@@ -43,6 +43,7 @@ set(STATISTICS_SOURCES
   "${SRCROOT}${MATHEMATICSDIR}/Statistics/kernelDensityDistribution.cpp"
   "${SRCROOT}${MATHEMATICSDIR}/Statistics/randomSampling.cpp"
   "${SRCROOT}${MATHEMATICSDIR}/Statistics/randomVariableGenerator.cpp"
+  "${SRCROOT}${MATHEMATICSDIR}/Statistics/inverseTransformRandomSampler.cpp"
 )
 
 # Add header files.
@@ -55,6 +56,7 @@ set(STATISTICS_HEADERS
   "${SRCROOT}${MATHEMATICSDIR}/Statistics/kernelDensityDistribution.h"
   "${SRCROOT}${MATHEMATICSDIR}/Statistics/randomSampling.h"
   "${SRCROOT}${MATHEMATICSDIR}/Statistics/randomVariableGenerator.h"
+  "${SRCROOT}${MATHEMATICSDIR}/Statistics/inverseTransformRandomSampler.h"
 )
 
 # Add static libraries.
@@ -85,3 +87,7 @@ target_link_libraries(test_KernelDensityDistribution tudat_statistics ${Boost_LI
 add_executable(test_RandomSampling "${SRCROOT}${MATHEMATICSDIR}/Statistics/UnitTests/unitTestRandomSampling.cpp")
 setup_custom_test_program(test_RandomSampling "${SRCROOT}${MATHEMATICSDIR}/Statistics")
 target_link_libraries(test_RandomSampling tudat_statistics ${TUDAT_EXTERNAL_LIBRARIES} ${Boost_LIBRARIES})
+
+add_executable(test_InverseTransformRandomSampler "${SRCROOT}${MATHEMATICSDIR}/Statistics/UnitTests/unitTestInverseTransformRandomSampler.cpp")
+setup_custom_test_program(test_InverseTransformRandomSampler "${SRCROOT}${MATHEMATICSDIR}/Statistics")
+target_link_libraries(test_InverseTransformRandomSampler tudat_statistics ${TUDAT_EXTERNAL_LIBRARIES} ${Boost_LIBRARIES})
