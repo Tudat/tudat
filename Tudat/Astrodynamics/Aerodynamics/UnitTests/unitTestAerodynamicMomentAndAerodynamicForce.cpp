@@ -685,7 +685,7 @@ void testAerodynamicForceDirection( const bool includeThrustForce,
             {
                 // Check if imposed and indirectly obtained rotation matrices are equal.
                 Eigen::Matrix3d rotationToBodyFrameFromEphemeris = rotationalEphemeris->getRotationToTargetFrame(
-                            outputIterator->first, basic_astrodynamics::JULIAN_DAY_ON_J2000 ).toRotationMatrix( );
+                            outputIterator->first ).toRotationMatrix( );
                 matrixDifference = rotationToBodyFrameFromEphemeris - rotationToBodyFrame;
                 for( unsigned int j = 0; j < 3; j++ )
                 {
@@ -734,11 +734,11 @@ void testAerodynamicForceDirection( const bool includeThrustForce,
 
 BOOST_AUTO_TEST_CASE( testAerodynamicForceDirectionInPropagation )
 {
-    //testAerodynamicForceDirection( 0, 0, 0 );
+    testAerodynamicForceDirection( 0, 0, 0 );
     testAerodynamicForceDirection( 1, 0, 0 );
-    //testAerodynamicForceDirection( 1, 1, 0 );
-    //testAerodynamicForceDirection( 1, 0, 1 );
-    //testAerodynamicForceDirection( 1, 1, 1 );
+    testAerodynamicForceDirection( 1, 1, 0 );
+    testAerodynamicForceDirection( 1, 0, 1 );
+    testAerodynamicForceDirection( 1, 1, 1 );
 }
 
 BOOST_AUTO_TEST_SUITE_END( )
