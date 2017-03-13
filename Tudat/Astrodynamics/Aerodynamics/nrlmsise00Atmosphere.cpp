@@ -51,7 +51,7 @@ void NRLMSISE00Atmosphere::computeProperties(
     input_.ap_a   = &aph_;
 
     // Call NRLMSISE00
-    gtd7(&input_, &flags_, &output_);
+    gtd7d(&input_, &flags_, &output_);
 
     // Retrieve density and temperature
     density_ = output_.d[ 5 ] * 1000.0; // GM/CM3 to kg/M3

@@ -18,7 +18,7 @@
 
 #include "Tudat/Astrodynamics/Aerodynamics/trimOrientation.h"
 #include "Tudat/Astrodynamics/Aerodynamics/aerodynamicCoefficientInterface.h"
-#include "Tudat/Astrodynamics/Aerodynamics/atmosphereModel.h"
+#include "Tudat/Astrodynamics/Aerodynamics/nrlmsise00Atmosphere.h"
 #include "Tudat/Astrodynamics/BasicAstrodynamics/bodyShapeModel.h"
 #include "Tudat/Astrodynamics/ReferenceFrames/aerodynamicAngleCalculator.h"
 #include "Tudat/Basics/basicTypedefs.h"
@@ -500,6 +500,8 @@ private:
 
     //! Atmosphere model of atmosphere through which vehicle is flying
     boost::shared_ptr< aerodynamics::AtmosphereModel > atmosphereModel_;
+
+    boost::shared_ptr< aerodynamics::NRLMSISE00Atmosphere > nrlMsiseAtmosphereModel_;
 
     //! Model describing the shape of the body w.r.t. which the flight is taking place.
     const boost::shared_ptr< basic_astrodynamics::BodyShapeModel > shapeModel_;

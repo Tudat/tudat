@@ -67,6 +67,11 @@ FlightConditions::FlightConditions(
     {
         throw std::runtime_error( "Error when making flight conditions, angles are to be updated, but no calculator is set" );
     }
+
+    if( boost::dynamic_pointer_cast< NRLMSISE00Atmosphere >( atmosphereModel_ ) != NULL )
+    {
+        nrlMsiseAtmosphereModel_ = boost::dynamic_pointer_cast< NRLMSISE00Atmosphere >( atmosphereModel_ );
+    }
 }
 
 //! Function to set custom dependency of aerodynamic coefficients
@@ -159,6 +164,153 @@ double FlightConditions::getAerodynamicCoefficientIndependentVariable(
         }
         currentIndependentVariable = getCurrentAltitude( );
         break;
+    case airspeed_dependent:
+        currentIndependentVariable = getCurrentAirspeed( );
+        break;
+    case he_number_density_dependent:
+    {
+        if( nrlMsiseAtmosphereModel_ == NULL )
+        {
+            throw std::runtime_error( "Error, NRLMSISE atmosphere model is null, but require He number density" );
+        }
+
+        if( aerodynamicAngleCalculator_== NULL )
+        {
+            throw std::runtime_error( "Error, aerodynamic angle calculator is null, but require latitude and longitude" );
+        }
+
+        currentIndependentVariable = nrlMsiseAtmosphereModel_->getNumberDensity(
+                    0, getCurrentAltitude( ),
+                    aerodynamicAngleCalculator_->getAerodynamicAngle( reference_frames::longitude_angle ),
+                    aerodynamicAngleCalculator_->getAerodynamicAngle( reference_frames::latitude_angle ), currentTime_ );
+        break;
+    }
+    case o_number_density_dependent:
+    {
+        if( nrlMsiseAtmosphereModel_ == NULL )
+        {
+            throw std::runtime_error( "Error, NRLMSISE atmosphere model is null, but require O number density" );
+        }
+
+        if( aerodynamicAngleCalculator_== NULL )
+        {
+            throw std::runtime_error( "Error, aerodynamic angle calculator is null, but require latitude and longitude" );
+        }
+
+        currentIndependentVariable = nrlMsiseAtmosphereModel_->getNumberDensity(
+                    1, getCurrentAltitude( ),
+                    aerodynamicAngleCalculator_->getAerodynamicAngle( reference_frames::longitude_angle ),
+                    aerodynamicAngleCalculator_->getAerodynamicAngle( reference_frames::latitude_angle ), currentTime_ );
+        break;
+    }
+    case n2_number_density_dependent:
+    {
+        if( nrlMsiseAtmosphereModel_ == NULL )
+        {
+            throw std::runtime_error( "Error, NRLMSISE atmosphere model is null, but require N2 number density" );
+        }
+
+        if( aerodynamicAngleCalculator_== NULL )
+        {
+            throw std::runtime_error( "Error, aerodynamic angle calculator is null, but require latitude and longitude" );
+        }
+
+        currentIndependentVariable = nrlMsiseAtmosphereModel_->getNumberDensity(
+                    2, getCurrentAltitude( ),
+                    aerodynamicAngleCalculator_->getAerodynamicAngle( reference_frames::longitude_angle ),
+                    aerodynamicAngleCalculator_->getAerodynamicAngle( reference_frames::latitude_angle ), currentTime_ );
+        break;
+    }
+    case o2_number_density_dependent:
+    {
+        if( nrlMsiseAtmosphereModel_ == NULL )
+        {
+            throw std::runtime_error( "Error, NRLMSISE atmosphere model is null, but require He number density" );
+        }
+
+        if( aerodynamicAngleCalculator_== NULL )
+        {
+            throw std::runtime_error( "Error, aerodynamic angle calculator is null, but require latitude and longitude" );
+        }
+
+        currentIndependentVariable = nrlMsiseAtmosphereModel_->getNumberDensity(
+                    3, getCurrentAltitude( ),
+                    aerodynamicAngleCalculator_->getAerodynamicAngle( reference_frames::longitude_angle ),
+                    aerodynamicAngleCalculator_->getAerodynamicAngle( reference_frames::latitude_angle ), currentTime_ );
+        break;
+    }
+    case ar_number_density_dependent:
+    {
+        if( nrlMsiseAtmosphereModel_ == NULL )
+        {
+            throw std::runtime_error( "Error, NRLMSISE atmosphere model is null, but require Ar number density" );
+        }
+
+        if( aerodynamicAngleCalculator_== NULL )
+        {
+            throw std::runtime_error( "Error, aerodynamic angle calculator is null, but require latitude and longitude" );
+        }
+
+        currentIndependentVariable = nrlMsiseAtmosphereModel_->getNumberDensity(
+                    4, getCurrentAltitude( ),
+                    aerodynamicAngleCalculator_->getAerodynamicAngle( reference_frames::longitude_angle ),
+                    aerodynamicAngleCalculator_->getAerodynamicAngle( reference_frames::latitude_angle ), currentTime_ );
+        break;
+    }
+    case h_number_density_dependent:
+    {
+        if( nrlMsiseAtmosphereModel_ == NULL )
+        {
+            throw std::runtime_error( "Error, NRLMSISE atmosphere model is null, but require H number density" );
+        }
+
+        if( aerodynamicAngleCalculator_== NULL )
+        {
+            throw std::runtime_error( "Error, aerodynamic angle calculator is null, but require latitude and longitude" );
+        }
+
+        currentIndependentVariable = nrlMsiseAtmosphereModel_->getNumberDensity(
+                    5, getCurrentAltitude( ),
+                    aerodynamicAngleCalculator_->getAerodynamicAngle( reference_frames::longitude_angle ),
+                    aerodynamicAngleCalculator_->getAerodynamicAngle( reference_frames::latitude_angle ), currentTime_ );
+        break;
+    }
+    case n_number_density_dependent:
+    {
+        if( nrlMsiseAtmosphereModel_ == NULL )
+        {
+            throw std::runtime_error( "Error, NRLMSISE atmosphere model is null, but require N number density" );
+        }
+
+        if( aerodynamicAngleCalculator_== NULL )
+        {
+            throw std::runtime_error( "Error, aerodynamic angle calculator is null, but require latitude and longitude" );
+        }
+
+        currentIndependentVariable = nrlMsiseAtmosphereModel_->getNumberDensity(
+                    6, getCurrentAltitude( ),
+                    aerodynamicAngleCalculator_->getAerodynamicAngle( reference_frames::longitude_angle ),
+                    aerodynamicAngleCalculator_->getAerodynamicAngle( reference_frames::latitude_angle ), currentTime_ );
+        break;
+    }
+    case anomalous_oxygen_number_density_dependent:
+    {
+        if( nrlMsiseAtmosphereModel_ == NULL )
+        {
+            throw std::runtime_error( "Error, NRLMSISE atmosphere model is null, but require anomalous oxugen number density" );
+        }
+
+        if( aerodynamicAngleCalculator_== NULL )
+        {
+            throw std::runtime_error( "Error, aerodynamic angle calculator is null, but require latitude and longitude" );
+        }
+
+        currentIndependentVariable = nrlMsiseAtmosphereModel_->getNumberDensity(
+                    7, getCurrentAltitude( ),
+                    aerodynamicAngleCalculator_->getAerodynamicAngle( reference_frames::longitude_angle ),
+                    aerodynamicAngleCalculator_->getAerodynamicAngle( reference_frames::latitude_angle ), currentTime_ );
+        break;
+    }
     case control_surface_deflection_dependent:
     {
         try

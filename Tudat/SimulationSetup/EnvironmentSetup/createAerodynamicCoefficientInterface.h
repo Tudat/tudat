@@ -323,6 +323,44 @@ private:
     Eigen::Vector3d constantMomentCoefficient_;
 };
 
+class RarefiedFlowSimpleGeometryAerodynamicCoefficientSettings: public AerodynamicCoefficientSettings
+{
+public:
+    RarefiedFlowSimpleGeometryAerodynamicCoefficientSettings(
+            const double referenceArea,
+            const bool isShapeSphere ):
+        AerodynamicCoefficientSettings(
+            rarefied_flow_simple_shape, 0.0, referenceArea, 0.0, Eigen::Vector3d::Zero( ),
+            getCoefficientDependencies( ), true, true ), isShapeSphere_( isShapeSphere ){ }
+
+    ~RarefiedFlowSimpleGeometryAerodynamicCoefficientSettings( ){ }
+
+    static std::vector< aerodynamics::AerodynamicCoefficientsIndependentVariables > getCoefficientDependencies( )
+    {
+        using namespace aerodynamics;
+        return { he_number_density_dependent,
+                    o_number_density_dependent,
+                    n2_number_density_dependent,
+                    o2_number_density_dependent,
+                    ar_number_density_dependent,
+                    density_dependent,
+                    h_number_density_dependent,
+                    n_number_density_dependent,
+                    anomalous_oxygen_number_density_dependent,
+                    temperature_dependent,
+                    airspeed_dependent };
+    }
+
+    bool getIsShapeSphere( )
+    {
+        return isShapeSphere_;
+    }
+
+private:
+
+    bool isShapeSphere_;
+};
+
 
 //! Object for setting aerodynamic coefficients from a user-defined N-dimensional table (with N>1).
 /*!
@@ -1093,6 +1131,9 @@ createTabulatedCoefficientAerodynamicCoefficientInterface(
     }
 }
 
+Eigen::Vector6d getAerodynamicCoefficientsFromDragOnly(
+        const std::vector< double >& independentVariable,
+        const boost::function< double( const std::vector< double >& ) > dragCoefficientFunction );
 
 //! Function to create an aerodynamic coefficient interface.
 /*!

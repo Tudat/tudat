@@ -48,8 +48,19 @@ enum AerodynamicCoefficientsIndependentVariables
     angle_of_attack_dependent = 1,
     angle_of_sideslip_dependent = 2,
     altitude_dependent = 3,
-    control_surface_deflection_dependent = 4,
-    undefined_independent_variable = 5
+    airspeed_dependent = 4,
+    he_number_density_dependent = 5,
+    o_number_density_dependent = 6,
+    n2_number_density_dependent = 7,
+    o2_number_density_dependent = 8,
+    ar_number_density_dependent = 9,
+    h_number_density_dependent = 10,
+    n_number_density_dependent = 11,
+    anomalous_oxygen_number_density_dependent = 12,
+    temperature_dependent = 13,
+    density_dependent = 14,
+    control_surface_deflection_dependent = 15,
+    undefined_independent_variable = 16
 };
 
 

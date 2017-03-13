@@ -177,6 +177,14 @@ createUnivariateTabulatedCoefficientAerodynamicCoefficientInterface(
     }
 }
 
+Eigen::Vector6d getAerodynamicCoefficientsFromDragOnly(
+        const std::vector< double >& independentVariable,
+        const boost::function< double( const std::vector< double >& ) > dragCoefficientFunction )
+{
+    return ( Eigen::Vector6d( ) << dragCoefficientFunction(
+                 independentVariable ), 0.0, 0.0, 0.0, 0.0, 0.0 ).finished( );
+}
+
 //! Function to create and aerodynamic coefficient interface.
 boost::shared_ptr< aerodynamics::AerodynamicCoefficientInterface >
 createAerodynamicCoefficientInterface(
@@ -263,6 +271,33 @@ createAerodynamicCoefficientInterface(
                                       boost::lexical_cast< std::string >( numberOfDimensions ) + " dimensions not yet implemented" );
         }
         break;
+    }
+    case rarefied_flow_simple_shape:
+    {
+        boost::shared_ptr< RarefiedFlowSimpleGeometryAerodynamicCoefficientSettings > rarefiedFlowCoefficientSettings =
+                boost::dynamic_pointer_cast< RarefiedFlowSimpleGeometryAerodynamicCoefficientSettings >( coefficientSettings );
+
+        boost::function< double( const std::vector< double >& ) > dragCoefficientFunction;
+        if( rarefiedFlowCoefficientSettings->getIsShapeSphere( ) )
+        {
+            //dragCoefficientFunction = ...
+        }
+        else
+        {
+            //dragCoefficientFunction = ...
+        }
+
+        return boost::make_shared< CustomAerodynamicCoefficientInterface >(
+                    boost::bind( &getAerodynamicCoefficientsFromDragOnly, _1, dragCoefficientFunction ),
+                    rarefiedFlowCoefficientSettings->getReferenceLength( ),
+                    rarefiedFlowCoefficientSettings->getReferenceArea( ),
+                    rarefiedFlowCoefficientSettings->getLateralReferenceLength( ),
+                    rarefiedFlowCoefficientSettings->getMomentReferencePoint( ),
+                    rarefiedFlowCoefficientSettings->getIndependentVariableNames( ),
+                    rarefiedFlowCoefficientSettings->getAreCoefficientsInAerodynamicFrame( ),
+                    rarefiedFlowCoefficientSettings->getAreCoefficientsInNegativeAxisDirection( ) );
+
+
     }
     default:
         throw std::runtime_error( "Error, do not recognize aerodynamic coefficient settings for " + body );
