@@ -18,6 +18,7 @@
 
 #include <boost/function.hpp>
 #include <boost/functional/hash.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include "Tudat/Astrodynamics/BasicAstrodynamics/physicalConstants.h"
 #include "Tudat/Astrodynamics/Aerodynamics/atmosphereModel.h"
@@ -207,6 +208,15 @@ public:
         GasComponentProperties gasProperties;
         gasComponentProperties_ = gasProperties; // Default gas properties
         useIdealGasLaw_ = useIdealGasLaw;
+
+        specieIndices_[ helium_atmosphere_component ] = 0;
+        specieIndices_[ atomic_oxygen_atmosphere_component ] = 1;
+        specieIndices_[ molecular_nitrogen_atmosphere_component ] = 2;
+        specieIndices_[ molecular_oxygen_atmosphere_component ] = 3;
+        specieIndices_[ argon_atmosphere_component ] = 4;
+        specieIndices_[ atomic_hydrogen_atmosphere_component ] = 5;
+        specieIndices_[ atomic_nitrogen_atmosphere_component ] = 6;
+        specieIndices_[ anomalous_oxygen_atmosphere_component ] = 7;
     }
 
     //! Constructor
@@ -362,11 +372,19 @@ public:
         return numberDensities_;
     }
 
-    double getNumberDensity( const int numberDensityIndex, const double altitude, const double longitude,
-                             const double latitude, const double time )
+    virtual double getSpecieNumberDensity(
+            const AtmosphericSpecies specieType, const double altitude, const double longitude,
+            const double latitude, const double time )
     {
         computeProperties( altitude, longitude, latitude, time );
-        return numberDensities_.at( numberDensityIndex );
+
+        if( specieIndices_.count( specieType ) == 0 )
+        {
+            std::string errorMessage = "Error, specie " + boost::lexical_cast< std::string >( specieType ) + " number density not implemented for this atmosphere model";
+            throw std::runtime_error( errorMessage );
+        }
+
+        return numberDensities_.at( specieIndices_.at( specieType ) );
     }
 
     //! Get local average number density.
@@ -441,6 +459,8 @@ private:
 
     //! Shared pointer to solar activity function
     NRLMSISE00InputFunction nrlmsise00InputFunction_;
+
+    std::map< AtmosphericSpecies, int > specieIndices_;
 
     //! Use the ideal gas law for the computation of the pressure.
     bool useIdealGasLaw_;

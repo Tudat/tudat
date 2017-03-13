@@ -24,9 +24,9 @@ namespace tudat
 namespace unit_tests
 {
 
-BOOST_AUTO_TEST_SUITE( test_aerodynamic_acceleration_force_moment_models )
+BOOST_AUTO_TEST_SUITE( test_simple_geometry_rarefied_flow_aerodynamic_coefficients )
 
-BOOST_AUTO_TEST_CASE( testTabulatedDragCoefficient )
+BOOST_AUTO_TEST_CASE( testSimpleGeometryRarefiedFlowCoefficients )
 {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////            USING STATEMENTS              //////////////////////////////////////////////////////
@@ -43,6 +43,7 @@ BOOST_AUTO_TEST_CASE( testTabulatedDragCoefficient )
     using namespace numerical_integrators;
     using namespace interpolators;
     using namespace input_output;
+    using namespace unit_conversions;
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +57,7 @@ BOOST_AUTO_TEST_CASE( testTabulatedDragCoefficient )
 
     // Set simulation time settings.
     const double simulationStartEpoch = 0.0;
-    const double simulationEndEpoch = tudat::physical_constants::JULIAN_DAY;
+    const double simulationEndEpoch = 200.0;
 
     for( unsigned int useSphereShape = 0; useSphereShape < 2; useSphereShape++ )
     {
@@ -67,6 +68,7 @@ BOOST_AUTO_TEST_CASE( testTabulatedDragCoefficient )
         // Create body objects.
         std::map< std::string, boost::shared_ptr< BodySettings > > bodySettings =
                 getDefaultBodySettings( bodiesToCreate );
+        bodySettings[ "Earth" ]->atmosphereSettings = boost::make_shared< AtmosphereSettings >( nrlmsise00 );
         NamedBodyMap bodyMap = createBodies( bodySettings );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,10 +84,76 @@ BOOST_AUTO_TEST_CASE( testTabulatedDragCoefficient )
         bodyMap[ "Vehicle" ]->setAerodynamicCoefficientInterface(
                     createAerodynamicCoefficientInterface(
                         boost::make_shared< RarefiedFlowSimpleGeometryAerodynamicCoefficientSettings >(
-                            referenceArea, true ), "Vehicle" ) );
+                            referenceArea, useSphereShape ), "Vehicle" ) );
 
         // Finalize body creation.
         setGlobalFrameBodyEphemerides( bodyMap, "SSB", "ECLIPJ2000" );
+
+        {
+            SelectedAccelerationMap accelerationMap;
+            std::vector< std::string > bodiesToPropagate;
+            std::vector< std::string > centralBodies;
+
+
+            // Define acceleration model settings.
+            std::map< std::string, std::vector< boost::shared_ptr< AccelerationSettings > > > accelerationsOfVehicle;
+            accelerationsOfVehicle[ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( central_gravity ) );
+            accelerationsOfVehicle[ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( aerodynamic ) );
+
+            accelerationMap[ "Vehicle" ] = accelerationsOfVehicle;
+
+            bodiesToPropagate.push_back( "Vehicle" );
+            centralBodies.push_back( "Earth" );
+
+            // Create acceleration models
+            basic_astrodynamics::AccelerationMap accelerationModelMap = createAccelerationModelsMap(
+                        bodyMap, accelerationMap, bodiesToPropagate, centralBodies );
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////             CREATE PROPAGATION SETTINGS            ////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            // Set spherical elements for Vehicle.
+            Eigen::Vector6d VehicleInitialState;
+            VehicleInitialState( SphericalOrbitalStateElementIndices::radiusIndex ) =
+                    spice_interface::getAverageRadius( "Earth" ) + 600.0E3;
+            VehicleInitialState( SphericalOrbitalStateElementIndices::latitudeIndex ) = convertDegreesToRadians( 10.0 );
+            VehicleInitialState( SphericalOrbitalStateElementIndices::longitudeIndex ) = convertDegreesToRadians( 20.0 );
+            VehicleInitialState( SphericalOrbitalStateElementIndices::speedIndex ) = 7500.0;
+            VehicleInitialState( SphericalOrbitalStateElementIndices::flightPathIndex ) = convertDegreesToRadians( 20.0 );
+            VehicleInitialState( SphericalOrbitalStateElementIndices::headingAngleIndex ) = convertDegreesToRadians( 90.0 );
+
+            // Convert Vehicle state from spherical elements to Cartesian elements.
+            Eigen::Vector6d systemInitialState = convertSphericalOrbitalToCartesianState(
+                        VehicleInitialState );
+            boost::shared_ptr< ephemerides::RotationalEphemeris > earthRotationalEphemeris =
+                    bodyMap.at( "Earth" )->getRotationalEphemeris( );
+            systemInitialState = transformStateToGlobalFrame( systemInitialState, simulationStartEpoch, earthRotationalEphemeris );
+
+            // Define list of dependent variables to save.
+            std::vector< boost::shared_ptr< SingleDependentVariableSaveSettings > > dependentVariables;
+
+
+            // Create propagation settings.
+            boost::shared_ptr< TranslationalStatePropagatorSettings < double > > propagatorSettings =
+                    boost::make_shared< TranslationalStatePropagatorSettings< double > >
+                    ( centralBodies, accelerationModelMap, bodiesToPropagate, systemInitialState, simulationEndEpoch,
+                      cowell, boost::make_shared< DependentVariableSaveSettings >( dependentVariables ) );
+
+            boost::shared_ptr< IntegratorSettings< > > integratorSettings =
+                    boost::make_shared< IntegratorSettings< > >
+                    ( rungeKutta4, simulationStartEpoch, 30.0 );
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////             PROPAGATE ORBIT            ////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            // Create simulation object and propagate dynamics.
+            SingleArcDynamicsSimulator< > dynamicsSimulator(
+                        bodyMap, integratorSettings, propagatorSettings, true, false, false );
+        }
     }
 
 }

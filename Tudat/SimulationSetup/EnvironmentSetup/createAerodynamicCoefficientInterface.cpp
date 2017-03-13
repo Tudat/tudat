@@ -277,7 +277,7 @@ createAerodynamicCoefficientInterface(
         boost::shared_ptr< RarefiedFlowSimpleGeometryAerodynamicCoefficientSettings > rarefiedFlowCoefficientSettings =
                 boost::dynamic_pointer_cast< RarefiedFlowSimpleGeometryAerodynamicCoefficientSettings >( coefficientSettings );
 
-        boost::function< double( const std::vector< double >& ) > dragCoefficientFunction;
+        boost::function< double( const std::vector< double >& ) > dragCoefficientFunction = boost::lambda::constant( 1.0 );
         if( rarefiedFlowCoefficientSettings->getIsShapeSphere( ) )
         {
             //dragCoefficientFunction = ...

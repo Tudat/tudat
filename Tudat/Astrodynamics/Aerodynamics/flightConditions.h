@@ -501,8 +501,6 @@ private:
     //! Atmosphere model of atmosphere through which vehicle is flying
     boost::shared_ptr< aerodynamics::AtmosphereModel > atmosphereModel_;
 
-    boost::shared_ptr< aerodynamics::NRLMSISE00Atmosphere > nrlMsiseAtmosphereModel_;
-
     //! Model describing the shape of the body w.r.t. which the flight is taking place.
     const boost::shared_ptr< basic_astrodynamics::BodyShapeModel > shapeModel_;
 
