@@ -17,6 +17,7 @@
  */
 
 #include "Tudat/Mathematics/BasicMathematics/mathematicalConstants.h"
+#include "Tudat/Astrodynamics/BasicAstrodynamics/physicalConstants.h"
 #include "Tudat/Astrodynamics/Aerodynamics/rarefiedFlowSimpleGeometryDrag.h"
 
 namespace tudat

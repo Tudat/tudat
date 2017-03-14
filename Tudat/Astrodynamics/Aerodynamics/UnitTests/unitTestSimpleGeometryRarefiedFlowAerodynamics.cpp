@@ -89,6 +89,16 @@ BOOST_AUTO_TEST_CASE( testSimpleGeometryRarefiedFlowCoefficients )
         // Finalize body creation.
         setGlobalFrameBodyEphemerides( bodyMap, "SSB", "ECLIPJ2000" );
 
+
+        /////////////////////////////  Define input varibales for coefficients here;
+        std::vector< double > coefficientIndependentVariables;// = ...
+        bodyMap[ "Vehicle" ]->getAerodynamicCoefficientInterface( )->updateFullCurrentCoefficients(
+                    coefficientIndependentVariables );
+        Eigen::Vector6d currentAerodynamicCoefficients =
+                bodyMap[ "Vehicle" ]->getAerodynamicCoefficientInterface( )->getCurrentAerodynamicCoefficients( );
+
+        ///////////////// Check currentAerodynamicCoefficients: entry 0 is drag coefficient, rest should be zero.
+
         {
             SelectedAccelerationMap accelerationMap;
             std::vector< std::string > bodiesToPropagate;
@@ -131,14 +141,26 @@ BOOST_AUTO_TEST_CASE( testSimpleGeometryRarefiedFlowCoefficients )
             systemInitialState = transformStateToGlobalFrame( systemInitialState, simulationStartEpoch, earthRotationalEphemeris );
 
             // Define list of dependent variables to save.
-            std::vector< boost::shared_ptr< SingleDependentVariableSaveSettings > > dependentVariables;
+            std::vector< boost::shared_ptr< SingleDependentVariableSaveSettings > > dependentVariablesToSave;
+
+            /////////////////////////// Extend list of variables to save (latitude, longitude, .... needed for test.
+            dependentVariablesToSave.push_back( boost::make_shared< SingleDependentVariableSaveSettings >(
+                                                    airspeed_dependent_variable, "Vehicle" ) );
+            dependentVariablesToSave.push_back( boost::make_shared< SingleDependentVariableSaveSettings >(
+                                                    altitude_dependent_variable, "Vehicle" ) );
+            dependentVariablesToSave.push_back( boost::make_shared< SingleDependentVariableSaveSettings >(
+                                                    aerodynamic_moment_coefficients_dependent_variable, "Vehicle" ) );
+
+            boost::shared_ptr< DependentVariableSaveSettings > dependentVariableSaveSettings =
+                    boost::make_shared< DependentVariableSaveSettings >( dependentVariablesToSave );
+
 
 
             // Create propagation settings.
             boost::shared_ptr< TranslationalStatePropagatorSettings < double > > propagatorSettings =
                     boost::make_shared< TranslationalStatePropagatorSettings< double > >
                     ( centralBodies, accelerationModelMap, bodiesToPropagate, systemInitialState, simulationEndEpoch,
-                      cowell, boost::make_shared< DependentVariableSaveSettings >( dependentVariables ) );
+                      cowell, dependentVariableSaveSettings );
 
             boost::shared_ptr< IntegratorSettings< > > integratorSettings =
                     boost::make_shared< IntegratorSettings< > >
