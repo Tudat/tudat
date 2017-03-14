@@ -10,6 +10,7 @@
 
 #include <boost/lambda/lambda.hpp>
 
+#include "Tudat/Astrodynamics/Aerodynamics/rarefiedFlowSimpleGeometryDrag.h"
 #include "Tudat/SimulationSetup/EnvironmentSetup/createAerodynamicCoefficientInterface.h"
 
 namespace tudat
@@ -280,11 +281,11 @@ createAerodynamicCoefficientInterface(
         boost::function< double( const std::vector< double >& ) > dragCoefficientFunction = boost::lambda::constant( 1.0 );
         if( rarefiedFlowCoefficientSettings->getIsShapeSphere( ) )
         {
-            //dragCoefficientFunction = ...
+            dragCoefficientFunction = boost::bind( &aerodynamics::computeDragCoefficientOfSphereInRarefiedFlow, _1 );
         }
         else
         {
-            //dragCoefficientFunction = ...
+            dragCoefficientFunction = boost::bind( &aerodynamics::computeDragCoefficientOfCubeInRarefiedFlow, _1 );
         }
 
         return boost::make_shared< CustomAerodynamicCoefficientInterface >(

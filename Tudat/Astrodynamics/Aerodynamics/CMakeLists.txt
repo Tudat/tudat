@@ -20,6 +20,7 @@ set(AERODYNAMICS_SOURCES
   "${SRCROOT}${AERODYNAMICSDIR}/customAerodynamicCoefficientInterface.cpp"
   "${SRCROOT}${AERODYNAMICSDIR}/flightConditions.cpp"
   "${SRCROOT}${AERODYNAMICSDIR}/trimOrientation.cpp"
+  "${SRCROOT}${AERODYNAMICSDIR}/rarefiedFlowSimpleGeometryDrag.cpp"
   "${SRCROOT}${AERODYNAMICSDIR}/equilibriumWallTemperature.cpp"
 )
 
@@ -44,6 +45,7 @@ set(AERODYNAMICS_HEADERS
   "${SRCROOT}${AERODYNAMICSDIR}/UnitTests/testApolloCapsuleCoefficients.h"
   "${SRCROOT}${AERODYNAMICSDIR}/flightConditions.cpp"
   "${SRCROOT}${AERODYNAMICSDIR}/aerodynamicGuidance.h"
+  "${SRCROOT}${AERODYNAMICSDIR}/rarefiedFlowSimpleGeometryDrag.h"
   "${SRCROOT}${AERODYNAMICSDIR}/equilibriumWallTemperature.h"
 )
 
