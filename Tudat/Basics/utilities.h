@@ -199,6 +199,7 @@ boost::array< boost::multi_array< double, 2 >::index, 2 > getMultiArrayIndexArra
 boost::array< boost::multi_array< double, 3 >::index, 3 > getMultiArrayIndexArray(
         const boost::multi_array< double, 3 >& multiArray, const double* requestedElement );
 
+
 //! Function to cast a map of Eigen matrices from one key/matrix scalar type set to another set
 /*!
  *  Function to produce a map of Eigen matrices, cast from one set of key/matrix scalar type set to another set.
