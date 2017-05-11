@@ -25,10 +25,10 @@ namespace observation_models
 //! Enum for types of observations
 enum ObservableType
 {
-    oneWayRange = 0,
+    one_way_range = 0,
     angular_position = 1,
-    position_observable = 2
-
+    position_observable = 2,
+    one_way_doppler = 3
 };
 
 //! Function to get the name (string) associated with a given observable type.
@@ -47,6 +47,15 @@ std::string getObservableName( const ObservableType observableType );
  */
 ObservableType getObservableType( const std::string& observableName );
 
+//! Function to get the indices in link end times/states for a given link end type and observable type
+/*!
+ * Function to get the indices in link end times/states for a given link end type and observable type
+ * \param observableType Type of observable for which link end indices are to be returned
+ * \param linkEndType Type of link end for which link end indices are to be returned
+ * \return Indices in link end times/states for given link end type and observable type
+ */
+std::vector< int > getLinkEndIndicesForLinkEndTypeAtObservable(
+        const ObservableType observableType, const LinkEndType linkEndType );
 
 } // namespace observation_models
 

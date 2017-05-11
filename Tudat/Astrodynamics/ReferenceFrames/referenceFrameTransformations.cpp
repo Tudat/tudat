@@ -228,6 +228,31 @@ Eigen::Quaterniond getVelocityBasedLvlhToPlanetocentricRotationKeplerian(
     return frameTransformationQuaternion;
 }
 
+Eigen::Matrix3d getInertialToRswSatelliteCenteredFrameRotationMatrx(
+        const Eigen::Vector6d bodyState )
+{
+    Eigen::Vector3d vehicleVelocity, vehicleRadius;
+    vehicleRadius = bodyState.segment( 0, 3 );
+    vehicleVelocity = bodyState.segment( 3, 3 );
+
+    Eigen::Vector3d unitR = vehicleRadius.normalized( );// / vehicleVelocity.norm( );
+    if ( vehicleRadius.cross( vehicleVelocity ).norm( ) == 0.0 )
+    {
+        std::string errorMessage = "Division by zero: radius and velocity are in the same direction in RSW frame.";
+        throw std::runtime_error( errorMessage );
+    }
+
+    Eigen::Vector3d unitW = ( vehicleRadius.cross( vehicleVelocity ) ).normalized( );
+
+    Eigen::Vector3d unitS = ( unitW.cross( unitR ) ).normalized( );
+
+    Eigen::Matrix3d transformationMatrix;
+    transformationMatrix << unitR( 0 ), unitR( 1 ), unitR( 2 ),
+                            unitS( 0 ), unitS( 1 ), unitS( 2 ),
+                            unitW( 0 ), unitW( 1 ), unitW( 2 );
+    return transformationMatrix;
+}
+
 //! Get inertial (I) to rotating planetocentric (R) reference frame transformtion quaternion.
 Eigen::Quaterniond getInertialToPlanetocentricFrameTransformationQuaternion(
         const double angleFromXItoXR )
@@ -468,6 +493,45 @@ Eigen::Quaterniond getEnuLocalVerticalToRotatingPlanetocentricFrameTransformatio
     return frameTransformationQuaternion;
 }
 
+Eigen::Matrix3d getDerivativeOfXAxisRotationWrtAngle( const double angle )
+{
+    return ( Eigen::Matrix3d( ) <<
+             0.0, 0.0, 0.0,
+             0.0, -std::sin( angle ), std::cos( angle ),
+             0.0, -std::cos( angle ), -std::sin( angle ) ).finished( );
+}
+
+Eigen::Matrix3d getDerivativeOfXAxisRotationWrtAngle( const Eigen::Matrix3d& rotationMatrix )
+{
+    return X_AXIS_ROTATION_MATRIX_DERIVATIVE_PREMULTIPLIER * rotationMatrix;
+}
+
+
+Eigen::Matrix3d getDerivativeOfYAxisRotationWrtAngle( const double angle )
+{
+    return ( Eigen::Matrix3d( ) <<
+             -std::sin( angle ), 0.0, -std::cos( angle ),
+             0.0, 0.0, 0.0,
+             -std::cos( angle ), 0.0, std::sin( angle ) ).finished( );
+}
+
+Eigen::Matrix3d getDerivativeOfYAxisRotationWrtAngle( const Eigen::Matrix3d& rotationMatrix )
+{
+    return Y_AXIS_ROTATION_MATRIX_DERIVATIVE_PREMULTIPLIER * rotationMatrix;
+}
+
+Eigen::Matrix3d getDerivativeOfZAxisRotationWrtAngle( const double angle )
+{
+    return ( Eigen::Matrix3d( ) <<
+             -std::sin( angle ), std::cos( angle ), 0.0 ,
+             -std::cos( angle ), -std::sin( angle ), 0.0,
+             0.0, 0.0, 0.0 ).finished( );
+}
+
+Eigen::Matrix3d getDerivativeOfZAxisRotationWrtAngle( const Eigen::Matrix3d& rotationMatrix )
+{
+    return Z_AXIS_ROTATION_MATRIX_DERIVATIVE_PREMULTIPLIER * rotationMatrix;
+}
 
 } // namespace reference_frames
 } // namespace tudat

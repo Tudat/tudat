@@ -32,6 +32,11 @@ namespace tudat
 namespace observation_models
 {
 
+//! Enum listing types of observation biases that are availabe
+enum ObservationBiasTypes
+{
+    constant_additive_bias
+};
 
 //! Base class (non-functional) for describing observation biases
 /*!

@@ -295,6 +295,7 @@ int findNearestLeftNeighbourUsingHuntingAlgorithm(
                 {
 
                     int middleIndex;
+
                     if( !( upperIndex - lowerIndex  > 0 ) )
                     {
                         throw std::runtime_error( "Error, upper and lower indices are inconsistent in nearest neighbour search" +

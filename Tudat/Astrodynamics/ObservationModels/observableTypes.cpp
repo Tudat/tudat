@@ -8,6 +8,8 @@
  *    http://tudat.tudelft.nl/LICENSE.
  */
 
+#include <iostream>
+
 #include <boost/lexical_cast.hpp>
 
 #include "Tudat/Astrodynamics/ObservationModels/observableTypes.h"
@@ -24,7 +26,7 @@ std::string getObservableName( const ObservableType observableType )
     std::string observableName;
     switch( observableType )
     {
-    case oneWayRange:
+    case one_way_range:
         observableName = "OneWayRange";
         break;
     case angular_position:
@@ -32,6 +34,9 @@ std::string getObservableName( const ObservableType observableType )
         break;
     case position_observable:
         observableName = "CartesianPosition";
+        break;
+    case one_way_doppler:
+        observableName = "OneWayDoppler";
         break;
     default:
         std::string errorMessage =
@@ -49,7 +54,7 @@ ObservableType getObservableType( const std::string& observableName )
 
     if( observableName == "OneWayRange" )
     {
-        observableType = oneWayRange;
+        observableType = one_way_range;
     }
     else if( observableName == "AngularPosition" )
     {
@@ -58,6 +63,10 @@ ObservableType getObservableType( const std::string& observableName )
     else if( observableName == "CartesianPosition" )
     {
         observableType = position_observable;
+    }
+    else if( observableName ==  "OneWayDoppler" )
+    {
+        observableType = one_way_doppler;
     }
     else
     {
@@ -68,6 +77,89 @@ ObservableType getObservableType( const std::string& observableName )
     }
 
     return observableType;
+}
+
+//! Function to get the indices in link end times/states for a given link end type and observable type
+std::vector< int > getLinkEndIndicesForLinkEndTypeAtObservable(
+        const ObservableType observableType, const LinkEndType linkEndType )
+{
+    std::vector< int > linkEndIndices;
+
+    switch( observableType )
+    {
+    case one_way_range:
+        switch( linkEndType )
+        {
+        case transmitter:
+            linkEndIndices.push_back( 0 );
+            break;
+        case receiver:
+            linkEndIndices.push_back( 1 );
+            break;
+        default:
+            std::string errorMessage =
+                    "Error, could not find link end type index for link end " +
+                    boost::lexical_cast< std::string >( linkEndType ) + " of observable " +
+                    boost::lexical_cast< std::string >( observableType );
+            throw std::runtime_error( errorMessage );
+        }
+        break;
+    case one_way_doppler:
+        switch( linkEndType )
+        {
+        case transmitter:
+            linkEndIndices.push_back( 0 );
+            break;
+        case receiver:
+            linkEndIndices.push_back( 1 );
+            break;
+        default:
+            std::string errorMessage =
+                    "Error, could not find link end type index for link end " +
+                    boost::lexical_cast< std::string >( linkEndType ) + " of observable " +
+                    boost::lexical_cast< std::string >( observableType );
+            throw std::runtime_error( errorMessage );
+        }
+        break;
+    case angular_position:
+        switch( linkEndType )
+        {
+        case transmitter:
+            linkEndIndices.push_back( 0 );
+            break;
+        case receiver:
+            linkEndIndices.push_back( 1 );
+            break;
+        default:
+            std::string errorMessage =
+                    "Error, could not find link end type index for link end " +
+                    boost::lexical_cast< std::string >( linkEndType ) + " of observable " +
+                    boost::lexical_cast< std::string >( observableType );
+            throw std::runtime_error( errorMessage );
+        }
+        break;
+    case position_observable:
+        if( linkEndType == observed_body )
+        {
+            linkEndIndices.push_back( 0 );
+        }
+        else
+        {
+            std::string errorMessage =
+                    "Error, could not find link end type index for link end " +
+                    boost::lexical_cast< std::string >( linkEndType ) + " of observable " +
+                    boost::lexical_cast< std::string >( observableType );
+            throw std::runtime_error( errorMessage );
+        }
+
+    default:
+        std::string errorMessage =
+                "Error, could not find link end type index for link end types of observable " +
+                boost::lexical_cast< std::string >( observableType );
+        throw std::runtime_error( errorMessage );
+    }
+
+    return linkEndIndices;
 }
 
 }
