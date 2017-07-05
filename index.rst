@@ -14,6 +14,6 @@ This page contains an overview of all the guides, introductions, tutorials and f
    :caption: Contents
 
    self
-   installation
+   installation/index
    tutorials/index
 
