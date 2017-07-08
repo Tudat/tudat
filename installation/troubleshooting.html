@@ -97,6 +97,8 @@
 <li class="toctree-l2"><a class="reference internal" href="setupNewApps.html">4. Setup New Applications</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">5. Troubleshooting</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#troubleshooting-installation">1. Troubleshooting Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#troubleshooting-configuration">2. Troubleshooting Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#troubleshooting-tools">3. Troubleshooting Tools</a></li>
 </ul>
 </li>
 </ul>
@@ -172,193 +174,367 @@
 <p>Welcome to the troubleshooting guide. You have most likely been asked to come here because you have a problem with your Tudat installation or its configuration. Hopefully the steps discussed here will help you get up and running!</p>
 <div class="section" id="troubleshooting-installation">
 <h2>1. Troubleshooting Installation<a class="headerlink" href="#troubleshooting-installation" title="Permalink to this headline">¶</a></h2>
-<p>Welcome to the troubleshooting guide. You have most likely been asked to come here because you have a problem with your Tudat installation (or stumbled upon this page, great, yay!).
-How to use this guide:&nbsp;please complete all checks and copy the output (even if a check seems succesfull). Some checks will provide additional tests and solutions in case the check initially fails. Please complete these instructions as well and redo the original test!</p>
-<p>1.1 Check CMake
-Open your terminal emulator and type
-cmake –version</p>
-<p>Report the full output of this command.
-If your output looks like the example below following, you can assume that CMake has been installed correctly.
-cmake version 3.4.3
-CMake suite maintained and supported by Kitware (kitware.com/cmake).</p>
-<p>1.2 Check Compiler
-Open your terminal and check the version of your C++ compiler using the command below. This command is follow by two example outputs. Both outputs are fine, but if you get compilation errors, please report the versions.</p>
-<p>gcc -v
-mingw32-make -v</p>
-<p>gcc -v
-make -v</p>
-<p>Report the full output of this command.</p>
-<p>Output command 1 example 1 (GCC)
-Output command 2 example 2 (Clang)
-Using built-in specs.
-COLLECT_GCC=g++
-COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-unknown-linux-gnu/5.3.0/lto-wrapper
-Target: x86_64-unknown-linux-gnu
-Configured with: /build/gcc/src/gcc-5-20160209/configure –prefix=/usr […]
-Thread model: posix
-gcc version 5.3.0 (GCC)
-clang version 3.7.1 (tags/RELEASE_371/final)
-Target: x86_64-unknown-linux-gnu
-Thread model: posix
-Output command 2
-GNU Make 4.1
-Built for x86_64-unknown-linux-gnu
-Copyright (C) 1988-2014 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later &lt;<a class="reference external" href="http://gnu.org/licenses/gpl.html">http://gnu.org/licenses/gpl.html</a>&gt;
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.</p>
-<p>Solution A: Make sure the software is installed (and up-to-date)
-Please make sure CMake has been installed on your system.
-If so try uninstall and reinstalling the latest version, please follow the&nbsp;Installation_Guide&nbsp;to make sure you don’t miss any steps.
-In case of CMake version CMake 3.4 or earlier, it needs to be fully uninstalled before installing 3.5 or later.
-Solution B: Make sure the software is added to the path
-On both Windows and OS X, some software is not added to the path by default.
-Usually this is an option inside the installation (not for CMake under OS X), reinstalling and selecting this option should fix the issue.
-If not you need to manually add the directory that contains the executables to you path, see instructions below.</p>
-<ol class="arabic simple" start="2">
-<li>Troubleshooting configuration</li>
-</ol>
-<p>The configuration of your project includes downloading the Tudat(Bundle) source and running CMake.</p>
-<p>2.1. Boost compiler compatability
-Not all version of Boost are compatible with each system. Please refer to the compatibility table below and pick a different version (by commenting out/in lines in tudatBundle/CMakeLists.txt).
-Compiler/Boost    Boost 1.53     Boost 1.57     Boost 1.60
-MinGW 4.9.1           ✓             ?              ?
-MinGW 4.9.2           ✓             ✓              ✓
-MinGW 5.3             ✗             ✓              ✓
-2.2 Check if Boost build succesfully
-Go to the tudatBundle/boost/stage/lib folder and verify&nbsp;all&nbsp;the libraries are present.</p>
-<p>Make note of all files in this folder.
-Go to the tudatBundle/boost/boost folder and locate version.hpp.</p>
-<p>Copy this file along with your report.
-If Boost still fails, go to your build directory and locate the following four files
-build-<em>/boost_1_XX_</em>/build_bootstrap.log
-build-<em>/boost_1_XX_</em>/build_b2.log
-build-<em>/boost_1_XX_</em>/cmake-config.jam
-build-<em>/boost_1_XX_</em>/project-config.jam</p>
+<p>Please complete all checks and copy the output (even if a check seems succesfull). Some checks will provide additional tests and solutions in case the check initially fails. Please complete these instructions as well and redo the original test!</p>
+<dl class="docutils">
+<dt><strong>Step 1.1: Check CMake</strong></dt>
+<dd><p class="first">Open your terminal emulator and type:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="o">--</span><span class="n">version</span>
+</pre></div>
+</div>
+<p>Report the full output of this command. If your output looks like the example below, you can assume that CMake has been installed correctly:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="n">version</span> <span class="mf">3.4</span><span class="o">.</span><span class="mi">3</span>
+<span class="n">CMake</span> <span class="n">suite</span> <span class="n">maintained</span> <span class="ow">and</span> <span class="n">supported</span> <span class="n">by</span> <span class="n">Kitware</span> <span class="p">(</span><span class="n">kitware</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">cmake</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>Step 1.2: Check Compiler</strong></dt>
+<dd><p class="first">Open your terminal and check the version of your C++ compiler using the command below. This command is followed by two example outputs. Both outputs are fine, but if you get compilation errors, please report the versions.</p>
+<p>Test Command 1:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">gcc</span> <span class="o">-</span><span class="n">v</span>
+<span class="n">mingw32</span><span class="o">-</span><span class="n">make</span> <span class="o">-</span><span class="n">v</span>
+</pre></div>
+</div>
+<p>Test Command 2:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">gcc</span> <span class="o">-</span><span class="n">v</span>
+<span class="n">make</span> <span class="o">-</span><span class="n">v</span>
+</pre></div>
+</div>
+<p>Test Command 1, Example Output 1 (GCC):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Using</span> <span class="n">built</span><span class="o">-</span><span class="ow">in</span> <span class="n">specs</span><span class="o">.</span>
+<span class="n">COLLECT_GCC</span><span class="o">=</span><span class="n">g</span><span class="o">++</span>
+<span class="n">COLLECT_LTO_WRAPPER</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">gcc</span><span class="o">/</span><span class="n">x86_64</span><span class="o">-</span><span class="n">unknown</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="mf">5.3</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">lto</span><span class="o">-</span><span class="n">wrapper</span>
+<span class="n">Target</span><span class="p">:</span> <span class="n">x86_64</span><span class="o">-</span><span class="n">unknown</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span>
+<span class="n">Configured</span> <span class="k">with</span><span class="p">:</span> <span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">gcc</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">gcc</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">20160209</span><span class="o">/</span><span class="n">configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="n">Thread</span> <span class="n">model</span><span class="p">:</span> <span class="n">posix</span>
+<span class="n">gcc</span> <span class="n">version</span> <span class="mf">5.3</span><span class="o">.</span><span class="mi">0</span> <span class="p">(</span><span class="n">GCC</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Test Command 1. Example Output 2 (Clang):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">clang</span> <span class="n">version</span> <span class="mf">3.7</span><span class="o">.</span><span class="mi">1</span> <span class="p">(</span><span class="n">tags</span><span class="o">/</span><span class="n">RELEASE_371</span><span class="o">/</span><span class="n">final</span><span class="p">)</span>
+<span class="n">Target</span><span class="p">:</span> <span class="n">x86_64</span><span class="o">-</span><span class="n">unknown</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span>
+<span class="n">Thread</span> <span class="n">model</span><span class="p">:</span> <span class="n">posix</span>
+</pre></div>
+</div>
+<p>Test Command 2:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">GNU</span> <span class="n">Make</span> <span class="mf">4.1</span>
+<span class="n">Built</span> <span class="k">for</span> <span class="n">x86_64</span><span class="o">-</span><span class="n">unknown</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span>
+<span class="n">Copyright</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="mi">1988</span><span class="o">-</span><span class="mi">2014</span> <span class="n">Free</span> <span class="n">Software</span> <span class="n">Foundation</span><span class="p">,</span> <span class="n">Inc</span><span class="o">.</span>
+<span class="n">License</span> <span class="n">GPLv3</span><span class="o">+</span><span class="p">:</span> <span class="n">GNU</span> <span class="n">GPL</span> <span class="n">version</span> <span class="mi">3</span> <span class="ow">or</span> <span class="n">later</span> <span class="o">&lt;</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">gnu</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">licenses</span><span class="o">/</span><span class="n">gpl</span><span class="o">.</span><span class="n">html</span><span class="o">&gt;</span>
+<span class="n">This</span> <span class="ow">is</span> <span class="n">free</span> <span class="n">software</span><span class="p">:</span> <span class="n">you</span> <span class="n">are</span> <span class="n">free</span> <span class="n">to</span> <span class="n">change</span> <span class="ow">and</span> <span class="n">redistribute</span> <span class="n">it</span><span class="o">.</span>
+<span class="n">There</span> <span class="ow">is</span> <span class="n">NO</span> <span class="n">WARRANTY</span><span class="p">,</span> <span class="n">to</span> <span class="n">the</span> <span class="n">extent</span> <span class="n">permitted</span> <span class="n">by</span> <span class="n">law</span><span class="o">.</span>
+</pre></div>
+</div>
+<p><strong>Solution A:</strong> Make sure the software is installed (and up-to-date).</p>
+<ul class="simple">
+<li>Please make sure CMake has been installed on your system.</li>
+<li>If so try uninstall and reinstalling the latest version, please follow the&nbsp;Installation Guide&nbsp;to make sure you don’t miss any steps.</li>
+<li>In case of CMake version CMake 3.4 or earlier, it needs to be fully uninstalled before installing 3.5 or later.</li>
+</ul>
+<p><strong>Solution B:</strong> Make sure the software is added to the path.</p>
+<ul class="last simple">
+<li>On both Windows and OS X, some software is not added to the path by default.</li>
+<li>Usually this is an option inside the installation (not for CMake under OS X), reinstalling and selecting this option should fix the issue.</li>
+<li>If not you need to manually add the directory that contains the executables to you path, see instructions below.</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="troubleshooting-configuration">
+<h2>2. Troubleshooting Configuration<a class="headerlink" href="#troubleshooting-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The configuration of your project includes downloading the Tudat Bundle source and running CMake.</p>
+<p><strong>Step 2.1: Boost compiler compatibility</strong></p>
+<blockquote>
+<div><p>Not all version of Boost are compatible with each system. Please refer to the compatibility table below and pick a different version (by commenting out/in lines in <code class="docutils literal"><span class="pre">tudatBundle/CMakeLists.txt</span></code>).</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="23%" />
+<col width="23%" />
+<col width="23%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Compiler/Boost</strong></td>
+<td><strong>Boost 1.53</strong></td>
+<td><strong>Boost 1.57</strong></td>
+<td><strong>Boost 1.60</strong></td>
+</tr>
+<tr class="row-even"><td>MinGW 4.9.1</td>
+<td>✓</td>
+<td>?</td>
+<td>?</td>
+</tr>
+<tr class="row-odd"><td>MinGW 4.9.2</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr class="row-even"><td>MinGW 5.3</td>
+<td>✗</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><strong>Step 2.2: Check if Boost build succesfully</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Go to the <code class="docutils literal"><span class="pre">tudatBundle/boost/stage/lib</span></code> folder and verify&nbsp;all&nbsp;the libraries are present.</li>
+<li>Make note of all files in this folder.</li>
+<li>Go to the <code class="docutils literal"><span class="pre">tudatBundle/boost/boost</span></code> folder and locate <code class="docutils literal"><span class="pre">version.hpp</span></code>.</li>
+<li>Copy this file along with your report.</li>
+</ul>
+<p>If Boost still fails, go to your build directory and locate the following four files:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">build</span><span class="o">-*/</span><span class="n">boost_1_XX_</span><span class="o">*/</span><span class="n">build_bootstrap</span><span class="o">.</span><span class="n">log</span>
+<span class="n">build</span><span class="o">-*/</span><span class="n">boost_1_XX_</span><span class="o">*/</span><span class="n">build_b2</span><span class="o">.</span><span class="n">log</span>
+<span class="n">build</span><span class="o">-*/</span><span class="n">boost_1_XX_</span><span class="o">*/</span><span class="n">cmake</span><span class="o">-</span><span class="n">config</span><span class="o">.</span><span class="n">jam</span>
+<span class="n">build</span><span class="o">-*/</span><span class="n">boost_1_XX_</span><span class="o">*/</span><span class="n">project</span><span class="o">-</span><span class="n">config</span><span class="o">.</span><span class="n">jam</span>
+</pre></div>
+</div>
 <p>Copy all four files along with your report.</p>
-<p>2.3 Clean your CMake cache
-If you have made changes to your configuration it is important to clean your cache.
-Navigate to your build folder
-Delete CMakeCache.txt
-2.4 Manually build Boost yourself
-The top-level CMakeLists.txt of Tudat Bundle, downloads, extracts, configures, builds and installs Boost for you. Although this process is completely automated it can happen that it fails somewhere doing the former.</p>
-<p>If the automated process fails, it is necessary to take note of where it fails please copy the output of CMake for specifics.
-1. Find the Boost version TudatBundle is trying to build.
-1. Open tudatBundle/CMakeLists.txt
-2. Look for the&nbsp;uncommented&nbsp;(without a # in front) instance of set(BoostVersion 1.XX.0)
-2. <a class="reference external" href="https://sourceforge.net/projects/boost/files/boost/">https://sourceforge.net/projects/boost/files/boost/</a>
-1. Pick the version corresponding to your version. Do not select beta.
-2. It doesn’t matter which archive type you select, generally pick .tar.bz2 for Linux and OS X and .zip for Windows.
-3. Unpack the folder somewhere, for instance /home/user/boost or c:boost.
-4. Open terminal emulator and go to the Boost folder.
-5. Run bootstrap:
-1. ./bootstrap.sh –with-toolset=gcc
-2. .bootstrap.bat gcc
-6. If successful, run bjam2:
-1. ./b2 toolset=gcc link=static threading=multi –build-dir=Build stage variant=release –layout=tagged cxxflags=-std=c++11 –with-filesystem –with-system –with-thread –with-regex –with-date_time –with-test
-2. .b2.exe toolset=gcc link=static threading=multi –build-dir=Build stage variant=release –layout=tagged cxxflags=-std=c++11 –with-filesystem –with-system –with-thread –with-regex –with-date_time –with-test
-7. In case of errors try to identify if bjam fails for each module or only for select modules.
-8. Rerun the b2 command several times, each time with&nbsp;only one&nbsp;and a different –with-[module] argument.</p>
-<p>Make logs of bootstrap and b2 command</p>
-<p>2.5 Check QtCreator CMake binary
-1. To verify the toolchain is correctly configured, open QtCreator, go to Preferences/Options, select the Build &amp; Run section and switch to the CMake tab
-2. It is very important that the QtCreator is pointed to the&nbsp;correct&nbsp;cmake binary. CMake ships with multiple binaries and often the wrong one is selected. The correct binaries are:
-1. C:Program Files (x86)CMakebincmake.exe instead of C:Program Files (x86)CMakebincmake-gui.exe
-2. /usr/bin/cmake or /usr/local/bin/cmake instead of /usr/local/bin/cmake-gui
-3. /Applications/CMake.app/Contents/bin/cmake instead of /Applications/CMake.app/Contents/MacOS/CMake or /Applications/CMake.app.</p>
-<p>Make a screenshot of the CMake tab if problems persist.</p>
-<p>2.6 Check QtCreator Kits
-1. To further verify the toolchain is correctly configured, open QtCreator, go to Preferences/Options, select the Build &amp; Run section and switch to the Kits tab
-2. Main generator:
-1. Unix Makefiles
-2. MinGW Makefiles
-3. Common mistakes are Ninja or NMake
-4. Extra generator: CodeBlocks
-3. Device type: Desktop
-4. Compiler C/C++:
-1. MinGW &gt;= 4.9.2
-2. GCC or Clang on Linux or Mac OS X
-3. Also the C compiler should be non-empty, it is needed for certain libraries.</p>
-<p>Make a screenshot of the Kits tab if problems persist.</p>
-<ol class="upperalpha simple">
-<li>Troubleshooting Tools</li>
-</ol>
-<p>Below are several tools and tricks that are essential for troubleshooting your installation</p>
-<p>A.1 Terminal
-The terminal (also console) is king in troubleshooting and the great unifier across systems. Some benefits:
-Although the output can be harsh, plentiful and unformatted, but is often very complete.
-Usually additional features and options can be accessed from the commandline that can not be gained through a regular GUI.
-Commands are often very similar across different platforms and version of software.
-Opening the terminal
-To open the terminal emulator on your system follow the instruction below.</p>
+</div></blockquote>
+<p><strong>Step 2.3: Clean your CMake cache</strong></p>
+<blockquote>
+<div><p>If you have made changes to your configuration it is important to clean your cache.</p>
+<ul class="simple">
+<li>Navigate to your build folder.</li>
+<li>Delete <code class="docutils literal"><span class="pre">CMakeCache.txt</span></code>.</li>
+</ul>
+</div></blockquote>
+<p><strong>Step 2.4: Manually build Boost yourself</strong></p>
+<blockquote>
+<div><p>The top-level CMakeLists.txt of Tudat Bundle, downloads, extracts, configures, builds and installs Boost for you. Although this process is completely automated it can happen that it fails somewhere doing the former.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the automated process fails, it is necessary to take note of where it fails please copy the output of CMake for specifics.</p>
+</div>
 <ol class="arabic simple">
-<li>Open the run dialog Win+R</li>
-<li>Type cmd</li>
-<li>Press Enter or choose Ok</li>
+<li><dl class="first docutils">
+<dt>Find the Boost version TudatBundle is trying to build.</dt>
+<dd><ol class="first last arabic">
+<li>Open tudatBundle/CMakeLists.txt</li>
+<li>Look for the&nbsp;uncommented&nbsp;(without a # in front) instance of set(BoostVersion 1.XX.0).</li>
 </ol>
-<ol class="arabic simple">
-<li>Open Spotlight Cmd+Space</li>
-<li>Type terminal</li>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference external" href="https://sourceforge.net/projects/boost/files/boost/">https://sourceforge.net/projects/boost/files/boost/</a></dt>
+<dd><ol class="first last arabic">
+<li>Pick the version corresponding to your version. Do not select beta.</li>
+<li>It doesn’t matter which archive type you select, generally pick .tar.bz2 for Linux and OS X and .zip for Windows.</li>
 </ol>
-<p>3. Confirm your choice with Enter
-Navigating in the terminal
-To go from one folder to another you can use the cd (change directory) command</p>
-<p>c:
-cd UsersJohn
-cd tudatBundle</p>
-<p>cd /Users/John
-cd tudatBundle</p>
-<p>cd /home/John
-cd tudatBundle
-Should be everything you need to get to the right place.
-Note that for Windows you can’t cd to another drive (e.g. from C:to D:). To switch drives, simply enter D:. Also note that for Windows directories are seperated by a backslash () and UNIX-like systems follow POSIX’s forward-slash seperator (“/”). However, Windows is POSIX compliant, meaning that cd UsersJohn and cd /Users/John are both correct on Windows.
-A.2 Creating log files
-In several checks of the troubleshooting guide you are asked to note down the output of several commands. Most terminal emulators support copy pasting, but even this can be very bothersome for long output, rather you can direct the output from a command to a file.
-gcc -v                       (all output to screen)
-gcc -v &gt; gcc_log.txt         (normal output to logfile, errors to screen)
-gcc -v &gt; gcc_log.txt 2&gt;&amp;1    (normal and error output to logfile)
-Unfortunately while creating a log file you can not see the output as it is directed to the file instead of the screen. On&nbsp;Linux and OS X&nbsp;there is a command called tee, which does both:
-gcc -v | tee gcc_log.txt         (normal output to file and screen, errors screen only)
-gcc -v  2&gt;&amp;1 | tee gcc_log.txt   (normal and error output to logfile and screen, FREFERRED)
-On Windows you can run the command twice (once without logging and once with) or checkout the logfile using a text editor.</p>
-<p>A.3 Command not found
-A number of causes can result in a “command not found” error while trying to execute something. The most common are (in no specific order):
-The command was mistyped: even getting the case wrong makes a diffirence on some UNIX-like systems (e.g. Cmake and cmake are not the same).
-Special character were not escaped: this problem starts with improper file and directory names, but My Program will be interpreted as two seperate command. Solutions are to escape the offending characters (the space in this case) MyProgram or quote all parts “My Program”
-The program is simply not installed: the obvious solution would be to install the program.
-The executable are installed, but not are not added to the PATH environment variable: the next section will focus on this problem in particular.</p>
-<p>A.4 Modifying the PATH variable
-All systems look for matching programs into all the directories mentioned in the PATH variable when a command is typed and executed. You can check which directories are added to your PATH using the following command</p>
-<p>echo %Path%</p>
-<p>echo $PATH
-Each user has a user-specific PATH directories and ones that it inherits from system. Usually we recommend installing a new directory entry for the PATH variable for the system (a.k.a. for all users). Usually during the setup of the application that we want to use from the command line there are some installation options that we can set such that the installer takes care of this. If you haven’t done so it will be easiest to go back to the installer for the program and check if such an options exists, before attempting to do so manually.</p>
-<p>This can break your system</p>
+</dd>
+</dl>
+</li>
+<li>Unpack the folder somewhere, for instance /home/user/boost or c:boost.</li>
+<li>Open terminal emulator and go to the Boost folder.</li>
+<li><dl class="first docutils">
+<dt>Run bootstrap:</dt>
+<dd><ol class="first last arabic">
+<li>./bootstrap.sh –with-toolset=gcc</li>
+<li>.bootstrap.bat gcc</li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>If successful, run bjam2:</dt>
+<dd><ol class="first last arabic">
+<li>./b2 toolset=gcc link=static threading=multi –build-dir=Build stage variant=release –layout=tagged cxxflags=-std=c++11 –with-filesystem –with-system –with-thread –with-regex –with-date_time –with-test</li>
+<li>.b2.exe toolset=gcc link=static threading=multi –build-dir=Build stage variant=release –layout=tagged cxxflags=-std=c++11 –with-filesystem –with-system –with-thread –with-regex –with-date_time –with-test</li>
+</ol>
+</dd>
+</dl>
+</li>
+<li>In case of errors try to identify if bjam fails for each module or only for select modules.</li>
+<li>Rerun the b2 command several times, each time with&nbsp;only one&nbsp;and a different –with-[module] argument.</li>
+</ol>
+</div></blockquote>
+<p><strong>Step 2.5: Check QtCreator CMake binary</strong></p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>To verify the toolchain is correctly configured, open QtCreator, go to Preferences/Options, select the Build &amp; Run section and switch to the CMake tab</li>
+<li><dl class="first docutils">
+<dt>It is very important that the QtCreator is pointed to the&nbsp;correct&nbsp;cmake binary. CMake ships with multiple binaries and often the wrong one is selected. The correct binaries are:</dt>
+<dd><ol class="first last arabic">
+<li>C:Program Files (x86)CMakebincmake.exe instead of C:Program Files (x86)CMakebincmake-gui.exe</li>
+<li>/usr/bin/cmake or /usr/local/bin/cmake instead of /usr/local/bin/cmake-gui</li>
+</ol>
+</dd>
+</dl>
+</li>
+<li>/Applications/CMake.app/Contents/bin/cmake instead of /Applications/CMake.app/Contents/MacOS/CMake or /Applications/CMake.app.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Make a screenshot of the CMake tab if problems persist.</p>
+</div>
+</div></blockquote>
+<p><strong>Step 2.6: Check QtCreator Kits</strong></p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>To further verify the toolchain is correctly configured, open QtCreator, go to Preferences/Options, select the Build &amp; Run section and switch to the Kits tab</li>
+<li><dl class="first docutils">
+<dt>Main generator:</dt>
+<dd><ol class="first last arabic">
+<li>Unix Makefiles</li>
+<li>MinGW Makefiles</li>
+<li>Common mistakes are Ninja or NMake</li>
+<li>Extra generator: CodeBlocks</li>
+</ol>
+</dd>
+</dl>
+</li>
+<li>Device type: Desktop</li>
+<li><dl class="first docutils">
+<dt>Compiler C/C++:</dt>
+<dd><ol class="first last arabic">
+<li>MinGW &gt;= 4.9.2</li>
+<li>GCC or Clang on Linux or Mac OS X</li>
+<li>Also the C compiler should be non-empty, it is needed for certain libraries.</li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Make a screenshot of the Kits tab if problems persist.</p>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="troubleshooting-tools">
+<h2>3. Troubleshooting Tools<a class="headerlink" href="#troubleshooting-tools" title="Permalink to this headline">¶</a></h2>
+<p>Below are several tools and tricks that are essential for troubleshooting your installation.</p>
+<dl class="docutils">
+<dt><strong>3.1: Terminal</strong></dt>
+<dd><p class="first">The terminal (also console) is king in troubleshooting and the great unifier across systems. Some benefits:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Although the output can be harsh, plentiful and unformatted, but is often very complete.</li>
+<li>Usually additional features and options can be accessed from the commandline that can not be gained through a regular GUI.</li>
+<li>Commands are often very similar across different platforms and version of software.</li>
+</ul>
+</div></blockquote>
+<p>To open the terminal emulator on your system follow the instruction below:</p>
+<blockquote>
+<div><p>Linux:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Super</span> <span class="o">+</span> <span class="n">T</span>
+</pre></div>
+</div>
+<p>Windows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Win</span> <span class="o">+</span> <span class="n">R</span>
+</pre></div>
+</div>
+<p>Mac OS X:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Cmd</span> <span class="o">+</span> <span class="n">Space</span>
+<span class="n">terminal</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>To go from one folder to another you can use the cd (change directory) command:</p>
+<blockquote>
+<div><p>Linux:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">John</span>
+<span class="n">cd</span> <span class="n">tudatBundle</span>
+</pre></div>
+</div>
+<p>Windows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>
+<span class="n">cd</span> \<span class="n">Users</span>\<span class="n">John</span>
+<span class="n">cd</span> <span class="n">tudatBundle</span>
+</pre></div>
+</div>
+<p>Mac OS X:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">John</span>
+<span class="n">cd</span> <span class="n">tudatBundle</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This should be everything you need to get to the right place.</p>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note that for Windows you can’t cd to another drive (e.g. from C:\ to D:\). To switch drives, simply enter D:. Also note that Windows directories are seperated by a backslash (\) and UNIX-like systems follow POSIX’s forward-slash seperator (“/”). However, Windows is POSIX compliant, meaning that cd UsersJohn and cd /Users/John are both correct on Windows.</p>
+</div>
+</dd>
+</dl>
+<p><strong>Step 3.2: Creating log files</strong></p>
+<blockquote>
+<div><p>In several checks of the troubleshooting guide you are asked to note down the output of several commands. Most terminal emulators support copy pasting, but even this can be very bothersome for long output, rather you can direct the output from a command to a file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">gcc</span> <span class="o">-</span><span class="n">v</span>                       <span class="p">(</span><span class="nb">all</span> <span class="n">output</span> <span class="n">to</span> <span class="n">screen</span><span class="p">)</span>
+<span class="n">gcc</span> <span class="o">-</span><span class="n">v</span> <span class="o">&gt;</span> <span class="n">gcc_log</span><span class="o">.</span><span class="n">txt</span>         <span class="p">(</span><span class="n">normal</span> <span class="n">output</span> <span class="n">to</span> <span class="n">logfile</span><span class="p">,</span> <span class="n">errors</span> <span class="n">to</span> <span class="n">screen</span><span class="p">)</span>
+<span class="n">gcc</span> <span class="o">-</span><span class="n">v</span> <span class="o">&gt;</span> <span class="n">gcc_log</span><span class="o">.</span><span class="n">txt</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>    <span class="p">(</span><span class="n">normal</span> <span class="ow">and</span> <span class="n">error</span> <span class="n">output</span> <span class="n">to</span> <span class="n">logfile</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Unfortunately while creating a log file you can not see the output as it is directed to the file instead of the screen. On&nbsp;Linux and OS X&nbsp;there is a command called tee, which does both:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">gcc</span> <span class="o">-</span><span class="n">v</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">gcc_log</span><span class="o">.</span><span class="n">txt</span>         <span class="p">(</span><span class="n">normal</span> <span class="n">output</span> <span class="n">to</span> <span class="n">file</span> <span class="ow">and</span> <span class="n">screen</span><span class="p">,</span> <span class="n">errors</span> <span class="n">screen</span> <span class="n">only</span><span class="p">)</span>
+<span class="n">gcc</span> <span class="o">-</span><span class="n">v</span>  <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">gcc_log</span><span class="o">.</span><span class="n">txt</span>   <span class="p">(</span><span class="n">normal</span> <span class="ow">and</span> <span class="n">error</span> <span class="n">output</span> <span class="n">to</span> <span class="n">logfile</span> <span class="ow">and</span> <span class="n">screen</span><span class="p">,</span> <span class="n">FREFERRED</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>On Windows you can run the command twice (once without logging and once with) or checkout the logfile using a text editor.</p>
+</div></blockquote>
+<p><strong>Step 3.3 Command not found</strong></p>
+<blockquote>
+<div><p>A number of causes can result in a “command not found” error while trying to execute something. The most common are (in no specific order):</p>
+<ul class="simple">
+<li>The command was mistyped: even getting the case wrong makes a diffirence on some UNIX-like systems (e.g. Cmake and cmake are not the same).</li>
+<li>Special character were not escaped: this problem starts with improper file and directory names, but My Program will be interpreted as two seperate command. Solutions are to escape the offending characters (the space in this case) MyProgram or quote all parts “My Program”</li>
+<li>The program is simply not installed: the obvious solution would be to install the program.</li>
+<li>The executable are installed, but not are not added to the PATH environment variable: the next section will focus on this problem in particular.</li>
+</ul>
+</div></blockquote>
+<p><strong>Step 3.4: Modifying the PATH variable</strong></p>
+<blockquote>
+<div><p>All systems look for matching programs into all the directories mentioned in the PATH variable when a command is typed and executed. You can check which directories are added to your PATH using the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>echo %Path%
+echo $PATH
+</pre></div>
+</div>
+<p>Each user has a user-specific PATH directories and ones that it inherits from system. Usually we recommend installing a new directory entry for the PATH variable for the system (a.k.a. for all users). Usually during the setup of the application that we want to use from the command line there are some installation options that we can set such that the installer takes care of this. If you haven’t done so it will be easiest to go back to the installer for the program and check if such an options exists, before attempting to do so manually.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This can break your system</p>
+</div>
 <p>Follow these three essential steps carefully before attempting:</p>
-<ol class="arabic simple">
+<blockquote>
+<div><ol class="arabic simple">
 <li>Make sure that the directory your want to add is not already in the list.</li>
 <li>Backup current PATH var before modifying (instructions included below).</li>
 <li>Quadruple check for typos in the directory name you’re adding. Example below uses MyApp</li>
 </ol>
-<p># Making a backup of the current path
-set path_backup %path%
-echo %path% &gt; %userprofile%path_backup.txt</p>
-<p># Changing the local PATH variable
-# NOTE (1) quotes around everything
-#      (2) semi-colon ; between old ond new
-#      (3) Percentage signs % around %path%
-setx path “%path%;C:MyAppbin”</p>
-<p># Verify that the operation was succesful
-echo %path%</p>
-<p># Otherwise restore from backup with the following command
-setx path %path_backup%</p>
-<p># Making a backup of the current path
-cp /etc/paths ~/paths_backup.txt</p>
-<p># Changing the local PATH variable
-echo “/Applications/MyApp.app/Contents/bin/” | sudo tee -a /etc/paths</p>
-<p># Verify that the operation was succesful”
-cat /etc/paths</p>
-<p># Otherwise we can restore from backup with the command
-sudo cp ~/paths_backup.txt /etc/paths</p>
+</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Making a backup of the current path</span>
+<span class="nb">set</span> <span class="n">path_backup</span> <span class="o">%</span><span class="n">path</span><span class="o">%</span>
+<span class="n">echo</span> <span class="o">%</span><span class="n">path</span><span class="o">%</span> <span class="o">&gt;</span> <span class="o">%</span><span class="n">userprofile</span><span class="o">%</span>\<span class="n">path_backup</span><span class="o">.</span><span class="n">txt</span>
+
+<span class="c1"># Changing the local PATH variable</span>
+<span class="c1"># NOTE (1) quotes around everything</span>
+<span class="c1">#      (2) semi-colon ; between old ond new</span>
+<span class="c1">#      (3) Percentage signs % around %path%</span>
+<span class="n">setx</span> <span class="n">path</span> <span class="s2">&quot;%path%;C:\MyApp</span><span class="se">\b</span><span class="s2">in</span><span class="se">\&quot;</span>
+
+<span class="c1"># Verify that the operation was succesful</span>
+<span class="n">echo</span> <span class="o">%</span><span class="n">path</span><span class="o">%</span>
+
+<span class="c1"># Otherwise restore from backup with the following command</span>
+<span class="n">setx</span> <span class="n">path</span> <span class="o">%</span><span class="n">path_backup</span><span class="o">%</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Making a backup of the current path</span>
+<span class="n">cp</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">paths</span> <span class="o">~/</span><span class="n">paths_backup</span><span class="o">.</span><span class="n">txt</span>
+
+<span class="c1"># Changing the local PATH variable</span>
+<span class="n">echo</span> <span class="s2">&quot;/Applications/MyApp.app/Contents/bin/&quot;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">tee</span> <span class="o">-</span><span class="n">a</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">paths</span>
+
+<span class="c1"># Verify that the operation was succesful&quot;</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">paths</span>
+
+<span class="c1"># Otherwise we can restore from backup with the command</span>
+<span class="n">sudo</span> <span class="n">cp</span> <span class="o">~/</span><span class="n">paths_backup</span><span class="o">.</span><span class="n">txt</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">paths</span>
+</pre></div>
+</div>
+</div></blockquote>
 </div>
 </div>
 
