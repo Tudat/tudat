@@ -16,4 +16,5 @@ This page contains an overview of all the guides, introductions, tutorials and f
    self
    installation/index
    tutorials/index
+   developerGuide/index
 

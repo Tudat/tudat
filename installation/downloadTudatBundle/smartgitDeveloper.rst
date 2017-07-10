@@ -3,6 +3,8 @@
 Download using SmartGit (Developer)
 -----------------------------------
 
+.. tip:: Before following this guide, you are highly advised to go through the :ref:`githubBasics` section to get up to speed with the usage of GitHub.
+
 1. Setup SmartGit
 ~~~~~~~~~~~~~~~~~
 **Step 1.1: Download SmartGit**
