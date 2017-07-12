@@ -1,7 +1,7 @@
 .. _externalBoostExamples:
 
-Boost: Examples
-===============
+Boost: Usage Examples
+=====================
 This page provides some examples on how to use :class:`shared_ptr`, :class:`make_shared`, :class:`function` and :class:`bind`, which were introduced on the Boost page, at application level and in combination with Tudat. Note that the first two are crucial for any Tudat user. The documentation on :class:`function`/:class:`bind` should be consulted only when working on feature development. The example of :class:`bind` also includes the use of the RK4 numerical integrator from Tudat.
 
 .. class:: shared_ptr

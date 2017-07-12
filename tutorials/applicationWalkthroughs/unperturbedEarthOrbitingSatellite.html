@@ -1,0 +1,546 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Unperturbed Earth-orbiting Satellite &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
+        <link rel="up" title="Application Walkthroughs" href="index.html"/>
+        <link rel="next" title="Un-guided Capsule Entry" href="unguidedCapsuleEntry.html"/>
+        <link rel="prev" title="Perturbed Earth-orbiting Satellite" href="perturbedEarthOrbitingSatellite.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorials and Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../prerequiredKnowledge/index.html">Pre-required Knowledge</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Walkthroughs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html#example-tutorials">Example tutorials</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="innerSolarSystemPropagation.html">Inner Solar System Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="perturbedEarthOrbitingSatellite.html">Perturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Unperturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unguidedCapsuleEntry.html">Un-guided Capsule Entry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="useOfThrustThrustForceAlongVelocityVector.html">Use of Thrust: Thrust Force Along Velocity Vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="useOfThrustUserDefinedThrustVector.html">Use of Thrust: User-defined Thrust Vector</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tudatFeatures/index.html">Tudat Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tutorials and Documentation</a> &raquo;</li>
+        
+          <li><a href="index.html">Application Walkthroughs</a> &raquo;</li>
+        
+      <li>Unperturbed Earth-orbiting Satellite</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tutorials/applicationWalkthroughs/unperturbedEarthOrbitingSatellite.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="unperturbed-earth-orbiting-satellite">
+<span id="walkthroughsunperturbedearthorbitingsatellite"></span><h1>Unperturbed Earth-orbiting Satellite<a class="headerlink" href="#unperturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
+<p>The example described on this page is that of Asterix, a single satellite that is orbiting the Earth. The code for this tutorial is given&nbsp;here&nbsp;on Github, and is also located in your Tudat Bundle at:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">singleSatellitePropagator</span><span class="p">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>For this example, we have the following problem statement:</p>
+<p><em>Given the position and velocity of the Asterix satellite at a certain point in time with respect to the Earth, what will its position and velocity be at a later time?</em></p>
+<p>There are a number of assumptions we can make in answering this question, which is often the case when translating a problem statement into a simulation. In our first tutorial, we will approximate the problem by the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The (initial) position and velocity of Asterix are given in the form of a Keplerian state vector.</li>
+<li>The Earth is modeled as a point mass, and the spacecraft is modeled as massless.</li>
+<li>All perturbations, such as solar radiation and third-body gravity,&nbsp;etc.&nbsp;are neglected.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In a&nbsp;followup tutorial, we will show how to extend the dynamical model of the spacecraft, slightly relaxing the last assumption.</p>
+</div>
+</div></blockquote>
+<div class="section" id="writing-the-simulation">
+<h2>1. Writing the simulation<a class="headerlink" href="#writing-the-simulation" title="Permalink to this headline">¶</a></h2>
+<p>The main focus of this tutorial is to provide insight into the use of the Tudat library for your application. Using this test case, we will show how you can use some of the elements of the Tudat library, namely:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The transformation from Keplerian elements (provided) to Cartesian elements (required by propagator).</li>
+<li>The settings for the environment</li>
+<li>The settings for the acceleration models.</li>
+<li>The settings for the state derivative model (propagator).</li>
+<li>The settings for the numerical integrator.</li>
+<li>The use of ‘create’ functions to parse these settings</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="propagating-an-orbit-numerically-and-outputting-the-results-to-a-file">
+<h2>2. Propagating an orbit numerically, and outputting the results to a file.<a class="headerlink" href="#propagating-an-orbit-numerically-and-outputting-the-results-to-a-file" title="Permalink to this headline">¶</a></h2>
+<p>In particular, it will show you how these elements can work together to provide you with a powerful satellite propagator tool. It is not the intention to give you a C++ tutorial. Only the parts of the source code specific to Tudat will be discussed on this page. Detailed documentation on the&nbsp;environment models,&nbsp;acceleration models&nbsp;and&nbsp;propagators/integrators&nbsp;is available, but we recommend working through the tutorials here before delving into the details of all options that are available to you.</p>
+</div>
+<div class="section" id="defining-the-simulation-settings">
+<h2>3. Defining the simulation settings<a class="headerlink" href="#defining-the-simulation-settings" title="Permalink to this headline">¶</a></h2>
+<p>In Tudat, the environment, acceleration models and propagator are not created directly by the user. Instead, the user defines a number of ‘Settings’ objects that describe how the actual models are to be put together. These Settings objects are then passed to ‘create’ functions to build up the objects/data used in the simulations, and link them all together. In linking these objects together, information is automatically updated, and where necessary transformed and processed in the manner specified by the user in the Settings objects.</p>
+</div>
+<div class="section" id="setting-up-the-environment">
+<h2>4. Setting up the environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this headline">¶</a></h2>
+<p>First we discuss the setup of the environment, which is stored in a list of&nbsp;Body&nbsp;objects, each of which represents either a natural celestial body, or a spacecraft (orbiter, entry vehicle, etc.). The entire environment (gravity fields, atmospheres, ephemerides, rotation models, etc.) are then defined as members of the corresponding&nbsp;Body&nbsp;object. For this example, the only environment models we need are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Earth gravity field (point-mass)</li>
+<li>Earth ephemeris model</li>
+</ul>
+</div></blockquote>
+<p>The block of code used to generate the environment that we require is:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create body objects.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToCreate</span><span class="p">;</span>
+<span class="n">bodiesToCreate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodySettings</span> <span class="o">=</span>
+        <span class="n">getDefaultBodySettings</span><span class="p">(</span> <span class="n">bodiesToCreate</span> <span class="p">);</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+            <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">::</span><span class="n">Zero</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
+
+<span class="c1">// Create Earth object</span>
+<span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
+
+<span class="c1">// Create spacecraft object.</span>
+<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
+
+<span class="c1">// Finalize body creation.</span>
+<span class="n">setGlobalFrameBodyEphemerides</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="s">&quot;SSB&quot;</span><span class="p">,</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Creating an environment starts by creating settings all required environment models, which stored in a list of&nbsp;BodySettings&nbsp;objects. Each&nbsp;BodySettings&nbsp;object has a list of objects for environment model settings, which are empty upon creation of the&nbsp;BodySettings, and may be set by the user to their desired specifications. To save you the trouble of having to define all settings manually, we provide default options for the environment, many of which will often be sufficient a given simulation. A list of all possible properties of the&nbsp;BodySettings, as well as the default settings, can be found&nbsp;here. In our example, we only need environment models for the Earth, so we start by:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToCreate</span><span class="p">;</span>
+<span class="n">bodiesToCreate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodySettings</span> <span class="o">=</span>
+        <span class="n">getDefaultBodySettings</span><span class="p">(</span> <span class="n">bodiesToCreate</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>With the settings that are now stored in the&nbsp;bodySettings&nbsp;map, we could generate our environment and move on to the next step of the simulation. However, both to showcase one of the options of settings up the environment, and for numerical accuracy, we make one modification to the default ephemeris settings, defining the Earth to be fixed at the center of the Solar system:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">::</span><span class="n">Zero</span><span class="p">(</span> <span class="p">),</span> <span class="s">&quot;SSB&quot;</span><span class="p">,</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>By using this code, we ‘cheat’ a little bit, since we put the Earth in the main inertial frame for Tudat: the Solar System Barycenter. This approach should ONLY be used when considering no third-body perturbations. However, since we are only considering a single satellite orbiting the Earth without perturbations in this simulation, the above code will provide the desired results. Note that we could have used any Ephemeris setting for the Earth (since we propagate out satellite w.r.t. the Earth origin) without changing anything in our dynamical model, but at a slight loss of numerical precision.
+Now, we have created the settings we need for the environment, and we can move on to creating the environment models themselves, which are stored in a set of&nbsp;Body&nbsp;objects. These of&nbsp;Body&nbsp;objects are stored in a&nbsp;NamedBodyMap, which is a&nbsp;typedef&nbsp;(shorthand name) for&nbsp;std::unordered_map&lt; std::string, boost::shared_ptr&lt; simulation_setup::Body &gt; &gt;. This&nbsp;unordered_map&nbsp;may be accessed as a regular&nbsp;map. The keys (string) represent the name of the body in the list, with the value (shared_ptr&nbsp;to&nbsp;Body&nbsp;object) the corresponding object, containing all the environment models.
+With the settings of our ephemeris and gravity field, we now create the bodyMap by:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Our environment is now missing only one aspect: the spacecraft. Our spacecraft (called Asterix) requires no specific properties, it merely needs to exist (its initial state is defined in a subsequent part of the example). Therefore, we can simply add the Asterix satellite to our environment by creating a new empty&nbsp;Body&nbsp;object:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Although not required in this simulation, it is good practice to call the following function following the complete setup of the bodyMap:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">setGlobalFrameBodyEphemerides</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="s">&quot;SSB&quot;</span><span class="p">,</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Calling this function will allow hierarchical ephemerides to be properly used in the simulation (i.e. orbiter Ephemeris w.r.t. Moon, Moon w.r.t. Earth, Earth w.r.t. Sun, Sun w.r.t. barycenter).</p>
+</div>
+<div class="section" id="setting-up-the-acceleration-models">
+<h2>5. Setting up the acceleration models<a class="headerlink" href="#setting-up-the-acceleration-models" title="Permalink to this headline">¶</a></h2>
+<p>To define the settings of the propagation of the orbit, we start by defining the required acceleration models. The block of code that performs the required operations is:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define propagator settings variables.</span>
+<span class="n">SelectedAccelerationMap</span> <span class="n">accelerationMap</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToPropagate</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodies</span><span class="p">;</span>
+
+<span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">);</span>
+<span class="n">centralBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
+
+<span class="c1">// Define propagation settings.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">accelerationsOfAsterix</span><span class="p">;</span>
+<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                                 <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">accelerationMap</span><span class="p">[</span>  <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">accelerationsOfAsterix</span><span class="p">;</span>
+
+<span class="c1">// Create acceleration models and propagation settings.</span>
+<span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span> <span class="n">accelerationModelMap</span> <span class="o">=</span> <span class="n">createAccelerationModelsMap</span><span class="p">(</span>
+            <span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">centralBodies</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>As with the environment models, there is no need to manually create the models. The user must only define the properties of the acceleration models that are desired, which are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>List of bodies that are to be numerically propagated</li>
+<li>Origin of reference frame in which they are to be propagated (may be different for each body). Note that propagation in Tudat is always done in a non-rotating reference frame, only the origin of the frames can be varied.</li>
+<li>A list of settings of the accelerations model(s) acting on the bodies in the simulation.</li>
+</ul>
+</div></blockquote>
+<p>These properties are to be defined in the following variables:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define propagator settings variables.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToPropagate</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodies</span><span class="p">;</span>
+<span class="n">SelectedAccelerationMap</span> <span class="n">accelerationMap</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The list of propagated bodies and the reference frame origins (central bodies) are simply lists of strings, which for our case are:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">);</span>
+<span class="n">centralBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>These settings for the accelerations require some more structure, though, and are stored in a&nbsp;SelectedAccelerationMap. This is&nbsp;typedef&nbsp;for:
+std::map&lt; std::string, std::map&lt; std::string, std::vector&lt; boost::shared_ptr&lt; AccelerationSettings &gt; &gt; &gt; &gt;
+This is a double map (with twice a string as a key). The two levels correspond to the names of bodies undergoing an acceleration (first key) , and those for bodies exerting an acceleration (second key). This allows any number of bodies to be propagated, undergoing any number (and type) of accelerations. Mutual acceleration between bodies being propagated, as is the case for Solar system dynamics for instance, is automatically handled by the code and requires no specific consideration.
+In our example, we have only a single point-mass acceleration due to Earth, acting on Asterix. We define the settings for the acceleration as follows:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">accelerationsOfAsterix</span><span class="p">;</span>
+<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                                 <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">accelerationMap</span><span class="p">[</span>  <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">accelerationsOfAsterix</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>A single acceleration, of type ‘central_gravity’ to be exerted by body ‘Earth’ on body ‘Asterix’ is now defined.
+The list of the actual acceleration models is now created by:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span> <span class="n">accelerationModelMap</span> <span class="o">=</span> <span class="n">createAccelerationModelsMap</span><span class="p">(</span>
+            <span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">centralBodies</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>which automatically links together all required objects and functions.</p>
+</div>
+<div class="section" id="propagation-settings">
+<h2>6. Propagation settings<a class="headerlink" href="#propagation-settings" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have both our environment models and our acceleration model, we can create the full settings for the propagation. These settings are stored in a&nbsp;PropagatorSettings&nbsp;object. For this example, we will only consider the propagation of translational dynamics, which is stored in the derived class&nbsp;TranslationalStatePropagatorSettings. The settings for the propagator are the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The acceleration models</li>
+<li>The list of bodies that are to be propagated</li>
+<li>The origins w.r.t. which these bodies are to be propagated</li>
+<li>The initial Cartesian state that is to be used</li>
+<li>Termination conditions for the propagation (here, a fixed final time)</li>
+<li>The type of propagator that we want (currently limited to the options of Cowell and Encke propagator).</li>
+</ul>
+</div></blockquote>
+<p>The above settings are provided in the following block of code:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Set Keplerian elements for Asterix.</span>
+<span class="n">Vector6d</span> <span class="n">asterixInitialStateInKeplerianElements</span><span class="p">;</span>
+<span class="n">asterixInitialStateInKeplerianElements</span><span class="p">(</span> <span class="n">semiMajorAxisIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">7500.0E3</span><span class="p">;</span>
+<span class="n">asterixInitialStateInKeplerianElements</span><span class="p">(</span> <span class="n">eccentricityIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+<span class="n">asterixInitialStateInKeplerianElements</span><span class="p">(</span> <span class="n">inclinationIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="n">convertDegreesToRadians</span><span class="p">(</span> <span class="mf">85.3</span> <span class="p">);</span>
+<span class="n">asterixInitialStateInKeplerianElements</span><span class="p">(</span> <span class="n">argumentOfPeriapsisIndex</span> <span class="p">)</span>
+        <span class="o">=</span> <span class="n">convertDegreesToRadians</span><span class="p">(</span> <span class="mf">235.7</span> <span class="p">);</span>
+<span class="n">asterixInitialStateInKeplerianElements</span><span class="p">(</span> <span class="n">longitudeOfAscendingNodeIndex</span> <span class="p">)</span>
+        <span class="o">=</span> <span class="n">convertDegreesToRadians</span><span class="p">(</span> <span class="mf">23.4</span> <span class="p">);</span>
+<span class="n">asterixInitialStateInKeplerianElements</span><span class="p">(</span> <span class="n">trueAnomalyIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="n">convertDegreesToRadians</span><span class="p">(</span> <span class="mf">139.87</span> <span class="p">);</span>
+
+<span class="c1">// Convert Asterix state from Keplerian elements to Cartesian elements.</span>
+<span class="kt">double</span> <span class="n">earthGravitationalParameter</span> <span class="o">=</span> <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getGravityFieldModel</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getGravitationalParameter</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">systemInitialState</span> <span class="o">=</span> <span class="n">convertKeplerianToCartesianElements</span><span class="p">(</span>
+            <span class="n">asterixInitialStateInKeplerianElements</span><span class="p">,</span>
+            <span class="n">earthGravitationalParameter</span> <span class="p">);</span>
+
+<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">propagatorSettings</span> <span class="o">=</span>
+        <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
+        <span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span> <span class="n">accelerationModelMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">systemInitialState</span><span class="p">,</span> <span class="n">simulationEndEpoch</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>If the body that is being propagated has a pre-existing Ephemeris, the initial state may be retrieved automatically. In this example, however, we manually define our initial state from the Keplerian state:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Set Keplerian elements for Asterix.</span>
+<span class="n">Vector6d</span> <span class="n">asterixInitialStateInKeplerianElements</span><span class="p">;</span>
+<span class="n">asterixInitialStateInKeplerianElements</span><span class="p">(</span> <span class="n">semiMajorAxisIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">7500.0E3</span><span class="p">;</span>
+<span class="n">asterixInitialStateInKeplerianElements</span><span class="p">(</span> <span class="n">eccentricityIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+<span class="n">asterixInitialStateInKeplerianElements</span><span class="p">(</span> <span class="n">inclinationIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="n">convertDegreesToRadians</span><span class="p">(</span> <span class="mf">85.3</span> <span class="p">);</span>
+<span class="n">asterixInitialStateInKeplerianElements</span><span class="p">(</span> <span class="n">argumentOfPeriapsisIndex</span> <span class="p">)</span>
+        <span class="o">=</span> <span class="n">convertDegreesToRadians</span><span class="p">(</span> <span class="mf">235.7</span> <span class="p">);</span>
+<span class="n">asterixInitialStateInKeplerianElements</span><span class="p">(</span> <span class="n">longitudeOfAscendingNodeIndex</span> <span class="p">)</span>
+        <span class="o">=</span> <span class="n">convertDegreesToRadians</span><span class="p">(</span> <span class="mf">23.4</span> <span class="p">);</span>
+<span class="n">asterixInitialStateInKeplerianElements</span><span class="p">(</span> <span class="n">trueAnomalyIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="n">convertDegreesToRadians</span><span class="p">(</span> <span class="mf">139.87</span> <span class="p">);</span>
+
+<span class="c1">// Convert Asterix state from Keplerian elements to Cartesian elements.</span>
+<span class="kt">double</span> <span class="n">earthGravitationalParameter</span> <span class="o">=</span> <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getGravityFieldModel</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getGravitationalParameter</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">systemInitialState</span> <span class="o">=</span> <span class="n">convertKeplerianToCartesianElements</span><span class="p">(</span>
+            <span class="n">asterixInitialStateInKeplerianElements</span><span class="p">,</span>
+            <span class="n">earthGravitationalParameter</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Note that we use the Earth gravity field in the body map for the conversion from Keplerian to Cartesian coordinates.
+Now, we can create our propagator settings by:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">propagatorSettings</span> <span class="o">=</span>
+    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
+        <span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span> <span class="n">accelerationModelMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">systemInitialState</span><span class="p">,</span> <span class="n">simulationEndEpoch</span><span class="p">,</span> <span class="n">cowell</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Where we have passed exactly the five aspects listed above as input to the&nbsp;TranslationalStatePropagatorSettings. If you have a look at the code for the&nbsp;TranslationalStatePropagatorSettings, you will notice that there are multiple constructors for the class, each with a number of additional input arguments (for which we use the defautl values). These more advanced options are discussed in the following tutorials.</p>
+<p>A final piece of information needed to propagate the orbit is the settings for the numerical integration. We use a Runge-Kutta 4 integrator, with a 10 second time step, starting the numerical integration at t=0:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create numerical integrator.</span>
+<span class="kt">double</span> <span class="n">simulationStartEpoch</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="n">fixedStepSize</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">;</span>
+<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">integratorSettings</span> <span class="o">=</span>
+    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
+        <span class="p">(</span> <span class="n">rungeKutta4</span><span class="p">,</span> <span class="n">simulationStartEpoch</span><span class="p">,</span> <span class="n">fixedStepSize</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="performing-the-orbit-propagation">
+<h2>7. Performing the orbit propagation<a class="headerlink" href="#performing-the-orbit-propagation" title="Permalink to this headline">¶</a></h2>
+<p>Now, we have defined all the information needed to propagate the orbit of our satellite, which are stored in the&nbsp;bodyMap&nbsp;(environment),&nbsp;propagatorSettings&nbsp;(settings for the full state derivative model) and&nbsp;integratorSettings&nbsp;(settings on how to obtain the numerical solution). The propagation is done by an object of a class (derived from)&nbsp;DynamicsSimulator. Here, the following is used to propagate:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="n">dynamicsSimulator</span><span class="p">(</span>
+        <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Upon creating this class, the numerical propagation is performed, and the output is stored in the class. Various options exist for parsing the output of the numerical propagation, which will be discussed in the next tutorials. The numerical solution of the orbit can be retrieved as follows:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">integrationResult</span> <span class="o">=</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Where the map key is the time at each step in the integration, and the value is the corresponding Cartesian state of Asterix w.r.t. the Earth, in the J2000 reference frame. To analyze/plot your numerical results further using e.g. Matlab, you can print the output to a text file as follows:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Write satellite propagation history to file.</span>
+<span class="n">input_output</span><span class="o">::</span><span class="n">writeDataMapToTextFile</span><span class="p">(</span> <span class="n">integrationResult</span><span class="p">,</span>
+                                      <span class="s">&quot;singleSatellitePropagationHistory.dat&quot;</span><span class="p">,</span>
+                                      <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span> <span class="p">),</span>
+                                      <span class="s">&quot;&quot;</span><span class="p">,</span>
+                                      <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;::</span><span class="n">digits10</span><span class="p">,</span>
+                                      <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;::</span><span class="n">digits10</span><span class="p">,</span>
+                                      <span class="s">&quot;,&quot;</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="unguidedCapsuleEntry.html" class="btn btn-neutral float-right" title="Un-guided Capsule Entry" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="perturbedEarthOrbitingSatellite.html" class="btn btn-neutral" title="Perturbed Earth-orbiting Satellite" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Alejandro Gonzalez Puerta.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
