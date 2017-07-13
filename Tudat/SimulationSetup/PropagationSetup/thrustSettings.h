@@ -314,28 +314,15 @@ public:
             const boost::function< double( const double ) > thrustMagnitudeFunction,
             const boost::function< double( const double ) > specificImpulseFunction,
             const boost::function< bool( const double ) > isEngineOnFunction = boost::lambda::constant( true ),
-            const Eigen::Vector3d bodyFixedThrustDirection = Eigen::Vector3d::UnitX( ),
-            const boost::function< void( const double ) > customThrustResetFunction =
-                boost::function< void( const double ) >( ) ):
+            const boost::function< Eigen::Vector3d( ) > bodyFixedThrustDirection =
+            boost::lambda::constant( Eigen::Vector3d::UnitX( ) ),
+            const boost::function< void( const double ) > customThrustResetFunction = boost::function< void( const double ) >( ) ):
         ThrustEngineSettings( thrust_magnitude_from_time_function, "" ),
         thrustMagnitudeFunction_( thrustMagnitudeFunction ),
         specificImpulseFunction_( specificImpulseFunction ),
         isEngineOnFunction_( isEngineOnFunction ),
-        bodyFixedThrustDirection_(  boost::lambda::constant( bodyFixedThrustDirection ) ),
+        bodyFixedThrustDirection_( bodyFixedThrustDirection ),
         customThrustResetFunction_( customThrustResetFunction ){ }
-
-//    FromFunctionThrustEngineSettings(
-//            const boost::function< double( const double ) > thrustMagnitudeFunction,
-//            const boost::function< double( const double ) > specificImpulseFunction,
-//            const boost::function< Eigen::Vector3d( ) > bodyFixedThrustDirection,
-//            const boost::function< bool( const double ) > isEngineOnFunction = boost::lambda::constant( true ),
-//            const boost::function< void( const double ) > customThrustResetFunction = boost::function< void( const double ) >( ) ):
-//        ThrustEngineSettings( thrust_magnitude_from_time_function, "" ),
-//        thrustMagnitudeFunction_( thrustMagnitudeFunction ),
-//        specificImpulseFunction_( specificImpulseFunction ),
-//        isEngineOnFunction_( isEngineOnFunction ),
-//        bodyFixedThrustDirection_( bodyFixedThrustDirection ),
-//        customThrustResetFunction_( customThrustResetFunction ){ }
 
     //! Destructor.
     ~FromFunctionThrustEngineSettings( ){ }
