@@ -195,7 +195,7 @@
 <span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>This creates four body objects (representing three celestial bodies and one vehicle; Tudat does not distinguish between the two). However, these bodies do not yet have any physical properties, the&nbsp;<a href="#id1"><span class="problematic" id="id2">``</span></a>bodyMap``&nbsp;created above now only indicates the&nbsp;existence&nbsp;of these four bodies.</p>
+<p>This creates four body objects (representing three celestial bodies and one vehicle; Tudat does not distinguish between the two). However, these bodies do not yet have any physical properties, the&nbsp;<code class="docutils literal"><span class="pre">bodyMap</span></code>&nbsp;created above now only indicates the&nbsp;existence&nbsp;of these four bodies.</p>
 <p>To actually define the physical properties of the environment, a&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;object may be endowed with any of a number of properties. In particular, the following properties may be set. A more extensive list of possible model types is given at the end of this tutorial page:</p>
 <blockquote>
 <div><ul class="simple">
@@ -221,7 +221,7 @@
 <div class="section" id="creating-the-environment-from-bodysettings">
 <h3>1.1.2. Creating the environment from&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code><a class="headerlink" href="#creating-the-environment-from-bodysettings" title="Permalink to this headline">¶</a></h3>
 <p>Manually creating all objects defining the full environment is possible, but not recommended. In particular, various environment models are interdependent and these dependencies must be fully and consistently defined for the code to function properly. To this end, we provide a&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code>&nbsp;object, in which the general properties of each environment model can be set (see above for the list of the available types of environment models). We note that for&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;objects that represent vehicles, the manual creation is typically used, as the vehicle conditions may depend on the celestial bodies, but not&nbsp;vice versa.</p>
-<p>In many cases, default properties of (celestial) bodies may be used by calling the&nbsp;<a href="#id3"><span class="problematic" id="id4">``</span></a>getDefaultBodySettings``&nbsp;function, so that the user does not need to define all required properties line-by-line. At present, the following default settings are used (none if not in list):</p>
+<p>In many cases, default properties of (celestial) bodies may be used by calling the&nbsp;<code class="docutils literal"><span class="pre">getDefaultBodySettings</span></code>&nbsp;function, so that the user does not need to define all required properties line-by-line. At present, the following default settings are used (none if not in list):</p>
 <blockquote>
 <div><ul class="simple">
 <li><strong>Ephemeris:</strong> Tabulated ephemeris created from Spice (valid in the interval that is specified by the input time-arguments to getDefaultBodySettings).</li>
@@ -297,7 +297,7 @@
 </div>
 <p>which will read the atmospheric properties from the file atmosphereFile (with four columns altitude and associated presure, density and temperature).</p>
 <ul class="simple">
-<li><strong>NRLMSISE00:</strong> Atmosphere model using the&nbsp;NRLMSISE-00 atmosphere model. To use this model, the&nbsp;<code class="docutils literal"><span class="pre">USE_NRLMSISE``&nbsp;flag</span> <span class="pre">in</span> <span class="pre">your</span> <span class="pre">top-level</span> <span class="pre">``CMakeLists</span></code> must be set to true. No derived class of&nbsp;<code class="xref py py-class docutils literal"><span class="pre">AtmosphereSettings</span></code>&nbsp;base class required, created by passing&nbsp;<a href="#id5"><span class="problematic" id="id6">``</span></a>nrlmsise00``&nbsp;as argument to base class constructor.</li>
+<li><strong>NRLMSISE00:</strong> Atmosphere model using the&nbsp;NRLMSISE-00 atmosphere model. To use this model, the&nbsp;<code class="docutils literal"><span class="pre">USE_NRLMSISE</span></code>&nbsp;flag in your top-level <code class="docutils literal"><span class="pre">CMakeLists</span></code> must be set to true. No derived class of&nbsp;<code class="xref py py-class docutils literal"><span class="pre">AtmosphereSettings</span></code>&nbsp;base class required, created by passing&nbsp;<code class="docutils literal"><span class="pre">nrlmsise00</span></code>&nbsp;as argument to base class constructor.</li>
 </ul>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">nrlmsise00</span> <span class="p">);</span>
 </pre></div>
@@ -337,7 +337,7 @@
 </div>
 <p>creating a barycentric (SSB) ephemeris with axes along J2000, with data retrieved from Spice at 3600 s intervals between t=0 and t=1.0E8, using a 6th order Lagrange interpolator. Settings for the interpolator (discussed&nbsp;here, can be added as a sixth argument if you wish to use a different interpolation method)</p>
 <ul class="simple">
-<li><a href="#id7"><span class="problematic" id="id8">**</span></a>Tabulated ephemeris:<a href="#id9"><span class="problematic" id="id10">**</span></a>s Ephemeris created directly by interpolating user-specified states as a function of time. Settings stored in&nbsp;TabulatedEphemerisSettings&nbsp;object.</li>
+<li><strong>Tabulated ephemeris:</strong> Ephemeris created directly by interpolating user-specified states as a function of time. Settings stored in&nbsp;TabulatedEphemerisSettings&nbsp;object.</li>
 </ul>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="n">bodyStateHistory</span> <span class="p">...</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrigin</span> <span class="o">=</span> <span class="s">&quot;SSB&quot;</span><span class="p">;</span>
@@ -372,73 +372,129 @@
 </div>
 </div></blockquote>
 <p><strong>Gravity field model:</strong> defined in the&nbsp;gravityFieldSettings&nbsp;(of type&nbsp;shared_ptr&lt; GravityFieldSettings &gt;). Models currently available through the&nbsp;BodySettings&nbsp;architecture are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Central (user-defined):</strong> Point-mass gravity field model, with user-defined gravitational parameter. Settings stored in&nbsp;CentralGravityFieldSettings&nbsp;object.</li>
+</ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">gravitationalParameter</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CentralGravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">gravitationalParameter</span> <span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><strong>Central (from Spice):</strong> Point-mass gravity field model, with gravitational parameter from Spice. No derived class of&nbsp;GravityFieldSettings&nbsp;base class required, created by passing&nbsp;central_spice&nbsp;as argument to base class constructor.</li>
+</ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">central_spice</span> <span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><strong>Spherical harmonic:</strong> Gravity field model as a spherical harmonic expansion. Settings stored in&nbsp;SphericalHarmonicsGravityFieldSettings&nbsp;object.</li>
+</ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">gravitationalParameter</span> <span class="o">=</span> <span class="p">...</span>
+<span class="kt">double</span> <span class="n">referenceRadius</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">cosineCoefficients</span> <span class="o">=</span>  <span class="c1">// NOTE: entry (i,j) denotes coefficient at degree i and order j</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">sineCoefficients</span> <span class="o">=</span>  <span class="c1">// NOTE: entry (i,j) denotes coefficient at degree i and order j</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">associatedReferenceFrame</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicsGravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">gravitationalParameter</span><span class="p">,</span> <span class="n">referenceRadius</span><span class="p">,</span> <span class="n">cosineCoefficients</span><span class="p">,</span> <span class="n">sineCoefficients</span><span class="p">,</span> <span class="n">associatedReferenceFrame</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>The&nbsp;associatedReferenceFrame&nbsp;reference frame must presently be the same frame as the target frame of the body’s rotation model (see below). It represents the frame to which the spherical harmonic field is fixed.</p>
 </div></blockquote>
-<p>Central (user-defined): Point-mass gravity field model, with user-defined gravitational parameter. Settings stored in&nbsp;CentralGravityFieldSettings&nbsp;object.
-double gravitationalParameter = …
-bodySettings[ “Earth” ]-&gt;gravityFieldSettings = boost::make_shared&lt; CentralGravityFieldSettings &gt;( gravitationalParameter );
-Central (from Spice): Point-mass gravity field model, with gravitational parameter from Spice. No derived class of&nbsp;GravityFieldSettings&nbsp;base class required, created by passing&nbsp;central_spice&nbsp;as argument to base class constructor.
-bodySettings[ “Earth” ]-&gt;gravityFieldSettings = boost::make_shared&lt; GravityFieldSettings &gt;( central_spice );
-Spherical harmonic: Gravity field model as a spherical harmonic expansion. Settings stored in&nbsp;SphericalHarmonicsGravityFieldSettings&nbsp;object.
-double gravitationalParameter = …
-double referenceRadius = …
-Eigen::MatrixXd cosineCoefficients = … // NOTE: entry (i,j) denotes coefficient at degree i and order j
-Eigen::MatrixXd sineCoefficients = … // NOTE: entry (i,j) denotes coefficient at degree i and order j
-std::string associatedReferenceFrame = …
-bodySettings[ “Earth” ]-&gt;gravityFieldSettings = boost::make_shared&lt; SphericalHarmonicsGravityFieldSettings &gt;( gravitationalParameter, referenceRadius, cosineCoefficients, sineCoefficients, associatedReferenceFrame );</p>
-<p>The&nbsp;associatedReferenceFrame&nbsp;reference frame must presently be the same frame as the target frame of the body’s rotation model (see below). It represents the frame to which the spherical harmonic field is fixed.
-Rotation model: defined in the&nbsp;rotationModelSettings&nbsp;(of type&nbsp;shared_ptr&lt; RotationModelSettings &gt;). Models currently available through the&nbsp;BodySettings&nbsp;architecture are:
-Simple rotation model: Rotation model with constant orientation of the rotation axis, and constant rotation rate about local z-axis. Settings stored in&nbsp;SimpleRotationModelSettings&nbsp;object.
-Eigen::Quaterniond initialOrientation = …
-double initialTime = …
-double rotationRate = …
-std::string originalFrame = “J2000”;
-std::string targetFrame = “IAU_Earth”;
-bodySettings[ “Earth” ]-&gt;rotationModelSettings = boost::make_shared&lt; SimpleRotationModelSettings &gt;(</p>
+<p><strong>Rotation model:</strong> defined in the&nbsp;rotationModelSettings&nbsp;(of type&nbsp;shared_ptr&lt; RotationModelSettings &gt;). Models currently available through the&nbsp;BodySettings&nbsp;architecture are:</p>
 <blockquote>
-<div>originalFrame, targetFrame , initialOrientation, initialTime, rotationRate );</div></blockquote>
-<p>where the rotation from&nbsp;originalFrame&nbsp;to&nbsp;targetFrame&nbsp;at&nbsp;initialTime&nbsp;is given by the quaternion&nbsp;initialOrientation. This is mapped to other times using the rotation rate&nbsp;rotationRate.
-Spice rotation model: Rotation model directly obtained from Spice. No derived class of&nbsp;RotationModelSettings&nbsp;base class required, created by passing&nbsp;spice_rotation_model&nbsp;as argument to base class constructor.
-std::string originalFrame = “J2000”;
-std::string targetFrame = “IAU_Earth”;
-bodySettings[ “Earth” ]-&gt;rotationModelSettings = boost::make_shared&lt; RotationModelSettings &gt;( spice_rotation_model, originalFrame, targetFrame );
-Shape model: defined in the&nbsp;shapeModelSettings&nbsp;(of type&nbsp;shared_ptr&lt; BodyShapeSettings &gt;). Models currently available through the&nbsp;BodySettings&nbsp;architecture are:
-Spherical shape model: Model defining a body shape as a perfect sphere, with the sphere radius provided by the user. Settings stored in&nbsp;SphericalBodyShapeSettings&nbsp;object.
-double bodyRadius = 6378.0E3;
-bodySettings[ “Earth” ]-&gt;shapeModelSettings = boost::make_shared&lt; SphericalBodyShapeSettings &gt;( bodyRadius );
-Spherical shape model from spice: Model defining a body shape as a perfect sphere, with the sphere radius retrieved from Spice. No derived class of&nbsp;BodyShapeSettings&nbsp;base class required, created by passing&nbsp;spherical_spice&nbsp;as argument to base class constructor.
-double bodyRadius = 6378.0E3;
-bodySettings[ “Earth” ]-&gt;shapeModelSettings = boost::make_shared&lt; BodyShapeSettings &gt;( spherical_spice );
-Oblate spheroid shape model: Model defining a body shape as a flattened sphere, with the equatorial radius and flattening provided by the user. Settings stored in&nbsp;OblateSphericalBodyShapeSettings&nbsp;object.
-double bodyRadius = 6378.0E3;
-double bodyFlattening = 1.0 / 300.0;
-bodySettings[ “Earth” ]-&gt;shapeModelSettings = boost::make_shared&lt; OblateSphericalBodyShapeSettings &gt;( bodyRadius, bodyFlattening );
-Radiation pressure model: defined in the&nbsp;radiationPressureSettings&nbsp;(of type&nbsp;map&lt; string, shared_ptr&lt; RadiationPressureInterfaceSettings &gt; &gt;). A separate model can be used for different bodies emitting radiation (key valyes of&nbsp;radiationPressureSettings) Models currently available through the&nbsp;BodySettings&nbsp;architecture are:
-Cannon-ball model: Properties for a cannonball radiation pressure model,&nbsp;i.e.&nbsp;effective force colinear with vector from source to target. Settings stored in&nbsp;CannonBallRadiationPressureInterfaceSettings&nbsp;object.
-std::string sourceBody = “Sun”;
-double area = 20.0;
-const double radiationPressureCoefficient = 1.2;
-const std::vector&lt; std::string &gt; occultingBodies;
-occultingBodies.push_back( “Earth” );
-bodySettings[ “TestVehicle” ]-&gt;radiationPressureSettings[ sourceBody ] = boost::make_shared&lt; CannonBallRadiationPressureInterfaceSettings &gt;(</p>
+<div><ul class="simple">
+<li><strong>Simple rotation model:</strong> Rotation model with constant orientation of the rotation axis, and constant rotation rate about local z-axis. Settings stored in&nbsp;SimpleRotationModelSettings&nbsp;object.</li>
+</ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span> <span class="n">initialOrientation</span> <span class="o">=</span> <span class="p">...</span>
+<span class="kt">double</span> <span class="n">initialTime</span> <span class="o">=</span> <span class="p">...</span>
+<span class="kt">double</span> <span class="n">rotationRate</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">originalFrame</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">targetFrame</span> <span class="o">=</span> <span class="s">&quot;IAU_Earth&quot;</span><span class="p">;</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SimpleRotationModelSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">originalFrame</span><span class="p">,</span> <span class="n">targetFrame</span> <span class="p">,</span> <span class="n">initialOrientation</span><span class="p">,</span> <span class="n">initialTime</span><span class="p">,</span> <span class="n">rotationRate</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>where the rotation from&nbsp;originalFrame&nbsp;to&nbsp;targetFrame&nbsp;at&nbsp;initialTime&nbsp;is given by the quaternion&nbsp;initialOrientation. This is mapped to other times using the rotation rate&nbsp;rotationRate.</p>
+<ul class="simple">
+<li><strong>Spice rotation model:</strong> Rotation model directly obtained from Spice. No derived class of&nbsp;RotationModelSettings&nbsp;base class required, created by passing&nbsp;spice_rotation_model&nbsp;as argument to base class constructor.</li>
+</ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">originalFrame</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">targetFrame</span> <span class="o">=</span> <span class="s">&quot;IAU_Earth&quot;</span><span class="p">;</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">spice_rotation_model</span><span class="p">,</span> <span class="n">originalFrame</span><span class="p">,</span> <span class="n">targetFrame</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Shape model:</strong> defined in the&nbsp;shapeModelSettings&nbsp;(of type&nbsp;shared_ptr&lt; BodyShapeSettings &gt;). Models currently available through the&nbsp;BodySettings&nbsp;architecture are:</p>
 <blockquote>
-<div>sourceBody, area, radiationPressureCoefficient, occultingBodies );</div></blockquote>
-<p>Creating cannonball radiation pressure settings for radiation due to the Sun, acting on the “TestVehicle” body, where the occultations due to the Earth are taken into account.
-NOTE: occultations by multiple bodies are not yet supported. Please contact the Tudat suppport team if you wish to use multiple occultations.
-Aerodynamic coefficients: defined in the&nbsp;aerodynamicCoefficientSettings&nbsp;(of type&nbsp;shared_ptr&lt; AerodynamicCoefficientSettings &gt;). Models currently available through the&nbsp;BodySettings&nbsp;architecture are:
-Constant coefficients: Settings for constant (not a function of any independent variables) aerodynamic coefficients. Settings stored in&nbsp;ConstantAerodynamicCoefficientSettings&nbsp;object.
-double referenceArea = 20.0;
-Eigen::Vector3d constantCoefficients;
-constantCoefficients( 0 ) = 1.5;
-constantCoefficients( 2 ) = 0.3;
-bodySettings[ “TestVehicle” ]-&gt;aerodynamicCoefficientSettings = boost::make_shared&lt; ConstantAerodynamicCoefficientSettings &gt;(</p>
+<div><ul class="simple">
+<li><strong>Spherical shape model:</strong> Model defining a body shape as a perfect sphere, with the sphere radius provided by the user. Settings stored in&nbsp;SphericalBodyShapeSettings&nbsp;object.</li>
+</ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">bodyRadius</span> <span class="o">=</span> <span class="mf">6378.0E3</span><span class="p">;</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalBodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodyRadius</span> <span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><strong>Spherical shape model from spice:</strong> Model defining a body shape as a perfect sphere, with the sphere radius retrieved from Spice. No derived class of&nbsp;BodyShapeSettings&nbsp;base class required, created by passing&nbsp;spherical_spice&nbsp;as argument to base class constructor.</li>
+</ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">bodyRadius</span> <span class="o">=</span> <span class="mf">6378.0E3</span><span class="p">;</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">BodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">spherical_spice</span> <span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><strong>Oblate spheroid shape model:</strong> Model defining a body shape as a flattened sphere, with the equatorial radius and flattening provided by the user. Settings stored in&nbsp;OblateSphericalBodyShapeSettings&nbsp;object.</li>
+</ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">bodyRadius</span> <span class="o">=</span> <span class="mf">6378.0E3</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">bodyFlattening</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">300.0</span><span class="p">;</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OblateSphericalBodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodyRadius</span><span class="p">,</span> <span class="n">bodyFlattening</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Radiation pressure model:</strong> defined in the&nbsp;radiationPressureSettings&nbsp;(of type&nbsp;map&lt; string, shared_ptr&lt; RadiationPressureInterfaceSettings &gt; &gt;). A separate model can be used for different bodies emitting radiation (key valyes of&nbsp;radiationPressureSettings) Models currently available through the&nbsp;BodySettings&nbsp;architecture are:</p>
 <blockquote>
-<div>referenceArea, constantCoefficients, true, true );</div></blockquote>
-<p>For constant drag coefficient of 1.5 and lift coefficient of 0.3.
-Tabulated: Settings for tabulated aerodynamic coefficients as a function of given independent variables. Settings stored in&nbsp;TabulatedAerodynamicCoefficientSettings&nbsp;object. These tables can be defined either manually or loaded from a file, as discussed in more detail&nbsp;here&nbsp;Coefficients can be defined as a function of angle of sideslip, angle of attack, Mach number or altitude. If you simulation requires any other dependencies for the coefficients, please open an issue on Github requesting feature.
-Local inclination methods: Settings for aerodynamic coefficients computed internally using a shape model of the vehicle, valid for hypersonic Mach numbers. Currently, this type of aerodynamic coefficients can only be set manually in the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;object directly.
-Gravity field variations: defined in the&nbsp;gravityFieldVariationSettings&nbsp;(of type&nbsp;vector&lt; shared_ptr&lt; GravityFieldVariationSettings &gt; &gt;). Any number of gravity field variations may be used (hence the use of a vector). NOTE: You can only use gravity field variations for bodies where you have defined a spherical harmonic gravity field (through the use of&nbsp;SphericalHarmonicsGravityFieldSettings). Models currently available through the&nbsp;BodySettings&nbsp;architecture are:
-First-order solid body tide: Tidal variation of the gravity field using first-order tidal theory. Settings stored in&nbsp;BasicSolidBodyGravityFieldVariationSettings&nbsp;object
-Tabulated gravity field variations: Variations in spherical harmonic coefficients tabulated as a function of time. Settings stored in&nbsp;TabulatedGravityFieldVariationSettings&nbsp;object.</p>
+<div><ul class="simple">
+<li><strong>Cannon-ball model:</strong> Properties for a cannonball radiation pressure model,&nbsp;i.e.&nbsp;effective force colinear with vector from source to target. Settings stored in&nbsp;CannonBallRadiationPressureInterfaceSettings&nbsp;object.</li>
+</ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">sourceBody</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">area</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="n">radiationPressureCoefficient</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
+<span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">occultingBodies</span><span class="p">;</span>
+<span class="n">occultingBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;TestVehicle&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">radiationPressureSettings</span><span class="p">[</span> <span class="n">sourceBody</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CannonBallRadiationPressureInterfaceSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">sourceBody</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="n">radiationPressureCoefficient</span><span class="p">,</span> <span class="n">occultingBodies</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Creating cannonball radiation pressure settings for radiation due to the Sun, acting on the “TestVehicle” body, where the occultations due to the Earth are taken into account.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Occultations by multiple bodies are not yet supported. Please contact the Tudat suppport team if you wish to use multiple occultations.</p>
+</div>
+</div></blockquote>
+<p><strong>Aerodynamic coefficients:</strong> defined in the&nbsp;aerodynamicCoefficientSettings&nbsp;(of type&nbsp;shared_ptr&lt; AerodynamicCoefficientSettings &gt;). Models currently available through the&nbsp;BodySettings&nbsp;architecture are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Constant coefficients:</strong> Settings for constant (not a function of any independent variables) aerodynamic coefficients. Settings stored in&nbsp;ConstantAerodynamicCoefficientSettings&nbsp;object.</li>
+</ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">referenceArea</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">;</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">constantCoefficients</span><span class="p">;</span>
+<span class="n">constantCoefficients</span><span class="p">(</span> <span class="mi">0</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">;</span>
+<span class="n">constantCoefficients</span><span class="p">(</span> <span class="mi">2</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;TestVehicle&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">aerodynamicCoefficientSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantAerodynamicCoefficientSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">referenceArea</span><span class="p">,</span> <span class="n">constantCoefficients</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="nb">true</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>For constant drag coefficient of 1.5 and lift coefficient of 0.3.</p>
+<ul class="simple">
+<li><strong>Tabulated:</strong> Settings for tabulated aerodynamic coefficients as a function of given independent variables. Settings stored in&nbsp;TabulatedAerodynamicCoefficientSettings&nbsp;object. These tables can be defined either manually or loaded from a file, as discussed in more detail&nbsp;here&nbsp;Coefficients can be defined as a function of angle of sideslip, angle of attack, Mach number or altitude. If you simulation requires any other dependencies for the coefficients, please open an issue on Github requesting feature.</li>
+<li><strong>Local inclination methods:</strong> Settings for aerodynamic coefficients computed internally using a shape model of the vehicle, valid for hypersonic Mach numbers. Currently, this type of aerodynamic coefficients can only be set manually in the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;object directly.</li>
+</ul>
+</div></blockquote>
+<p><strong>Gravity field variations:</strong> defined in the&nbsp;gravityFieldVariationSettings&nbsp;(of type&nbsp;vector&lt; shared_ptr&lt; GravityFieldVariationSettings &gt; &gt;). Any number of gravity field variations may be used (hence the use of a vector). NOTE: You can only use gravity field variations for bodies where you have defined a spherical harmonic gravity field (through the use of&nbsp;SphericalHarmonicsGravityFieldSettings). Models currently available through the&nbsp;BodySettings&nbsp;architecture are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>First-order solid body tide:</strong> Tidal variation of the gravity field using first-order tidal theory. Settings stored in&nbsp;BasicSolidBodyGravityFieldVariationSettings&nbsp;object.</li>
+<li><strong>Tabulated gravity field variations:</strong> Variations in spherical harmonic coefficients tabulated as a function of time. Settings stored in&nbsp;TabulatedGravityFieldVariationSettings&nbsp;object.</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
 </div>
 <div class="section" id="the-environment-during-propagation">
 <h2>1.3. The environment during propagation<a class="headerlink" href="#the-environment-during-propagation" title="Permalink to this headline">¶</a></h2>

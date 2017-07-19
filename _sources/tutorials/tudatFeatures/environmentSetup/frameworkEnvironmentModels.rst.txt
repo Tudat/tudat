@@ -19,7 +19,7 @@ The following shows how to manually declare a :class:`NamedBodyMap`, and then c
     bodyMap[ "Sun" ] = boost::make_shared< Body >( );
     bodyMap[ "Apollo" ] = boost::make_shared< Body >( );
 
-This creates four body objects (representing three celestial bodies and one vehicle; Tudat does not distinguish between the two). However, these bodies do not yet have any physical properties, the ``bodyMap`` created above now only indicates the existence of these four bodies.
+This creates four body objects (representing three celestial bodies and one vehicle; Tudat does not distinguish between the two). However, these bodies do not yet have any physical properties, the :literal:`bodyMap` created above now only indicates the existence of these four bodies.
 
 To actually define the physical properties of the environment, a :class:`Body` object may be endowed with any of a number of properties. In particular, the following properties may be set. A more extensive list of possible model types is given at the end of this tutorial page:
 
@@ -47,7 +47,7 @@ Creating the environment from :class:`BodySettings`
 ***************************************************
 Manually creating all objects defining the full environment is possible, but not recommended. In particular, various environment models are interdependent and these dependencies must be fully and consistently defined for the code to function properly. To this end, we provide a :class:`BodySettings` object, in which the general properties of each environment model can be set (see above for the list of the available types of environment models). We note that for :class:`Body` objects that represent vehicles, the manual creation is typically used, as the vehicle conditions may depend on the celestial bodies, but not vice versa.
 
-In many cases, default properties of (celestial) bodies may be used by calling the ``getDefaultBodySettings`` function, so that the user does not need to define all required properties line-by-line. At present, the following default settings are used (none if not in list):
+In many cases, default properties of (celestial) bodies may be used by calling the :literal:`getDefaultBodySettings` function, so that the user does not need to define all required properties line-by-line. At present, the following default settings are used (none if not in list):
 
     - **Ephemeris:** Tabulated ephemeris created from Spice (valid in the interval that is specified by the input time-arguments to getDefaultBodySettings).
     - **Gravity field models:** Point mass gravity field models, with gravitational parameter from Spice (if available). Exceptions are the Earth and Moon, for which the EGM96 and GGLP spherical harmonic gravity fields are loaded, respectively.
@@ -137,7 +137,7 @@ The full list of available environment model settings is:
 
         which will read the atmospheric properties from the file atmosphereFile (with four columns altitude and associated presure, density and temperature).
 
-        - **NRLMSISE00:** Atmosphere model using the NRLMSISE-00 atmosphere model. To use this model, the ``USE_NRLMSISE`` flag in your top-level ``CMakeLists`` must be set to true. No derived class of :class:`AtmosphereSettings` base class required, created by passing ``nrlmsise00`` as argument to base class constructor.
+        - **NRLMSISE00:** Atmosphere model using the NRLMSISE-00 atmosphere model. To use this model, the :literal:`USE_NRLMSISE` flag in your top-level :literal:`CMakeLists` must be set to true. No derived class of :class:`AtmosphereSettings` base class required, created by passing :literal:`nrlmsise00` as argument to base class constructor.
 
         .. code-block:: cpp
 
@@ -177,7 +177,7 @@ The full list of available environment model settings is:
 
         creating a barycentric (SSB) ephemeris with axes along J2000, with data retrieved from Spice at 3600 s intervals between t=0 and t=1.0E8, using a 6th order Lagrange interpolator. Settings for the interpolator (discussed here, can be added as a sixth argument if you wish to use a different interpolation method)
 
-        - **Tabulated ephemeris:**s Ephemeris created directly by interpolating user-specified states as a function of time. Settings stored in TabulatedEphemerisSettings object.
+        - **Tabulated ephemeris:** Ephemeris created directly by interpolating user-specified states as a function of time. Settings stored in TabulatedEphemerisSettings object.
 
         .. code-block:: cpp
 
@@ -214,73 +214,123 @@ The full list of available environment model settings is:
                 constantCartesianState, frameOrigin, frameOrientation ); 
 
     **Gravity field model:** defined in the gravityFieldSettings (of type shared_ptr< GravityFieldSettings >). Models currently available through the BodySettings architecture are:
-Central (user-defined): Point-mass gravity field model, with user-defined gravitational parameter. Settings stored in CentralGravityFieldSettings object.
-double gravitationalParameter = ...
-bodySettings[ "Earth" ]->gravityFieldSettings = boost::make_shared< CentralGravityFieldSettings >( gravitationalParameter );
-Central (from Spice): Point-mass gravity field model, with gravitational parameter from Spice. No derived class of GravityFieldSettings base class required, created by passing central_spice as argument to base class constructor.
-bodySettings[ "Earth" ]->gravityFieldSettings = boost::make_shared< GravityFieldSettings >( central_spice ); 
-Spherical harmonic: Gravity field model as a spherical harmonic expansion. Settings stored in SphericalHarmonicsGravityFieldSettings object. 
-double gravitationalParameter = ...
-double referenceRadius = ...
-Eigen::MatrixXd cosineCoefficients = ... // NOTE: entry (i,j) denotes coefficient at degree i and order j
-Eigen::MatrixXd sineCoefficients = ... // NOTE: entry (i,j) denotes coefficient at degree i and order j
-std::string associatedReferenceFrame = ...
-bodySettings[ "Earth" ]->gravityFieldSettings = boost::make_shared< SphericalHarmonicsGravityFieldSettings >( gravitationalParameter, referenceRadius, cosineCoefficients, sineCoefficients, associatedReferenceFrame ); 
 
-The associatedReferenceFrame reference frame must presently be the same frame as the target frame of the body's rotation model (see below). It represents the frame to which the spherical harmonic field is fixed.
-Rotation model: defined in the rotationModelSettings (of type shared_ptr< RotationModelSettings >). Models currently available through the BodySettings architecture are:
-Simple rotation model: Rotation model with constant orientation of the rotation axis, and constant rotation rate about local z-axis. Settings stored in SimpleRotationModelSettings object.
-Eigen::Quaterniond initialOrientation = ...
-double initialTime = ...
-double rotationRate = ...
-std::string originalFrame = "J2000";
-std::string targetFrame = "IAU_Earth";
-bodySettings[ "Earth" ]->rotationModelSettings = boost::make_shared< SimpleRotationModelSettings >( 
-    originalFrame, targetFrame , initialOrientation, initialTime, rotationRate ); 
+        - **Central (user-defined):** Point-mass gravity field model, with user-defined gravitational parameter. Settings stored in CentralGravityFieldSettings object.
 
-where the rotation from originalFrame to targetFrame at initialTime is given by the quaternion initialOrientation. This is mapped to other times using the rotation rate rotationRate.
-Spice rotation model: Rotation model directly obtained from Spice. No derived class of RotationModelSettings base class required, created by passing spice_rotation_model as argument to base class constructor.
-std::string originalFrame = "J2000";
-std::string targetFrame = "IAU_Earth";
-bodySettings[ "Earth" ]->rotationModelSettings = boost::make_shared< RotationModelSettings >( spice_rotation_model, originalFrame, targetFrame ); 
-Shape model: defined in the shapeModelSettings (of type shared_ptr< BodyShapeSettings >). Models currently available through the BodySettings architecture are:
-Spherical shape model: Model defining a body shape as a perfect sphere, with the sphere radius provided by the user. Settings stored in SphericalBodyShapeSettings object.
-double bodyRadius = 6378.0E3;
-bodySettings[ "Earth" ]->shapeModelSettings = boost::make_shared< SphericalBodyShapeSettings >( bodyRadius ); 
-Spherical shape model from spice: Model defining a body shape as a perfect sphere, with the sphere radius retrieved from Spice. No derived class of BodyShapeSettings base class required, created by passing spherical_spice as argument to base class constructor.
-double bodyRadius = 6378.0E3;
-bodySettings[ "Earth" ]->shapeModelSettings = boost::make_shared< BodyShapeSettings >( spherical_spice ); 
-Oblate spheroid shape model: Model defining a body shape as a flattened sphere, with the equatorial radius and flattening provided by the user. Settings stored in OblateSphericalBodyShapeSettings object.
-double bodyRadius = 6378.0E3;
-double bodyFlattening = 1.0 / 300.0;
-bodySettings[ "Earth" ]->shapeModelSettings = boost::make_shared< OblateSphericalBodyShapeSettings >( bodyRadius, bodyFlattening ); 
-Radiation pressure model: defined in the radiationPressureSettings (of type map< string, shared_ptr< RadiationPressureInterfaceSettings > >). A separate model can be used for different bodies emitting radiation (key valyes of radiationPressureSettings) Models currently available through the BodySettings architecture are:
-Cannon-ball model: Properties for a cannonball radiation pressure model, i.e. effective force colinear with vector from source to target. Settings stored in CannonBallRadiationPressureInterfaceSettings object.
-std::string sourceBody = "Sun";
-double area = 20.0;
-const double radiationPressureCoefficient = 1.2;
-const std::vector< std::string > occultingBodies;
-occultingBodies.push_back( "Earth" );
-bodySettings[ "TestVehicle" ]->radiationPressureSettings[ sourceBody ] = boost::make_shared< CannonBallRadiationPressureInterfaceSettings >(
-    sourceBody, area, radiationPressureCoefficient, occultingBodies ); 
+        .. code-block:: cpp
 
-Creating cannonball radiation pressure settings for radiation due to the Sun, acting on the "TestVehicle" body, where the occultations due to the Earth are taken into account.
-NOTE: occultations by multiple bodies are not yet supported. Please contact the Tudat suppport team if you wish to use multiple occultations.
-Aerodynamic coefficients: defined in the aerodynamicCoefficientSettings (of type shared_ptr< AerodynamicCoefficientSettings >). Models currently available through the BodySettings architecture are:
-Constant coefficients: Settings for constant (not a function of any independent variables) aerodynamic coefficients. Settings stored in ConstantAerodynamicCoefficientSettings object.
-double referenceArea = 20.0;
-Eigen::Vector3d constantCoefficients;
-constantCoefficients( 0 ) = 1.5;
-constantCoefficients( 2 ) = 0.3;
-bodySettings[ "TestVehicle" ]->aerodynamicCoefficientSettings = boost::make_shared< ConstantAerodynamicCoefficientSettings >( 
-    referenceArea, constantCoefficients, true, true ); 
+            double gravitationalParameter = ...
+            bodySettings[ "Earth" ]->gravityFieldSettings = boost::make_shared< CentralGravityFieldSettings >( gravitationalParameter );
 
-For constant drag coefficient of 1.5 and lift coefficient of 0.3.
-Tabulated: Settings for tabulated aerodynamic coefficients as a function of given independent variables. Settings stored in TabulatedAerodynamicCoefficientSettings object. These tables can be defined either manually or loaded from a file, as discussed in more detail here Coefficients can be defined as a function of angle of sideslip, angle of attack, Mach number or altitude. If you simulation requires any other dependencies for the coefficients, please open an issue on Github requesting feature.
-Local inclination methods: Settings for aerodynamic coefficients computed internally using a shape model of the vehicle, valid for hypersonic Mach numbers. Currently, this type of aerodynamic coefficients can only be set manually in the :class:`Body` object directly.
-Gravity field variations: defined in the gravityFieldVariationSettings (of type vector< shared_ptr< GravityFieldVariationSettings > >). Any number of gravity field variations may be used (hence the use of a vector). NOTE: You can only use gravity field variations for bodies where you have defined a spherical harmonic gravity field (through the use of SphericalHarmonicsGravityFieldSettings). Models currently available through the BodySettings architecture are:
-First-order solid body tide: Tidal variation of the gravity field using first-order tidal theory. Settings stored in BasicSolidBodyGravityFieldVariationSettings object
-Tabulated gravity field variations: Variations in spherical harmonic coefficients tabulated as a function of time. Settings stored in TabulatedGravityFieldVariationSettings object.
+        - **Central (from Spice):** Point-mass gravity field model, with gravitational parameter from Spice. No derived class of GravityFieldSettings base class required, created by passing central_spice as argument to base class constructor.
+
+        .. code-block:: cpp
+
+            bodySettings[ "Earth" ]->gravityFieldSettings = boost::make_shared< GravityFieldSettings >( central_spice ); 
+
+        - **Spherical harmonic:** Gravity field model as a spherical harmonic expansion. Settings stored in SphericalHarmonicsGravityFieldSettings object. 
+
+        .. code-block:: cpp
+
+            double gravitationalParameter = ...
+            double referenceRadius = ...
+            Eigen::MatrixXd cosineCoefficients =  // NOTE: entry (i,j) denotes coefficient at degree i and order j
+            Eigen::MatrixXd sineCoefficients =  // NOTE: entry (i,j) denotes coefficient at degree i and order j
+            std::string associatedReferenceFrame = ...
+            bodySettings[ "Earth" ]->gravityFieldSettings = boost::make_shared< SphericalHarmonicsGravityFieldSettings >( gravitationalParameter, referenceRadius, cosineCoefficients, sineCoefficients, associatedReferenceFrame ); 
+
+        The associatedReferenceFrame reference frame must presently be the same frame as the target frame of the body's rotation model (see below). It represents the frame to which the spherical harmonic field is fixed.
+
+    **Rotation model:** defined in the rotationModelSettings (of type shared_ptr< RotationModelSettings >). Models currently available through the BodySettings architecture are:
+
+        - **Simple rotation model:** Rotation model with constant orientation of the rotation axis, and constant rotation rate about local z-axis. Settings stored in SimpleRotationModelSettings object.
+
+        .. code-block:: cpp
+
+            Eigen::Quaterniond initialOrientation = ...
+            double initialTime = ...
+            double rotationRate = ...
+            std::string originalFrame = "J2000";
+            std::string targetFrame = "IAU_Earth";
+            bodySettings[ "Earth" ]->rotationModelSettings = boost::make_shared< SimpleRotationModelSettings >( 
+                originalFrame, targetFrame , initialOrientation, initialTime, rotationRate ); 
+
+        where the rotation from originalFrame to targetFrame at initialTime is given by the quaternion initialOrientation. This is mapped to other times using the rotation rate rotationRate.
+
+        - **Spice rotation model:** Rotation model directly obtained from Spice. No derived class of RotationModelSettings base class required, created by passing spice_rotation_model as argument to base class constructor.
+
+        .. code-block:: cpp
+
+            std::string originalFrame = "J2000";
+            std::string targetFrame = "IAU_Earth";
+            bodySettings[ "Earth" ]->rotationModelSettings = boost::make_shared< RotationModelSettings >( spice_rotation_model, originalFrame, targetFrame ); 
+
+    **Shape model:** defined in the shapeModelSettings (of type shared_ptr< BodyShapeSettings >). Models currently available through the BodySettings architecture are:
+
+        - **Spherical shape model:** Model defining a body shape as a perfect sphere, with the sphere radius provided by the user. Settings stored in SphericalBodyShapeSettings object.
+
+        .. code-block:: cpp
+
+            double bodyRadius = 6378.0E3;
+            bodySettings[ "Earth" ]->shapeModelSettings = boost::make_shared< SphericalBodyShapeSettings >( bodyRadius ); 
+
+        - **Spherical shape model from spice:** Model defining a body shape as a perfect sphere, with the sphere radius retrieved from Spice. No derived class of BodyShapeSettings base class required, created by passing spherical_spice as argument to base class constructor.
+
+        .. code-block:: cpp
+
+            double bodyRadius = 6378.0E3;
+            bodySettings[ "Earth" ]->shapeModelSettings = boost::make_shared< BodyShapeSettings >( spherical_spice ); 
+
+        - **Oblate spheroid shape model:** Model defining a body shape as a flattened sphere, with the equatorial radius and flattening provided by the user. Settings stored in OblateSphericalBodyShapeSettings object.
+
+        .. code-block:: cpp
+
+            double bodyRadius = 6378.0E3;
+            double bodyFlattening = 1.0 / 300.0;
+            bodySettings[ "Earth" ]->shapeModelSettings = boost::make_shared< OblateSphericalBodyShapeSettings >( bodyRadius, bodyFlattening ); 
+
+    **Radiation pressure model:** defined in the radiationPressureSettings (of type map< string, shared_ptr< RadiationPressureInterfaceSettings > >). A separate model can be used for different bodies emitting radiation (key valyes of radiationPressureSettings) Models currently available through the BodySettings architecture are:
+
+        - **Cannon-ball model:** Properties for a cannonball radiation pressure model, i.e. effective force colinear with vector from source to target. Settings stored in CannonBallRadiationPressureInterfaceSettings object.
+
+        .. code-block:: cpp
+
+            std::string sourceBody = "Sun";
+            double area = 20.0;
+            const double radiationPressureCoefficient = 1.2;
+            const std::vector< std::string > occultingBodies;
+            occultingBodies.push_back( "Earth" );
+            bodySettings[ "TestVehicle" ]->radiationPressureSettings[ sourceBody ] = boost::make_shared< CannonBallRadiationPressureInterfaceSettings >(
+                sourceBody, area, radiationPressureCoefficient, occultingBodies ); 
+
+        Creating cannonball radiation pressure settings for radiation due to the Sun, acting on the "TestVehicle" body, where the occultations due to the Earth are taken into account.
+
+        .. note:: Occultations by multiple bodies are not yet supported. Please contact the Tudat suppport team if you wish to use multiple occultations.
+
+    **Aerodynamic coefficients:** defined in the aerodynamicCoefficientSettings (of type shared_ptr< AerodynamicCoefficientSettings >). Models currently available through the BodySettings architecture are:
+
+        - **Constant coefficients:** Settings for constant (not a function of any independent variables) aerodynamic coefficients. Settings stored in ConstantAerodynamicCoefficientSettings object.
+
+        .. code-block:: cpp
+
+            double referenceArea = 20.0;
+            Eigen::Vector3d constantCoefficients;
+            constantCoefficients( 0 ) = 1.5;
+            constantCoefficients( 2 ) = 0.3;
+            bodySettings[ "TestVehicle" ]->aerodynamicCoefficientSettings = boost::make_shared< ConstantAerodynamicCoefficientSettings >( 
+                referenceArea, constantCoefficients, true, true ); 
+
+        For constant drag coefficient of 1.5 and lift coefficient of 0.3.
+
+        - **Tabulated:** Settings for tabulated aerodynamic coefficients as a function of given independent variables. Settings stored in TabulatedAerodynamicCoefficientSettings object. These tables can be defined either manually or loaded from a file, as discussed in more detail here Coefficients can be defined as a function of angle of sideslip, angle of attack, Mach number or altitude. If you simulation requires any other dependencies for the coefficients, please open an issue on Github requesting feature.
+
+        - **Local inclination methods:** Settings for aerodynamic coefficients computed internally using a shape model of the vehicle, valid for hypersonic Mach numbers. Currently, this type of aerodynamic coefficients can only be set manually in the :class:`Body` object directly.
+
+    **Gravity field variations:** defined in the gravityFieldVariationSettings (of type vector< shared_ptr< GravityFieldVariationSettings > >). Any number of gravity field variations may be used (hence the use of a vector). NOTE: You can only use gravity field variations for bodies where you have defined a spherical harmonic gravity field (through the use of SphericalHarmonicsGravityFieldSettings). Models currently available through the BodySettings architecture are:
+
+        - **First-order solid body tide:** Tidal variation of the gravity field using first-order tidal theory. Settings stored in BasicSolidBodyGravityFieldVariationSettings object.
+
+        - **Tabulated gravity field variations:** Variations in spherical harmonic coefficients tabulated as a function of time. Settings stored in TabulatedGravityFieldVariationSettings object.
 
 The environment during propagation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

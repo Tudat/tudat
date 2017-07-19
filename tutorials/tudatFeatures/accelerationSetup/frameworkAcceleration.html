@@ -1,0 +1,399 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. Implementation Framework of the Acceleration Settings &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
+        <link rel="up" title="Acceleration Set-Up" href="index.html"/>
+        <link rel="next" title="2. Aerodynamic Guidance" href="aerodynamicGuidance.html"/>
+        <link rel="prev" title="Acceleration Set-Up" href="index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials and Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../prerequiredKnowledge/index.html">Pre-required Knowledge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">Basic Mathematics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">Environment Set-up</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Acceleration Set-Up</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">1. Implementation Framework of the Acceleration Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aerodynamicGuidance.html">2. Aerodynamic Guidance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="thrustModels.html">3. Thrust Models</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">Propagation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">Other Libraries</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Tutorials and Documentation</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
+        
+          <li><a href="index.html">Acceleration Set-Up</a> &raquo;</li>
+        
+      <li>1. Implementation Framework of the Acceleration Settings</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="implementation-framework-of-the-acceleration-settings">
+<span id="tudatfeaturesframeworkaccelerations"></span><h1>1. Implementation Framework of the Acceleration Settings<a class="headerlink" href="#implementation-framework-of-the-acceleration-settings" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="acceleration-settings">
+<h2>1.1. Acceleration settings<a class="headerlink" href="#acceleration-settings" title="Permalink to this headline">¶</a></h2>
+<p>The settings for accelerations are defined and stored by the user in a&nbsp;<code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code>, which is&nbsp;<code class="docutils literal"><span class="pre">typedef</span></code>&nbsp;for:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>This is a double map (with twice a string as a key). The two levels correspond to the names of bodies undergoing an acceleration (first key) , and those for bodies exerting an acceleration (second key). This allows any number of bodies to be propagated, undergoing any number (and type) of accelerations from any number of bodies.
+For a given environment, most acceleration models are completely defined by:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Type of acceleration model (a list is provided in the&nbsp;AvailableAcceleration&nbsp;enum in Tudat/Astrodynamics/BasicAstrodynamics/accelerationModelTypes.h.</li>
+<li>Name of body undergoing acceleration</li>
+<li>Name of body exerting acceleration</li>
+</ul>
+</div></blockquote>
+<p>For instance, when using the following:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettings</span><span class="p">;</span>
+<span class="n">accelerationSettings</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">accelerationSettings</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">aerodynamic</span> <span class="p">)</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>We have defined a point-mass Earth gravity model and an aerodynamic acceleration due to Earth’s atmosphere to be used. In this example, we have only defined the&nbsp;type&nbsp;of the acceleration, without the need for any additional information. All required variables used on the computations of the accelerations are uniquely defined in the Apollo and Earth entries of the body map (provided that the required environment models have been set).</p>
+<p>However, as was the case for the settings of the environment models, certain types of accelerations require additional information. An important example is the spherical harmonic acceleration. We cannot replace&nbsp;<code class="docutils literal"><span class="pre">central_gravity</span></code>&nbsp;with&nbsp;<code class="docutils literal"><span class="pre">spherical_harmonic_gravity</span></code>&nbsp;in the above, as there is still an ambiguity in how the acceleration model is defined. In particular, we now also need the maximum degree and order of the gravity field that is to be used in addition to the three properties listed above. Consequently, we have created a dedicated&nbsp;<code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code> derived class for defining spherical harmonic acceleration settings. Updating the above example to use J_2, J_3 and J_4 (maximum degree = 4; maximum order = 0), we now have:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettings</span><span class="p">;</span>
+<span class="n">accelerationSettings</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">accelerationSettings</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">aerodynamic</span> <span class="p">)</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>A full list of the available acceleration models, as well as their required input and environment models, is given at the end of this page. One KEY point to understand is that, when creating an object of the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code>&nbsp;type (or its derived class), you must&nbsp;not&nbsp;provide any of the third body acceleration types (<code class="docutils literal"><span class="pre">third_body_central_gravity</span></code>,&nbsp;<code class="docutils literal"><span class="pre">third_body_spherical_harmonic_gravity</span></code>,&nbsp;<code class="docutils literal"><span class="pre">third_body_mutual_spherical_harmonic_gravity</span></code>) as input. If you wish to use a third-body gravity acceleration (typically from a point mass), simply provide&nbsp;<code class="docutils literal"><span class="pre">central_gravity</span></code>&nbsp;as input. Depending on the settings for your central bodies, the code will automatically create the corresponding acceleration object (central or third-body).</p>
+<p>Having defined all the required settings for the accelerations in your&nbsp;<code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code>, you can create the actual acceleration models by using the&nbsp;<code class="docutils literal"><span class="pre">createAccelerationModelsMap</span></code>&nbsp;function. This function requires four input parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Full environment, as defined by a&nbsp;NamedBodyMap</li>
+<li>Settings for the acceleration models, given by&nbsp;SelectedAccelerationMap</li>
+<li>A list of bodies to numerically propagate</li>
+<li>A list of central bodies (one for each numerically propagated body).</li>
+</ul>
+</div></blockquote>
+<p>The list of central bodies defines the reference frame origins in which the bodies are propagated. The use of a hierarchical system is perfectly acceptable. For instance, one can propagate the Earth and Mars w.r.t. the Sun, the Sun w.r.t. the barycenter, the Moon w.r.t the Earth,&nbsp;etc. For this case, the central bodies and propagated bodies are defined as:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodyMap</span><span class="p">;</span>
+<span class="n">centralBodyMap</span><span class="p">[</span> <span class="s">&quot;Moon&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Earth&quot;</span><span class="p">;</span>
+<span class="n">centralBodyMap</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
+<span class="n">centralBodyMap</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
+<span class="n">centralBodyMap</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;SSB&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>There is no hardcoded limit to the number of permitted levels in the frame hierarchy, but it is not allowed to include circular dependencies,&nbsp;i.e.&nbsp;body A w.r.t. body B, body B w.r.t. body C and body C w.r.t. body A. More information of the acceleration models is discussed in the&nbsp;Propagators section. The following gives an example on how to create the acceleration model objects:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span><span class="p">;</span>
+<span class="p">....</span>
+<span class="c1">// Create environment here</span>
+<span class="p">....</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodyMap</span><span class="p">;</span>
+<span class="p">....</span>
+<span class="c1">// Set central and propagated bodies here</span>
+<span class="p">....</span>
+<span class="n">AccelerationMap</span> <span class="n">accelerationModelMap</span> <span class="o">=</span> <span class="n">createAccelerationModelsMap</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationMap</span><span class="p">,</span> <span class="n">centralBodyMap</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>Mutual acceleration between bodies being propagated (i.e&nbsp;body A exerting acceleation on body B and&nbsp;vice versa), as is the case for solar system dynamics, is automatically handled by the&nbsp;<code class="docutils literal"><span class="pre">createAccelerationModelsMap</span></code>&nbsp;code and requires no specific consideration. Moreover, when creating a gravitational acceleration, the code checks whether it is a direct or a third-body gravitational acceleration and creates the acceleration models accordingly. Similarly, the code automatically checks which value of the gravitational parameter mu to use in such computations. For instance, when computing the gravitational acceleration due to the Sun acting on the Earth, <code class="docutils literal"><span class="pre">mu_Sun</span></code> is used when propagating w.r.t. the barycenter, whereas <code class="docutils literal"><span class="pre">mu_Sun</span> <span class="pre">+</span> <span class="pre">mu_Earth</span></code> is used when propagating w.r.t. the Sun.</p>
+<p>For every acceleration, a model for the current state of the body exerting the acceleration must be available (the state of the body undergoing the acceleration is taken from the numerically propagated state). This means that, in the above example of the Apollo capsule entering Earth’s atmosphere, we must include one of the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li>An ephemeris member for Earth.</li>
+<li>Numerically integrate the Earth concurrently with our Apollo vehicle.</li>
+</ul>
+</div></blockquote>
+<p>For this example, the second option is of course a bit ‘non-standard’. However, for cases where entire planetary systems are propagated, such an approach is typically taken (for certain applications, the numerically propagated body must also have a particular ephemeris member object, see&nbsp;Propagators).</p>
+</div>
+<div class="section" id="available-acceleration-models">
+<h2>1.2. Available acceleration models<a class="headerlink" href="#available-acceleration-models" title="Permalink to this headline">¶</a></h2>
+<p>As stated above, the&nbsp;<code class="docutils literal"><span class="pre">createAccelerationModelsMap</span></code>&nbsp;function uses your environment and settings for the accelerations to automatically retrieve and put together all functions used to calculate the accelerations during each function evaluation of the numerical scheme. For reference, we provide a list of available acceleration models, below, including example of how to add settings for the model to the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code>. In addition, we define the list of environment models required for their creation.</p>
+<blockquote>
+<div><strong>Point mass gravity</strong>&nbsp;(no derived class of&nbsp;<code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code>, type central_gravity), added to&nbsp;<code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code>&nbsp;as follows, for example of acceleration exerted on “Apollo” by “Earth”:</div></blockquote>
+<p>SelectedAccelerationMap accelerationSettings;
+accelerationSettings[ “Apollo” ][ “Earth” ].push_back( boost::make_shared&lt; AccelerationSettings &gt;( central_gravity ) );
+Requires the following environment models to be defined:
+Gravity field for body exerting acceleration.
+Current state of bodies undergoing and exerting acceleration, either from an&nbsp;Ephemeris&nbsp;model or from the numerical propagation.
+Spherical harmonic gravity&nbsp;(derived class&nbsp;SphericalHarmonicAccelerationSettings), added to&nbsp;<code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code>&nbsp;as follows, for example of acceleration exerted on “Apollo” by “Earth”:
+SelectedAccelerationMap accelerationSettings;
+int maximumDegree = 12;
+int maximumOrder = 12;
+accelerationSettings[ “Apollo” ][ “Earth” ].push_back( boost::make_shared&lt; SphericalHarmonicAccelerationSettings &gt;( maximumDegree, maximumOrder ) );</p>
+<p>where the gravity field will be expanded up to degree and order 12 in the acceleration model. Requires the following environment models to be defined:
+Spherical harmonic gravity field for body exerting acceleration.
+Rotation model from the inertial frame to the body-fixed frame.
+Current state of bodies undergoing and exerting acceleration, either from an&nbsp;Ephemeris&nbsp;model or from the numerical propagation.
+Mutual spherical harmonic gravity&nbsp;(derived class&nbsp;MutualSphericalHarmonicAccelerationSettings). This model is typically only used for detailed propagation of planetary systems, and discussed in more detail&nbsp;here. It is added to&nbsp;<code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code>&nbsp;as follows, for example of acceleration exerted on “Io” by “Jupiter”:
+SelectedAccelerationMap accelerationSettings;
+int maximumDegreeOfIo = 12;
+int maximumOrderOfIo = 12;
+int maximumDegreeOfJupiter = 4;
+int maximumOrderOfJupiter = 4;
+accelerationSettings[ “Io” ][ “Jupiter” ].push_back( boost::make_shared&lt; MutualSphericalHarmonicAccelerationSettings &gt;(</p>
+<blockquote>
+<div>maximumDegreeOfJupiter, maximumOrderOfJupiter, maximumDegreeOfIo, maximumOrderOfIo ) );</div></blockquote>
+<p>where the gravity fields of Io and Jupiter will be expanded up to degree and order 12 and 4, respectively, in the acceleration model. Requires the following environment models to be defined:
+Spherical harmonic gravity field for body exerting acceleration and body undergoing acceleration.
+Rotation model from the inertial frame to the body-fixed frame and body undergoing acceleration.
+Current state of bodies undergoing and exerting acceleration, either from an&nbsp;Ephemeris&nbsp;model or from the numerical propagation.
+For the case where a third-body mutual spherical harmonic acceleration (e.g. Ganymede on Io when propagating w.r.t. Jupiter), additional parameters have to be provided that denote the expansion degree/order of the central body, so:
+SelectedAccelerationMap accelerationSettings;
+int maximumDegreeOfIo = 12;
+int maximumOrderOfIo = 12;
+int maximumDegreeOfGanymede = 4;
+int maximumOrderOfGanymede = 4;
+int maximumDegreeOfJupiter = 4;
+int maximumOrderOfJupiter = 4;
+accelerationSettings[ “Io” ][ “Jupiter” ].push_back( boost::make_shared&lt; MutualSphericalHarmonicAccelerationSettings &gt;(</p>
+<blockquote>
+<div>maximumDegreeOfJupiter, maximumOrderOfJupiter, maximumDegreeOfGanymede, maximumOrderOfGanymede, maximumDegreeOfIo, maximumOrderOfIo ) );</div></blockquote>
+<p>where Jupiter now takes the role of central body, instead of body exerting the acceleration.
+Aerodynamic acceleration&nbsp;(no derived class of&nbsp;<code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code>, type aerodynamic), added to&nbsp;<code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code>&nbsp;as follows, for example of acceleration exerted on “Apollo” by “Earth” (e.g. atmosphere model belonging to Earth):
+SelectedAccelerationMap accelerationSettings;
+accelerationSettings[ “Apollo” ][ “Earth” ].push_back( boost::make_shared&lt; AccelerationSettings &gt;( aerodynamic ) );
+Requires the following environment models to be defined:
+Atmosphere model for body exerting acceleration.
+Shape model for body exerting acceleration.
+Aerodynamic coefficient interface for body undergoing acceleration. NOTE: In the case that the aerodynamic coefficients are defined as a function of the vehicle orientation (e.g. angle of attack and sideslip angle), these angles can be manually or automatically defined. We have dedicated a specific page to this here.
+Mass model for body undergoing acceleration.
+Current state of body undergoing and body with atmosphere.
+NOTE: Defining settings for a vehicle’s orientation, which may influence your aerodynamic force, is done&nbsp;after&nbsp;creating the acceleration models, as discused&nbsp;here
+Cannonball radiation pressure&nbsp;(no derived class of&nbsp;<code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code>, type cannon_ball_radiation_pressure), added to&nbsp;<code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code>&nbsp;as follows, for example of acceleration exerted on “Apollo” by “Sun”:
+SelectedAccelerationMap accelerationSettings;
+accelerationSettings[ “Apollo” ][ “Sun” ].push_back( boost::make_shared&lt; AccelerationSettings &gt;( cannon_ball_radiation_pressure ) );
+Requires the following environment models to be defined:
+Radiation pressure model for body undergoing acceleration (from source equal to body exerting acceleration)
+Current state of body undergoing and body emitting radiation
+Thrust acceleration&nbsp;(derived class of&nbsp;ThrustAccelerationSettings), requires:
+Mass of body undergoing acceleration
+Settings for both the direction and magnitude of the thrust force. These models may in turn have additional environmental dependencies. The creation of thrust accelerations is discussed in more detail&nbsp;here
+Mass rate model setup
+Although propagating a body’s translational dynamics is the backbone of Tudat’s simulations, it is also possible to propagate a vehicle’s mass (either concurrently or separately). The manner in which the models that govern the ‘mass dynamics’, i.e. mass-rate models, are handled in the code is very similar to the acceleration models: a list of settings for the models is created by the user, which are then used to create the required objects. The list to be created by the user is:
+std::map&lt; std::string, std::vector&lt; boost::shared_ptr&lt; MassRateModelSettings &gt; &gt; &gt; massRateModelSettings;</p>
+<p>where the map key denotes the body of which the mass-rate is to be computed. At present, two mass-rate models are available, each with its own derived class of&nbsp;MassRateModelSettings. These are:
+Custom mass-rate&nbsp;(derived class&nbsp;CustomMassRateModelSettings). Using this class, the user must provide a&nbsp;boost::function&lt; double( const double ) &gt;&nbsp;function, i.e. a function returning a&nbsp;double, representing the mass-rate, and taking another&nbsp;double, representing time, as an input. The internal workings of this function are completely up to the user. If any help is required in setting up such a model please contact the Tudat support team.
+From-thrust mass rate&nbsp;(derived class&nbsp;FromThrustMassModelSettings). Using this mass-rate model, the change in vehicle mass due to the expulsion of propellant is taken into account when propagating a vehicle’s dynamics. It retrieves the required data from a&nbsp;ThrustAccelerationobject, ensuring full consistency between the two. Two option are available when creating this type of mass-rate model:
+Use&nbsp;all&nbsp;thrust forces acting on a single body, combined into a single mass-rate model. This will in most cases be the model of choice, as there is often no need to distinguish between thurst sources when computing the mass rate: only the total amount of propellant usage is relevant. This option is toggled by setting the&nbsp;useAllThrustModels&nbsp;input argument of the&nbsp;FromThrustMassModelSettings&nbsp;constructor to true.
+Use a single thrust model, defined by a string-identifier. When creating a thrust model, a&nbsp;thrustOriginId&nbsp;input is provided to the&nbsp;ThrustEngineSettings&nbsp;settings constructor. Only in the&nbsp;FromBodyThrustEngineSettings&nbsp;derived type (see&nbsp;here&nbsp;for additional explanation) is this thrust origin id set to anything else than an empty string: it represents the engine name.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="aerodynamicGuidance.html" class="btn btn-neutral float-right" title="2. Aerodynamic Guidance" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Acceleration Set-Up" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Alejandro Gonzalez Puerta.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
