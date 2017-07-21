@@ -20,8 +20,8 @@ There are a number of assumptions we can make in answering this question, which 
 
     .. note:: In a followup tutorial, we will show how to extend the dynamical model of the spacecraft, slightly relaxing the last assumption.
 
-1. Writing the simulation
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Writing the simulation
+~~~~~~~~~~~~~~~~~~~~~~
 The main focus of this tutorial is to provide insight into the use of the Tudat library for your application. Using this test case, we will show how you can use some of the elements of the Tudat library, namely:
 
     - The transformation from Keplerian elements (provided) to Cartesian elements (required by propagator).
@@ -31,16 +31,16 @@ The main focus of this tutorial is to provide insight into the use of the Tudat 
     - The settings for the numerical integrator.
     - The use of 'create' functions to parse these settings
 
-2. Propagating an orbit numerically, and outputting the results to a file.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Propagating an orbit numerically, and outputting the results to a file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In particular, it will show you how these elements can work together to provide you with a powerful satellite propagator tool. It is not the intention to give you a C++ tutorial. Only the parts of the source code specific to Tudat will be discussed on this page. Detailed documentation on the environment models, acceleration models and propagators/integrators is available, but we recommend working through the tutorials here before delving into the details of all options that are available to you.
 
-3. Defining the simulation settings
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Defining the simulation settings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In Tudat, the environment, acceleration models and propagator are not created directly by the user. Instead, the user defines a number of 'Settings' objects that describe how the actual models are to be put together. These Settings objects are then passed to 'create' functions to build up the objects/data used in the simulations, and link them all together. In linking these objects together, information is automatically updated, and where necessary transformed and processed in the manner specified by the user in the Settings objects.
 
-4. Setting up the environment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Setting up the environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 First we discuss the setup of the environment, which is stored in a list of Body objects, each of which represents either a natural celestial body, or a spacecraft (orbiter, entry vehicle, etc.). The entire environment (gravity fields, atmospheres, ephemerides, rotation models, etc.) are then defined as members of the corresponding Body object. For this example, the only environment models we need are:
 
     - Earth gravity field (point-mass)
@@ -105,8 +105,8 @@ Although not required in this simulation, it is good practice to call the follow
 
 Calling this function will allow hierarchical ephemerides to be properly used in the simulation (i.e. orbiter Ephemeris w.r.t. Moon, Moon w.r.t. Earth, Earth w.r.t. Sun, Sun w.r.t. barycenter).
 
-5. Setting up the acceleration models
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Setting up the acceleration models
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 To define the settings of the propagation of the orbit, we start by defining the required acceleration models. The block of code that performs the required operations is:
 
     .. code-block:: cpp
@@ -173,8 +173,8 @@ The list of the actual acceleration models is now created by:
 
 which automatically links together all required objects and functions.
 
-6. Propagation settings
-~~~~~~~~~~~~~~~~~~~~~~~
+Propagation settings
+~~~~~~~~~~~~~~~~~~~~
 Now that we have both our environment models and our acceleration model, we can create the full settings for the propagation. These settings are stored in a PropagatorSettings object. For this example, we will only consider the propagation of translational dynamics, which is stored in the derived class TranslationalStatePropagatorSettings. The settings for the propagator are the following:
 
     - The acceleration models
@@ -252,8 +252,8 @@ A final piece of information needed to propagate the orbit is the settings for t
             boost::make_shared< IntegratorSettings< > >
                 ( rungeKutta4, simulationStartEpoch, fixedStepSize );
 
-7. Performing the orbit propagation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Performing the orbit propagation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Now, we have defined all the information needed to propagate the orbit of our satellite, which are stored in the bodyMap (environment), propagatorSettings (settings for the full state derivative model) and integratorSettings (settings on how to obtain the numerical solution). The propagation is done by an object of a class (derived from) DynamicsSimulator. Here, the following is used to propagate:
 
     .. code-block:: cpp

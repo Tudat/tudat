@@ -12,8 +12,8 @@ The main difference of this example w.r.t. the previous one lies in the followin
     2. Creating an interpolator that turns the discrete data set into a continuous function
     3. Creating settings for the thrust acceleration using these data.
 
-1. Loading the data
-~~~~~~~~~~~~~~~~~~~
+Loading the data
+~~~~~~~~~~~~~~~~
 Reading data from a file can be done in many different ways. Since the manner in which a file is read depends on the structure of the particular file, there can be many different approaches (and file readers) for different applications. Here, we chose a very basic setup in which the thrust file is set up as follows::
 
     0       0 0 5
@@ -84,8 +84,8 @@ The first argument to the readMatrixFromFile denotes the full file location of
         }
         return thrustData;
 
-2. Creating the interpolator
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Creating the interpolator
+~~~~~~~~~~~~~~~~~~~~~~~~~
 We now have a map with time vs. thrust force. To pass this information to the acceleration settings, we need to turn this discrete data into a continuous function, for which we use an interpolator. Here, we choose to use a linear interpolator. For a list of the various other interpolation options, details of their implementation, and instructions on how to use/create them, this wiki page. For this example, we use the following code to create an interpolator of the thrust vector:
 
     .. code-block:: cpp
@@ -122,8 +122,8 @@ The interpolator is then created by calling:
 
 The type boost::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector3d > > is the pointer to our interpolator. The bit < double, Eigen::Vector3d > denotes that the independent variable is a double (time) and the dependent variable is a Eigen::Vector3d(thrust). The two arguments provided to the createOneDimensionalInterpolator function is firstly the map containing the data, and secondly the object containing the settings to be used for creating the interpolator.
 
-3. Creating the thrust acceleration.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Creating the thrust acceleration.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The creation of the thrust acceleration is done similarly as in the previous example, by creating an object of type ThrustAccelerationSettings, as follows:
 
     .. code-block:: cpp

@@ -17,6 +17,7 @@ Example tutorials
 Each example is discussed in detail on a separate page. Note that in the first example, the entire source file is discussed in a step-by-step manner. Subsequent tutorials focus on the aspects that are different, compared to the basic Kepler orbit propagation.
 
 .. toctree::
+   :numbered:
    :maxdepth: 1
 
    innerSolarSystemPropagation

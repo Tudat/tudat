@@ -1,11 +1,11 @@
 .. _troubleshooting:
 
-5. Troubleshooting
+Troubleshooting
 ==================
 Welcome to the troubleshooting guide. You have most likely been asked to come here because you have a problem with your Tudat installation or its configuration. Hopefully the steps discussed here will help you get up and running!
 
-1. Troubleshooting Installation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Troubleshooting installation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Please complete all checks and copy the output (even if a check seems succesfull). Some checks will provide additional tests and solutions in case the check initially fails. Please complete these instructions as well and redo the original test!
 
 **Step 1.1: Check CMake**
@@ -69,8 +69,8 @@ Please complete all checks and copy the output (even if a check seems succesfull
     - Usually this is an option inside the installation (not for CMake under OS X), reinstalling and selecting this option should fix the issue.
     - If not you need to manually add the directory that contains the executables to you path, see instructions below.
 
-2. Troubleshooting Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Troubleshooting configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The configuration of your project includes downloading the Tudat Bundle source and running CMake.
 
 **Step 2.1: Boost compiler compatibility**
@@ -162,8 +162,8 @@ The configuration of your project includes downloading the Tudat Bundle source a
 
     .. note:: Make a screenshot of the Kits tab if problems persist.
 
-3. Troubleshooting Tools
-~~~~~~~~~~~~~~~~~~~~~~~~
+Troubleshooting tools
+~~~~~~~~~~~~~~~~~~~~~
 Below are several tools and tricks that are essential for troubleshooting your installation.
 
 **3.1: Terminal**

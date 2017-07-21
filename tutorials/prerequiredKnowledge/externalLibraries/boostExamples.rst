@@ -4,7 +4,8 @@ Boost: Usage Examples
 =====================
 This page provides some examples on how to use :class:`shared_ptr`, :class:`make_shared`, :class:`function` and :class:`bind`, which were introduced on the Boost page, at application level and in combination with Tudat. Note that the first two are crucial for any Tudat user. The documentation on :class:`function`/:class:`bind` should be consulted only when working on feature development. The example of :class:`bind` also includes the use of the RK4 numerical integrator from Tudat.
 
-.. class:: shared_ptr
+shared_ptr
+~~~~~~~~~~
 
     The boost :class:`shared_ptr` is a template class that stores a smart pointer to a dynamically allocated object. Generally, it behaves much like a normal C++ pointer but should be used instead, because it is more safe. Use of this pointer ensures that the object pointed to is destroyed when the last :class:`shared_ptr` to the object is destroyed or reset. Thus, this feature provides automatic memory management and prevents memory leaks. Also, this eliminates the use of explicit delete statements.
 
@@ -85,7 +86,8 @@ This page provides some examples on how to use :class:`shared_ptr`, :class:`ma
 
             TestBody* exampleTestBodyPointer = new TestBody( initialState );
 
-.. class:: make_shared
+make_shared
+~~~~~~~~~~~
 
     Boost :class:`make_shared` is a factory function that creates an object of a given type and returns a :class:`shared_ptr` to it. This way the explicit use of ``new`` is avoided.
 
@@ -128,7 +130,8 @@ This page provides some examples on how to use :class:`shared_ptr`, :class:`ma
 
             boost::shared_ptr< objectType > newExampleTestBodyPointer( new objectType( input1, input2, ..., inputN ) ); // Where N > 10.
 
-.. class:: function
+function
+~~~~~~~~
 
     The  boost function library contains a family of class templates that are function object wrappers. It is used in Tudat instead of a normal C++ function pointer because it is an easy way to pass a function as an input to another object or function. Specifically, it allows the passing of free functions and class member functions with a single interface. The boost function type defines both its input types (and order) and its output type. Any function that fits this profile is accepted when it is passed.
 
@@ -246,7 +249,8 @@ This page provides some examples on how to use :class:`shared_ptr`, :class:`ma
 
         will ignore the input to ``testFunction`` and again assign 3.0 to the ``testValue`` variable.
 
-.. class:: bind
+bind
+~~~~
 
     The boost bind library implements a simple and versatile function argument binding mechanism. This boost feature is used in Tudat because it is a good way to pass function objects. Its use is required for a unified free function and member function interface when using a class method, due to the way C++ calls function methods1.
 

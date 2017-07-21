@@ -1,7 +1,7 @@
 .. _setupNewApps:
 
-4. Setup New Applications
-=========================
+Setup New Applications
+======================
 
 This guide will show how to start add new and existing applications to the Tudat Bundle environment. Existing applications (by another user) are considered new to the system, thus the process is the same. The guide assumes that you you have already set-up the build environment, and downloaded, configured and build the Tudat libraries.
 
