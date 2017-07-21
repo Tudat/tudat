@@ -1,7 +1,7 @@
 .. _downloadTudatBundle:
 
-2. Download Tudat Bundle
-========================
+Download Tudat Bundle
+=====================
 The next step in the installation guide is to download the Tudat Bundle. This is a pre-configured setup that will allow us to get the libraries up and running in no time. The Tudat Bundle contains the following libraries:
 
 - Tudat

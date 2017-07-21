@@ -19,8 +19,8 @@ A list of options/details of the first two of these points is discussed here. F
 
 We will not treat the entire source file for the simulation, as most of it is similar or identical to that discussed in detail for the unperturbed and perturbed satellite examples.
 
-1. Adding the thrust acceleration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Adding the thrust acceleration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The first main difference w.r.t. the other examples is the use of a thrust acceleration. For this example, the full code required for this is:
     
     .. code-block:: cpp
@@ -73,8 +73,8 @@ with the first and second arguments of the ConstantThrustEngineSettings repres
 
 where you can see that defining a thrust acceleration requires a dedicated derived class of AccelerationSettings, as was the case for the spherical harmonic acceleration. This derived class (ThrustAccelerationSettings) takes the settings for the magnitude and direction of the thrust force, which we just created, as input. A final point to remember when defining the thrust acceleration settings is that thrust is a force that the vehicle exerts on itself.
 
-2. Propagating the mass and the orbit
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Propagating the mass and the orbit
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 For consistent simulation results, the mass decrease as a result of the expelled propellant must be included in the simulation. Doing so requires a significant modification of the way in which the propagator settings are defined. The total block of code is:
     
     .. code-block:: cpp
@@ -177,6 +177,6 @@ Our final step is to tell the software to propagate both the translational dyn
 
 As is discussed in more detail here. This propagatorSettings object, which contains settings for both translational dynamics and mass rate, can be passed to the SingleArcDynamicsSimulator in the exact same manner as was done in the previous examples.
 
-3. Results
-~~~~~~~~~~
+Results
+~~~~~~~
 Below, you see the (in-plane) resulting dynamics of the spacecraft and the mass of the vehicle as a function of time. The thrust force is along the velocity vector, constantly adding kinetic energy to the spacecraft. As a result, you can see the orbit slowly spiral outwards. Since the specific impulse and thrust force were both set to a constant, the body mass decreases exacly linearly.

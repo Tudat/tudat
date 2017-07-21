@@ -1,7 +1,7 @@
 .. _configureTudatLibraries:
 
-3. Configure Tudat Libraries
-============================
+Configure Tudat Libraries
+=========================
 
 .. warning:: This step requires that you have CMake, GCC compiler, Qt Creator installed and the Tudat Bundle (incl. libraries) on your computer.
 
