@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3. Thrust Models &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>4.3. Thrust Models &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -36,9 +36,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="Acceleration Set-Up" href="index.html"/>
-        <link rel="next" title="Propagation Set-Up" href="../propagationSetup/index.html"/>
-        <link rel="prev" title="2. Aerodynamic Guidance" href="aerodynamicGuidance.html"/> 
+        <link rel="up" title="4. Acceleration Set-Up" href="index.html"/>
+        <link rel="next" title="5. Propagation Set-Up" href="../propagationSetup/index.html"/>
+        <link rel="prev" title="4.2. Aerodynamic Guidance" href="aerodynamicGuidance.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -95,17 +95,17 @@
 <li class="toctree-l2"><a class="reference internal" href="../../prerequiredKnowledge/index.html">Pre-required Knowledge</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">Basic Mathematics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">Environment Set-up</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">Acceleration Set-Up</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="frameworkAcceleration.html">1. Implementation Framework of the Acceleration Settings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="aerodynamicGuidance.html">2. Aerodynamic Guidance</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">3. Thrust Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">4. Acceleration Set-Up</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="frameworkAcceleration.html">4.1. Implementation Framework of the Acceleration Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aerodynamicGuidance.html">4.2. Aerodynamic Guidance</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">4.3. Thrust Models</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">Propagation Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">Other Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Propagation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">6. Other Libraries</a></li>
 </ul>
 </li>
 </ul>
@@ -159,9 +159,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">Acceleration Set-Up</a> &raquo;</li>
+          <li><a href="index.html">4. Acceleration Set-Up</a> &raquo;</li>
         
-      <li>3. Thrust Models</li>
+      <li>4.3. Thrust Models</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -181,7 +181,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="thrust-models">
-<span id="tudatfeaturesthrustmodels"></span><h1>3. Thrust Models<a class="headerlink" href="#thrust-models" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturesthrustmodels"></span><h1>4.3. Thrust Models<a class="headerlink" href="#thrust-models" title="Permalink to this headline">¶</a></h1>
 <p>When simulating the dynamics of solar system bodies, we defined the environment and types of accelerations, and let the numerical integration produce a solution to the resulting equations of motion. When considering manmade vehicles, however, we often have direct influence on the forces acting on our body. In Tudat, controlling such forces can be done in a number of manners, which we will discuss in this tutorial. At present, the forces that can be controlled are:</p>
 <blockquote>
 <div><ul class="simple">
@@ -190,7 +190,7 @@
 </ul>
 </div></blockquote>
 <div class="section" id="thrust-control">
-<h2>3.1. Thrust Control<a class="headerlink" href="#thrust-control" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.1. Thrust Control<a class="headerlink" href="#thrust-control" title="Permalink to this headline">¶</a></h2>
 <p>In Tudat, we define the thrust force by two separate types of settings (which may or may not be linked):</p>
 <blockquote>
 <div><ul class="simple">
@@ -208,7 +208,7 @@
 </div>
 <p>In the above code snippet, two things may stand out. First of all, we define the thrust force as one that the vehicle&nbsp;exerts on itself. Secondly, to define the thrust force, the user must provide two objects: one of type (derived from)&nbsp;<code class="xref py py-class docutils literal"><span class="pre">ThrustDirectionGuidanceSettings</span></code>&nbsp;and&nbsp;<code class="xref py py-class docutils literal"><span class="pre">ThrustEngineSettings</span></code>.</p>
 <div class="section" id="thrust-direction">
-<h3>3.1.1. Thrust direction<a class="headerlink" href="#thrust-direction" title="Permalink to this headline">¶</a></h3>
+<h3>4.3.1.1. Thrust direction<a class="headerlink" href="#thrust-direction" title="Permalink to this headline">¶</a></h3>
 <p>For the&nbsp;direction&nbsp;of the thrust, there are presently four available types of guidance. As is done for the acceleration models, some of the types of thrust direction require a specific derived class of&nbsp;<code class="xref py py-class docutils literal"><span class="pre">ThrustDirectionGuidanceSettings</span></code>, while others are defined purely by their type.</p>
 <blockquote>
 <div><dl class="docutils">
@@ -243,7 +243,7 @@
 </div>
 </div>
 <div class="section" id="thrust-magnitude">
-<h2>3.2. Thrust magnitude<a class="headerlink" href="#thrust-magnitude" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.2. Thrust magnitude<a class="headerlink" href="#thrust-magnitude" title="Permalink to this headline">¶</a></h2>
 <p>To define the thrust magnitude, there are presently three available types of settings, each with its own dedicated derived class of&nbsp;<code class="xref py py-class docutils literal"><span class="pre">ThrustEngineSettings</span></code>. We note that presently, the definition of the thrust direction in the body-fixed frame is also defined through these derived classes. In essence, the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">ThrustEngineSettings</span></code>&nbsp;defines all&nbsp;local&nbsp;(to the vehicle systems) settings for the thrust, while&nbsp;<code class="xref py py-class docutils literal"><span class="pre">ThrustDirectionGuidanceSettings</span></code>&nbsp;defines how the full vehicle must orient itself in space for the required thrust direction to be achieved. At present, there is no option for thrust-vector control (i.e. modifying the thrust direction in the body-fixed frame). If your application requires such functionality, please contact the Tudat support team. The following thrust magnitude settings are available:</p>
 <blockquote>
 <div><dl class="docutils">
@@ -282,10 +282,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../propagationSetup/index.html" class="btn btn-neutral float-right" title="Propagation Set-Up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../propagationSetup/index.html" class="btn btn-neutral float-right" title="5. Propagation Set-Up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="aerodynamicGuidance.html" class="btn btn-neutral" title="2. Aerodynamic Guidance" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="aerodynamicGuidance.html" class="btn btn-neutral" title="4.2. Aerodynamic Guidance" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

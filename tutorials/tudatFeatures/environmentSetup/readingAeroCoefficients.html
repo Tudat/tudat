@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3. Reading Aerodynamic Coefficients From Files &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>3.3. Reading Aerodynamic Coefficients From Files &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -36,9 +36,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="2. Environment Set-up" href="index.html"/>
-        <link rel="next" title="Acceleration Set-Up" href="../accelerationSetup/index.html"/>
-        <link rel="prev" title="2. Environment Valid Time-range" href="validTimeRange.html"/> 
+        <link rel="up" title="3. Environment Set-up" href="index.html"/>
+        <link rel="next" title="4. Acceleration Set-Up" href="../accelerationSetup/index.html"/>
+        <link rel="prev" title="3.2. Environment Valid Time-range" href="validTimeRange.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -96,16 +96,16 @@
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">Basic Mathematics Tools</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">2. Environment Set-up</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="frameworkEnvironmentModels.html">1. Implementation Framework of the Environment Models</a></li>
-<li class="toctree-l4"><a class="reference internal" href="validTimeRange.html">2. Environment Valid Time-range</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">3. Reading Aerodynamic Coefficients From Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">3. Environment Set-up</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="frameworkEnvironmentModels.html">3.1. Implementation Framework of the Environment Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="validTimeRange.html">3.2. Environment Valid Time-range</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">3.3. Reading Aerodynamic Coefficients From Files</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">Acceleration Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Propagation Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">4. Other Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Acceleration Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Propagation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">6. Other Libraries</a></li>
 </ul>
 </li>
 </ul>
@@ -159,9 +159,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">2. Environment Set-up</a> &raquo;</li>
+          <li><a href="index.html">3. Environment Set-up</a> &raquo;</li>
         
-      <li>3. Reading Aerodynamic Coefficients From Files</li>
+      <li>3.3. Reading Aerodynamic Coefficients From Files</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -181,10 +181,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="reading-aerodynamic-coefficients-from-files">
-<span id="tudatfeaturesreadingaerocoefficients"></span><h1>3. Reading Aerodynamic Coefficients From Files<a class="headerlink" href="#reading-aerodynamic-coefficients-from-files" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturesreadingaerocoefficients"></span><h1>3.3. Reading Aerodynamic Coefficients From Files<a class="headerlink" href="#reading-aerodynamic-coefficients-from-files" title="Permalink to this headline">¶</a></h1>
 <p>For many simulations/analyses involving atmospheric flight, the aerodynamic coefficients will be provided in tabulated form. If put into the correct file format, these files can be read into Tudat used during the orbit propagation. By specifying the physical meaning of the independent variables of the aerodynamic coefficients, no action on the side of the user is required to update the aerodynamic coefficients to their correct values during propagation. Here, we give an overview and some examples on how to load aerodynamic coefficients from a file.</p>
 <div class="section" id="loading-the-coefficient-settings">
-<h2>3.1. Loading the coefficient settings<a class="headerlink" href="#loading-the-coefficient-settings" title="Permalink to this headline">¶</a></h2>
+<h2>3.3.1. Loading the coefficient settings<a class="headerlink" href="#loading-the-coefficient-settings" title="Permalink to this headline">¶</a></h2>
 <p>As a reminder, aerodynamic coefficients are created in Tudat by creating an object of type&nbsp;<code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientSettings</span></code>:</p>
 <blockquote>
 <div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AerodynamicCoefficientSettings</span> <span class="o">&gt;</span> <span class="n">aerodynamicCoefficientSettings</span> <span class="o">=</span> <span class="p">.....</span>
@@ -197,7 +197,7 @@
 <p>For the situation where only force coefficients are considered, several pieces information are needed:</p>
 <blockquote>
 <div><ul class="simple">
-<li>A list of files for any of the three aerodynamic coefficients (e.g. <span class="math">C_D</span>, C&nbsp;S, C&nbsp;L&nbsp;or C&nbsp;X, C&nbsp;Y, C&nbsp;Z). Note that the behaviour of each coefficient must be provided in a&nbsp;separate file. Note that not every coefficient needs to be defined. If a file is not provided for one of the coefficients, as will often be the case for C&nbsp;S, zeros are assumed at all points in the propagation.</li>
+<li>A list of files for any of the three aerodynamic coefficients (e.g. C_D, C&nbsp;S, C&nbsp;L&nbsp;or C&nbsp;X, C&nbsp;Y, C&nbsp;Z). Note that the behaviour of each coefficient must be provided in a&nbsp;separate file. Note that not every coefficient needs to be defined. If a file is not provided for one of the coefficients, as will often be the case for C&nbsp;S, zeros are assumed at all points in the propagation.</li>
 <li>The physical meaning of each of the independent variables of the coefficients.</li>
 <li>The reference area for the aerodynamics. This is&nbsp;not&nbsp;read from the file and must be provided as an input to the function.</li>
 <li>Two booleans denoting the orientation and direction of the aerodynamic coefficients. For instance C&nbsp;D, C&nbsp;S, C&nbsp;L&nbsp;denote the strength of the aerodynamic force in the aerodynamic reference frame, in a direction opposite to the axes of that frame. The C&nbsp;X, C&nbsp;Y, C&nbsp;Z&nbsp;coefficients, on the other hand, are defined in the body-fixed frame.</li>
@@ -238,7 +238,7 @@
 </div>
 </div>
 <div class="section" id="adding-control-surface-influence">
-<h2>3.2. Adding control surface influence<a class="headerlink" href="#adding-control-surface-influence" title="Permalink to this headline">¶</a></h2>
+<h2>3.3.2. Adding control surface influence<a class="headerlink" href="#adding-control-surface-influence" title="Permalink to this headline">¶</a></h2>
 <p>In addition to defining aerodynamic coefficients for the vehicle itself, the influence of control surface deflections on the values of the coefficients will be needed for certain applications. In Tudat, any number of control surfaces may be defined for a vehicle, the deflection of which may be set by your particular guidance model (see&nbsp;here). Loading the aerodynamic coefficient increments of the control surface is done in a manner similar to those of the total vehicle, but:</p>
 <blockquote>
 <div><ul class="simple">
@@ -288,10 +288,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../accelerationSetup/index.html" class="btn btn-neutral float-right" title="Acceleration Set-Up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../accelerationSetup/index.html" class="btn btn-neutral float-right" title="4. Acceleration Set-Up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="validTimeRange.html" class="btn btn-neutral" title="2. Environment Valid Time-range" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="validTimeRange.html" class="btn btn-neutral" title="3.2. Environment Valid Time-range" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

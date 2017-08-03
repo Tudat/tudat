@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1. Frame/State Transformations &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>1.1. Frame/State Transformations &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
         <link rel="up" title="1. Basic Astrodynamics Tools" href="index.html"/>
-        <link rel="next" title="Basic Mathematics Tools" href="../mathTools/index.html"/>
+        <link rel="next" title="2. Basic Mathematics Tools" href="../mathTools/index.html"/>
         <link rel="prev" title="1. Basic Astrodynamics Tools" href="index.html"/> 
 
   
@@ -96,14 +96,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">1. Basic Astrodynamics Tools</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">1. Frame/State Transformations</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">1.1. Frame/State Transformations</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">Basic Mathematics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">2. Environment Set-up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">Acceleration Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Propagation Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">4. Other Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Acceleration Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Propagation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">6. Other Libraries</a></li>
 </ul>
 </li>
 </ul>
@@ -159,7 +159,7 @@
         
           <li><a href="index.html">1. Basic Astrodynamics Tools</a> &raquo;</li>
         
-      <li>1. Frame/State Transformations</li>
+      <li>1.1. Frame/State Transformations</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -179,9 +179,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="frame-state-transformations">
-<span id="tudatfeaturesframestatetransformations"></span><h1>1. Frame/State Transformations<a class="headerlink" href="#frame-state-transformations" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturesframestatetransformations"></span><h1>1.1. Frame/State Transformations<a class="headerlink" href="#frame-state-transformations" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="state-type-conversions">
-<h2>1.1. State type conversions<a class="headerlink" href="#state-type-conversions" title="Permalink to this headline">¶</a></h2>
+<h2>1.1.1. State type conversions<a class="headerlink" href="#state-type-conversions" title="Permalink to this headline">¶</a></h2>
 <p>Depending on your application, you will be using any of a number of state (position and velocity) representations. In Tudat, conversions involving the following state representations are available:</p>
 <ul class="simple">
 <li>Cartesian elements.</li>
@@ -219,7 +219,7 @@
 <p>which yields the exact same result.</p>
 <p>In the definition of the <code class="docutils literal"><span class="pre">KeplerianElementIndices</span></code> enum, you can see something peculiar: both <code class="docutils literal"><span class="pre">semiMajorAxisIndex</span></code> and <code class="docutils literal"><span class="pre">semiLatusRectumIndex</span></code> are defined as index 0. The latter option is only applicable when the orbit is parabolic (when the eccentricity is 1.0). That is, if the orbit is parabolic, element 0 does not represent the semi-major axis (as it is not defined) but the semi-latus rectum. Below, we list the details of the implementation of each of these state types in Tudat:</p>
 <div class="section" id="kepler-elements">
-<h3>1.1.1. Kepler elements<a class="headerlink" href="#kepler-elements" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.1.1. Kepler elements<a class="headerlink" href="#kepler-elements" title="Permalink to this headline">¶</a></h3>
 <p>The Kepler elements are the standard orbital elements used in classical celestial mechanics, with the element indices shown above.
 Converting to/from Cartesian state requires an additional piece of information in addition to the state itself: the gravitational parameter of the body w.r.t. the Keplerian elements are defined. Conversion to/from Cartesian elements is done as</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">cartesianState</span> <span class="o">=</span> <span class="p">....</span>
@@ -274,7 +274,7 @@ Converting to/from Cartesian state requires an additional piece of information i
 </div>
 </div>
 <div class="section" id="spherical-orbital-elements">
-<h3>1.1.2. Spherical-orbital elements<a class="headerlink" href="#spherical-orbital-elements" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.1.2. Spherical-orbital elements<a class="headerlink" href="#spherical-orbital-elements" title="Permalink to this headline">¶</a></h3>
 <p>The spherical elements are typically used to denote the conditions in atmospheric flight. In most applications, they will be used to denote the state in a body-fixed frame. The details of the physical meaning of the elements id discussed&nbsp;here. The element indices in Tudat are the following:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Spherical orbital state element indices</span>
 <span class="k">enum</span> <span class="n">SphericalOrbitalStateElementIndices</span>
@@ -300,23 +300,23 @@ Converting to/from Cartesian state requires an additional piece of information i
 </div>
 </div>
 <div class="section" id="modified-equinoctial-elements">
-<h3>1.1.3. Modified Equinoctial elements<a class="headerlink" href="#modified-equinoctial-elements" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.1.3. Modified Equinoctial elements<a class="headerlink" href="#modified-equinoctial-elements" title="Permalink to this headline">¶</a></h3>
 <p>Coming soon.</p>
 </div>
 <div class="section" id="unified-state-model-elements">
-<h3>1.1.4. Unified State Model elements<a class="headerlink" href="#unified-state-model-elements" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.1.4. Unified State Model elements<a class="headerlink" href="#unified-state-model-elements" title="Permalink to this headline">¶</a></h3>
 <p>Coming soon.</p>
 </div>
 </div>
 <div class="section" id="frame-transformations">
-<h2>1.2. Frame transformations<a class="headerlink" href="#frame-transformations" title="Permalink to this headline">¶</a></h2>
+<h2>1.1.2. Frame transformations<a class="headerlink" href="#frame-transformations" title="Permalink to this headline">¶</a></h2>
 <p>Every state, regardless of its representation is expressed with a particular origin an orientation. This is most easy to understand for Cartesian elements, where the origin represents the (0,0,0) position, and the orientation defines the direction of the x-, y- and z-axes. Below, we discuss how to perform these operations in Tudat.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">Do not use the getCurrentState or getCurrentRotation functions in the body objects! These functions are used during numerical propagation, and calling them outside of the numerical propagation will generally not lead to meaningful results.</p>
 </div>
 <div class="section" id="frame-translations">
-<h3>1.2.1. Frame translations<a class="headerlink" href="#frame-translations" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.2.1. Frame translations<a class="headerlink" href="#frame-translations" title="Permalink to this headline">¶</a></h3>
 <p>To change the origin of a Cartesian, one can simply add a Cartesian state that represents the difference between the original and the new origin. For instance, when transforming a vector (state of a vehicle) from Earth-centered to Moon-centered (keeping the orientation constant):</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">vehicleCartesianStateInEarthCenteredFrame</span> <span class="o">=</span> <span class="p">....</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">moonCartesianStateInEarthCenteredFrame</span> <span class="o">=</span> <span class="p">....</span>
@@ -340,7 +340,7 @@ Converting to/from Cartesian state requires an additional piece of information i
 <p>where the <code class="docutils literal"><span class="pre">NONE</span></code> arguments indicates that no light-time corrections are used, and the frame orientation denotes the orientation of the frame in which the relative state is returned.</p>
 </div>
 <div class="section" id="frame-rotations">
-<h3>1.2.2. Frame rotations<a class="headerlink" href="#frame-rotations" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.2.2. Frame rotations<a class="headerlink" href="#frame-rotations" title="Permalink to this headline">¶</a></h3>
 <p>Rotating the frame in which a Cartesian state is expressed requires two pieces of information:</p>
 <blockquote>
 <div><ol class="arabic simple">
@@ -385,7 +385,7 @@ Converting to/from Cartesian state requires an additional piece of information i
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../mathTools/index.html" class="btn btn-neutral float-right" title="Basic Mathematics Tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../mathTools/index.html" class="btn btn-neutral float-right" title="2. Basic Mathematics Tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="1. Basic Astrodynamics Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

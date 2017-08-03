@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1. Implementation Framework of the Environment Models &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>3.1. Implementation Framework of the Environment Models &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -36,9 +36,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="2. Environment Set-up" href="index.html"/>
-        <link rel="next" title="2. Environment Valid Time-range" href="validTimeRange.html"/>
-        <link rel="prev" title="2. Environment Set-up" href="index.html"/> 
+        <link rel="up" title="3. Environment Set-up" href="index.html"/>
+        <link rel="next" title="3.2. Environment Valid Time-range" href="validTimeRange.html"/>
+        <link rel="prev" title="3. Environment Set-up" href="index.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -96,16 +96,16 @@
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">Basic Mathematics Tools</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">2. Environment Set-up</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">1. Implementation Framework of the Environment Models</a></li>
-<li class="toctree-l4"><a class="reference internal" href="validTimeRange.html">2. Environment Valid Time-range</a></li>
-<li class="toctree-l4"><a class="reference internal" href="readingAeroCoefficients.html">3. Reading Aerodynamic Coefficients From Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">3. Environment Set-up</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">3.1. Implementation Framework of the Environment Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="validTimeRange.html">3.2. Environment Valid Time-range</a></li>
+<li class="toctree-l4"><a class="reference internal" href="readingAeroCoefficients.html">3.3. Reading Aerodynamic Coefficients From Files</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">Acceleration Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Propagation Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">4. Other Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Acceleration Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Propagation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">6. Other Libraries</a></li>
 </ul>
 </li>
 </ul>
@@ -159,9 +159,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">2. Environment Set-up</a> &raquo;</li>
+          <li><a href="index.html">3. Environment Set-up</a> &raquo;</li>
         
-      <li>1. Implementation Framework of the Environment Models</li>
+      <li>3.1. Implementation Framework of the Environment Models</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -181,12 +181,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="implementation-framework-of-the-environment-models">
-<span id="tudatfeaturesframeworkenvironmentmodels"></span><h1>1. Implementation Framework of the Environment Models<a class="headerlink" href="#implementation-framework-of-the-environment-models" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturesframeworkenvironmentmodels"></span><h1>3.1. Implementation Framework of the Environment Models<a class="headerlink" href="#implementation-framework-of-the-environment-models" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="setting-up-the-environment">
-<h2>1.1. Setting up the environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this headline">¶</a></h2>
+<h2>3.1.1. Setting up the environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this headline">¶</a></h2>
 <p>In Tudat, the physical environment is defined by a list of&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;objects, each of which represents either a celestial body, or a manmade vehicle. Consequently, all properties that are required for computing e.g. accelerations are stored in&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;objects. Typically the entire environment is stored in a named list of&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;object, the standard typedef for which is the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code>. (It as an unordered map of shared pointers to body objects, see&nbsp;this wiki page&nbsp;for a discussion of shared pointers; don’t worry if you’re not sure what a shared pointer or unordered map is at this point.).</p>
 <div class="section" id="manually-creating-the-environment">
-<h3>1.1.1. Manually creating the environment<a class="headerlink" href="#manually-creating-the-environment" title="Permalink to this headline">¶</a></h3>
+<h3>3.1.1.1. Manually creating the environment<a class="headerlink" href="#manually-creating-the-environment" title="Permalink to this headline">¶</a></h3>
 <p>The following shows how to manually declare a&nbsp;<code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code>, and then create entries in this body map for a number of bodies:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span><span class="p">;</span>
 <span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
@@ -219,7 +219,7 @@
 <p>This calls the constructors of the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">SpiceEphemeris</span></code>&nbsp;and&nbsp;<code class="xref py py-class docutils literal"><span class="pre">GravityFieldModel</span></code>&nbsp;classes (see&nbsp;here&nbsp;and&nbsp;here&nbsp;for details), and assigns the objects that are constructed to the&nbsp;”Earth”&nbsp;entry of the&nbsp;<code class="docutils literal"><span class="pre">bodyMap</span></code>.</p>
 </div>
 <div class="section" id="creating-the-environment-from-bodysettings">
-<h3>1.1.2. Creating the environment from&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code><a class="headerlink" href="#creating-the-environment-from-bodysettings" title="Permalink to this headline">¶</a></h3>
+<h3>3.1.1.2. Creating the environment from&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code><a class="headerlink" href="#creating-the-environment-from-bodysettings" title="Permalink to this headline">¶</a></h3>
 <p>Manually creating all objects defining the full environment is possible, but not recommended. In particular, various environment models are interdependent and these dependencies must be fully and consistently defined for the code to function properly. To this end, we provide a&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code>&nbsp;object, in which the general properties of each environment model can be set (see above for the list of the available types of environment models). We note that for&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;objects that represent vehicles, the manual creation is typically used, as the vehicle conditions may depend on the celestial bodies, but not&nbsp;vice versa.</p>
 <p>In many cases, default properties of (celestial) bodies may be used by calling the&nbsp;<code class="docutils literal"><span class="pre">getDefaultBodySettings</span></code>&nbsp;function, so that the user does not need to define all required properties line-by-line. At present, the following default settings are used (none if not in list):</p>
 <blockquote>
@@ -267,7 +267,7 @@
 </div>
 </div>
 <div class="section" id="available-settings-for-the-environment-models">
-<h2>1.2. Available settings for the environment models<a class="headerlink" href="#available-settings-for-the-environment-models" title="Permalink to this headline">¶</a></h2>
+<h2>3.1.2. Available settings for the environment models<a class="headerlink" href="#available-settings-for-the-environment-models" title="Permalink to this headline">¶</a></h2>
 <p>Here, we will provide a full list of the available properties of the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code>&nbsp;object. Each type of environment model has one base class to define settings for the creation of the model). Often, a specific derived class is implemented for a specific environment model of a given class, in which any additional information that may be needed can be provided. For instance, when defining a gravity field model, one can simply use:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">central_spice</span> <span class="p">);</span>
 </pre></div>
@@ -497,7 +497,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="the-environment-during-propagation">
-<h2>1.3. The environment during propagation<a class="headerlink" href="#the-environment-during-propagation" title="Permalink to this headline">¶</a></h2>
+<h2>3.1.3. The environment during propagation<a class="headerlink" href="#the-environment-during-propagation" title="Permalink to this headline">¶</a></h2>
 <p>Each&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;object and its constituent members is updated to the current state and time automatically during the numerical propagation. We stress that only those models that are relevant for a given propagation are updated every time step (this is handled automatically, without user intervention). Most time-dependent properties of the body are set in the environment models themselves. However, a number are updated and stored directly in the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;object. These are:</p>
 <blockquote>
 <div><ul class="simple">
@@ -523,10 +523,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="validTimeRange.html" class="btn btn-neutral float-right" title="2. Environment Valid Time-range" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="validTimeRange.html" class="btn btn-neutral float-right" title="3.2. Environment Valid Time-range" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="2. Environment Set-up" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="3. Environment Set-up" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

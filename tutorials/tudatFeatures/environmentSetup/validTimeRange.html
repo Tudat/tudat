@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2. Environment Valid Time-range &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>3.2. Environment Valid Time-range &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -36,9 +36,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="2. Environment Set-up" href="index.html"/>
-        <link rel="next" title="3. Reading Aerodynamic Coefficients From Files" href="readingAeroCoefficients.html"/>
-        <link rel="prev" title="1. Implementation Framework of the Environment Models" href="frameworkEnvironmentModels.html"/> 
+        <link rel="up" title="3. Environment Set-up" href="index.html"/>
+        <link rel="next" title="3.3. Reading Aerodynamic Coefficients From Files" href="readingAeroCoefficients.html"/>
+        <link rel="prev" title="3.1. Implementation Framework of the Environment Models" href="frameworkEnvironmentModels.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -96,16 +96,16 @@
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">Basic Mathematics Tools</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">2. Environment Set-up</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="frameworkEnvironmentModels.html">1. Implementation Framework of the Environment Models</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">2. Environment Valid Time-range</a></li>
-<li class="toctree-l4"><a class="reference internal" href="readingAeroCoefficients.html">3. Reading Aerodynamic Coefficients From Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">3. Environment Set-up</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="frameworkEnvironmentModels.html">3.1. Implementation Framework of the Environment Models</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">3.2. Environment Valid Time-range</a></li>
+<li class="toctree-l4"><a class="reference internal" href="readingAeroCoefficients.html">3.3. Reading Aerodynamic Coefficients From Files</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">Acceleration Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Propagation Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">4. Other Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Acceleration Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Propagation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">6. Other Libraries</a></li>
 </ul>
 </li>
 </ul>
@@ -159,9 +159,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">2. Environment Set-up</a> &raquo;</li>
+          <li><a href="index.html">3. Environment Set-up</a> &raquo;</li>
         
-      <li>2. Environment Valid Time-range</li>
+      <li>3.2. Environment Valid Time-range</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -181,7 +181,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="environment-valid-time-range">
-<span id="tudatfeaturesvalidtimerange"></span><h1>2. Environment Valid Time-range<a class="headerlink" href="#environment-valid-time-range" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturesvalidtimerange"></span><h1>3.2. Environment Valid Time-range<a class="headerlink" href="#environment-valid-time-range" title="Permalink to this headline">¶</a></h1>
 <p>Most of the environment models are valid for any time, but there is a key exception. In particular, the default settings do not directly use the Spice ephemerides, but retrieve the state for each body from Spice, and then create a&nbsp;<code class="xref py py-class docutils literal"><span class="pre">TabulatedEphemeris</span></code>&nbsp;(which is only valid in the given time range), as opposed to a&nbsp;<code class="xref py py-class docutils literal"><span class="pre">SpiceEphemeris</span></code>, which is valid for the entire time interval that the Spice kernels contain data. This approach is taken for computational reasons: retrieving a state from Spice is very time-consuming, much more so than retrieving it from a 6th- or 8th-order Lagrange interpolator that is used here for the tabulated ephemeris. An additional consequence of this is that the start and end time of the environment must be slightly (3 times the integration time step) larger than that which is used for the actual propagation, as a Lagrange interpolator can be unreliable at the edges of its domain. It is also possible to use the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">SpiceEphemeris</span></code>&nbsp;directly, at the expense of longer runtimes, by creating the <code class="docutils literal"><span class="pre">bodySettings</span></code> amd <code class="docutils literal"><span class="pre">bodyMap</span></code> as:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodySettings</span> <span class="o">=</span> <span class="n">getDefaultBodySettings</span><span class="p">(</span> <span class="n">bodiesToCreate</span> <span class="p">)</span>
 <span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
@@ -199,10 +199,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="readingAeroCoefficients.html" class="btn btn-neutral float-right" title="3. Reading Aerodynamic Coefficients From Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="readingAeroCoefficients.html" class="btn btn-neutral float-right" title="3.3. Reading Aerodynamic Coefficients From Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="frameworkEnvironmentModels.html" class="btn btn-neutral" title="1. Implementation Framework of the Environment Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="frameworkEnvironmentModels.html" class="btn btn-neutral" title="3.1. Implementation Framework of the Environment Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

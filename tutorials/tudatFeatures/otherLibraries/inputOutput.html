@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1. Input/Output &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>6.1. Input/Output &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -36,9 +36,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="Other Libraries" href="index.html"/>
-        <link rel="next" title="2. External Libraries: SPICE" href="spice.html"/>
-        <link rel="prev" title="Other Libraries" href="index.html"/> 
+        <link rel="up" title="6. Other Libraries" href="index.html"/>
+        <link rel="next" title="6.2. External Libraries: SPICE" href="spice.html"/>
+        <link rel="prev" title="6. Other Libraries" href="index.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -96,14 +96,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">Basic Mathematics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">2. Environment Set-up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">Acceleration Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">Propagation Set-Up</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">Other Libraries</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">1. Input/Output</a></li>
-<li class="toctree-l4"><a class="reference internal" href="spice.html">2. External Libraries: SPICE</a></li>
-<li class="toctree-l4"><a class="reference internal" href="jsoncpp.html">3. External Libraries: JSONCPP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Acceleration Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Propagation Set-Up</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6. Other Libraries</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.1. Input/Output</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spice.html">6.2. External Libraries: SPICE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jsoncpp.html">6.3. External Libraries: JSONCPP</a></li>
 </ul>
 </li>
 </ul>
@@ -159,9 +159,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">Other Libraries</a> &raquo;</li>
+          <li><a href="index.html">6. Other Libraries</a> &raquo;</li>
         
-      <li>1. Input/Output</li>
+      <li>6.1. Input/Output</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -181,10 +181,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="input-output">
-<span id="tudatfeaturesinputoutput"></span><h1>1. Input/Output<a class="headerlink" href="#input-output" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturesinputoutput"></span><h1>6.1. Input/Output<a class="headerlink" href="#input-output" title="Permalink to this headline">¶</a></h1>
 <p>Handling input and output can be an important part of an application, as Tudat is built primarily for numerical orbit propagation/mission analysis, and not for visualization, which most users choose to do in e.g. Matlab. This page provides an overview of the most important Tudat methods for handling input and output, their set-up and how they can be used in an application.</p>
 <div class="section" id="available-methods">
-<h2>1.1. Available methods<a class="headerlink" href="#available-methods" title="Permalink to this headline">¶</a></h2>
+<h2>6.1.1. Available methods<a class="headerlink" href="#available-methods" title="Permalink to this headline">¶</a></h2>
 <p>All functions and classes that handle input/output can be found in the <code class="docutils literal"><span class="pre">InputOutput</span></code> directory in the Tudat libraries. These functions and classes provide a variety of handlers and can, for example, skip lines, eliminate comments from a file, or store the propagation history to a particular file. In most cases, however, these specific file readers will not need to be called directly by the user, but are instead used when retrieving a default spherical harmonic gravity field or an aerodynamic database.</p>
 <p>The input/output elements from Tudat that will be discussed here, can be subdivided into three categories:</p>
 <ul class="simple">
@@ -193,7 +193,7 @@
 <li>File-writers.</li>
 </ul>
 <div class="section" id="path-functions">
-<h3>1.1.1. Path-functions<a class="headerlink" href="#path-functions" title="Permalink to this headline">¶</a></h3>
+<h3>6.1.1.1. Path-functions<a class="headerlink" href="#path-functions" title="Permalink to this headline">¶</a></h3>
 <p>These are functions that return the root-path of the library (or a particular folder). They can be used to define a path relative to the root-path of Tudat when using a file-reader/writer. The following path functions are available:</p>
 <dl class="docutils">
 <dt><code class="docutils literal"><span class="pre">getTudatRootPath()</span></code>&nbsp;(Tudat)</dt>
@@ -216,7 +216,7 @@
 </dl>
 </div>
 <div class="section" id="file-readers">
-<h3>1.1.2. File-readers<a class="headerlink" href="#file-readers" title="Permalink to this headline">¶</a></h3>
+<h3>6.1.1.2. File-readers<a class="headerlink" href="#file-readers" title="Permalink to this headline">¶</a></h3>
 <p>If neeeded, you can use this functionality as a starting point to create your own file-reader for your specific file type. If you run into issues when doing so, please contact the Tudat support team. However, there is a dedicated file-reader available in the Tudat library:</p>
 <dl class="docutils">
 <dt><code class="docutils literal"><span class="pre">readMatrixFromFile</span></code>&nbsp;(Tudat)</dt>
@@ -224,7 +224,7 @@
 </dl>
 </div>
 <div class="section" id="file-writers">
-<h3>1.1.3. File-writers<a class="headerlink" href="#file-writers" title="Permalink to this headline">¶</a></h3>
+<h3>6.1.1.3. File-writers<a class="headerlink" href="#file-writers" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal"><span class="pre">InputOutput</span></code> directory in the Tudat library also contains functionality to write data (e.g. the propagation history of a satellite) to a file. The following function is available:</p>
 <dl class="docutils">
 <dt><code class="docutils literal"><span class="pre">writeDataMapToTextFile</span></code>&nbsp;(Tudat)</dt>
@@ -235,9 +235,9 @@
 </div>
 </div>
 <div class="section" id="examples">
-<h2>1.2. Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<h2>6.1.2. Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="data-map-double-double-to-text-file">
-<h3>1.2.1. Data-map (double,double) to text file<a class="headerlink" href="#data-map-double-double-to-text-file" title="Permalink to this headline">¶</a></h3>
+<h3>6.1.2.1. Data-map (double,double) to text file<a class="headerlink" href="#data-map-double-double-to-text-file" title="Permalink to this headline">¶</a></h3>
 <p>A data map is a template class that is defined by its key-type and value-type:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">key</span><span class="o">-</span><span class="n">type</span><span class="p">,</span> <span class="n">value</span><span class="o">-</span><span class="n">type</span> <span class="o">&gt;</span>
 </pre></div>
@@ -263,7 +263,7 @@
 </div>
 </div>
 <div class="section" id="data-map-double-vector3d-to-text-file">
-<h3>1.2.2. Data-map (double,Vector3d) to text file<a class="headerlink" href="#data-map-double-vector3d-to-text-file" title="Permalink to this headline">¶</a></h3>
+<h3>6.1.2.2. Data-map (double,Vector3d) to text file<a class="headerlink" href="#data-map-double-vector3d-to-text-file" title="Permalink to this headline">¶</a></h3>
 <p>An example of a data map, where the type of the key is a <code class="docutils literal"><span class="pre">double</span></code>, and the type of the value is an <code class="docutils literal"><span class="pre">Eigen::Vector3d</span></code>:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">keyDoubleValueVector3dMap</span><span class="p">;</span>
 <span class="n">keyDoubleValueVector3dMap</span><span class="p">[</span> <span class="mf">1.1</span> <span class="p">]</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.54</span> <span class="p">);</span>
@@ -278,7 +278,7 @@
 </div>
 </div>
 <div class="section" id="storing-propagation-history">
-<h3>1.2.3. Storing propagation history<a class="headerlink" href="#storing-propagation-history" title="Permalink to this headline">¶</a></h3>
+<h3>6.1.2.3. Storing propagation history<a class="headerlink" href="#storing-propagation-history" title="Permalink to this headline">¶</a></h3>
 <p>A good example on how to store the propagation history in a data map can be found in the example applications in the Tudat Bundle. If you have downloaded the bundle, these examples can be found in:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span>
 </pre></div>
@@ -298,10 +298,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="spice.html" class="btn btn-neutral float-right" title="2. External Libraries: SPICE" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="spice.html" class="btn btn-neutral float-right" title="6.2. External Libraries: SPICE" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Other Libraries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="6. Other Libraries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
