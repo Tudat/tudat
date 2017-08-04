@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>5. Simulator Set-Up &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>5.3. Create a Dynamics Simulator Object &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -36,9 +36,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="Tudat Libraries" href="../index.html"/>
-        <link rel="next" title="5.1. Integrator Settings" href="integratorSettings.html"/>
-        <link rel="prev" title="4.3. Thrust Models" href="../accelerationSetup/thrustModels.html"/> 
+        <link rel="up" title="5. Simulator Set-Up" href="index.html"/>
+        <link rel="next" title="6. Other Libraries" href="../otherLibraries/index.html"/>
+        <link rel="prev" title="5.2. Propagator Settings" href="propagatorSettings.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -99,10 +99,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Acceleration Set-Up</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">5. Simulator Set-Up</a><ul>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">5. Simulator Set-Up</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="integratorSettings.html">5.1. Integrator Settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettings.html">5.2. Propagator Settings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="simulatorCreation.html">5.3. Create a Dynamics Simulator Object</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">5.3. Create a Dynamics Simulator Object</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">6. Other Libraries</a></li>
@@ -159,13 +159,15 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-      <li>5. Simulator Set-Up</li>
+          <li><a href="index.html">5. Simulator Set-Up</a> &raquo;</li>
+        
+      <li>5.3. Create a Dynamics Simulator Object</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../../_sources/tutorials/tudatFeatures/propagationSetup/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../../_sources/tutorials/tudatFeatures/propagationSetup/simulatorCreation.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -178,69 +180,47 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="simulator-set-up">
-<span id="tudatfeaturessimulatorindex"></span><h1>5. Simulator Set-Up<a class="headerlink" href="#simulator-set-up" title="Permalink to this headline">¶</a></h1>
-<p>One of the core elements of the Tudat libraries is its simulator framework. The goal of this page is discuss the implementation of such framework as well as the numerous options available. The top-level framework of the simulator is shown below:</p>
-<div class="figure align-center">
-<img alt="../../../_images/TudatSimulatorArchitecture.jpg" src="../../../_images/TudatSimulatorArchitecture.jpg" />
+  <div class="section" id="create-a-dynamics-simulator-object">
+<span id="tudatfeaturessimulatorcreation"></span><h1>5.3. Create a Dynamics Simulator Object<a class="headerlink" href="#create-a-dynamics-simulator-object" title="Permalink to this headline">¶</a></h1>
+<p>At the moment, the following dynamics simulators are available or under development in Tudat:</p>
+<ul class="simple">
+<li>Single-arc dynamics simulator.</li>
+<li>Multi-arc dynamics simulator (under development).</li>
+<li>Hybrid dynamics simulator (under development).</li>
+</ul>
+<p>The <code class="docutils literal"><span class="pre">bodyMap</span></code>, <code class="docutils literal"><span class="pre">integratorSettigns</span></code> and the <code class="docutils literal"><span class="pre">propagatorSettings</span></code> are binded together when the <code class="docutils literal"><span class="pre">dynamicsSimulator</span></code> is created as shown below:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create simulation object and propagate dynamics.</span>
+<span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="n">dynamicsSimulator</span><span class="p">(</span>
+            <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span> <span class="p">);</span>
+</pre></div>
 </div>
-<p>The top-element in such framework is the <code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code>, which is in charge of propagating the equations of motion using the environment and acceleration models discussed in <a class="reference internal" href="../environmentSetup/index.html#tudatfeaturesenvironmentindex"><span class="std std-ref">Environment Set-up</span></a> and <a class="reference internal" href="../accelerationSetup/index.html#tudatfeaturesaccelerationindex"><span class="std std-ref">Acceleration Set-Up</span></a>, respectively. The orbit propation is done according to the specified <code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code> and the <code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code>, which are discussed in detail in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a> and <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings</span></a>.</p>
-<p>As shown in the figure above, there are various types of <code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code> and <code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code> depending on the particularities of the application at hand. The different types are implemented by means of derived classes, as discussed below:</p>
-<dl class="docutils">
-<dt><strong>Integrator Settings</strong></dt>
-<dd><ul class="first last simple">
+<p>By default, the equations of motion are integrated once the object is created. This can be changed by adding additional arguments, as shown below:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create simulation object and propagate dynamics.</span>
+<span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="n">dynamicsSimulator</span><span class="p">(</span>
+            <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span> <span class="p">,</span> <span class="n">areEquationsOfMotionToBeIntegrated</span> <span class="p">,</span> <span class="n">clearNumericalSolutions</span> <span class="p">,</span> <span class="n">setIntegratedResult</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>where:</p>
+<ul class="simple">
 <li><dl class="first docutils">
-<dt><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></dt>
-<dd>This is the default derived class which is used whenever a fixed-step size integrator is used.</dd>
+<dt><code class="docutils literal"><span class="pre">areEquationsOfMotionToBeIntegrated</span></code></dt>
+<dd>Boolean to denote whether equations of motion should be integrated immediately at the end of the contructor or not (default true).</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><code class="xref py py-class docutils literal"><span class="pre">RungeKuttaVariableStepSizeSettings</span></code></dt>
-<dd>This is a special derived class which takes additional arguments and is used whenever a Runge-Kutta variable step-size integrator is used.</dd>
+<dt><code class="docutils literal"><span class="pre">clearNumericalSolutions</span></code></dt>
+<dd>Boolean to determine whether to clear the raw numerical solution member variables after propagation and resetting ephemerides (default true).</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">setIntegratedResult</span></code></dt>
+<dd>Boolean to determine whether to automatically use the integrated results to set ephemerides (default true).</dd>
 </dl>
 </li>
 </ul>
-</dd>
-<dt><strong>Propagator Settings</strong></dt>
-<dd><ul class="first last simple">
-<li><dl class="first docutils">
-<dt><code class="xref py py-class docutils literal"><span class="pre">TranslationalStatePropagatorSettings</span></code></dt>
-<dd>This derived class defines the settings to propagate the translational dynamics.</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><code class="xref py py-class docutils literal"><span class="pre">MassPropagationSettings</span></code></dt>
-<dd>This derived class defines the settings to propagate the mass of a body.</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><code class="xref py py-class docutils literal"><span class="pre">CustomStatePropagationSettings</span></code></dt>
-<dd>This derived class allows the propagation of user-defined dynamics.</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><code class="xref py py-class docutils literal"><span class="pre">MultiTypeProgationSettings</span></code></dt>
-<dd>This derived class allows to propagate simultaneously the various propagator classes defined above.</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-<p>The reader is referred to the following sections to examine in detail how to create the dynamics simulator:</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="integratorSettings.html">5.1. Integrator Settings</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="integratorSettings.html#propagation-with-a-fixed-step-size-integrator">5.1.1. Propagation with a fixed step-size integrator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="integratorSettings.html#propagation-with-a-variable-step-size-integrator">5.1.2. Propagation with a variable step-size integrator</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="propagatorSettings.html">5.2. Propagator Settings</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="propagatorSettings.html#propagation-saving">5.2.1. Propagation saving</a></li>
-<li class="toctree-l2"><a class="reference internal" href="propagatorSettings.html#propagation-termination-conditions">5.2.2. Propagation termination conditions</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="simulatorCreation.html">5.3. Create a Dynamics Simulator Object</a></li>
-</ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">It is important to ensure that the propagator settings are compatible with the dynamics simulator type selected. During otherwise will result in exception being thrown during run-time.</p>
 </div>
 </div>
 
@@ -254,10 +234,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="integratorSettings.html" class="btn btn-neutral float-right" title="5.1. Integrator Settings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../otherLibraries/index.html" class="btn btn-neutral float-right" title="6. Other Libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../accelerationSetup/thrustModels.html" class="btn btn-neutral" title="4.3. Thrust Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="propagatorSettings.html" class="btn btn-neutral" title="5.2. Propagator Settings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
