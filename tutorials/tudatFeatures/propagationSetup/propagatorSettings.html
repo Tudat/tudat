@@ -13,8 +13,6 @@
 
   
   
-  
-  
 
   
 
@@ -47,7 +45,6 @@
 
 <body class="wy-body-for-nav" role="document">
 
-   
   <div class="wy-grid-for-nav">
 
     
@@ -84,10 +81,7 @@
           
             
             
-              
-            
-            
-              <p class="caption"><span class="caption-text">Contents</span></p>
+                <p class="caption"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
@@ -123,10 +117,8 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">TU Delft Astrodynamic Toolbox</a>
-        
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">TU Delft Astrodynamic Toolbox</a>
       </nav>
 
 
@@ -135,46 +127,29 @@
         <div class="rst-content">
           
 
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
-
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
-        
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
           <li><a href="../../index.html">Tutorials and Documentation</a> &raquo;</li>
-        
+      
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
-        
+      
           <li><a href="index.html">5. Simulator Set-Up</a> &raquo;</li>
-        
-      <li>5.2. Propagator Settings</li>
-    
-    
+      
+    <li>5.2. Propagator Settings</li>
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../../../_sources/tutorials/tudatFeatures/propagationSetup/propagatorSettings.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -182,28 +157,118 @@
             
   <div class="section" id="propagator-settings">
 <span id="tudatfeaturespropagatorsettings"></span><h1>5.2. Propagator Settings<a class="headerlink" href="#propagator-settings" title="Permalink to this headline">¶</a></h1>
+<p>This page presents an overview of the available options within <code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code>. As the name suggests, these settings define how the orbit is propagated within the <code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code>.</p>
+<div class="section" id="available-settings">
+<h2>5.2.1. Available settings<a class="headerlink" href="#available-settings" title="Permalink to this headline">¶</a></h2>
+<p>Similarly to the <code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code> discussed in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a>, various derived classes are used to implement different settings:</p>
+<dl class="class">
+<dt id="TranslationalStatePropagatorSettings">
+<em class="property">class </em><code class="descname">TranslationalStatePropagatorSettings</code><a class="headerlink" href="#TranslationalStatePropagatorSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class implements the framework required to propagate the translation state of a body. The constructor of this derived class is overloaded allowing two types of termination conditions:</p>
+<ul class="simple">
+<li>Termination when the simulation time reaches a predefined <code class="docutils literal"><span class="pre">endTime</span></code> (Default).</li>
+<li>Termination when a predefined dependent variables meets a certain criterion.</li>
+</ul>
+<p><strong>Default termination settings</strong></p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">TranslationalStatePropagatorSettings</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">centralBodies</span><span class="p">,</span>
+                                      <span class="o">&amp;</span><span class="n">accelerationsMap</span><span class="p">,</span>
+                                      <span class="o">&amp;</span><span class="n">bodiesToIntegrate</span><span class="p">,</span>
+                                      <span class="o">&amp;</span><span class="n">initialBodyStates</span><span class="p">,</span>
+                                      <span class="n">endTime</span><span class="p">,</span>
+                                      <span class="n">propagator</span><span class="p">,</span>
+                                      <span class="n">dependentVariablesToSave</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">&amp;centralBodies</span></code> is a <code class="docutils literal"><span class="pre">const</span> <span class="pre">std::vector&lt;</span> <span class="pre">std::string</span> <span class="pre">&gt;</span></code> passed by reference that defines the names of the central bodies which must match with those in the <code class="xref py py-class docutils literal"><span class="pre">BodyMap</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">&amp;accelerationsMap</span></code> is a <code class="docutils literal"><span class="pre">const</span> <span class="pre">basic_astrodynamics::AccelerationMap</span></code> passed by reference that contains the accelerations for each body as discussed in <a class="reference internal" href="../accelerationSetup/index.html#tudatfeaturesaccelerationindex"><span class="std std-ref">Acceleration Set-Up</span></a>.</li>
+<li><code class="docutils literal"><span class="pre">&amp;bodiesToIntegrate</span></code> is a <code class="docutils literal"><span class="pre">const</span> <span class="pre">std::vector&lt;</span> <span class="pre">std::string</span> <span class="pre">&gt;</span></code> passed by reference that defines the names of the bodies to integrate which must match with those in the <code class="xref py py-class docutils literal"><span class="pre">BodyMap</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">&amp;initialBodyStates</span></code> is a <code class="docutils literal"><span class="pre">const</span> <span class="pre">Eigen::Matrix&lt;</span> <span class="pre">StateScalarType,</span> <span class="pre">Eigen::Dynamic,</span> <span class="pre">1</span> <span class="pre">&gt;</span></code> passed by reference</li>
+<li><code class="docutils literal"><span class="pre">endTime</span></code> is a <code class="docutils literal"><span class="pre">double</span></code> that defines the end-time of the simulation.</li>
+<li><code class="docutils literal"><span class="pre">propagator</span></code> is a <code class="docutils literal"><span class="pre">const</span> <span class="pre">TranslationalPropagatorType</span></code> which defines the type of propagator being used. Currently, <code class="docutils literal"><span class="pre">cowell</span></code> and <code class="docutils literal"><span class="pre">encke</span></code> are available. By default, the <code class="docutils literal"><span class="pre">cowell</span></code> propagator is used.</li>
+<li><code class="docutils literal"><span class="pre">dependentVariablesToSave</span></code> is a <code class="docutils literal"><span class="pre">const</span> <span class="pre">boost::shared_ptr&lt;</span> <span class="pre">DependentVariableSaveSettings</span> <span class="pre">&gt;</span></code> that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved.</li>
+</ul>
+<p><strong>User-defined termination settings</strong></p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">TranslationalStatePropagatorSettings</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">centralBodies</span><span class="p">,</span>
+                                      <span class="o">&amp;</span><span class="n">accelerationsMap</span><span class="p">,</span>
+                                      <span class="o">&amp;</span><span class="n">bodiesToIntegrate</span><span class="p">,</span>
+                                      <span class="o">&amp;</span><span class="n">initialBodyStates</span><span class="p">,</span>
+                                      <span class="n">terminationSettings</span><span class="p">,</span>
+                                      <span class="n">propagator</span><span class="p">,</span>
+                                      <span class="n">dependentVariablesToSave</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>where:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">terminationSettings</span></code> is a <code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">PropagationTerminationSettings</span> <span class="pre">&gt;</span></code> that defines the termination settings of the propagation. This is the fifth argument and replaces the <code class="docutils literal"><span class="pre">endTime</span></code> in the default constructor.</li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="MassPropagatorSettings">
+<em class="property">class </em><code class="descname">MassPropagatorSettings</code><a class="headerlink" href="#MassPropagatorSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class implements the framework required to propagate the mass of a body. The constructor of this derived class is overloaded allowing either a single mass-rate per body or multiple mass-rates per body:</p>
+<p><strong>Single mass-rate model per body</strong></p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">MassPropagatorSettings</span><span class="p">(</span>
+        <span class="n">bodiesWithMassToPropagate</span><span class="p">,</span>
+        <span class="n">massRateModels</span><span class="p">,</span>
+        <span class="o">&amp;</span><span class="n">initialBodyMasses</span><span class="p">,</span>
+        <span class="n">terminationSettings</span><span class="p">,</span>
+        <span class="n">dependentVariablesToSave</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>where:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">bodiesWithMassToPropagate</span></code> is a <code class="docutils literal"><span class="pre">const</span> <span class="pre">std::vector&lt;</span> <span class="pre">std::string</span> <span class="pre">&gt;</span></code> that provides the names of the bodies with mass that must be propagated. These names must match with those in the <code class="xref py py-class docutils literal"><span class="pre">BodyMap</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">massRateModels</span></code> is a <code class="docutils literal"><span class="pre">const</span> <span class="pre">std::map&lt;</span> <span class="pre">std::string,</span> <span class="pre">boost::shared_ptr&lt;</span> <span class="pre">basic_astrodynamics::MassRateModel</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> that associates a <code class="xref py py-class docutils literal"><span class="pre">MassRateModel</span></code> to a every body with mass that needs to be propagated.</li>
+<li><code class="docutils literal"><span class="pre">&amp;initialBodyMasses</span></code> is a <code class="docutils literal"><span class="pre">const</span> <span class="pre">Eigen::Matrix&lt;</span> <span class="pre">StateScalarType,</span> <span class="pre">Eigen::Dynamic,</span> <span class="pre">1</span> <span class="pre">&gt;</span></code> passed by reference that associates an initial body mass to each body with mass to be propagated.</li>
+</ul>
+<p><strong>Various mass-rate models per body</strong></p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">MassPropagatorSettings</span><span class="p">(</span>
+        <span class="n">bodiesWithMassToPropagate</span><span class="p">,</span>
+        <span class="n">massRateModels</span><span class="p">,</span>
+        <span class="o">&amp;</span><span class="n">initialBodyMasses</span><span class="p">,</span>
+        <span class="n">terminationSettings</span><span class="p">,</span>
+        <span class="n">dependentVariablesToSave</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>where:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">massRateModels</span></code> is a <code class="docutils literal"><span class="pre">const</span> <span class="pre">std::map&lt;</span> <span class="pre">std::string,</span> <span class="pre">std::vector&lt;</span> <span class="pre">boost::shared_ptr&lt;</span> <span class="pre">basic_astrodynamics::MassRateModel</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> that associates a <code class="docutils literal"><span class="pre">std::vector</span></code> of <code class="xref py py-class docutils literal"><span class="pre">MassRateModel</span></code> to each body with mass to be propagated.</li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="CustomPropagatorSettings">
+<em class="property">class </em><code class="descname">CustomPropagatorSettings</code><a class="headerlink" href="#CustomPropagatorSettings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="MultiTypePropagatorSettings">
+<em class="property">class </em><code class="descname">MultiTypePropagatorSettings</code><a class="headerlink" href="#MultiTypePropagatorSettings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 <div class="section" id="propagation-saving">
-<h2>5.2.1. Propagation saving<a class="headerlink" href="#propagation-saving" title="Permalink to this headline">¶</a></h2>
+<h2>5.2.2. Propagation saving<a class="headerlink" href="#propagation-saving" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="propagation-termination-conditions">
-<h2>5.2.2. Propagation termination conditions<a class="headerlink" href="#propagation-termination-conditions" title="Permalink to this headline">¶</a></h2>
+<h2>5.2.3. Propagation termination conditions<a class="headerlink" href="#propagation-termination-conditions" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
 
-           </div>
-           <div class="articleComments">
-            
            </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="simulatorCreation.html" class="btn btn-neutral float-right" title="5.3. Create a Dynamics Simulator Object" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="simulatorCreation.html" class="btn btn-neutral float-right" title="5.3. Create a Dynamics Simulator Object" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="integratorSettings.html" class="btn btn-neutral" title="5.1. Integrator Settings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="integratorSettings.html" class="btn btn-neutral" title="5.1. Integrator Settings" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -237,8 +302,7 @@
             VERSION:'',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
+            HAS_SOURCE:  true
         };
     </script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
