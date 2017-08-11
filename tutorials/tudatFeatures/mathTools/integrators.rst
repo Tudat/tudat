@@ -19,14 +19,14 @@ All numerical integrators presented in this page follow the same framework, wher
 
     NumericalIntegratorXdPointer integrator
                     = boost::make_shared< EulerIntegratorXd >(
-                        &stateDerivativeFunction,
+                        stateDerivativeFunction,
                         intervalStart,
                         initialState );
 
 Although in this case :literal:`NumericalIntegratorXdPointer` is a *typedef* for a boost :literal:`shared_ptr`, the constructor can be created explicitly. To initialize an Euler integrator, the following arguments need to be specified:
 
 - :literal:`EulerIntegratorXd` is the input argument for boost's :literal:`make_shared`, which defines the derived integrator class that we want to use.
-- :literal:`&stateDerivativeFunction` passes by reference the state derivative function that defines the differential equation to be integrated. See below for more details.
+- :literal:`stateDerivativeFunction` passes the state derivative function that defines the differential equation to be integrated. See below for more details.
 - :literal:`intervalStart` provides the start of the integration interval and must have the type of the independent variable.
 - :literal:`initialState` provides the initial state and must have the type of the dependent variable.
  
@@ -108,7 +108,7 @@ The Euler integrator is the simplest integrator available but is also a first-or
 
     NumericalIntegratorXdPointer integrator
                     = boost::make_shared< EulerIntegratorXd >(
-                        &stateDerivativeFunction,
+                        stateDerivativeFunction,
                         intervalStart,
                         initialState );
 
@@ -120,7 +120,7 @@ The Runge-Kutta 4 (RK4) integrator is a fourth-order fixed step-size integrator,
 
     NumericalIntegratorXdPointer integrator
                     = boost::make_shared< RungeKutta4IntegratorXd >(
-                        &stateDerivativeFunction,
+                        stateDerivativeFunction,
                         intervalStart,
                         initialState );
 
@@ -132,7 +132,7 @@ The Runge-Kutta variable step-size integrator involves a number of methods where
 
     RungeKuttaVariableStepSizeIntegratorXd integrator(
                 rungeKuttaCoefficients,
-                &stateDerivativeFunction,
+                stateDerivativeFunction,
                 initialTime,
                 initialState,
                 minimumStepSize,
@@ -163,7 +163,7 @@ where the following arguments are necessary:
         RungeKuttaCoefficients rungeKuttaCoefficients =
                 RungeKuttaCoefficients::get( RungeKuttaCoefficients::rungeKuttaFehlberg87 );
 
-- :literal:`&stateDerivativeFunction` passes by reference the state derivative function that defines the differential equation to be integrated.
+- :literal:`stateDerivativeFunction` passes the state derivative function that defines the differential equation to be integrated.
 - :literal:`initialTime` provides the initial value of the independent variable.
 - :literal:`initialState` provides the initial state and must have the type of the dependent variable.
 - :literal:`minimumStepSize` defines the minimum step-size that the variable step-size integrator can take.

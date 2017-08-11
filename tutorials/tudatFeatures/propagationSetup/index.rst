@@ -34,4 +34,6 @@ The reader is referred to the following sections to examine in detail how to cre
 
    integratorSettings
    propagatorSettings
+   propagatorSettingsTermination
+   propagatorSettingsDependentVariables
    simulatorCreation
