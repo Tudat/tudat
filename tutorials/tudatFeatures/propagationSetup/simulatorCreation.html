@@ -8,11 +8,9 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>5.3. Create a Dynamics Simulator Object &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>5.5. Create a Dynamics Simulator Object &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
-  
-  
   
   
 
@@ -38,7 +36,7 @@
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
         <link rel="up" title="5. Simulator Set-Up" href="index.html"/>
         <link rel="next" title="6. Other Libraries" href="../otherLibraries/index.html"/>
-        <link rel="prev" title="5.2. Propagator Settings" href="propagatorSettings.html"/> 
+        <link rel="prev" title="5.4. Propagator Settings: Dependent Variables" href="propagatorSettingsDependentVariables.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -47,7 +45,6 @@
 
 <body class="wy-body-for-nav" role="document">
 
-   
   <div class="wy-grid-for-nav">
 
     
@@ -84,10 +81,7 @@
           
             
             
-              
-            
-            
-              <p class="caption"><span class="caption-text">Contents</span></p>
+                <p class="caption"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
@@ -101,8 +95,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Acceleration Set-Up</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">5. Simulator Set-Up</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="integratorSettings.html">5.1. Integrator Settings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="propagatorSettings.html">5.2. Propagator Settings</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">5.3. Create a Dynamics Simulator Object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="propagatorSettings.html">5.2. Propagator Settings: Basics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="propagatorSettingsTermination.html">5.3. Propagator Settings: Termination Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="propagatorSettingsDependentVariables.html">5.4. Propagator Settings: Dependent Variables</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">5.5. Create a Dynamics Simulator Object</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">6. Other Libraries</a></li>
@@ -123,10 +119,8 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">TU Delft Astrodynamic Toolbox</a>
-        
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">TU Delft Astrodynamic Toolbox</a>
       </nav>
 
 
@@ -135,53 +129,36 @@
         <div class="rst-content">
           
 
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
-
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
-        
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
           <li><a href="../../index.html">Tutorials and Documentation</a> &raquo;</li>
-        
+      
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
-        
+      
           <li><a href="index.html">5. Simulator Set-Up</a> &raquo;</li>
-        
-      <li>5.3. Create a Dynamics Simulator Object</li>
-    
-    
+      
+    <li>5.5. Create a Dynamics Simulator Object</li>
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../../../_sources/tutorials/tudatFeatures/propagationSetup/simulatorCreation.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
   <div class="section" id="create-a-dynamics-simulator-object">
-<span id="tudatfeaturessimulatorcreation"></span><h1>5.3. Create a Dynamics Simulator Object<a class="headerlink" href="#create-a-dynamics-simulator-object" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturessimulatorcreation"></span><h1>5.5. Create a Dynamics Simulator Object<a class="headerlink" href="#create-a-dynamics-simulator-object" title="Permalink to this headline">¶</a></h1>
 <p>At the moment, the following dynamics simulators are available or under development in Tudat:</p>
 <ul class="simple">
 <li>Single-arc dynamics simulator.</li>
@@ -222,22 +199,46 @@
 <p class="first admonition-title">Warning</p>
 <p class="last">It is important to ensure that the propagator settings are compatible with the dynamics simulator type selected. During otherwise will result in exception being thrown during run-time.</p>
 </div>
+<div class="section" id="retrieving-the-propagation-history">
+<h2>5.5.1. Retrieving the propagation history<a class="headerlink" href="#retrieving-the-propagation-history" title="Permalink to this headline">¶</a></h2>
+<p>Once the <code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code> object has been created and the equations of motion have been integrated, the propagation history of the selected bodies is stored within the <code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code>. To make use of it using software, such history needs to be retrieved and saved to a file.</p>
+<p>If the state propagation history needs to be saved, the following code needs to be placed after the <code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code> object creation:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Write body propagation history to file.</span>
+<span class="n">writeDataMapToTextFile</span><span class="p">(</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">),</span>
+                        <span class="s">&quot;bodyPropagationHistory.dat&quot;</span><span class="p">,</span>
+                        <span class="n">outputPath</span><span class="p">,</span>
+                        <span class="s">&quot;&quot;</span><span class="p">,</span>
+                        <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;::</span><span class="n">digits10</span><span class="p">,</span>
+                        <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;::</span><span class="n">digits10</span><span class="p">,</span>
+                        <span class="s">&quot;,&quot;</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>If the dependent variable history needs to be saved, the following code needs to be placed after the <code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code> object creation:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Write body dependent variable history to file.</span>
+<span class="n">writeDataMapToTextFile</span><span class="p">(</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getDependentVariableHistory</span><span class="p">(</span> <span class="p">),</span>
+                        <span class="s">&quot;bodyDependentVariableHistory.dat&quot;</span><span class="p">,</span>
+                        <span class="n">outputPath</span><span class="p">,</span>
+                        <span class="s">&quot;&quot;</span><span class="p">,</span>
+                        <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;::</span><span class="n">digits10</span><span class="p">,</span>
+                        <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;::</span><span class="n">digits10</span><span class="p">,</span>
+                        <span class="s">&quot;,&quot;</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>These two code snippets will save two <code class="docutils literal"><span class="pre">.dat</span></code> files in the folder specified by the <code class="docutils literal"><span class="pre">outputPath</span></code>. You can make use of the <code class="docutils literal"><span class="pre">tudat_applications::getOutputPath(</span> <span class="pre">)</span></code> function to get a folder name relative to the project folder.</p>
+</div>
 </div>
 
 
-           </div>
-           <div class="articleComments">
-            
            </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../otherLibraries/index.html" class="btn btn-neutral float-right" title="6. Other Libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../otherLibraries/index.html" class="btn btn-neutral float-right" title="6. Other Libraries" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="propagatorSettings.html" class="btn btn-neutral" title="5.2. Propagator Settings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="propagatorSettingsDependentVariables.html" class="btn btn-neutral" title="5.4. Propagator Settings: Dependent Variables" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -271,8 +272,7 @@
             VERSION:'',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
+            HAS_SOURCE:  true
         };
     </script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>

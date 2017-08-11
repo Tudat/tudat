@@ -6,7 +6,7 @@ Models for the physical environment are one of the cornerstones of a numerical a
 
 On this page, we will give an overview of how the environment is represented in Tudat, which models have been implemented, and how to create the environment that is tailored to your needs.
 
-Setting up the environment
+Setting up the Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 In Tudat, the physical environment is defined by a list of :class:`Body` objects, each of which represents either a celestial body, or a manmade vehicle. Consequently, all properties that are required for computing e.g. accelerations are stored in :class:`Body` objects. Typically the entire environment is stored in a named list of :class:`Body` object, the standard typedef for which is the :class:`NamedBodyMap`. (It as an unordered map of shared pointers to body objects, see this wiki page for a discussion of shared pointers; don't worry if you're not sure what a shared pointer or unordered map is at this point.).
 
@@ -103,7 +103,7 @@ where the ``getApolloCoefficientInterface`` is a predefined function that gener
  
 This line of code allows the ephemerides and rotation models of the various bodies to be defined w.r.t. different origins (and even w.r.t. each other).
 
-Available settings for the environment models
+Available Settings for the Environment Models
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Here, we will provide a full list of the available properties of the :class:`BodySettings` object. Each type of environment model has one base class to define settings for the creation of the model). Often, a specific derived class is implemented for a specific environment model of a given class, in which any additional information that may be needed can be provided. For instance, when defining a gravity field model, one can simply use:
 
@@ -335,7 +335,7 @@ The full list of available environment model settings is:
 
         - **Tabulated gravity field variations:** Variations in spherical harmonic coefficients tabulated as a function of time. Settings stored in TabulatedGravityFieldVariationSettings object.
 
-The environment during propagation
+The Environment During Propagation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Each :class:`Body` object and its constituent members is updated to the current state and time automatically during the numerical propagation. We stress that only those models that are relevant for a given propagation are updated every time step (this is handled automatically, without user intervention). Most time-dependent properties of the body are set in the environment models themselves. However, a number are updated and stored directly in the :class:`Body` object. These are:
 
@@ -345,7 +345,7 @@ Each :class:`Body` object and its constituent members is updated to the curren
 
 .. note:: As a user, you will typically not access these variables directly.
 
-The environment valid time-range
+The Environment Valid Time-Range
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Most of the environment models are valid for any time, but there is a key exception. In particular, the default settings do not directly use the Spice ephemerides, but retrieve the state for each body from Spice, and then create a :class:`TabulatedEphemeris` (which is only valid in the given time range), as opposed to a :class:`SpiceEphemeris`, which is valid for the entire time interval that the Spice kernels contain data. This approach is taken for computational reasons: retrieving a state from Spice is very time-consuming, much more so than retrieving it from a 6th- or 8th-order Lagrange interpolator that is used here for the tabulated ephemeris. An additional consequence of this is that the start and end time of the environment must be slightly (3 times the integration time step) larger than that which is used for the actual propagation, as a Lagrange interpolator can be unreliable at the edges of its domain. It is also possible to use the :class:`SpiceEphemeris` directly, at the expense of longer runtimes, by creating the ``bodySettings`` amd ``bodyMap`` as:
 

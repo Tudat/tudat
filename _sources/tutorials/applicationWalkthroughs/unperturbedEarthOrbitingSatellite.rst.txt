@@ -20,8 +20,6 @@ There are a number of assumptions we can make in answering this question, which 
 
     .. note:: In a followup tutorial, we will show how to extend the dynamical model of the spacecraft, slightly relaxing the last assumption.
 
-Writing the simulation
-~~~~~~~~~~~~~~~~~~~~~~
 The main focus of this tutorial is to provide insight into the use of the Tudat library for your application. Using this test case, we will show how you can use some of the elements of the Tudat library, namely:
 
     - The transformation from Keplerian elements (provided) to Cartesian elements (required by propagator).
@@ -31,12 +29,8 @@ The main focus of this tutorial is to provide insight into the use of the Tudat 
     - The settings for the numerical integrator.
     - The use of 'create' functions to parse these settings
 
-Propagating an orbit numerically, and outputting the results to a file
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In particular, it will show you how these elements can work together to provide you with a powerful satellite propagator tool. It is not the intention to give you a C++ tutorial. Only the parts of the source code specific to Tudat will be discussed on this page. Detailed documentation on the environment models, acceleration models and propagators/integrators is available, but we recommend working through the tutorials here before delving into the details of all options that are available to you.
 
-Defining the simulation settings
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In Tudat, the environment, acceleration models and propagator are not created directly by the user. Instead, the user defines a number of 'Settings' objects that describe how the actual models are to be put together. These Settings objects are then passed to 'create' functions to build up the objects/data used in the simulations, and link them all together. In linking these objects together, information is automatically updated, and where necessary transformed and processed in the manner specified by the user in the Settings objects.
 
 Setting up the environment

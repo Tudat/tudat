@@ -20,9 +20,9 @@ Each example is discussed in detail on a separate page. Note that in the first e
    :numbered:
    :maxdepth: 1
 
-   innerSolarSystemPropagation
-   perturbedEarthOrbitingSatellite
    unperturbedEarthOrbitingSatellite
+   perturbedEarthOrbitingSatellite
    unguidedCapsuleEntry
+   innerSolarSystemPropagation
    useOfThrustThrustForceAlongVelocityVector
    useOfThrustUserDefinedThrustVector

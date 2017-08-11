@@ -1,4 +1,0 @@
-.. _tudatFeaturesPropagationSaving:
-
-Propagation Saving
-==================

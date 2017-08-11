@@ -13,8 +13,6 @@
 
   
   
-  
-  
 
   
 
@@ -47,7 +45,6 @@
 
 <body class="wy-body-for-nav" role="document">
 
-   
   <div class="wy-grid-for-nav">
 
     
@@ -84,10 +81,7 @@
           
             
             
-              
-            
-            
-              <p class="caption"><span class="caption-text">Contents</span></p>
+                <p class="caption"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
@@ -98,14 +92,14 @@
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">3. Environment Set-up</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#setting-up-the-environment">3.1. Setting up the environment</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#available-settings-for-the-environment-models">3.2. Available settings for the environment models</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#the-environment-during-propagation">3.3. The environment during propagation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#the-environment-valid-time-range">3.4. The environment valid time-range</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setting-up-the-environment">3.1. Setting up the Environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#available-settings-for-the-environment-models">3.2. Available Settings for the Environment Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-environment-during-propagation">3.3. The Environment During Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-environment-valid-time-range">3.4. The Environment Valid Time-Range</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Acceleration Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Propagation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Simulator Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">6. Other Libraries</a></li>
 </ul>
 </li>
@@ -124,10 +118,8 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">TU Delft Astrodynamic Toolbox</a>
-        
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">TU Delft Astrodynamic Toolbox</a>
       </nav>
 
 
@@ -136,44 +128,27 @@
         <div class="rst-content">
           
 
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
-
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
-        
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
           <li><a href="../../index.html">Tutorials and Documentation</a> &raquo;</li>
-        
+      
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
-        
-      <li>3. Environment Set-up</li>
-    
-    
+      
+    <li>3. Environment Set-up</li>
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../../../_sources/tutorials/tudatFeatures/environmentSetup/index.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -184,7 +159,7 @@
 <p>Models for the physical environment are one of the cornerstones of a numerical astrodynamics toolbox. Here, we define the environment in the broadest sense, including all physical properties of the solar system, such as atmospheres and gravity fields, but also any models for the orbits and rotations of these bodies.</p>
 <p>On this page, we will give an overview of how the environment is represented in Tudat, which models have been implemented, and how to create the environment that is tailored to your needs.</p>
 <div class="section" id="setting-up-the-environment">
-<h2>3.1. Setting up the environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this headline">¶</a></h2>
+<h2>3.1. Setting up the Environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this headline">¶</a></h2>
 <p>In Tudat, the physical environment is defined by a list of&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;objects, each of which represents either a celestial body, or a manmade vehicle. Consequently, all properties that are required for computing e.g. accelerations are stored in&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;objects. Typically the entire environment is stored in a named list of&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;object, the standard typedef for which is the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code>. (It as an unordered map of shared pointers to body objects, see&nbsp;this wiki page&nbsp;for a discussion of shared pointers; don’t worry if you’re not sure what a shared pointer or unordered map is at this point.).</p>
 <div class="section" id="manually-creating-the-environment">
 <h3>3.1.1. Manually creating the environment<a class="headerlink" href="#manually-creating-the-environment" title="Permalink to this headline">¶</a></h3>
@@ -254,7 +229,7 @@
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>It should be noted that default settings presently exist only for celestial bodies. The addition of objects to represent vehicles may be done either at the settings level (appending the&nbsp;<code class="docutils literal"><span class="pre">bodySettings``&nbsp;map)</span> <span class="pre">or</span> <span class="pre">at</span> <span class="pre">the</span> <span class="pre">body</span> <span class="pre">object</span> <span class="pre">level</span> <span class="pre">(appending</span> <span class="pre">the&nbsp;``bodyMap</span></code>). Here, we give the example of directly appending the&nbsp;<code class="docutils literal"><span class="pre">bodyMap</span></code>. For instance, creating an Apollo entry vehicle object, and adding a mass and aerodynamic properties is achieved as follows:</p>
+<p>It should be noted that default settings presently exist only for celestial bodies. The addition of objects to represent vehicles may be done either at the settings level (appending the&nbsp;<code class="docutils literal"><span class="pre">bodySettings</span></code>&nbsp;map) or at the body object level (appending the&nbsp;<code class="docutils literal"><span class="pre">bodyMap</span></code>). Here, we give the example of directly appending the&nbsp;<code class="docutils literal"><span class="pre">bodyMap</span></code>. For instance, creating an Apollo entry vehicle object, and adding a mass and aerodynamic properties is achieved as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
 <span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setAerodynamicCoefficientInterface</span><span class="p">(</span> <span class="n">getApolloCoefficientInterface</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
 <span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setConstantBodyMass</span><span class="p">(</span> <span class="mf">5.0E3</span> <span class="p">);</span>
@@ -268,7 +243,7 @@
 </div>
 </div>
 <div class="section" id="available-settings-for-the-environment-models">
-<h2>3.2. Available settings for the environment models<a class="headerlink" href="#available-settings-for-the-environment-models" title="Permalink to this headline">¶</a></h2>
+<h2>3.2. Available Settings for the Environment Models<a class="headerlink" href="#available-settings-for-the-environment-models" title="Permalink to this headline">¶</a></h2>
 <p>Here, we will provide a full list of the available properties of the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code>&nbsp;object. Each type of environment model has one base class to define settings for the creation of the model). Often, a specific derived class is implemented for a specific environment model of a given class, in which any additional information that may be needed can be provided. For instance, when defining a gravity field model, one can simply use:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">central_spice</span> <span class="p">);</span>
 </pre></div>
@@ -498,7 +473,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="the-environment-during-propagation">
-<h2>3.3. The environment during propagation<a class="headerlink" href="#the-environment-during-propagation" title="Permalink to this headline">¶</a></h2>
+<h2>3.3. The Environment During Propagation<a class="headerlink" href="#the-environment-during-propagation" title="Permalink to this headline">¶</a></h2>
 <p>Each&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;object and its constituent members is updated to the current state and time automatically during the numerical propagation. We stress that only those models that are relevant for a given propagation are updated every time step (this is handled automatically, without user intervention). Most time-dependent properties of the body are set in the environment models themselves. However, a number are updated and stored directly in the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;object. These are:</p>
 <blockquote>
 <div><ul class="simple">
@@ -513,7 +488,7 @@
 </div>
 </div>
 <div class="section" id="the-environment-valid-time-range">
-<h2>3.4. The environment valid time-range<a class="headerlink" href="#the-environment-valid-time-range" title="Permalink to this headline">¶</a></h2>
+<h2>3.4. The Environment Valid Time-Range<a class="headerlink" href="#the-environment-valid-time-range" title="Permalink to this headline">¶</a></h2>
 <p>Most of the environment models are valid for any time, but there is a key exception. In particular, the default settings do not directly use the Spice ephemerides, but retrieve the state for each body from Spice, and then create a&nbsp;<code class="xref py py-class docutils literal"><span class="pre">TabulatedEphemeris</span></code>&nbsp;(which is only valid in the given time range), as opposed to a&nbsp;<code class="xref py py-class docutils literal"><span class="pre">SpiceEphemeris</span></code>, which is valid for the entire time interval that the Spice kernels contain data. This approach is taken for computational reasons: retrieving a state from Spice is very time-consuming, much more so than retrieving it from a 6th- or 8th-order Lagrange interpolator that is used here for the tabulated ephemeris. An additional consequence of this is that the start and end time of the environment must be slightly (3 times the integration time step) larger than that which is used for the actual propagation, as a Lagrange interpolator can be unreliable at the edges of its domain. It is also possible to use the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">SpiceEphemeris</span></code>&nbsp;directly, at the expense of longer runtimes, by creating the <code class="docutils literal"><span class="pre">bodySettings</span></code> amd <code class="docutils literal"><span class="pre">bodyMap</span></code> as:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodySettings</span> <span class="o">=</span> <span class="n">getDefaultBodySettings</span><span class="p">(</span> <span class="n">bodiesToCreate</span> <span class="p">)</span>
 <span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
@@ -524,18 +499,15 @@
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../accelerationSetup/index.html" class="btn btn-neutral float-right" title="4. Acceleration Set-Up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../accelerationSetup/index.html" class="btn btn-neutral float-right" title="4. Acceleration Set-Up" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../mathTools/probabilityDistributions.html" class="btn btn-neutral" title="2.3. Probability Distributions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../mathTools/probabilityDistributions.html" class="btn btn-neutral" title="2.3. Probability Distributions" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -569,8 +541,7 @@
             VERSION:'',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
+            HAS_SOURCE:  true
         };
     </script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
