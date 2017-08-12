@@ -154,7 +154,121 @@
             
   <div class="section" id="perturbed-earth-orbiting-satellite">
 <span id="walkthroughsperturbedearthorbitingsatellite"></span><h1>2. Perturbed Earth-orbiting Satellite<a class="headerlink" href="#perturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
-<p>These pages of the wiki will help you build a strong knowledge basis to get started with Tudat. It is mandatory to understand the concepts taught here before proceding any further.</p>
+<p>The example described on this page is that of Asterix, a single satellite that is orbiting the Earth. The code for this tutorial is located in your Tudat Bundle at:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">singlePerturbedSatellitePropagator</span><span class="o">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
+<p>For this example, we have the following problem statement:</p>
+<p><em>Given the position and velocity of Asterix at a certain point in time with respect to the Earth, what will its position and velocity be after a Julian day has passed? Take into account perturbations due to gravitational forces by other celestial bodies, due to radiation pressure and due to aerodynamic forces.</em></p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The example described in this page assumes that the user has read the <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a>. This page only describes the differences with respect to such example, so please go back before proceding.</p>
+</div>
+<div class="section" id="set-up-the-environment">
+<h2>2.1. Set up the environment<a class="headerlink" href="#set-up-the-environment" title="Permalink to this headline">¶</a></h2>
+<p>Although this example is largely similar to the <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> example, there are a number of key differences. To begin with, the environment creation includes a number of additional bodies which will provide the gravitational perturbation that affect the Asterix satellite. Such bodies are added as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define body settings for simulation.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToCreate</span><span class="p">;</span>
+<span class="n">bodiesToCreate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Sun&quot;</span> <span class="p">);</span>
+<span class="n">bodiesToCreate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
+<span class="n">bodiesToCreate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Moon&quot;</span> <span class="p">);</span>
+<span class="n">bodiesToCreate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Mars&quot;</span> <span class="p">);</span>
+<span class="n">bodiesToCreate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Venus&quot;</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Next, the <code class="docutils literal"><span class="pre">bodySettings</span></code> are created with a limitation on the time for which the Spice ephemeris is to be interpolated. Such ephemeris is created 300 seconds ahead the <code class="docutils literal"><span class="pre">simulationStartEpoch</span></code> and 300 seconds past the <code class="docutils literal"><span class="pre">simulationEndEpoch</span></code>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create body objects.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodySettings</span> <span class="o">=</span>
+        <span class="n">getDefaultBodySettings</span><span class="p">(</span> <span class="n">bodiesToCreate</span><span class="p">,</span> <span class="n">simulationStartEpoch</span> <span class="o">-</span> <span class="mf">300.0</span><span class="p">,</span> <span class="n">simulationEndEpoch</span> <span class="o">+</span> <span class="mf">300.0</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>In the <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> example, a <code class="xref py py-class docutils literal"><span class="pre">ConstantEphemerisSettings</span></code> is used thus no limitation on the ephemeris are necessary. Next, the <code class="docutils literal"><span class="pre">frameOrientation</span></code> within <code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code> and the base frame orientation within <code class="xref py py-class docutils literal"><span class="pre">RotationModelSettings</span></code> are set to the <code class="docutils literal"><span class="pre">&quot;J2000&quot;</span></code> frame:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">bodiesToCreate</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">bodySettings</span><span class="p">[</span> <span class="n">bodiesToCreate</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span><span class="o">-&gt;</span><span class="n">resetFrameOrientation</span><span class="p">(</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
+    <span class="n">bodySettings</span><span class="p">[</span> <span class="n">bodiesToCreate</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span><span class="o">-&gt;</span><span class="n">resetOriginalFrame</span><span class="p">(</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-the-vehicle">
+<h2>2.2. Create the vehicle<a class="headerlink" href="#create-the-vehicle" title="Permalink to this headline">¶</a></h2>
+<p>A number of additional settings need to be linked to the vehicle when using additional perturbations. To begin with, the mass of the spacecraft needs to be defined:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create spacecraft object.</span>
+<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setConstantBodyMass</span><span class="p">(</span> <span class="mf">400.0</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Since aerodynamic forces are considered as a perturbation, we need to include a number of variables typically used when simulating vehicles in atmospheric flight:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create aerodynamic coefficient interface settings.</span>
+<span class="kt">double</span> <span class="n">referenceArea</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">aerodynamicCoefficient</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
+<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AerodynamicCoefficientSettings</span> <span class="o">&gt;</span> <span class="n">aerodynamicCoefficientSettings</span> <span class="o">=</span>
+        <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantAerodynamicCoefficientSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+            <span class="n">referenceArea</span><span class="p">,</span> <span class="n">aerodynamicCoefficient</span> <span class="o">*</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitX</span><span class="p">(</span> <span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
+
+<span class="c1">// Create and set aerodynamic coefficients object</span>
+<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setAerodynamicCoefficientInterface</span><span class="p">(</span>
+            <span class="n">createAerodynamicCoefficientInterface</span><span class="p">(</span> <span class="n">aerodynamicCoefficientSettings</span><span class="p">,</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">)</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Next, a number of parameters necessary for the cannonball radiation pressure model are defined. One of the assumptions made here is that Earth acts an occulting body, meaning that when Asterix enters the Earth’s shadow no radiation pressure is experienced:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create radiation pressure settings</span>
+<span class="kt">double</span> <span class="n">referenceAreaRadiation</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">radiationPressureCoefficient</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">occultingBodies</span><span class="p">;</span>
+<span class="n">occultingBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
+<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RadiationPressureInterfaceSettings</span> <span class="o">&gt;</span> <span class="n">asterixRadiationPressureSettings</span> <span class="o">=</span>
+        <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CannonBallRadiationPressureInterfaceSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+            <span class="s">&quot;Sun&quot;</span><span class="p">,</span> <span class="n">referenceAreaRadiation</span><span class="p">,</span> <span class="n">radiationPressureCoefficient</span><span class="p">,</span> <span class="n">occultingBodies</span> <span class="p">);</span>
+
+<span class="c1">// Create and set radiation pressure settings</span>
+<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setRadiationPressureInterface</span><span class="p">(</span>
+            <span class="s">&quot;Sun&quot;</span><span class="p">,</span> <span class="n">createRadiationPressureInterface</span><span class="p">(</span>
+                <span class="n">asterixRadiationPressureSettings</span><span class="p">,</span> <span class="s">&quot;Asterix&quot;</span><span class="p">,</span> <span class="n">bodyMap</span> <span class="p">)</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-up-the-acceleration-models">
+<h2>2.3. Set up the acceleration models<a class="headerlink" href="#set-up-the-acceleration-models" title="Permalink to this headline">¶</a></h2>
+<p>So far we have defined the <code class="xref py py-class docutils literal"><span class="pre">RadiationPressureInterfaceSettings</span></code> and the celestial bodies that will perturb the orbit of Asterix. In summary, the Asterix spacecraft will experience the following accelerations:</p>
+<ul class="simple">
+<li>Primary gravitational acceleration caused by Earth, according to a spherical-harmonics gravity model.</li>
+<li>Perturbing gravitational acceleration caused by the Sun, the Moon, Mars and Venus.</li>
+<li>Perturbing radiation pressure acceleration caused by the Sun.</li>
+<li>Perturbing aerodynamic acceleration cause by Earth.</li>
+</ul>
+<p>These needs to be binded to the Asterix <code class="xref py py-class docutils literal"><span class="pre">Body</span></code> object:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define propagation settings.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">accelerationsOfAsterix</span><span class="p">;</span>
+
+<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span> <span class="p">)</span> <span class="p">);</span>
+
+<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                               <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Moon&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                                 <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                                 <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Venus&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                                 <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                                 <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">cannon_ball_radiation_pressure</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                                 <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">aerodynamic</span> <span class="p">)</span> <span class="p">);</span>
+
+<span class="n">accelerationMap</span><span class="p">[</span>  <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">accelerationsOfAsterix</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Finally, <code class="docutils literal"><span class="pre">&quot;Asterix&quot;</span></code> is added to <code class="docutils literal"><span class="pre">bodiesToPropagate</span></code> while having <code class="docutils literal"><span class="pre">&quot;Earth&quot;</span></code> as the respective central body. This means that despite that other celestial bodies have been included, these will not be propagated.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">);</span>
+<span class="n">centralBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 

@@ -193,8 +193,8 @@
 <p class="last">If you want to include a different vehicle, you will have to define a new <code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientInterface</span></code> and implement your own custom aerodynamic database. Please go to <a class="reference internal" href="../tudatFeatures/accelerationSetup/aerodynamicGuidance.html#tudatfeaturesaerodynamicguidance"><span class="std std-ref">Aerodynamic Guidance</span></a> for further details.</p>
 </div>
 </div>
-<div class="section" id="create-the-accelerations">
-<h2>3.2. Create the accelerations<a class="headerlink" href="#create-the-accelerations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="set-up-the-acceleration-models">
+<h2>3.2. Set up the acceleration models<a class="headerlink" href="#set-up-the-acceleration-models" title="Permalink to this headline">¶</a></h2>
 <p>A major difference with respect to the <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> is the use of a spherical-harmonic gravity model and the presence of an aerodynamic force on the vehicle. Such acceleration models are added to the <code class="docutils literal"><span class="pre">accelerationMap</span></code> as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define acceleration model settings.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">accelerationsOfApollo</span><span class="p">;</span>
@@ -211,8 +211,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="create-the-propagation-settings">
-<h2>3.3. Create the propagation settings<a class="headerlink" href="#create-the-propagation-settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="set-up-the-propagation-settings">
+<h2>3.3. Set up the propagation settings<a class="headerlink" href="#set-up-the-propagation-settings" title="Permalink to this headline">¶</a></h2>
 <p>In most reentry studies, it is convenient to define the entry conditions using a spherical state. The following entry state is used:</p>
 <ul class="simple">
 <li>Altitude: 120 km</li>
@@ -243,9 +243,8 @@
 <p class="first admonition-title">Note</p>
 <p class="last">Note that speed defined in the <code class="docutils literal"><span class="pre">speedIndex</span></code> makes reference to the <strong>inertial</strong> speed of the vehicle. Furthermore, the <code class="docutils literal"><span class="pre">latitudeIndex</span></code> makes reference to the <strong>geocentric</strong> latitude.</p>
 </div>
-</div>
 <div class="section" id="create-a-list-of-dependent-variables-to-save">
-<h2>3.4. Create a list of dependent variables to save<a class="headerlink" href="#create-a-list-of-dependent-variables-to-save" title="Permalink to this headline">¶</a></h2>
+<h3>3.3.1. Create a list of dependent variables to save<a class="headerlink" href="#create-a-list-of-dependent-variables-to-save" title="Permalink to this headline">¶</a></h3>
 <p>In this example, a number of dependent variables are saved to plot the trajectory of Apollo after reentry. The following dependent variables are saved:</p>
 <ul class="simple">
 <li>Mach number</li>
@@ -278,7 +277,7 @@
 </div>
 </div>
 <div class="section" id="define-the-termination-conditions">
-<h2>3.5. Define the termination conditions<a class="headerlink" href="#define-the-termination-conditions" title="Permalink to this headline">¶</a></h2>
+<h3>3.3.2. Define the termination conditions<a class="headerlink" href="#define-the-termination-conditions" title="Permalink to this headline">¶</a></h3>
 <p>Finally, the termination conditions are established. In this example, the reentry trajectory is propagated until Apollo’s altitude drops below 25 km:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define termination conditions</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span> <span class="n">terminationDependentVariable</span> <span class="o">=</span>
@@ -290,6 +289,7 @@
 </pre></div>
 </div>
 <p>Please go to <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettingsTermination.html#tudatfeaturespropagatorsettingstermination"><span class="std std-ref">Propagator Settings: Termination Settings</span></a> for a detailed description of the available termination conditions.</p>
+</div>
 </div>
 </div>
 

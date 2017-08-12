@@ -154,7 +154,191 @@
             
   <div class="section" id="inner-solar-system-propagation">
 <span id="walkthroughsinnersolarsystempropagation"></span><h1>4. Inner Solar System Propagation<a class="headerlink" href="#inner-solar-system-propagation" title="Permalink to this headline">¶</a></h1>
-<p>These pages of the wiki will help you build a strong knowledge basis to get started with Tudat. It is mandatory to understand the concepts taught here before proceding any further.</p>
+<p>The example described on this page aims to simulate the dynamics of the main celestial bodies in the inner solar system. The code for this tutorial is located in your Tudat Bundle at:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">innerSolarSystemPropagation</span><span class="o">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
+<p>For this example, we have the following problem statement:</p>
+<p><em>Given the position and velocity of the main celestial bodies in the inner solar system at a certain point in time, what will their position and velocity after a certain period of time?</em></p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The example described in this page assumes that the user has read the <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a>. This page only describes the differences with respect to such example, so please go back before proceding.</p>
+</div>
+<div class="section" id="set-up-the-environment">
+<h2>4.1. Set up the environment<a class="headerlink" href="#set-up-the-environment" title="Permalink to this headline">¶</a></h2>
+<p>The first step is to define the bodies that will be propagated, which are stored hierarchically in a moons to stars fashion. The reason why this is done will become clear later:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define bodies in simulation.</span>
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">totalNumberOfBodies</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodyNames</span><span class="p">;</span>
+<span class="n">bodyNames</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">totalNumberOfBodies</span> <span class="p">);</span>
+<span class="n">bodyNames</span><span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Moon&quot;</span><span class="p">;</span>
+<span class="n">bodyNames</span><span class="p">[</span> <span class="mi">1</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Earth&quot;</span><span class="p">;</span>
+<span class="n">bodyNames</span><span class="p">[</span> <span class="mi">2</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Mars&quot;</span><span class="p">;</span>
+<span class="n">bodyNames</span><span class="p">[</span> <span class="mi">3</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Venus&quot;</span><span class="p">;</span>
+<span class="n">bodyNames</span><span class="p">[</span> <span class="mi">4</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Mercury&quot;</span><span class="p">;</span>
+<span class="n">bodyNames</span><span class="p">[</span> <span class="mi">5</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The next step is to save such bodies in the <code class="docutils literal"><span class="pre">bodyMap</span></code> and set the global ephemerides:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create bodies needed in simulation</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodySettings</span> <span class="o">=</span>
+        <span class="n">getDefaultBodySettings</span><span class="p">(</span> <span class="n">bodyNames</span> <span class="p">);</span>
+<span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
+<span class="n">setGlobalFrameBodyEphemerides</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="s">&quot;SSB&quot;</span><span class="p">,</span> <span class="s">&quot;ECLIPJ2000&quot;</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-up-the-acceleration-models">
+<h2>4.2. Set up the acceleration models<a class="headerlink" href="#set-up-the-acceleration-models" title="Permalink to this headline">¶</a></h2>
+<p>The example explained in this page is slightly different than all the previous examples, since two simulations are performed within the same application:</p>
+<ol class="arabic simple">
+<li>The Solar System Barycenter (SSB) is considered as the central body for all the propagated celestial bodies.</li>
+<li>The propagated celestial bodies consider the higher hierarchical body as their respective central body. (Moon &gt; Earth; Mercury, Venus, Earth, Mars &gt; Sun; Sun &gt; SSB).</li>
+</ol>
+<p>These two simulations result in two different output files. Consequently, all the steps required to create a <code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code> are performed twice, as shown by the following <code class="docutils literal"><span class="pre">for</span></code> loop:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Run simulation for 2 different central body settings (barycentric and hierarchical)</span>
+<span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">centralBodySettings</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">centralBodySettings</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="n">centralBodySettings</span><span class="o">++</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">///////////////////////////////////////////////////////////////////////////////////////////////////////////////////</span>
+    <span class="c1">///////////////////////             CREATE ACCELERATIONS            ///////////////////////////////////////////////</span>
+    <span class="c1">///////////////////////////////////////////////////////////////////////////////////////////////////////////////////</span>
+
+    <span class="c1">// Set accelerations between bodies that are to be taken into account (mutual point mass gravity between all bodies).</span>
+    <span class="n">SelectedAccelerationMap</span> <span class="n">accelerationMap</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">bodyNames</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">currentAccelerations</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">bodyNames</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span> <span class="n">j</span><span class="o">++</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// Create central gravity acceleration between each 2 bodies.</span>
+            <span class="k">if</span><span class="p">(</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span> <span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">currentAccelerations</span><span class="p">[</span> <span class="n">bodyNames</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">j</span> <span class="p">)</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span>
+                            <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>\
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">accelerationMap</span><span class="p">[</span> <span class="n">bodyNames</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="p">]</span> <span class="o">=</span> <span class="n">currentAccelerations</span><span class="p">;</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p>The first step in the <code class="docutils literal"><span class="pre">for</span></code> loop is to create the acceleration models. The only acceleration model used in this example is the <code class="docutils literal"><span class="pre">central_gravity</span></code> model, which in this case acts on all bodies from all bodies. The <code class="docutils literal"><span class="pre">if</span></code> condition shown above ensures that the gravity field model of a body does not act on itself.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The reason behind having two different simulations is merely for illustration purposes and is not requirement when simulating the Solar System dynamics.</p>
+</div>
+</div>
+<div class="section" id="set-up-the-propagation-settings">
+<h2>4.3. Set up the propagation settings<a class="headerlink" href="#set-up-the-propagation-settings" title="Permalink to this headline">¶</a></h2>
+<p>The next step found in the <code class="docutils literal"><span class="pre">for</span></code> loop is to create the list with the <code class="docutils literal"><span class="pre">bodiesToPropagate</span></code>. Contrary to the <a class="reference internal" href="perturbedEarthOrbitingSatellite.html#walkthroughsperturbedearthorbitingsatellite"><span class="std std-ref">Perturbed Earth-orbiting Satellite</span></a> example, in this case all the bodies in the <code class="docutils literal"><span class="pre">bodyMap</span></code> are propagated:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define list of bodies to propagate</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToPropagate</span> <span class="o">=</span> <span class="n">bodyNames</span><span class="p">;</span>
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">numberOfNumericalBodies</span> <span class="o">=</span> <span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Since all bodies require a central body, a placeholder is created for each body:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define central bodies to use in propagation.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodies</span><span class="p">;</span>
+<span class="n">centralBodies</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">numberOfNumericalBodies</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>where each place holder is filled depending on which simulation is being executed. The first part of the following <code class="docutils literal"><span class="pre">if</span></code> loop corresponds to Simulation 1 and the second part (the <code class="docutils literal"><span class="pre">elseif</span></code> loop) corresponds to Simulation 2:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Set central body as Solar System Barycente for each body</span>
+<span class="k">if</span><span class="p">(</span> <span class="n">centralBodySettings</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+<span class="p">{</span>
+   <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfNumericalBodies</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+   <span class="p">{</span>
+      <span class="n">centralBodies</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;SSB&quot;</span><span class="p">;</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">centralBodySettings</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span>
+<span class="p">{</span>
+   <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfNumericalBodies</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+   <span class="p">{</span>
+      <span class="c1">// Set Earth as central body for Moon</span>
+      <span class="k">if</span><span class="p">(</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+      <span class="p">{</span>
+         <span class="n">centralBodies</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Earth&quot;</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="c1">// Set barycenter as central &#39;body&#39; for Sun</span>
+      <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">5</span> <span class="p">)</span>
+      <span class="p">{</span>
+         <span class="n">centralBodies</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;SSB&quot;</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="c1">// Set Sun as central body for all planets</span>
+      <span class="k">else</span>
+      <span class="p">{</span>
+         <span class="n">centralBodies</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Once the <code class="docutils literal"><span class="pre">centralBodies</span></code> have been set, the creation of the <code class="xref py py-class docutils literal"><span class="pre">AccelerationMap</span></code> can be finalized:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create acceleration models and propagation settings.</span>
+<span class="n">AccelerationMap</span> <span class="n">accelerationModelMap</span> <span class="o">=</span> <span class="n">createAccelerationModelsMap</span><span class="p">(</span>
+   <span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">centralBodies</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>The next step in the <code class="docutils literal"><span class="pre">for</span></code> loop is to define the propagation time. In this example, the orbits of the inner solar system bodies are initiated 1.0e7 seconds after J2000 and are propagated for five Julian years:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Specify initial time</span>
+<span class="kt">double</span> <span class="n">initialEphemerisTime</span> <span class="o">=</span> <span class="mf">1.0E7</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">finalEphemerisTime</span> <span class="o">=</span> <span class="mf">1.0E7</span> <span class="o">+</span> <span class="mf">5.0</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_YEAR</span><span class="p">;</span>
+
+<span class="c1">// Get initial state vector as input to integration.</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">systemInitialState</span> <span class="o">=</span> <span class="n">getInitialStatesOfBodies</span><span class="p">(</span>
+   <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">centralBodies</span><span class="p">,</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">initialEphemerisTime</span> <span class="p">);</span>
+
+
+<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">propagatorSettings</span> <span class="o">=</span>
+   <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
+      <span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span> <span class="n">accelerationModelMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">systemInitialState</span><span class="p">,</span> <span class="n">finalEphemerisTime</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Once this step is completed, the <code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code> object is created and the equations of motion are integrated. Once again, this step is within the <code class="docutils literal"><span class="pre">for</span></code> loop, thus this step is performed twice:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create simulation object and propagate dynamics.</span>
+<span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="n">dynamicsSimulator</span><span class="p">(</span>
+   <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
+</pre></div>
+</div>
+<div class="section" id="save-the-propagation-results">
+<h3>4.3.1. Save the propagation results<a class="headerlink" href="#save-the-propagation-results" title="Permalink to this headline">¶</a></h3>
+<p>The final step in the <code class="docutils literal"><span class="pre">for</span></code> loop is to save the propagation results to a file. First, the propagation history is retrieved from the <code class="docutils literal"><span class="pre">dynamicsSimulator</span></code>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">integrationResult</span> <span class="o">=</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>where the retrieved result is an <code class="docutils literal"><span class="pre">std::map</span></code> with a <code class="docutils literal"><span class="pre">double</span></code> as key (the simulation time) and a <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code> of 1x36 elements, containing the 6-variable state for the six bodies. Next, an <code class="docutils literal"><span class="pre">std::vector</span></code> where each of its elements is an <code class="docutils literal"><span class="pre">std::map</span></code> that contains the propagation history of a single body:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Retrieve numerically integrated state for each body.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">allBodiesPropagationHistory</span><span class="p">;</span>
+<span class="n">allBodiesPropagationHistory</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">numberOfNumericalBodies</span> <span class="p">);</span>
+
+<span class="k">for</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;::</span><span class="n">const_iterator</span> <span class="n">stateIterator</span> <span class="o">=</span> <span class="n">integrationResult</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span> <span class="p">);</span>
+      <span class="n">stateIterator</span> <span class="o">!=</span> <span class="n">integrationResult</span><span class="p">.</span><span class="n">end</span><span class="p">(</span> <span class="p">);</span> <span class="n">stateIterator</span><span class="o">++</span> <span class="p">)</span>
+<span class="p">{</span>
+   <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfNumericalBodies</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+   <span class="p">{</span>
+      <span class="n">allBodiesPropagationHistory</span><span class="p">[</span> <span class="n">i</span> <span class="p">][</span> <span class="n">stateIterator</span><span class="o">-&gt;</span><span class="n">first</span> <span class="p">]</span> <span class="o">=</span> <span class="n">stateIterator</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span> <span class="p">);</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Finally, each of the <code class="docutils literal"><span class="pre">std::map</span></code> within <code class="docutils literal"><span class="pre">allBodiesPropagationHistory</span></code> are written to individual <code class="docutils literal"><span class="pre">.dat</span></code> files:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span> <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfNumericalBodies</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+ <span class="p">{</span>
+    <span class="c1">// Write propagation history to file.</span>
+    <span class="n">input_output</span><span class="o">::</span><span class="n">writeDataMapToTextFile</span><span class="p">(</span>
+       <span class="n">allBodiesPropagationHistory</span><span class="p">[</span> <span class="n">i</span> <span class="p">],</span>
+       <span class="s">&quot;innerSolarSystemPropagationHistory&quot;</span> <span class="o">+</span> <span class="n">bodyNames</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="o">+</span>
+       <span class="n">boost</span><span class="o">::</span><span class="n">lexical_cast</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">centralBodySettings</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;.dat&quot;</span><span class="p">,</span>
+       <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span> <span class="p">),</span>
+       <span class="s">&quot;&quot;</span><span class="p">,</span>
+       <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;::</span><span class="n">digits10</span><span class="p">,</span>
+       <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;::</span><span class="n">digits10</span><span class="p">,</span>
+       <span class="s">&quot;,&quot;</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
 
