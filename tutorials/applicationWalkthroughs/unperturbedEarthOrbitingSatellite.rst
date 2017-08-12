@@ -2,11 +2,11 @@
 
 Unperturbed Earth-orbiting Satellite
 ====================================
-The example described on this page is that of Asterix, a single satellite that is orbiting the Earth. The code for this tutorial is given here on Github, and is also located in your Tudat Bundle at:
+The example described on this page is that of Asterix, a single satellite that is orbiting the Earth. The code for this tutorial is located in your Tudat Bundle at:
 
-    .. code-block:: cpp
+.. code-block:: cpp
 
-        tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/singleSatellitePropagator.cpp
+   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/singleSatellitePropagator.cpp
 
 For this example, we have the following problem statement:
 
@@ -18,7 +18,7 @@ There are a number of assumptions we can make in answering this question, which 
     - The Earth is modeled as a point mass, and the spacecraft is modeled as massless.
     - All perturbations, such as solar radiation and third-body gravity, etc. are neglected.
 
-    .. note:: In a followup tutorial, we will show how to extend the dynamical model of the spacecraft, slightly relaxing the last assumption.
+.. note:: In a followup tutorial, we will show how to extend the dynamical model of the spacecraft, slightly relaxing the last assumption.
 
 The main focus of this tutorial is to provide insight into the use of the Tudat library for your application. Using this test case, we will show how you can use some of the elements of the Tudat library, namely:
 
@@ -33,9 +33,9 @@ In particular, it will show you how these elements can work together to provide 
 
 In Tudat, the environment, acceleration models and propagator are not created directly by the user. Instead, the user defines a number of 'Settings' objects that describe how the actual models are to be put together. These Settings objects are then passed to 'create' functions to build up the objects/data used in the simulations, and link them all together. In linking these objects together, information is automatically updated, and where necessary transformed and processed in the manner specified by the user in the Settings objects.
 
-Setting up the environment
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-First we discuss the setup of the environment, which is stored in a list of Body objects, each of which represents either a natural celestial body, or a spacecraft (orbiter, entry vehicle, etc.). The entire environment (gravity fields, atmospheres, ephemerides, rotation models, etc.) are then defined as members of the corresponding Body object. For this example, the only environment models we need are:
+Set up the environment
+~~~~~~~~~~~~~~~~~~~~~~
+First we discuss the setup of the environment, which is stored in a list of :class:`Body` objects, each of which represents either a natural celestial body, or a spacecraft (orbiter, entry vehicle, etc.). The entire environment (gravity fields, atmospheres, ephemerides, rotation models, etc.) are then defined as members of the corresponding :class:`Body` object. For this example, the only environment models we need are:
 
     - Earth gravity field (point-mass)
     - Earth ephemeris model
@@ -61,7 +61,7 @@ The block of code used to generate the environment that we require is:
         // Finalize body creation.
         setGlobalFrameBodyEphemerides( bodyMap, "SSB", "J2000" );
 
-Creating an environment starts by creating settings all required environment models, which stored in a list of BodySettings objects. Each BodySettings object has a list of objects for environment model settings, which are empty upon creation of the BodySettings, and may be set by the user to their desired specifications. To save you the trouble of having to define all settings manually, we provide default options for the environment, many of which will often be sufficient a given simulation. A list of all possible properties of the BodySettings, as well as the default settings, can be found here. In our example, we only need environment models for the Earth, so we start by:
+Creating an environment starts by creating settings all required environment models, which stored in a list of :class:`BodySettings` objects. Each :class:`BodySettings` object has a list of objects for environment model settings, which are empty upon creation of the :class:`BodySettings`, and may be set by the user to their desired specifications. To save you the trouble of having to define all settings manually, we provide default options for the environment, many of which will often be sufficient a given simulation. A list of all possible properties of the :class:`BodySettings`, as well as the default settings, can be found here. In our example, we only need environment models for the Earth, so we start by:
 
     .. code-block:: cpp
 
@@ -70,21 +70,24 @@ Creating an environment starts by creating settings all required environment mod
         std::map< std::string, boost::shared_ptr< BodySettings > > bodySettings =
                 getDefaultBodySettings( bodiesToCreate );    
 
-With the settings that are now stored in the bodySettings map, we could generate our environment and move on to the next step of the simulation. However, both to showcase one of the options of settings up the environment, and for numerical accuracy, we make one modification to the default ephemeris settings, defining the Earth to be fixed at the center of the Solar system:
+With the settings that are now stored in the :literal:`bodySettings` map, we could generate our environment and move on to the next step of the simulation. However, both to showcase one of the options of settings up the environment, and for numerical accuracy, we make one modification to the default ephemeris settings, defining the Earth to be fixed at the center of the Solar system:
 
     .. code-block:: cpp
 
         bodySettings[ "Earth" ]->ephemerisSettings = boost::make_shared< ConstantEphemerisSettings >(
                 Eigen::Vector6d::Zero( ), "SSB", "J2000" );
 
-By using this code, we 'cheat' a little bit, since we put the Earth in the main inertial frame for Tudat: the Solar System Barycenter. This approach should ONLY be used when considering no third-body perturbations. However, since we are only considering a single satellite orbiting the Earth without perturbations in this simulation, the above code will provide the desired results. Note that we could have used any Ephemeris setting for the Earth (since we propagate out satellite w.r.t. the Earth origin) without changing anything in our dynamical model, but at a slight loss of numerical precision.
-Now, we have created the settings we need for the environment, and we can move on to creating the environment models themselves, which are stored in a set of Body objects. These of Body objects are stored in a NamedBodyMap, which is a typedef (shorthand name) for std::unordered_map< std::string, boost::shared_ptr< simulation_setup::Body > >. This unordered_map may be accessed as a regular map. The keys (string) represent the name of the body in the list, with the value (shared_ptr to Body object) the corresponding object, containing all the environment models.
-With the settings of our ephemeris and gravity field, we now create the bodyMap by:
+.. warning:: By using this code, we 'cheat' a little bit, since we put the Earth in the main inertial frame for Tudat: the Solar System Barycenter. This approach should **only** be used when considering no third-body perturbations. Note that we could have used any ephemeris setting for the Earth (since we propagate out satellite w.r.t. the Earth origin) without changing anything in our dynamical model, but at a slight loss of numerical precision.
+
+Now, we have created the settings we need for the environment, and we can move on to creating the environment models themselves, which are stored in a set of :class:`Body` objects. These of :class:`Body` objects are stored in a :class:`NamedBodyMap`, which is a :literal:`typedef` (shorthand name) for :literal:`std::unordered_map< std::string, boost::shared_ptr< simulation_setup::Body > >`. This :literal:`unordered_map` may be accessed as a regular map. The :literal:`std::string` keys represent the name of the body in the list, with the value (shared_ptr to Body object) the corresponding object, containing all the environment models.
+With the settings of our ephemeris and gravity field, we now create the :literal:`bodyMap` by:
 
     .. code-block:: cpp
 
         NamedBodyMap bodyMap = createBodies( bodySettings );
 
+Create the vehicle
+~~~~~~~~~~~~~~~~~~
 Our environment is now missing only one aspect: the spacecraft. Our spacecraft (called Asterix) requires no specific properties, it merely needs to exist (its initial state is defined in a subsequent part of the example). Therefore, we can simply add the Asterix satellite to our environment by creating a new empty Body object:
 
     .. code-block:: cpp
@@ -99,8 +102,8 @@ Although not required in this simulation, it is good practice to call the follow
 
 Calling this function will allow hierarchical ephemerides to be properly used in the simulation (i.e. orbiter Ephemeris w.r.t. Moon, Moon w.r.t. Earth, Earth w.r.t. Sun, Sun w.r.t. barycenter).
 
-Setting up the acceleration models
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Set up the acceleration models
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 To define the settings of the propagation of the orbit, we start by defining the required acceleration models. The block of code that performs the required operations is:
 
     .. code-block:: cpp
@@ -145,9 +148,14 @@ The list of propagated bodies and the reference frame origins (central bodies) a
         bodiesToPropagate.push_back( "Asterix" );
         centralBodies.push_back( "Earth" );
     
-These settings for the accelerations require some more structure, though, and are stored in a SelectedAccelerationMap. This is typedef for:
-std::map< std::string, std::map< std::string, std::vector< boost::shared_ptr< AccelerationSettings > > > >
-This is a double map (with twice a string as a key). The two levels correspond to the names of bodies undergoing an acceleration (first key) , and those for bodies exerting an acceleration (second key). This allows any number of bodies to be propagated, undergoing any number (and type) of accelerations. Mutual acceleration between bodies being propagated, as is the case for Solar system dynamics for instance, is automatically handled by the code and requires no specific consideration.
+These settings for the accelerations require some more structure, though, and are stored in a :class:`SelectedAccelerationMap`. This is :literal:`typedef` for:
+
+.. code-block:: cpp
+
+    std::map< std::string, std::map< std::string, std::vector< boost::shared_ptr< AccelerationSettings > > > >
+
+This is a double map (with twice a string as a key). The two levels correspond to the names of bodies undergoing an acceleration (first key), and those for bodies exerting an acceleration (second key). This allows any number of bodies to be propagated, undergoing any number (and type) of accelerations. Mutual acceleration between bodies being propagated, as is the case for Solar system dynamics for instance, is automatically handled by the code and requires no specific consideration.
+
 In our example, we have only a single point-mass acceleration due to Earth, acting on Asterix. We define the settings for the acceleration as follows:
 
     .. code-block:: cpp
@@ -157,8 +165,7 @@ In our example, we have only a single point-mass acceleration due to Earth, acti
                                                          basic_astrodynamics::central_gravity ) );
         accelerationMap[  "Asterix" ] = accelerationsOfAsterix;
 
-A single acceleration, of type 'central_gravity' to be exerted by body 'Earth' on body 'Asterix' is now defined.
-The list of the actual acceleration models is now created by:
+A single acceleration, of type :literal:`central_gravity` to be exerted by body :literal:`"Earth"` on body :literal:`"Asterix"` is now defined. The list of the actual acceleration models is now created by:
 
     .. code-block:: cpp
 
@@ -167,9 +174,9 @@ The list of the actual acceleration models is now created by:
 
 which automatically links together all required objects and functions.
 
-Propagation settings
-~~~~~~~~~~~~~~~~~~~~
-Now that we have both our environment models and our acceleration model, we can create the full settings for the propagation. These settings are stored in a PropagatorSettings object. For this example, we will only consider the propagation of translational dynamics, which is stored in the derived class TranslationalStatePropagatorSettings. The settings for the propagator are the following:
+Set up the propagation settings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Now that we have both our environment models and our acceleration model, we can create the full settings for the propagation. These settings are stored in a :class:`PropagatorSettings` object. For this example, we will only consider the propagation of translational dynamics, which is stored in the derived class :class:`TranslationalStatePropagatorSettings`. The settings for the propagator are the following:
 
     - The acceleration models
     - The list of bodies that are to be propagated
@@ -233,7 +240,7 @@ Now, we can create our propagator settings by:
             boost::make_shared< TranslationalStatePropagatorSettings< > >
                 ( centralBodies, accelerationModelMap, bodiesToPropagate, systemInitialState, simulationEndEpoch, cowell );
 
-Where we have passed exactly the five aspects listed above as input to the TranslationalStatePropagatorSettings. If you have a look at the code for the TranslationalStatePropagatorSettings, you will notice that there are multiple constructors for the class, each with a number of additional input arguments (for which we use the defautl values). These more advanced options are discussed in the following tutorials.
+Where we have passed exactly the five aspects listed above as input to the :class:`TranslationalStatePropagatorSettings`. If you have a look at the code for the :class:`TranslationalStatePropagatorSettings`, you will notice that there are multiple constructors for the class, each with a number of additional input arguments (for which we use the defautl values). These more advanced options are discussed in the following tutorials.
 
 A final piece of information needed to propagate the orbit is the settings for the numerical integration. We use a Runge-Kutta 4 integrator, with a 10 second time step, starting the numerical integration at t=0:
 
@@ -246,9 +253,9 @@ A final piece of information needed to propagate the orbit is the settings for t
             boost::make_shared< IntegratorSettings< > >
                 ( rungeKutta4, simulationStartEpoch, fixedStepSize );
 
-Performing the orbit propagation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Now, we have defined all the information needed to propagate the orbit of our satellite, which are stored in the bodyMap (environment), propagatorSettings (settings for the full state derivative model) and integratorSettings (settings on how to obtain the numerical solution). The propagation is done by an object of a class (derived from) DynamicsSimulator. Here, the following is used to propagate:
+Perform the orbit propagation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Now, we have defined all the information needed to propagate the orbit of our satellite, which are stored in the :literal:`bodyMap` (environment), :literal:`propagatorSettings` (settings for the full state derivative model) and :literal:`integratorSettings` (settings on how to obtain the numerical solution). The propagation is done by an object of a class (derived from) :class:`DynamicsSimulator`. Here, the following is used to propagate:
 
     .. code-block:: cpp
 

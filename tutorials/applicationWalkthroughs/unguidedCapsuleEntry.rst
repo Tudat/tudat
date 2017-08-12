@@ -2,7 +2,6 @@
 
 Un-guided Capsule Entry
 =======================
-
 The example described on this page is that of Apollo on a reentry trajectory towards the surface of Earth. The code for this tutorial is located in your Tudat Bundle at::
 
    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/apolloCapsuleEntry.cpp
@@ -45,8 +44,8 @@ In this case, the :literal:`getApolloCoefficientInterface( )` function returns a
 
 .. tip:: If you want to include a different vehicle, you will have to define a new :class:`AerodynamicCoefficientInterface` and implement your own custom aerodynamic database. Please go to :ref:`tudatFeaturesAerodynamicGuidance` for further details.
 
-Create the accelerations
-~~~~~~~~~~~~~~~~~~~~~~~~
+Set up the acceleration models
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 A major difference with respect to the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` is the use of a spherical-harmonic gravity model and the presence of an aerodynamic force on the vehicle. Such acceleration models are added to the :literal:`accelerationMap` as follows:
 
 .. code-block:: cpp
@@ -66,7 +65,7 @@ A crucial step in reentry modelling is the definition of a :class:`AerodynamicGu
     bodyMap.at( "Apollo" )->getFlightConditions( )->getAerodynamicAngleCalculator( )->setOrientationAngleFunctions(
                 boost::lambda::constant( constantAngleOfAttack ) );
 
-Create the propagation settings
+Set up the propagation settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In most reentry studies, it is convenient to define the entry conditions using a spherical state. The following entry state is used:
 
@@ -99,7 +98,7 @@ Such state must is defined and converted to Cartesian state variables as follows
 .. note:: Note that speed defined in the :literal:`speedIndex` makes reference to the **inertial** speed of the vehicle. Furthermore, the :literal:`latitudeIndex` makes reference to the **geocentric** latitude.
 
 Create a list of dependent variables to save
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+********************************************
 In this example, a number of dependent variables are saved to plot the trajectory of Apollo after reentry. The following dependent variables are saved:
 
 - Mach number
@@ -135,7 +134,7 @@ Next, the list is populated with the desired dependent variables. Please go to :
             boost::make_shared< DependentVariableSaveSettings >( dependentVariablesList );
 
 Define the termination conditions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*********************************
 Finally, the termination conditions are established. In this example, the reentry trajectory is propagated until Apollo's altitude drops below 25 km:
 
 .. code-block:: cpp
