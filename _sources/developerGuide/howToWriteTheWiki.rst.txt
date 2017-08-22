@@ -32,9 +32,169 @@ The documentation using reStructuredText and Sphinx requires relatively few tool
       sudo apt-get install python pip
       pip install sphinx sphinx-autobuild
 
-**3. Clone the** :literal:`wikiSource` **repository**
+**3. Clone the** :literal:`source` **repository**
+   This repository contains the :literal:`.rst` source files that make up the wiki. These are stored under the :literal:`source` branch within the :literal:`tudat` repository of https://github.com/Tudat/tudat. Place the contents of this repository inside a :literal:`source` folder.
 
 **4. Clone the** :literal:`gh-pages` **repository**
+   This repository contains the :literal:`.html` files that build the wiki website. These are stored under the :literal:`gh-pages` branch within the :literal:`tudat` repository of https://github.com/Tudat/tudat. Place the contents of this repository inside a :literal:`build/html` folder, next to your :literal:`source` folder.
+
+**5. Create the** :literal:`make.bat` **and the** :literal:`Makefile` **files**
+   These two files should be placed next to the folders. They allow to build the wiki from the terminal with few commands.
+
+   Contents of the :literal:`make.bat`:
+
+   .. code-block:: bat
+
+      @ECHO OFF
+
+      pushd %~dp0
+
+      REM Command file for Sphinx documentation
+
+      if "%SPHINXBUILD%" == "" (
+      	set SPHINXBUILD=python -msphinx
+      )
+      set SOURCEDIR=source
+      set BUILDDIR=build
+      set SPHINXPROJ=TUDelftAstrodynamicsToolbox
+
+      if "%1" == "" goto help
+
+      %SPHINXBUILD% >NUL 2>NUL
+      if errorlevel 9009 (
+   	echo.
+	echo.The Sphinx module was not found. Make sure you have Sphinx installed,
+	echo.then set the SPHINXBUILD environment variable to point to the full
+	echo.path of the 'sphinx-build' executable. Alternatively you may add the
+	echo.Sphinx directory to PATH.
+	echo.
+	echo.If you don't have Sphinx installed, grab it from
+	echo.http://sphinx-doc.org/
+	exit /b 1
+      )
+
+      %SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
+      goto end
+
+      :help
+      %SPHINXBUILD% -M help %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
+
+      :end
+      popd
+
+   Contents of the :literal:`Makefile`:
+
+   .. code-block:: makefile
+
+      # Minimal makefile for Sphinx documentation
+      #
+
+      # You can set these variables from the command line.
+      SPHINXOPTS    =
+      SPHINXBUILD   = python -msphinx
+      SPHINXPROJ    = TUDelftAstrodynamicsToolbox
+      SOURCEDIR     = source
+      BUILDDIR      = build
+
+      # Put it first so that "make" without argument is like "make help".
+      help:
+	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+
+      .PHONY: help Makefile
+
+      # Catch-all target: route all unknown targets to Sphinx using the new
+      # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
+      %: Makefile
+	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+
+
+**6. Compiling the wiki**
+   To compile the wiki, navigate using the terminal to the folder containing the :literal:`make.bat` file and launch the following command::
+
+      make html
+
+  This will compile the :literal:`.html` files which you can view using your favorite web browser.
+
+   The overall files structure should look as follows::
+
+      root
+      | 
+      | build
+      |     |
+      |     | html
+      |          |
+      |          | index.html
+      |          | ...
+      |   
+      | source
+      |      |
+      |      | conf.py
+      |      | index.rst
+      |      | ...
+      |
+      | make.bat
+      |
+      | makefile
+
 
 Wiki style guide
 ~~~~~~~~~~~~~~~~
+As mentioned above, the wiki is built using :literal:`.rst` files that contain a special mark-up. This files are linked together using :literal:`toctree` commands, that link the source files together.
+
+Linking :literal:`.rst` files
+*****************************
+The wiki source files are organized in different folders, where each folder contains an :literal:`index.rst` file that serves are the header of such folder. The source files should be organized in folder with meaningful names::
+
+      source
+      | 
+      | index.rst
+      |
+      | installation
+      |            |
+      |            | index.rst
+      |            | downloadTudatBundle.rst
+      |            | downloadTudatBundle
+      |            |                   |
+      |            |                   | commandLine.rst
+      |            |                   | smartgitDeveloper.rst
+      |            |                   | smartgitUser.rst	
+      |            | ...
+      |
+      | tutorials
+      |         |
+      |         | index.rst
+      |         | prerequiredKnowledge
+      |         |                    | 
+      |         |                    | index.rst
+      |         |                    | ...
+      |         | ...
+      |        
+      | developerGuide
+      |              | index.rst
+      |              | ...
+      | ...
+
+
+The files are then linked together in a top-down fashion from the top :literal:`index.rst` file. Such linking is done by means of :literal:`toctree` commands, which are placed within the source files:
+
+   .. code-block:: rst
+      
+      .. toctree::
+         :maxdepth: 2
+         :hidden:
+         :caption: Contents
+
+         self
+         installation/index
+         tutorials/index
+         developerGuide/index
+
+   where:
+
+   - :literal:`.. toctree::`
+      Launches the :literal:`toctree` command. Here we see a special syntax widely used in reStructuredText which are used to launch special commands.
+   - g
+      
+   
+.. note:: Having an :literal:`index.rst` file in each folder is done simply due to convention. You could use a different file name as long as you refer to it properly in the :literal:`toctree`.
+

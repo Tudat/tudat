@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -44,6 +46,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +83,10 @@
           
             
             
-                <p class="caption"><span class="caption-text">Contents</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation Guide</a></li>
@@ -90,7 +96,10 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">How to Write the Wiki</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#the-documentation-framework">The documentation framework</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#installing-the-documentation-tools">Installing the documentation tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#wiki-style-guide">Wiki style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wiki-style-guide">Wiki style guide</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#linking-rst-files">Linking <code class="docutils literal"><span class="pre">.rst</span></code> files</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -107,8 +116,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TU Delft Astrodynamic Toolbox</a>
+        
       </nav>
 
 
@@ -117,25 +128,42 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="index.html">Developer Guide</a> &raquo;</li>
-      
-    <li>How to Write the Wiki</li>
+        
+      <li>How to Write the Wiki</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="../_sources/developerGuide/howToWriteTheWiki.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -171,16 +199,180 @@
 </pre></div>
 </div>
 </dd>
+<dt><strong>3. Clone the</strong> <code class="docutils literal"><span class="pre">source</span></code> <strong>repository</strong></dt>
+<dd>This repository contains the <code class="docutils literal"><span class="pre">.rst</span></code> source files that make up the wiki. These are stored under the <code class="docutils literal"><span class="pre">source</span></code> branch within the <code class="docutils literal"><span class="pre">tudat</span></code> repository of <a class="reference external" href="https://github.com/Tudat/tudat">https://github.com/Tudat/tudat</a>. Place the contents of this repository inside a <code class="docutils literal"><span class="pre">source</span></code> folder.</dd>
+<dt><strong>4. Clone the</strong> <code class="docutils literal"><span class="pre">gh-pages</span></code> <strong>repository</strong></dt>
+<dd>This repository contains the <code class="docutils literal"><span class="pre">.html</span></code> files that build the wiki website. These are stored under the <code class="docutils literal"><span class="pre">gh-pages</span></code> branch within the <code class="docutils literal"><span class="pre">tudat</span></code> repository of <a class="reference external" href="https://github.com/Tudat/tudat">https://github.com/Tudat/tudat</a>. Place the contents of this repository inside a <code class="docutils literal"><span class="pre">build/html</span></code> folder, next to your <code class="docutils literal"><span class="pre">source</span></code> folder.</dd>
+<dt><strong>5. Create the</strong> <code class="docutils literal"><span class="pre">make.bat</span></code> <strong>and the</strong> <code class="docutils literal"><span class="pre">Makefile</span></code> <strong>files</strong></dt>
+<dd><p class="first">These two files should be placed next to the folders. They allow to build the wiki from the terminal with few commands.</p>
+<p>Contents of the <code class="docutils literal"><span class="pre">make.bat</span></code>:</p>
+<div class="highlight-bat"><div class="highlight"><pre><span></span><span class="p">@</span><span class="k">ECHO</span> OFF
+
+<span class="k">pushd</span> <span class="nv">%~dp0</span>
+
+<span class="c1">REM Command file for Sphinx documentation</span>
+
+<span class="k">if</span> <span class="s2">&quot;</span><span class="nv">%SPHINXBUILD%</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="p">(</span>
+  <span class="k">set</span> <span class="nv">SPHINXBUILD</span><span class="p">=</span>python -msphinx
+<span class="p">)</span>
+<span class="k">set</span> <span class="nv">SOURCEDIR</span><span class="p">=</span>source
+<span class="k">set</span> <span class="nv">BUILDDIR</span><span class="p">=</span>build
+<span class="k">set</span> <span class="nv">SPHINXPROJ</span><span class="p">=</span>TUDelftAstrodynamicsToolbox
+
+<span class="k">if</span> <span class="s2">&quot;</span><span class="nv">%1</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">goto</span> <span class="nl">help</span>
+
+<span class="nv">%SPHINXBUILD%</span> <span class="p">&gt;</span>NUL <span class="mi">2</span><span class="p">&gt;</span>NUL
+<span class="k">if</span> <span class="k">errorlevel</span> <span class="mi">9009</span> <span class="p">(</span>
+  <span class="k">echo</span>.
+  <span class="k">echo</span>.The Sphinx module was not found. Make sure you have Sphinx installed,
+  <span class="k">echo</span>.then set the SPHINXBUILD environment variable to point to the full
+  <span class="k">echo</span>.path of the &#39;sphinx-build&#39; executable. Alternatively you may add the
+  <span class="k">echo</span>.Sphinx directory to PATH.
+  <span class="k">echo</span>.
+  <span class="k">echo</span>.If you don&#39;t have Sphinx installed, grab it from
+  <span class="k">echo</span>.http://sphinx-doc.org/
+  <span class="k">exit</span> /b 1
+<span class="p">)</span>
+
+<span class="nv">%SPHINXBUILD%</span> -M <span class="nv">%1</span> <span class="nv">%SOURCEDIR%</span> <span class="nv">%BUILDDIR%</span> <span class="nv">%SPHINXOPTS%</span>
+<span class="k">goto</span> <span class="nl">end</span>
+
+<span class="p">:</span><span class="nl">help</span>
+<span class="nv">%SPHINXBUILD%</span> -M help <span class="nv">%SOURCEDIR%</span> <span class="nv">%BUILDDIR%</span> <span class="nv">%SPHINXOPTS%</span>
+
+<span class="p">:</span><span class="nl">end</span>
+<span class="k">popd</span>
+</pre></div>
+</div>
+<p>Contents of the <code class="docutils literal"><span class="pre">Makefile</span></code>:</p>
+<div class="last highlight-makefile"><div class="highlight"><pre><span></span><span class="c"># Minimal makefile for Sphinx documentation</span>
+<span class="c">#</span>
+
+<span class="c"># You can set these variables from the command line.</span>
+<span class="nv">SPHINXOPTS</span>    <span class="o">=</span>
+<span class="nv">SPHINXBUILD</span>   <span class="o">=</span> python -msphinx
+<span class="nv">SPHINXPROJ</span>    <span class="o">=</span> TUDelftAstrodynamicsToolbox
+<span class="nv">SOURCEDIR</span>     <span class="o">=</span> <span class="nb">source</span>
+<span class="nv">BUILDDIR</span>      <span class="o">=</span> build
+
+<span class="c"># Put it first so that &quot;make&quot; without argument is like &quot;make help&quot;.</span>
+<span class="nf">help</span><span class="o">:</span>
+  @<span class="k">$(</span>SPHINXBUILD<span class="k">)</span> -M <span class="nb">help</span> <span class="s2">&quot;</span><span class="k">$(</span>SOURCEDIR<span class="k">)</span><span class="s2">&quot;</span> <span class="s2">&quot;</span><span class="k">$(</span>BUILDDIR<span class="k">)</span><span class="s2">&quot;</span> <span class="k">$(</span>SPHINXOPTS<span class="k">)</span> <span class="k">$(</span>O<span class="k">)</span>
+
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">help</span> <span class="n">Makefile</span>
+
+<span class="c"># Catch-all target: route all unknown targets to Sphinx using the new</span>
+<span class="c"># &quot;make mode&quot; option.  $(O) is meant as a shortcut for $(SPHINXOPTS).</span>
+<span class="nf">%</span><span class="o">:</span> <span class="n">Makefile</span>
+  @<span class="k">$(</span>SPHINXBUILD<span class="k">)</span> -M <span class="nv">$@</span> <span class="s2">&quot;</span><span class="k">$(</span>SOURCEDIR<span class="k">)</span><span class="s2">&quot;</span> <span class="s2">&quot;</span><span class="k">$(</span>BUILDDIR<span class="k">)</span><span class="s2">&quot;</span> <span class="k">$(</span>SPHINXOPTS<span class="k">)</span> <span class="k">$(</span>O<span class="k">)</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>6. Compiling the wiki</strong></dt>
+<dd><blockquote class="first">
+<div><p>To compile the wiki, navigate using the terminal to the folder containing the <code class="docutils literal"><span class="pre">make.bat</span></code> file and launch the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">html</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This will compile the <code class="docutils literal"><span class="pre">.html</span></code> files which you can view using your favorite web browser.</p>
+<blockquote class="last">
+<div><p>The overall files structure should look as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">build</span>
+<span class="o">|</span>     <span class="o">|</span>
+<span class="o">|</span>     <span class="o">|</span> <span class="n">html</span>
+<span class="o">|</span>          <span class="o">|</span>
+<span class="o">|</span>          <span class="o">|</span> <span class="n">index</span><span class="o">.</span><span class="n">html</span>
+<span class="o">|</span>          <span class="o">|</span> <span class="o">...</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">source</span>
+<span class="o">|</span>      <span class="o">|</span>
+<span class="o">|</span>      <span class="o">|</span> <span class="n">conf</span><span class="o">.</span><span class="n">py</span>
+<span class="o">|</span>      <span class="o">|</span> <span class="n">index</span><span class="o">.</span><span class="n">rst</span>
+<span class="o">|</span>      <span class="o">|</span> <span class="o">...</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">make</span><span class="o">.</span><span class="n">bat</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">makefile</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd>
 </dl>
-<p><strong>3. Clone the</strong> <code class="docutils literal"><span class="pre">wikiSource</span></code> <strong>repository</strong></p>
-<p><strong>4. Clone the</strong> <code class="docutils literal"><span class="pre">gh-pages</span></code> <strong>repository</strong></p>
 </div>
 <div class="section" id="wiki-style-guide">
 <h2>Wiki style guide<a class="headerlink" href="#wiki-style-guide" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned above, the wiki is built using <code class="docutils literal"><span class="pre">.rst</span></code> files that contain a special mark-up. This files are linked together using <code class="docutils literal"><span class="pre">toctree</span></code> commands, that link the source files together.</p>
+<div class="section" id="linking-rst-files">
+<h3>Linking <code class="docutils literal"><span class="pre">.rst</span></code> files<a class="headerlink" href="#linking-rst-files" title="Permalink to this headline">¶</a></h3>
+<p>The wiki source files are organized in different folders, where each folder contains an <code class="docutils literal"><span class="pre">index.rst</span></code> file that serves are the header of such folder. The source files should be organized in folder with meaningful names:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">source</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">index</span><span class="o">.</span><span class="n">rst</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">installation</span>
+<span class="o">|</span>            <span class="o">|</span>
+<span class="o">|</span>            <span class="o">|</span> <span class="n">index</span><span class="o">.</span><span class="n">rst</span>
+<span class="o">|</span>            <span class="o">|</span> <span class="n">downloadTudatBundle</span><span class="o">.</span><span class="n">rst</span>
+<span class="o">|</span>            <span class="o">|</span> <span class="n">downloadTudatBundle</span>
+<span class="o">|</span>            <span class="o">|</span>                   <span class="o">|</span>
+<span class="o">|</span>            <span class="o">|</span>                   <span class="o">|</span> <span class="n">commandLine</span><span class="o">.</span><span class="n">rst</span>
+<span class="o">|</span>            <span class="o">|</span>                   <span class="o">|</span> <span class="n">smartgitDeveloper</span><span class="o">.</span><span class="n">rst</span>
+<span class="o">|</span>            <span class="o">|</span>                   <span class="o">|</span> <span class="n">smartgitUser</span><span class="o">.</span><span class="n">rst</span>
+<span class="o">|</span>            <span class="o">|</span> <span class="o">...</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">tutorials</span>
+<span class="o">|</span>         <span class="o">|</span>
+<span class="o">|</span>         <span class="o">|</span> <span class="n">index</span><span class="o">.</span><span class="n">rst</span>
+<span class="o">|</span>         <span class="o">|</span> <span class="n">prerequiredKnowledge</span>
+<span class="o">|</span>         <span class="o">|</span>                    <span class="o">|</span>
+<span class="o">|</span>         <span class="o">|</span>                    <span class="o">|</span> <span class="n">index</span><span class="o">.</span><span class="n">rst</span>
+<span class="o">|</span>         <span class="o">|</span>                    <span class="o">|</span> <span class="o">...</span>
+<span class="o">|</span>         <span class="o">|</span> <span class="o">...</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">developerGuide</span>
+<span class="o">|</span>              <span class="o">|</span> <span class="n">index</span><span class="o">.</span><span class="n">rst</span>
+<span class="o">|</span>              <span class="o">|</span> <span class="o">...</span>
+<span class="o">|</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>The files are then linked together in a top-down fashion from the top <code class="docutils literal"><span class="pre">index.rst</span></code> file. Such linking is done by means of <code class="docutils literal"><span class="pre">toctree</span></code> commands, which are placed within the source files:</p>
+<blockquote>
+<div><div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">toctree</span><span class="p">::</span>
+   <span class="nc">:maxdepth:</span> <span class="nf">2</span>
+   <span class="nc">:hidden:</span>
+   <span class="nc">:caption:</span> <span class="nf">Contents</span>
+
+   self
+   installation/index
+   tutorials/index
+   developerGuide/index
+</pre></div>
+</div>
+<p>where:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">..</span> <span class="pre">toctree::</span></code></dt>
+<dd>Launches the <code class="docutils literal"><span class="pre">toctree</span></code> command. Here we see a special syntax widely used in reStructuredText which are used to launch special commands.</dd>
+</dl>
+</li>
+<li>g</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Having an <code class="docutils literal"><span class="pre">index.rst</span></code> file in each folder is done simply due to convention. You could use a different file name as long as you refer to it properly in the <code class="docutils literal"><span class="pre">toctree</span></code>.</p>
+</div>
+</div>
 </div>
 </div>
 
 
+           </div>
+           <div class="articleComments">
+            
            </div>
           </div>
           <footer>
@@ -188,7 +380,7 @@
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="githubBasics.html" class="btn btn-neutral" title="Github Basics" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="githubBasics.html" class="btn btn-neutral" title="Github Basics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -222,7 +414,8 @@
             VERSION:'',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
