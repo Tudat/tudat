@@ -193,8 +193,84 @@ The files are then linked together in a top-down fashion from the top :literal:`
 
    - :literal:`.. toctree::`
       Launches the :literal:`toctree` command. Here we see a special syntax widely used in reStructuredText which are used to launch special commands.
-   - g
-      
-   
+   - :literal:`:maxdepth: 2`
+      Defines the maximum number of levels to show in the :literal:`toctree`. Note that the corresponding source pages will still be linked, even if not shown. This option becomes irrelevant if :literal:`hidden` is used.
+   - :literal:`:hidden:`
+      Hides the :literal:`toctree` entirely from the page.
+   - :literal:`:caption:`
+      Defines the name of the :literal:`toctree`. In the Tudat wiki, this is only used in the top-level :literal:`toctree`.
+   - :literal:`self`, :literal:`installation/index`, ...
+      Define the location of the corresponding source files to be linked in the :literal:`toctree`. 
+
 .. note:: Having an :literal:`index.rst` file in each folder is done simply due to convention. You could use a different file name as long as you refer to it properly in the :literal:`toctree`.
+
+Indentation in reStructuredText
+*******************************
+Once the wiki source files have been linked, it is time to start writing your text. While doing so, it is highly emphasized to nest all similar content among different categories and captions. To do so, you need to use the indentation system of reStructuredText, which consist on sequentially adding blocks of 3 whitespaces depending on the indentation level. For instance:
+
+.. code-block:: rst
+
+   First level
+   ===========
+      Bla bla bla starts after 3 whitespaces.
+
+      Second level
+      ~~~~~~~~~~~~
+         Bla bla bla starts after 6 whitespaces
+
+         Third level
+         ***********
+         Bla bla bla starts after 9 whitespaces
+
+Where all text with an indentation of at least 3 whitespace belongs to the caption "First level", all text with an indentation of at least 6 whitespace belongs to the caption "Second level" and all text with an indentation of at least 9 whitespace belongs to the caption "Third level".
+
+.. warning:: It is important to realize that the "3-whitespaces" rule is applicable to all commands within reStructuredText. In fact, many commands require to add all the relative content to such command with an indentation of 3 whitespaces for the command to actually work. For instance:
+
+   .. code-block:: rst
+
+      .. code-block:: cpp
+
+         This text WILL be recognized within code-block.
+
+      .. code-block:: cpp
+
+      This text WILL NOT be recognized within code-block.
+
+Use of special commands
+***********************
+One of the most powerful features of reStructuredText is the ability to use complex mark-up. It is required that you make use of it to ensure that the wiki stays pretty and clear. The best advice we can give you is to go through existing wiki pages and cross-check against the source code that generates them. You can do so by clicking on "View page source" on the top-right corner of the page.
+
+The following commands are available within reStructuredText
+
+- :literal:`.. warning::`, :literal:`.. note::`, :literal:`.. tip::`
+
+   These commands place coloured boxes which highlight particular content relevant to the current page. :literal:`.. warning::` should be used for critical information will likely lead to issues if ignored. :literal:`.. warning::` should be used to extend the information beyond the regular paragraphs for further clarification, but is not critical for the end-user. :literal:`.. tip::` should be used for non-critical information that can help the user in solve further problems than the one treated.
+
+- :literal:`.. code-block:: cpp`
+
+   Sets a box with a monospaced box that contains C++ (cpp) marked-up code. You can use alternative designators such as reStructuredText (rst), MakeFile (makefile) or Windows Batch files (bat), among others.
+
+- :literal:`**this text goes in bold**`
+   Makes the text enclosed by double multiplication signs **bold**.
+
+- :literal:`*this text goes in italics*`
+   Makes the text enclosed by single multiplication signs *italics*.
+
+- :literal:`:literal:```
+   Introduces text in a red monospaced font. Should be used to refer to "software objects", such as clickable buttons in GUIs, files, folders, variables, etc.
+
+- :literal:`:class:```
+   Introduces text in a black monospaced font. Should be used to refer to C++ classes. In Tudat, these are generally identified by variable names where each word is capitalized, such as in :class:`ExampleClass`.
+
+- :literal:`.. _exampleReferenceLink:`
+   Introduces a referable link, typically used at the start of sections. Similarly to cross-links used in LaTeX.
+
+- :literal:`:ref:`exampleReferenceLink``
+   Introduces an inline link to the page designated with :literal:`.. _exampleReferenceLink:`.
+
+- :literal:`.. class:: ExampleClass`
+   Creates a special environment for class objects. If a :literal:`:class:`ExampleClass`` exists within the wiki, it will exist as a clickable object that redirects the user to the environment defined here.
+
+- :literal:`use of semi-colon after a paragraph::`
+   Introduces a box of monospaced text without mark-up. Generally used to define file locations.
 

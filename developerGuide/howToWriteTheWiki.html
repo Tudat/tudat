@@ -98,6 +98,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#installing-the-documentation-tools">Installing the documentation tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#wiki-style-guide">Wiki style guide</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#linking-rst-files">Linking <code class="docutils literal"><span class="pre">.rst</span></code> files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#indentation-in-restructuredtext">Indentation in reStructuredText</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#use-of-special-commands">Use of special commands</a></li>
 </ul>
 </li>
 </ul>
@@ -358,13 +360,128 @@
 <dd>Launches the <code class="docutils literal"><span class="pre">toctree</span></code> command. Here we see a special syntax widely used in reStructuredText which are used to launch special commands.</dd>
 </dl>
 </li>
-<li>g</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">:maxdepth:</span> <span class="pre">2</span></code></dt>
+<dd>Defines the maximum number of levels to show in the <code class="docutils literal"><span class="pre">toctree</span></code>. Note that the corresponding source pages will still be linked, even if not shown. This option becomes irrelevant if <code class="docutils literal"><span class="pre">hidden</span></code> is used.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">:hidden:</span></code></dt>
+<dd>Hides the <code class="docutils literal"><span class="pre">toctree</span></code> entirely from the page.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">:caption:</span></code></dt>
+<dd>Defines the name of the <code class="docutils literal"><span class="pre">toctree</span></code>. In the Tudat wiki, this is only used in the top-level <code class="docutils literal"><span class="pre">toctree</span></code>.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">self</span></code>, <code class="docutils literal"><span class="pre">installation/index</span></code>, …</dt>
+<dd>Define the location of the corresponding source files to be linked in the <code class="docutils literal"><span class="pre">toctree</span></code>.</dd>
+</dl>
+</li>
 </ul>
 </div></blockquote>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Having an <code class="docutils literal"><span class="pre">index.rst</span></code> file in each folder is done simply due to convention. You could use a different file name as long as you refer to it properly in the <code class="docutils literal"><span class="pre">toctree</span></code>.</p>
 </div>
+</div>
+<div class="section" id="indentation-in-restructuredtext">
+<h3>Indentation in reStructuredText<a class="headerlink" href="#indentation-in-restructuredtext" title="Permalink to this headline">¶</a></h3>
+<p>Once the wiki source files have been linked, it is time to start writing your text. While doing so, it is highly emphasized to nest all similar content among different categories and captions. To do so, you need to use the indentation system of reStructuredText, which consist on sequentially adding blocks of 3 whitespaces depending on the indentation level. For instance:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="gh">First level</span>
+<span class="gh">===========</span>
+   Bla bla bla starts after 3 whitespaces.
+
+   Second level
+   ~~~~~~~~~~~~
+      Bla bla bla starts after 6 whitespaces
+
+      Third level
+      <span class="gs">**********</span>*
+      Bla bla bla starts after 9 whitespaces
+</pre></div>
+</div>
+<p>Where all text with an indentation of at least 3 whitespace belongs to the caption “First level”, all text with an indentation of at least 6 whitespace belongs to the caption “Second level” and all text with an indentation of at least 9 whitespace belongs to the caption “Third level”.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>It is important to realize that the “3-whitespaces” rule is applicable to all commands within reStructuredText. In fact, many commands require to add all the relative content to such command with an indentation of 3 whitespaces for the command to actually work. For instance:</p>
+<div class="last highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">code-block</span><span class="p">::</span> <span class="k">cpp</span>
+
+   <span class="n">This</span> <span class="n">text</span> <span class="n">WILL</span> <span class="n">be</span> <span class="n">recognized</span> <span class="n">within</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">.</span>
+
+<span class="p">..</span> <span class="ow">code-block</span><span class="p">::</span> cpp
+
+This text WILL NOT be recognized within code-block.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="use-of-special-commands">
+<h3>Use of special commands<a class="headerlink" href="#use-of-special-commands" title="Permalink to this headline">¶</a></h3>
+<p>One of the most powerful features of reStructuredText is the ability to use complex mark-up. It is required that you make use of it to ensure that the wiki stays pretty and clear. The best advice we can give you is to go through existing wiki pages and cross-check against the source code that generates them. You can do so by clicking on “View page source” on the top-right corner of the page.</p>
+<p>The following commands are available within reStructuredText</p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">..</span> <span class="pre">warning::</span></code>, <code class="docutils literal"><span class="pre">..</span> <span class="pre">note::</span></code>, <code class="docutils literal"><span class="pre">..</span> <span class="pre">tip::</span></code></p>
+<blockquote>
+<div><p>These commands place coloured boxes which highlight particular content relevant to the current page. <code class="docutils literal"><span class="pre">..</span> <span class="pre">warning::</span></code> should be used for critical information will likely lead to issues if ignored. <code class="docutils literal"><span class="pre">..</span> <span class="pre">warning::</span></code> should be used to extend the information beyond the regular paragraphs for further clarification, but is not critical for the end-user. <code class="docutils literal"><span class="pre">..</span> <span class="pre">tip::</span></code> should be used for non-critical information that can help the user in solve further problems than the one treated.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">..</span> <span class="pre">code-block::</span> <span class="pre">cpp</span></code></p>
+<blockquote>
+<div><p>Sets a box with a monospaced box that contains C++ (cpp) marked-up code. You can use alternative designators such as reStructuredText (rst), MakeFile (makefile) or Windows Batch files (bat), among others.</p>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">**this</span> <span class="pre">text</span> <span class="pre">goes</span> <span class="pre">in</span> <span class="pre">bold**</span></code></dt>
+<dd><p class="first last">Makes the text enclosed by double multiplication signs <strong>bold</strong>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">*this</span> <span class="pre">text</span> <span class="pre">goes</span> <span class="pre">in</span> <span class="pre">italics*</span></code></dt>
+<dd><p class="first last">Makes the text enclosed by single multiplication signs <em>italics</em>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">:literal:``</span></code></dt>
+<dd><p class="first last">Introduces text in a red monospaced font. Should be used to refer to “software objects”, such as clickable buttons in GUIs, files, folders, variables, etc.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">:class:``</span></code></dt>
+<dd><p class="first last">Introduces text in a black monospaced font. Should be used to refer to C++ classes. In Tudat, these are generally identified by variable names where each word is capitalized, such as in <code class="xref py py-class docutils literal"><span class="pre">ExampleClass</span></code>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">..</span> <span class="pre">_exampleReferenceLink:</span></code></dt>
+<dd><p class="first last">Introduces a referable link, typically used at the start of sections. Similarly to cross-links used in LaTeX.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">:ref:`exampleReferenceLink`</span></code></dt>
+<dd><p class="first last">Introduces an inline link to the page designated with <code class="docutils literal"><span class="pre">..</span> <span class="pre">_exampleReferenceLink:</span></code>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">..</span> <span class="pre">class::</span> <span class="pre">ExampleClass</span></code></dt>
+<dd><p class="first last">Creates a special environment for class objects. If a <code class="docutils literal"><span class="pre">:class:`ExampleClass`</span></code> exists within the wiki, it will exist as a clickable object that redirects the user to the environment defined here.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">use</span> <span class="pre">of</span> <span class="pre">semi-colon</span> <span class="pre">after</span> <span class="pre">a</span> <span class="pre">paragraph::</span></code></dt>
+<dd><p class="first last">Introduces a box of monospaced text without mark-up. Generally used to define file locations.</p>
+</dd>
+</dl>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -389,7 +506,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Alejandro Gonzalez Puerta.
+        &copy; Copyright 2017, Delft University of Technology.
 
     </p>
   </div>
