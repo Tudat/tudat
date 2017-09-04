@@ -88,8 +88,32 @@ Next, we need to define which link ends are to be used for which observable. We 
 
 Where you can see that the :literal:`ObservableType` denotes a type of observation. Here, we limit ourselves to 1-way range, 1-way Doppler and angular position observables.
 
-Results
-~~~~~~~
-Below, we show the resulting orbit of the spacecraft w.r.t. the Earth. Clearly, the thrust force that we apply has a significant effect, changing the orbital plane and increasing the spacecraft's mean distance from the Earth.
-LinkEndType
-We also show plots of the acceleration (in an inertial frame) and force (in the LVLH frame) due to the thrust. The thrust profile clearly shows the linearly interpolated behaviour from our input data. For the acceleration, the once-per-orbit signature of the transformation is clearly visible.
+Now that we've defined which link ends are used for which observables, we can start adding more properties to the observation models. This is done by using the :literal:`ObservationSettings` class. This class is discussed in more detail on THIS PAGE. For this tutorial, we restrict ourselves to simple observation models (which do not require any information in addition to their type) and we do not use observation biases or light-time corrections.
+
+The resulting code to create settings for the observation models then becomes:
+
+.. code-block:: cpp
+
+    observation_models::ObservationSettingsMap observationSettingsMap;
+    for( std::map< ObservableType, std::vector< LinkEnds > >::iterator linkEndIterator = linkEndsPerObservable.begin( );
+         linkEndIterator != linkEndsPerObservable.end( ); linkEndIterator++ )
+    {
+        ObservableType currentObservable = linkEndIterator->first;
+
+        std::vector< LinkEnds > currentLinkEndsList = linkEndIterator->second;
+        for( unsigned int i = 0; i < currentLinkEndsList.size( ); i++ )
+        {
+            // Define settings for observable, no light-time corrections, and biases for selected 1-way range links
+            observationSettingsMap.insert(
+                        std::make_pair( currentLinkEndsList.at( i ),
+                                        boost::make_shared< ObservationSettings >(
+                                            currentObservable ) );
+                    //, boost::shared_ptr< LightTimeCorrectionSettings >( ),
+                    //                        biasSettings ) ) );
+        }
+    }
+    
+Where we have defined a map :literal:`ObservationSettingsMap` that contains all the settings necessary to create the observation models.
+
+Defining Estimation Settings 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
