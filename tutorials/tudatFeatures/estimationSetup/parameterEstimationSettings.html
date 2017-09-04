@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>6.4. Setting Up Estimated Parameters &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
+        <link rel="up" title="6. Estimation Set-Up" href="index.html"/>
+        <link rel="next" title="6.5. Parameter Estimation" href="estimationExecution.html"/>
+        <link rel="prev" title="6.3. Simulating Observations" href="observationSimulation.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials and Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../prerequiredKnowledge/index.html">Pre-required Knowledge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Acceleration Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Simulator Set-Up</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6. Estimation Set-Up</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="linkEndSetup.html">6.1. Setting up the link ends</a></li>
+<li class="toctree-l4"><a class="reference internal" href="observationModelSetup.html">6.2. Setting up Observation Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="observationSimulation.html">6.3. Simulating Observations</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.4. Setting Up Estimated Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="estimationExecution.html">6.5. Parameter Estimation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Tutorials and Documentation</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
+        
+          <li><a href="index.html">6. Estimation Set-Up</a> &raquo;</li>
+        
+      <li>6.4. Setting Up Estimated Parameters</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/tutorials/tudatFeatures/estimationSetup/parameterEstimationSettings.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="setting-up-estimated-parameters">
+<span id="parameterestimationsettings"></span><h1>6.4. Setting Up Estimated Parameters<a class="headerlink" href="#setting-up-estimated-parameters" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="parameter-architecture">
+<h2>6.4.1. Parameter Architecture<a class="headerlink" href="#parameter-architecture" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="creating-estimated-parameters">
+<h2>6.4.2. Creating Estimated Parameters<a class="headerlink" href="#creating-estimated-parameters" title="Permalink to this headline">¶</a></h2>
+<p>The framework discussed in the previous section explains how the <code class="docutils literal"><span class="pre">parameterNames</span></code> is populated. The goal of this section is to list the available parameters that can be estimated, and which environment models they are linked to.</p>
+<dl class="class">
+<dt id="EstimatableParameterSettings">
+<em class="property">class </em><code class="descname">EstimatableParameterSettings</code><a class="headerlink" href="#EstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>This base-class is a generic method to define parameters that require no more information than their type, the associated body, and (in some cases) a secondary identifier. Variables are added to the <code class="docutils literal"><span class="pre">parameterNames</span></code> using the following code:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
+             <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">associatedBody</span><span class="p">,</span> <span class="n">parameterType</span><span class="p">,</span> <span class="n">secondaryIdentifier</span> <span class="p">)</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>where:</p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">parameterType</span></code></p>
+<blockquote>
+<div><p><code class="xref py py-class docutils literal"><span class="pre">EstimatebleParametersEnum</span></code> variable that can take the following values:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">gravitational_parameter</span></code>. Gravitational parameter of a body, linked to a <code class="xref py py-class docutils literal"><span class="pre">GravityFieldModel</span></code> object, which may be a point-mass or (time-dependent) spherical harmonic field. Parameter size: 1. Secondary identifer: None.</li>
+<li><code class="docutils literal"><span class="pre">constant_drag_coefficient</span></code>. Drag coefficient of a body that is constant, linked to a <code class="xref py py-class docutils literal"><span class="pre">CustomAerodynamicCoefficientInterface</span></code> object, which must have 0 independent variables for the coefficients. Parameter size: 1. Secondary identifer: None.</li>
+<li><code class="docutils literal"><span class="pre">constant_rotation_rate</span></code>. Rotation rate of a body around a fixed axis, linked to a <code class="xref py py-class docutils literal"><span class="pre">SimpleRotationalEphemeris</span></code> object. Parameter size: 1. Secondary identifer: None.</li>
+<li><code class="docutils literal"><span class="pre">radiation_pressure_coefficient</span></code>. Constant radiation pressure coefficient of a body, linked to a <code class="xref py py-class docutils literal"><span class="pre">RadiationPressureInterface</span></code> object. Parameter size: 1. Secondary identifer: None.</li>
+<li><code class="docutils literal"><span class="pre">rotation_pole_position</span></code>. Fixed rotation axis about which a body rotates with a fixed rotation rate, linked to a :class:`` object. Parameter size: 2 (denoting pole right ascension and declination). Secondary identifer: None.</li>
+<li><code class="docutils literal"><span class="pre">ground_station_position</span></code>. Fixed body-fixed position of a ground station on a body, linked to a <code class="xref py py-class docutils literal"><span class="pre">GroundStationState</span></code> object (requires a <code class="xref py py-class docutils literal"><span class="pre">GroundStationState</span></code> class). Parameter size: 3 (denoting body-fixed <em>x</em>, <em>y</em> and <em>z</em> Cartesian position). Secondary identifer: Ground station name.</li>
+<li><code class="docutils literal"><span class="pre">ppn_parameter_gamma</span></code>. Parameter <span class="math">\(\gamma\)</span> used in Parametric Post-Newtonian (PPN) framework, linked to a <code class="xref py py-class docutils literal"><span class="pre">PPNParameterSet</span></code> object (nominally the global <code class="docutils literal"><span class="pre">relativity::ppnParameterSet</span></code> variable). Parameter size: 1. Note that the name of the associated body should be <code class="docutils literal"><span class="pre">&quot;global_metric&quot;</span></code>. Secondary identifer: None.</li>
+<li><code class="docutils literal"><span class="pre">ppn_parameter_gamma</span></code>. Parameter <span class="math">\(\beta\)</span> used in Parametric Post-Newtonian (PPN) framework, linked to a <code class="xref py py-class docutils literal"><span class="pre">PPNParameterSet</span></code> object (nominally the global <code class="docutils literal"><span class="pre">relativity::ppnParameterSet</span></code> variable). Parameter size: 1. Note that the name of the associated body should be <code class="docutils literal"><span class="pre">&quot;global_metric&quot;</span></code>. Secondary identifer: None.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<blockquote>
+<div>arc_wise_initial_body_state,
+initial_body_state,
+spherical_harmonics_cosine_coefficient_block,
+spherical_harmonics_sine_coefficient_block,
+constant_additive_observation_bias,
+constant_relative_observation_bias,
+equivalence_principle_lpi_violation_parameter,
+empirical_acceleration_coefficients,
+arc_wise_empirical_acceleration_coefficients,
+full_degree_tidal_love_number,
+single_degree_variable_tidal_love_number</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="retrieving-and-modifying-parameters">
+<h2>6.4.3. Retrieving and modifying parameters<a class="headerlink" href="#retrieving-and-modifying-parameters" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="estimationExecution.html" class="btn btn-neutral float-right" title="6.5. Parameter Estimation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="observationSimulation.html" class="btn btn-neutral" title="6.3. Simulating Observations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

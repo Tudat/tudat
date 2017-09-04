@@ -14,4 +14,5 @@ These pages of the wiki provide further details about critical libraries necessa
    environmentSetup/index
    accelerationSetup/index
    propagationSetup/index
+   estimationSetup/index
    otherLibraries/index
