@@ -4,7 +4,7 @@ Use of Thrust: Thrust Force Along Velocity Vector
 =================================================
 This example focuses on the inclusion of a thrust force in Tudat. In this example, the dynamics of the inner solar system (Sun, Mercury, Venus, Earth, Mars, Moon) is simulated. The code for this tutorial is given here on Github, and is also located in your tudat bundle at::
 
-    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/thrustAccelerationFromFileExample.cpp
+    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/thrustAlongVelocityVectorExample.cpp
 
 Although thrust is in principle handled just like any other force and Tudat, you as a user have much more control over how this thrust behaves. In fact, optimizing the thrust profile is an important goal of many types of simulations. The addition of a thrust force requires the addition of the following blocks of code/information:
 

@@ -11,11 +11,11 @@ Tudat supports a diverse set of observation types, which are defined in the :lit
 * :literal:`one_way_range` Range (in meters) between two link ends. Observable has size 1. Requires :literal:`transmitter` and :literal:`receiver` link ends.
 * :literal:`angular_position` Right ascension and declination (in radians) of one link end (the transmitter) as observed by other link end (the receiver) as measured in the base frame in which the states of the link ends are defined. Observable has size 2. Requires :literal:`transmitter` and :literal:`receiver` link ends.
 * :literal:`position_observable` Three-dimensional position of link end (in m) as measured in base the frame in which the state of the link end is defined. Observable has size 3 (*x*, *y* and *z* components). Requires :literal:`observed_body` link end, which directly defines the body of which an observation is taken. Note that this observable is not realized in practice, but is typically used for testing or analysis purposes. It does not use a light-time calculation
-* :literal:`one_way_doppler` Doppler effect of a signal (dimensionless) between two link ends. Observable has size 1. The value is com[puted from range-rate between the link ends, divided by *c*.  Requires :literal:`transmitter` and :literal:`receiver` link ends.
+* :literal:`one_way_doppler` Doppler effect of a signal (dimensionless) between two link ends. Observable has size 1. The value is computed from range-rate between the link ends, divided by *c*.  Requires :literal:`transmitter` and :literal:`receiver` link ends.
 * :literal:`one_way_differenced_range` Doppler observable as it is typically obtained in interplanetary tracking in so-called 'closed-loop' mode (in m/s) between two link ends. Observable has size 1. The value is computed from the averaged range-rate over some integration time (see below). Requires :literal:`transmitter` and :literal:`receiver` link ends.
 * :literal:`n_way_range` Accumulated range (in meters) over any number of signal paths, may be used for two-way range (as in SLR or deep space tracking), as well as more exotic situations where more than 2 signal paths are used in generating the observable (as was the case for, for instance, the SELENE mission) Observable has size 1. The value is com[puted accumulating the light-time (multiplied by *c*) with any retranmission delays that the user defines (see below) Requires :literal:`transmitter`, :literal:`receiver`, as well as :literal:`reflector1`, :literal:`reflector2` ... :literal:`reflectorX` for X+1 signal paths (when only a :literal:`transmitter` and :literal:`receiver` are defined the observation is identical to a :literal:`one_way_range`)
 
-The settings for most obsevation model types are provided to an object of the :class:`ObservationSettings` class, which takes the type of observable, the light-time correction, se AAAA and observation biases AAAAA. For some observation models, however, specific additional information is required. Below the input to these classes is discussed in detail.
+The settings for most obsevation model types are provided to an object of the :class:`ObservationSettings` class, which takes the type of observable, the light-time correction, see AAAAA and observation biases AAAAA. For some observation models, however, specific additional information is required. Below the input to these classes is discussed in detail.
 
 .. class:: ObservationSettings
 
@@ -56,7 +56,7 @@ and:
 
       boost::shared_ptr< ObservationSettings > observationSettings =
             boost::make_shared< ObservationSettings >( 
-                observableType, lightTimeCorrectionsList, biasSettings );
+                observableType, lightTimeCorrectionsList );
             
 may be used as well to create an observation model without light-time corrections or biases (in the case of the former) and no biases (in the case of the latter).
 
@@ -77,14 +77,14 @@ where no input on the type of observable is given (it is :literal:`one_way_diffe
 
    - :literal:`integrationTimeFunction`
 
-      :literal:`boost::function< double( const double ) >` that returns the integration time of the observable as a function of observation time (function input). In many cases, the integration time will be constant, and you may use a :literal:`boost::lambda`, so for a conmstant 60 s integration time:
+      :literal:`boost::function< double( const double ) >` that returns the integration time of the observable as a function of observation time (function input). In many cases, the integration time will be constant, and you may use a :literal:`boost::lambda`, so for a constant 60 s integration time:
       
      .. code-block:: cpp
 
       boost::function< double( const double ) >  integrationTimeFunction = 
           boost::lambda::constant( 60.0 );
       
-As is the case for the :class:`ObservationSettings` class, the second and third constructor argument are optional, and the second argument may be either a :literal:`std::vector` of :literal:`boost::shared_ptr< LightTimeCorrectionSettings >`, or a single such object.  
+As is the case for the :class:`ObservationSettings` class, the second and third constructor arguments are optional, and the second argument may be either a :literal:`std::vector` of :literal:`boost::shared_ptr< LightTimeCorrectionSettings >`, or a single such object.  
 
 .. class:: NWayRangeObservationSettings
 
@@ -110,6 +110,7 @@ where no input on the type of observable is given (it is :literal:`n_way_range` 
 
 The :literal:`OneWayDopperObservationSettings` class is used to define settings for one-way Doppler observables. Here, the term Doppler is used in the instantaneous sense, and is distinct from what is typically termed Doppler in the deep-space tracking community. An object of this type is created as follows:
 
+FIXME
 
 Light-time Corrections
 ~~~~~~~~~~~~~~~~~~~~~~

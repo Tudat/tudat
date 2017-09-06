@@ -20,7 +20,7 @@ The first modification is that we change the Earth rotation model
                     spice_interface::computeRotationQuaternionBetweenFrames(
                         "ECLIPJ2000", "IAU_Earth", initialEphemerisTime ),
                     initialEphemerisTime, 2.0 * mathematical_constants::PI /
-                    ( physical_constants::JULIAN_DAY + 40.0 * 60.0
+                    ( physical_constants::JULIAN_DAY + 40.0 * 60.0 ) );
 
 Which we do so that we can estimate the rotational properties of the Earth, as they are described by this model (fixed rotation axis and rotation rate).
 
@@ -45,7 +45,7 @@ The subsequent creation of acceleration, propagation and integration settings is
 
 Defining Observation Settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In Tudat, an observation model is referred to a number of link ends. For a one-way range model, for instance, a receiver and transmitter are required, both of which are termed a 'link end'. An :literal:`enum` termed :literal:`LinkEndType` is available that lists all the possible kinds of link ends. A full list of observation models, as well as the link ends that they require, is given on THIS PAGE. A set of link ends used for a given observable are stored in a :literal:`LinkEnds` type, which is a :literal:`typedef` for :literal:`std::map< LinkEndType, std::pair< std::string, std::string > >`. As you can see, the map value is a pair of strings. The first entry of the string is the body on which the link end is placed, the second entry the reference point on this body (typically the ground station). In the case where teh second entry is empty (as is often the case for spacecraft), the body's center of mass is used.
+In Tudat, an observation model is referred to a number of link ends. For a one-way range model, for instance, a receiver and transmitter are required, both of which are termed a 'link end'. An :literal:`enum` termed :literal:`LinkEndType` is available that lists all the possible kinds of link ends. A full list of observation models, as well as the link ends that they require, is given on THIS PAGE. A set of link ends used for a given observable are stored in a :literal:`LinkEnds` type, which is a :literal:`typedef` for :literal:`std::map< LinkEndType, std::pair< std::string, std::string > >`. As you can see, the map value is a pair of strings. The first entry of the string is the body on which the link end is placed, the second entry the reference point on this body (typically the ground station). In the case where the second entry is empty (as is often the case for spacecraft), the body's center of mass is used.
 
 Here, we want to create a set of link ends that use each of the ground stations as a receiver, and the spacecraft as a transmitter, as well as vice versa. We do this by:
 
@@ -68,7 +68,7 @@ Here, we want to create a set of link ends that use each of the ground stations 
         stationReceiverLinkEnds.push_back( linkEnds );
     }
 
-For instance, :literal:`stationReceiverLinkEnds.at( 1 )` will now denote a set of link ends where the spacecraft is the transmitter, and ground station 1 is the receiver. 
+For instance, :literal:`stationReceiverLinkEnds.at( 1 )` will now denote a set of link ends where the spacecraft is the transmitter, and ground station 1 (FIXME: "Station2"?) is the receiver. 
 
 Next, we need to define which link ends are to be used for which observable. We do this somewhat arbitrarily, and define:
 
