@@ -13,4 +13,6 @@ We recommend to start going through the :ref:`preknowledgeIndex` pages, since th
    prerequiredKnowledge/index
    applicationWalkthroughs/index
    tudatFeatures/index
+   jsonInterface/index
+   matlabInterface/index
 
