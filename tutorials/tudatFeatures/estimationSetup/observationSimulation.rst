@@ -3,6 +3,8 @@
 Simulating Observations
 =======================
 
+.. _creatingObservationSimulators:
+
 Creating the Observation Simulator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -43,9 +45,9 @@ In either case, this provides you with an object of type :literal:`ObservationSi
 Observation Simulation Settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The times at which observations are simulated may be defined directly by the user, or they may depend on some scheduling algorithm, which is then used to determine the observation times. The final observation times are determined by a combination of :class:`ObservationSimulationTimeSettings` objects and :literal:`ObservationViabilitySettings` objects. The former allows you to define observation times directly, or an observation schedule algorithm. The latter defines constraints that must be met for an observation to be possible. The viability settigns are discussed ON THIS PAGE.
+The times at which observations are simulated may be defined directly by the user, or they may depend on some scheduling algorithm, which is then used to determine the observation times. The final observation times are determined by a combination of :class:`ObservationSimulationTimeSettings` objects and :literal:`ObservationViabilitySettings` objects. The former allows you to define observation times directly, or an observation schedule algorithm. The latter defines constraints that must be met for an observation to be possible. The viability settigns are discussed on the page :ref:`observationViability`.
 
-Each type of observation settings is defined by a dedicated derived class of :class:`ObservationSimulationTimeSettings`. This class has a :literal:`TimeType` argument, which is discussed in more detail ON THIS PAGE. The following classes are presently available:
+Each type of observation settings is defined by a dedicated derived class of :class:`ObservationSimulationTimeSettings`. This class has a :literal:`TimeType` argument, which is discussed in more detail :ref:`tudatTemplatingStateTime`. The following classes are presently available:
 
 .. class:: TabulatedObservationSimulationTimeSettings
 
@@ -67,6 +69,8 @@ Each type of observation settings is defined by a dedicated derived class of :cl
    - :literal:`simulationTimes`
 
       A :literal:`std::vector< TimeType >` variable, containing the list of times at which observations are to be simulated.
+
+.. _observationViability:
 
 Observation Viability Setttings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -145,11 +149,11 @@ Where :literal:`PerObservableObservationViabilityCalculatorList` is a typedef fo
 Observation Noise
 ~~~~~~~~~~~~~~~~~
 
-In addition to the observation biases, discussed on THIS PAGE, which are part of the observation model and typically deterministic, stochastic noise may be added to the observations when simulating them. 
+In addition to the observation biases (see :ref:`observationBiases`), which are part of the observation model and typically deterministic, stochastic noise may be added to the observations when simulating them. 
 
-The interface for observation noise is made general, allowing both time-correlated and time-uncorrelated noise to be added: a function of type :literal:`boost::function< double( const double ) >` must be created. Here, the function input is the current time, and the output the noise value. You are free to define this function in any way you like. Refer to the documentation of :literal:`boost::function` and :literal:`boost::bind` ON THIS PAGE.
+The interface for observation noise is made general, allowing both time-correlated and time-uncorrelated noise to be added: a function of type :literal:`boost::function< double( const double ) >` must be created. Here, the function input is the current time, and the output the noise value. You are free to define this function in any way you like. Refer to the documentation of :literal:`boost::function` and :literal:`boost::bind` (see :ref:`externalBoost`).
 
-In typical basic simulation studies, time-uncorrelated white noise is used. To easily add this type of noise, you can make use of the Tudat interface to boost probability distributions/random number generation, which is defined in mroe detail ON THIS PAGE. As an example, the following will generate a function which generates which noise with a mean of 0.005 and a standard deviationof 0.003.
+In typical basic simulation studies, time-uncorrelated white noise is used. To easily add this type of noise, you can make use of the Tudat interface to boost probability distributions/random number generation (see :ref:`tudatFeaturesProbabilityDistributions`). As an example, the following will generate a function which generates which noise with a mean of 0.005 and a standard deviationof 0.003.
 
 .. code-block:: cpp
 
@@ -166,6 +170,7 @@ In typical basic simulation studies, time-uncorrelated white noise is used. To e
           
 You may use a similar approach to use any of the boost distrbutions for noise. Note that the second step, in which the :literal:`evaluateFunctionWithoutInputArgumentDependency` is called, is needed for consistency with the observation noise interface.
 
+.. _generatingObservations:
 
 Generating the observations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
