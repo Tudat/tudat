@@ -3,3 +3,4 @@
 Adding support for enumerations
 ===============================
 
+EnumValueError

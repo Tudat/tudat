@@ -10,9 +10,12 @@ The goal of this page is to document how the JSON interface can be updated to su
 
    basics
    valueConversions
+   enhancedDeserialization
    enhancedValueAccess
+   enhancedValueSet
    enumerations
    polymorphicClasses
    otherTypes
+   unitTesting
 
 
