@@ -44,8 +44,8 @@ the following is happening behind the scenes:
 Indeed, :literal:`to_json` functions are defined for many frequently used types in the file :literal:`"json/src/json.hpp"`. These functions are always defined in the namespace of the type that is on the right-hand side of the assignment. We can create :literal:`to_json` functions for our custom classes:
 
 .. code-block:: cpp
-
-    // dog.h
+    :caption: :class:`dog.h`
+    :name: dog-h
     
     namespace animals
     {
@@ -61,25 +61,25 @@ Indeed, :literal:`to_json` functions are defined for many frequently used types 
     }
     
 .. code-block:: cpp
-
-        // jsonInterface.h
-        
-        #include "json/src/json.hpp"
-        using json = nlohmann::json;
-        #include "dog.h"
-        
-        namespace animals
-        {            
-            void to_json( json& j, const Dog& dog )
-            {
-                j[ "name" ] = dog.name;      // std::to_json( json&, const string& ) will be called
-                j[ "weight" ] = dog.weight;  // to_json( json&, const double& ) will be called
-            }
+    :caption: :class:`jsonInterface.h`
+    :name: jsonInterface-h
+    
+    #include "json/src/json.hpp"
+    using json = nlohmann::json;
+    #include "dog.h"
+    
+    namespace animals
+    {            
+        void to_json( json& j, const Dog& dog )
+        {
+            j[ "name" ] = dog.name;      // std::to_json( json&, const string& ) will be called
+            j[ "weight" ] = dog.weight;  // to_json( json&, const double& ) will be called
         }
-        
+    }
+    
 .. code-block:: cpp
-
-    // jsonInterface.cpp
+    :caption: :class:`jsonInterface.cpp`
+    :name: jsonInterface-cpp
     
     #include "jsonInterface.h"
     
@@ -143,20 +143,22 @@ The :literal:`from_json` functions must be defined in the namespace of the type 
 We have to define its :literal:`from_json` function:
 
 .. code-block:: cpp
-
-        // jsonInterface.h
+    :caption: :class:`jsonInterface.h`
+    :name: jsonInterface-h-from-json
+    
+    #include "json/src/json.hpp"
+    using json = nlohmann::json;
+    #include "dog.h"
+    
+    namespace animals
+    {            
+        ...
         
-        #include "json/src/json.hpp"
-        using json = nlohmann::json;
-        #include "dog.h"
-        
-        namespace animals
-        {            
-            void from_json( const json& j, Dog& dog )
-            {
-                dog = Dog( j.at( "name" ), j.at( "weight" ) );
-            }
+        void from_json( const json& j, Dog& dog )
+        {
+            dog = Dog( j.at( "name" ), j.at( "weight" ) );
         }
+    }
         
 However, we are still getting a compile error, because this is happening behind the scenes:
 
@@ -165,11 +167,11 @@ However, we are still getting a compile error, because this is happening behind 
     animals::Dog dog;                  // compile error: Dog is not default-constructible!
     animals::from_json( j, dog );      
 
-Thus, we need to define a default constructor to the class :class:`Dog`. We can do that by providing default values for all the arguments in the constructor:
+Thus, we need to define a default constructor for the class :class:`Dog`. We can do this by providing default values for all the arguments in the constructor:
 
 .. code-block:: cpp
-
-    // dog.h
+    :caption: :class:`dog.h`
+    :name: dog-h-default-constructible
     
     namespace animals
     {
