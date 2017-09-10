@@ -11,11 +11,11 @@ The value of (the elements of) a :class:`json` object can be set as follows:
 .. code-block:: cpp
 
     int myInt = 1;
-    json j = myInt;                // j.is_numeric( ) -> true
+    json j = myInt;          // j.is_numeric( ) -> true
 
     double myDouble = 1.0;
-    json k;                        // k.is_null( ) -> true
-    k[ 0 ] = myDouble;             // k.is_array, k[ 0 ].is_numeric, j == k[ 0 ] -> true
+    json k;                  // k.is_null( ) -> true
+    k[ 0 ] = myDouble;       // k.is_array( ) && k[ 0 ].is_numeric( ) && j == k[ 0 ] -> true
     
 However, this does not work (yet):
 
@@ -81,7 +81,7 @@ Indeed, :literal:`to_json` functions are defined for many frequently used types 
 
     // jsonInterface.cpp
     
-    #include "jsonInterface.cpp"
+    #include "jsonInterface.h"
     
     void printDog( )
     {
@@ -101,9 +101,9 @@ The value of the elements of a :class:`json` object can be accessed as follows:
     j[ 0 ];                                             // "no"
     j.at( 1 );                                          // "yes"
 
-    json k = { { "half", 0.5 }, { "twise", 2.0 } };
-    k[ "half" ]                                         // 0.5
-    k.at( "twice" )                                     // 2.0
+    json k = { { "half", 0.5 }, { "twice", 2.0 } };
+    k[ "half" ];                                        // 0.5
+    k.at( "twice" );                                    // 2.0
 
 However, as discussed in :ref:`extendingJSON_basics_valueTypes`, the returned values are not numbers or strings, but :class:`json` objects. Thus:
 
@@ -114,7 +114,7 @@ However, as discussed in :ref:`extendingJSON_basics_valueTypes`, the returned va
     std::string no = j[ 0 ];                        // "no"
     std::string str = no + ", thanks";              // "no, thanks"
 
-The implicit conversion is done by overloading the :literal:`=` operator. That means that the following won't work:
+The implicit conversion is done by overloading the :literal:`=` operator. This means that the following won't work:
 
 .. code-block:: cpp
 
