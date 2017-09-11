@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>7. Orbit Determination and Parameter Estimation &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>7. Orbit Determination and Parameter Estimation (Basic) &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
         <link rel="up" title="Application Walkthroughs" href="index.html"/>
-        <link rel="next" title="Tudat Libraries" href="../tudatFeatures/index.html"/>
+        <link rel="next" title="8. Orbit Determination and Parameter Estimation" href="earthOrbiterStateEstimation.html"/>
         <link rel="prev" title="6. Use of Thrust: User-defined Thrust Vector" href="useOfThrustUserDefinedThrustVector.html"/> 
 
   
@@ -102,7 +102,8 @@
 <li class="toctree-l4"><a class="reference internal" href="innerSolarSystemPropagation.html">4. Inner Solar System Propagation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="useOfThrustThrustForceAlongVelocityVector.html">5. Use of Thrust: Thrust Force Along Velocity Vector</a></li>
 <li class="toctree-l4"><a class="reference internal" href="useOfThrustUserDefinedThrustVector.html">6. Use of Thrust: User-defined Thrust Vector</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">7. Orbit Determination and Parameter Estimation</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7. Orbit Determination and Parameter Estimation (Basic)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthOrbiterStateEstimation.html">8. Orbit Determination and Parameter Estimation</a></li>
 </ul>
 </li>
 </ul>
@@ -159,7 +160,7 @@
         
           <li><a href="index.html">Application Walkthroughs</a> &raquo;</li>
         
-      <li>7. Orbit Determination and Parameter Estimation</li>
+      <li>7. Orbit Determination and Parameter Estimation (Basic)</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -178,9 +179,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="orbit-determination-and-parameter-estimation">
-<span id="earthorbiterbasicstateestimation"></span><h1>7. Orbit Determination and Parameter Estimation<a class="headerlink" href="#orbit-determination-and-parameter-estimation" title="Permalink to this headline">¶</a></h1>
-<p>In all previous tutorials, we were only concerned with the propagation of orbits, and the analysis of the numerical results. In this tutorial, we will show how to simulate tracking observables, and use these observations to estimate the state of a spacecraft, as well as a variety of physical parameters of the environment. The estimation framework in Tudat has a broad variety of features, and we only cover the basic aspects here. A tutorial of more extensive features is given on the page <span class="xref std std-ref">earthOrbiterStateEstimation</span></p>
+  <div class="section" id="orbit-determination-and-parameter-estimation-basic">
+<span id="earthorbiterbasicstateestimation"></span><h1>7. Orbit Determination and Parameter Estimation (Basic)<a class="headerlink" href="#orbit-determination-and-parameter-estimation-basic" title="Permalink to this headline">¶</a></h1>
+<p>In all previous tutorials, we were only concerned with the propagation of orbits, and the analysis of the numerical results. In this tutorial, we will show how to simulate tracking observables, and use these observations to estimate the state of a spacecraft, as well as a variety of physical parameters of the environment. The estimation framework in Tudat has a broad variety of features, and we only cover the basic aspects here. A tutorial of more extensive features is given on the page <a class="reference internal" href="earthOrbiterStateEstimation.html#earthorbiterstateestimation"><span class="std std-ref">Orbit Determination and Parameter Estimation</span></a></p>
 <blockquote>
 <div><p>The code for this tutorial is given on Github, and is also located in your tudat bundle at:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">earthOrbiterBasicStateEstimation</span><span class="o">.</span><span class="n">cpp</span>
@@ -431,27 +432,26 @@
 </pre></div>
 </div>
 <p>Where the 4 index indicates that the estimation will perform 4 iterations. The estimation should produce output similar to the following:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span>  <span class="n">Calculating</span> <span class="n">residuals</span> <span class="n">and</span> <span class="n">partials</span> <span class="mi">13500</span>
-  <span class="n">Parameter</span> <span class="n">update</span>   <span class="o">-</span><span class="mf">6.08378</span>    <span class="o">-</span><span class="mf">18.9676</span>    <span class="o">-</span><span class="mf">7.76344</span> <span class="o">-</span><span class="mf">0.00696149</span>  <span class="o">-</span><span class="mf">0.0186691</span> <span class="o">-</span><span class="mf">0.00883959</span>   <span class="o">-</span><span class="mf">0.165673</span>  <span class="o">-</span><span class="mf">0.0139745</span> <span class="o">-</span><span class="mf">1.4458e-09</span> <span class="mf">9.05548e-08</span> <span class="mf">3.77696e-08</span> <span class="mf">1.44452e-07</span>   <span class="mf">8.374e-10</span>
-  <span class="n">Current</span> <span class="nl">residual</span><span class="p">:</span> <span class="mf">2502.59</span>
-  <span class="n">Warning</span><span class="p">,</span> <span class="n">tabulated</span> <span class="n">ephemeris</span> <span class="n">is</span> <span class="n">being</span> <span class="n">reset</span> <span class="k">using</span> <span class="n">data</span> <span class="n">at</span> <span class="n">different</span> <span class="n">precision</span>
-  <span class="n">Calculating</span> <span class="n">residuals</span> <span class="n">and</span> <span class="n">partials</span> <span class="mi">13500</span>
-  <span class="n">Parameter</span> <span class="n">update</span>    <span class="o">-</span><span class="mf">3.91642</span>      <span class="mf">8.96792</span>     <span class="o">-</span><span class="mf">2.23662</span>  <span class="o">-</span><span class="mf">0.00303872</span>   <span class="mf">0.00866954</span>  <span class="o">-</span><span class="mf">0.00116045</span>      <span class="mf">0.15567</span>   <span class="mf">0.00397531</span>  <span class="mf">1.44563e-09</span> <span class="o">-</span><span class="mf">9.05592e-08</span>  <span class="o">-</span><span class="mf">3.7772e-08</span> <span class="o">-</span><span class="mf">1.44462e-07</span> <span class="o">-</span><span class="mf">8.40113e-10</span>
-  <span class="n">Current</span> <span class="nl">residual</span><span class="p">:</span> <span class="mf">1.40276</span>
-  <span class="n">Warning</span><span class="p">,</span> <span class="n">tabulated</span> <span class="n">ephemeris</span> <span class="n">is</span> <span class="n">being</span> <span class="n">reset</span> <span class="k">using</span> <span class="n">data</span> <span class="n">at</span> <span class="n">different</span> <span class="n">precision</span>
-  <span class="n">Calculating</span> <span class="n">residuals</span> <span class="n">and</span> <span class="n">partials</span> <span class="mi">13500</span>
-  <span class="n">Parameter</span> <span class="n">update</span> <span class="mf">0.000194697</span> <span class="o">-</span><span class="mf">0.000314532</span>  <span class="mf">5.82188e-05</span>  <span class="mf">2.08074e-07</span> <span class="o">-</span><span class="mf">4.85731e-07</span>  <span class="mf">4.99801e-08</span>   <span class="mf">4.5677e-06</span> <span class="o">-</span><span class="mf">2.21992e-06</span>  <span class="mf">2.18631e-13</span>   <span class="mf">4.6825e-12</span>  <span class="mf">2.48334e-12</span>  <span class="mf">9.83626e-12</span>  <span class="mf">2.55367e-12</span>
-  <span class="n">Current</span> <span class="nl">residual</span><span class="p">:</span> <span class="mf">0.000221693</span>
-  <span class="n">Warning</span><span class="p">,</span> <span class="n">tabulated</span> <span class="n">ephemeris</span> <span class="n">is</span> <span class="n">being</span> <span class="n">reset</span> <span class="k">using</span> <span class="n">data</span> <span class="n">at</span> <span class="n">different</span> <span class="n">precision</span>
-  <span class="n">Calculating</span> <span class="n">residuals</span> <span class="n">and</span> <span class="n">partials</span> <span class="mi">13500</span>
-  <span class="n">Parameter</span> <span class="n">update</span> <span class="mf">5.18789e-06</span> <span class="o">-</span><span class="mf">9.23697e-06</span> <span class="o">-</span><span class="mf">2.86618e-06</span>  <span class="mf">4.95883e-09</span>  <span class="mf">4.12459e-09</span>  <span class="mf">2.61187e-09</span> <span class="o">-</span><span class="mf">2.04626e-06</span>  <span class="mf">1.16347e-06</span> <span class="o">-</span><span class="mf">5.01255e-14</span> <span class="o">-</span><span class="mf">2.42908e-13</span> <span class="o">-</span><span class="mf">1.31398e-13</span>  <span class="mf">9.26677e-14</span>  <span class="mf">1.81624e-13</span>
-  <span class="n">Current</span> <span class="nl">residual</span><span class="p">:</span> <span class="mf">0.000496538</span>
-  <span class="n">Maximum</span> <span class="n">number</span> <span class="n">of</span> <span class="n">iterations</span> <span class="n">reached</span>
-  <span class="n">Final</span> <span class="nl">residual</span><span class="p">:</span> <span class="mf">0.000221693</span>
-
-<span class="n">Which</span> <span class="n">shows</span> <span class="n">the</span> <span class="n">estimation</span> <span class="n">progress</span><span class="p">.</span> <span class="n">Clearly</span><span class="p">,</span> <span class="n">no</span> <span class="n">improvements</span> <span class="n">are</span> <span class="n">made</span> <span class="n">in</span> <span class="n">the</span> <span class="k">final</span> <span class="n">iteration</span><span class="p">,</span> <span class="n">so</span> <span class="n">that</span> <span class="n">only</span> <span class="mi">3</span> <span class="n">iterations</span> <span class="n">would</span> <span class="n">have</span> <span class="n">been</span> <span class="n">needed</span><span class="p">.</span> <span class="n">The</span> <span class="n">example</span> <span class="n">also</span> <span class="n">prints</span> <span class="n">the</span> <span class="nb">true</span> <span class="n">and</span> <span class="n">formal</span> <span class="n">estimation</span> <span class="n">errors</span> <span class="n">where</span><span class="p">,</span> <span class="n">in</span> <span class="k">this</span> <span class="k">case</span><span class="p">,</span> <span class="n">the</span> <span class="nb">true</span> <span class="n">error</span> <span class="n">is</span> <span class="n">much</span> <span class="n">smaller</span><span class="p">,</span> <span class="n">as</span> <span class="n">the</span> <span class="n">observations</span> <span class="n">are</span> <span class="n">noise</span><span class="o">-</span><span class="n">free</span> <span class="p">(</span><span class="n">and</span> <span class="n">not</span> <span class="n">noisy</span> <span class="n">at</span> <span class="n">the</span> <span class="n">level</span> <span class="n">presumed</span> <span class="n">by</span> <span class="n">the</span> <span class="n">weights</span><span class="p">).</span> <span class="n">The</span> <span class="n">performance</span> <span class="n">is</span> <span class="n">in</span> <span class="k">this</span> <span class="k">case</span> <span class="n">only</span> <span class="n">limited</span> <span class="n">by</span> <span class="n">the</span> <span class="n">numerical</span> <span class="n">precision</span><span class="p">,</span> <span class="n">causing</span> <span class="n">the</span> <span class="n">initial</span> <span class="n">state</span> <span class="n">to</span> <span class="n">be</span> <span class="n">estimated</span> <span class="n">at</span> <span class="n">the</span> <span class="mf">0.01</span> <span class="n">mm</span> <span class="n">level</span><span class="p">.</span> <span class="n">The</span> <span class="n">simulation</span> <span class="n">also</span> <span class="n">prints</span> <span class="n">various</span> <span class="n">quantities</span> <span class="n">to</span> <span class="n">files</span><span class="p">,</span> <span class="n">which</span> <span class="n">are</span> <span class="n">then</span> <span class="n">processed</span> <span class="n">by</span> <span class="n">the</span> <span class="n">Matlab</span> <span class="n">function</span> <span class="n">provided</span><span class="p">.</span> <span class="n">A</span> <span class="n">few</span> <span class="n">examples</span> <span class="n">of</span> <span class="n">results</span> <span class="n">are</span> <span class="n">given</span> <span class="nl">below</span><span class="p">:</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Calculating</span> <span class="n">residuals</span> <span class="n">and</span> <span class="n">partials</span> <span class="mi">13500</span>
+<span class="n">Parameter</span> <span class="n">update</span>   <span class="o">-</span><span class="mf">6.08378</span>    <span class="o">-</span><span class="mf">18.9676</span>    <span class="o">-</span><span class="mf">7.76344</span> <span class="o">-</span><span class="mf">0.00696149</span>  <span class="o">-</span><span class="mf">0.0186691</span> <span class="o">-</span><span class="mf">0.00883959</span>   <span class="o">-</span><span class="mf">0.165673</span>  <span class="o">-</span><span class="mf">0.0139745</span> <span class="o">-</span><span class="mf">1.4458e-09</span> <span class="mf">9.05548e-08</span> <span class="mf">3.77696e-08</span> <span class="mf">1.44452e-07</span>   <span class="mf">8.374e-10</span>
+<span class="n">Current</span> <span class="nl">residual</span><span class="p">:</span> <span class="mf">2502.59</span>
+<span class="n">Warning</span><span class="p">,</span> <span class="n">tabulated</span> <span class="n">ephemeris</span> <span class="n">is</span> <span class="n">being</span> <span class="n">reset</span> <span class="k">using</span> <span class="n">data</span> <span class="n">at</span> <span class="n">different</span> <span class="n">precision</span>
+<span class="n">Calculating</span> <span class="n">residuals</span> <span class="n">and</span> <span class="n">partials</span> <span class="mi">13500</span>
+<span class="n">Parameter</span> <span class="n">update</span>    <span class="o">-</span><span class="mf">3.91642</span>      <span class="mf">8.96792</span>     <span class="o">-</span><span class="mf">2.23662</span>  <span class="o">-</span><span class="mf">0.00303872</span>   <span class="mf">0.00866954</span>  <span class="o">-</span><span class="mf">0.00116045</span>      <span class="mf">0.15567</span>   <span class="mf">0.00397531</span>  <span class="mf">1.44563e-09</span> <span class="o">-</span><span class="mf">9.05592e-08</span>  <span class="o">-</span><span class="mf">3.7772e-08</span> <span class="o">-</span><span class="mf">1.44462e-07</span> <span class="o">-</span><span class="mf">8.40113e-10</span>
+<span class="n">Current</span> <span class="nl">residual</span><span class="p">:</span> <span class="mf">1.40276</span>
+<span class="n">Warning</span><span class="p">,</span> <span class="n">tabulated</span> <span class="n">ephemeris</span> <span class="n">is</span> <span class="n">being</span> <span class="n">reset</span> <span class="k">using</span> <span class="n">data</span> <span class="n">at</span> <span class="n">different</span> <span class="n">precision</span>
+<span class="n">Calculating</span> <span class="n">residuals</span> <span class="n">and</span> <span class="n">partials</span> <span class="mi">13500</span>
+<span class="n">Parameter</span> <span class="n">update</span> <span class="mf">0.000194697</span> <span class="o">-</span><span class="mf">0.000314532</span>  <span class="mf">5.82188e-05</span>  <span class="mf">2.08074e-07</span> <span class="o">-</span><span class="mf">4.85731e-07</span>  <span class="mf">4.99801e-08</span>   <span class="mf">4.5677e-06</span> <span class="o">-</span><span class="mf">2.21992e-06</span>  <span class="mf">2.18631e-13</span>   <span class="mf">4.6825e-12</span>  <span class="mf">2.48334e-12</span>  <span class="mf">9.83626e-12</span>  <span class="mf">2.55367e-12</span>
+<span class="n">Current</span> <span class="nl">residual</span><span class="p">:</span> <span class="mf">0.000221693</span>
+<span class="n">Warning</span><span class="p">,</span> <span class="n">tabulated</span> <span class="n">ephemeris</span> <span class="n">is</span> <span class="n">being</span> <span class="n">reset</span> <span class="k">using</span> <span class="n">data</span> <span class="n">at</span> <span class="n">different</span> <span class="n">precision</span>
+<span class="n">Calculating</span> <span class="n">residuals</span> <span class="n">and</span> <span class="n">partials</span> <span class="mi">13500</span>
+<span class="n">Parameter</span> <span class="n">update</span> <span class="mf">5.18789e-06</span> <span class="o">-</span><span class="mf">9.23697e-06</span> <span class="o">-</span><span class="mf">2.86618e-06</span>  <span class="mf">4.95883e-09</span>  <span class="mf">4.12459e-09</span>  <span class="mf">2.61187e-09</span> <span class="o">-</span><span class="mf">2.04626e-06</span>  <span class="mf">1.16347e-06</span> <span class="o">-</span><span class="mf">5.01255e-14</span> <span class="o">-</span><span class="mf">2.42908e-13</span> <span class="o">-</span><span class="mf">1.31398e-13</span>  <span class="mf">9.26677e-14</span>  <span class="mf">1.81624e-13</span>
+<span class="n">Current</span> <span class="nl">residual</span><span class="p">:</span> <span class="mf">0.000496538</span>
+<span class="n">Maximum</span> <span class="n">number</span> <span class="n">of</span> <span class="n">iterations</span> <span class="n">reached</span>
+<span class="n">Final</span> <span class="nl">residual</span><span class="p">:</span> <span class="mf">0.000221693</span>
 </pre></div>
 </div>
+<p>Which shows the estimation progress. Clearly, no improvements are made in the final iteration, so that only 3 iterations would have been needed. The example also prints the true and formal estimation errors where, in this case, the true error is much smaller, as the observations are noise-free (and not noisy at the level presumed by the weights). The performance is in this case only limited by the numerical precision, causing the initial state to be estimated at the 0.01 mm level. The simulation also prints various quantities to files, which are then processed by the Matlab function provided. A few examples of results are given below:</p>
 </div>
 </div>
 
@@ -465,7 +465,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../tudatFeatures/index.html" class="btn btn-neutral float-right" title="Tudat Libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="earthOrbiterStateEstimation.html" class="btn btn-neutral float-right" title="8. Orbit Determination and Parameter Estimation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="useOfThrustUserDefinedThrustVector.html" class="btn btn-neutral" title="6. Use of Thrust: User-defined Thrust Vector" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
