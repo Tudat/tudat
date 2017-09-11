@@ -3,6 +3,8 @@
 Setting Up Estimated Parameters
 ===============================
 
+.. _parameterArchitecture:
+
 Parameter Architecture
 ~~~~~~~~~~~~~~~~~~~~~~
 

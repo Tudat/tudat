@@ -3,6 +3,8 @@
 Parameter Estimation 
 =========================
 
+.. _estimationObjectCreation:
+
 Creating the estimation object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -51,6 +53,8 @@ After the creation of the :class:`OrbitDeterminationManager` object, a number of
 * An object with base class :class:`VariationalEquationsSolver`, which contains the numerically propagated variational equations and dynamics, can be retrieved using the :literal:`getVariationalEquationsSolver` member function. 
 * A list of objects with base class :class:`ObservationSimulatorBase` (one per observable type) to simulate observations, discussed in more detail on the page on :ref:`creatingObservationSimulators`
 * A list of objects with base class :class:`ObservationManagerBase` (one per observable type) to simulate observations and the associated partial derivatives. These objects are not directly accesed by users. Their output (partial derivatives of observables) are provided *a posterior* through an object of type :class:`PodOutput`, discussed on the page on :ref:`estimationOutput`.
+
+.. _estimationInput:
 
 Defining estimation input
 ~~~~~~~~~~~~~~~~~~~~~~~~~
