@@ -1,7 +1,7 @@
 .. _earthOrbiterBasicStateEstimation:
 
-Orbit Determination and Parameter Estimation
-============================================
+Orbit Determination and Parameter Estimation (Basic)
+====================================================
 
 In all previous tutorials, we were only concerned with the propagation of orbits, and the analysis of the numerical results. In this tutorial, we will show how to simulate tracking observables, and use these observations to estimate the state of a spacecraft, as well as a variety of physical parameters of the environment. The estimation framework in Tudat has a broad variety of features, and we only cover the basic aspects here. A tutorial of more extensive features is given on the page :ref:`earthOrbiterStateEstimation`
 
@@ -323,4 +323,4 @@ Where the 4 index indicates that the estimation will perform 4 iterations. The e
    Maximum number of iterations reached
    Final residual: 0.000221693
  
- Which shows the estimation progress. Clearly, no improvements are made in the final iteration, so that only 3 iterations would have been needed. The example also prints the true and formal estimation errors where, in this case, the true error is much smaller, as the observations are noise-free (and not noisy at the level presumed by the weights). The performance is in this case only limited by the numerical precision, causing the initial state to be estimated at the 0.01 mm level. The simulation also prints various quantities to files, which are then processed by the Matlab function provided. A few examples of results are given below: 
+Which shows the estimation progress. Clearly, no improvements are made in the final iteration, so that only 3 iterations would have been needed. The example also prints the true and formal estimation errors where, in this case, the true error is much smaller, as the observations are noise-free (and not noisy at the level presumed by the weights). The performance is in this case only limited by the numerical precision, causing the initial state to be estimated at the 0.01 mm level. The simulation also prints various quantities to files, which are then processed by the Matlab function provided. A few examples of results are given below: 
