@@ -5,6 +5,8 @@ Setting up the link ends
 
 In Tudat, an observation model is referred to a number of link ends. For a one-way range model, for instance, a receiver and transmitter are required, both of which are termed a 'link end'. An :literal:`enum` termed :literal:`LinkEndType` is available that lists all the possible kinds of link ends. A full list of observation models, as well as the link ends that they require, is given on the page on :ref:`observationModelSetup`.
 
+.. _groundStationCreation:
+
 Ground Station Creation
 ~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -3,6 +3,8 @@
 Setting up Observation Models
 =============================
 
+.. _observationTypes:
+
 Observation Types
 ~~~~~~~~~~~~~~~~~
 
@@ -26,6 +28,7 @@ Tudat supports a diverse set of observation types, which are defined in the :lit
 * :class:`one_way_differenced_range` Doppler observable as it is typically obtained in interplanetary tracking in so-called 'closed-loop' mode (in m/s) between two link ends. Observable has size 1. The value is computed from the averaged range-rate over some integration time (see below). Requires :literal:`transmitter` and :literal:`receiver` link ends.
 * :class:`n_way_range` Accumulated range (in meters) over any number of signal paths, may be used for two-way range (as in SLR or deep space tracking), as well as more exotic situations where more than 2 signal paths are used in generating the observable (as was the case for, for instance, the SELENE mission) Observable has size 1. The value is com[puted accumulating the light-time (multiplied by *c*) with any retranmission delays that the user defines (see below) Requires :literal:`transmitter`, :literal:`receiver`, as well as :literal:`reflector1`, :literal:`reflector2` ... :literal:`reflectorX` for X+1 signal paths (when only a :literal:`transmitter` and :literal:`receiver` are defined the observation is identical to a :literal:`one_way_range`)
 
+.. _observationSettings:
 
 Observation Settings
 ~~~~~~~~~~~~~~~~~~~~
