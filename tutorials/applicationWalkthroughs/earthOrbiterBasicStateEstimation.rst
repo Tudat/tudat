@@ -20,7 +20,7 @@ The first modification is that we change the Earth rotation model
                     spice_interface::computeRotationQuaternionBetweenFrames(
                         "ECLIPJ2000", "IAU_Earth", initialEphemerisTime ),
                     initialEphemerisTime, 2.0 * mathematical_constants::PI /
-                    ( physical_constants::JULIAN_DAY + 40.0 * 60.0
+                    ( physical_constants::JULIAN_DAY ) );
 
 Which we do so that we can estimate the rotational properties of the Earth, as they are described by this model (fixed rotation axis and rotation rate). Details of the architecture of the parameter estimation is given on the page on :ref:`parameterArchitecture`.
 
@@ -68,7 +68,7 @@ Here, we want to create a set of link ends that use each of the ground stations 
         stationReceiverLinkEnds.push_back( linkEnds );
     }
 
-For instance, :literal:`stationReceiverLinkEnds.at( 1 )` will now denote a set of link ends where the spacecraft is the transmitter, and  the ground station  termed Station2 is the receiver. 
+For instance, :literal:`stationReceiverLinkEnds.at( 1 )` will now denote a set of link ends where the spacecraft is the transmitter, and the ground station termed "Station2" is the receiver. 
 
 Next, we need to define which link ends are to be used for which observable. We do this somewhat arbitrarily, and define:
 

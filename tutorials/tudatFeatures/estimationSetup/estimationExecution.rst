@@ -32,7 +32,7 @@ An object is created as follows:
 
       A :literal:`boost::shared_ptr< EstimatableParameterSet< ObservationScalarType > >` variable which contains the full list of parameters that are to be estimated.
       
-   - :literal:`bodyMap`
+   - :literal:`observationSettingsMap`
 
       A list of :class:`ObservationSettings` that may be provided as either :literal:`std::multimap< LinkEnds, boost::shared_ptr< ObservationSettings > >` or a :literal:`std::map< ObservableType, std::map< LinkEnds, boost::shared_ptr< ObservationSettings > >`. In the former case, the list is sorter by :literal:`LinkEnds` only, in the latter by both :literal:`ObservableType` and :literal:`LinkEnds`
       
@@ -77,7 +77,7 @@ The input to the estimation consists of several parts. Firstly, the input data, 
    
    - :literal:`numberOfEstimatedParameters` An :literal:`int` denoting the length of the vector of estimated paramaters, discussed in more detail on the page :ref:`parameterSettingCreation`.
    
-   - :literal:`inverseOfAprioriCovariance` An :literal:'Eigen::MatrixXd`with the inverse of the *a priori* covariance matrix. This input type may be left empty, in which case no *a priori* covariance is used.
+   - :literal:`inverseOfAprioriCovariance` An :literal:`Eigen::MatrixXd` with the inverse of the *a priori* covariance matrix. This input type may be left empty, in which case no *a priori* covariance is used.
 
 
 .. note::
