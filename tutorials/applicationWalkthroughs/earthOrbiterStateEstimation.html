@@ -226,10 +226,17 @@
 </div>
 <p>We use the same link ends/observable types as in the previous example. However, we extend our list of estimated parameters to:</p>
 <ul class="simple">
-<li></li>
-<li></li>
-<li></li>
-<li></li>
+<li>The spacecraft initial states <span class="math">\(x(t_{j)}\)</span> for 10 arcs, with <span class="math">\(j=1..10\)</span>, <span class="math">\(t_{j+1}-t_{j}\)</span> = 3 days</li>
+<li>Parameteric Post-Newtonian (PPN) parameter <span class="math">\(\gamma\)</span>. Parameter equals 1 in general relativity</li>
+<li>A constant radiation pressure coefficient <span class="math">\(C_{r}\)</span> of the spacecraft (assuming a cannonball radiation pressure model)</li>
+<li>A constant aerodynamic drag coefficient <span class="math">\(C_{D}\)</span> of the spacecraft</li>
+<li>Constant Earth rotation rate <span class="math">\(\omega_{E}\)</span></li>
+<li>Pole position of Earth rotation axis, parameterized by its right ascension and declination <span class="math">\(\alpha_{E}\)</span> and <span class="math">\(\delta_{E}\)</span></li>
+<li>Earth-fixed position of ground stations “Station1” and “Station2”  <span class="math">\(\mathbf{x}_{GS,1}^{(E)}\)</span> and <span class="math">\(\mathbf{x}_{GS,2}^{(E)}\)</span>.</li>
+<li>Absolute observation bias <span class="math">\(K_{a}\)</span> for the first two links used for one-way range</li>
+<li>Spherical harmonic cosine coefficients <span class="math">\(C_{lm}\)</span> at degree <span class="math">\(l=2..8\)</span> and orders <span class="math">\(m=0..l\)</span>.</li>
+<li>Spherical harmonic cosine coefficients <span class="math">\(S_{lm}\)</span> at degree <span class="math">\(l=2..8\)</span> and orders <span class="math">\(m=1..l\)</span>.</li>
+<li>Empirical accelerations in along- and across-track directions (both sine and cosine of true anomaly components), estimated in a multi-arc fashion, using 2 arcs over the full simulation period.</li>
 </ul>
 <p>Which is achieved by the following block of code:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define list of parameters to estimate.</span>
@@ -367,7 +374,7 @@
                          <span class="n">boost</span><span class="o">::</span><span class="n">assign</span><span class="o">::</span><span class="n">list_of</span><span class="p">(</span> <span class="mf">0.0</span> <span class="p">)(</span> <span class="n">dopplerNoise</span> <span class="p">),</span> <span class="mf">0.0</span> <span class="p">),</span> <span class="n">_1</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Which generates noise functions that put a 0.1 m noise on range, 0.1 mrad noise on the angular position, and <span class="math">\(10^{-12}\)</span> noise on the Doppler observation. The syntax of the above code ise described in more detail on the page on <span class="xref std std-ref">observationNoise</span>. The observations are simulated similarly as before:</p>
+<p>Which generates noise functions that put a 0.1 m noise on range, 0.1 mrad noise on the angular position, and <span class="math">\(10^{-12}\)</span> noise on the Doppler observation. The syntax of the above code ise described in more detail on the page on <a class="reference internal" href="../tudatFeatures/estimationSetup/observationSimulation.html#observationnoise"><span class="std std-ref">Observation Noise</span></a>. The observations are simulated similarly as before:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Simulate observations</span>
 <span class="n">PodInputDataType</span> <span class="n">observationsAndTimes</span> <span class="o">=</span> <span class="n">simulateObservationsWithNoise</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span>
             <span class="n">measurementSimulationInput</span><span class="p">,</span> <span class="n">orbitDeterminationManager</span><span class="p">.</span><span class="n">getObservationSimulators</span><span class="p">(</span> <span class="p">),</span> <span class="n">noiseFunctions</span><span class="p">,</span>

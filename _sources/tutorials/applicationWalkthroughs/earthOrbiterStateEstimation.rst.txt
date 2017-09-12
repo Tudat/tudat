@@ -52,11 +52,18 @@ where we have set an arc-overlap of 1 hour. The propagator settings for the mult
             
 We use the same link ends/observable types as in the previous example. However, we extend our list of estimated parameters to:
 
-* 
-* 
-* 
-* 
-
+* The spacecraft initial states :math:`x(t_{j)}` for 10 arcs, with :math:`j=1..10`, :math:`t_{j+1}-t_{j}` = 3 days
+* Parameteric Post-Newtonian (PPN) parameter :math:`\gamma`. Parameter equals 1 in general relativity
+* A constant radiation pressure coefficient :math:`C_{r}` of the spacecraft (assuming a cannonball radiation pressure model)
+* A constant aerodynamic drag coefficient :math:`C_{D}` of the spacecraft
+* Constant Earth rotation rate :math:`\omega_{E}`
+* Pole position of Earth rotation axis, parameterized by its right ascension and declination :math:`\alpha_{E}` and :math:`\delta_{E}`
+* Earth-fixed position of ground stations "Station1" and "Station2"  :math:`\mathbf{x}_{GS,1}^{(E)}` and :math:`\mathbf{x}_{GS,2}^{(E)}`.
+* Absolute observation bias :math:`K_{a}` for the first two links used for one-way range 
+* Spherical harmonic cosine coefficients :math:`C_{lm}` at degree :math:`l=2..8` and orders :math:`m=0..l`.
+* Spherical harmonic cosine coefficients :math:`S_{lm}` at degree :math:`l=2..8` and orders :math:`m=1..l`.
+* Empirical accelerations in along- and across-track directions (both sine and cosine of true anomaly components), estimated in a multi-arc fashion, using 2 arcs over the full simulation period.
+    
 Which is achieved by the following block of code:
 
 .. code-block:: cpp
