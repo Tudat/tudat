@@ -1,7 +1,7 @@
 .. _extendingJSON_enumerations:
 
-Adding support for enumerations
-===============================
+Enumerations
+============
 
 Enumerations are widely used by Tudat to define the type of settings objects. In this section, it will be explained how to implement support for the enumeration :literal:`EphemerisType`. The same process can be followed to add support for other enumerations in the future.
 
