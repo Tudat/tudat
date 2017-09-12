@@ -126,11 +126,11 @@ To make use of the Tudat libraries, you need to compile them. The steps that fol
    .. note:: 
       The output should look similar as the output shown below. It will not match your results exactly, since the Template Application generates random floating-point numbers to provide an example of using the Boost libraries:: 
 
-        Starting /home/tudatDevelopment/tudatBundle/tudatExampleApplications/templateApplication/bin/applications/application_HelloWorld...
+        Starting ../tudatBundle/tudatExampleApplications/templateApplication/bin/applications/application_HelloWorld...
         Hello world!
         I am floating 7.00853 km above the Moon's surface.
         The gravitational acceleration here is 1.61083 m/s^2.
-        /home/tudatDevelopment/tudatBundle/tudatExampleApplications/templateApplication/bin/applications/application_HelloWorld exited with code 0
+        ../tudatBundle/tudatExampleApplications/templateApplication/bin/applications/application_HelloWorld exited with code 0
       
 Congratulations! You've built and run your first Tudat application :)
 
@@ -173,6 +173,6 @@ For each part of the code in Tudat, we have written unit tests, which are includ
     15:16:48: The process "/usr/bin/make" exited normally.
     15:16:48: Elapsed time: 01:00.
 
-    If the output ends with ``100% tests passed, 0 tests failed``, all is well and you do not need to take any further action. After running the unit tests , make sure to remove the 'test' text that you've typed in here, Qt will not compile the code as long as it is there. There is a possibility of one or more unit tests failing, though. Usually, there is no cause for alarm, as this just means that your computer is rounding some variables a bit differently, so that the 15th or 16th digit is different from what we expect. Just to be sure, however, you should "open an issue on Github": https://github.com/Tudat/tudat/issues/new In this issue, attach the file ``LastTest.log``, which should be in the ``/Testing/Temporary/`` directory in your build folder (which you specified in Step 2). In the issue description and title, note that it concerns failed unit test(s) and mention your operating system. We'll get back to you with a fix for the failure ASAP.
+If the output ends with ``100% tests passed, 0 tests failed``, all is well and you do not need to take any further action. After running the unit tests, make sure to remove the 'test' text that you've typed in here, Qt will not compile the code as long as it is there. There is a possibility of one or more unit tests failing, though. Usually, there is no cause for alarm, as this just means that your computer is rounding some variables a bit differently, so that the 15th or 16th digit is different from what we expect. Just to be sure, however, you should "open an issue on Github": https://github.com/Tudat/tudat/issues/new. In this issue, attach the file ``LastTest.log``, which should be in the ``/Testing/Temporary/`` directory in your build folder (which you specified in Step 2). In the issue description and title, note that it concerns failed unit test(s) and mention your operating system. We'll get back to you with a fix for the failure ASAP.
 
 So, welcome to the Tudat universe :). The fun has just started though. You are now ready to run one of the many example applications that came bundled with Tudat, and this time it involves real simulations. The applications are explained in detail in the tutorials at Tutorials and Documentation. The next and last (optional) part explains you how to set-up a new application or add existing ones to your Tudat Bundle.
