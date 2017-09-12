@@ -308,7 +308,7 @@ The second constructor is called as:
          
 .. class:: FullDegreeTidalLoveNumberEstimatableParameterSettings
 
-   This derived class of :class:`EstimatableParameterSettings` is used to define settings for tidal Love numbers :math:`k_{n}` at degree :math:`n` that are constant over all all orders at that degree (so for :math:`n=1, k_{20}=k_{21}=k_{22}`. The estimated parameters are a property of an :class:`BasicSolidBodyTideGravityFieldVariations` object. It is created by:
+   This derived class of :class:`EstimatableParameterSettings` is used to define settings for tidal Love numbers :math:`k_{n}` at degree :math:`n` that are constant over all all orders at that degree (so for :math:`n=2, k_{20}=k_{21}=k_{22}`. The estimated parameters are a property of an :class:`BasicSolidBodyTideGravityFieldVariations` object. It is created by:
       
    .. code-block:: cpp
    
