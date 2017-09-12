@@ -37,7 +37,7 @@
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
         <link rel="up" title="Application Walkthroughs" href="index.html"/>
-        <link rel="next" title="7. Orbit Determination and Parameter Estimation" href="earthOrbiterBasicStateEstimation.html"/>
+        <link rel="next" title="7. Orbit Determination and Parameter Estimation (Basic)" href="earthOrbiterBasicStateEstimation.html"/>
         <link rel="prev" title="5. Use of Thrust: Thrust Force Along Velocity Vector" href="useOfThrustThrustForceAlongVelocityVector.html"/> 
 
   
@@ -102,7 +102,8 @@
 <li class="toctree-l4"><a class="reference internal" href="innerSolarSystemPropagation.html">4. Inner Solar System Propagation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="useOfThrustThrustForceAlongVelocityVector.html">5. Use of Thrust: Thrust Force Along Velocity Vector</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">6. Use of Thrust: User-defined Thrust Vector</a></li>
-<li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">7. Orbit Determination and Parameter Estimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">7. Orbit Determination and Parameter Estimation (Basic)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthOrbiterStateEstimation.html">8. Orbit Determination and Parameter Estimation</a></li>
 </ul>
 </li>
 </ul>
@@ -180,8 +181,8 @@
             
   <div class="section" id="use-of-thrust-user-defined-thrust-vector">
 <span id="walkthroughsuseofthrustuserdefinedthrustvector"></span><h1>6. Use of Thrust: User-defined Thrust Vector<a class="headerlink" href="#use-of-thrust-user-defined-thrust-vector" title="Permalink to this headline">¶</a></h1>
-<p>In the previous tutorial, we discussed how to include thrust in a simulation, separately specifying the direction and magnitude of the thrust force. Alternatively, however, you may want to impose the thrust vector (direction and magnitude in some reference frame) as a function of time explicitly. In this tutorial, we will look at which Tudat interfaces you can use to accomplish this. The code for this tutorial is given&nbsp;here&nbsp;on Github, and is also located in your tudat bundle at:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">thrustAlongVelocityVectorExample</span><span class="o">.</span><span class="n">cpp</span>
+<p>In the previous tutorial, we discussed how to include thrust in a simulation, separately specifying the direction and magnitude of the thrust force. Alternatively, however, you may want to impose the thrust vector (direction and magnitude in some reference frame) as a function of time explicitly. In this tutorial, we will look at which Tudat interfaces you can use to accomplish this. The code for this tutorial is given here on Github, and is also located in your tudat bundle at:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">thrustAccelerationFromFileExample</span><span class="o">.</span><span class="n">cpp</span>
 </pre></div>
 </div>
 <p>The main difference of this example w.r.t. the previous one lies in the following steps:</p>
@@ -244,7 +245,7 @@
 </pre></div>
 </div>
 </div></blockquote>
-<p>Don’t worry if the details of these steps escape you. What is important is to know that the&nbsp;cppFolder&nbsp;now contains the location of the current directory. We now load the data into an&nbsp;Eigen::MatrixXd&nbsp;using a Tudat function&nbsp;readMatrixFromFile, located in&nbsp;InputOutput/matrixTextFileReader.cpp&nbsp;as follows:</p>
+<p>Don’t worry if the details of these steps escape you. What is important is to know that the cppFolder now contains the location of the current directory. We now load the data into an Eigen::MatrixXd using a Tudat function readMatrixFromFile, located in InputOutput/matrixTextFileReader.cpp as follows:</p>
 <blockquote>
 <div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Load data into matrix</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">thrustForceMatrix</span> <span class="o">=</span>
@@ -252,7 +253,7 @@
 </pre></div>
 </div>
 </div></blockquote>
-<p>The first argument to the&nbsp;readMatrixFromFile&nbsp;denotes the full file location of our&nbsp;testThrustValues.txt&nbsp;file containing the thrust data. The second argument:&nbsp;” t”&nbsp;denotes that both spaces and tabs (t) are considered separators for the file contents (points in the file where a new entry starts). To use the interpolator, we want to have our thrust data in a map, with the time as key and thrust vector as value. The following block of code converts the&nbsp;Eigen::MatrixXd&nbsp;to a&nbsp;std::map&lt; double, Eigen::Vector3d &gt;</p>
+<p>The first argument to the readMatrixFromFile denotes the full file location of our testThrustValues.txt file containing the thrust data. The second argument: ” t” denotes that both spaces and tabs (t) are considered separators for the file contents (points in the file where a new entry starts). To use the interpolator, we want to have our thrust data in a map, with the time as key and thrust vector as value. The following block of code converts the Eigen::MatrixXd to a std::map&lt; double, Eigen::Vector3d &gt;</p>
 <blockquote>
 <div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Fill thrustData map using thrustForceMatrix Eigen matrix</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">thrustData</span><span class="p">;</span>
@@ -267,7 +268,7 @@
 </div>
 <div class="section" id="creating-the-interpolator">
 <h2>6.2. Creating the interpolator<a class="headerlink" href="#creating-the-interpolator" title="Permalink to this headline">¶</a></h2>
-<p>We now have a map with time vs. thrust force. To pass this information to the acceleration settings, we need to turn this discrete data into a continuous function, for which we use an interpolator. Here, we choose to use a linear interpolator. For a list of the various other interpolation options, details of their implementation, and instructions on how to use/create them,&nbsp;this wiki page. For this example, we use the following code to create an interpolator of the thrust vector:</p>
+<p>We now have a map with time vs. thrust force. To pass this information to the acceleration settings, we need to turn this discrete data into a continuous function, for which we use an interpolator. Here, we choose to use a linear interpolator. For a list of the various other interpolation options, details of their implementation, and instructions on how to use/create them, this wiki page. For this example, we use the following code to create an interpolator of the thrust vector:</p>
 <blockquote>
 <div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Retrieve thrust data as function of time.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">thrustData</span> <span class="o">=</span> <span class="n">getThrustData</span><span class="p">(</span> <span class="p">);</span>
@@ -291,7 +292,7 @@
 </pre></div>
 </div>
 </div></blockquote>
-<p>creates an object that contains the settings for how to create the interpolator. For this application, this means specifying that the interpolator should be of the type&nbsp;linear_interpolator. Note that this setup is very similar to how an environment/acceleration/etc. model is set up.
+<p>creates an object that contains the settings for how to create the interpolator. For this application, this means specifying that the interpolator should be of the type linear_interpolator. Note that this setup is very similar to how an environment/acceleration/etc. model is set up.
 The interpolator is then created by calling:</p>
 <blockquote>
 <div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Creating settings for thrust force</span>
@@ -301,11 +302,11 @@ The interpolator is then created by calling:</p>
 </pre></div>
 </div>
 </div></blockquote>
-<p>The type&nbsp;boost::shared_ptr&lt; OneDimensionalInterpolator&lt; double, Eigen::Vector3d &gt; &gt;&nbsp;is the pointer to our interpolator. The bit&nbsp;&lt; double, Eigen::Vector3d &gt;&nbsp;denotes that the independent variable is a double (time) and the dependent variable is a&nbsp;Eigen::Vector3d(thrust). The two arguments provided to the&nbsp;createOneDimensionalInterpolator&nbsp;function is firstly the map containing the data, and secondly the object containing the settings to be used for creating the interpolator.</p>
+<p>The type boost::shared_ptr&lt; OneDimensionalInterpolator&lt; double, Eigen::Vector3d &gt; &gt; is the pointer to our interpolator. The bit &lt; double, Eigen::Vector3d &gt; denotes that the independent variable is a double (time) and the dependent variable is a Eigen::Vector3d(thrust). The two arguments provided to the createOneDimensionalInterpolator function is firstly the map containing the data, and secondly the object containing the settings to be used for creating the interpolator.</p>
 </div>
 <div class="section" id="creating-the-thrust-acceleration">
 <h2>6.3. Creating the thrust acceleration.<a class="headerlink" href="#creating-the-thrust-acceleration" title="Permalink to this headline">¶</a></h2>
-<p>The creation of the thrust acceleration is done similarly as in the previous example, by creating an object of type&nbsp;ThrustAccelerationSettings, as follows:</p>
+<p>The creation of the thrust acceleration is done similarly as in the previous example, by creating an object of type ThrustAccelerationSettings, as follows:</p>
 <blockquote>
 <div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">constantSpecificImpulse</span> <span class="o">=</span> <span class="mf">3000.0</span><span class="p">;</span>
 
@@ -316,16 +317,16 @@ The interpolator is then created by calling:</p>
 </pre></div>
 </div>
 </div></blockquote>
-<p>The input to the&nbsp;ThrustAccelerationSettings, however, is different from that used in the previous example. In fact, we use a different constructor here, an example of&nbsp;constructor overloading. The input required to the constructor we use here is:</p>
+<p>The input to the ThrustAccelerationSettings, however, is different from that used in the previous example. In fact, we use a different constructor here, an example of constructor overloading. The input required to the constructor we use here is:</p>
 <blockquote>
 <div><ul class="simple">
 <li>The interpolator used to compute the thrust force vector as a function of time.</li>
-<li>Function returning the specific impulse as a function of time (here constant at the 3000 s). If you are not familiar with&nbsp;boost::lambda::constant, have a look&nbsp;here.</li>
+<li>Function returning the specific impulse as a function of time (here constant at the 3000 s). If you are not familiar with boost::lambda::constant, have a look here.</li>
 <li>The frame type in which the thrust vector is expressed.</li>
 <li>The reference body for any frame transformation that may be required.</li>
 </ul>
 </div></blockquote>
-<p>The last two argument define the frame orientation in which the thrust force produced by the&nbsp;thrustInterpolatorPointer&nbsp;is expressed. At present, there are two options:</p>
+<p>The last two argument define the frame orientation in which the thrust force produced by the thrustInterpolatorPointer is expressed. At present, there are two options:</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li>Inertial frame: if this is the case, there is no need to specify a reference body. The interpolated thrust is used directly in the equations of motion, without and transformation.</li>
@@ -333,7 +334,7 @@ The interpolator is then created by calling:</p>
 </ol>
 </div></blockquote>
 <p>In this example, we use the second option, basing the thrust direction on the current Earth-centered position of the spacecraft.</p>
-<p>The rest of the application, including the definition of the mass propagation, is set up analogously to the previous example, with a single addition: two dependent variables are saved during the propagation, the thrust acceleration, and the rotation matrix from LVLH to inertial frame. Note that when saving an acceleration, it is&nbsp;always&nbsp;saved as expressed in the inertial frame. We also save the rotation matrix here, to reconstruct the original thrust profile that we provided, checking the correct implementation.</p>
+<p>The rest of the application, including the definition of the mass propagation, is set up analogously to the previous example, with a single addition: two dependent variables are saved during the propagation, the thrust acceleration, and the rotation matrix from LVLH to inertial frame. Note that when saving an acceleration, it is always saved as expressed in the inertial frame. We also save the rotation matrix here, to reconstruct the original thrust profile that we provided, checking the correct implementation.</p>
 </div>
 <div class="section" id="results">
 <h2>6.4. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
@@ -352,7 +353,7 @@ The interpolator is then created by calling:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="earthOrbiterBasicStateEstimation.html" class="btn btn-neutral float-right" title="7. Orbit Determination and Parameter Estimation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="earthOrbiterBasicStateEstimation.html" class="btn btn-neutral float-right" title="7. Orbit Determination and Parameter Estimation (Basic)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="useOfThrustThrustForceAlongVelocityVector.html" class="btn btn-neutral" title="5. Use of Thrust: Thrust Force Along Velocity Vector" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

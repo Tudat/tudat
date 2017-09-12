@@ -195,7 +195,7 @@
                  <span class="n">spice_interface</span><span class="o">::</span><span class="n">computeRotationQuaternionBetweenFrames</span><span class="p">(</span>
                      <span class="s">&quot;ECLIPJ2000&quot;</span><span class="p">,</span> <span class="s">&quot;IAU_Earth&quot;</span><span class="p">,</span> <span class="n">initialEphemerisTime</span> <span class="p">),</span>
                  <span class="n">initialEphemerisTime</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span> <span class="o">/</span>
-                 <span class="p">(</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span> <span class="o">+</span> <span class="mf">40.0</span> <span class="o">*</span> <span class="mf">60.0</span>
+                 <span class="p">(</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>Which we do so that we can estimate the rotational properties of the Earth, as they are described by this model (fixed rotation axis and rotation rate). Details of the architecture of the parameter estimation is given on the page on <a class="reference internal" href="../tudatFeatures/estimationSetup/parameterEstimationSettings.html#parameterarchitecture"><span class="std std-ref">Parameter Architecture</span></a>.</p>
@@ -237,7 +237,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>For instance, <code class="docutils literal"><span class="pre">stationReceiverLinkEnds.at(</span> <span class="pre">1</span> <span class="pre">)</span></code> will now denote a set of link ends where the spacecraft is the transmitter, and  the ground station  termed Station2 is the receiver.</p>
+<p>For instance, <code class="docutils literal"><span class="pre">stationReceiverLinkEnds.at(</span> <span class="pre">1</span> <span class="pre">)</span></code> will now denote a set of link ends where the spacecraft is the transmitter, and the ground station termed “Station2” is the receiver.</p>
 <p>Next, we need to define which link ends are to be used for which observable. We do this somewhat arbitrarily, and define:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define (arbitrarily) link ends to be used for 1-way range, 1-way doppler and angular position observables</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">ObservableType</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">LinkEnds</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">linkEndsPerObservable</span><span class="p">;</span>

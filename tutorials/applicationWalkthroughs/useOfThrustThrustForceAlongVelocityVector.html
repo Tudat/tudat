@@ -102,7 +102,8 @@
 <li class="toctree-l4"><a class="reference internal" href="innerSolarSystemPropagation.html">4. Inner Solar System Propagation</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">5. Use of Thrust: Thrust Force Along Velocity Vector</a></li>
 <li class="toctree-l4"><a class="reference internal" href="useOfThrustUserDefinedThrustVector.html">6. Use of Thrust: User-defined Thrust Vector</a></li>
-<li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">7. Orbit Determination and Parameter Estimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">7. Orbit Determination and Parameter Estimation (Basic)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthOrbiterStateEstimation.html">8. Orbit Determination and Parameter Estimation</a></li>
 </ul>
 </li>
 </ul>
@@ -180,8 +181,8 @@
             
   <div class="section" id="use-of-thrust-thrust-force-along-velocity-vector">
 <span id="walkthroughsuseofthrustthrustforcealongvelocityvector"></span><h1>5. Use of Thrust: Thrust Force Along Velocity Vector<a class="headerlink" href="#use-of-thrust-thrust-force-along-velocity-vector" title="Permalink to this headline">¶</a></h1>
-<p>This example focuses on the inclusion of a thrust force in Tudat. In this example, the dynamics of the inner solar system (Sun, Mercury, Venus, Earth, Mars, Moon) is simulated. The code for this tutorial is given&nbsp;here&nbsp;on Github, and is also located in your tudat bundle at:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">thrustAccelerationFromFileExample</span><span class="o">.</span><span class="n">cpp</span>
+<p>This example focuses on the inclusion of a thrust force in Tudat. In this example, the dynamics of the inner solar system (Sun, Mercury, Venus, Earth, Mars, Moon) is simulated. The code for this tutorial is given here on Github, and is also located in your tudat bundle at:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">thrustAlongVelocityVectorExample</span><span class="o">.</span><span class="n">cpp</span>
 </pre></div>
 </div>
 <p>Although thrust is in principle handled just like any other force and Tudat, you as a user have much more control over how this thrust behaves. In fact, optimizing the thrust profile is an important goal of many types of simulations. The addition of a thrust force requires the addition of the following blocks of code/information:</p>
@@ -192,14 +193,14 @@
 <li>Inclusion of vehicle mass in the state vector: using thrut decreases the mass of the spacecraft, which we propagate concurrently with the translational state.</li>
 </ul>
 </div></blockquote>
-<p>A list of options/details of the first two of these points is discussed&nbsp;here. For the example here, we will only treat a single type of thrust model, for which:</p>
+<p>A list of options/details of the first two of these points is discussed here. For the example here, we will only treat a single type of thrust model, for which:</p>
 <blockquote>
 <div><ul class="simple">
 <li>The thrust force and specific impulse are constant</li>
 <li>The direction of the thrust is always along (and in the same direction as) the vehicle’s Earth-centered velocity vector.</li>
 </ul>
 </div></blockquote>
-<p>We will not treat the entire source file for the simulation, as most of it is similar or identical to that discussed in detail for the&nbsp;unperturbed&nbsp;and&nbsp;perturbed&nbsp;satellite examples.</p>
+<p>We will not treat the entire source file for the simulation, as most of it is similar or identical to that discussed in detail for the unperturbed and perturbed satellite examples.</p>
 <div class="section" id="adding-the-thrust-acceleration">
 <h2>5.1. Adding the thrust acceleration<a class="headerlink" href="#adding-the-thrust-acceleration" title="Permalink to this headline">¶</a></h2>
 <p>The first main difference w.r.t. the other examples is the use of a thrust acceleration. For this example, the full code required for this is:</p>
@@ -221,8 +222,8 @@
 </pre></div>
 </div>
 </div></blockquote>
-<p>First, we define a constant thrust force of 25 N and specific impulse of 5000 s. For the interface of the thrust we use here, two blocks need to be defined before creating the&nbsp;AccelerationSettings, one providing settings for the&nbsp;direction, and one for the&nbsp;magnitude&nbsp;of the thrust force.</p>
-<p>The direction settings are defined by an object of type (derived from)&nbsp;ThrustDirectionGuidanceSettings. For this example, we use a derived class designed specifically to set the thrust in the direction of the vehicle velocity vector:</p>
+<p>First, we define a constant thrust force of 25 N and specific impulse of 5000 s. For the interface of the thrust we use here, two blocks need to be defined before creating the AccelerationSettings, one providing settings for the direction, and one for the magnitude of the thrust force.</p>
+<p>The direction settings are defined by an object of type (derived from) ThrustDirectionGuidanceSettings. For this example, we use a derived class designed specifically to set the thrust in the direction of the vehicle velocity vector:</p>
 <blockquote>
 <div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustDirectionGuidanceSettings</span> <span class="o">&gt;</span> <span class="n">thrustDirectionGuidanceSettings</span> <span class="o">=</span>
         <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ThrustDirectionFromStateGuidanceSettings</span> <span class="o">&gt;</span><span class="p">(</span>
@@ -230,7 +231,7 @@
 </pre></div>
 </div>
 </div></blockquote>
-<p>The three input arguments to the constructor of the&nbsp;ThrustDirectionFromStateGuidanceSettings&nbsp;represent:</p>
+<p>The three input arguments to the constructor of the ThrustDirectionFromStateGuidanceSettings represent:</p>
 <blockquote>
 <div><ul class="simple">
 <li>The central body w.r.t. which the velocit is to be computed when setting the thrust direction. For instance, the propagation of a vehicle may be done w.r.t. the Sun, while the thrust direction is computed from the velocity w.r.t. the Earth.</li>
@@ -238,7 +239,7 @@
 <li>Whether the thrust force is in the same direction, or opposite to the direction, of the state of the vehicle w.r.t. the central body.</li>
 </ul>
 </div></blockquote>
-<p>We have set the thrust force to be in line and in the same direction as the velocity vector of the spacecraft w.r.t. the Earth. Defining the magnitude of the thrust (and specific impulse) is done through the dedicated derived class&nbsp;ConstantThrustEngineSettings:</p>
+<p>We have set the thrust force to be in line and in the same direction as the velocity vector of the spacecraft w.r.t. the Earth. Defining the magnitude of the thrust (and specific impulse) is done through the dedicated derived class ConstantThrustEngineSettings:</p>
 <blockquote>
 <div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustEngineSettings</span> <span class="o">&gt;</span> <span class="n">thrustMagnitudeSettings</span> <span class="o">=</span>
         <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantThrustEngineSettings</span> <span class="o">&gt;</span><span class="p">(</span>
@@ -246,14 +247,14 @@
 </pre></div>
 </div>
 </div></blockquote>
-<p>with the first and second arguments of the&nbsp;ConstantThrustEngineSettings&nbsp;representing the constant thrust force and specific impulse. Now, the thrust acceleration settings are added to the accelerationsOfVehicle list as follows:</p>
+<p>with the first and second arguments of the ConstantThrustEngineSettings representing the constant thrust force and specific impulse. Now, the thrust acceleration settings are added to the accelerationsOfVehicle list as follows:</p>
 <blockquote>
 <div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">accelerationsOfVehicle</span><span class="p">[</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span>
             <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ThrustAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">thrustDirectionGuidanceSettings</span><span class="p">,</span> <span class="n">thrustMagnitudeSettings</span><span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
 </div></blockquote>
-<p>where you can see that defining a thrust acceleration requires a dedicated derived class of&nbsp;AccelerationSettings, as was the case for the spherical harmonic acceleration. This derived class (ThrustAccelerationSettings) takes the settings for the magnitude and direction of the thrust force, which we just created, as input. A final point to remember when defining the thrust acceleration settings is that thrust is a force that the vehicle exerts on&nbsp;itself.</p>
+<p>where you can see that defining a thrust acceleration requires a dedicated derived class of AccelerationSettings, as was the case for the spherical harmonic acceleration. This derived class (ThrustAccelerationSettings) takes the settings for the magnitude and direction of the thrust force, which we just created, as input. A final point to remember when defining the thrust acceleration settings is that thrust is a force that the vehicle exerts on itself.</p>
 </div>
 <div class="section" id="propagating-the-mass-and-the-orbit">
 <h2>5.2. Propagating the mass and the orbit<a class="headerlink" href="#propagating-the-mass-and-the-orbit" title="Permalink to this headline">¶</a></h2>
@@ -306,8 +307,8 @@
 </pre></div>
 </div>
 </div></blockquote>
-<p>This is similar to the step we took in&nbsp;a previous example, but distinct from the first two examples, where we simply pssed the final time variable as a double to the constructor of our propagation settings. More details on termination settings as given&nbsp;here.</p>
-<p>In the next step, we create the propagation settings for the translational dynamics, in the same way as is done in the previous examples. To incorporate the change in vehicle mass, we need to create mass rate models, which are essentially the equivalent of accelelations for ‘mass dynamics’. They compute the time derivative of the mass at each time step. Defining the settings for these models is done by creating objects of class (derived from)&nbsp;MassRateModelSettings, analogously how acceleration settings are defined by&nbsp;AccelerationSettings&nbsp;objects. The following code is used to create the mass rate models:</p>
+<p>This is similar to the step we took in a previous example, but distinct from the first two examples, where we simply pssed the final time variable as a double to the constructor of our propagation settings. More details on termination settings as given here.</p>
+<p>In the next step, we create the propagation settings for the translational dynamics, in the same way as is done in the previous examples. To incorporate the change in vehicle mass, we need to create mass rate models, which are essentially the equivalent of accelelations for ‘mass dynamics’. They compute the time derivative of the mass at each time step. Defining the settings for these models is done by creating objects of class (derived from) MassRateModelSettings, analogously how acceleration settings are defined by AccelerationSettings objects. The following code is used to create the mass rate models:</p>
 <blockquote>
 <div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create mass rate models</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">MassRateModelSettings</span> <span class="o">&gt;</span> <span class="n">massRateModelSettings</span> <span class="o">=</span>
@@ -318,17 +319,17 @@
 </pre></div>
 </div>
 </div></blockquote>
-<p>For our example, we want to derive the mass rate models from the thrust acceleration on our Vehicle. To this end, our mass rate model settings are of type&nbsp;FromThrustMassModelSettings&nbsp;(see&nbsp;this&nbsp;wiki page for a list of available mass rate model settings). You may wonder why we are passing the value&nbsp;true&nbsp;to the constructor opf this class. This is done to specify that the mass rate model should include expelled propellant due to all thrust forces acting on the body (for this example this makes no difference, but may be relevant for more detailed simulations).</p>
-<p>The next step is to create the full settings for the propagation of the mass. Just like for the propagation of the dynamics, we create an object of a type derived from&nbsp;PropagatorSettings. For mass rate, this type is&nbsp;MassPropagatorSettings. It requires as input:</p>
+<p>For our example, we want to derive the mass rate models from the thrust acceleration on our Vehicle. To this end, our mass rate model settings are of type FromThrustMassModelSettings (see this wiki page for a list of available mass rate model settings). You may wonder why we are passing the value true to the constructor opf this class. This is done to specify that the mass rate model should include expelled propellant due to all thrust forces acting on the body (for this example this makes no difference, but may be relevant for more detailed simulations).</p>
+<p>The next step is to create the full settings for the propagation of the mass. Just like for the propagation of the dynamics, we create an object of a type derived from PropagatorSettings. For mass rate, this type is MassPropagatorSettings. It requires as input:</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li>List of bodies for which the mass is to be propagated</li>
 <li>Mass rate models for these bodies</li>
-<li>The initial masses of the bodies (stored in a&nbsp;VectorXd</li>
+<li>The initial masses of the bodies (stored in a VectorXd</li>
 <li>Settings for when to terminate the propagation</li>
 </ol>
 </div></blockquote>
-<p>Below, you can see how these settigns are passed to the&nbsp;MassPropagatorSettings&nbsp;constructor.</p>
+<p>Below, you can see how these settigns are passed to the MassPropagatorSettings constructor.</p>
 <blockquote>
 <div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create settings for propagating the mass of the vehicle.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesWithMassToPropagate</span><span class="p">;</span>
@@ -343,7 +344,7 @@
 </pre></div>
 </div>
 </div></blockquote>
-<p>Our final step is to tell the software to propagate&nbsp;both&nbsp;the translational dynamics and body mass, which is achieved as follows:</p>
+<p>Our final step is to tell the software to propagate both the translational dynamics and body mass, which is achieved as follows:</p>
 <blockquote>
 <div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create list of propagation settings.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">PropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">propagatorSettingsVector</span><span class="p">;</span>
@@ -357,7 +358,7 @@
 </pre></div>
 </div>
 </div></blockquote>
-<p>As is discussed in more detail&nbsp;here. This&nbsp;propagatorSettings&nbsp;object, which contains settings for both translational dynamics and mass rate, can be passed to the&nbsp;SingleArcDynamicsSimulator&nbsp;in the exact same manner as was done in the previous examples.</p>
+<p>As is discussed in more detail here. This propagatorSettings object, which contains settings for both translational dynamics and mass rate, can be passed to the SingleArcDynamicsSimulator in the exact same manner as was done in the previous examples.</p>
 </div>
 <div class="section" id="results">
 <h2>5.3. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
