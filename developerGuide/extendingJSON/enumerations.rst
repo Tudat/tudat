@@ -80,12 +80,12 @@ In this case, the :literal:`_ephemeris` part is redundant. In Tudat this is nece
 The definition of the string representation of the enum values is done in a file in the JSON interface but in the enumeration's namespace (not in the :literal:`json_interface` namespace). This decision was made taking into account that these variables are only used inside the :literal:`to_json` and :literal:`from_json` functions of the enumaration, which must be declared in the enumeration's namespace. A map is used to define the string representation of each enumeration type:
 
 .. code-block:: cpp
-  :caption: :class:`Tudat/External/JsonInterface/Environment/ephemeris.h`
+  :caption: :class:`Tudat/InputOutput/JsonInterface/Environment/ephemeris.h`
   :name: ephemeris-h
   
   #include <Tudat/SimulationSetup/EnvironmentSetup/createEphemeris.h>
-  #include "Tudat/External/JsonInterface/Support/valueAccess.h"
-  #include "Tudat/External/JsonInterface/Support/valueConversions.h"
+  #include "Tudat/InputOutput/JsonInterface/Support/valueAccess.h"
+  #include "Tudat/InputOutput/JsonInterface/Support/valueConversions.h"
 
   ...
   
@@ -119,15 +119,15 @@ The definition of the string representation of the enum values is done in a file
 
 As you can see, the string representations are provided for **all** the enumeration values, even those that are not supported by the JSON interface. For instance, :literal:`custom_ephemeris` is not supported by the JSON interface, because a :literal:`boost::function` cannot be provided using JSON files. Thus, this enum value is marked as unsupported by adding it to the variable :literal:`unsupportedEphemerisTypes`. In this way, when the user provides the value :literal:`"custom"`, for the key :literal:`ephemeris`, rather than getting an :class:`IllevalValueError`, an :class:`EphemerisType` with value :literal:`custom_ephemeris` will be created without printing any warning. Then, when the actual :class:`EphemerisSettings` are created, in its :literal:`from_json` function, the user will get an error in which it is said that custom epehemeris is not supported by the JSON interface but it *does* exist in Tudat, so if they want to use it they have to build their own custom JSON-Tudat application, in which the ephemeris function is defined manually (after reading the JSON input file containing the remainder of the settings).
 
-Although a :literal:`to_json` and :literal:`from_json` function has to be written for each enumeration, the functions are just a single line in which the functions :literal:`stringFromEnum` and :literal:`enumFromString` defined in :class:`Tudat/External/JsonInterface/Support/errorHandling.h` are called:
+Although a :literal:`to_json` and :literal:`from_json` function has to be written for each enumeration, the functions are just a single line in which the functions :literal:`stringFromEnum` and :literal:`enumFromString` defined in :class:`Tudat/InputOutput/JsonInterface/Support/errorHandling.h` are called:
 
 .. code-block:: cpp
-  :caption: :class:`Tudat/External/JsonInterface/Environment/ephemeris.h`
+  :caption: :class:`Tudat/InputOutput/JsonInterface/Environment/ephemeris.h`
   :name: ephemeris-h-to-from-json
   
   #include <Tudat/SimulationSetup/EnvironmentSetup/createEphemeris.h>
-  #include "Tudat/External/JsonInterface/Support/valueAccess.h"
-  #include "Tudat/External/JsonInterface/Support/valueConversions.h"
+  #include "Tudat/InputOutput/JsonInterface/Support/valueAccess.h"
+  #include "Tudat/InputOutput/JsonInterface/Support/valueConversions.h"
   
   ...
   
@@ -170,6 +170,6 @@ If the string representation of :literal:`ephemerisType` is not known, the recog
   Illegal value for key: bodies.Earth.ephemeris.type
   Could not convert value to expected type tudat::simulation_setup::EphemerisType
 
-.. note:: All the files in which the :literal:`to_json` and :literal:`from_json` functions of enumerations and settings file are defined must include the files :class:`Tudat/External/JsonInterface/Support/valueAccess.h` and :class:`Tudat/External/JsonInterface/Support/valueConversions.h`. The former includes :class:`Tudat/External/JsonInterface/Support/errorHandling.h`, exposing the functions :literal:`json_interface::stringFromEnum` and :literal:`json_interface::enumFromString`.
+.. note:: All the files in which the :literal:`to_json` and :literal:`from_json` functions of enumerations and settings file are defined must include the files :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h` and :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h`. The former includes :class:`Tudat/InputOutput/JsonInterface/Support/errorHandling.h`, exposing the functions :literal:`json_interface::stringFromEnum` and :literal:`json_interface::enumFromString`.
 
 .. caution:: When converting an enumeration to or from a :class:`json` object, the file in which its custom :literal:`to_json` and :literal:`from_json` functions are defined must be included (if the conversion takes place in a different file). If one forgets to include this file, the code will compile without giving any errors or warnings and the default implementation will be used, leading to a run-time error in which it is said that an :class:`int` was expected when converting to the enumeration type.

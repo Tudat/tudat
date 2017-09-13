@@ -5,7 +5,7 @@ Enhanced deserialization
 
 This is how a basic JSON input file for Tudat looks like:
 
-.. literalinclude:: code/main.json
+.. literalinclude:: main.json
   :linenos:
   :language: json
   :caption: :class:`main.json`
@@ -22,11 +22,11 @@ The :literal:`json_interace` introduces a set of funtions that can be used to pa
   - **Parent file**: file from which the declaration file is referenced.
   - **Root file**: file provided as input argument to :literal:`tudat`.
 
-The function :literal:`void parseModularJSON( json& jsonObject, const path& filePath, ... )` declared in :class:`Tudat/External/JsonInterface/Support/deserialization.h` can be used to parse a modular JSON file. This function combines recursively the contents of all the files referenced from :literal:`jsonObject` obtained by parsing :literal:`filePath`, and updates the :literal:`jsonObject` (passed by reference).
+The function :literal:`void parseModularJSON( json& jsonObject, const path& filePath, ... )` declared in :class:`Tudat/InputOutput/JsonInterface/Support/deserialization.h` can be used to parse a modular JSON file. This function combines recursively the contents of all the files referenced from :literal:`jsonObject` obtained by parsing :literal:`filePath`, and updates the :literal:`jsonObject` (passed by reference).
 
 .. note:: A type definition :class:`path` for :class:`boost::filesystem::path` is declared in :literal:`json_interace`, and thus the type name :class:`path` is widely used throughout the whole interface. Eventually, this will also allow a faster migration from :class:`boost::filesystem` to :class:`std::filesystem`.
 
-Each of the referenced JSON files is parsed individually using the function :literal:`json readJSON( const path& filePath, ... )` declared in :class:`Tudat/External/JsonInterface/Support/deserialization.h`. In addition to parsing the contents of the file at :literal:`filePath` using the :literal:`json::parse` function, this function adds the following features:
+Each of the referenced JSON files is parsed individually using the function :literal:`json readJSON( const path& filePath, ... )` declared in :class:`Tudat/InputOutput/JsonInterface/Support/deserialization.h`. In addition to parsing the contents of the file at :literal:`filePath` using the :literal:`json::parse` function, this function adds the following features:
 
   - If the file to be parsed contains a syntax error (i.e. invalid JSON syntax), the :literal:`json::parse` throws an error indicating the byte in which the syntax error is found. The :literal:`readJSON` catches this error and uses this information to throw an error indicating the line and column of the syntax error.
     
@@ -78,13 +78,13 @@ can be merged leading to a JSON object identical to the one that would have been
   
 since this would re-define the key :literal:`bodies` of :literal:`main.json` to be an object containing only one element (the body :literal:`asterix`) whose only property would be an :literal:`initialState` with an :literal:`eccentricity` set to :literal:`0`.
 
-In order to merge a :class:`json` of value type :literal:`array` into a one of value type :literal:`object`, the function :literal:`void mergeJSON( json& jsonObject, const path& filePath )` declared in :class:`Tudat/External/JsonInterface/Support/deserialization.h` is used. If the passed :literal:`jsonObject` is not of value type :literal:`array`, this function does nothing.
+In order to merge a :class:`json` of value type :literal:`array` into a one of value type :literal:`object`, the function :literal:`void mergeJSON( json& jsonObject, const path& filePath )` declared in :class:`Tudat/InputOutput/JsonInterface/Support/deserialization.h` is used. If the passed :literal:`jsonObject` is not of value type :literal:`array`, this function does nothing.
 
 
 Full deserialization sequence
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-All the features described previously are combined into the function :literal:`json getDeserializedJSON( const path& filePath )` declared in :class:`Tudat/External/JsonInterface/Support/deserialization.h`. This function replaces relative paths, combines modular files and merges objects when possible. This is the function that should be called when creating a :class:`json` object to be used to set up a simulation. In general, this function is only called once during the life-cycle of the application.
+All the features described previously are combined into the function :literal:`json getDeserializedJSON( const path& filePath )` declared in :class:`Tudat/InputOutput/JsonInterface/Support/deserialization.h`. This function replaces relative paths, combines modular files and merges objects when possible. This is the function that should be called when creating a :class:`json` object to be used to set up a simulation. In general, this function is only called once during the life-cycle of the application.
 
 When testing individual parts of the :literal:`json_interface`, the input :class:`json` object is not necessarily of value type :literal:`object`, and thus this function cannot be used, as the expected object may be of value type :literal:`array`. Thus, in :ref:`extendingJSON_unitTesting`, modular and mergeable JSON files are not used and the function :literal:`parseJSON` is used instead. In practice, for non-modular files, the only thing this function does is replacing strings such as :literal:`"@path(text)"` by :literal:`"text"`.
 

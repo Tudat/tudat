@@ -23,7 +23,7 @@ As it can be seen, for a simple input file such as :ref:`main-json` the key :lit
 Key paths
 ~~~~~~~~~
 
-A key path is a list of keys of a :class:`json` that are accessed sequentialy one after the other. The class :class:`KeyPath` is declared in the file :literal:`Tudat/External/JsonInterface/Support/keys.h`. This class derives from :class:`std::vector< std::string >` and has some additional features, such as the possibility of being initialized directly from a single :literal:`std::string` or being outputted as text:
+A key path is a list of keys of a :class:`json` that are accessed sequentialy one after the other. The class :class:`KeyPath` is declared in the file :literal:`Tudat/InputOutput/JsonInterface/Support/keys.h`. This class derives from :class:`std::vector< std::string >` and has some additional features, such as the possibility of being initialized directly from a single :literal:`std::string` or being outputted as text:
 
 .. code-block:: cpp
 
@@ -70,7 +70,7 @@ Although there is ambiguity when printing :literal:`keyPathFile1`, since :litera
 Error handling
 ~~~~~~~~~~~~~~
 
-The templated function :literal:`ValueType getValue( const json& jsonObject, const KeyPath& keyPath )` declared in :class:`Tudat/External/JsonInterface/Support/valueAccess.h` returns the value of :literal:`jsonObject` defined at :literal:`keyPath` as a :class:`ValueType`. For instance:
+The templated function :literal:`ValueType getValue( const json& jsonObject, const KeyPath& keyPath )` declared in :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h` returns the value of :literal:`jsonObject` defined at :literal:`keyPath` as a :class:`ValueType`. For instance:
 
 .. code-block:: cpp
 
@@ -328,7 +328,7 @@ Note that, if the user *does* provide a value for the integrator's type, but it 
 Other value-access functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In this subsection, a few functions widely used in the :literal:`json_interface`, all defined in :class:`Tudat/External/JsonInterface/Support/valueAccess.h`, are mentioned together with an example. For more information, see the Doxygen documentation [LINK].
+In this subsection, a few functions widely used in the :literal:`json_interface`, all defined in :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h`, are mentioned together with an example. For more information, see the Doxygen documentation [LINK].
 
 - :literal:`bool isDefined( const json& jsonObject, const KeyPath& keyPath )`
 
@@ -435,7 +435,7 @@ generate the following :class:`json` object:
     "#root": {}
   }
 
-where the root objec, i.e. :literal:`mainJson`, has been omitted in this document. If one wants to check whether the returned object actually represent an array, instead of using the built-in :literal:`is_array` method, one has to use the function :literal:`bool isConvertibleToArray( const json& j )` defined in :class:`Tudat/External/JsonInterface/Support/valueAccess.h`. This function returns :literal:`true` if :literal:`j` is of value type :literal:`object` and all its non-special keys are convertible to :class:`int`, or if :literal:`j` is already of value type :literal:`array`. After this check, it is safe to call the function :literal:`json getAsArray( const json& jsonObject )` to convert the object back to array type. During this process, the information stored in the special keys is lost, so this is rarely done. Instead, the :literal:`from_json` function of :class:`std::vector` has been overridden so that it is possible to write:
+where the root objec, i.e. :literal:`mainJson`, has been omitted in this document. If one wants to check whether the returned object actually represent an array, instead of using the built-in :literal:`is_array` method, one has to use the function :literal:`bool isConvertibleToArray( const json& j )` defined in :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h`. This function returns :literal:`true` if :literal:`j` is of value type :literal:`object` and all its non-special keys are convertible to :class:`int`, or if :literal:`j` is already of value type :literal:`array`. After this check, it is safe to call the function :literal:`json getAsArray( const json& jsonObject )` to convert the object back to array type. During this process, the information stored in the special keys is lost, so this is rarely done. Instead, the :literal:`from_json` function of :class:`std::vector` has been overridden so that it is possible to write:
 
 .. code-block:: cpp
   
@@ -444,8 +444,8 @@ where the root objec, i.e. :literal:`mainJson`, has been omitted in this documen
   isConvertibleToArray( jsonObject );                               // true
   std::vector< Integrator > integrators = getAs< std::vector< Integrator > >( jsonObject );
 
-.. note:: :class:`json` objects of value type :literal:`array` (or convertible to array) are not only convertible to :class:`std::vector` , they can also be used to create e.g. an :literal:`Eigen::Matrix` or an :literal:`std::set`. The :literal:`to_json` and :literal:`from_json` functions for :literal:`Eigen::Matrix` are defined in :class:`Tudat/External/JsonInterface/Support/valueConversions.h`, making use of the custom :literal:`from_json` implementation for :class:`std::vector` (i.e. the :class:`json` object is first converted to a vector of vectors, and then to an :literal:`Eigen::Matrix`).
+.. note:: :class:`json` objects of value type :literal:`array` (or convertible to array) are not only convertible to :class:`std::vector` , they can also be used to create e.g. an :literal:`Eigen::Matrix` or an :literal:`std::set`. The :literal:`to_json` and :literal:`from_json` functions for :literal:`Eigen::Matrix` are defined in :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h`, making use of the custom :literal:`from_json` implementation for :class:`std::vector` (i.e. the :class:`json` object is first converted to a vector of vectors, and then to an :literal:`Eigen::Matrix`).
 
-.. warning:: No custom implementation of the :literal:`from_json` function for :literal:`std::set` is provided by :literal:`json_interface`, since this type is not used by Tudat (as of now). In the future, if one wants to use the :literal:`getValue` function with :literal:`std::set` as template argument, the default :literal:`from_json` function for :literal:`std::set` will have to be overridden to allow conversion of :class:`json` objects of value type :literal:`object` to :literal:`std::set`, in a similar way as been done for :literal:`std::vecotr` in :class:`Tudat/External/JsonInterface/Support/valueConversions.h`.
+.. warning:: No custom implementation of the :literal:`from_json` function for :literal:`std::set` is provided by :literal:`json_interface`, since this type is not used by Tudat (as of now). In the future, if one wants to use the :literal:`getValue` function with :literal:`std::set` as template argument, the default :literal:`from_json` function for :literal:`std::set` will have to be overridden to allow conversion of :class:`json` objects of value type :literal:`object` to :literal:`std::set`, in a similar way as been done for :literal:`std::vecotr` in :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h`.
 
-.. note:: The :literal:`to_json` function of :literal:`std::map` and :literal:`std::unordered_map` have been overridden in :class:`Tudat/External/JsonInterface/Support/valueConversions.h`, so that the special keys are not assigned to the converted map.
+.. note:: The :literal:`to_json` function of :literal:`std::map` and :literal:`std::unordered_map` have been overridden in :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h`, so that the special keys are not assigned to the converted map.

@@ -3,7 +3,7 @@
 Other types
 ===========
 
-Some types that are not used to store settings require different :literal:`to_json` and :literal:`from_json` implementations. If these types are prone to be used in different parts of the :literal:`json_interface`, their :literal:`to_json` and :literal:`from_json` should be declared in :class:`Tudat/External/JsonInterface/Support/valueConversions.h`. As discussed previously, there are already some functions there, such as custom implementations for :class:`std::map` and :class:`std::unordered_map` that ignore the special keys, for :class:`std::vector` to support unidimensional array inference, for :class:`Eigen::Matrix`.
+Some types that are not used to store settings require different :literal:`to_json` and :literal:`from_json` implementations. If these types are prone to be used in different parts of the :literal:`json_interface`, their :literal:`to_json` and :literal:`from_json` should be declared in :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h`. As discussed previously, there are already some functions there, such as custom implementations for :class:`std::map` and :class:`std::unordered_map` that ignore the special keys, for :class:`std::vector` to support unidimensional array inference, for :class:`Eigen::Matrix`.
 
 Additionally, there are functions for :class:`std::complex`, so that the following is possible:
 

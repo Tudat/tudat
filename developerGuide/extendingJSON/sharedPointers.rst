@@ -44,10 +44,10 @@ Definition of keys
 
 In all the example :literal:`to_json` and :literal:`from_json` functions presented so far, the keys were hard-coded, i.e. literal strings were used when using the :literal:`[]` operator of a :class:`json` object, calling the :literal:`getValue` function or constructing a key path (by concatenating several strings). However, this approach makes code-updating very complex. Image that, in the future, we want to update a key called :literal:`initialTime` to :literal:`initialEpoch`. Although a global search could do the trick, this may result in modifying parts of the code that should not be modified. If we want to update the name of the key :literal:`type` to :literal:`modelType`, but only for rotation model settings, the only option is doing it manually to avoid changing also the :literal:`type` keys of other objects.
 
-Thus, in the :literal:`json_interface`, literal strings are never used inside :literal:`to_json` and :literal:`from_json` functions. Instead, all the keys that are recognized by the JSON interface are declared in :class:`Tudat/External/JsonInterface/Support/keys.h`, and their string-value is defined in :class:`Tudat/External/JsonInterface/Support/keys.cpp`. This is done using a struct called :class:`Keys` containing several nested structs for each level. For instance:
+Thus, in the :literal:`json_interface`, literal strings are never used inside :literal:`to_json` and :literal:`from_json` functions. Instead, all the keys that are recognized by the JSON interface are declared in :class:`Tudat/InputOutput/JsonInterface/Support/keys.h`, and their string-value is defined in :class:`Tudat/InputOutput/JsonInterface/Support/keys.cpp`. This is done using a struct called :class:`Keys` containing several nested structs for each level. For instance:
 
 .. code-block:: cpp
-  :caption: :class:`Tudat/External/JsonInterface/Support/keys.h`
+  :caption: :class:`Tudat/InputOutput/JsonInterface/Support/keys.h`
   :name: keys-h
   
   namespace tudat
@@ -91,7 +91,7 @@ Thus, in the :literal:`json_interface`, literal strings are never used inside :l
 
 
 .. code-block:: cpp
-  :caption: :class:`Tudat/External/JsonInterface/Support/keys.cpp`
+  :caption: :class:`Tudat/InputOutput/JsonInterface/Support/keys.cpp`
   :name: keys-cpp
   
   namespace tudat
@@ -169,13 +169,13 @@ To illustrate the structure of a :literal:`from_json` function for a shared poin
 
 .. code-block:: cpp
   :linenos:
-  :caption: :class:`Tudat/External/JsonInterface/Environment/rotationModel.h`
+  :caption: :class:`Tudat/InputOutput/JsonInterface/Environment/rotationModel.h`
   :name: rotationModel-h
   
   #include <Tudat/SimulationSetup/EnvironmentSetup/createRotationModel.h>
 
-  #include "Tudat/External/JsonInterface/Support/valueAccess.h"
-  #include "Tudat/External/JsonInterface/Support/valueConversions.h"
+  #include "Tudat/InputOutput/JsonInterface/Support/valueAccess.h"
+  #include "Tudat/InputOutput/JsonInterface/Support/valueConversions.h"
 
   namespace tudat
   {
@@ -217,7 +217,7 @@ To illustrate the structure of a :literal:`from_json` function for a shared poin
 
 .. code-block:: cpp
   :linenos:
-  :caption: :class:`Tudat/External/JsonInterface/Environment/rotationModel.cpp`
+  :caption: :class:`Tudat/InputOutput/JsonInterface/Environment/rotationModel.cpp`
   :name: rotationModel-cpp-from-json
   
   namespace tudat
@@ -280,7 +280,7 @@ To illustrate the structure of a :literal:`from_json` function for a shared poin
 
   } // namespace tudat
 
-Note that the files :class:`Tudat/External/JsonInterface/Support/valueAccess.h` and :class:`Tudat/External/JsonInterface/Support/valueConversions.h` are always included. The former includes enhaced value access functions (:literal:`getValue`) and the latter overrides (and defines) :literal:`to_json` and :literal:`from_json` functions for frequently-used types, such as :class:`std::vector` (with support for unidimensional array inference [REF]) or :class:`Eigen::Matrix`. The file :class:`Tudat/External/JsonInterface/Support/valueAccess.h` includes :class:`Tudat/External/JsonInterface/Support/keys.h`, so all the keys available in the :literal:`json_interface` are readily accessible.
+Note that the files :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h` and :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h` are always included. The former includes enhaced value access functions (:literal:`getValue`) and the latter overrides (and defines) :literal:`to_json` and :literal:`from_json` functions for frequently-used types, such as :class:`std::vector` (with support for unidimensional array inference [REF]) or :class:`Eigen::Matrix`. The file :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h` includes :class:`Tudat/InputOutput/JsonInterface/Support/keys.h`, so all the keys available in the :literal:`json_interface` are readily accessible.
 
 Typically, the first lines of a :literal:`from_json` function are:
 
@@ -329,7 +329,7 @@ An example of a :literal:`to_json` function is provided below:
 
 .. code-block:: cpp
   :linenos:
-  :caption: :class:`Tudat/External/JsonInterface/Environment/rotationModel.cpp`
+  :caption: :class:`Tudat/InputOutput/JsonInterface/Environment/rotationModel.cpp`
   :name: rotationModel-cpp-to-json
   
   namespace tudat
