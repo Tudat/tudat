@@ -1,0 +1,3 @@
+.. role:: arrow
+
+- :literal:`object[]` :class:`torques` (mandatory) Map in which each object contains a map of torque lists. The keys of the outer map are the names of the bodies undergoing the torque, while the keys of the inner maps are the names of the bodies exerting the torque. For instance, :literal:`torques/Earth/Moon` is read as: torque on Earth caused by the Moon.

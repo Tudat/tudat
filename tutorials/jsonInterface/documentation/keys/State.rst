@@ -2,18 +2,18 @@
 
 - :literal:`string` :class:`type` (mandatory). Possible values: :literal:`"cartesian"`, :literal:`"keplerian"`.
 
-	.. container:: toggle
+.. container:: toggle
 
-		.. container:: header
+	.. container:: header
 
-			:arrow:`Cartesian State`
+		:arrow:`Cartesian State`
 
-		.. include:: keys/CartesianState.rst
+	.. include:: keys/CartesianState.rst
 
-	.. container:: toggle
+.. container:: toggle
 
-		.. container:: header
+	.. container:: header
 
-			:arrow:`Keplerian State`
+		:arrow:`Keplerian State`
 
-		.. include:: keys/KeplerianState.rst
+	.. include:: keys/KeplerianState.rst
