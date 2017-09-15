@@ -3,6 +3,8 @@
 Parameter Estimation 
 =========================
 
+.. _estimationObjectCreation:
+
 Creating the estimation object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -46,7 +48,13 @@ An object is created as follows:
       
          The settings in :class:`PropagatorSettings` and :class:`EstimatableParameterSet` must be consistently defined: any initial state that is propagated *must* also be estimated, there is as yet no possibility to only estimate some of the propagates states.
          
-After the creation of the :class:`OrbitDeterminationManager` object, the :class:`VariationalEquationsSolver`, which contains the numerically propagated variational equations and dynamics, can be retrieved using the :literal:`getVariationalEquationsSolver` member function.
+After the creation of the :class:`OrbitDeterminationManager` object, a number of objects are created internally that can be used for various purposes:
+
+* An object with base class :class:`VariationalEquationsSolver`, which contains the numerically propagated variational equations and dynamics, can be retrieved using the :literal:`getVariationalEquationsSolver` member function. 
+* A list of objects with base class :class:`ObservationSimulatorBase` (one per observable type) to simulate observations, discussed in more detail on the page on :ref:`creatingObservationSimulators`
+* A list of objects with base class :class:`ObservationManagerBase` (one per observable type) to simulate observations and the associated partial derivatives. These objects are not directly accesed by users. Their output (partial derivatives of observables) are provided *a posterior* through an object of type :class:`PodOutput`, discussed on the page on :ref:`estimationOutput`.
+
+.. _estimationInput:
 
 Defining estimation input
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -65,23 +73,21 @@ The input to the estimation consists of several parts. Firstly, the input data, 
      
    The input is:
    
-   - :literal:`observationsAndTimes` A container of type :literal:`std::map< ObservableType, std::map< LinkEnds, std::pair< Eigen::Matrix< ObservationScalarType, Eigen::Dynamic, 1 >, std::pair< std::vector< TimeType >, LinkEndType > > > >` (the structure of which is described in more detail ON THIS PAGE). This container has both the observables to be used in the estimation, and the assictaed times and link end types.
+   - :literal:`observationsAndTimes` A container of type :literal:`std::map< ObservableType, std::map< LinkEnds, std::pair< Eigen::Matrix< ObservationScalarType, Eigen::Dynamic, 1 >, std::pair< std::vector< TimeType >, LinkEndType > > > >` (the structure of which is described in more detail on the page :ref:`generatingObservations`). This container has both the observables to be used in the estimation, and the assictaed times and link end types.
    
-   - :literal:`numberOfEstimatedParameters` An :literal:`int` denoting the length of the vector of estimated paramaters, discussed in more detail ON THIS PAGE.
+   - :literal:`numberOfEstimatedParameters` An :literal:`int` denoting the length of the vector of estimated paramaters, discussed in more detail on the page :ref:`parameterSettingCreation`.
    
-   - :literal:`inverseOfAprioriCovariance` An :literal:`Eigen::MatrixXd` with the inverse of the *a priori* covariance matrix
-   
-   .. note::
-   
-      This input type may be left empty, in which case no *a priori* covariance is used.
+   - :literal:`inverseOfAprioriCovariance` An :literal:`Eigen::MatrixXd` with the inverse of the *a priori* covariance matrix. This input type may be left empty, in which case no *a priori* covariance is used.
 
 
 .. note::
    
    Currently, Tudat only supports diagonal weight matrices, implicitly assuming independent observation noise in the inversion.
 
-Executing the estimation
-~~~~~~~~~~~~~~~~~~~~~~~~
+.. _estimationOutput:
+
+Estimation output
+~~~~~~~~~~~~~~~~~
 
 
 When performing the estimation, the code rescales the values of all parameters :math:`p`, where we denote the scaled parameters as :math:`\tilde{h}`, so that all partials :math:`\partial h/\partial\tilde{p}` w.r.t. lie in the range :math:`[-1,1]`. To provide transparency, it is the covariance and partial derivative matrix of these scaled parameters that is saved to the :literal:`PodOutput` object. However, the following functions allow you to retrieve the information w.r.t. the *unscaled* parameters:

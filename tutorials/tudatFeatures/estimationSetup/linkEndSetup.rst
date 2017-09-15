@@ -3,14 +3,16 @@
 Setting up the link ends
 ========================
 
-In Tudat, an observation model is referred to a number of link ends. For a one-way range model, for instance, a receiver and transmitter are required, both of which are termed a 'link end'. An :literal:`enum` termed :literal:`LinkEndType` is available that lists all the possible kinds of link ends. A full list of observation models, as well as the link ends that they require, is given on THIS PAGE. 
+In Tudat, an observation model is referred to a number of link ends. For a one-way range model, for instance, a receiver and transmitter are required, both of which are termed a 'link end'. An :literal:`enum` termed :literal:`LinkEndType` is available that lists all the possible kinds of link ends. A full list of observation models, as well as the link ends that they require, is given on the page on :ref:`observationModelSetup`.
+
+.. _groundStationCreation:
 
 Ground Station Creation
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Often, you will need to define the positions of ground stations on celestial bodies to/from which observations are made. Presently, the position of a ground station is fixed in the body-fixed frame of the body on which it is located, but modifications to allow a time-varying position (due to tides, continental drift, *etc.*) are planned.
 
-With the present setup, you must provide only the name and position (as a :literal:`Eigen::Vector3d`) of the ground station to create it. The position may be defined in several coordinate systems, defined by an enum of :literal:`PositionElementTypes`:
+With the present setup, you must provide only the name and position (as an :literal:`Eigen::Vector3d`) of the ground station to create it. The position may be defined in several coordinate systems, defined by an enum of :literal:`PositionElementTypes`:
 
 * :literal:`cartesian_position` For this type, the three entries of the position are simply the *x*, *y* and *z* components in the body-fixed frame.
 * :literal:`spherical_position` For this type, the three entries of the position are the distance from the body's center of mass, and the geocentric latitude and longitude on the body (in that order).
