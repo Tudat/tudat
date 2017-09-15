@@ -1,5 +1,8 @@
 .. _extendingJSON_validation:
 
+.. role:: jsontype
+.. role:: jsonkey
+
 Validation
 ==========
 
@@ -96,7 +99,7 @@ As explained above, unidimensional array inference is a capability of the valida
     getValue< std::vector< std::string > >( person, "children" );            // { "Marc" }
   std::vector< std::string > childrenBaiscAccess = person[ "children" ];     // { "Marc" }
 
-However, the :literal:`getValue` function *is* responsible for checking whether unidimensional array inference has been applied, and for printing a warning or throwing an error depending on the user setting for the key :literal:`options.unidimensionalArrayInference` of the main object. This is done by performing the following steps:
+However, the :literal:`getValue` function *is* responsible for checking whether unidimensional array inference has been applied, and for printing a warning or throwing an error depending on the user setting for the key :jsonkey:`options.unidimensionalArrayInference` of the main object. This is done by performing the following steps:
 
   - Get the :literal:`json` object at the requested key path -> :literal:`originalSubjson`.
   - Convert :literal:`originalSubjson` to the requested :literal:`ValueType` -> :literal:`returnObject`.
@@ -113,7 +116,7 @@ This means that, in the previous example, is unidimensional array inference is d
 
     void to_json( json& j, NonJsonableClass& nonJsonableObject ) { }
 
-  leading to the generation of a :class:`json` object of value type :literal:`null`, for which the check on whether unidimensional array inference has been applied will always evaluate to :literal:`false`.
+  leading to the generation of a :class:`json` object of value type :jsontype:`null`, for which the check on whether unidimensional array inference has been applied will always evaluate to :literal:`false`.
 
 
 .. note:: Unidimensional array inference is widely used when working with :class:`Eigen::Vector`. An :class:`Eigen::Vector` is an :class:`Eigen::Matrix` with just one column. The JSON representation of a matrix is an array of arrays (with each array corresponding to a matrix row). Thus, the JSON representation of a row vector is an array of unidimensional arrays. For instance:

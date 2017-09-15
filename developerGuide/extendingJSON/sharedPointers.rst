@@ -1,5 +1,8 @@
 .. _extendingJSON_sharedPointers:
 
+.. role:: jsontype
+.. role:: jsonkey
+
 Shared pointers
 ===============
 
@@ -42,7 +45,7 @@ Thus, given that the settings classes used throughout Tudat are always used as s
 Definition of keys
 ~~~~~~~~~~~~~~~~~~
 
-In all the example :literal:`to_json` and :literal:`from_json` functions presented so far, the keys were hard-coded, i.e. literal strings were used when using the :literal:`[]` operator of a :class:`json` object, calling the :literal:`getValue` function or constructing a key path (by concatenating several strings). However, this approach makes code-updating very complex. Image that, in the future, we want to update a key called :literal:`initialTime` to :literal:`initialEpoch`. Although a global search could do the trick, this may result in modifying parts of the code that should not be modified. If we want to update the name of the key :literal:`type` to :literal:`modelType`, but only for rotation model settings, the only option is doing it manually to avoid changing also the :literal:`type` keys of other objects.
+In all the example :literal:`to_json` and :literal:`from_json` functions presented so far, the keys were hard-coded, i.e. literal strings were used when using the :literal:`[]` operator of a :class:`json` object, calling the :literal:`getValue` function or constructing a key path (by concatenating several strings). However, this approach makes code-updating very complex. Image that, in the future, we want to update a key called :literal:`initialTime` to :literal:`initialEpoch`. Although a global search could do the trick, this may result in modifying parts of the code that should not be modified. If we want to update the name of the key :jsonkey:`type` to :literal:`modelType`, but only for rotation model settings, the only option is doing it manually to avoid changing also the :literal:`type` keys of other objects.
 
 Thus, in the :literal:`json_interface`, literal strings are never used inside :literal:`to_json` and :literal:`from_json` functions. Instead, all the keys that are recognized by the JSON interface are declared in :class:`Tudat/InputOutput/JsonInterface/Support/keys.h`, and their string-value is defined in :class:`Tudat/InputOutput/JsonInterface/Support/keys.cpp`. This is done using a struct called :class:`Keys` containing several nested structs for each level. For instance:
 
@@ -150,14 +153,14 @@ When one wants to modify a key, changing its string value in :class:`keys.cpp` s
     libc++abi.dylib: terminating with uncaught exception of type tudat::json_interface::UndefinedKeyError:
     Undefined key: bodies.Earth.rotationModel.initialOrientation
 
-  The key :literal:`initialOrientation` stores a defaultable-property, i.e. if not provided the value can be inferred from the keys :literal:`originalFrame`, :literal:`targetFrame` and :literal:`initialTime`. Thus, the error should not be generated if the key is not defined. One would probably tend to start by looking at the :literal:`from_json` function of :class:`EphemerisSettings` when debugging this issue. However, the source of the problem can be in the :class:`keys.cpp`. Even if the :literal:`from_json` function is completely correct, the previous error would be printed if, in the :class:`keys.cpp`, we had:
+  The key :jsonkey:`initialOrientation` stores a defaultable-property, i.e. if not provided the value can be inferred from the keys :literal:`originalFrame`, :literal:`targetFrame` and :literal:`initialTime`. Thus, the error should not be generated if the key is not defined. One would probably tend to start by looking at the :literal:`from_json` function of :class:`EphemerisSettings` when debugging this issue. However, the source of the problem can be in the :class:`keys.cpp`. Even if the :literal:`from_json` function is completely correct, the previous error would be printed if, in the :class:`keys.cpp`, we had:
 
   .. code-block:: cpp
     
     const std::string Keys::Body::RotationModel::initialOrientation = "initialOrientation";
     const std::string Keys::Body::RotationModel::initialTime = "initialOrientation";
 
-  which can happen easily when copy-pasting. Thus, what is actually happening is that, when retrieving the value for :literal:`initialTime` (non-defaultable property), the key :literal:`initialOrientation` is accessed (and not found). To prevent these issues, a search for any given key inside the :class:`keys.cpp` file should always result in an even number of occurences. In this way, we also make sure that the value stored at the key :literal:`rotationRate` does not end up being used for the property :literal:`initialTime` of our :class:`RotationModelSettings`, in which case no error or warning would be generated during conversion to :class:`json` as both as non-defaultable properties and store values of the same type (:class:`double`).
+  which can happen easily when copy-pasting. Thus, what is actually happening is that, when retrieving the value for :literal:`initialTime` (non-defaultable property), the key :jsonkey:`initialOrientation` is accessed (and not found). To prevent these issues, a search for any given key inside the :class:`keys.cpp` file should always result in an even number of occurences. In this way, we also make sure that the value stored at the key :jsonkey:`rotationRate` does not end up being used for the property :literal:`initialTime` of our :class:`RotationModelSettings`, in which case no error or warning would be generated during conversion to :class:`json` as both as non-defaultable properties and store values of the same type (:class:`double`).
   
 
 Writing :literal:`from_json` functions
@@ -291,7 +294,7 @@ Typically, the first lines of a :literal:`from_json` function are:
 
 Generally, when creating a shared pointer to a settings class, only the keys for that class are needed (unless some keys of the root :class:`mainJson` object have to be accessed). Thus we can use a shorter-name such as :literal:`K`. The other keys can still be accessed using the full name :literal:`Keys::...`. Do not write :literal:`using Keys = Keys::...`, as this would result in all the other keys being unaccessible.
 
-Although it may be convenient to make the check on whether the provided :literal:`jsonObject` object is :literal:`null`, and return immediately a :literal:`NULL` shared pointer if it is, this situation will generally not happen in practice. When the user does not want to provide a rotation model, rather than writing :literal:`"rotationModel": null`, they leave the key :literal:`rotationModel` undefined. The :literal:`from_json` function of :class:`BodySettings` is responsible for only calling the :literal:`from_json` function of :class:`RotationModelSettings` if the key :literal:`rotationModel` is defined. If the user does provide a :literal:`null` object manually in their input file, this will result in an :literal:`UndefinedKeyError` for key :literal:`bodies.Earth.rotationModel.type` (the first key to be accessed in the :literal:`from_json` function) will be thrown.
+Although it may be convenient to make the check on whether the provided :literal:`jsonObject` object is :literal:`null`, and return immediately a :literal:`NULL` shared pointer if it is, this situation will generally not happen in practice. When the user does not want to provide a rotation model, rather than writing :literal:`"rotationModel": null`, they leave the key :jsonkey:`rotationModel` undefined. The :literal:`from_json` function of :class:`BodySettings` is responsible for only calling the :literal:`from_json` function of :class:`RotationModelSettings` if the key :jsonkey:`rotationModel` is defined. If the user does provide :literal:`null` manually in their input file, this will result in an :literal:`UndefinedKeyError` for key :jsonkey:`bodies.Earth.rotationModel.type` (the first key to be accessed in the :literal:`from_json` function) will be thrown.
 
 The settings classes used in Tudat typically have a type property that can be used to determine which derived class should be used when creating the shared pointer object. This is retrieved in line 15. Then, the settings for the base class (shared by all the derived classes) are retrieved in lines 16 and 17. The next step is to write a :class:`switch` that modify the :literal:`rotationModelSettings` (passed by reference) depending on the :literal:`rotationModelType`. Generally, a :literal:`return` is used at the end of each switch case.
 
@@ -307,7 +310,7 @@ In most cases, the defaultable properties use the default value defined in the s
           const double bodyReferenceRadius,
           const boost::shared_ptr< InterpolatorSettings > interpolatorSettings = NULL ):
 
-If the user does not provide the key :literal:`interpolator`, the same default value defined in the constructor (:literal:`NULL`) should be used to create the settings object from the :class:`json` object. To keep the behaviour of C++ Tudat applications and JSON-based Tudat applications, if in the future the default interpolator settings are changed from :literal:`NULL` to e.g. :literal:`boost::make_shared< InterpolatorSettings >( 6 )` in the constructor, this change should also be reflected in the JSON interface. To make this happen automatically, the default values are not hard-coded in the :literal:`from_json` functions. Instead, an instance constructed only with the mandatory properties is used to create the actual shared pointer:
+If the user does not provide the key :jsonkey:`interpolator`, the same default value defined in the constructor (:literal:`NULL`) should be used to create the settings object from the :class:`json` object. To keep the behaviour of C++ Tudat applications and JSON-based Tudat applications, if in the future the default interpolator settings are changed from :literal:`NULL` to e.g. :literal:`boost::make_shared< InterpolatorSettings >( 6 )` in the constructor, this change should also be reflected in the JSON interface. To make this happen automatically, the default values are not hard-coded in the :literal:`from_json` functions. Instead, an instance constructed only with the mandatory properties is used to create the actual shared pointer:
 
 .. code-block:: cpp
 
@@ -378,7 +381,7 @@ An example of a :literal:`to_json` function is provided below:
   
   }  // namespace tudat
 
-First, a check on the nullity of the shared pointer is done. If it is :literal:`NULL`, a :class:`json` object of value type :literal:`null` will be returned. Otherwise, the settings object will be used to define the keys of the :class:`json` object.
+First, a check on the nullity of the shared pointer is done. If it is :literal:`NULL`, a :class:`json` object of value type :jsontype:`null` will be returned. Otherwise, the settings object will be used to define the keys of the :class:`json` object.
 
 The structure is similar to the one for :literal:`from_json` functions. The main difference is that the :literal:`[]` mutator operator is used to modify the :class:`json` object, instead of using the :literal:`getVlaue` function to access it. Additionally, in every switch case the original shared pointer has to be dynamically casted to the corresponding derived class. Then, the function :literal:`enforceNonNullPointer` is called. This throws an :literal:`NullPointerError` when the settings derived class and the value of its type property do not match.
 

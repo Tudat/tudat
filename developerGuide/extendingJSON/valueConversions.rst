@@ -1,5 +1,8 @@
 .. _extendingJSON_valueConversions:
 
+.. role:: jsontype
+.. role:: jsonkey
+
 Value conversions
 =================
 

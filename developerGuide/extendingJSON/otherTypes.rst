@@ -1,5 +1,8 @@
 .. _extendingJSON_otherTypes:
 
+.. role:: jsontype
+.. role:: jsonkey
+
 Other types
 ===========
 
@@ -24,7 +27,7 @@ For :class:`std::pair`:
   )"_json;
   std::pair< int, std::string > pair = j;         // { 6, "keplerian" }
 
-And for :class:`Eigen::Quaterniond`, so that it can be created directly from an :class:`Eigen::Matrix3d` when the provided :class:`json` object is of type value :class:`array`, or using the function :literal:`spice_interface::computeRotationQuaternionBetweenFrames` when it is of value type :class:`object`. Thus, it is possible to create an :class:`Eigen::Quaterniond` from any of these two JSON files:
+And for :class:`Eigen::Quaterniond`, so that it can be created directly from an :class:`Eigen::Matrix3d` when the provided :class:`json` object is of value type :jsontype:`array`, or using the function :literal:`spice_interface::computeRotationQuaternionBetweenFrames` when it is of value type :jsontype:`object`. Thus, it is possible to create an :class:`Eigen::Quaterniond` from any of these two JSON files:
 
 .. code-block:: json
 

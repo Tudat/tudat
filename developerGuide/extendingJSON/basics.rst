@@ -1,5 +1,8 @@
 .. _extendingJSON_basics:
 
+.. role:: jsontype
+.. role:: jsonkey
+
 Basics
 ======
 
@@ -61,7 +64,7 @@ Value types
 
 A :class:`json` object can have 6 possible value types. The value type of a :class:`json` object can be inferred during construction, or later through its lifecycle. The value type of a :class:`json` object can change.
 
-    - :literal:`null`
+    - :jsontype:`null`
     
       .. code-block:: cpp
           
@@ -70,7 +73,7 @@ A :class:`json` object can have 6 possible value types. The value type of a :cla
           json k = ...                                 // k.is_null( ) -> false
           k = json( );                                 // k.is_null( ) -> true
 
-    - :literal:`object`: similar to :class:`std::map`, but with the possibility to mix different value types.
+    - :jsontype:`object`: similar to :class:`std::map`, but with the possibility to mix different value types.
     
       .. code-block:: cpp
           
@@ -81,7 +84,7 @@ A :class:`json` object can have 6 possible value types. The value type of a :cla
           json k;                                      // k.is_object( ) -> false
           k[ "a" ] = 0;                                // k.is_object( ) -> true
 
-    - :literal:`array`: similar to :class:`std::vector`, but with the possibility to mix different value types.
+    - :jsontype:`array`: similar to :class:`std::vector`, but with the possibility to mix different value types.
     
       .. code-block:: cpp
           
@@ -96,13 +99,13 @@ A :class:`json` object can have 6 possible value types. The value type of a :cla
           k = json( );                                 // k.is_null( ) -> true
           k[ "b" ] = 1;                                // k.is_object( ) -> true
 
-    - :literal:`string`: similar to :class:`std::string`.
+    - :jsontype:`string`: similar to :class:`std::string`.
           
-    - :literal:`number`: similar to :class:`double`, :class:`float` or :class:`int`.
+    - :jsontype:`number`: similar to :class:`double`, :class:`float` or :class:`int`.
         
-    - :literal:`boolean`: similar to :class:`bool`.
+    - :jsontype:`boolean`: similar to :class:`bool`.
 
-The types :literal:`object` and :literal:`array` are known as structured types (the method :literal:`is_structured` will return :literal:`true`), while the types :literal:`string`, :literal:`number` and :literal:`bool` are known as primitive types (the method :literal:`is_primitive` will return :literal:`true`).
+The types :jsontype:`object` and :jsontype:`array` are known as structured types (the method :literal:`is_structured` will return :literal:`true`), while the types :jsontype:`string`, :jsontype:`number` and :jsontype:`boolean` are known as primitive types (the method :literal:`is_primitive` will return :literal:`true`).
 
 Structured :class:`json` objects are containers of :class:`json` objects (of any value type). This means that if we create the following :class:`json` object of array type:
 
@@ -112,6 +115,6 @@ Structured :class:`json` objects are containers of :class:`json` objects (of any
     std::string aString = "two";
     json j = { aDouble, aString };       
 
-then when we access any of its elements (e.g. :literal:`j[ 0 ]` or :literal:`j[ 1 ]`) we will not get a :class:`double` or :class:`std::string`, but a :class:`json` object (with value type :literal:`number` or :literal:`string` in this case).
+then when we access any of its elements (e.g. :literal:`j[ 0 ]` or :literal:`j[ 1 ]`) we will not get a :class:`double` or :class:`std::string`, but a :class:`json` object (with value type :jsontype:`number` or :jsontype:`string` in this case).
 
 

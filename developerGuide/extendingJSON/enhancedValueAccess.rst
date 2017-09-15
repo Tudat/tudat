@@ -1,5 +1,8 @@
 .. _extendingJSON_enhancedValueAccess:
 
+.. role:: jsontype
+.. role:: jsonkey
+
 Enhanced value access
 =====================
 
@@ -10,14 +13,14 @@ Once that the :ref:`main-json` file has been deserialized into the :literal:`mai
     double initialEpoch = mainJson[ "initialEpoch" ];                       // 0.0
     std::string integratorType = mainJson.at( "integrator" ).at( "type" );  // "rungeKutta4"
 
-The main problem of this approach is that, in case that the user didn't define the key :literal:`type` for the :literal:`integrator` object, the thrown value-access error will not provide sufficient information to uniquely identify the source of the problem:
+The main problem of this approach is that, in case that the user didn't define the key :jsonkey:`type` for the :literal:`integrator` object, the thrown value-access error will not provide sufficient information to uniquely identify the source of the problem:
 
 .. code-block:: txt
 
   libc++abi.dylib: terminating with uncaught exception of type nlohmann::detail::out_of_range:
   [json.exception.out_of_range.403] key 'type' not found
 
-As it can be seen, for a simple input file such as :ref:`main-json` the key :literal:`type` is defined for six objects. If we forget to define it for any of them, the message :literal:`key 'type' not found` will be useless as we cannot know for which object it is missing. For more complex simulations, in which the JSON input file is hundreds of lines long, identification of the source of the problem becomes even more difficult. A message that *is* informative would be something like :literal:`key 'integrator.type' not found`. In the :literal:`json_interface`, :literal:`integrator.type` is known as a key path.
+As it can be seen, for a simple input file such as :ref:`main-json` the key :jsonkey:`type` is defined for six objects. If we forget to define it for any of them, the message :literal:`key 'type' not found` will be useless as we cannot know for which object it is missing. For more complex simulations, in which the JSON input file is hundreds of lines long, identification of the source of the problem becomes even more difficult. A message that *is* informative would be something like :literal:`key 'integrator.type' not found`. In the :literal:`json_interface`, :literal:`integrator.type` is known as a key path.
 
 
 Key paths
@@ -62,9 +65,9 @@ However, a key path has been defined as a list of strings. If we want to define 
   KeyPath keyPathFile1 = "export" / 1 / "file";          // { "export", "1", "file" }
   std::cout << keyPathFile1 << std::endl;                // export.1.file
 
-Note that the :literal:`/` operator is also overloaded for combinations of :class:`unsigned int` with :class:`string` or :class:`KeyPath` (but not for two pairs of :class:`unsigned int`), so :literal:`0` and :literal:`1` are implicitely converted to strings.
+Note that the :literal:`/` operator is also overloaded for combinations of :class:`unsigned int` with :class:`std::string` or :class:`KeyPath` (but not for two pairs of :class:`unsigned int`), so :literal:`0` and :literal:`1` are implicitely converted to strings.
 
-Although there is ambiguity when printing :literal:`keyPathFile1`, since :literal:`export.1` can be read as "the second element of an array defined at key :literal:`export`" or "the element at key :literal:`"1"` of an object defined at key :literal:`export`", there is no ambiguity when actually using the key path to access the values. If the :class:`json` object obtained when accessing the key :literal:`export` is of value type :literal:`object`, the key :literal:`"1"` will be used, while the integer value :literal:`1` will be used when the :class:`json` object at the key :literal:`export` is of value type :literal:`array`.
+Although there is ambiguity when printing :literal:`keyPathFile1`, since :literal:`export.1` can be read as "the second element of an array defined at key :jsonkey:`export`" or "the element at key :jsonkey:`"1"` of an object defined at key :jsonkey:`export`", there is no ambiguity when actually using the key path to access the values. If the :class:`json` object obtained when accessing the key :jsonkey:`export` is of value type :jsontype:`object`, the key :jsonkey:`"1"` will be used, while the integer value :literal:`1` will be used when the :class:`json` object at the key :jsonkey:`export` is of value type :jsontype:`array`.
 
 
 Error handling
@@ -269,7 +272,7 @@ For instance, imagine that our :class:`Integrator` has an :literal:`initialTime`
       }
   }
 
-In this case, we navigate one level up in the key by using the special key :literal:`..`, so we end up in the :literal:`mainJson` object, and then we *can* access the key :literal:`initialEpoch`. However, in case it is possible for integrator objects to be defined at different levels in the key tree (i.e. not always immediately under the :literal:`mainJson`), it is better to use an absolute key path:
+In this case, we navigate one level up in the key by using the special key :jsonkey:`..`, so we end up in the :literal:`mainJson` object, and then we *can* access the key :jsonkey:`initialEpoch`. However, in case it is possible for integrator objects to be defined at different levels in the key tree (i.e. not always immediately under the :literal:`mainJson`), it is better to use an absolute key path:
 
 .. code-block:: cpp
   
@@ -299,7 +302,7 @@ As illustrated in the previous section, some properties (referred to as multi-so
 Defaultable properties
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Imagine that the :literal:`type` property of our :class:`Integrator` class can take several values, e.g. :literal:`"euler"` and :literal:`"rungeKutta4"`. If we want the Runge-Kutta 4 integrator to be used when the key :literal:`type` is not defined by the user, we could modify the :literal:`from_json` method:
+Imagine that the :literal:`type` property of our :class:`Integrator` class can take several values, e.g. :literal:`"euler"` and :literal:`"rungeKutta4"`. If we want the Runge-Kutta 4 integrator to be used when the key :jsonkey:`type` is not defined by the user, we could modify the :literal:`from_json` method:
 
 .. code-block:: cpp
   
@@ -408,11 +411,11 @@ we do get a comprehensible error message:
   libc++abi.dylib: terminating with uncaught exception of type tudat::json_interface::UndefinedKeyError:
   Undefined key: integrator.2
 
-Although the functionality is identical for :class:`json` objects of value type :literal:`object` and :literal:`array`, the internal implementation is different and can have consequences for a developer extending the JSON interface. As explained in [REF], the comprehensible error messages are generated by defining the special key :literal:`#keypath` of the :class:`json` objects retrieved by using the :literal:`getValue` function. If the retrieved object is of value type :literal:`object`, defining this key is trivial. However, if the retrieved object is of value type :literal:`array`, the key cannot be defined directly, as string keys cannot be defined for :class:`json` arrays.
+Although the functionality is identical for :class:`json` objects of value type :jsontype:`object` and :jsontype:`array`, the internal implementation is different and can have consequences for a developer extending the JSON interface. As explained in [REF], the comprehensible error messages are generated by defining the special key :jsonkey:`#keypath` of the :class:`json` objects retrieved by using the :literal:`getValue` function. If the retrieved object is of value type :jsontype:`object`, defining this key is trivial. However, if the retrieved object is of value type :jsontype:`array`, the key cannot be defined directly, as string keys cannot be defined for :class:`json` arrays.
 
-To overcome this problem, :class:`json` objects of value type :literal:`array` are converted first to :class:`json` objects of value type :literal:`object`. Then, the special keys :literal:`#keypath` and :literal:`#root` *can* be set. This means that, when calling :literal:`getValue< json >( ... )`, the returned :class:`json` will always be of value type :literal:`object` or :literal:`primitive`, but never :literal:`array`. For :literal:`primitive` types, there is no need to convert them to :literal:`object` and define the special keys, as they are unstructured, which means that they cannot store ojects and thus their :literal:`at` method is undefined.
+To overcome this problem, :class:`json` objects of value type :jsontype:`array` are converted first to :class:`json` objects of value type :jsontype:`object`. Then, the special keys :literal:`#keypath` and :literal:`#root` *can* be set. This means that, when calling :literal:`getValue< json >( ... )`, the returned :class:`json` will always be of value type :jsontype:`object` or :jsontype:`primitive`, but never :jsontype:`array`. For :jsontype:`primitive` types, there is no need to convert them to :jsontype:`object` and define the special keys, as they are unstructured, which means that they cannot store ojects and thus their :literal:`at` method is undefined.
 
-The process of converting :class:`json` objects from value type :literal:`array` to value type :literal:`object` is done inside the :literal:`getValue` function automatically. For instance:
+The process of converting :class:`json` objects from value type :jsontype:`array` to value type :jsontype:`object` is done inside the :literal:`getValue` function automatically. For instance:
 
 .. code-block:: cpp
   
@@ -435,7 +438,7 @@ generate the following :class:`json` object:
     "#root": {}
   }
 
-where the root objec, i.e. :literal:`mainJson`, has been omitted in this document. If one wants to check whether the returned object actually represent an array, instead of using the built-in :literal:`is_array` method, one has to use the function :literal:`bool isConvertibleToArray( const json& j )` defined in :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h`. This function returns :literal:`true` if :literal:`j` is of value type :literal:`object` and all its non-special keys are convertible to :class:`int`, or if :literal:`j` is already of value type :literal:`array`. After this check, it is safe to call the function :literal:`json getAsArray( const json& jsonObject )` to convert the object back to array type. During this process, the information stored in the special keys is lost, so this is rarely done. Instead, the :literal:`from_json` function of :class:`std::vector` has been overridden so that it is possible to write:
+where the root objec, i.e. :literal:`mainJson`, has been omitted in this document. If one wants to check whether the returned object actually represent an array, instead of using the built-in :literal:`is_array` method, one has to use the function :literal:`bool isConvertibleToArray( const json& j )` defined in :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h`. This function returns :literal:`true` if :literal:`j` is of value type :jsontype:`object` and all its non-special keys are convertible to :class:`int`, or if :literal:`j` is already of value type :jsontype:`array`. After this check, it is safe to call the function :literal:`json getAsArray( const json& jsonObject )` to convert the object back to array type. During this process, the information stored in the special keys is lost, so this is rarely done. Instead, the :literal:`from_json` function of :class:`std::vector` has been overridden so that it is possible to write:
 
 .. code-block:: cpp
   
@@ -444,8 +447,8 @@ where the root objec, i.e. :literal:`mainJson`, has been omitted in this documen
   isConvertibleToArray( jsonObject );                               // true
   std::vector< Integrator > integrators = getAs< std::vector< Integrator > >( jsonObject );
 
-.. note:: :class:`json` objects of value type :literal:`array` (or convertible to array) are not only convertible to :class:`std::vector` , they can also be used to create e.g. an :literal:`Eigen::Matrix` or an :literal:`std::set`. The :literal:`to_json` and :literal:`from_json` functions for :literal:`Eigen::Matrix` are defined in :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h`, making use of the custom :literal:`from_json` implementation for :class:`std::vector` (i.e. the :class:`json` object is first converted to a vector of vectors, and then to an :literal:`Eigen::Matrix`).
+.. note:: :class:`json` objects of value type :jsontype:`array` (or convertible to array) are not only convertible to :class:`std::vector` , they can also be used to create e.g. an :literal:`Eigen::Matrix` or an :literal:`std::set`. The :literal:`to_json` and :literal:`from_json` functions for :literal:`Eigen::Matrix` are defined in :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h`, making use of the custom :literal:`from_json` implementation for :class:`std::vector` (i.e. the :class:`json` object is first converted to a vector of vectors, and then to an :literal:`Eigen::Matrix`).
 
-.. warning:: No custom implementation of the :literal:`from_json` function for :literal:`std::set` is provided by :literal:`json_interface`, since this type is not used by Tudat (as of now). In the future, if one wants to use the :literal:`getValue` function with :literal:`std::set` as template argument, the default :literal:`from_json` function for :literal:`std::set` will have to be overridden to allow conversion of :class:`json` objects of value type :literal:`object` to :literal:`std::set`, in a similar way as been done for :literal:`std::vecotr` in :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h`.
+.. warning:: No custom implementation of the :literal:`from_json` function for :literal:`std::set` is provided by :literal:`json_interface`, since this type is not used by Tudat (as of now). In the future, if one wants to use the :literal:`getValue` function with :literal:`std::set` as template argument, the default :literal:`from_json` function for :literal:`std::set` will have to be overridden to allow conversion of :class:`json` objects of value type :jsontype:`object` to :literal:`std::set`, in a similar way as been done for :literal:`std::vecotr` in :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h`.
 
 .. note:: The :literal:`to_json` function of :literal:`std::map` and :literal:`std::unordered_map` have been overridden in :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h`, so that the special keys are not assigned to the converted map.

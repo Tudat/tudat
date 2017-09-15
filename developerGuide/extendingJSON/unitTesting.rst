@@ -1,5 +1,8 @@
 .. _extendingJSON_unitTesting:
 
+.. role:: jsontype
+.. role:: jsonkey
+
 Unit testing
 ============
 

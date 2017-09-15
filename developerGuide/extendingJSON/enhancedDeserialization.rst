@@ -1,5 +1,8 @@
 .. _extendingJSON_enhancedDeserialization:
 
+.. role:: jsontype
+.. role:: jsonkey
+
 Enhanced deserialization
 ========================
 
@@ -59,7 +62,7 @@ In addition to modular JSON files, in which the content of (part of) other JSON 
     }
   ]
 
-can be merged leading to a JSON object identical to the one that would have been obtained by parsing :literal:`main.json`, but with the initial eccentricty of the body :literal:`asterix` set to :literal:`0`. The file must be first de-modularized (by replacing :literal:`"$(main.json)"` by an object retrieved from that file) and then merged, by (re-)defining the keys indicated in the second element of the array with the corresponding values. Thus, the returned :literal:`json` has value type :literal:`object`. Note that the following file would not result in the same merged :literal:`json` object:
+can be merged leading to a JSON object identical to the one that would have been obtained by parsing :literal:`main.json`, but with the initial eccentricty of the body :literal:`asterix` set to :literal:`0`. The file must be first de-modularized (by replacing :literal:`"$(main.json)"` by an object retrieved from that file) and then merged, by (re-)defining the keys indicated in the second element of the array with the corresponding values. Thus, the returned :literal:`json` has value type :jsontype:`object`. Note that the following file would not result in the same merged :literal:`json` object:
 
 .. code-block:: json
 
@@ -76,9 +79,9 @@ can be merged leading to a JSON object identical to the one that would have been
     }
   ]
   
-since this would re-define the key :literal:`bodies` of :literal:`main.json` to be an object containing only one element (the body :literal:`asterix`) whose only property would be an :literal:`initialState` with an :literal:`eccentricity` set to :literal:`0`.
+since this would re-define the key :jsonkey:`bodies` of :literal:`main.json` to be an object containing only one element (the body :literal:`asterix`) whose only property would be an :literal:`initialState` with an :literal:`eccentricity` set to :literal:`0`.
 
-In order to merge a :class:`json` of value type :literal:`array` into a one of value type :literal:`object`, the function :literal:`void mergeJSON( json& jsonObject, const path& filePath )` declared in :class:`Tudat/InputOutput/JsonInterface/Support/deserialization.h` is used. If the passed :literal:`jsonObject` is not of value type :literal:`array`, this function does nothing.
+In order to merge a :class:`json` of value type :jsontype:`array` into a one of value type :jsontype:`object`, the function :literal:`void mergeJSON( json& jsonObject, const path& filePath )` declared in :class:`Tudat/InputOutput/JsonInterface/Support/deserialization.h` is used. If the passed :literal:`jsonObject` is not of value type :jsontype:`array`, this function does nothing.
 
 
 Full deserialization sequence
@@ -86,7 +89,7 @@ Full deserialization sequence
 
 All the features described previously are combined into the function :literal:`json getDeserializedJSON( const path& filePath )` declared in :class:`Tudat/InputOutput/JsonInterface/Support/deserialization.h`. This function replaces relative paths, combines modular files and merges objects when possible. This is the function that should be called when creating a :class:`json` object to be used to set up a simulation. In general, this function is only called once during the life-cycle of the application.
 
-When testing individual parts of the :literal:`json_interface`, the input :class:`json` object is not necessarily of value type :literal:`object`, and thus this function cannot be used, as the expected object may be of value type :literal:`array`. Thus, in :ref:`extendingJSON_unitTesting`, modular and mergeable JSON files are not used and the function :literal:`parseJSON` is used instead. In practice, for non-modular files, the only thing this function does is replacing strings such as :literal:`"@path(text)"` by :literal:`"text"`.
+When testing individual parts of the :literal:`json_interface`, the input :class:`json` object is not necessarily of value type :jsontype:`object`, and thus this function cannot be used, as the expected object may be of value type :jsontype:`array`. Thus, in :ref:`extendingJSON_unitTesting`, modular and mergeable JSON files are not used and the function :literal:`parseJSON` is used instead. In practice, for non-modular files, the only thing this function does is replacing strings such as :literal:`"@path(text)"` by :literal:`"text"`.
 
 .. note:: Immediately before or after parsing a JSON input file (using either :literal:`getDeserializedJSON` or :literal:`parseJSON`), the current working directory must be changed to the root input file's directory using :literal:`boost::filesystem::current_path( rootFile.parent_path( ) )`, so that the relative paths defined in the obtained :class:`json` are valid.
 
