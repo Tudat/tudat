@@ -61,7 +61,7 @@ The block of code used to generate the environment that we require is:
    // Finalize body creation.
    setGlobalFrameBodyEphemerides( bodyMap, "SSB", "J2000" );
 
-Creating an environment starts by creating the settings for all required environment models, which are stored in a list of :class:`BodySettings` objects. Each :class:`BodySettings` object has a list of objects for environment model settings, which are empty upon creation of the :class:`BodySettings`, and may be set by the user to their desired specifications. To save you the trouble of having to define all settings manually, we provide default options for the environment, many of which will often be sufficient for a given simulation. A list of all possible properties of the :class:`BodySettings`, as well as the default settings, can be found in :ref:`tudatFeaturesEnvironmentIndex`. In our example, we only need environment models for the Earth, so we start by:
+Creating an environment starts by creating the settings for all required environment models, which are stored in a list of :class:`BodySettings` objects. Each :class:`BodySettings` object has a list of objects for environment model settings, which are empty upon creation of the :class:`BodySettings`, and may be set by the user to their desired specifications. To save you the trouble of having to define all settings manually, we provide default options for the environment, many of which will often be sufficient for a given simulation. A list of all possible properties of the :class:`BodySettings`, as well as the default settings, can be found :ref:`here <tudatFeaturesCreatingTheEnvironment>`. In our example, we only need environment models for the Earth, so we start by:
 
 .. code-block:: cpp
 
