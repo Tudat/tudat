@@ -56,7 +56,7 @@ A number of additional settings need to be linked to the vehicle when using addi
     bodyMap[ "Asterix" ] = boost::make_shared< simulation_setup::Body >( );
     bodyMap[ "Asterix" ]->setConstantBodyMass( 400.0 );
 
-We also need to set the aerodynamic coefficients of the spacecraft. These setting are stored in the :class:`AerodynamicCoefficientSettings` object. For this example, we will consider constant aerodynamic coefficients. This option is set by using the derived class :class:`ConstantAerodynamicCoefficientSettings`. Other options for setting the aerodynamic coefficients can be found :ref:`here <aerodynamicCoefficientOptions>`. The settings for the aerodynamic coefficients are the following:
+We also need to set the aerodynamic coefficients of the spacecraft. These setting are stored in the :class:`AerodynamicCoefficientSettings` object. For this example, we will consider constant aerodynamic coefficients. This option is set by using the derived-class :class:`ConstantAerodynamicCoefficientSettings`. The settings for the aerodynamic coefficients are the following:
 
 - The reference area.
 - The coefficients in three directions.
@@ -78,7 +78,9 @@ These settings are provided in the following block of code:
     bodyMap[ "Asterix" ]->setAerodynamicCoefficientInterface(
                 createAerodynamicCoefficientInterface( aerodynamicCoefficientSettings, "Asterix" ) );
 
-Next, a number of parameters necessary for the cannonball radiation pressure model are defined. This is similar to the aerodynamic coefficients as discussed above. The settings are stored in the :class:`RadiationPressureInterfaceSettings` object. This example uses a simple cannonball model. This option is set by the derived class :class:`CannonBallRadiationPressureInterfaceSettings`. One of the assumptions made here is that Earth acts an occulting body, meaning that when Asterix enters the Earth's shadow no radiation pressure from body :literal:`"Sun"` is experienced:
+.. tip:: Other available options for the :class::`AerodynamicCoefficientSettings` can be found :ref:`here <aerodynamicCoefficientOptions>`.
+
+Next, a number of parameters necessary for the cannonball radiation pressure model are defined. This is similar to the aerodynamic coefficients as discussed above. The settings are stored in the :class:`RadiationPressureInterfaceSettings` object. This example uses a simple cannonball model. This option is set by the derived-class :class:`CannonBallRadiationPressureInterfaceSettings`. One of the assumptions made here is that Earth acts an occulting body, meaning that when Asterix enters the Earth's shadow no radiation pressure from body :literal:`"Sun"` is experienced:
 
 .. code-block:: cpp
 
@@ -97,7 +99,7 @@ Next, a number of parameters necessary for the cannonball radiation pressure mod
                 "Sun", createRadiationPressureInterface(
                     asterixRadiationPressureSettings, "Asterix", bodyMap ) );
 
-Available options for the :class:`RadiationPressureInterFaceSettings` can be found :ref:`here <radiationPressureModelOptions>`.
+.. tip:: Available options for the :class:`RadiationPressureInterFaceSettings` can be found :ref:`here <radiationPressureModelOptions>`.
 
 Set up the acceleration models
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -132,7 +134,7 @@ These needs to be binded to the Asterix :class:`Body` object:
 
     accelerationMap[  "Asterix" ] = accelerationsOfAsterix;
 
-Finally, :literal:`"Asterix"` is added to :literal:`bodiesToPropagate` while having :literal:`"Earth"` as the respective central body. This means that despite that other celestial bodies have been included, these will not be propagated.
+Note that the spherical-harmonic gravitational model is implemented with the derived-class :class:`SphericalHarmonicAccelerationSettings` with inputs the degree and order of the model. Finally, :literal:`"Asterix"` is added to :literal:`bodiesToPropagate` while having :literal:`"Earth"` as the respective central body. This means that despite that other celestial bodies have been included, these will not be propagated.
 
 .. code-block:: cpp
 
