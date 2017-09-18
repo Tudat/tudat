@@ -10,11 +10,11 @@ For this example, we have the following problem statement:
 
 *Given the position and velocity of the Apollo capsule at a certain point in time with respect to the Earth, what will its position and velocity be once it reaches an altitude of 25 km over the surface of Earth?*
 
-.. warning:: The example described in this page assumes that the user has read the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite`. This page only describes the differences with respect to such example, so please go back before proceding.
+.. warning:: The example described in this page assumes that the user has read the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite`. This page only describes the differences with respect to such example, so please go back before proceeding.
 
 Create the vehicle
 ~~~~~~~~~~~~~~~~~~
-First, the vehicle is created by placing an :literal:`"Apollo"` entry in the :literal:`bodyMap`, as shown below:
+First, the vehicle is created by placing an :literal:`"Apollo"` entry vehicle in the :literal:`bodyMap`, as shown below:
 
 .. code-block:: cpp
 
@@ -29,11 +29,7 @@ Once that is done, an :class:`AerodynamicCoefficientInterface` is linked to the 
     bodyMap[ "Apollo" ]->setAerodynamicCoefficientInterface(
                 unit_tests::getApolloCoefficientInterface( ) );
 
-Note that in this case a pre-made interface that is part of the following Unit Tests is used::
-
-    /tudatBundle/tudat/Tudat/Astrodynamics/Aerodynamics/UnitTests/testApolloCapsuleCoefficients.h
-
-In this case, the :literal:`getApolloCoefficientInterface( )` function returns a :class:`HypersonicLocalInclinationAnalysis` object, which is a derived-class from :class:`AerodynamicCoefficientInterface`. Such object computes the aerodynamic coefficients during propagation by means of a local-inclination method. Finally, the mass of the Apollo capsule is set and the body creation is finalized:
+In this example a pre-made interface is used to define the aerodynamic coefficients. The :literal:`getApolloCoefficientInterface( )` function returns a :class:`HypersonicLocalInclinationAnalysis` object, which is a derived-class from :class:`AerodynamicCoefficientInterface`. It computes the aerodynamic coefficients during propagation by means of a local-inclination method. Finally, the mass of the Apollo capsule is set and the body creation is finalized:
 
 .. code-block:: cpp
 
@@ -46,7 +42,7 @@ In this case, the :literal:`getApolloCoefficientInterface( )` function returns a
 
 Set up the acceleration models
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-A major difference with respect to the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` is the use of a spherical-harmonic gravity model and the presence of an aerodynamic force on the vehicle. Such acceleration models are added to the :literal:`accelerationMap` as follows:
+A major difference with respect to the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` is the use of a spherical-harmonic gravity model and the presence of an aerodynamic force on the vehicle. The spherical-harmonic gravity model is selected by the derived-class :class:`SphericalHarmonicAccelerationSettings` with degree and order as input parameters. Both acceleration models are added to the :literal:`accelerationMap` as follows:
 
 .. code-block:: cpp
 
@@ -56,14 +52,16 @@ A major difference with respect to the :ref:`walkthroughsUnperturbedEarthOrbitin
     accelerationsOfApollo[ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( aerodynamic ) );
     accelerationMap[  "Apollo" ] = accelerationsOfApollo;
 
-A crucial step in reentry modelling is the definition of a :class:`AerodynamicGuidance` model. Controlling the orientation of the vehicle during atmospheric flight plays an important role in the shape of the trajectory as well as on the magnitude of the aerodynamic and thermal loads. In this example, a simple fixed-angle aerodynamic guidance is used:
+A crucial step in reentry modelling is the definition of a :class:`AerodynamicGuidance` model. Controlling the orientation of the vehicle during atmospheric flight plays an important role in the shape of the trajectory as well as on the magnitude of the aerodynamic and thermal loads. In this example, a simple fixed-angle aerodynamic guidance model is used. This is implemented using a :literal:`boost::lambda::constant` function. This creates a simple function which always outputs the value of :literal:`constantAngleOfAttack` which in turn sets the orientation angles of the :literal:`"Apollo"` body:
 
 .. code-block:: cpp
 
     // Define constant 30 degree angle of attack
     double constantAngleOfAttack = 30.0 * mathematical_constants::PI / 180.0;
     bodyMap.at( "Apollo" )->getFlightConditions( )->getAerodynamicAngleCalculator( )->setOrientationAngleFunctions(
-                boost::lambda::constant( constantAngleOfAttack ) );
+                boost::lambda::constant( constantAngleOfAttack ) ); 
+
+.. tip:: To view the available options for aerodynamic guidance see :ref:`tudatFeaturesAerodynamicGuidance`. 
 
 Set up the propagation settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
