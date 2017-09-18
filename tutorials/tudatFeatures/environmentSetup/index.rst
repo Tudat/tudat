@@ -46,6 +46,8 @@ These properties can be set manually or default settings can be used. For instan
 
 This calls the constructors of the :class:`SpiceEphemeris` and :class:`GravityFieldModel` classes (see here and here for details), and assigns the objects that are constructed to the "Earth" entry of the ``bodyMap``.
 
+.. _tudatFeaturesCreatingTheEnvironment:
+
 Creating the environment from :class:`BodySettings`
 ***************************************************
 Manually creating all objects defining the full environment is possible, but not recommended. In particular, various environment models are interdependent and these dependencies must be fully and consistently defined for the code to function properly. To this end, we provide a :class:`BodySettings` object, in which the general properties of each environment model can be set (see above for the list of the available types of environment models). We note that for :class:`Body` objects that represent vehicles, the manual creation is typically used, as the vehicle conditions may depend on the celestial bodies, but not vice versa.
@@ -292,7 +294,9 @@ The full list of available environment model settings is:
             double bodyFlattening = 1.0 / 300.0;
             bodySettings[ "Earth" ]->shapeModelSettings = boost::make_shared< OblateSphericalBodyShapeSettings >( bodyRadius, bodyFlattening ); 
 
-    **Radiation pressure model:** defined in the radiationPressureSettings (of type map< string, shared_ptr< RadiationPressureInterfaceSettings > >). A separate model can be used for different bodies emitting radiation (key valyes of radiationPressureSettings) Models currently available through the BodySettings architecture are:
+   .. _radiationPressureModelOptions:     
+
+    **Radiation pressure model:** defined in the radiationPressureSettings (of type map< string, shared_ptr< RadiationPressureInterfaceSettings > >). A separate model can be used for different bodies emitting radiation (key values of radiationPressureSettings) Models currently available through the BodySettings architecture are:
 
         - **Cannon-ball model:** Properties for a cannonball radiation pressure model, i.e. effective force colinear with vector from source to target. Settings stored in CannonBallRadiationPressureInterfaceSettings object.
 
@@ -310,8 +314,10 @@ The full list of available environment model settings is:
 
         .. note:: Occultations by multiple bodies are not yet supported. Please contact the Tudat suppport team if you wish to use multiple occultations.
 
-    **Aerodynamic coefficients:** defined in the aerodynamicCoefficientSettings (of type shared_ptr< AerodynamicCoefficientSettings >). Models currently available through the BodySettings architecture are:
+      .. _aerodynamicCoefficientOptions:
 
+    **Aerodynamic coefficients:** defined in the aerodynamicCoefficientSettings (of type shared_ptr< AerodynamicCoefficientSettings >). Models currently available through the BodySettings architecture are:
+         
         - **Constant coefficients:** Settings for constant (not a function of any independent variables) aerodynamic coefficients. Settings stored in ConstantAerodynamicCoefficientSettings object.
 
         .. code-block:: cpp
