@@ -3,6 +3,8 @@
 Parameter Estimation 
 =========================
 
+.. _estimationObjectCreation:
+
 Creating the estimation object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -30,7 +32,7 @@ An object is created as follows:
 
       A :literal:`boost::shared_ptr< EstimatableParameterSet< ObservationScalarType > >` variable which contains the full list of parameters that are to be estimated.
       
-   - :literal:`bodyMap`
+   - :literal:`observationSettingsMap`
 
       A list of :class:`ObservationSettings` that may be provided as either :literal:`std::multimap< LinkEnds, boost::shared_ptr< ObservationSettings > >` or a :literal:`std::map< ObservableType, std::map< LinkEnds, boost::shared_ptr< ObservationSettings > >`. In the former case, the list is sorter by :literal:`LinkEnds` only, in the latter by both :literal:`ObservableType` and :literal:`LinkEnds`
       
@@ -51,6 +53,8 @@ After the creation of the :class:`OrbitDeterminationManager` object, a number of
 * An object with base class :class:`VariationalEquationsSolver`, which contains the numerically propagated variational equations and dynamics, can be retrieved using the :literal:`getVariationalEquationsSolver` member function. 
 * A list of objects with base class :class:`ObservationSimulatorBase` (one per observable type) to simulate observations, discussed in more detail on the page on :ref:`creatingObservationSimulators`
 * A list of objects with base class :class:`ObservationManagerBase` (one per observable type) to simulate observations and the associated partial derivatives. These objects are not directly accesed by users. Their output (partial derivatives of observables) are provided *a posterior* through an object of type :class:`PodOutput`, discussed on the page on :ref:`estimationOutput`.
+
+.. _estimationInput:
 
 Defining estimation input
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -73,7 +77,7 @@ The input to the estimation consists of several parts. Firstly, the input data, 
    
    - :literal:`numberOfEstimatedParameters` An :literal:`int` denoting the length of the vector of estimated paramaters, discussed in more detail on the page :ref:`parameterSettingCreation`.
    
-   - :literal:`inverseOfAprioriCovariance` An :literal:'Eigen::MatrixXd`with the inverse of the *a priori* covariance matrix. This input type may be left empty, in which case no *a priori* covariance is used.
+   - :literal:`inverseOfAprioriCovariance` An :literal:`Eigen::MatrixXd` with the inverse of the *a priori* covariance matrix. This input type may be left empty, in which case no *a priori* covariance is used.
 
 
 .. note::

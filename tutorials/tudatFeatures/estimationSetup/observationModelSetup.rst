@@ -3,6 +3,8 @@
 Setting up Observation Models
 =============================
 
+.. _observationTypes:
+
 Observation Types
 ~~~~~~~~~~~~~~~~~
 
@@ -24,8 +26,9 @@ Tudat supports a diverse set of observation types, which are defined in the :lit
       
    The two-way Doppler requires :literal:`transmitter`, :literal:`reflector1` and :literal:`receiver` link ends (:math:`A`, :math:`B` and :math:`C` in the above example).
 * :class:`one_way_differenced_range` Doppler observable as it is typically obtained in interplanetary tracking in so-called 'closed-loop' mode (in m/s) between two link ends. Observable has size 1. The value is computed from the averaged range-rate over some integration time (see below). Requires :literal:`transmitter` and :literal:`receiver` link ends.
-* :class:`n_way_range` Accumulated range (in meters) over any number of signal paths, may be used for two-way range (as in SLR or deep space tracking), as well as more exotic situations where more than 2 signal paths are used in generating the observable (as was the case for, for instance, the SELENE mission) Observable has size 1. The value is com[puted accumulating the light-time (multiplied by *c*) with any retranmission delays that the user defines (see below) Requires :literal:`transmitter`, :literal:`receiver`, as well as :literal:`reflector1`, :literal:`reflector2` ... :literal:`reflectorX` for X+1 signal paths (when only a :literal:`transmitter` and :literal:`receiver` are defined the observation is identical to a :literal:`one_way_range`)
+* :class:`n_way_range` Accumulated range (in meters) over any number of signal paths, may be used for two-way range (as in SLR or deep space tracking), as well as more exotic situations where more than 2 signal paths are used in generating the observable (as was the case for, for instance, the SELENE mission) Observable has size 1. The value is computed accumulating the light-time (multiplied by *c*) with any retranmission delays that the user defines (see below) Requires :literal:`transmitter`, :literal:`receiver`, as well as :literal:`reflector1`, :literal:`reflector2` ... :literal:`reflectorX` for X+1 signal paths (when only a :literal:`transmitter` and :literal:`receiver` are defined the observation is identical to a :literal:`one_way_range`)
 
+.. _observationSettings:
 
 Observation Settings
 ~~~~~~~~~~~~~~~~~~~~
@@ -76,7 +79,7 @@ and:
 
       boost::shared_ptr< ObservationSettings > observationSettings =
             boost::make_shared< ObservationSettings >( 
-                observableType, lightTimeCorrectionsList, biasSettings );
+                observableType, lightTimeCorrectionsList );
             
 may be used as well to create an observation model without light-time corrections or biases (in the case of the former) and no biases (in the case of the latter).
 
@@ -104,7 +107,7 @@ where no input on the type of observable is given (it is :literal:`one_way_diffe
       boost::function< double( const double ) >  integrationTimeFunction = 
           boost::lambda::constant( 60.0 );
       
-As is the case for the :class:`ObservationSettings` class, the second and third constructor argument are optional, and the second argument may be either a :literal:`std::vector` of :literal:`boost::shared_ptr< LightTimeCorrectionSettings >`, or a single such object.  
+As is the case for the :class:`ObservationSettings` class, the second and third constructor arguments are optional, and the second argument may be either a :literal:`std::vector` of :literal:`boost::shared_ptr< LightTimeCorrectionSettings >`, or a single such object.  
 
 .. class:: NWayRangeObservationSettings
 
