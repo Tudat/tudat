@@ -51,7 +51,7 @@ The JSON for modern C++ library has built-in support for enumerations. For insta
   json j = ephemerisType;
   std::cout << ephemerisType << std::endl;              // 3
 
-However, the built-in implementation uses the value of the enumeration rather than its name. Clearly, it is not convinient for the user having to specify the type of the ephemeris based on how they are listed in the C++ code. Additionally, if the order of the values in the enumeration list changes in the future, converting :literal:`1` to :class:`EphemerisType` may not result in :literal:`direct_spice_ephemeris` anymore. Thus, a custom implementation is needed, in which the JSON representation of an enumeration is the name of its possible values. For instance:
+However, the built-in implementation uses the value of the enumeration rather than its name. Clearly, it is not convenient for the user having to specify the type of the ephemeris based on how they are listed in the C++ code. Additionally, if the order of the values in the enumeration list changes in the future, converting :literal:`1` to :class:`EphemerisType` may not result in :literal:`direct_spice_ephemeris` anymore. Thus, a custom implementation is needed, in which the JSON representation of an enumeration is the name of its possible values. For instance:
 
 .. code-block:: cpp
   
@@ -64,7 +64,7 @@ but this leads to a run-time error.
 Name-based implementation
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Custom implementations for the :literal:`to_json` and :literal:`from_json` functions of all the supported enumerations are provided in the :literal:`json_interface`. In this way, it is possible to convert :class:`json` objects of value type :jsontype:`string` to :literal:`enum` and vice versa. However, the string representation for each enum value has to be manually provided. Although it is possible to replace the enumeration value names by identical srings during compile time, this was deemed to complex and, additionally, the enumeration names used in Tudat are not always optimal. For instance, consider this JSON file:
+Custom implementations for the :literal:`to_json` and :literal:`from_json` functions of all the supported enumerations are provided in the :literal:`json_interface`. In this way, it is possible to convert :class:`json` objects of value type :jsontype:`string` to :literal:`enum` and vice versa. However, the string representation for each enum value has to be manually provided. Although it is possible to replace the enumeration value names by identical strings during compile time, this was deemed to complex and, additionally, the enumeration names used in Tudat are not always optimal. For instance, consider this JSON file:
 
 .. code-block:: json
   :caption: :class:`bodies.h`
@@ -78,9 +78,9 @@ Custom implementations for the :literal:`to_json` and :literal:`from_json` funct
     }
   }
 
-In this case, the :literal:`_ephemeris` part is redundant. In Tudat this is necessary when other enumerations declared in the same namespace can share the same names (e.g. :literal:`tabulated_atmosphere`). However, in a JSON file, they string :literal:`tabulated_ephemeris` will only be used inside :literal:`ephemeris` objects of body objects, so the string :literal:`tabulated` is unambiguous. Thus, when defining the string representation for existing Tudat enumrations, the redundant information is removed. Additionally, the naming convention is to use :literal:`lowerCamelCase` strings.
+In this case, the :literal:`_ephemeris` part is redundant. In Tudat this is necessary when other enumerations declared in the same namespace can share the same names (e.g. :literal:`tabulated_atmosphere`). However, in a JSON file, they string :literal:`tabulated_ephemeris` will only be used inside :literal:`ephemeris` objects of body objects, so the string :literal:`tabulated` is unambiguous. Thus, when defining the string representation for existing Tudat enumerations, the redundant information is removed. Additionally, the naming convention is to use :literal:`lowerCamelCase` strings.
 
-The definition of the string representation of the enum values is done in a file in the JSON interface but in the enumeration's namespace (not in the :literal:`json_interface` namespace). This decision was made taking into account that these variables are only used inside the :literal:`to_json` and :literal:`from_json` functions of the enumaration, which must be declared in the enumeration's namespace. A map is used to define the string representation of each enumeration type:
+The definition of the string representation of the enum values is done in a file in the JSON interface but in the enumeration's namespace (not in the :literal:`json_interface` namespace). This decision was made taking into account that these variables are only used inside the :literal:`to_json` and :literal:`from_json` functions of the enumeration, which must be declared in the enumeration's namespace. A map is used to define the string representation of each enumeration type:
 
 .. code-block:: cpp
   :caption: :class:`Tudat/InputOutput/JsonInterface/Environment/ephemeris.h`
@@ -120,7 +120,7 @@ The definition of the string representation of the enum values is done in a file
   
   ...
 
-As you can see, the string representations are provided for **all** the enumeration values, even those that are not supported by the JSON interface. For instance, :literal:`custom_ephemeris` is not supported by the JSON interface, because a :literal:`boost::function` cannot be provided using JSON files. Thus, this enum value is marked as unsupported by adding it to the variable :literal:`unsupportedEphemerisTypes`. In this way, when the user provides the value :literal:`"custom"`, for the key :jsonkey:`ephemeris`, rather than getting an :class:`IllevalValueError`, an :class:`EphemerisType` with value :literal:`custom_ephemeris` will be created without printing any warning. Then, when the actual :class:`EphemerisSettings` are created, in its :literal:`from_json` function, the user will get an error in which it is said that custom epehemeris is not supported by the JSON interface but it *does* exist in Tudat, so if they want to use it they have to build their own custom JSON-Tudat application, in which the ephemeris function is defined manually (after reading the JSON input file containing the remainder of the settings).
+As you can see, the string representations are provided for **all** the enumeration values, even those that are not supported by the JSON interface. For instance, :literal:`custom_ephemeris` is not supported by the JSON interface, because a :literal:`boost::function` cannot be provided using JSON files. Thus, this enum value is marked as unsupported by adding it to the variable :literal:`unsupportedEphemerisTypes`. In this way, when the user provides the value :literal:`"custom"`, for the key :jsonkey:`ephemeris`, rather than getting an :class:`IllevalValueError`, an :class:`EphemerisType` with value :literal:`custom_ephemeris` will be created without printing any warning. Then, when the actual :class:`EphemerisSettings` are created, in its :literal:`from_json` function, the user will get an error in which it is said that custom ephemeris is not supported by the JSON interface but it *does* exist in Tudat, so if they want to use it they have to build their own custom JSON-Tudat application, in which the ephemeris function is defined manually (after reading the JSON input file containing the remainder of the settings).
 
 Although a :literal:`to_json` and :literal:`from_json` function has to be written for each enumeration, the functions are just a single line in which the functions :literal:`stringFromEnum` and :literal:`enumFromString` defined in :class:`Tudat/InputOutput/JsonInterface/Support/errorHandling.h` are called:
 
@@ -156,7 +156,7 @@ Although a :literal:`to_json` and :literal:`from_json` function has to be writte
   
   ...
 
-If the string representation of :literal:`ephemerisType` is not known, the recognized strings will be printed and an :literal:`IllegalValueError` will be thrown:
+If the string representation of :literal:`ephemerisType` is not known, the recognised strings will be printed and an :literal:`IllegalValueError` will be thrown:
 
 .. code-block:: txt
 

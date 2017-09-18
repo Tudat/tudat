@@ -18,10 +18,10 @@ Including the library
 
 
 
-Serialization and deserialization
+Serialisation and deserialisation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Parse a JSON-formatted :class:`std::string` as :class:`json` (deserialization):
+Parse a JSON-formatted :class:`std::string` as :class:`json` (deserialisation):
 
 .. code-block:: cpp
     
@@ -29,7 +29,7 @@ Parse a JSON-formatted :class:`std::string` as :class:`json` (deserialization):
     json j = json::parse( str );
 
 
-Parse a JSON file as :class:`json` (deserialization):
+Parse a JSON file as :class:`json` (deserialisation):
 
 .. code-block:: cpp
     
@@ -37,7 +37,7 @@ Parse a JSON file as :class:`json` (deserialization):
     std::ifstream stream( filePath );
     json j = json::parse( stream );
     
-Convert a :class:`json` object to JSON-formatted :class:`std::string` (serialization):
+Convert a :class:`json` object to JSON-formatted :class:`std::string` (serialisation):
 
 .. code-block:: cpp
     
@@ -47,7 +47,7 @@ Convert a :class:`json` object to JSON-formatted :class:`std::string` (serializa
 
 where the (optional) argument of the :literal:`dump` method is the number of spaces used for each indentation level.
 
-Print a :class:`json` object as JSON-formatted text (serialization):
+Print a :class:`json` object as JSON-formatted text (serialisation):
 
 .. code-block:: cpp
     

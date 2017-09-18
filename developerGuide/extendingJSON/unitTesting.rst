@@ -18,7 +18,7 @@ FIXME
 Component tests
 ~~~~~~~~~~~~~~~
 
-Each component test is designed to exhaustively test all the features of a given settings-container class (and its derived classes). In these tests, it is checked that objects created by reading a JSON file are identical to the objects created manually by writing C++ code. In order to compare the created objects, it will be necessary to define a comparison operator for each settings class in Tudat. Fortunately, this has indirectly done by writing :literal:`to_json` methods, so we can compare the :literal:`json` representation of the created objects rathar than the objects themselves. The only drawbacks of this approach are:
+Each component test is designed to exhaustively test all the features of a given settings-container class (and its derived classes). In these tests, it is checked that objects created by reading a JSON file are identical to the objects created manually by writing C++ code. In order to compare the created objects, it will be necessary to define a comparison operator for each settings class in Tudat. Fortunately, this has indirectly done by writing :literal:`to_json` methods, so we can compare the :literal:`json` representation of the created objects rather than the objects themselves. The only drawbacks of this approach are:
 
   - It cannot be followed for classes storing information that is not convertible to JSON (such as :literal:`boost::function`).
   - An error in the :literal:`to_json` function can lead to overlooking of errors in the :literal:`from_json` functions.
@@ -57,7 +57,7 @@ Now, imagine that we forget line 9 and additionally we have:
     getValue< double >( jsonObject, K::equatorialRadius ),
     getValue< double >( jsonObject, K::equatorialRadius ) );
 
-The errors in the :literal:`to_json` and :literal:`from_json` functions will not be detected, because the JSON representation of an :literal:`OblateSphericalBodyShapeSettings` containes no :literal:`flattening` key, so the comparison would be successful, even though the object created from JSON would have identical equatorial radius and flattening values, and the object created manually would not. To detect these kind of errors, a unit test in which the objects are actually used (to run propagations) would be needed for each and every Tudat feature supported by the JSON interface. This was deemed unfeasible, as would require duplicating almost every unit test existing in Tudat. Comparing the actual objects rather than their JSON representation would not solve the issue, as one could also forget to add the line in which the flattening of the two objects is compared. This limitation is partially overcome by creating Integration tests in which propagations are run. However, in those tests not all the features of Tudat are exhaustively tested, since only the most frequently-used features are included.
+The errors in the :literal:`to_json` and :literal:`from_json` functions will not be detected, because the JSON representation of an :literal:`OblateSphericalBodyShapeSettings` contains no :literal:`flattening` key, so the comparison would be successful, even though the object created from JSON would have identical equatorial radius and flattening values, and the object created manually would not. To detect these kind of errors, a unit test in which the objects are actually used (to run propagations) would be needed for each and every Tudat feature supported by the JSON interface. This was deemed unfeasible, as would require duplicating almost every unit test existing in Tudat. Comparing the actual objects rather than their JSON representation would not solve the issue, as one could also forget to add the line in which the flattening of the two objects is compared. This limitation is partially overcome by creating Integration tests in which propagations are run. However, in those tests not all the features of Tudat are exhaustively tested, since only the most frequently-used features are included.
 
 Although component tests cannot identify errors under certain circumstances, in most cases the potential errors in the :literal:`to_json` and :literal:`from_json` will not be coupled, leading to a successful detection of bugs. Since these tests are all very similar structurally, some useful functions that are frequently used have been provided in the file :class:`Tudat/InputOutput/JsonInterface/UnitTests/unitTestSupport.h`. Consider the example for :literal:`RotationModelSettings`:
 
@@ -170,7 +170,7 @@ The test for enumeration values is performed to check that the names of the enum
     "spice"
   ]
 
-Note that only the values supported by the JSON interface must be included in this file (while the string representation of unsupported enum values is defined in the map of string representatios, in the MATLAB interface only the supported enum values are defined).
+Note that only the values supported by the JSON interface must be included in this file (while the string representation of unsupported enum values is defined in the map of string representations, in the MATLAB interface only the supported enum values are defined).
 
 
 Settings classes
@@ -233,7 +233,7 @@ Now, we can compare the numerical solution of the simulation run using the setti
 
 Here, the macro :literal:`BOOST_CHECK_CLOSE_INTEGRATION_RESULTS` defined in :class:`Tudat/InputOutput/JsonInterface/UnitTests/unitTestSupport.h` is used. This takes as first and second arguments the maps of states (where the keys are the values of the independent variable at each integration step, and the values the vector of corresponding states) generated manually and using the :literal:`json_interface` (the order is irrelevant). :literal:`indeces` contains the starting indeces of vectors in the state whose norm is not expected to be small (i.e. the position and velocity distances start at indeces 0 and 3 of the state), and :literal:`sizes` denotes the size of these vectors (3 elements in both cases). If the mass of the vehicle would have been propagated, its index would be 7 and its size 1. The last argument is the tolerance to be used when comparing numerical values. This macro performs a set of checks on the provided map of states:
 
-  - The maps are of the same size (i.e. same number of integreation steps performed).
+  - The maps are of the same size (i.e. same number of integration steps performed).
   
   - The difference between initial and final epochs is smaller than the specified tolerance:
   

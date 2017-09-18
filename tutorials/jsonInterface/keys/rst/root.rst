@@ -6,7 +6,7 @@
 - :jsontype:`number` :jsonkey:`initialEpoch` (optional). Used for the initial time of the integrator (if not provided inside the integrator object) and for interpolation of Spice ephemeris (if Spice enabled and set to preload ephemeris).
 - :jsontype:`number` :jsonkey:`finalEpoch` (optional). Used for interpolation of Spice ephemeris (if Spice enabled and set to preload ephemeris) and to create the time-termination condition. If smaller than :jsonkey:`initialEpoch`, the dynamics will be propagated backwards in time.
 - :jsontype:`string` :jsonkey:`globalFrameOrigin` (optional). Used to set the global frame origin for the propagation. Default value: :literal:`"SSB"`.
-- :jsontype:`string` :jsonkey:`globalFrameOrientation` (optional). Used to set the global frame orientation for the propagation. Updates the frame orientation of epehemeris and rotation model settings if not specified. Default value: :literal:`"ECLIPJ2000"`.
+- :jsontype:`string` :jsonkey:`globalFrameOrientation` (optional). Used to set the global frame orientation for the propagation. Updates the frame orientation of ephemeris and rotation model settings if not specified. Default value: :literal:`"ECLIPJ2000"`.
 - :jsontype:`object` :jsonkey:`spice` (optional). Used to provide Spice settings.
 
 	.. container:: toggle

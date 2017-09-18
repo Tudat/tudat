@@ -3,7 +3,7 @@
 .. role:: jsontype
 .. role:: jsonkey
 
-Enhanced deserialization
+Enhanced deserialisation
 ========================
 
 This is how a basic JSON input file for Tudat looks like:
@@ -14,7 +14,7 @@ This is how a basic JSON input file for Tudat looks like:
   :caption: :class:`main.json`
   :name: main-json
 
-The :class:`json` object created by parsing the contents of this file, referred to as :literal:`mainJson`, is used throughout the examples in this tutorial to explain the features that have been added to the :ref:`jsonInterface` regarding enhanced deserialization [LINK], value access [LINK] and value set [LINK].
+The :class:`json` object created by parsing the contents of this file, referred to as :literal:`mainJson`, is used throughout the examples in this tutorial to explain the features that have been added to the :ref:`jsonInterface` regarding enhanced deserialisation [LINK], value access [LINK] and value set [LINK].
 
 Modular files
 ~~~~~~~~~~~~~

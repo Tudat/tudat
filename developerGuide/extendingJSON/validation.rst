@@ -6,13 +6,13 @@
 Validation
 ==========
 
-The validation of the JSON input files provided by the user is made possible by using the :literal:`getValue< ExpectedType >` function and special keys and :class:`KeyPath` s, as explained in [REF]. This validator is customizable, i.e. the user can define a set of keys in theit input file that will determine the behaviour of the validator under certain events.
+The validation of the JSON input files provided by the user is made possible by using the :literal:`getValue< ExpectedType >` function and special keys and :class:`KeyPath` s, as explained in [REF]. This validator is customisable, i.e. the user can define a set of keys in their input file that will determine the behaviour of the validator under certain events.
 
 
 Validator options
 ~~~~~~~~~~~~~~~~~
 
-The following keys of the :literal:`mainJson` object can be defined to customize the behaviour of the validator:
+The following keys of the :literal:`mainJson` object can be defined to customise the behaviour of the validator:
 
   - :literal:`options.defaultValueUsedForMissingKey`: determines the behaviour of the validator when the :literal:`getValue( const json& j, const KeyPath& keyPath, const ValueType& defaultValue )` function is called and :literal:`keyPath` is undefined. By default, :literal:`defaultValue` is used without informing the user.
 
@@ -24,20 +24,20 @@ These three options are converted to a value of the enum :class:`ExceptionRespon
 
   - :literal:`continueSilently`: allow this validator feature and do not inform the user.
   - :literal:`printWarning`: allow this validator feature but print a warning when using it.
-  - :literal:`throwError`: do not allow this validator feature and terminate throwing an error when trying to use this feature. For :literal:`defaultValueUsedForMissingKey`, an :class:`UndefinedKeyError` will be thrown (i.e. the behaviour of the :literal:`getValue` function with and without third default value argument will be equivalent). For :literal:`unidimensionalArrayInference`, an :class:`IllegalValueError` will be thrown. For :literal:`unusedKey`, the error :literal:`std::runtime_error( "Validation failed because there are unsued keys." )` will be thrown.
+  - :literal:`throwError`: do not allow this validator feature and terminate throwing an error when trying to use this feature. For :literal:`defaultValueUsedForMissingKey`, an :class:`UndefinedKeyError` will be thrown (i.e. the behaviour of the :literal:`getValue` function with and without third default value argument will be equivalent). For :literal:`unidimensionalArrayInference`, an :class:`IllegalValueError` will be thrown. For :literal:`unusedKey`, the error :literal:`std::runtime_error( "Validation failed because there are unused keys." )` will be thrown.
 
 
 Access history
 ~~~~~~~~~~~~~~
 
-The validator feature to check the keys that have not been used is usefult to inform the user about the existence of redundant information in their input file, the use of old key identifeirs that are not used anymore in the current version of Tudat, or the detection of typos when manually writing the input file. This feature would not be necessary if defaultable properties did not exist. However, consider the following:
+The validator feature to check the keys that have not been used is useful to inform the user about the existence of redundant information in their input file, the use of old key identifiers that are not used anymore in the current version of Tudat, or the detection of typos when manually writing the input file. This feature would not be necessary if defaultable properties did not exist. However, consider the following:
 
 .. code-block:: cpp
 
     json j = { { "tyep", "euler" }, { "stepSize": 20 } };    // not the typo in the key "tyep"
     std::string type = getValue( j, "type", "rungeKutta4" );
 
-This would result in the integrator being used to by of the default type :literal:`rungeKutta4` even though the intention of the user was to use of type :literal:`euler`. However, the user will not know about this unless they have configured the validator to warn about the use of default values (wich is off by default). Thus, before integratin the equations of motion, when all the required information has been obtained from the :literal:`mainJson` object, the call to :literal:`checkUnusedKeys` will print the following warning (by default):
+This would result in the integrator being used to by of the default type :literal:`rungeKutta4` even though the intention of the user was to use of type :literal:`euler`. However, the user will not know about this unless they have configured the validator to warn about the use of default values (which is off by default). Thus, before integration the equations of motion, when all the required information has been obtained from the :literal:`mainJson` object, the call to :literal:`checkUnusedKeys` will print the following warning (by default):
 
 .. code-block:: txt
 
@@ -59,7 +59,7 @@ In order to make this feature possible, the :literal:`json_interface` has to kee
         getValue< Integrator >( mainJson, "integrator" );  // integrators::from_json called
   }
 
-so the getValue function could potentially modify mainJson to add :literal:`integrator` as an accessed key, but here the :literal:`mainJson` object is not accessible:
+so the getValue function could potentially modify :literal:`mainJson` to add :literal:`integrator` as an accessed key, but here the :literal:`mainJson` object is not accessible:
 
 .. code-block:: cpp
   :caption: :class:`integrator.h`
@@ -84,7 +84,7 @@ A possible walk-around this issue could consist in defining the :literal:`#acces
 
 This variable is automatically updated when calling the :literal:`getValue` function. In order to clear the contents of this variable, the function :literal:`clearAccessHistory` must be called. This is done right after reading a JSON file.
 
-.. warning:: The current implementation has one limitation: it is not possible to keep track of the accessed keys of multiple :literal:`mainJson` objects simultaneously. Currently, this is not done anywhere in the :literal:`json_interface`, but if in the feature this is required, it will be neccessary to create a derived class of :class:`json` (e.g. :class:`EnhancedJSON`) with the :literal:`accessedKeyPaths` as property and the functions :literal:`getValue` and :literal:`checkUnusedKeys` as methods (probably other global functions declared in :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h` would also have to be moved to this class). The :literal:`to_json` and :literal:`from_json` methods would have to be updated to take objects of this class as first argument instead of the basic :class:`json` objects. An attempt to implement this was done at one point during the development of the :literal:`json_interface`, but it was unsuccessful due to the existance of an `inheritance bug <https://github.com/nlohmann/json/issues/608>`_ in the JSON library.
+.. warning:: The current implementation has one limitation: it is not possible to keep track of the accessed keys of multiple :literal:`mainJson` objects simultaneously. Currently, this is not done anywhere in the :literal:`json_interface`, but if in the feature this is required, it will be necessary to create a derived class of :class:`json` (e.g. :class:`EnhancedJSON`) with the :literal:`accessedKeyPaths` as property and the functions :literal:`getValue` and :literal:`checkUnusedKeys` as methods (probably other global functions declared in :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h` would also have to be moved to this class). The :literal:`to_json` and :literal:`from_json` methods would have to be updated to take objects of this class as first argument instead of the basic :class:`json` objects. An attempt to implement this was done at one point during the development of the :literal:`json_interface`, but it was unsuccessful due to the existence of an `inheritance bug <https://github.com/nlohmann/json/issues/608>`_ in the JSON library.
 
 
 Unidimensional array inference
@@ -106,9 +106,9 @@ However, the :literal:`getValue` function *is* responsible for checking whether 
   - Convert :literal:`returnObject` back to :literal:`json` (referred to as :literal:`deconvertedSubjson`).
   - Before returning :literal:`returnObject`, check if :literal:`! originalSubjson.is_array( ) && deconvertedSubjson.is_array( )`. If this evals to :literal:`true`, then unidimensional array inference has taken place, and depending on the value of the :class:`json` object at the key path :literal:`#root.options.unidimensionalArrayInference`, a warning may be printed, an error may be thrown or execution may continue silently.
 
-This means that, in the previous example, is unidimensional array inference is disabled, when creating the variable :literal:`childrenEnhancedAccess` using the :literal:`getValue` function, an :class:`IllegalValueError` will be thrown, but when creating :literal:`childrenBaiscAccess` using the :literal:`[]` operator or the :literal:`at` method, no error will be thrown and the user will not be informed about the fact that unidimensional array inference took place.
+This means that, in the previous example, is unidimensional array inference is disabled, when creating the variable :literal:`childrenEnhancedAccess` using the :literal:`getValue` function, an :class:`IllegalValueError` will be thrown, but when creating :literal:`childrenBasicAccess` using the :literal:`[]` operator or the :literal:`at` method, no error will be thrown and the user will not be informed about the fact that unidimensional array inference took place.
 
-.. warning:: Unidimensional array inference is currently only implemented for :class:`std::vector`, or types that use the :class:`std::vector`'s :literal:`from_json` function in their :literal:`from_json` function, such as :class:`Eigen::Matrix`. In the future, if this feature is also wanted for other container types, such as :class:`std::set`, an overriden :literal:`from_json` function should be provided.
+.. warning:: Unidimensional array inference is currently only implemented for :class:`std::vector`, or types that use the :class:`std::vector`'s :literal:`from_json` function in their :literal:`from_json` function, such as :class:`Eigen::Matrix`. In the future, if this feature is also wanted for other container types, such as :class:`std::set`, an overridden :literal:`from_json` function should be provided.
 
 .. warning:: In order to check whether unidimensional array inference has taken place during the call to a :literal:`from_json` function, the :literal:`getValue` function converts the converted object of :literal:`ValueType` back to :class:`json` implicitly using the :literal:`to_json` function. This means that trying to use the :literal:`getValue` function for a type that does not have a :literal:`to_json` function will result in a compile error. Consequently, in the :literal:`json_interface`, all classes for which a :literal:`from_json` function is declared should also have a :literal:`to_json`. If the object is never going to be converted to :literal:`json`, this function could be left empty:
 

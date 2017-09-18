@@ -47,7 +47,7 @@ Definition of keys
 
 In all the example :literal:`to_json` and :literal:`from_json` functions presented so far, the keys were hard-coded, i.e. literal strings were used when using the :literal:`[]` operator of a :class:`json` object, calling the :literal:`getValue` function or constructing a key path (by concatenating several strings). However, this approach makes code-updating very complex. Image that, in the future, we want to update a key called :literal:`initialTime` to :literal:`initialEpoch`. Although a global search could do the trick, this may result in modifying parts of the code that should not be modified. If we want to update the name of the key :jsonkey:`type` to :literal:`modelType`, but only for rotation model settings, the only option is doing it manually to avoid changing also the :literal:`type` keys of other objects.
 
-Thus, in the :literal:`json_interface`, literal strings are never used inside :literal:`to_json` and :literal:`from_json` functions. Instead, all the keys that are recognized by the JSON interface are declared in :class:`Tudat/InputOutput/JsonInterface/Support/keys.h`, and their string-value is defined in :class:`Tudat/InputOutput/JsonInterface/Support/keys.cpp`. This is done using a struct called :class:`Keys` containing several nested structs for each level. For instance:
+Thus, in the :literal:`json_interface`, literal strings are never used inside :literal:`to_json` and :literal:`from_json` functions. Instead, all the keys that are recognised by the JSON interface are declared in :class:`Tudat/InputOutput/JsonInterface/Support/keys.h`, and their string-value is defined in :class:`Tudat/InputOutput/JsonInterface/Support/keys.cpp`. This is done using a struct called :class:`Keys` containing several nested structs for each level. For instance:
 
 .. code-block:: cpp
   :caption: :class:`Tudat/InputOutput/JsonInterface/Support/keys.h`
@@ -128,9 +128,9 @@ Thus, in the :literal:`json_interface`, literal strings are never used inside :l
   
   }  // namespace tudat
 
-Note that the keys for the different derieved classes of :class:`RotationModelSettings` are all defined at the same level (i.e. a different struct is not created for each derived class). When going through a settings class and defining its keys, it is good practice to define also the keys for the derived classes that will not supported by the :class:`json_interface` (initially), and commenting them out.
+Note that the keys for the different derived classes of :class:`RotationModelSettings` are all defined at the same level (i.e. a different struct is not created for each derived class). When going through a settings class and defining its keys, it is good practice to define also the keys for the derived classes that will not supported by the :class:`json_interface` (initially), and commenting them out.
 
-When one wants to modify a key, changing its string value in :class:`keys.cpp` should suffice. However, it is good practice to keep the name of the keys and the values of the keys consistent, so "Rename Symbol Under Cursor" should be used as well to replace all the occurences of the key.
+When one wants to modify a key, changing its string value in :class:`keys.cpp` should suffice. However, it is good practice to keep the name of the keys and the values of the keys consistent, so "Rename Symbol Under Cursor" should be used as well to replace all the occurrences of the key.
 
 .. caution:: When debugging an :class:`UndefinedKeyError`, the following situation can arise when parsing, for instance, the following JSON file (only relevant section shown):
 
@@ -160,7 +160,7 @@ When one wants to modify a key, changing its string value in :class:`keys.cpp` s
     const std::string Keys::Body::RotationModel::initialOrientation = "initialOrientation";
     const std::string Keys::Body::RotationModel::initialTime = "initialOrientation";
 
-  which can happen easily when copy-pasting. Thus, what is actually happening is that, when retrieving the value for :literal:`initialTime` (non-defaultable property), the key :jsonkey:`initialOrientation` is accessed (and not found). To prevent these issues, a search for any given key inside the :class:`keys.cpp` file should always result in an even number of occurences. In this way, we also make sure that the value stored at the key :jsonkey:`rotationRate` does not end up being used for the property :literal:`initialTime` of our :class:`RotationModelSettings`, in which case no error or warning would be generated during conversion to :class:`json` as both as non-defaultable properties and store values of the same type (:class:`double`).
+  which can happen easily when copy-pasting. Thus, what is actually happening is that, when retrieving the value for :literal:`initialTime` (non-defaultable property), the key :jsonkey:`initialOrientation` is accessed (and not found). To prevent these issues, a search for any given key inside the :class:`keys.cpp` file should always result in an even number of occurrences. In this way, we also make sure that the value stored at the key :jsonkey:`rotationRate` does not end up being used for the property :literal:`initialTime` of our :class:`RotationModelSettings`, in which case no error or warning would be generated during conversion to :class:`json` as both as non-defaultable properties and store values of the same type (:class:`double`).
   
 
 Writing :literal:`from_json` functions
@@ -383,7 +383,7 @@ An example of a :literal:`to_json` function is provided below:
 
 First, a check on the nullity of the shared pointer is done. If it is :literal:`NULL`, a :class:`json` object of value type :jsontype:`null` will be returned. Otherwise, the settings object will be used to define the keys of the :class:`json` object.
 
-The structure is similar to the one for :literal:`from_json` functions. The main difference is that the :literal:`[]` mutator operator is used to modify the :class:`json` object, instead of using the :literal:`getVlaue` function to access it. Additionally, in every switch case the original shared pointer has to be dynamically casted to the corresponding derived class. Then, the function :literal:`enforceNonNullPointer` is called. This throws an :literal:`NullPointerError` when the settings derived class and the value of its type property do not match.
+The structure is similar to the one for :literal:`from_json` functions. The main difference is that the :literal:`[]` mutator operator is used to modify the :class:`json` object, instead of using the :literal:`getValue` function to access it. Additionally, in every switch case the original shared pointer has to be dynamically casted to the corresponding derived class. Then, the function :literal:`enforceNonNullPointer` is called. This throws an :literal:`NullPointerError` when the settings derived class and the value of its type property do not match.
 
 Some switch cases, such as :literal:`spice_rotation_model`, are empty because they do not contain additional information other than the original base class. Thus, the only needed statement is :literal:`return;`.
 
