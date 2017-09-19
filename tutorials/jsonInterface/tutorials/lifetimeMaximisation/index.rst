@@ -214,11 +214,11 @@ Since :math:`t_0` is not a shared property, one of the termination conditions wi
 .. code-block:: cpp
 
   {
-    "variable": "${export.0.variables.0}",
+    "variable": "${export[0].variables[0]}",
     "lowerLimit": 110000
   }
 
-Note that there is no need to manually provide the variable object again (i.e. :literal:`{"body":"satellite","dependentVariableType":"periapsisAltitude","relativeToBody":"Earth"}`). Thanks to the modularity capabilities of the :literal:`json_interface`, we can reference parts of other files, and even of the same file, using the special string format :literal:`"$(file.json){variable}"`. If the part :literal:`(file.json)` is omitted, the variable will be retrieved from the current file. In this case, :jsonkey:`export.0.variables.0` is read as "the first element of the key :jsonkey:`variables` of the first element of the key :jsonkey:`export`". It is not necessary for the variable :jsonkey:`export.0.variables.0` to be defined before the line in which the special string :literal:`"${export.0.variables.0}"` is used.
+Note that there is no need to manually provide the variable object again (i.e. :literal:`{"body":"satellite","dependentVariableType":"periapsisAltitude","relativeToBody":"Earth"}`). Thanks to the modularity capabilities of the :literal:`json_interface`, we can reference parts of other files, and even of the same file, using the special string format :literal:`"$(file.json){variable}"`. If the part :literal:`(file.json)` is omitted, the variable will be retrieved from the current file. In this case, :jsonkey:`export[0].variables[0]` is read as "the first element of the key :jsonkey:`variables` of the first element of the key :jsonkey:`export`". It is not necessary for the variable :jsonkey:`export[0].variables[0]` to be defined before the line in which the special string :literal:`"${export[0].variables[0]}"` is used.
 
 Since we are going to run 365 propagations, we want to get some output in Terminal when each of the propagation ends. We achieve this by settings the key :jsonkey:`options` to be:
 

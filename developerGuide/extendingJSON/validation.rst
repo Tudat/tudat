@@ -140,9 +140,9 @@ This means that, in the previous example, is unidimensional array inference is d
   
   .. code-block:: txt
 
-    Unidimensional array inferred for key: keyWhereVectorIsStored.0
-    Unidimensional array inferred for key: keyWhereVectorIsStored.1
-    Unidimensional array inferred for key: keyWhereVectorIsStored.2
+    Unidimensional array inferred for key: keyWhereVectorIsStored[0]
+    Unidimensional array inferred for key: keyWhereVectorIsStored[1]
+    Unidimensional array inferred for key: keyWhereVectorIsStored[2]
 
   This could be prevented by providing directly a row vector (in MATLAB, :literal:`rowVector = [0; 0; 0]`) instead of a column vector (in MATLAB :literal:`colVector = [0 0 0]`). However, the built-in MATLAB function :literal:`jsonencode` returns the same encoded JSON object for both :literal:`rowVector` and :literal:`colVector` (i.e. :literal:`[0, 0, 0]`). Thus, when using the JSON interface in combination with the MATLAB interface, unidimensional array inference will be applied frequently, since the vectors encoded by MATLAB are always column-vectors and Tudat expects row-vectors almost everywhere when using :class:`Eigen`.
 

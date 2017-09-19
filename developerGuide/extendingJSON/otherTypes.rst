@@ -21,8 +21,8 @@ For :class:`std::pair`:
 
   json j = R"(
     {
-      "0": 6,
-      "1": "keplerian"
+      "@0": 6,
+      "@1": "keplerian"
     }
   )"_json;
   std::pair< int, std::string > pair = j;         // { 6, "keplerian" }

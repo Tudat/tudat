@@ -125,7 +125,7 @@ After running in Terminal:
 
   json_inteface main.json
 
-we will get a :class:`stateHistory.txt` file containing the results, and a :class:`fullSettings.json` file containing default settings, inferred unidimensional arrays and some keys are moved to a different place (e.g. :jsonkey:`bodies.Asterix.initialState` to :jsonkey:`propagator.0.initialStates`):
+we will get a :class:`stateHistory.txt` file containing the results, and a :class:`fullSettings.json` file containing default settings, inferred unidimensional arrays and some keys are moved to a different place (e.g. :jsonkey:`bodies.Asterix.initialState` to :jsonkey:`propagator[0].initialStates`):
 
 .. literalinclude:: fullSettings.json
   :linenos:
