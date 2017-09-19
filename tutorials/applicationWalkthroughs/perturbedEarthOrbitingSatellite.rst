@@ -2,7 +2,7 @@
 
 Perturbed Earth-orbiting Satellite
 ==================================
-The example described on this page is that of Asterix, a single satellite that is orbiting the Earth. The code for this tutorial is located in your Tudat Bundle at::
+The example described on this page is that of Asterix, a single satellite that is orbiting the Earth. The code for this tutorial is given here on Github, and is also located in your tudat bundle at::
 
    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/singlePerturbedSatellitePropagator.cpp
 
@@ -10,7 +10,7 @@ For this example, we have the following problem statement:
 
 *Given the position and velocity of Asterix at a certain point in time with respect to the Earth, what will its position and velocity be after a Julian day has passed? Take into account perturbations due to gravitational forces by other celestial bodies, due to radiation pressure and due to aerodynamic forces.*
 
-.. warning:: The example described in this page assumes that the user has read the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite`. This page only describes the differences with respect to that example, so please go back before proceeding.
+.. warning:: The example described in this page assumes that the user has read the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite`. This page only describes the differences with respect such example, so please go back before proceeding.
 
 Set up the environment
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -59,8 +59,8 @@ A number of additional settings need to be linked to the vehicle when using addi
 We also need to set the aerodynamic coefficients of the spacecraft. These setting are stored in the :class:`AerodynamicCoefficientSettings` object. For this example, we will consider constant aerodynamic coefficients. This option is set by using the derived-class :class:`ConstantAerodynamicCoefficientSettings`. The settings for the aerodynamic coefficients are the following:
 
 - The reference area.
-- The coefficients in three directions.
-- A boolean to indicate whether the aerodynamic coefficients are defined in the aerodynamic frame (lift, drag, side force) or in the body frame (typically denoted as Cx, Cy, Cz).
+- The aerodynamic coefficients in three directions.
+- A boolean to indicate whether the aerodynamic coefficients are defined in the aerodynamic frame (CD, CS, CL) or in the body frame (typically denoted as Cx, Cy, Cz).
 - A boolean to define whether the aerodynamic coefficients are positive along the negative axes of the body or aerodynamic frame. 
 
 These settings are provided in the following block of code:
@@ -78,7 +78,7 @@ These settings are provided in the following block of code:
     bodyMap[ "Asterix" ]->setAerodynamicCoefficientInterface(
                 createAerodynamicCoefficientInterface( aerodynamicCoefficientSettings, "Asterix" ) );
 
-.. tip:: Other available options for the :class::`AerodynamicCoefficientSettings` can be found :ref:`here <aerodynamicCoefficientOptions>`.
+.. tip:: Available options for :class:`AerodynamicCoefficientSettings` can be found :ref:`here <aerodynamicCoefficientOptions>`.
 
 Next, a number of parameters necessary for the cannonball radiation pressure model are defined. This is similar to the aerodynamic coefficients as discussed above. The settings are stored in the :class:`RadiationPressureInterfaceSettings` object. This example uses a simple cannonball model. This option is set by the derived-class :class:`CannonBallRadiationPressureInterfaceSettings`. One of the assumptions made here is that Earth acts an occulting body, meaning that when Asterix enters the Earth's shadow no radiation pressure from body :literal:`"Sun"` is experienced:
 
@@ -99,7 +99,7 @@ Next, a number of parameters necessary for the cannonball radiation pressure mod
                 "Sun", createRadiationPressureInterface(
                     asterixRadiationPressureSettings, "Asterix", bodyMap ) );
 
-.. tip:: Available options for the :class:`RadiationPressureInterFaceSettings` can be found :ref:`here <radiationPressureModelOptions>`.
+.. tip:: Available options for :class:`RadiationPressureInterFaceSettings` can be found :ref:`here <radiationPressureModelOptions>`.
 
 Set up the acceleration models
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
