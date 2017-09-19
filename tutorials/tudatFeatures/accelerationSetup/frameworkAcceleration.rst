@@ -200,6 +200,8 @@ As stated above, the :literal:`createAccelerationModelsMap` function uses your e
     - Vector containing the sine terms of the accelerations in the R, S and W directions.
     - Vector containing the cosine terms of the accelerations in the R, S and W directions.
     
+.. _tudatFeaturesFrameworkAccelerationsMassRateModelSetup:
+
 Mass rate model setup
 ~~~~~~~~~~~~~~~~~~~~~
 Although propagating a body's translational dynamics is the backbone of Tudat's simulations, it is also possible to propagate a vehicle's mass (either concurrently or separately). The manner in which the models that govern the 'mass dynamics', i.e. mass-rate models, are handled in the code is very similar to the acceleration models: a list of settings for the models is created by the user, which are then used to create the required objects. The list to be created by the user is:
