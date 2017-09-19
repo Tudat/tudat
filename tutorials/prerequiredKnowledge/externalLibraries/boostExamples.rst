@@ -130,6 +130,8 @@ make_shared
 
             boost::shared_ptr< objectType > newExampleTestBodyPointer( new objectType( input1, input2, ..., inputN ) ); // Where N > 10.
 
+.. _externalBoostExamplesFunction:
+
 function
 ~~~~~~~~
 
