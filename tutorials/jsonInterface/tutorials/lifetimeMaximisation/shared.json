@@ -1,0 +1,103 @@
+{
+  "globalFrameOrientation": "J2000",
+  "spice": {
+    "useStandardKernels": true
+  },
+  "bodies": {
+    "Sun": {
+      "useDefaultSettings": true
+    },
+    "Earth": {
+      "useDefaultSettings": true,
+      "atmosphere": {
+        "type": "nrlmsise00"
+      },
+      "gravityField": {
+        "type": "sphericalHarmonic",
+        "model": "ggm02c"
+      }
+    },
+    "Moon": {
+      "useDefaultSettings": true
+    },
+    "satellite": {
+      "initialState": {
+        "type": "keplerian",
+        "periapsisAltitude": 200000,
+        "apoapsisAltitude": 2.0E+6,
+        "inclination": 0.2
+      },
+      "mass": 400,
+      "referenceArea": 10,
+      "aerodynamics": {
+        "forceCoefficients": [2.2, 0, 0]
+      },
+      "radiationPressure": {
+        "Sun": {
+          "radiationPressureCoefficient": 1.5,
+          "occultingBodies": "Earth"
+        }
+      }
+    }
+  },
+  "propagator": {
+    "integratedStateType": "translational",
+    "centralBodies": "Earth" ,
+    "bodiesToPropagate": "satellite",
+    "accelerations": {
+      "satellite": {
+        "Earth": [
+          {
+            "type": "sphericalHarmonicGravity",
+            "maximumDegree": 7,
+            "maximumOrder": 0
+          },
+          {
+            "type": "aerodynamic"
+          }
+        ],
+        "Sun": [
+          {
+            "type": "pointMassGravity"
+          },
+          {
+            "type": "cannonBallRadiationPressure"
+          }
+        ],
+        "Moon": {
+          "type": "pointMassGravity"
+        }
+      }
+    }
+  },
+  "integrator": {
+    "type": "rungeKuttaVariableStepSize",
+    "rungeKuttaCoefficientSet": "rungeKuttaFehlberg78",
+    "initialStepSize": 60,
+    "minimumStepSize": 1,
+    "maximumStepSize": 10000,
+    "relativeErrorTolerance": 1E-10,
+    "absoluteErrorTolerance": 1E-10
+  },
+  "export": [
+    {
+      "file": "@path(outputs/${ROOT_FILE_STEM}.txt)",
+      "variables": [
+        {
+          "body": "satellite",
+          "dependentVariableType": "periapsisAltitude",
+          "relativeToBody": "Earth"
+        }
+      ],
+      "onlyInitialStep": true,
+      "onlyFinalStep": true
+    }
+  ],
+  "termination": {
+    "variable": "${export.0.variables.0}",
+    "lowerLimit": 110000
+  },
+  "options": {
+    "notifyOnPropagationTermination": true
+  }
+}

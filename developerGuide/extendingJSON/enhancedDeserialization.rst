@@ -23,7 +23,7 @@ The :literal:`json_interace` introduces a set of funtions that can be used to pa
 
   - **Declaration file**: file in which a JSON key and corresponding value are defined.
   - **Parent file**: file from which the declaration file is referenced.
-  - **Root file**: file provided as input argument to :literal:`tudat`.
+  - **Root file**: file provided as input argument to :literal:`json_interface`.
 
 The function :literal:`void parseModularJSON( json& jsonObject, const path& filePath, ... )` declared in :class:`Tudat/InputOutput/JsonInterface/Support/deserialization.h` can be used to parse a modular JSON file. This function combines recursively the contents of all the files referenced from :literal:`jsonObject` obtained by parsing :literal:`filePath`, and updates the :literal:`jsonObject` (passed by reference).
 
@@ -51,7 +51,7 @@ Each of the referenced JSON files is parsed individually using the function :lit
 Mergeable files
 ~~~~~~~~~~~~~~~
 
-In addition to modular JSON files, in which the content of (part of) other JSON files is included, the :literal:`json_interace` also introduces support for mergeable JSON files. Since the :literal:`tudat` application expects a root JSON file containing an object, when providing a root JSON file containing an array, the contents of this array can be merged to generate a single JSON object to be used to set up the simulation. For instance, the following input file:
+In addition to modular JSON files, in which the content of (part of) other JSON files is included, the :literal:`json_interace` also introduces support for mergeable JSON files. Since the :literal:`json_interface` application expects a root JSON file containing an object, when providing a root JSON file containing an array, the contents of this array can be merged to generate a single JSON object to be used to set up the simulation. For instance, the following input file:
 
 .. code-block:: json
 
@@ -84,7 +84,7 @@ since this would re-define the key :jsonkey:`bodies` of :literal:`main.json` to 
 In order to merge a :class:`json` of value type :jsontype:`array` into a one of value type :jsontype:`object`, the function :literal:`void mergeJSON( json& jsonObject, const path& filePath )` declared in :class:`Tudat/InputOutput/JsonInterface/Support/deserialization.h` is used. If the passed :literal:`jsonObject` is not of value type :jsontype:`array`, this function does nothing.
 
 
-Full deserialization sequence
+Full deserialisation sequence
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 All the features described previously are combined into the function :literal:`json getDeserializedJSON( const path& filePath )` declared in :class:`Tudat/InputOutput/JsonInterface/Support/deserialization.h`. This function replaces relative paths, combines modular files and merges objects when possible. This is the function that should be called when creating a :class:`json` object to be used to set up a simulation. In general, this function is only called once during the life-cycle of the application.
