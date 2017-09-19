@@ -2,9 +2,7 @@
 
 Unperturbed Earth-orbiting Satellite
 ====================================
-The example described on this page is that of Asterix, a single satellite that is orbiting the Earth. The code for this tutorial is located in your Tudat Bundle at:
-
-.. code-block:: cpp
+The example described on this page is that of Asterix, a single satellite that is orbiting the Earth. The code for this tutorial is given here on Github, and is also located in your tudat bundle at::
 
    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/singleSatellitePropagator.cpp
 
@@ -260,7 +258,7 @@ A final piece of information needed to propagate the orbit is the settings objec
 
 Perform the orbit propagation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Now, we have defined all the information needed to propagate the orbit of our satellite, which are stored in the :literal:`bodyMap` (environment), :literal:`propagatorSettings` (settings for the full state derivative model) and :literal:`integratorSettings` (settings on how to obtain the numerical solution). The propagation is done by an object of a class (derived from) :class:`DynamicsSimulator`. Here, the following is used to propagate:
+Now, we have defined all the information needed to propagate the orbit of our satellite, which are stored in the :literal:`bodyMap` (environment), :literal:`propagatorSettings` (settings for the full state derivative model) and :literal:`integratorSettings` (settings on how to obtain the numerical solution). The propagation is done by an object of type (derived from) :class:`DynamicsSimulator`:
 
 .. code-block:: cpp
 
@@ -273,7 +271,7 @@ Upon creating this class, the numerical propagation is performed, and the output
 
    std::map< double, Eigen::VectorXd > integrationResult = dynamicsSimulator.getEquationsOfMotionNumericalSolution( );
 
-Where the map key is the time at each step in the integration, and the value is the corresponding Cartesian state of Asterix w.r.t. the Earth, in the J2000 reference frame. To analyze/plot your numerical results further using e.g. Matlab, you can print the output to a text file as follows:
+where the retrieved result is a :literal:`std::map` where the key :literal:`double` is the time at each step in the integration, and the value, :literal:`Eigen::VectorXd`, is the corresponding Cartesian state of Asterix w.r.t. the Earth, in the J2000 reference frame. To analyze/plot your numerical results further using e.g. Matlab, you can print the output to a text file as follows:
 
 .. code-block:: cpp
 
