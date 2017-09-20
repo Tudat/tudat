@@ -15,18 +15,6 @@ Additionally, there are functions for :class:`std::complex`, so that the followi
   json j = "(1,-0.5)";
   std::complex< double > complexNumber = j;         // 1 - 0.5i
 
-For :class:`std::pair`:
-
-.. code-block:: cpp
-
-  json j = R"(
-    {
-      "@0": 6,
-      "@1": "keplerian"
-    }
-  )"_json;
-  std::pair< int, std::string > pair = j;         // { 6, "keplerian" }
-
 And for :class:`Eigen::Quaterniond`, so that it can be created directly from an :class:`Eigen::Matrix3d` when the provided :class:`json` object is of value type :jsontype:`array`, or using the function :literal:`spice_interface::computeRotationQuaternionBetweenFrames` when it is of value type :jsontype:`object`. Thus, it is possible to create an :class:`Eigen::Quaterniond` from any of these two JSON files:
 
 .. code-block:: json
