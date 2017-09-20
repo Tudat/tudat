@@ -20,10 +20,10 @@ For :class:`std::pair`:
 .. code-block:: cpp
 
   json j = R"(
-    {
-      "@0": 6,
-      "@1": "keplerian"
-    }
+    [
+      6,
+      "keplerian"
+    ]
   )"_json;
   std::pair< int, std::string > pair = j;         // { 6, "keplerian" }
 
