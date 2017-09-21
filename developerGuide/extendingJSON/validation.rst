@@ -18,13 +18,11 @@ The following keys of the :literal:`mainJson` object can be defined to customise
 
   - :literal:`options.unusedKey`: determines the behaviour of the validator when the :literal:`void heckUnusedKeys( const json& mainJson, ... )` function is called and some of the keys defined in :literal:`mainJson` have not been accessed. This function is called right before integrating the equations of motion, when all the settings objects have been created. By default, a warning is printed for each unused key.
 
-  - :literal:`options.unidimensionalArrayInference`: determines the behaviour of the validator when the expected type is :literal:`std::vector< T >` and the object provided by the user is not convertible to :literal:`std::vector< T >` but *is* convertible to :literal:`T`. By default, an :literal:`std::vector< T >` containing only one element (the provided element of type :literal:`T`) is returned without informing the user.
-
 These three options are converted to a value of the enum :class:`ExceptionResponseType` defined in :class:`Tudat/InputOutput/JsonInterface/Support/errorHandling.h`. The three possible values are:
 
   - :literal:`continueSilently`: allow this validator feature and do not inform the user.
   - :literal:`printWarning`: allow this validator feature but print a warning when using it.
-  - :literal:`throwError`: do not allow this validator feature and terminate throwing an error when trying to use this feature. For :literal:`defaultValueUsedForMissingKey`, an :class:`UndefinedKeyError` will be thrown (i.e. the behaviour of the :literal:`getValue` function with and without third default value argument will be equivalent). For :literal:`unidimensionalArrayInference`, an :class:`IllegalValueError` will be thrown. For :literal:`unusedKey`, the error :literal:`std::runtime_error( "Validation failed because there are unused keys." )` will be thrown.
+  - :literal:`throwError`: do not allow this validator feature and terminate throwing an error when trying to use this feature. For :literal:`defaultValueUsedForMissingKey`, an :class:`UndefinedKeyError` will be thrown (i.e. the behaviour of the :literal:`getValue` function with and without third default value argument will be equivalent).
 
 
 Access history
@@ -90,7 +88,7 @@ This variable is automatically updated when calling the :literal:`getValue` func
 Unidimensional array inference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As explained above, unidimensional array inference is a capability of the validator to generate a :literal:`std::vector< T >` with one single element when the user provides an object convertible to type :literal:`T` but an object convertible to type :literal:`std::vector< T >` is expected. This feature is not implemented in the :literal:`getValue` function, but in the custom implementation of the :class:`std::vector`'s :literal:`from_json` function. This means that the following will work:
+Unidimensional array inference is a capability of the validator to generate a :literal:`std::vector< T >` with one single element when the user provides an object convertible to type :literal:`T` but an object convertible to type :literal:`std::vector< T >` is expected. This feature is not implemented in the :literal:`getValue` function, but in the custom implementation of the :class:`std::vector`'s :literal:`from_json` function. This means that the following will work:
 
 .. code-block:: cpp
 
@@ -99,25 +97,7 @@ As explained above, unidimensional array inference is a capability of the valida
     getValue< std::vector< std::string > >( person, "children" );            // { "Marc" }
   std::vector< std::string > childrenBaiscAccess = person[ "children" ];     // { "Marc" }
 
-However, the :literal:`getValue` function *is* responsible for checking whether unidimensional array inference has been applied, and for printing a warning or throwing an error depending on the user setting for the key :jsonkey:`options.unidimensionalArrayInference` of the main object. This is done by performing the following steps:
-
-  - Get the :literal:`json` object at the requested key path -> :literal:`originalSubjson`.
-  - Convert :literal:`originalSubjson` to the requested :literal:`ValueType` -> :literal:`returnObject`.
-  - Convert :literal:`returnObject` back to :literal:`json` (referred to as :literal:`deconvertedSubjson`).
-  - Before returning :literal:`returnObject`, check if :literal:`! originalSubjson.is_array( ) && deconvertedSubjson.is_array( )`. If this evals to :literal:`true`, then unidimensional array inference has taken place, and depending on the value of the :class:`json` object at the key path :literal:`#root.options.unidimensionalArrayInference`, a warning may be printed, an error may be thrown or execution may continue silently.
-
-This means that, in the previous example, is unidimensional array inference is disabled, when creating the variable :literal:`childrenEnhancedAccess` using the :literal:`getValue` function, an :class:`IllegalValueError` will be thrown, but when creating :literal:`childrenBasicAccess` using the :literal:`[]` operator or the :literal:`at` method, no error will be thrown and the user will not be informed about the fact that unidimensional array inference took place.
-
 .. warning:: Unidimensional array inference is currently only implemented for :class:`std::vector`, or types that use the :class:`std::vector`'s :literal:`from_json` function in their :literal:`from_json` function, such as :class:`Eigen::Matrix`. In the future, if this feature is also wanted for other container types, such as :class:`std::set`, an overridden :literal:`from_json` function should be provided.
-
-.. warning:: In order to check whether unidimensional array inference has taken place during the call to a :literal:`from_json` function, the :literal:`getValue` function converts the converted object of :literal:`ValueType` back to :class:`json` implicitly using the :literal:`to_json` function. This means that trying to use the :literal:`getValue` function for a type that does not have a :literal:`to_json` function will result in a compile error. Consequently, in the :literal:`json_interface`, all classes for which a :literal:`from_json` function is declared should also have a :literal:`to_json`. If the object is never going to be converted to :literal:`json`, this function could be left empty:
-
-  .. code-block:: cpp
-
-    void to_json( json& j, NonJsonableClass& nonJsonableObject ) { }
-
-  leading to the generation of a :class:`json` object of value type :jsontype:`null`, for which the check on whether unidimensional array inference has been applied will always evaluate to :literal:`false`.
-
 
 .. note:: Unidimensional array inference is widely used when working with :class:`Eigen::Vector`. An :class:`Eigen::Vector` is an :class:`Eigen::Matrix` with just one column. The JSON representation of a matrix is an array of arrays (with each array corresponding to a matrix row). Thus, the JSON representation of a row vector is an array of unidimensional arrays. For instance:
 
@@ -136,13 +116,7 @@ This means that, in the previous example, is unidimensional array inference is d
       [ 0 ]
     ]
   
-  Thus, when the user provides e.g. the JSON array :literal:`[0, 0, 0]` and this is converted to an :literal:`Eigen::Vector3d`, unidimensional array inference is applied for each element, as an array of numbers is expected for each row but a number is found instead. If :literal:`options.unidimensionalArrayInference` is set to print warnings, this results messages of the type:
-  
-  .. code-block:: txt
-
-    Unidimensional array inferred for key: keyWhereVectorIsStored[0]
-    Unidimensional array inferred for key: keyWhereVectorIsStored[1]
-    Unidimensional array inferred for key: keyWhereVectorIsStored[2]
+  Thus, when the user provides e.g. the JSON array :literal:`[0, 0, 0]` and this is converted to an :literal:`Eigen::Vector3d`, unidimensional array inference is applied for each element, as an array of numbers is expected for each row but a number is found instead.
 
   This could be prevented by providing directly a row vector (in MATLAB, :literal:`rowVector = [0; 0; 0]`) instead of a column vector (in MATLAB :literal:`colVector = [0 0 0]`). However, the built-in MATLAB function :literal:`jsonencode` returns the same encoded JSON object for both :literal:`rowVector` and :literal:`colVector` (i.e. :literal:`[0, 0, 0]`). Thus, when using the JSON interface in combination with the MATLAB interface, unidimensional array inference will be applied frequently, since the vectors encoded by MATLAB are always column-vectors and Tudat expects row-vectors almost everywhere when using :class:`Eigen`.
 

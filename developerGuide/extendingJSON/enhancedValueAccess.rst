@@ -229,8 +229,7 @@ When using the :literal:`getValue` function, the following :class:`json` object 
       ],
       "options": {
         "defaultValueUsedForMissingKey": "continueSilently",
-        "unusedKey": "printWarning",
-        "unidimensionalArrayInference": "continueSilently"
+        "unusedKey": "printWarning"
       }
     }
   }

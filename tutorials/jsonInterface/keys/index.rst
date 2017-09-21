@@ -14,7 +14,7 @@ In this page, an exhaustive list with the possible keys that can be defined in i
 
 The type :jsontype:`path` before a key name denotes that a :jsontype:`string` such as :literal:`"@path(relPath)"` has to be provided when using relative paths inside modular files. When providing absolute paths or not using modular files, both :literal:`"@path(file)"` and :literal:`"file"` will work.
 
-:jsontype:`T[]` denotes that an array of :jsontype:`T` is expected. If unidimensional array inference is supported, a single :jsontype:`T` is also valid. If no number is indicated, there is no constraint on the size of the array. For instance, :jsontype:`number[6]` is used for state vectors. A second :jsontype:`[]` is used to represent matrices, e.g. :jsontype:`number[][]` will be converted to :class:`Eigen::MatrixXd`, and :jsontype:`number[3][3]` will be converted to :class:`Eigen::Matrix3d`.
+:jsontype:`T[]` denotes that an array of :jsontype:`T` is expected. Thanks to unidimensional array inference [REF], providing a single :jsontype:`T` is also valid. If no number is indicated, there is no constraint on the size of the array. For instance, :jsontype:`number[6]` is used for state vectors. A second :jsontype:`[]` is used to represent matrices, e.g. :jsontype:`number[][]` will be converted to :class:`Eigen::MatrixXd`, and :jsontype:`number[3][3]` will be converted to :class:`Eigen::Matrix3d`.
 
 Some keys appear twice because they accept different value types (and a different description for each case is provided). For instance, the body's initial state can be of value type :jsontype:`number[6]` (where a Cartesian state is assumed), or an :jsontype:`object` containing keys such as :jsonkey:`x`, :jsonkey:`vy`, :jsonkey:`semiMajorAxis`, :jsonkey:`inclination`, etc.
 
