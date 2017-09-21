@@ -17,4 +17,4 @@
 - :jsontype:`boolean` :jsonkey:`epochsInFirstColumn` (optional). Whether to include the epochs in the first column of the results matrix. Default value: :literal:`true`.
 - :jsontype:`boolean` :jsonkey:`onlyInitialStep` (optional). Whether to save only the values corresponding to the initial integration step. Does not override :jsonkey:`onlyFinalStep`. Default value: :literal:`false`.
 - :jsontype:`boolean` :jsonkey:`onlyFinalStep` (optional). Whether to save only the values corresponding to the initial integration step. Does not override :jsonkey:`onlyInitialStep`. Default value: :literal:`false`.
-- :jsontype:`number` :jsonkey:`numericalPrecision` (optional). Maximum number of significant digits to be used for decimal numbers. Default value: :literal:`16`.
+- :jsontype:`number` :jsonkey:`numericalPrecision` (optional). Maximum number of significant digits to be used for decimal numbers. Default value: :literal:`15`.
