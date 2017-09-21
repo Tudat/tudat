@@ -14,15 +14,15 @@ Validator options
 
 The following keys of the :literal:`mainJson` object can be defined to customise the behaviour of the validator:
 
-  - :literal:`options.defaultValueUsedForMissingKey`: determines the behaviour of the validator when the :literal:`getValue( const json& j, const KeyPath& keyPath, const ValueType& defaultValue )` function is called and :literal:`keyPath` is undefined. By default, :literal:`defaultValue` is used without informing the user.
+  - :jsonkey:`options.defaultValueUsedForMissingKey`: determines the behaviour of the validator when the :literal:`getValue( const json& j, const KeyPath& keyPath, const ValueType& defaultValue )` function is called and :literal:`keyPath` is undefined. By default, :literal:`defaultValue` is used without informing the user.
 
-  - :literal:`options.unusedKey`: determines the behaviour of the validator when the :literal:`void heckUnusedKeys( const json& mainJson, ... )` function is called and some of the keys defined in :literal:`mainJson` have not been accessed. This function is called right before integrating the equations of motion, when all the settings objects have been created. By default, a warning is printed for each unused key.
+  - :jsonkey:`options.unusedKey`: determines the behaviour of the validator when the :literal:`void heckUnusedKeys( const json& mainJson, ... )` function is called and some of the keys defined in :literal:`mainJson` have not been accessed. This function is called right before integrating the equations of motion, when all the settings objects have been created. By default, a warning is printed for each unused key.
 
 These three options are converted to a value of the enum :class:`ExceptionResponseType` defined in :class:`Tudat/InputOutput/JsonInterface/Support/errorHandling.h`. The three possible values are:
 
   - :literal:`continueSilently`: allow this validator feature and do not inform the user.
   - :literal:`printWarning`: allow this validator feature but print a warning when using it.
-  - :literal:`throwError`: do not allow this validator feature and terminate throwing an error when trying to use this feature. For :literal:`defaultValueUsedForMissingKey`, an :class:`UndefinedKeyError` will be thrown (i.e. the behaviour of the :literal:`getValue` function with and without third default value argument will be equivalent).
+  - :literal:`throwError`: do not allow this validator feature and terminate throwing an error when trying to use this feature. For :jsonkey:`defaultValueUsedForMissingKey`, an :class:`UndefinedKeyError` will be thrown (i.e. the behaviour of the :literal:`getValue` function with and without third default value argument will be equivalent). For :jsonkey:`unusedKey`, the error message :literal:`Validation failed because there are unused keys.` will be printed after the list of unused keys.
 
 
 Access history
@@ -99,24 +99,24 @@ Unidimensional array inference is a capability of the validator to generate a :l
 
 .. warning:: Unidimensional array inference is currently only implemented for :class:`std::vector`, or types that use the :class:`std::vector`'s :literal:`from_json` function in their :literal:`from_json` function, such as :class:`Eigen::Matrix`. In the future, if this feature is also wanted for other container types, such as :class:`std::set`, an overridden :literal:`from_json` function should be provided.
 
-.. note:: Unidimensional array inference is widely used when working with :class:`Eigen::Vector`. An :class:`Eigen::Vector` is an :class:`Eigen::Matrix` with just one column. The JSON representation of a matrix is an array of arrays (with each array corresponding to a matrix row). Thus, the JSON representation of a row vector is an array of unidimensional arrays. For instance:
+Unidimensional array inference is widely used when working with :class:`Eigen::Vector`. An :class:`Eigen::Vector` is an :class:`Eigen::Matrix` with just one column. The JSON representation of a matrix is an array of arrays (with each array corresponding to a matrix row). Thus, the JSON representation of a row vector is an array of unidimensional arrays. For instance:
 
-  .. code-block:: cpp
+.. code-block:: cpp
 
-    Eigen::Vector3d zeroVector = Eigen::Vector3d::Zero( );
-    std::cout << json( zeroVector ) << std::endl;
+  Eigen::Vector3d zeroVector = Eigen::Vector3d::Zero( );
+  std::cout << json( zeroVector ) << std::endl;
 
-  yields:
-    
-  .. code-block:: json
+yields:
   
-    [
-      [ 0 ],
-      [ 0 ],
-      [ 0 ]
-    ]
-  
-  Thus, when the user provides e.g. the JSON array :literal:`[0, 0, 0]` and this is converted to an :literal:`Eigen::Vector3d`, unidimensional array inference is applied for each element, as an array of numbers is expected for each row but a number is found instead.
+.. code-block:: json
 
-  This could be prevented by providing directly a row vector (in MATLAB, :literal:`rowVector = [0; 0; 0]`) instead of a column vector (in MATLAB :literal:`colVector = [0 0 0]`). However, the built-in MATLAB function :literal:`jsonencode` returns the same encoded JSON object for both :literal:`rowVector` and :literal:`colVector` (i.e. :literal:`[0, 0, 0]`). Thus, when using the JSON interface in combination with the MATLAB interface, unidimensional array inference will be applied frequently, since the vectors encoded by MATLAB are always column-vectors and Tudat expects row-vectors almost everywhere when using :class:`Eigen`.
+  [
+    [ 0 ],
+    [ 0 ],
+    [ 0 ]
+  ]
+
+Thus, when the user provides e.g. the JSON array :literal:`[0, 0, 0]` and this is converted to an :literal:`Eigen::Vector3d`, unidimensional array inference is applied for each element, as an array of numbers is expected for each row but a number is found instead.
+
+This could be prevented by providing directly a row vector (in MATLAB, :literal:`rowVector = [0; 0; 0]`) instead of a column vector (in MATLAB :literal:`colVector = [0 0 0]`). However, the built-in MATLAB function :literal:`jsonencode` returns the same encoded JSON object for both :literal:`rowVector` and :literal:`colVector` (i.e. :literal:`[0, 0, 0]`). Thus, when using the JSON interface in combination with the MATLAB interface, unidimensional array inference will be applied frequently, since the vectors encoded by MATLAB are always column-vectors and Tudat expects row-vectors almost everywhere when using :class:`Eigen`.
 
