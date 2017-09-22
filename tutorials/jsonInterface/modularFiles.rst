@@ -94,13 +94,13 @@ Since these variables are used in several places (for defining termination condi
 
   {
     "termination": {
-      "variable": "$(variables.json){satellite.altitude}",
+      "variable": [ "$(variables.json){satellite.altitude}" ],
       "lowerLimit": 110E+3
     }
     "export": [
       {
         "file": "finalAltitude.txt",
-        "variables": "$(variables.json){satellite.altitude}",
+        "variables": [ "$(variables.json){satellite.altitude}" ],
         "onlyFinalStep": true,
         "epochsInFirstColumn": false
       },
@@ -121,7 +121,7 @@ The special string :literal:`"$(variables.json){satellite.altitude}"` is replace
     "relativeToBody": "Earth"
   }
   
-while the string :literal:`"$(variables.json){satellite.drag,satellite.srp}"` is replace by an array of objects:
+while the string :literal:`"$(variables.json){satellite.drag,satellite.srp}"` is replaced by an array of objects:
 
 .. code-block:: json
 
@@ -140,7 +140,7 @@ while the string :literal:`"$(variables.json){satellite.drag,satellite.srp}"` is
     } 
   ]
 
-The key :literal:`export.variables` expects an array of objects. Thanks to unidimensional array inference [REF], in the first case the object will be automatically converted to an array with only one element. However, if it is turned off, we need to explicitly specify that we want to create an array with one element by writing either :literal:`[ "$(variables.json){satellite.altitude}" ]` or adding a comma at the end of the special string's list of variables, as in :literal:`"$(variables.json){satellite.altitude,}"`.
+The key :literal:`export.variables` expects an array of objects. Then, we need to explicitly specify that we want to create an array with one element by writing either :literal:`[ "$(variables.json){satellite.altitude}" ]` or adding a comma at the end of the special string's list of variables, as in :literal:`"$(variables.json){satellite.altitude,}"`.
 
 Now imagine we provide a file containing pre-defined settings for celestial bodies:
 

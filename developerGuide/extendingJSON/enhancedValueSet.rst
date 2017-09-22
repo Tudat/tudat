@@ -47,7 +47,7 @@ If one wants to use the properties of a given object to update the keys of a :cl
       j[ ".." / "initialEpoch" ] = integrator.initialTime;   // compile error
   }
 
-this is not possible (yet). This kind of implementation is required only once in the whole :literal:`json_interface` interface, when converting a :class:`Simulation` object to :class:`json`, as the information contained in the propagator settings is stored in three different places in the simulation object (part of its information is stored in the key :jsonkey:`propagator` of the :literal:`mainJson`, the termination settings are stored in the key :jsonkey:`termination` of the :literal:`mainJson`, and the print interval is stored in the :literal:`options.printInterval` key path of the :literal:`mainJson`). To do so, the following implementation was chosen (code has been simplified):
+this is not possible (yet). This kind of implementation is required only once in the whole :literal:`json_interface` interface, when converting a :class:`Simulation` object to :class:`json`, as the information contained in the propagator settings is stored in three different places in the simulation object (part of its information is stored in the key :jsonkey:`propagators` of the :literal:`mainJson`, the termination settings are stored in the key :jsonkey:`termination` of the :literal:`mainJson`, and the print interval is stored in the :literal:`options.printInterval` key path of the :literal:`mainJson`). To do so, the following implementation was chosen (code has been simplified):
 
 .. code-block:: cpp
   :caption: :class:`simulation.h`
@@ -69,8 +69,8 @@ this is not possible (yet). This kind of implementation is required only once in
   {
       void to_json( json& mainJson, const Propagator& propagator )
       {
-          mainJson[ "propagator" ][ "type" ] = propagator.type;
-          mainJson[ "propagator" ][ "centralBodies" ] = propagator.centralBodies;
+          mainJson[ "propagators" ][ 0 ][ "type" ] = propagator.type;
+          mainJson[ "propagators" ][ 0 ][ "centralBodies" ] = propagator.centralBodies;
           ...
           mainJson[ "termination" ] = propagator.terminationSettings;
           mainJson[ "options" ][ "printInterval" ] = propagator.printInterval;

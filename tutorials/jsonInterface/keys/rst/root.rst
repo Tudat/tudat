@@ -25,7 +25,7 @@
 			:arrow:`Body`
 
 		.. include:: rst/Body.rst
-- :jsontype:`object[]` :jsonkey:`propagator` (mandatory). Used to define the propagator(s).
+- :jsontype:`object[]` :jsonkey:`propagators` (mandatory). Used to define the propagator(s).
 
 	.. container:: toggle
 

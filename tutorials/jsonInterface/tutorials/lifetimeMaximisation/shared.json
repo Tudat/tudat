@@ -40,36 +40,38 @@
       }
     }
   },
-  "propagator": {
-    "integratedStateType": "translational",
-    "centralBodies": "Earth" ,
-    "bodiesToPropagate": "satellite",
-    "accelerations": {
-      "satellite": {
-        "Earth": [
-          {
-            "type": "sphericalHarmonicGravity",
-            "maximumDegree": 7,
-            "maximumOrder": 0
-          },
-          {
-            "type": "aerodynamic"
-          }
-        ],
-        "Sun": [
-          {
+  "propagators": [
+    {
+      "integratedStateType": "translational",
+      "centralBodies": "Earth" ,
+      "bodiesToPropagate": "satellite",
+      "accelerations": {
+        "satellite": {
+          "Earth": [
+            {
+              "type": "sphericalHarmonicGravity",
+              "maximumDegree": 7,
+              "maximumOrder": 0
+            },
+            {
+              "type": "aerodynamic"
+            }
+          ],
+          "Sun": [
+            {
+              "type": "pointMassGravity"
+            },
+            {
+              "type": "cannonBallRadiationPressure"
+            }
+          ],
+          "Moon": {
             "type": "pointMassGravity"
-          },
-          {
-            "type": "cannonBallRadiationPressure"
           }
-        ],
-        "Moon": {
-          "type": "pointMassGravity"
         }
       }
     }
-  },
+  ],
   "integrator": {
     "type": "rungeKuttaVariableStepSize",
     "rungeKuttaCoefficientSet": "rungeKuttaFehlberg78",

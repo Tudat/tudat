@@ -191,18 +191,20 @@ When using the :literal:`getValue` function, the following :class:`json` object 
           }
         }
       },
-      "propagator": {
-        "centralBodies": "Earth",
-        "accelerations": {
-          "asterix": {
-            "Earth": {
-              "type": "pointMassGravity"
+      "propagators": [
+          {
+          "centralBodies": "Earth",
+          "accelerations": {
+            "asterix": {
+              "Earth": {
+                "type": "pointMassGravity"
+              }
             }
-          }
-        },
-        "integratedStateType": "translational",
-        "bodiesToPropagate": "asterix"
-      },
+          },
+          "integratedStateType": "translational",
+          "bodiesToPropagate": "asterix"
+        }
+      ],
       "integrator": {
         "type": "rungeKutta4",
         "stepSize": 10

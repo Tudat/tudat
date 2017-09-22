@@ -124,44 +124,48 @@ As can be seen, the bodies :jsonkey:`Sun` and :jsonkey:`Moon` have no properties
 
 For the orbiting body, :jsonkey:`satellite`, we do not specify the key :jsonkey:`useDefaultSettings`, which defaults to :literal:`false`. Thus, no properties will be pre-loaded. We provided an :jsonkey:`initialState` of type :literal:`"keplerian"`. We need not define the keys :jsonkey:`argumentOfPeriapsis`, :jsonkey:`longitudeOfAscendingNode` and :jsonkey:`trueAnomaly`, which are assumed to be :literal:`0`. Then we define its constant :jsonkey:`mass` and :jsonkey:`referenceArea`. Finally, we add aerodynamics and radiation pressure settings. In both cases, there is no need to specify a key :jsonkey:`type` because constant aerodynamics coefficients and cannon ball radiation pressure are the default types. For the aerodynamics, we only need to specify the force coefficients (only drag, no lift of side force). For the key :jsonkey:`radiationPressure`, we provide an object in which each key is the name of the radiating bodies (in this case, only the :jsonkey:`Sun`). We specify the :jsonkey:`radiationPressureCoefficient` and a list of :jsonkey:`occultingBodies` (i.e. bodies which can block the flux from the Sun on the satellite).
 
-Then, we specify the propagator settings. In this case, we are going to propagate the translational state of :jsonkey:`satellite` about :jsonkey:`Earth`, so we define the key :jsonkey:`propagator` to be:
+Then, we specify the propagator settings. In this case, we are going to propagate the translational state of :jsonkey:`satellite` about :jsonkey:`Earth`, so we define the key :jsonkey:`propagators` to be:
 
 .. code-block:: json
 
-  {
-    "integratedStateType": "translational",
-    "centralBodies": "Earth",
-    "bodiesToPropagate": "Asterix",
-    "accelerations": {
-      "satellite": {
-        "Earth": [
-          {
-            "type": "sphericalHarmonicGravity",
-            "maximumDegree": 7,
-            "maximumOrder": 0
-          },
-          {
-            "type": "aerodynamic"
-          }
-        ],
-        "Sun": [
-          {
-            "type": "pointMassGravity"
-          },
-          {
-            "type": "cannonBallRadiationPressure"
-          }
-        ],
-        "Moon": {
-          "type": "pointMassGravity"
+  [
+    {
+      "integratedStateType": "translational",
+      "centralBodies": [ "Earth" ],
+      "bodiesToPropagate": [ "Asterix" ],
+      "accelerations": {
+        "satellite": {
+          "Earth": [
+            {
+              "type": "sphericalHarmonicGravity",
+              "maximumDegree": 7,
+              "maximumOrder": 0
+            },
+            {
+              "type": "aerodynamic"
+            }
+          ],
+          "Sun": [
+            {
+              "type": "pointMassGravity"
+            },
+            {
+              "type": "cannonBallRadiationPressure"
+            }
+          ],
+          "Moon": [
+            {
+              "type": "pointMassGravity"
+            }
+          ]
         }
       }
     }
-  }
+  ]
 
-Note that the keys :jsonkey:`propagator.centralBodies` and :jsonkey:`propagator.bodiesToPropagate` expect an array of strings. However, thanks to unidimensional array inference, we can also provide just a single string. Additionally, we specify the key :jsonkey:`propagator.accelerations`, an object containing lists of accelerations. The inner keys (in this case, :jsonkey:`Earth`, :jsonkey:`Sun` and :jsonkey:`Moon`) are the names of the bodies exerting the accelerations, while the outer keys (in this case, :jsonkey:`satellite`), are the names of the bodies undergoing the accelerations. Thus, :jsonkey:`accelerations.satellite.Earth` is read as accelerations on the satellite caused by Earth. In this case, this is a list with two accelerations: the spherical harmonic gravity up to degree 7 and order 0 (i.e. only zonal terms), and the aerodynamic acceleration caused by the atmosphere. For the Sun, we specify the point-mass gravitational attraction and the cannon-ball radiation pressure acceleration. Finally, for the Moon, there is only one acceleration: that caused by the point-mass gravitational attraction.
+We specify the key :jsonkey:`propagators[0].accelerations`, an object containing lists of accelerations. The inner keys (in this case, :jsonkey:`Earth`, :jsonkey:`Sun` and :jsonkey:`Moon`) are the names of the bodies exerting the accelerations, while the outer keys (in this case, :jsonkey:`satellite`), are the names of the bodies undergoing the accelerations. Thus, :jsonkey:`accelerations.satellite.Earth` is read as accelerations on the satellite caused by Earth. In this case, this is a list with two accelerations: the spherical harmonic gravity up to degree 7 and order 0 (i.e. only zonal terms), and the aerodynamic acceleration caused by the atmosphere. For the Sun, we specify the point-mass gravitational attraction and the cannon-ball radiation pressure acceleration. Finally, for the Moon, there is only one acceleration: that caused by the point-mass gravitational attraction.
 
-In this case, some keys of the :jsonkey:`propagator` have been omitted. For instance, the key :literal:`type` has not been specified, meaning that the default value :literal:`"cowell"` is used.
+In this case, some keys of :jsonkey:`propagators[0]` have been omitted. For instance, the key :literal:`type` has not been specified, meaning that the default value :literal:`"cowell"` is used.
 
 The next step is to define the integrator settings. The initial time is retrieved from the key :jsonkey:`initialEpoch` defined at root level. Thus, we define the key :jsonkey:`integrator` to be equal to the following object:
 

@@ -53,26 +53,30 @@ The first body, :jsonkey:`Earth`, has the key :jsonkey:`useDefaultSettings` set 
 
 The second body, :jsonkey:`Asterix`, does not specify the key :jsonkey:`useDefaultSettings`, which defaults to :literal:`false`. Thus, no properties will be loaded from Spice. Since no perturbations are considered in this propagation, we need not specify a mass or aerodynamic properties. Thus, we only need to provided an :jsonkey:`initialState`. We can provide directly a vector with the Cartesian components, or an object defining the different keys of a Keplerian state, as shown above.
 
-Then, we specify the propagator settings. In this case, we are going to propagate the translational state of :jsonkey:`Asterix` about :jsonkey:`Earth`, so we define the key :jsonkey:`propagator` to be:
+Then, we specify the propagator settings. In this case, we are going to propagate the translational state of :jsonkey:`Asterix` about :jsonkey:`Earth`, so we define the key :jsonkey:`propagators` to be:
 
 .. code-block:: json
 
-  {
-    "integratedStateType": "translational",
-    "centralBodies": "Earth",
-    "bodiesToPropagate": "Asterix",
-    "accelerations": {
-      "Asterix": {
-        "Earth": {
-          "type": "pointMassGravity"
+  [
+    {
+      "integratedStateType": "translational",
+      "centralBodies": [ "Earth" ],
+      "bodiesToPropagate": [ "Asterix" ],
+      "accelerations": {
+        "Asterix": {
+          "Earth": [
+            {
+              "type": "pointMassGravity"
+            }
+          ]
         }
       }
     }
-  }
+  ]
 
-Note that the keys :jsonkey:`propagator.centralBodies` and :jsonkey:`propagator.bodiesToPropagate` expect an array of strings. However, thanks to unidimensional array inference, we can also provide just a single string. Additionally, we specify the key :jsonkey:`propagator.accelerations`, an object containing lists of accelerations. The inner keys (in this case, :jsonkey:`Earth`) are the names of the bodies exerting the accelerations, while the outer keys (in this case, :jsonkey:`Asterix`), are the names of the bodies undergoing the accelerations. Thus, :jsonkey:`accelerations.Asterix.Earth` is read as accelerations on Asterix caused by Earth. In this case, the only acceleration is Earth's point-mass gravity. Thanks to unidimensional array inference, although a list of accelerations is expected, we can simply provide the object :literal:`{ "type": "pointMassGravity" }`, which is an acceleration object that only requires one key to be defined.
+We specify the key :jsonkey:`propagators[0].accelerations`, an object containing lists of accelerations. The inner keys (in this case, :jsonkey:`Earth`) are the names of the bodies exerting the accelerations, while the outer keys (in this case, :jsonkey:`Asterix`), are the names of the bodies undergoing the accelerations. Thus, :jsonkey:`accelerations.Asterix.Earth` is read as accelerations on Asterix caused by Earth. In this case, the only acceleration is Earth's point-mass gravity.
 
-In this case, some keys of the :jsonkey:`propagator` have been omitted. For instance, the key :literal:`type` has not been specified, meaning that the default value :literal:`"cowell"` is used.
+In this case, some keys of :jsonkey:`propagators[0]` have been omitted. For instance, the key :literal:`type` has not been specified, meaning that the default value :literal:`"cowell"` is used.
 
 The next step is to define the integrator settings. The initial time is retrieved from the key :jsonkey:`initialEpoch` defined at root level, so it is sufficient to define the key :jsonkey:`integrator` to be equal to the following object:
 
@@ -125,7 +129,7 @@ After running in Terminal:
 
   json_inteface main.json
 
-we will get a :class:`stateHistory.txt` file containing the results, and a :class:`fullSettings.json` file containing default settings, inferred unidimensional arrays and some keys are moved to a different place (e.g. :jsonkey:`bodies.Asterix.initialState` to :jsonkey:`propagator[0].initialStates`):
+we will get a :class:`stateHistory.txt` file containing the results, and a :class:`fullSettings.json` file containing default settings and with some keys moved to a different place (e.g. :jsonkey:`bodies.Asterix.initialState` to :jsonkey:`propagators[0].initialStates`):
 
 .. literalinclude:: fullSettings.json
   :linenos:

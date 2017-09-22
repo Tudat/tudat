@@ -283,7 +283,7 @@ To illustrate the structure of a :literal:`from_json` function for a shared poin
 
   } // namespace tudat
 
-Note that the files :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h` and :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h` are always included. The former includes enhaced value access functions (:literal:`getValue`) and the latter overrides (and defines) :literal:`to_json` and :literal:`from_json` functions for frequently-used types, such as :class:`std::vector` (with support for unidimensional array inference [REF]) or :class:`Eigen::Matrix`. The file :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h` includes :class:`Tudat/InputOutput/JsonInterface/Support/keys.h`, so all the keys available in the :literal:`json_interface` are readily accessible.
+Note that the files :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h` and :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h` are always included. The former includes enhaced value access functions (:literal:`getValue`) and the latter overrides (and defines) :literal:`to_json` and :literal:`from_json` functions for frequently-used types, such as :class:`std::vector` or :class:`Eigen::Matrix`. The file :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h` includes :class:`Tudat/InputOutput/JsonInterface/Support/keys.h`, so all the keys available in the :literal:`json_interface` are readily accessible.
 
 Typically, the first lines of a :literal:`from_json` function are:
 
