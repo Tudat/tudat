@@ -6,18 +6,18 @@
 Value conversions
 =================
 
-Conversion to :class:`json`
+Conversion to :class:`nlohmann::json`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The value of (the elements of) a :class:`json` object can be set as follows:
+The value of (the elements of) a :class:`nlohmann::json` object can be set as follows:
 
 .. code-block:: cpp
 
     int myInt = 1;
-    json j = myInt;          // j.is_numeric( ) -> true
+    nlohmann::json j = myInt;          // j.is_numeric( ) -> true
 
     double myDouble = 1.0;
-    json k;                  // k.is_null( ) -> true
+    nlohmann::json k;                  // k.is_null( ) -> true
     k[ 0 ] = myDouble;       // k.is_array( ) && k[ 0 ].is_numeric( ) && j == k[ 0 ] -> true
     
 However, this does not work (yet):
@@ -25,23 +25,23 @@ However, this does not work (yet):
 .. code-block:: cpp
 
     MyClass myObject = ...
-    json j = myObject;            // compile error
+    nlohmann::json j = myObject;            // compile error
 
 because the JSON representation of :class:`MyClass` objects is not known.
 
-At first, one could think that the :class:`json` class has constructors taking as an argument a basic type such as :class:`double`, :class:`int`, :class:`bool`, :class:`std::string`, :class:`std::vector` or :class:`std::map`. However, this is not true. When writing:
+At first, one could think that the :class:`nlohmann::json` class has constructors taking as an argument a basic type such as :class:`double`, :class:`int`, :class:`bool`, :class:`std::string`, :class:`std::vector` or :class:`std::map`. However, this is not true. When writing:
 
 .. code-block:: cpp
     
     std::string myString = "hi";
-    json j = myString;
+    nlohmann::json j = myString;
 
 the following is happening behind the scenes:
     
 .. code-block:: cpp
 
     ...
-    json j;
+    nlohmann::json j;
     std::to_json( j, "hi" );
     
 Indeed, :literal:`to_json` functions are defined for many frequently used types in the file :literal:`"json/src/json.hpp"`. These functions are always defined in the namespace of the type that is on the right-hand side of the assignment. We can create :literal:`to_json` functions for our custom classes:
@@ -68,7 +68,7 @@ Indeed, :literal:`to_json` functions are defined for many frequently used types 
     :name: jsonInterface-h
     
     #include "json/src/json.hpp"
-    using json = nlohmann::json;
+    using nlohmann::json = nlohmann::json;
     #include "dog.h"
     
     namespace animals
@@ -88,27 +88,27 @@ Indeed, :literal:`to_json` functions are defined for many frequently used types 
     
     void printDog( )
     {
-        json jsonDog = animals::Dog( "Senda", 20 );
+        nlohmann::json jsonDog = animals::Dog( "Senda", 20 );
         std::cout << jsonDog << std::endl;    // {"name":"Senda","weight":20}
     }
     
     
-Conversion from :class:`json`
+Conversion from :class:`nlohmann::json`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The value of the elements of a :class:`json` object can be accessed as follows:
+The value of the elements of a :class:`nlohmann::json` object can be accessed as follows:
 
 .. code-block:: cpp
 
-    json j = { "no", "yes" };
+    nlohmann::json j = { "no", "yes" };
     j[ 0 ];                                             // "no"
     j.at( 1 );                                          // "yes"
 
-    json k = { { "half", 0.5 }, { "twice", 2.0 } };
+    nlohmann::json k = { { "half", 0.5 }, { "twice", 2.0 } };
     k[ "half" ];                                        // 0.5
     k.at( "twice" );                                    // 2.0
 
-However, as discussed in :ref:`extendingJSON_basics_valueTypes`, the returned values are not numbers or strings, but :class:`json` objects. Thus:
+However, as discussed in :ref:`extendingJSON_basics_valueTypes`, the returned values are not numbers or strings, but :class:`nlohmann::json` objects. Thus:
 
 .. code-block:: cpp
 
@@ -140,7 +140,7 @@ The :literal:`from_json` functions must be defined in the namespace of the type 
 
 .. code-block:: cpp
 
-    json jsonDog = { { "name", "Senda" }, { "weight", 20 } };
+    nlohmann::json jsonDog = { { "name", "Senda" }, { "weight", 20 } };
     Dog dog = jsonDog;                                          // compile error
 
 We have to define its :literal:`from_json` function:
@@ -150,7 +150,7 @@ We have to define its :literal:`from_json` function:
     :name: jsonInterface-h-from-json
     
     #include "json/src/json.hpp"
-    using json = nlohmann::json;
+    using nlohmann::json = nlohmann::json;
     #include "dog.h"
     
     namespace animals
@@ -193,7 +193,7 @@ Now, we can do:
 
 .. code-block:: cpp
 
-    json jsonDog = { { "name", "Senda" }, { "weight", 20 } };
+    nlohmann::json jsonDog = { { "name", "Senda" }, { "weight", 20 } };
     Dog dog = jsonDog;                                          // fine
 
 

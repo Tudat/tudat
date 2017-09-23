@@ -42,20 +42,20 @@ The JSON for modern C++ library has built-in support for enumerations. For insta
 
 .. code-block:: cpp
   
-  json j = 1;
+  nlohmann::json j = 1;
   EphemerisType ephemerisType = j;                      // direct_spice_ephemeris
   
 .. code-block:: cpp
   
   EphemerisType ephemerisType = interpolated_spice;
-  json j = ephemerisType;
+  nlohmann::json j = ephemerisType;
   std::cout << ephemerisType << std::endl;              // 3
 
 However, the built-in implementation uses the value of the enumeration rather than its name. Clearly, it is not convenient for the user having to specify the type of the ephemeris based on how they are listed in the C++ code. Additionally, if the order of the values in the enumeration list changes in the future, converting :literal:`1` to :class:`EphemerisType` may not result in :literal:`direct_spice_ephemeris` anymore. Thus, a custom implementation is needed, in which the JSON representation of an enumeration is the name of its possible values. For instance:
 
 .. code-block:: cpp
   
-  json j = "direct_spice_ephemeris";
+  nlohmann::json j = "direct_spice_ephemeris";
   EphemerisType ephemerisType = j;
   
 but this leads to a run-time error.
@@ -64,7 +64,7 @@ but this leads to a run-time error.
 Name-based implementation
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Custom implementations for the :literal:`to_json` and :literal:`from_json` functions of all the supported enumerations are provided in the :literal:`json_interface`. In this way, it is possible to convert :class:`json` objects of value type :jsontype:`string` to :literal:`enum` and vice versa. However, the string representation for each enum value has to be manually provided. Although it is possible to replace the enumeration value names by identical strings during compile time, this was deemed to complex and, additionally, the enumeration names used in Tudat are not always optimal. For instance, consider this JSON file:
+Custom implementations for the :literal:`to_json` and :literal:`from_json` functions of all the supported enumerations are provided in the :literal:`json_interface`. In this way, it is possible to convert :class:`nlohmann::json` objects of value type :jsontype:`string` to :literal:`enum` and vice versa. However, the string representation for each enum value has to be manually provided. Although it is possible to replace the enumeration value names by identical strings during compile time, this was deemed to complex and, additionally, the enumeration names used in Tudat are not always optimal. For instance, consider this JSON file:
 
 .. code-block:: json
   :caption: :class:`bodies.h`
@@ -142,13 +142,13 @@ Although a :literal:`to_json` and :literal:`from_json` function has to be writte
 
   ...
 
-  //! Convert `EphemerisType` to `json`.
+  //! Convert `EphemerisType` to `nlohmann::json`.
   inline void to_json( json& jsonObject, const EphemerisType& ephemerisType )
   {
       jsonObject = json_interface::stringFromEnum( ephemerisType, ephemerisTypes );
   }
 
-  //! Convert `json` to `EphemerisType`.
+  //! Convert `nlohmann::json` to `EphemerisType`.
   inline void from_json( const json& jsonObject, EphemerisType& ephemerisType )
   {
       ephemerisType = json_interface::enumFromString( jsonObject, ephemerisTypes );
@@ -175,4 +175,4 @@ If the string representation of :literal:`ephemerisType` is not known, the recog
 
 .. note:: All the files in which the :literal:`to_json` and :literal:`from_json` functions of enumerations and settings file are defined must include the files :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h` and :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h`. The former includes :class:`Tudat/InputOutput/JsonInterface/Support/errorHandling.h`, exposing the functions :literal:`json_interface::stringFromEnum` and :literal:`json_interface::enumFromString`.
 
-.. caution:: When converting an enumeration to or from a :class:`json` object, the file in which its custom :literal:`to_json` and :literal:`from_json` functions are defined must be included (if the conversion takes place in a different file). If one forgets to include this file, the code will compile without giving any errors or warnings and the default implementation will be used, leading to a run-time error in which it is said that an :class:`int` was expected when converting to the enumeration type.
+.. caution:: When converting an enumeration to or from a :class:`nlohmann::json` object, the file in which its custom :literal:`to_json` and :literal:`from_json` functions are defined must be included (if the conversion takes place in a different file). If one forgets to include this file, the code will compile without giving any errors or warnings and the default implementation will be used, leading to a run-time error in which it is said that an :class:`int` was expected when converting to the enumeration type.

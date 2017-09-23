@@ -24,5 +24,6 @@ It is also possible to use the :literal:`json_interface` application from Qt Cre
    keys/index
    modularFiles
    multicase
+   customJsonApp
    tutorials/index
 

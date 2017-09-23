@@ -18,7 +18,7 @@ FIXME
 Component tests
 ~~~~~~~~~~~~~~~
 
-Each component test is designed to exhaustively test all the features of a given settings-container class (and its derived classes). In these tests, it is checked that objects created by reading a JSON file are identical to the objects created manually by writing C++ code. In order to compare the created objects, it will be necessary to define a comparison operator for each settings class in Tudat. Fortunately, this has indirectly done by writing :literal:`to_json` methods, so we can compare the :literal:`json` representation of the created objects rather than the objects themselves. The only drawbacks of this approach are:
+Each component test is designed to exhaustively test all the features of a given settings-container class (and its derived classes). In these tests, it is checked that objects created by reading a JSON file are identical to the objects created manually by writing C++ code. In order to compare the created objects, it will be necessary to define a comparison operator for each settings class in Tudat. Fortunately, this has indirectly done by writing :literal:`to_json` methods, so we can compare the :literal:`nlohmann::json` representation of the created objects rather than the objects themselves. The only drawbacks of this approach are:
 
   - It cannot be followed for classes storing information that is not convertible to JSON (such as :literal:`boost::function`).
   - An error in the :literal:`to_json` function can lead to overlooking of errors in the :literal:`from_json` functions.

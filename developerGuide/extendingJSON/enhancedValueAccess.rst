@@ -26,7 +26,7 @@ As it can be seen, for a simple input file such as :ref:`main-json` the key :jso
 Key paths
 ~~~~~~~~~
 
-A key path is a list of keys of a :class:`json` that are accessed sequentialy one after the other. The class :class:`KeyPath` is declared in the file :literal:`Tudat/InputOutput/JsonInterface/Support/keys.h`. This class derives from :class:`std::vector< std::string >` and has some additional features, such as the possibility of being initialised directly from a single :literal:`std::string` or being outputted as text:
+A key path is a list of keys of a :class:`nlohmann::json` that are accessed sequentialy one after the other. The class :class:`KeyPath` is declared in the file :literal:`Tudat/InputOutput/JsonInterface/Support/keys.h`. This class derives from :class:`std::vector< std::string >` and has some additional features, such as the possibility of being initialised directly from a single :literal:`std::string` or being outputted as text:
 
 .. code-block:: cpp
 
@@ -78,7 +78,7 @@ The templated function :literal:`ValueType getValue( const json& jsonObject, con
   getValue< std::string >( mainJson, "integrator" / "type" );   // "rungeKutta4"
   getValue< std::string >( mainJson, "export" / 1 / "file" );   // "states.txt"
 
-In addition to recursively accessing the keys contained in :literal:`keyPath` and eventually transforming the last retrieved :class:`json` object to :class:`ValueType`, this function adds support for comprehensive value-access and value-conversion errors. For instance:
+In addition to recursively accessing the keys contained in :literal:`keyPath` and eventually transforming the last retrieved :class:`nlohmann::json` object to :class:`ValueType`, this function adds support for comprehensive value-access and value-conversion errors. For instance:
 
 .. code-block:: cpp
 
@@ -106,7 +106,7 @@ throws an :class:`IllegalValueError`:
   Illegal value for key: export[1].file
 
 
-Now, image that we have an :class:`Integrator` class and we define its :literal:`from_json` function so that it can be created from :class:`json` objects:
+Now, image that we have an :class:`Integrator` class and we define its :literal:`from_json` function so that it can be created from :class:`nlohmann::json` objects:
 
 .. code-block:: cpp
   :caption: :class:`integrator.h`
@@ -140,7 +140,7 @@ the default value access functions will be used, leading to error messages in ca
 
   Integrator integrator = getValue< Integrator >( mainJson, "integrator" );
 
-Note that, in both cases, a :class:`json` object containing only the integrator object is passed to the :literal:`from_json` function. However, this object is not the same in both cases. When using the default basic value access, the following object is passed:
+Note that, in both cases, a :class:`nlohmann::json` object containing only the integrator object is passed to the :literal:`from_json` function. However, this object is not the same in both cases. When using the default basic value access, the following object is passed:
 
 .. code-block:: json
 
@@ -149,7 +149,7 @@ Note that, in both cases, a :class:`json` object containing only the integrator 
     "stepSize": 0
   }
   
-When using the :literal:`getValue` function, the following :class:`json` object is passed:
+When using the :literal:`getValue` function, the following :class:`nlohmann::json` object is passed:
 
 .. code-block:: json
 
@@ -244,14 +244,14 @@ Special keys
 
 In order to make possible this advanced error handling in which the full key path is printed, a set of special keys are defined in :literal:`json_interface`. These special keys are subdivided in two categories:
 
-  - Object-related. These special keys are assigned to :class:`json` objects by the :literal:`getValue` function. These keys must never be used in a JSON input file.
+  - Object-related. These special keys are assigned to :class:`nlohmann::json` objects by the :literal:`getValue` function. These keys must never be used in a JSON input file.
 
-    - :literal:`#root` Key storing the contents of the root :class:`json` object.
-    - :literal:`#keypath` Key storing the (absolute) key path from which a :class:`json` object was retrieved.
+    - :literal:`#root` Key storing the contents of the root :class:`nlohmann::json` object.
+    - :literal:`#keypath` Key storing the (absolute) key path from which a :class:`nlohmann::json` object was retrieved.
 
   - Path-related. These special keys are used only in :class:`KeyPath` objects.
     
-    - :literal:`~` Known as root key. Used to denote that a key path is absolute (i.e. relative to the root :class:`json` object). Relative paths start with a key other than :literal:`~`.
+    - :literal:`~` Known as root key. Used to denote that a key path is absolute (i.e. relative to the root :class:`nlohmann::json` object). Relative paths start with a key other than :literal:`~`.
     - :literal:`..` Known as up key. Used to navigate up one level in the key tree.
       
 For instance, imagine that our :class:`Integrator` has an :literal:`initialTime` property. If we want this property to be retrieved from the :literal:`initialEpoch` key of the :literal:`mainJson` object in case it is not defined for the integrator, we can update its :literal:`from_json` like this:
@@ -344,7 +344,7 @@ In this subsection, a few functions widely used in the :literal:`json_interface`
     
     Integrator integrator = getAs< Integrator >( jsonIntegrator );
 
-- :literal:`json getRootObject( const json& jsonObject )`
+- :literal:`nlohmann::json getRootObject( const json& jsonObject )`
 
   .. code-block:: cpp
     
@@ -385,7 +385,7 @@ Thus, when we try to access:
 
 .. code-block:: cpp
   
-  json integrators = mainJson.at( "integrator" );
+  nlohmann::json integrators = mainJson.at( "integrator" );
   Integrator thirdIntegrator = integrators.at( 2 );
 
 we get the following error:
@@ -401,7 +401,7 @@ If we use enhanced value access:
 
 .. code-block:: cpp
   
-  json thirdIntegrator = getValue< json >( mainJson, "integrator" / 2 );
+  nlohmann::json thirdIntegrator = getValue< nlohmann::json >( mainJson, "integrator" / 2 );
 
 we do get a comprehensible error message:
 
@@ -410,17 +410,17 @@ we do get a comprehensible error message:
   libc++abi.dylib: terminating with uncaught exception of type tudat::json_interface::UndefinedKeyError:
   Undefined key: integrator[2]
 
-Although the functionality is identical for :class:`json` objects of value type :jsontype:`object` and :jsontype:`array`, the internal implementation is different and can have consequences for a developer extending the JSON interface. As explained in [REF], the comprehensible error messages are generated by defining the special key :jsonkey:`#keypath` of the :class:`json` objects retrieved by using the :literal:`getValue` function. If the retrieved object is of value type :jsontype:`object`, defining this key is trivial. However, if the retrieved object is of value type :jsontype:`array`, the key cannot be defined directly, as string keys cannot be defined for :class:`json` arrays.
+Although the functionality is identical for :class:`nlohmann::json` objects of value type :jsontype:`object` and :jsontype:`array`, the internal implementation is different and can have consequences for a developer extending the JSON interface. As explained in [REF], the comprehensible error messages are generated by defining the special key :jsonkey:`#keypath` of the :class:`nlohmann::json` objects retrieved by using the :literal:`getValue` function. If the retrieved object is of value type :jsontype:`object`, defining this key is trivial. However, if the retrieved object is of value type :jsontype:`array`, the key cannot be defined directly, as string keys cannot be defined for :class:`nlohmann::json` arrays.
 
-To overcome this problem, :class:`json` objects of value type :jsontype:`array` are converted first to :class:`json` objects of value type :jsontype:`object`. Then, the special keys :literal:`#keypath` and :literal:`#root` *can* be set. This means that, when calling :literal:`getValue< json >( ... )`, the returned :class:`json` will always be of value type :jsontype:`object` or :jsontype:`primitive`, but never :jsontype:`array`. For :jsontype:`primitive` types, there is no need to convert them to :jsontype:`object` and define the special keys, as they are unstructured, which means that they cannot store ojects and thus their :literal:`at` method is undefined.
+To overcome this problem, :class:`nlohmann::json` objects of value type :jsontype:`array` are converted first to :class:`nlohmann::json` objects of value type :jsontype:`object`. Then, the special keys :literal:`#keypath` and :literal:`#root` *can* be set. This means that, when calling :literal:`getValue< nlohmann::json >( ... )`, the returned :class:`nlohmann::json` will always be of value type :jsontype:`object` or :jsontype:`primitive`, but never :jsontype:`array`. For :jsontype:`primitive` types, there is no need to convert them to :jsontype:`object` and define the special keys, as they are unstructured, which means that they cannot store ojects and thus their :literal:`at` method is undefined.
 
-The process of converting :class:`json` objects from value type :jsontype:`array` to value type :jsontype:`object` is done inside the :literal:`getValue` function automatically. For instance:
+The process of converting :class:`nlohmann::json` objects from value type :jsontype:`array` to value type :jsontype:`object` is done inside the :literal:`getValue` function automatically. For instance:
 
 .. code-block:: cpp
   
-  json integrators = getValue< json >( mainJson, "integrator" );
+  nlohmann::json integrators = getValue< nlohmann::json >( mainJson, "integrator" );
 
-generate the following :class:`json` object:
+generate the following :class:`nlohmann::json` object:
 
 .. code-block:: json
 
@@ -437,17 +437,17 @@ generate the following :class:`json` object:
     "#root": {}
   }
 
-where the root object, i.e. :literal:`mainJson`, has been omitted in this document. If one wants to check whether the returned object actually represent an array, instead of using the built-in :literal:`is_array` method, one has to use the function :literal:`bool isConvertibleToArray( const json& j )` defined in :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h`. This function returns :literal:`true` if :literal:`j` is of value type :jsontype:`object` and all its non-special keys math the expression :literal:`@i`, with :literal:`i` convertible to :class:`int`, or if :literal:`j` is already of value type :jsontype:`array`. After this check, it is safe to call the function :literal:`json getAsArray( const json& jsonObject )` to convert the object back to array type. During this process, the information stored in the special keys is lost, so this is rarely done. Instead, the :literal:`from_json` function of :class:`std::vector` has been overridden so that it is possible to write:
+where the root object, i.e. :literal:`mainJson`, has been omitted in this document. If one wants to check whether the returned object actually represent an array, instead of using the built-in :literal:`is_array` method, one has to use the function :literal:`bool isConvertibleToArray( const json& j )` defined in :class:`Tudat/InputOutput/JsonInterface/Support/valueAccess.h`. This function returns :literal:`true` if :literal:`j` is of value type :jsontype:`object` and all its non-special keys math the expression :literal:`@i`, with :literal:`i` convertible to :class:`int`, or if :literal:`j` is already of value type :jsontype:`array`. After this check, it is safe to call the function :literal:`nlohmann::json getAsArray( const json& jsonObject )` to convert the object back to array type. During this process, the information stored in the special keys is lost, so this is rarely done. Instead, the :literal:`from_json` function of :class:`std::vector` has been overridden so that it is possible to write:
 
 .. code-block:: cpp
   
-  json jsonObject = getValue< json >( mainJson, "integrator" );
+  nlohmann::json jsonObject = getValue< nlohmann::json >( mainJson, "integrator" );
   jsonObject.is_array( );                                           // false
   isConvertibleToArray( jsonObject );                               // true
   std::vector< Integrator > integrators = getAs< std::vector< Integrator > >( jsonObject );
 
-.. note:: :class:`json` objects of value type :jsontype:`array` (or convertible to array) are not only convertible to :class:`std::vector` , they can also be used to create e.g. an :literal:`Eigen::Matrix` or an :literal:`std::set`. The :literal:`to_json` and :literal:`from_json` functions for :literal:`Eigen::Matrix` are defined in :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h`, making use of the custom :literal:`from_json` implementation for :class:`std::vector` (i.e. the :class:`json` object is first converted to a vector of vectors, and then to an :literal:`Eigen::Matrix`).
+.. note:: :class:`nlohmann::json` objects of value type :jsontype:`array` (or convertible to array) are not only convertible to :class:`std::vector` , they can also be used to create e.g. an :literal:`Eigen::Matrix` or an :literal:`std::set`. The :literal:`to_json` and :literal:`from_json` functions for :literal:`Eigen::Matrix` are defined in :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h`, making use of the custom :literal:`from_json` implementation for :class:`std::vector` (i.e. the :class:`nlohmann::json` object is first converted to a vector of vectors, and then to an :literal:`Eigen::Matrix`).
 
-.. warning:: No custom implementation of the :literal:`from_json` function for :literal:`std::set` is provided by :literal:`json_interface`, since this type is not used by Tudat (as of now). In the future, if one wants to use the :literal:`getValue` function with :literal:`std::set` as template argument, the default :literal:`from_json` function for :literal:`std::set` will have to be overridden to allow conversion of :class:`json` objects of value type :jsontype:`object` to :literal:`std::set`, in a similar way as been done for :literal:`std::vector` in :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h`.
+.. warning:: No custom implementation of the :literal:`from_json` function for :literal:`std::set` is provided by :literal:`json_interface`, since this type is not used by Tudat (as of now). In the future, if one wants to use the :literal:`getValue` function with :literal:`std::set` as template argument, the default :literal:`from_json` function for :literal:`std::set` will have to be overridden to allow conversion of :class:`nlohmann::json` objects of value type :jsontype:`object` to :literal:`std::set`, in a similar way as been done for :literal:`std::vector` in :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h`.
 
 .. note:: The :literal:`to_json` function of :literal:`std::map` and :literal:`std::unordered_map` have been overridden in :class:`Tudat/InputOutput/JsonInterface/Support/valueConversions.h`, so that the special keys are not assigned to the converted map.
