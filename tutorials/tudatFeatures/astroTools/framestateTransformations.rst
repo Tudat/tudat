@@ -100,7 +100,7 @@ The inverse operation, mean to eccentric anomaly, is done separately for hyperbo
     double eccentricity = ...
     double eccentricAnomaly = convertMeanAnomalyToEccentricAnomaly( eccentricity, meanAnomaly );
 
-However, this conversion involves the solution of an implicit algebraic equation, for which a root finder is used. Root finders are discussed in more detail here. When calling the function as in the above example, a root finder is created internally. However, in some cases you may want to specify your own root finder, as well as a first initial guess for the eccentric anomaly (which the root finder uses at its first iteration). When doing so, you create a pointer to a root finder object and pass it to the conversion function as follows:
+However, this conversion involves the solution of an implicit algebraic equation, for which a root finder is used. Root finders are discussed in more detail here. When calling the function as in the above example, a :class:`RootFinder` is created internally. However, in some cases you may want to specify your own root finder, as well as a first initial guess for the eccentric anomaly (which the root finder uses at its first iteration). When doing so, you create a pointer to a root finder object and pass it to the conversion function as follows:
 
 .. code-block:: cpp
 
@@ -121,7 +121,7 @@ where the argument ``false`` indicates that the user-specified initial guess is 
 
 Spherical-orbital elements
 **************************
-The spherical elements are typically used to denote the conditions in atmospheric flight. In most applications, they will be used to denote the state in a body-fixed frame. The details of the physical meaning of the elements id discussed here. The element indices in Tudat are the following:
+The spherical elements are typically used to denote the conditions in atmospheric flight. In most applications, they will be used to denote the state in a body-fixed frame. The details of the physical meaning of the elements is discussed here. The element indices in Tudat are the following:
 
 .. code-block:: cpp
 
@@ -152,15 +152,79 @@ Similarly, the inverse operation is done as:
 
 Modified Equinoctial elements
 *****************************
-Coming soon.
+The modified equinoctial elements are typically used for orbits with eccentricities near 0 or 1 and/or inclinations near 0 or :math:`\pi`. The element indices in Tudat are the following:
 
+.. code-block:: cpp
+
+   //! Modified equinoctial element vector indices.
+   enum ModifiedEquinoctialElementVectorIndices
+   {
+       semiParameterIndex = 0,
+       fElementIndex = 1,
+       gElementIndex = 2,
+       hElementIndex = 3,
+       kElementIndex = 4,
+       trueLongitudeIndex = 5 
+   };
+
+The modified equinoctial elements consists of 6 elements. The conversion to/from Cartesian elements requires the gravitation parameter of the body w.r.t. which the Modified Equinoctial elements are defined. Furthermore, a :literal:`bool` is used to indicate whether the singularity of this element set occurs for inclinations of 0 or :math:`\pi`. The conversion from Cartesian elements is done as:
+
+.. code-block:: cpp
+
+    Eigen::Vector6d cartesianState = ....
+    double centralBodyGravitationalParameter = ...
+    Eigen::Vector6d cartesianState = convertCartesianToModifiedEquinoctial( cartesianState, centralBodyGravitationalParameter, flipSingularityToZeroInclination );
+
+.. Note:: :literal:`flipSingularityToZeroInlination` is optional for this conversion. If left empty, an overloaded function will determine whether this value is true or false based on the inclination of the orbit. 
+
+Similarly, the inverse operation is done as:
+
+.. code-block:: cpp
+
+    Eigen::Vector6d modifiedEquinoctialElements = ....
+    double centralBodyGravitationalParameter = ...
+    Eigen::Vector6d cartesianState = convertModifiedEquinoctialToCartesian( modifiedEquinoctialElements, centralBodyGravitationalParameter, flipSingularityToZeroInclination );
+
+
+ 
 Unified State Model elements
 ****************************
-Coming soon.
+The element indices for the Unified State Model elements in Tudat are the following:
+
+.. code-block:: cpp
+
+   //! Unified State Model indices.
+   enum UnifiedStateModelElementIndices
+   {
+       CHodographIndex = 0,
+       Rf1HodographIndex = 1,
+       Rf2HodographIndex = 2,
+       epsilon1QuaternionIndex = 3,
+       epsilon2QuaternionIndex = 4,
+       epsilon3QuaternionIndex = 5,
+       etaQuaternionIndex = 6
+   };
+
+The unified state model elements consists of 7 elements. Only the conversion to/from Keplerian elements is implemented. The conversion requires the gravitation parameter of the body w.r.t. which the Unified State Model elements are defined. The conversion from Keplerian elements is done as:
+
+.. code-block:: cpp
+
+    Eigen::Vector6d keplerianElements = ....
+    double centralBodyGravitationalParameter = ...
+    Eigen::Vector6d cartesianState = convertKeplerianToUnifiedStateModelElements( keplerianElements, centralBodyGravitationalParameter );
+
+Similarly, the inverse operation is done as:
+
+.. code-block:: cpp
+
+    Eigen::Vector6d unifiedStateModelElements = ....
+    double centralBodyGravitationalParameter = ...
+    Eigen::Vector6d cartesianState = convertUnifiedStateElementsToKeplerian( unifiedStateModelElements, centralBodyGravitationalParameter );
+
 
 Frame transformations
 ~~~~~~~~~~~~~~~~~~~~~
-Every state, regardless of its representation is expressed with a particular origin an orientation. This is most easy to understand for Cartesian elements, where the origin represents the (0,0,0) position, and the orientation defines the direction of the x-, y- and z-axes. Below, we discuss how to perform these operations in Tudat.
+Every state, regardless of its representation is expressed with a particular origin and orientation. This is most easy to understand for Cartesian elements, where the origin represents the (0,0,0) position, and the orientation defines the direction of the x-, y- and z-axes. Below, we discuss how to perform these operations in Tudat.
 
 .. warning:: Do not use the getCurrentState or getCurrentRotation functions in the body objects! These functions are used during numerical propagation, and calling them outside of the numerical propagation will generally not lead to meaningful results.
 
@@ -229,4 +293,5 @@ the inverse rotation is done as follows:
     double currentTime = ...
     Eigen::Vector6d bodyFixedState = ...
     Eigen::Vector6d inertialState = transformStateToGlobalFrame( inertialState, bodyFixedState, bodyMap.at( "Earth" )->getRotationalEphemeris( ) );
+
 
