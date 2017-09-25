@@ -191,7 +191,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
    
         - :literal:`propagatorSettingsMap`
 
-            :literal:`std::vector< boost::shared_ptr< PropagatorSettings< StateScalarType > > >` where each element contains a pointer to a :class:`PropagatorSettings` class. This class is the simplest to use, since it allows to pass a set of unsorted :class:`PropagatorSettings` derived-classes by means of the :literal:`push_back` method of :literal:`std::vector`.
+            :literal:`std::vector< boost::shared_ptr< PropagatorSettings< StateScalarType > > >` where each element contains a pointer to a :class:`PropagatorSettings` class. This class is the simplest to use, since it allows to pass a set of unsorted :class:`PropagatorSettings` derived classes by means of the :literal:`push_back` method of :literal:`std::vector`.
 
     .. method:: Using an std::map
 
@@ -206,7 +206,10 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         - :literal:`propagatorSettingsMap`
 
-            :literal:`std::map< IntegratedStateType, std::vector< boost::shared_ptr< PropagatorSettings< StateScalarType > > > >` where each element contains a pointer to a :class:`PropagatorSettings` class. This class requires a sorted list :class:`PropagatorSettings` derived-classes.
+            :literal:`std::map< IntegratedStateType, std::vector< boost::shared_ptr< PropagatorSettings< StateScalarType > > > >` where each element contains a pointer to a :class:`PropagatorSettings` class. This class requires a sorted list :class:`PropagatorSettings` derived classes.
+
+   
+   .. Warning:: When using the :class:`MultiTypePropagatorSettings` derived class note that the :literal:`dependentVariablesToSave` need to be passed in this constructor and not inside the :literal:`propagatorSettingsMap` since these will be ignored. 
 
 .. class:: MultiArcPropagatorSettings
 
