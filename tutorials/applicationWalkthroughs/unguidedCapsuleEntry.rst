@@ -150,3 +150,13 @@ Finally, the termination conditions are established. The termination settings ar
 
 .. tip:: Please go to :ref:`tudatFeaturesPropagatorSettingsTermination` for a detailed description of the available termination conditions.
 
+Results
+~~~~~~~
+
+Below the history of some of the saved parameters is shown. One can see the capsule skipping several times before it's final descent into the atmosphere until reaching 25km altitude. 
+
+.. figure:: images/apolloResults.png
+
+.. tip:: Open the figure in a new tab for more detail.
+
+

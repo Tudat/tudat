@@ -283,3 +283,32 @@ where the retrieved result is a :literal:`std::map` where the key :literal:`doub
                                          std::numeric_limits< double >::digits10,
                                          std::numeric_limits< double >::digits10,
                                          "," );
+
+Results
+~~~~~~~
+The output of the program should look similar to the output below::
+
+   Starting ../tudatBundle/tudatExampleApplications/satellitePropagatorExamples/bin/applications/application_SingleSatellitePropagator... 
+   Single Earth-Orbiting Satellite Example.
+   The initial position vector of Asterix is [km]:
+   7037.48
+   3238.06
+   2150.72
+   The initial velocity vector of Asterix is [km/s]:
+     -1.46566
+   -0.0409584
+       6.6228
+   After 86400 seconds, the position vector of Asterix is [km]:
+   -4560.45
+   -1438.32
+    5973.99
+   And the velocity vector of Asterix is [km/s]:
+   -4.55021
+   -2.41254
+   -4.95063
+   ../tudatBundle/tudatExampleApplications/satellitePropagatorExamples/bin/applications/application_SingleSatellitePropagator exited with code 0
+
+
+
+
+

@@ -183,7 +183,7 @@ Below, you see the (in-plane) resulting dynamics of the spacecraft and the mass 
 
 .. figure:: images/thrustAlongVelocityExampleResult.png
 
-.. tip:: Open the figure in a new tab if it is too small.
+.. tip:: Open the figure in a new tab for more detail.
 
 
 

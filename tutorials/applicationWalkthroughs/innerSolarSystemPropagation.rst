@@ -208,3 +208,15 @@ Finally, each of the :literal:`std::map` within :literal:`allBodiesPropagationHi
          std::numeric_limits< double >::digits10,
          "," );
   }
+
+Results
+~~~~~~~
+The orbit of the propagated bodies are shown below. First the orbits are shown in the inertial frame. Then case 1 is shown first where the Solar System Barycenter is considered as the central body. Finally case 2 where the higher hierarchical body is used as respective central body.
+
+.. figure:: images/InnerSolarSystemOverview.png
+.. figure:: images/InnerSolarSystemOrbitsBaryCenter.png
+.. figure:: images/InnerSolarSystemOrbits.png
+
+.. tip:: Open the figure(s) in a new tab for more detail.
+
+

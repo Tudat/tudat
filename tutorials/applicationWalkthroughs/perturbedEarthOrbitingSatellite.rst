@@ -140,3 +140,16 @@ Note that the spherical-harmonic gravitational model is implemented with the der
 
     bodiesToPropagate.push_back( "Asterix" );
     centralBodies.push_back( "Earth" );
+
+
+Results
+~~~~~~~
+Both the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` and :ref:`walkthroughsPerturbedEarthOrbitingSatellite` are now discussed. The orbits of both simulations can now be compared. This results are shown below. 
+
+.. figure:: images/perturbedAndUnperturbed.png
+
+.. tip:: Open the figure in a new tab for more detail.
+
+
+
+
