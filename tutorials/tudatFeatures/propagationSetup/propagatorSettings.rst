@@ -98,7 +98,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
    where:
 
-   -``torqueModelMap``
+   - ``torqueModelMap``
 
       :class:`TorqueModelMap` List of torque models that are to be used in propagation.
 
