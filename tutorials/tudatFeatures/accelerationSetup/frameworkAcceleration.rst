@@ -14,11 +14,11 @@ The settings for accelerations are defined and stored by the user in a :class:`S
 This is a double map (with twice a string as a key). The two levels correspond to the names of bodies undergoing an acceleration (first key) , and those for bodies exerting an acceleration (second key). This allows any number of bodies to be propagated, undergoing any number (and type) of accelerations from any number of bodies.
 For a given environment, most acceleration models are completely defined by:
 
-    - Type of acceleration model (a list is provided in the AvailableAcceleration enum in Tudat/Astrodynamics/BasicAstrodynamics/accelerationModelTypes.h.
+    - Type of acceleration model (a list is provided in the :class:`AvailableAcceleration` enum in ``Tudat/Astrodynamics/BasicAstrodynamics/accelerationModelTypes.h``).
     - Name of body undergoing acceleration
     - Name of body exerting acceleration
 
-For instance, when using the following:
+For instance, when using the following from the :ref:`walkthroughsUnguidedCapsuleEntry`:
 
 .. code-block:: cpp
 
@@ -26,9 +26,9 @@ For instance, when using the following:
     accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( central_gravity ) );
     accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( aerodynamic ) );
 
-We have defined a point-mass Earth gravity model and an aerodynamic acceleration due to Earth's atmosphere to be used. In this example, we have only defined the type of the acceleration, without the need for any additional information. All required variables used on the computations of the accelerations are uniquely defined in the Apollo and Earth entries of the body map (provided that the required environment models have been set).
+We have defined a point-mass Earth gravity model and an aerodynamic acceleration due to Earth's atmosphere to be used. In this example, we have only defined the type of the acceleration, without the need for any additional information. All required variables used on the computations of the accelerations are uniquely defined in the Apollo and Earth entries of the body map (provided that the required environment models have been set as discussed in :ref:`tudatFeaturesEnvironmentIndex`).
 
-However, as was the case for the settings of the environment models, certain types of accelerations require additional information. An important example is the spherical harmonic acceleration. We cannot replace :literal:`central_gravity` with :literal:`spherical_harmonic_gravity` in the above, as there is still an ambiguity in how the acceleration model is defined. In particular, we now also need the maximum degree and order of the gravity field that is to be used in addition to the three properties listed above. Consequently, we have created a dedicated :class:`AccelerationSettings` derived class for defining spherical harmonic acceleration settings. Updating the above example to use J_2, J_3 and J_4 (maximum degree = 4; maximum order = 0), we now have:
+However, as was the case for the settings of the environment models, certain types of accelerations require additional information. An important example is the spherical harmonic acceleration. We cannot replace :literal:`central_gravity` with :literal:`spherical_harmonic_gravity` in the above, as there is still an ambiguity in how the acceleration model is defined. In particular, we now also need the maximum degree and order of the gravity field that is to be used in addition to the three properties listed above. Consequently, we have created a dedicated :class:`AccelerationSettings` derived class for defining spherical harmonic acceleration settings: :class:`SphericalHarmonicAccelerationSettings`. Updating the above example to use J\ :sub:`2`, J\ :sub:`3` and J\ :sub:`4` (maximum degree = 4; maximum order = 0), we now have:
 
 .. code-block:: cpp
 
@@ -40,9 +40,9 @@ A full list of the available acceleration models, as well as their required inpu
 
 Having defined all the required settings for the accelerations in your :class:`SelectedAccelerationMap`, you can create the actual acceleration models by using the :literal:`createAccelerationModelsMap` function. This function requires four input parameters:
 
-    - Full environment, as defined by a NamedBodyMap
-    - Settings for the acceleration models, given by SelectedAccelerationMap
-    - A list of bodies to numerically propagate
+    - Full environment, as defined by a :class:`NamedBodyMap`.
+    - Settings for the acceleration models, given by :class:`SelectedAccelerationMap`.
+    - A list of bodies to numerically propagate.
     - A list of central bodies (one for each numerically propagated body).
 
 The list of central bodies defines the reference frame origins in which the bodies are propagated. The use of a hierarchical system is perfectly acceptable. For instance, one can propagate the Earth and Mars w.r.t. the Sun, the Sun w.r.t. the barycenter, the Moon w.r.t the Earth, etc. For this case, the central bodies and propagated bodies are defined as:
@@ -55,7 +55,7 @@ The list of central bodies defines the reference frame origins in which the bodi
     centralBodyMap[ "Mars" ] = "Sun";
     centralBodyMap[ "Sun" ] = "SSB";
 
-There is no hardcoded limit to the number of permitted levels in the frame hierarchy, but it is not allowed to include circular dependencies, i.e. body A w.r.t. body B, body B w.r.t. body C and body C w.r.t. body A. More information of the acceleration models is discussed in the Propagators section. The following gives an example on how to create the acceleration model objects:
+There is no hardcoded limit to the number of permitted levels in the frame hierarchy, but it is not allowed to include circular dependencies, i.e. body A w.r.t. body B, body B w.r.t. body C and body C w.r.t. body A. More information of the acceleration models is discussed in :ref:`tudatFeaturesPropagatorSettings`. The following gives an example on how to create the acceleration model objects:
 
 .. code-block:: cpp
 
@@ -69,14 +69,14 @@ There is no hardcoded limit to the number of permitted levels in the frame hiera
     ....
     AccelerationMap accelerationModelMap = createAccelerationModelsMap( bodyMap, accelerationMap, centralBodyMap )
 
-Mutual acceleration between bodies being propagated (i.e body A exerting acceleation on body B and vice versa), as is the case for solar system dynamics, is automatically handled by the :literal:`createAccelerationModelsMap` code and requires no specific consideration. Moreover, when creating a gravitational acceleration, the code checks whether it is a direct or a third-body gravitational acceleration and creates the acceleration models accordingly. Similarly, the code automatically checks which value of the gravitational parameter mu to use in such computations. For instance, when computing the gravitational acceleration due to the Sun acting on the Earth, :literal:`mu_Sun` is used when propagating w.r.t. the barycenter, whereas :literal:`mu_Sun + mu_Earth` is used when propagating w.r.t. the Sun.
+Mutual acceleration between bodies being propagated (i.e body A exerting acceleation on body B and vice versa), as is the case for solar system dynamics, is automatically handled by the :literal:`createAccelerationModelsMap` code and requires no specific consideration. Moreover, when creating a gravitational acceleration, the code checks whether it is a direct or a third-body gravitational acceleration and creates the acceleration models accordingly. Similarly, the code automatically checks which value of the gravitational parameter "mu" to use in such computations. For instance, when computing the gravitational acceleration due to the Sun acting on the Earth, :literal:`mu_Sun` is used when propagating w.r.t. the barycenter, whereas :literal:`mu_Sun + mu_Earth` is used when propagating w.r.t. the Sun.
 
-For every acceleration, a model for the current state of the body exerting the acceleration must be available (the state of the body undergoing the acceleration is taken from the numerically propagated state). This means that, in the above example of the Apollo capsule entering Earth's atmosphere, we must include one of the following:
+For every acceleration, a model for the current state of the body exerting the acceleration must be available (the state of the body undergoing the acceleration is taken from the numerically propagated state). This means that, in the above example of the Apollo capsule entering Earth's atmosphere (:ref:`walkthroughsUnguidedCapsuleEntry`), we must include one of the following:
 
     - An ephemeris member for Earth.
     - Numerically integrate the Earth concurrently with our Apollo vehicle.
 
-For this example, the second option is of course a bit 'non-standard'. However, for cases where entire planetary systems are propagated, such an approach is typically taken (for certain applications, the numerically propagated body must also have a particular ephemeris member object, see Propagators).
+For this example, the second option is of course a bit 'non-standard'. However, for cases where entire planetary systems are propagated, such an approach is typically taken (for certain applications, the numerically propagated body must also have a particular ephemeris member object, as discussed in :ref:`tudatFeaturesPropagatorSettings`).
 
 Available acceleration models
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
