@@ -83,6 +83,26 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
             :literal:`boost::shared_ptr< PropagationTerminationSettings >` that defines the termination settings of the propagation. This is the fifth argument and replaces the :literal:`endTime` in the default constructor.
 
+.. class:: RotationalStatePropagatorSettings
+
+   This class implements the framework required to propagate the rotational dynamics of a body. The settings are constructed as follows:
+
+   .. code-block:: cpp
+
+      RotationalStatePropagatorSettings( 
+      		torqueModelMap,
+                bodiesToIntegrate,
+                initialBodyStates,
+                terminationSettings,
+                dependentVariablesToSave )
+
+   where:
+
+   -``torqueModelMap``
+
+      :class:`TorqueModelMap` List of torque models that are to be used in propagation.
+
+
 .. class:: MassPropagatorSettings
 
     This class implements the framework required to propagate the mass of a body. The constructor of this derived class is overloaded allowing either a single mass-rate per body or multiple mass-rates per body: 
