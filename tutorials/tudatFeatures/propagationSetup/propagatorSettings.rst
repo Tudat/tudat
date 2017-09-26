@@ -49,7 +49,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         - :literal:`propagator`
 
-            :class:`TranslationalPropagatorType` which defines the type of propagator being used. Currently, :literal:`cowell` and :literal:`encke` are available. By default, the :literal:`cowell` propagator is used.
+            :class:`TranslationalPropagatorType` which defines the type of propagator being used. Currently, :literal:`cowell`, :literal:`encke`, :literal:`gaus_keplerian` and :literal:`gaus_modified_equinoctial` are available. By default, the :literal:`cowell` propagator is used.
 
         - :literal:`dependentVariablesToSave`
 
@@ -233,7 +233,23 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
 .. class:: MultiArcPropagatorSettings
 
-    This class is meant to be used together with a :class:`MultiArcDynamicsSimulator`. At the moment, the multi-arc simulator elements in Tudat are undergoing testing and are thus not yet available.
+    This class is meant to be used together with a :class:`MultiArcDynamicsSimulator`. This allows the numerical propagation to be performed in an arc-wise manner. Dynamical model settings may be defined differently per arc. 
+
+   .. code-block:: cpp
+
+      MultiArcPropagatorSettings(
+            singleArcSettings,
+            transferInitialStateInformationPerArc)
+
+   where:
+
+   - ``singleArcSettings``
+
+      ``std::vector< boost::shared_ptr< SingleArcPropagatorSettings< StateScalarType > > >`` defines the settings for the constituent arcs. The switch times for the arcs are defined by the initial times for each of the arcs. 
+
+   - ``transferInitialStateInformationPerArc``
+
+      ``bool`` allows only a single initial state to be defined: that for the first arc. When this variable is true, the initial state for arc 2 is taken from interpolating arc 1 at the arc 2 start time. This allows a continuous state to be set, while still using the multi-arc interface (for instance for a first estimate when doing multi-arc propagation).
 
 .. tip:: Please beware that all the classes belonging to Tudat libraries are declared above without their namespace. To get the code working please make use of the appropriate :literal:`#include` and :literal:`using` statements.
 
