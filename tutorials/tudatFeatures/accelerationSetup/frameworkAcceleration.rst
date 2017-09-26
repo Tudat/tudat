@@ -82,109 +82,120 @@ Available acceleration models
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 As stated above, the :literal:`createAccelerationModelsMap` function uses your environment and settings for the accelerations to automatically retrieve and put together all functions used to calculate the accelerations during each function evaluation of the numerical scheme. For reference, we provide a list of available acceleration models, below, including example of how to add settings for the model to the :class:`SelectedAccelerationMap`. In addition, we define the list of environment models required for their creation.
 
-    **Point mass gravity:**
-        No derived class of :class:`AccelerationSettings`, accessed by feeding :literal:`central_gravity` to the constructor. Added to :class:`SelectedAccelerationMap` as follows, for example of acceleration exerted on "Apollo" by "Earth":
+.. class:: AccelerationSettings
 
-        .. code-block:: cpp
+   Base class for setting the accelerations on a body. Settings currently available are the following:
 
-            SelectedAccelerationMap accelerationSettings;
-            accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( central_gravity ) );
+.. method:: Point mass gravity
 
-        Requires the following environment models to be defined:
+   Settings for a point mass gravity acceleration. No derived class of :class:`AccelerationSettings` is required, this acceleration setting are constructed by feeding :literal:`central_gravity` to the constructor. Added to :class:`SelectedAccelerationMap` as follows, for example of acceleration exerted on "Apollo" by "Earth":
 
-        - Gravity field for body exerting acceleration.
-        - Current state of bodies undergoing and exerting acceleration, either from an Ephemeris model or from the numerical propagation.
+   .. code-block:: cpp
 
-    **Spherical harmonic gravity:**
-        Accessed by means of the derived class :class:`SphericalHarmonicAccelerationSettings`. Added to :class:`SelectedAccelerationMap` as follows, for example of acceleration exerted on "Apollo" by "Earth":
+       SelectedAccelerationMap accelerationSettings;
+       accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( central_gravity ) );
 
-        .. code-block:: cpp
+   Requires the following environment models to be defined:
 
-            SelectedAccelerationMap accelerationSettings;
-            int maximumDegree = 12;
-            int maximumOrder = 12;
-                accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< SphericalHarmonicAccelerationSettings >( maximumDegree, maximumOrder ) );
+   - Gravity field for body exerting acceleration (set by :class:`GravityFieldSettings`).
+   - Current state of bodies undergoing and exerting acceleration, either from an Ephemeris model (set by :class:`EphemerisSettings`) or from the numerical propagation.
 
-        where the gravity field will be expanded up to degree and order 12 in the acceleration model. Requires the following environment models to be defined:
+.. class:: SphericalHarmonicAccelerationSettings
 
-        - Spherical harmonic gravity field for body exerting acceleration.
-        - Rotation model from the inertial frame to the body-fixed frame.
-        - Current state of bodies undergoing and exerting acceleration, either from an ephemeris model or from the numerical propagation.
+   Settings for the accelerations as set by :class:`SphericalHarmonicsGravityFieldSettings`. Added to :class:`SelectedAccelerationMap` as follows, for example of acceleration exerted on "Apollo" by "Earth":
 
-    **Mutual spherical harmonic gravity:**
-        Accessed by means of the derived class :class:`MutualSphericalHarmonicAccelerationSettings`. This model is typically only used for detailed propagation of planetary systems, and discussed in more detail here. It is added to :class:`SelectedAccelerationMap` as follows, for example of acceleration exerted on "Io" by "Jupiter":
+   .. code-block:: cpp
 
-        .. code-block:: cpp
+      SelectedAccelerationMap accelerationSettings;
+      int maximumDegree = 12;
+      int maximumOrder = 12;
+          accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< SphericalHarmonicAccelerationSettings >( maximumDegree, maximumOrder ) );
 
-            SelectedAccelerationMap accelerationSettings;
-            int maximumDegreeOfIo = 12;
-            int maximumOrderOfIo = 12;
-            int maximumDegreeOfJupiter = 4;
-            int maximumOrderOfJupiter = 4;
-            accelerationSettings[ "Io" ][ "Jupiter" ].push_back( boost::make_shared< MutualSphericalHarmonicAccelerationSettings >( 
-                maximumDegreeOfJupiter, maximumOrderOfJupiter, maximumDegreeOfIo, maximumOrderOfIo ) );
+   where the gravity field will be expanded up to degree and order 12 in the acceleration model. Requires the following environment models to be defined:
 
-        where the gravity fields of Io and Jupiter will be expanded up to degree and order 12 and 4, respectively, in the acceleration model. Requires the following environment models to be defined:
+   - Spherical harmonic gravity field for body exerting acceleration (set by :class:`SphericalHarmonicsGravityFieldSettings`).
+   - Rotation model from the inertial frame to the body-fixed frame (set by :class:`RotationModelSettings`).
+   - Current state of bodies undergoing and exerting acceleration, either from an ephemeris model (set by :class:`EphemerisSettings`) or from the numerical propagation.
 
-        - Spherical harmonic gravity field for body exerting acceleration and body undergoing acceleration.
-        - Rotation model from the inertial frame to the body-fixed frame and body undergoing acceleration.
-        - Current state of bodies undergoing and exerting acceleration, either from an Ephemeris model or from the numerical propagation.
+.. class:: MutualSphericalHarmonicAccelerationSettings
 
-        For the case where a third-body mutual spherical harmonic acceleration (e.g. Ganymede on Io when propagating w.r.t. Jupiter), additional parameters have to be provided that denote the expansion degree/order of the central body, so:
+   This model is typically only used for detailed propagation of planetary systems, and discussed in more detail here BROKEN HERE LINK. It is added to :class:`SelectedAccelerationMap` as follows, for example of acceleration exerted on "Io" by "Jupiter":
 
-        .. code-block:: cpp
+   .. code-block:: cpp
 
-            SelectedAccelerationMap accelerationSettings;
-            int maximumDegreeOfIo = 12;
-            int maximumOrderOfIo = 12;
-            int maximumDegreeOfGanymede = 4;
-            int maximumOrderOfGanymede = 4;
-            int maximumDegreeOfJupiter = 4;
-            int maximumOrderOfJupiter = 4;
-            accelerationSettings[ "Io" ][ "Jupiter" ].push_back( boost::make_shared< MutualSphericalHarmonicAccelerationSettings >( 
-                maximumDegreeOfJupiter, maximumOrderOfJupiter, maximumDegreeOfGanymede, maximumOrderOfGanymede, maximumDegreeOfIo, maximumOrderOfIo ) );
+      SelectedAccelerationMap accelerationSettings;
+      int maximumDegreeOfIo = 12;
+      int maximumOrderOfIo = 12;
+      int maximumDegreeOfJupiter = 4;
+      int maximumOrderOfJupiter = 4;
+      accelerationSettings[ "Io" ][ "Jupiter" ].push_back( boost::make_shared< MutualSphericalHarmonicAccelerationSettings >( 
+          maximumDegreeOfJupiter, maximumOrderOfJupiter, maximumDegreeOfIo, maximumOrderOfIo ) );
 
-        where Jupiter now takes the role of central body, instead of body exerting the acceleration.
+   where the gravity fields of Io and Jupiter will be expanded up to degree and order 12 and 4, respectively, in the acceleration model. Requires the following environment models to be defined:
 
-    **Aerodynamic acceleration:**
-        No derived class of :class:`AccelerationSettings`, accessed by feeding :literal:`aerodynamic` to the constructor. Added to :class:`SelectedAccelerationMap` as follows, for example of acceleration exerted on "Apollo" by "Earth" (e.g. atmosphere model belonging to Earth):
+   - Spherical harmonic gravity field for body exerting acceleration and body undergoing acceleration set by :class:`SphericalHarmonicsGravityFieldSettings`).
+   - Rotation model from the inertial frame to the body-fixed frame and body undergoing acceleration (set by :class:`RotationModelSettings`).
+   - Current state of bodies undergoing and exerting acceleration, either from an Ephemeris model (set by :class:`EphemerisSettings`) or from the numerical propagation.
 
-        .. code-block:: cpp
+   For the case where a third-body mutual spherical harmonic acceleration (e.g. Ganymede on Io when propagating w.r.t. Jupiter), additional parameters have to be provided that denote the expansion degree/order of the central body, so:
 
-            SelectedAccelerationMap accelerationSettings;
-            accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( aerodynamic ) );
+   .. code-block:: cpp
 
-        Requires the following environment models to be defined:
+      SelectedAccelerationMap accelerationSettings;
+      int maximumDegreeOfIo = 12;
+      int maximumOrderOfIo = 12;
+      int maximumDegreeOfGanymede = 4;
+      int maximumOrderOfGanymede = 4;
+      int maximumDegreeOfJupiter = 4;
+      int maximumOrderOfJupiter = 4;
+      accelerationSettings[ "Io" ][ "Jupiter" ].push_back( boost::make_shared< MutualSphericalHarmonicAccelerationSettings >( 
+          maximumDegreeOfJupiter, maximumOrderOfJupiter, maximumDegreeOfGanymede, maximumOrderOfGanymede, maximumDegreeOfIo, maximumOrderOfIo ) );
 
-        - Atmosphere model for body exerting acceleration.
-        - Shape model for body exerting acceleration.
-        - Aerodynamic coefficient interface for body undergoing acceleration. NOTE: In the case that the aerodynamic coefficients are defined as a function of the vehicle orientation (e.g. angle of attack and sideslip angle), these angles can be manually or automatically defined. We have dedicated a specific page to this here.
-        - Mass model for body undergoing acceleration.
-        - Current state of body undergoing and body with atmosphere.
+   where Jupiter now takes the role of central body, instead of body exerting the acceleration.
 
-        .. warning:: Defining settings for a vehicle's orientation, which may influence your aerodynamic force, is done after creating the acceleration models, as discused here.
+.. method:: Aerodynamic acceleration
 
-    **Cannonball radiation pressure:**
-        No derived class of :class:`AccelerationSettings`, accessed by feeding :literal:`cannon_ball_radiation_pressure` to the constructor. Added to :class:`SelectedAccelerationMap` as follows, for example of acceleration exerted on "Apollo" by "Sun":
+   No derived class of :class:`AccelerationSettings` required, accessed by feeding :literal:`aerodynamic` to the constructor. Added to :class:`SelectedAccelerationMap` as follows, for example of acceleration exerted on "Apollo" by "Earth" (e.g. atmosphere model belonging to Earth):
 
-        .. code-block:: cpp
+   .. code-block:: cpp
 
-            SelectedAccelerationMap accelerationSettings;
-            accelerationSettings[ "Apollo" ][ "Sun" ].push_back( boost::make_shared< AccelerationSettings >( cannon_ball_radiation_pressure ) );
+      SelectedAccelerationMap accelerationSettings;
+      accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( aerodynamic ) );
 
-        Requires the following environment models to be defined:
+   Requires the following environment models to be defined:
 
-        - Radiation pressure model for body undergoing acceleration (from source equal to body exerting acceleration)
-        - Current state of body undergoing and body emitting radiation
+   - Atmosphere model for body exerting acceleration (set by :class:`AtmosphereSettings`).
+   - Shape model for body exerting acceleration (set by :class:`ShapeModelSettings`).
+   - Aerodynamic coefficient interface for body undergoing acceleration (set by :class:`AerodynamicCoefficientInterfaceSettings`). NOTE: In the case that the aerodynamic coefficients are defined as a function of the vehicle orientation (e.g. angle of attack and sideslip angle), these angles can be manually or automatically defined. We have dedicated a specific page to this here BROKEN HERE LINK.
+   - Mass model for body undergoing acceleration.
+   - Current state of body undergoing acceleration and body with atmosphere.
 
-    **Thrust acceleration:**
-        Accessed by means of the derived class :class:`ThrustAccelerationSettings`, requiring:
+   .. warning:: Defining settings for a vehicle's orientation, which may influence your aerodynamic force, is done after creating the acceleration models, as discused here.
 
-    - Mass of body undergoing acceleration.
-    - Settings for both the direction and magnitude of the thrust force. These models may in turn have additional environmental dependencies. The creation of thrust accelerations is discussed in more detail here.
+.. method:: Cannonball radiation pressure
+
+   No derived class of :class:`AccelerationSettings` required, accessed by feeding :literal:`cannon_ball_radiation_pressure` to the constructor. Added to :class:`SelectedAccelerationMap` as follows, for example of acceleration exerted on "Apollo" by "Sun":
+
+   .. code-block:: cpp
+
+      SelectedAccelerationMap accelerationSettings;
+      accelerationSettings[ "Apollo" ][ "Sun" ].push_back( boost::make_shared< AccelerationSettings >( cannon_ball_radiation_pressure ) );
+
+   Requires the following environment models to be defined:
+
+   - Radiation pressure model for body undergoing acceleration (from source equal to body exerting acceleration) (set by :class:`RadiationPressureInterfaceSettings`).
+   - Current state of body undergoing and body emitting radiation
+
+.. class:: ThrustAccelerationSettings
+
+   Used to define the resulting accerelations of a thrust force, requiring:
+
+   - Mass of body undergoing acceleration.
+   - Settings for both the direction and magnitude of the thrust force (set by :class:`ThrustEngineSettings`). These models may in turn have additional environmental dependencies. 
     
-    **Relativistic acceleration correction:**
-        A first-order (in :math:`1/c^{2}`) correction to the acceleration due to the influence of relativity. It implements the model of Chapter 10, Section 3 of the IERS 2010 Conventions. These settings are defined by means of the derived class :class:`RelativisticAccelerationCorrectionSettings`, requiring:
+.. class:: RelativisticAccelerationCorrectionSettings
+
+   A first-order (in :math:`1/c^{2}`) correction to the acceleration due to the influence of relativity. It implements the model of Chapter 10, Section 3 of the IERS 2010 Conventions. These settings  require:
 
     - Boolean whether to include the Schwarzschild correction term
     - Boolean whether to include the Lense-Thirring correction term
@@ -192,9 +203,9 @@ As stated above, the :literal:`createAccelerationModelsMap` function uses your e
     - The name of the so-called 'primary body', for a planetary orbiter this should be set as the Sun (only relevant for de Sitter correction)
     - The angular momentum vector of the orbited body (only relevant for Lense-Thirring correction)
     
-    **Empirical Acceleration**
+.. class:: EmpiricalAccelerationSettings
     
-       A constant/once-per-orbit acceleration, expressed in the RSW frame, for which the mangitude is determined empirically (typically during an orbit determination process). The acceleration components are defined according to Montenbruck and Gill (2000), with a total of 9 components: a constant, sine and cosine term (with true anomaly as argument) for each of the three independent directions of the RSW frame. The settings are defined by means of the derived class :class:`EmpiricalAccelerationSettings`, requiring:
+   A constant/once-per-orbit acceleration, expressed in the RSW frame, for which the mangitude is determined empirically (typically during an orbit determination process). The acceleration components are defined according to Montenbruck and Gill (2000), with a total of 9 components: a constant, sine and cosine term (with true anomaly as argument) for each of the three independent directions of the RSW frame. The settings require:
        
     - Vector containing the constant terms of the accelerations in the R, S and W directions.
     - Vector containing the sine terms of the accelerations in the R, S and W directions.
@@ -210,14 +221,20 @@ Although propagating a body's translational dynamics is the backbone of Tudat's 
 
     std::map< std::string, std::vector< boost::shared_ptr< MassRateModelSettings > > > massRateModelSettings;
 
-where the map key denotes the body of which the mass-rate is to be computed. At present, two mass-rate models are available, each with its own derived class of :class:`MassRateModelSettings`. These are:
+where the map key denotes the body of which the mass-rate is to be computed.
 
-    **Custom mass-rate:**
-        Accessed by means of the derived class :class:`CustomMassRateModelSettings`. Using this class, the user must provide a :literal:`boost::function< double( const double ) > function`, i.e. a function returning a double, representing the mass-rate, and taking another double, representing time, as an input. The internal workings of this function are completely up to the user. If any help is required in setting up such a model please contact the Tudat support team.
+.. class:: MassRateModelSettings
 
-    **From-thrust mass-rate:**
-        Accessed by means of the derived class :class:`FromThrustMassModelSettings`. Using this mass-rate model, the change in vehicle mass due to the expulsion of propellant is taken into account when propagating a vehicle's dynamics. It retrieves the required data from a :class:`ThrustAcceleration` object, ensuring full consistency between the two. Two option are available when creating this type of mass-rate model:
+   Base class for the mass rate model setup. Currently two mass rate models are available each with its own derived class described below.
 
-        - Use all thrust forces acting on a single body, combined into a single mass-rate model. This will in most cases be the model of choice, as there is often no need to distinguish between thurst sources when computing the mass rate: only the total amount of propellant usage is relevant. This option is toggled by setting the :literal:`useAllThrustModels` input argument of the :class:`FromThrustMassModelSettings` constructor to true.
-        - Use a single thrust model, defined by a string-identifier. When creating a thrust model, a :literal:`thrustOriginId` input is provided to the :class:`ThrustEngineSettings` settings constructor. Only in the :literal:`FromBodyThrustEngineSettings` derived type (see here for additional explanation) is this thrust origin id set to anything else than an empty string: it represents the engine name.
+.. class:: CustomMassRateModelSettings
+
+   Using this class, the user must provide a :literal:`boost::function< double( const double ) > function`, i.e. a function returning a double, representing the mass-rate, and taking another double, representing time, as an input. The internal workings of this function are completely up to the user. If any help is required in setting up such a model please contact the Tudat support team.
+
+.. class:: FromThrustMassModelSettings
+
+   Using this mass-rate model, the change in vehicle mass due to the expulsion of propellant is taken into account when propagating a vehicle's dynamics. It retrieves the required data from a :class:`ThrustAcceleration` object (set by :class:`ThrustAccelerationSettings`), ensuring full consistency between the two. Two option are available when creating this type of mass-rate model:
+
+   - Use all thrust forces acting on a single body, combined into a single mass-rate model. This will in most cases be the model of choice, as there is often no need to distinguish between thrust sources when computing the mass rate: only the total amount of propellant usage is relevant. This option is toggled by setting the :literal:`useAllThrustModels` input argument of the :class:`FromThrustMassModelSettings` constructor to true.
+   - Use a single thrust model, defined by a string-identifier. When creating a thrust model, a :literal:`thrustOriginId` input is provided to the :class:`ThrustEngineSettings` settings constructor. Only in the :class:`FromBodyThrustEngineSettings` derived class is this thrust origin id set to anything else than an empty string: it represents the engine name.
 
