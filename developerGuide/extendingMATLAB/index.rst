@@ -8,6 +8,7 @@ The goal of this page is to document how the :ref:`matlabInterface` can be updat
 .. toctree::
    :maxdepth: 2
 
-   
+   basics
+   addingFeatures
 
 
