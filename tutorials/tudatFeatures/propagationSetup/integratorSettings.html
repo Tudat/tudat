@@ -185,88 +185,90 @@
             
   <div class="section" id="integrator-settings">
 <span id="tudatfeaturesintegratorsettings"></span><h1>5.1. Integrator Settings<a class="headerlink" href="#integrator-settings" title="Permalink to this headline">¶</a></h1>
-<p>As the name suggests, the integrator settings tell the dynamics simulator how to integrate numerically the equations of motion that govern the orbital mechanics to simulate. The integrator settings are defined using two derived classes, depending on whether the integrator to be used is a fixed step-size integrator or a variable step-size integrator.</p>
-<div class="section" id="propagation-with-a-fixed-step-size-integrator">
-<h2>5.1.1. Propagation with a fixed step-size integrator<a class="headerlink" href="#propagation-with-a-fixed-step-size-integrator" title="Permalink to this headline">¶</a></h2>
-<p>In order to use a fixed step-size integrator, the following constructor needs to be created in your <code class="docutils literal"><span class="pre">main</span></code> function. The constructor is created as a <code class="docutils literal"><span class="pre">shared_ptr</span></code> where the arguments to the constructor are passed by using <code class="docutils literal"><span class="pre">make_shared</span></code>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">integratorSettings</span> <span class="o">=</span>
-            <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
-            <span class="p">(</span> <span class="n">integratorType</span><span class="p">,</span> <span class="n">simulationStartEpoch</span><span class="p">,</span> <span class="n">fixedStepSize</span> <span class="p">);</span>
+<p>As the name suggests, the integrator settings tell the dynamics simulator how to integrate numerically the equations of motion that govern the orbital mechanics to simulate. The <a class="reference internal" href="#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> are defined using two derived classes, depending on whether the integrator to be used is a fixed step-size integrator or a variable step-size integrator.</p>
+<dl class="class">
+<dt id="IntegratorSettings">
+<em class="property">class </em><code class="descname">IntegratorSettings</code><a class="headerlink" href="#IntegratorSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is used to define the settings for fixed step-size integration. The constructor for this base class is:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">IntegratorSettings</span><span class="p">(</span> <span class="n">integratorType</span><span class="p">,</span>
+                    <span class="n">simulationStartEpoch</span><span class="p">,</span>
+                    <span class="n">fixedStepSize</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>where the following arguments need to be passed:</p>
-<ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">integratorType</span></code></dt>
-<dd>Defines the fixed step-size integrator type to be used. Currently the only options available are <code class="docutils literal"><span class="pre">euler</span></code> and <code class="docutils literal"><span class="pre">rungeKutta4</span></code>.</dd>
-</dl>
+<p>where:</p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">integratorType</span></code></p>
+<blockquote>
+<div><p><code class="xref py py-class docutils literal"><span class="pre">AvailableIntegrators</span></code> which defines the fixed step-size integrator type to be used. Currently the only options available are <code class="docutils literal"><span class="pre">euler</span></code> and <code class="docutils literal"><span class="pre">rungeKutta4</span></code>.</p>
+</div></blockquote>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">simulationStartEpoch</span></code></dt>
-<dd>Defines the simulation’s start epoch. It must be a <code class="docutils literal"><span class="pre">double</span></code> variable-type.</dd>
-</dl>
+<li><p class="first"><code class="docutils literal"><span class="pre">simulationStartEpoch</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">double</span></code> that defines the simulation’s start epoch.</p>
+</div></blockquote>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">fixedStepSize</span></code></dt>
-<dd>Defines the fixed step-size to be used either by the <code class="docutils literal"><span class="pre">euler</span></code> or the <code class="docutils literal"><span class="pre">rungeKutta4</span></code> numerical integrator. It must be a <code class="docutils literal"><span class="pre">double</span></code> variable-type.</dd>
-</dl>
+<li><p class="first"><code class="docutils literal"><span class="pre">fixedStepSize</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">double</span></code> that defines the fixed step-size to be used either by the <code class="docutils literal"><span class="pre">euler</span></code> or the <code class="docutils literal"><span class="pre">rungeKutta4</span></code> numerical integrator.</p>
+</div></blockquote>
 </li>
 </ul>
-</div>
-<div class="section" id="propagation-with-a-variable-step-size-integrator">
-<h2>5.1.2. Propagation with a variable step-size integrator<a class="headerlink" href="#propagation-with-a-variable-step-size-integrator" title="Permalink to this headline">¶</a></h2>
-<p>In order to use a variable step-size integrator, the following constructor needs to be created in your <code class="docutils literal"><span class="pre">main</span></code> function. Similarly to the fixed-step size integrator settings, this is done by means of a boost pointer libraries:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">integratorSettings</span> <span class="o">=</span>
-            <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">RungeKuttaVariableStepSizeSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
-                        <span class="n">integratorType</span><span class="p">,</span>
-                        <span class="n">initialTime</span><span class="p">,</span>
-                        <span class="n">initialTimeStep</span><span class="p">,</span>
-                        <span class="n">coefficientSet</span><span class="p">,</span>
-                        <span class="n">minimumStepSize</span>
-                        <span class="n">maximumStepSize</span> <span class="p">);</span>
+</dd></dl>
+
+<dl class="class">
+<dt id="RungeKuttaVariableStepSizeSettings">
+<em class="property">class </em><code class="descname">RungeKuttaVariableStepSizeSettings</code><a class="headerlink" href="#RungeKuttaVariableStepSizeSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is used to define the settings for variable step-size integration. The constructor for this derived class is:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">RungeKuttaVariableStepSizeSettings</span><span class="p">(</span> <span class="n">integratorType</span><span class="p">,</span>
+                                    <span class="n">initialTime</span><span class="p">,</span>
+                                    <span class="n">initialTimeStep</span><span class="p">,</span>
+                                    <span class="n">coefficientSet</span><span class="p">,</span>
+                                    <span class="n">minimumStepSize</span><span class="p">,</span>
+                                    <span class="n">maximumStepSize</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>where the following arguments need to be passed:</p>
-<ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">integratorType</span></code></dt>
-<dd>Defines the fixed step-size integrator type to be used. The only option available is <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code>.</dd>
-</dl>
+<p>where:</p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">integratorType</span></code></p>
+<blockquote>
+<div><p><code class="xref py py-class docutils literal"><span class="pre">AvailableIntegrators</span></code> which defines the fixed step-size integrator type to be used. The only option available is <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code>.</p>
+</div></blockquote>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">initialTime</span></code></dt>
-<dd>Defines the simulation’s initial time. It must be a <code class="docutils literal"><span class="pre">double</span></code> variable-type.</dd>
-</dl>
+<li><p class="first"><code class="docutils literal"><span class="pre">initialTime</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">double</span></code> that defines the simulation’s initial time. It must be a <code class="docutils literal"><span class="pre">double</span></code> variable-type.</p>
+</div></blockquote>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">initialTimeStep</span></code></dt>
-<dd>Defines the initial step-size to be used either by the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator. It must be a <code class="docutils literal"><span class="pre">double</span></code> variable-type.</dd>
-</dl>
+<li><p class="first"><code class="docutils literal"><span class="pre">initialTimeStep</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">double</span></code> that defines the initial step-size to be used either by the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator. It must be a <code class="docutils literal"><span class="pre">double</span></code> variable-type.</p>
+</div></blockquote>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">coefficientSet</span></code></dt>
-<dd>Defines the coefficient set to be used by the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator. The list of available coefficient sets is given in <a class="reference internal" href="../mathTools/integrators.html#tudatfeaturesintegrators"><span class="std std-ref">Integrators</span></a>.</dd>
-</dl>
+<li><p class="first"><code class="docutils literal"><span class="pre">coefficientSet</span></code></p>
+<blockquote>
+<div><p><code class="xref py py-class docutils literal"><span class="pre">RungeKuttaCoefficients::CoefficientSets</span></code> that defines the coefficient set to be used by the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator. The list of available coefficient sets is given in <a class="reference internal" href="../mathTools/integrators.html#tudatfeaturesintegrators"><span class="std std-ref">Integrators</span></a>.</p>
+</div></blockquote>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">minimumStepSize</span></code></dt>
-<dd>Defines the minimum step-size that the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator can take. It must be a <code class="docutils literal"><span class="pre">double</span></code> variable-type.</dd>
-</dl>
+<li><p class="first"><code class="docutils literal"><span class="pre">minimumStepSize</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">double</span></code> that defines the minimum step-size that the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator can take.</p>
+</div></blockquote>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">maximumStepSize</span></code></dt>
-<dd>Defines the maximum step-size that the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator can take. It must be a <code class="docutils literal"><span class="pre">double</span></code> variable-type.</dd>
-</dl>
+<li><p class="first"><code class="docutils literal"><span class="pre">maximumStepSize</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">double</span></code> that defines the maximum step-size that the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator can take.</p>
+</div></blockquote>
 </li>
 </ul>
+</dd></dl>
+
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Aside from the arguments listed in this page, the <code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code> derived classes offer a number of optional arguments. The reader is advised to examine the Doxygen documentation included in the code for further details.</p>
+<p class="last">Aside from the arguments listed in this page, the <a class="reference internal" href="#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> class and derived classes described here offer a number of optional arguments. The reader is advised to examine the Doxygen documentation included in the code for further details.</p>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">Make sure that a compatible <code class="docutils literal"><span class="pre">integratorType</span></code> is selected, otherwise a runtime exception will be thrown.</p>
-</div>
 </div>
 </div>
 

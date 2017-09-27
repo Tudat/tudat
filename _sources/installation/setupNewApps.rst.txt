@@ -23,13 +23,13 @@ Note this same **A**, **B**, **C** notation is used further on in the guide 
     **(C)** Fork a repository and keep it public. Visit any repository on GitHub and click ``Fork`` at the top of the page.
 
 **Step 2: Clone the repository in SmartGit**
-    Open SmartGit, go to ``Repository`` and choose ``Clone..`` Copy in the repository URL and choose ``Next``. If your repository is private, you will need to enter your GitHub credentials! Select a local path.
+    Open SmartGit, go to ``Repository`` and choose ``Clone...`` Copy in the repository URL and choose ``Next``. If your repository is private, you will need to enter your GitHub credentials! Select a local path.
 
     .. tip:: It is highly recommended to create a new directory myApplication (in this guide, substitute for the repository name) under tudatBundle/tudatApplications.
 
 **Step 3: Copy and modify the template (A only)**
 
-    .. note:: Space Project: Only go through this step if installing a new empty repository. do not go through this step for the space project!
+    .. note:: Space Project: Only go through this step if installing a new empty repository. Do not go through this step for the space project!
 
     Open your file browser and navigate to ``tudatBundle/tudatExampleApplications/templateApplication``. Copy the contents to ``tudatBundle/tudatApplications/myApplication``. Rename ``TemplateApplication`` to ``MyApplication``. Open ``MyApplication/CMakeLists.txt`` and replace the CMake project name ``TemplateApplication`` with your application.
 
@@ -44,9 +44,9 @@ Note this same **A**, **B**, **C** notation is used further on in the guide 
 
 **Step 5: Commit changes to the application repository**
 
-    .. note:: Space Project: This step is only applicable when you have made changes to your code. you can skip this step for now.
+    .. note:: Space Project: This step is only applicable when you have made changes to your code. You can skip this step for now.
 
-    When the application is modified or new code is added, it is recommended to commit these changes to the repository and push these changes to your GitHub account. In the case below the added code that was copied from the template is committed. This process, however, is general for any change to your application. Select the changes and right-click and choose ``Commit..`` Write a short commit message describing the changes just made. You can now choose to ``Commit`` (just record) or ``Commit & Push`` (record and update GitHub).
+    When the application is modified or new code is added, it is recommended to commit these changes to the repository and push these changes to your GitHub account. In the case below the added code that was copied from the template is committed. This process, however, is general for any change to your application. Select the changes and right-click and choose ``Commit...`` Write a short commit message describing the changes just made. You can now choose to ``Commit`` (just record) or ``Commit & Push`` (record and update GitHub).
 
 **Step 6: Invite a collaborators to (private) repository**
     Go to the ``Settings/Collaborators`` of the repository. Add other users that you want to invite to the repository.

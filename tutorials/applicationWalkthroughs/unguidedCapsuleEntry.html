@@ -181,7 +181,7 @@
             
   <div class="section" id="un-guided-capsule-entry">
 <span id="walkthroughsunguidedcapsuleentry"></span><h1>3. Un-guided Capsule Entry<a class="headerlink" href="#un-guided-capsule-entry" title="Permalink to this headline">¶</a></h1>
-<p>The example described on this page is that of Apollo on a reentry trajectory towards the surface of Earth. The code for this tutorial is located in your Tudat Bundle at:</p>
+<p>The example described on this page is that of Apollo on a re-entry trajectory towards the surface of Earth. The code for this tutorial is given here on Github, and is also located in your tudat bundle at:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">apolloCapsuleEntry</span><span class="o">.</span><span class="n">cpp</span>
 </pre></div>
 </div>
@@ -189,11 +189,11 @@
 <p><em>Given the position and velocity of the Apollo capsule at a certain point in time with respect to the Earth, what will its position and velocity be once it reaches an altitude of 25 km over the surface of Earth?</em></p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">The example described in this page assumes that the user has read the <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a>. This page only describes the differences with respect to such example, so please go back before proceding.</p>
+<p class="last">The example described in this page assumes that the user has read the <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a>. This page only describes the differences with respect to such example, so please go back before proceeding.</p>
 </div>
 <div class="section" id="create-the-vehicle">
 <h2>3.1. Create the vehicle<a class="headerlink" href="#create-the-vehicle" title="Permalink to this headline">¶</a></h2>
-<p>First, the vehicle is created by placing an <code class="docutils literal"><span class="pre">&quot;Apollo&quot;</span></code> entry in the <code class="docutils literal"><span class="pre">bodyMap</span></code>, as shown below:</p>
+<p>First, the vehicle is created by placing an <code class="docutils literal"><span class="pre">&quot;Apollo&quot;</span></code> entry vehicle in the <code class="docutils literal"><span class="pre">bodyMap</span></code>, as shown below:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create vehicle objects.</span>
 <span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
 </pre></div>
@@ -204,11 +204,7 @@
             <span class="n">unit_tests</span><span class="o">::</span><span class="n">getApolloCoefficientInterface</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Note that in this case a pre-made interface that is part of the following Unit Tests is used:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudat</span><span class="o">/</span><span class="n">Tudat</span><span class="o">/</span><span class="n">Astrodynamics</span><span class="o">/</span><span class="n">Aerodynamics</span><span class="o">/</span><span class="n">UnitTests</span><span class="o">/</span><span class="n">testApolloCapsuleCoefficients</span><span class="o">.</span><span class="n">h</span>
-</pre></div>
-</div>
-<p>In this case, the <code class="docutils literal"><span class="pre">getApolloCoefficientInterface(</span> <span class="pre">)</span></code> function returns a <code class="xref py py-class docutils literal"><span class="pre">HypersonicLocalInclinationAnalysis</span></code> object, which is a derived-class from <code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientInterface</span></code>. Such object computes the aerodynamic coefficients during propagation by means of a local-inclination method. Finally, the mass of the Apollo capsule is set and the body creation is finalized:</p>
+<p>In this example a pre-made interface is used to define the aerodynamic coefficients. The <code class="docutils literal"><span class="pre">getApolloCoefficientInterface(</span> <span class="pre">)</span></code> function returns a <code class="xref py py-class docutils literal"><span class="pre">HypersonicLocalInclinationAnalysis</span></code> object, which is a derived-class from <code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientInterface</span></code>. It computes the aerodynamic coefficients during propagation by means of a local-inclination method. Finally, the mass of the Apollo capsule is set and the body creation is finalized:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setConstantBodyMass</span><span class="p">(</span> <span class="mf">5.0E3</span> <span class="p">);</span>
 
 <span class="c1">// Finalize body creation.</span>
@@ -222,7 +218,7 @@
 </div>
 <div class="section" id="set-up-the-acceleration-models">
 <h2>3.2. Set up the acceleration models<a class="headerlink" href="#set-up-the-acceleration-models" title="Permalink to this headline">¶</a></h2>
-<p>A major difference with respect to the <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> is the use of a spherical-harmonic gravity model and the presence of an aerodynamic force on the vehicle. Such acceleration models are added to the <code class="docutils literal"><span class="pre">accelerationMap</span></code> as follows:</p>
+<p>A major difference with respect to the <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> is the use of a spherical-harmonic gravity model and the presence of an aerodynamic force on the vehicle. The spherical-harmonic gravity model is selected by the derived-class <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#SphericalHarmonicAccelerationSettings" title="SphericalHarmonicAccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicAccelerationSettings</span></code></a> with degree and order as input parameters. Both acceleration models are added to the <code class="docutils literal"><span class="pre">accelerationMap</span></code> as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define acceleration model settings.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">accelerationsOfApollo</span><span class="p">;</span>
 <span class="n">accelerationsOfApollo</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">);</span>
@@ -230,17 +226,21 @@
 <span class="n">accelerationMap</span><span class="p">[</span>  <span class="s">&quot;Apollo&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">accelerationsOfApollo</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>A crucial step in reentry modelling is the definition of a <code class="xref py py-class docutils literal"><span class="pre">AerodynamicGuidance</span></code> model. Controlling the orientation of the vehicle during atmospheric flight plays an important role in the shape of the trajectory as well as on the magnitude of the aerodynamic and thermal loads. In this example, a simple fixed-angle aerodynamic guidance is used:</p>
+<p>A crucial step in re-entry modelling is the definition of a <a class="reference internal" href="../tudatFeatures/accelerationSetup/aerodynamicGuidance.html#AerodynamicGuidance" title="AerodynamicGuidance"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicGuidance</span></code></a> model. Controlling the orientation of the vehicle during atmospheric flight plays an important role in the shape of the trajectory as well as on the magnitude of the aerodynamic and thermal loads. In this example, a simple fixed-angle aerodynamic guidance model is used. This is implemented using a <code class="docutils literal"><span class="pre">boost::lambda::constant</span></code> function (explained in detail <a class="reference internal" href="../prerequiredKnowledge/externalLibraries/boostExamples.html#externalboostexamplesfunction"><span class="std std-ref">here</span></a>). In short this function always outputs the value of <code class="docutils literal"><span class="pre">constantAngleOfAttack</span></code> which in turn sets the orientation angles of the <code class="docutils literal"><span class="pre">&quot;Apollo&quot;</span></code> body:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define constant 30 degree angle of attack</span>
-<span class="kt">double</span> <span class="n">constantAngleOfAttack</span> <span class="o">=</span> <span class="mf">30.0</span> <span class="o">*</span> <span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span> <span class="o">/</span> <span class="mf">180.0</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">constantAngleOfAttack</span> <span class="o">=</span> <span class="n">unit_conversions</span><span class="o">::</span><span class="n">convertDegreesToRadians</span><span class="p">(</span><span class="mf">30.0</span><span class="p">);</span>
 <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getAerodynamicAngleCalculator</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">setOrientationAngleFunctions</span><span class="p">(</span>
             <span class="n">boost</span><span class="o">::</span><span class="n">lambda</span><span class="o">::</span><span class="n">constant</span><span class="p">(</span> <span class="n">constantAngleOfAttack</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">To view the available options for aerodynamic guidance check out the <a class="reference internal" href="../tudatFeatures/accelerationSetup/aerodynamicGuidance.html#tudatfeaturesaerodynamicguidance"><span class="std std-ref">Aerodynamic Guidance</span></a> section.</p>
+</div>
 </div>
 <div class="section" id="set-up-the-propagation-settings">
 <h2>3.3. Set up the propagation settings<a class="headerlink" href="#set-up-the-propagation-settings" title="Permalink to this headline">¶</a></h2>
-<p>In most reentry studies, it is convenient to define the entry conditions using a spherical state. The following entry state is used:</p>
+<p>In most re-entry studies, it is convenient to define the entry conditions using a spherical state. The following entry state is used:</p>
 <ul class="simple">
 <li>Altitude: 120 km</li>
 <li>Latitude: 0 deg</li>
@@ -254,12 +254,15 @@
 <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">apolloSphericalEntryState</span><span class="p">;</span>
 <span class="n">apolloSphericalEntryState</span><span class="p">(</span> <span class="n">SphericalOrbitalStateElementIndices</span><span class="o">::</span><span class="n">radiusIndex</span> <span class="p">)</span> <span class="o">=</span>
         <span class="n">spice_interface</span><span class="o">::</span><span class="n">getAverageRadius</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">)</span> <span class="o">+</span> <span class="mf">120.0E3</span><span class="p">;</span>
-<span class="n">apolloSphericalEntryState</span><span class="p">(</span> <span class="n">SphericalOrbitalStateElementIndices</span><span class="o">::</span><span class="n">latitudeIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
-<span class="n">apolloSphericalEntryState</span><span class="p">(</span> <span class="n">SphericalOrbitalStateElementIndices</span><span class="o">::</span><span class="n">longitudeIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
+<span class="n">apolloSphericalEntryState</span><span class="p">(</span> <span class="n">SphericalOrbitalStateElementIndices</span><span class="o">::</span><span class="n">latitudeIndex</span> <span class="p">)</span> <span class="o">=</span>
+        <span class="n">unit_conversions</span><span class="o">::</span><span class="n">convertDegreesToRadians</span><span class="p">(</span> <span class="mf">0.0</span> <span class="p">);</span>
+<span class="n">apolloSphericalEntryState</span><span class="p">(</span> <span class="n">SphericalOrbitalStateElementIndices</span><span class="o">::</span><span class="n">longitudeIndex</span> <span class="p">)</span> <span class="o">=</span>
+        <span class="n">unit_conversions</span><span class="o">::</span><span class="n">convertDegreesToRadians</span><span class="p">(</span> <span class="mf">68.75</span> <span class="p">);</span>
 <span class="n">apolloSphericalEntryState</span><span class="p">(</span> <span class="n">SphericalOrbitalStateElementIndices</span><span class="o">::</span><span class="n">speedIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">7.7E3</span><span class="p">;</span>
 <span class="n">apolloSphericalEntryState</span><span class="p">(</span> <span class="n">SphericalOrbitalStateElementIndices</span><span class="o">::</span><span class="n">flightPathIndex</span> <span class="p">)</span> <span class="o">=</span>
-        <span class="o">-</span><span class="mf">0.9</span> <span class="o">*</span> <span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span> <span class="o">/</span> <span class="mf">180.0</span><span class="p">;</span>
-<span class="n">apolloSphericalEntryState</span><span class="p">(</span> <span class="n">SphericalOrbitalStateElementIndices</span><span class="o">::</span><span class="n">headingAngleIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">;</span>
+        <span class="n">unit_conversions</span><span class="o">::</span><span class="n">convertDegreesToRadians</span><span class="p">(</span> <span class="o">-</span><span class="mf">0.9</span> <span class="p">);</span>
+<span class="n">apolloSphericalEntryState</span><span class="p">(</span> <span class="n">SphericalOrbitalStateElementIndices</span><span class="o">::</span><span class="n">headingAngleIndex</span> <span class="p">)</span> <span class="o">=</span>
+        <span class="n">unit_conversions</span><span class="o">::</span><span class="n">convertDegreesToRadians</span><span class="p">(</span> <span class="mf">34.37</span> <span class="p">);</span>
 
 <span class="c1">// Convert apollo state from spherical elements to Cartesian elements.</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">systemInitialState</span> <span class="o">=</span> <span class="n">convertSphericalOrbitalToCartesianState</span><span class="p">(</span>
@@ -272,7 +275,7 @@
 </div>
 <div class="section" id="create-a-list-of-dependent-variables-to-save">
 <h3>3.3.1. Create a list of dependent variables to save<a class="headerlink" href="#create-a-list-of-dependent-variables-to-save" title="Permalink to this headline">¶</a></h3>
-<p>In this example, a number of dependent variables are saved to plot the trajectory of Apollo after reentry. The following dependent variables are saved:</p>
+<p>In this example, a number of dependent variables are saved to plot the trajectory of Apollo after re-entry. The following dependent variables are saved:</p>
 <ul class="simple">
 <li>Mach number</li>
 <li>Altitude</li>
@@ -284,7 +287,7 @@
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">dependentVariablesList</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Next, the list is populated with the desired dependent variables. Please go to <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettingsDependentVariables.html#tudatfeaturespropagatorsettingsdependentvariables"><span class="std std-ref">Propagator Settings: Dependent Variables</span></a> for further details on the various dependent variables that an be stored:</p>
+<p>Next, the list is populated with the desired dependent variables. Please go to <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettingsDependentVariables.html#tudatfeaturespropagatorsettingsdependentvariables"><span class="std std-ref">Propagator Settings: Dependent Variables</span></a> for further details on the various dependent variables that can be stored:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">dependentVariablesList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
             <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">mach_number_dependent_variable</span><span class="p">,</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">)</span> <span class="p">);</span>
 <span class="n">dependentVariablesList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
@@ -305,7 +308,7 @@
 </div>
 <div class="section" id="define-the-termination-conditions">
 <h3>3.3.2. Define the termination conditions<a class="headerlink" href="#define-the-termination-conditions" title="Permalink to this headline">¶</a></h3>
-<p>Finally, the termination conditions are established. In this example, the reentry trajectory is propagated until Apollo’s altitude drops below 25 km:</p>
+<p>Finally, the termination conditions are established. The termination settings are stored in the <code class="xref py py-class docutils literal"><span class="pre">PropagationTerminationSettings</span></code> object. In this example, the re-entry trajectory is propagated until Apollo’s altitude drops below 25 km. The boolean in the constructor of the derived-class <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettingsTermination.html#PropagationDependentVariableTerminationSettings" title="PropagationDependentVariableTerminationSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagationDependentVariableTerminationSettings</span></code></a> indicates whether the simulation is terminated when <code class="docutils literal"><span class="pre">terminationDependentVariable</span></code> goes below the supplied value (true) or above (false):</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define termination conditions</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span> <span class="n">terminationDependentVariable</span> <span class="o">=</span>
         <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
@@ -315,7 +318,21 @@
             <span class="n">terminationDependentVariable</span><span class="p">,</span> <span class="mf">25.0E3</span><span class="p">,</span> <span class="nb">true</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Please go to <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettingsTermination.html#tudatfeaturespropagatorsettingstermination"><span class="std std-ref">Propagator Settings: Termination Settings</span></a> for a detailed description of the available termination conditions.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Please go to <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettingsTermination.html#tudatfeaturespropagatorsettingstermination"><span class="std std-ref">Propagator Settings: Termination Settings</span></a> for a detailed description of the available termination conditions.</p>
+</div>
+</div>
+</div>
+<div class="section" id="results">
+<h2>3.4. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>Below the history of some of the saved parameters is shown. One can see the capsule skipping several times before it’s final descent into the atmosphere until reaching 25km altitude.</p>
+<div class="figure">
+<img alt="tutorials/applicationWalkthroughs/images/apolloResults.png" src="tutorials/applicationWalkthroughs/images/apolloResults.png" />
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Open the figure in a new tab for more detail.</p>
 </div>
 </div>
 </div>

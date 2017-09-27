@@ -185,33 +185,22 @@
             
   <div class="section" id="propagator-settings-termination-settings">
 <span id="tudatfeaturespropagatorsettingstermination"></span><h1>5.3. Propagator Settings: Termination Settings<a class="headerlink" href="#propagator-settings-termination-settings" title="Permalink to this headline">¶</a></h1>
-<p>The propagation <code class="docutils literal"><span class="pre">TerminationSettings</span></code> are a key parameter in the propagation of a body’s orbit, since these will determine the computational time and the size of the output file. Depending on the application, the user may want to end the body propagation according to different criteria. Currently, the following <code class="docutils literal"><span class="pre">TerminationSettings</span></code> are offered in Tudat:</p>
+<p>The <code class="xref py py-class docutils literal"><span class="pre">PropagationTerminationSettings</span></code> are a key parameter in the propagation of a body’s orbit, since these will determine the computational time and the size of the output file. Depending on the application, the user may want to end the body propagation according to different criteria. Currently, the following <code class="xref py py-class docutils literal"><span class="pre">PropagationTerminationSettings</span></code> are offered in Tudat:</p>
 <ul class="simple">
 <li>Termination once a certain time has passed.</li>
 <li>Termination once a dependent variable meets a certain criterion.</li>
 <li>Termination once multiple criteria are met.</li>
 </ul>
-<p>The different types of <code class="docutils literal"><span class="pre">TerminationSettings</span></code> are implemented by means of derived classes and custom constructors, as detailed in this page.</p>
+<p>The different types of <code class="xref py py-class docutils literal"><span class="pre">PropagationTerminationSettings</span></code> are implemented by means of derived classes and custom constructors, as detailed in this page.</p>
 <dl class="class">
 <dt id="PropagationTimeTerminationSettings">
 <em class="property">class </em><code class="descname">PropagationTimeTerminationSettings</code><a class="headerlink" href="#PropagationTimeTerminationSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>As the name suggests, these settings will cause the propagation to terminate after a certain time has passed. Please note that the simulator will finish the final time-step, which may cause the termination time to be slightly overpassed. The <code class="docutils literal"><span class="pre">PropagationTimeTerminationSettings</span></code> are passed as shown:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">PropagationTerminationSettings</span> <span class="o">&gt;</span> <span class="n">terminationSettings</span> <span class="o">=</span>
-      <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">PropagationTimeTerminationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">terminationTime</span> <span class="p">);</span>
+<dd><p>As the name suggests, these settings will cause the propagation to terminate after a certain time has passed. Please note that the simulator will finish the final time-step, which may cause the termination time to be slightly overpassed. The constructor is:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">PropagationTerminationSettings</span><span class="p">(</span> <span class="n">terminationTime</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where:</p>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">terminationSettings</span></code></p>
-<blockquote>
-<div><p><code class="docutils literal"><span class="pre">boost::shared_ptr</span></code> that is passed to one of the derived classes of <code class="xref py py-class docutils literal"><span class="pre">PropagationSettings</span></code> discussed in <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>.</p>
-</div></blockquote>
-</li>
-<li><p class="first"><a class="reference internal" href="#PropagationTimeTerminationSettings" title="PropagationTimeTerminationSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagationTimeTerminationSettings</span></code></a></p>
-<blockquote>
-<div><p>Indicates to <code class="docutils literal"><span class="pre">boost::make_shared</span></code> the constructor of the derived class being used.</p>
-</div></blockquote>
-</li>
 <li><p class="first"><code class="docutils literal"><span class="pre">terminationTime</span></code></p>
 <blockquote>
 <div><p><code class="docutils literal"><span class="pre">double</span></code> that dictates the time that must pass before the simulation is terminated.</p>
@@ -231,27 +220,22 @@
 </div>
 <p>where in this example the variable created is an <code class="docutils literal"><span class="pre">altitude_dependent_variable</span></code> which provides the altitude of <code class="docutils literal"><span class="pre">Vehicle</span></code> with respect to <code class="docutils literal"><span class="pre">Earth</span></code>.</p>
 <p>The versatility in the use of <a class="reference internal" href="#PropagationDependentVariableTerminationSettings" title="PropagationDependentVariableTerminationSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagationDependentVariableTerminationSettings</span></code></a> to terminate a simulation lies in the large number of dependent variable types available in Tudat. The user is referred to <a class="reference internal" href="propagatorSettingsDependentVariables.html#tudatfeaturespropagatorsettingsdependentvariables"><span class="std std-ref">Propagator Settings: Dependent Variables</span></a> for a full list of the available dependent variables as well as their use.</p>
-<p>Once the dependent variable that terminates the simulation has been created, it must be passed to the <code class="docutils literal"><span class="pre">terminationSettings</span></code>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">PropagationTerminationSettings</span> <span class="o">&gt;</span> <span class="n">terminationSettings</span> <span class="o">=</span>
-     <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">PropagationDependentVariableTerminationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-         <span class="n">terminationDependentVariable</span><span class="p">,</span> <span class="n">limitValue</span><span class="p">,</span> <span class="n">useAsLowerLimit</span> <span class="p">);</span>
+<p>The constructor for this derived class is:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">PropagationDependentVariableTerminationSettings</span><span class="p">(</span> <span class="n">terminationDependentVariable</span><span class="p">,</span>
+                                                 <span class="n">limitValue</span><span class="p">,</span>
+                                                 <span class="n">useAsLowerLimit</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where:</p>
 <ul>
-<li><p class="first"><a class="reference internal" href="#PropagationDependentVariableTerminationSettings" title="PropagationDependentVariableTerminationSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagationDependentVariableTerminationSettings</span></code></a></p>
-<blockquote>
-<div><p>Indicates to <code class="docutils literal"><span class="pre">boost::make_shared</span></code> the constructor of the derived class being used.</p>
-</div></blockquote>
-</li>
 <li><p class="first"><code class="docutils literal"><span class="pre">terminationDependentVariable</span></code></p>
 <blockquote>
-<div><p>Contains the dependent variable used for termination, in this example <code class="docutils literal"><span class="pre">altitude_dependent_variable</span></code> as declared above.</p>
+<div><p><code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">SingleDependentVariableSaveSettings</span> <span class="pre">&gt;</span></code> contains the dependent variable used for termination, in this example: <code class="docutils literal"><span class="pre">altitude_dependent_variable</span></code> as declared above.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">limitValue</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">double</span></code> that provides the lower-limit (or higher-limit) that the :literal:`` can take before terminating the propagation.</p>
+<div><p><code class="docutils literal"><span class="pre">double</span></code> that provides the lower-limit (or higher-limit) that the <code class="docutils literal"><span class="pre">terminationDependentVariable</span></code> can take before terminating the propagation.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">useAsLowerLimit</span></code></p>
@@ -265,22 +249,16 @@
 <dl class="class">
 <dt id="PropagationHybridTerminationSettings">
 <em class="property">class </em><code class="descname">PropagationHybridTerminationSettings</code><a class="headerlink" href="#PropagationHybridTerminationSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>It may be possible that the user desires to terminate a propagation according several criteria, where such criteria may or may not be fulfilled simulataneously. To do so, the user must include the following code:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">PropagationTerminationSettings</span> <span class="o">&gt;</span> <span class="n">terminationSettings</span> <span class="o">=</span>
-      <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">PropagationHybridTerminationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">terminationSettingsList</span><span class="p">,</span> <span class="n">fulFillSingleCondition</span> <span class="p">);</span>
+<dd><p>It may be possible that the user desires to terminate a propagation according several criteria, where such criteria may or may not be fulfilled simulataneously. The constructor for this derived class is:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">PropagationHybridTerminationSettings</span><span class="p">(</span> <span class="n">terminationSettingsList</span><span class="p">,</span>
+                                      <span class="n">fulFillSingleCondition</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where:</p>
 <ul>
-<li><p class="first"><a class="reference internal" href="#PropagationHybridTerminationSettings" title="PropagationHybridTerminationSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagationHybridTerminationSettings</span></code></a></p>
-<blockquote>
-<div><p>Indicates to <code class="docutils literal"><span class="pre">boost::make_shared</span></code> the constructor of the derived class being used.</p>
-</div></blockquote>
-</li>
 <li><p class="first"><code class="docutils literal"><span class="pre">terminationSettingsList</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">boost::shared_ptr&lt;</span> <span class="pre">PropagationTerminationSettings</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> where each of its elements contains derived classes of <code class="xref py py-class docutils literal"><span class="pre">TerminationSettings</span></code>. The desired <code class="xref py py-class docutils literal"><span class="pre">TerminationSettings</span></code> can be added by using the <code class="docutils literal"><span class="pre">push_back</span></code> method of <code class="docutils literal"><span class="pre">std::vector</span></code>, where the pushed elements are the <code class="docutils literal"><span class="pre">terminationSettings</span></code> objects discussed above for <a class="reference internal" href="#PropagationTimeTerminationSettings" title="PropagationTimeTerminationSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagationTimeTerminationSettings</span></code></a> and <a class="reference internal" href="#PropagationDependentVariableTerminationSettings" title="PropagationDependentVariableTerminationSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagationDependentVariableTerminationSettings</span></code></a>.</p>
+<div><p><code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">boost::shared_ptr&lt;</span> <span class="pre">PropagationTerminationSettings</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> where each of its elements contains derived classes of <code class="xref py py-class docutils literal"><span class="pre">PropagationTerminationSettings</span></code>. The desired <code class="xref py py-class docutils literal"><span class="pre">PropagationTerminationSettings</span></code> can be added by using the <code class="docutils literal"><span class="pre">push_back</span></code> method of <code class="docutils literal"><span class="pre">std::vector</span></code>, where the pushed elements are objects of the classes discussed above.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">fulFillSingleCondition</span></code></p>

@@ -258,7 +258,7 @@ Converting to/from Cartesian state requires an additional piece of information i
 <span class="kt">double</span> <span class="n">eccentricAnomaly</span> <span class="o">=</span> <span class="n">convertMeanAnomalyToEccentricAnomaly</span><span class="p">(</span> <span class="n">eccentricity</span><span class="p">,</span> <span class="n">meanAnomaly</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>However, this conversion involves the solution of an implicit algebraic equation, for which a root finder is used. Root finders are discussed in more detail&nbsp;here. When calling the function as in the above example, a root finder is created internally. However, in some cases you may want to specify your own root finder, as well as a first initial guess for the eccentric anomaly (which the root finder uses at its first iteration). When doing so, you create a pointer to a root finder object and pass it to the conversion function as follows:</p>
+<p>However, this conversion involves the solution of an implicit algebraic equation, for which a root finder is used. Root finders are discussed in more detail&nbsp;here. When calling the function as in the above example, a <code class="xref py py-class docutils literal"><span class="pre">RootFinder</span></code> is created internally. However, in some cases you may want to specify your own root finder, as well as a first initial guess for the eccentric anomaly (which the root finder uses at its first iteration). When doing so, you create a pointer to a root finder object and pass it to the conversion function as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">meanAnomaly</span> <span class="o">=</span> <span class="p">....</span>
 <span class="kt">double</span> <span class="n">eccentricity</span> <span class="o">=</span> <span class="p">...</span>
 <span class="kt">double</span> <span class="n">initialGuess</span> <span class="o">=</span> <span class="p">...</span>
@@ -276,7 +276,7 @@ Converting to/from Cartesian state requires an additional piece of information i
 </div>
 <div class="section" id="spherical-orbital-elements">
 <h3>1.1.1.2. Spherical-orbital elements<a class="headerlink" href="#spherical-orbital-elements" title="Permalink to this headline">¶</a></h3>
-<p>The spherical elements are typically used to denote the conditions in atmospheric flight. In most applications, they will be used to denote the state in a body-fixed frame. The details of the physical meaning of the elements id discussed&nbsp;here. The element indices in Tudat are the following:</p>
+<p>The spherical elements are typically used to denote the conditions in atmospheric flight. In most applications, they will be used to denote the state in a body-fixed frame. The details of the physical meaning of the elements is discussed&nbsp;here. The element indices in Tudat are the following:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Spherical orbital state element indices</span>
 <span class="k">enum</span> <span class="n">SphericalOrbitalStateElementIndices</span>
 <span class="p">{</span>
@@ -302,16 +302,69 @@ Converting to/from Cartesian state requires an additional piece of information i
 </div>
 <div class="section" id="modified-equinoctial-elements">
 <h3>1.1.1.3. Modified Equinoctial elements<a class="headerlink" href="#modified-equinoctial-elements" title="Permalink to this headline">¶</a></h3>
-<p>Coming soon.</p>
+<p>The modified equinoctial elements are typically used for orbits with eccentricities near 0 or 1 and/or inclinations near 0 or <span class="math">\(\pi\)</span>. The element indices in Tudat are the following:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Modified equinoctial element vector indices.</span>
+<span class="k">enum</span> <span class="n">ModifiedEquinoctialElementVectorIndices</span>
+<span class="p">{</span>
+    <span class="n">semiParameterIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">fElementIndex</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">gElementIndex</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">hElementIndex</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">kElementIndex</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">trueLongitudeIndex</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>The modified equinoctial elements consists of 6 elements. The conversion to/from Cartesian elements requires the gravitation parameter of the body w.r.t. which the Modified Equinoctial elements are defined. Furthermore, a <code class="docutils literal"><span class="pre">bool</span></code> is used to indicate whether the singularity of this element set occurs for inclinations of 0 or <span class="math">\(\pi\)</span>. The conversion from Cartesian elements is done as:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">cartesianState</span> <span class="o">=</span> <span class="p">....</span>
+<span class="kt">double</span> <span class="n">centralBodyGravitationalParameter</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">cartesianState</span> <span class="o">=</span> <span class="n">convertCartesianToModifiedEquinoctial</span><span class="p">(</span> <span class="n">cartesianState</span><span class="p">,</span> <span class="n">centralBodyGravitationalParameter</span><span class="p">,</span> <span class="n">flipSingularityToZeroInclination</span> <span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">flipSingularityToZeroInlination</span></code> is optional for this conversion. If left empty, an overloaded function will determine whether this value is true or false based on the inclination of the orbit.</p>
+</div>
+<p>Similarly, the inverse operation is done as:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">modifiedEquinoctialElements</span> <span class="o">=</span> <span class="p">....</span>
+<span class="kt">double</span> <span class="n">centralBodyGravitationalParameter</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">cartesianState</span> <span class="o">=</span> <span class="n">convertModifiedEquinoctialToCartesian</span><span class="p">(</span> <span class="n">modifiedEquinoctialElements</span><span class="p">,</span> <span class="n">centralBodyGravitationalParameter</span><span class="p">,</span> <span class="n">flipSingularityToZeroInclination</span> <span class="p">);</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="unified-state-model-elements">
 <h3>1.1.1.4. Unified State Model elements<a class="headerlink" href="#unified-state-model-elements" title="Permalink to this headline">¶</a></h3>
-<p>Coming soon.</p>
+<p>The element indices for the Unified State Model elements in Tudat are the following:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Unified State Model indices.</span>
+<span class="k">enum</span> <span class="n">UnifiedStateModelElementIndices</span>
+<span class="p">{</span>
+    <span class="n">CHodographIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">Rf1HodographIndex</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">Rf2HodographIndex</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">epsilon1QuaternionIndex</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">epsilon2QuaternionIndex</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">epsilon3QuaternionIndex</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">etaQuaternionIndex</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>The unified state model elements consists of 7 elements. Only the conversion to/from Keplerian elements is implemented. The conversion requires the gravitation parameter of the body w.r.t. which the Unified State Model elements are defined. The conversion from Keplerian elements is done as:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">keplerianElements</span> <span class="o">=</span> <span class="p">....</span>
+<span class="kt">double</span> <span class="n">centralBodyGravitationalParameter</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">cartesianState</span> <span class="o">=</span> <span class="n">convertKeplerianToUnifiedStateModelElements</span><span class="p">(</span> <span class="n">keplerianElements</span><span class="p">,</span> <span class="n">centralBodyGravitationalParameter</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Similarly, the inverse operation is done as:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">unifiedStateModelElements</span> <span class="o">=</span> <span class="p">....</span>
+<span class="kt">double</span> <span class="n">centralBodyGravitationalParameter</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">cartesianState</span> <span class="o">=</span> <span class="n">convertUnifiedStateElementsToKeplerian</span><span class="p">(</span> <span class="n">unifiedStateModelElements</span><span class="p">,</span> <span class="n">centralBodyGravitationalParameter</span> <span class="p">);</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="frame-transformations">
 <h2>1.1.2. Frame transformations<a class="headerlink" href="#frame-transformations" title="Permalink to this headline">¶</a></h2>
-<p>Every state, regardless of its representation is expressed with a particular origin an orientation. This is most easy to understand for Cartesian elements, where the origin represents the (0,0,0) position, and the orientation defines the direction of the x-, y- and z-axes. Below, we discuss how to perform these operations in Tudat.</p>
+<p>Every state, regardless of its representation is expressed with a particular origin and orientation. This is most easy to understand for Cartesian elements, where the origin represents the (0,0,0) position, and the orientation defines the direction of the x-, y- and z-axes. Below, we discuss how to perform these operations in Tudat.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">Do not use the getCurrentState or getCurrentRotation functions in the body objects! These functions are used during numerical propagation, and calling them outside of the numerical propagation will generally not lead to meaningful results.</p>

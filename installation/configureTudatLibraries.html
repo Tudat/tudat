@@ -289,55 +289,62 @@
 <dt><strong>Step 5: Build the libraries</strong></dt>
 <dd>Now all that remains to be done is to build the libraries. To do this, simply click on the “hammer” build icon at the bottom-left of your screen (or use the menu <code class="docutils literal"><span class="pre">Build</span></code> at the top and select <code class="docutils literal"><span class="pre">Build</span> <span class="pre">all</span></code>). You will see a <code class="docutils literal"><span class="pre">Compile</span> <span class="pre">Output</span></code> console window pop-up, showing the status of the build process, as the compiler walks through all the project files, and generates the libraries that we need. The entire build process could take anywhere from 5 to 30 minutes, depending on the specifications of your computer. Have patience! It will all work out in the end :). Once the building is complete, you’re done! You have now successfully built Tudat and all required libraries on your computer. In case of any problems, please contact&nbsp;<a class="reference external" href="mailto:tudat_ae&#37;&#52;&#48;tudelft&#46;nl">tudat_ae<span>&#64;</span>tudelft<span>&#46;</span>nl</a>.</dd>
 <dt><strong>Step 6: Run Template Application</strong></dt>
-<dd><p class="first">For your convenience, we have shipped some example applications for you to play around with. As the basis for your future applications, your Tudat Bundle is shipped with a magnificent template application. All that remains to be done is to run it. To select a specific application to run, click on the <code class="docutils literal"><span class="pre">Build</span> <span class="pre">and</span> <span class="pre">Run</span> <span class="pre">Settings</span></code> (computer) icon and select the <code class="docutils literal"><span class="pre">application_HelloWorld</span></code> application. By clicking the <code class="docutils literal"><span class="pre">Run</span></code> button (play icon in bottom left), the code will be compiled and the selected application will be executed. However, this will also recompile all off the applications in your current project. Assuming that you have made no changes to the code, this process should be quite quick, but can take up to several minutes on a Windows machine. To tell Qt Creator to only build a single executable, click the project tab on the left. Subsequently, click on <code class="docutils literal"><span class="pre">Details</span></code> under <code class="docutils literal"><span class="pre">Build</span> <span class="pre">Steps</span></code>. You will see a list of all applications and static libraries in the project. Select the one(s) you want to compile. Note that all dependencies of a given application will automatically be compiled as well. Now go back to your coding window by hitting <code class="docutils literal"><span class="pre">Edit</span></code>. Click the <code class="docutils literal"><span class="pre">Run</span></code> button again. The output of your application is displayed in the green box.</p>
-<div class="last admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">The output in the greenbox will not match your results exactly, since the Template Application generates random floating-point numbers to provide an example of using the Boost libraries. SO DON’T WORRY SO LONG AS THE OUTPUT IS SIMILAR!.</p>
+<dd><blockquote class="first">
+<div>For your convenience, we have shipped some example applications for you to play around with. As the basis for your future applications, your Tudat Bundle is shipped with a magnificent template application. All that remains to be done is to run it. To select a specific application to run, click on the <code class="docutils literal"><span class="pre">Build</span> <span class="pre">and</span> <span class="pre">Run</span> <span class="pre">Settings</span></code> (computer) icon and select the <code class="docutils literal"><span class="pre">application_HelloWorld</span></code> application. By clicking the <code class="docutils literal"><span class="pre">Run</span></code> button (play icon in bottom left), the code will be compiled and the selected application will be executed. However, this will also recompile all off the applications in your current project. Assuming that you have made no changes to the code, this process should be quite quick, but can take up to several minutes on a Windows machine. To tell Qt Creator to only build a single executable, click the project tab on the left. Subsequently, click on <code class="docutils literal"><span class="pre">Details</span></code> under <code class="docutils literal"><span class="pre">Build</span> <span class="pre">Steps</span></code>. You will see a list of all applications and static libraries in the project. Select the one(s) you want to compile. Note that all dependencies of a given application will automatically be compiled as well. Now go back to your coding window by hitting <code class="docutils literal"><span class="pre">Edit</span></code>. Click the <code class="docutils literal"><span class="pre">Run</span></code> button again. The output of your application is displayed in the <code class="docutils literal"><span class="pre">Application</span> <span class="pre">Output</span></code> box at the bottom of your screen.</div></blockquote>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p>The output should look similar as the output shown below. It will not match your results exactly, since the Template Application generates random floating-point numbers to provide an example of using the Boost libraries:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span>Starting ../tudatBundle/tudatExampleApplications/templateApplication/bin/applications/application_HelloWorld...
+Hello world!
+I am floating 7.00853 km above the Moon&#39;s surface.
+The gravitational acceleration here is 1.61083 m/s^2.
+../tudatBundle/tudatExampleApplications/templateApplication/bin/applications/application_HelloWorld exited with code 0
+</pre></div>
+</div>
 </div>
 </dd>
 </dl>
 <p>Congratulations! You’ve built and run your first Tudat application :)</p>
 <p><strong>Step 7: Running the unit tests</strong>
 For each part of the code in Tudat, we have written unit tests, which are included in the repository. Before moving on with using Tudat, you should run all the unit tests to ensure that your installation is functioning as it should. To run all unit tests, go back to the project tab, and again go to the <code class="docutils literal"><span class="pre">Build</span> <span class="pre">Steps</span></code> block. In this block, uncheck the <code class="docutils literal"><span class="pre">application_HelloWorld</span></code> from the previous part and write “test” in the <code class="docutils literal"><span class="pre">Additional</span> <span class="pre">Arguments</span></code> line, as shown below. After running the unit tests, make sure to remove the “test” text that you’ve typed in here, Qt will not compile the code as long as it is there. Now, go back to your code by clicking on the <code class="docutils literal"><span class="pre">Edit</span></code> tab, and click the <code class="docutils literal"><span class="pre">Compile</span></code> (hammer) button on the lower left. In the <code class="docutils literal"><span class="pre">Compile</span> <span class="pre">Output</span></code> console window at the bottom of your screen, you should see all the unit tests being run, with output as follows:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>15:15:48: Running steps for project TudatBundle...
-15:15:48: Starting: &quot;/usr/bin/make&quot; test
-Running tests...
-Test project /home/dominicdirkx/Software/tudat/build-tudatBundle-Desktop-Default
-Start 1: test_Sofa
-1/132 Test 1: test_Sofa ................................................ Passed 0.03 sec
-Start 2: test_AerodynamicMomentAndAerodynamicForce
-2/132 Test 2: test_AerodynamicMomentAndAerodynamicForce ................ Passed 0.22 sec
-Start 3: test_AerodynamicsNamespace
-3/132 Test 3: test_AerodynamicsNamespace ............................... Passed 0.00 sec
-Start 4: test_AerodynamicCoefficientGenerator
-4/132 Test 4: test_AerodynamicCoefficientGenerator ..................... Passed 0.03 sec
-Start 5: test_ExponentialAtmosphere
-5/132 Test 5: test_ExponentialAtmosphere ............................... Passed 0.00 sec
-Start 6: test_TabulatedAtmosphere
-6/132 Test 6: test_TabulatedAtmosphere ................................. Passed 0.04 sec
-Start 7: test_TabulatedAerodynamicCoefficients
-7/132 Test 7: test_TabulatedAerodynamicCoefficients .................... Passed 1.61 sec
-Start 8: test_NRLMSISE00Atmosphere
-8/132 Test 8: test_NRLMSISE00Atmosphere ................................ Passed 0.01 sec
-Start 9: test_AstrodynamicsFunctions
-9/132 Test 9: test_AstrodynamicsFunctions .............................. Passed 0.00 sec
-Start 10: test_OrbitalElementConversions
-...
-...
-...
-130/132 Test 130: test_SpiceInterface ...................................... Passed 0.05 sec
-Start 131: test_EnvironmentSetup
-131/132 Test 131: test_EnvironmentSetup .................................... Passed 2.90 sec
-Start 132: test_AccelerationModelSetup
-132/132 Test 132: test_AccelerationModelSetup .............................. Passed 0.16 sec
-100% tests passed, 0 tests failed out of 132
-Total Test time (real) = 59.57 sec
-15:16:48: The process &quot;/usr/bin/make&quot; exited normally.
-15:16:48: Elapsed time: 01:00.
-
-If the output ends with ``100% tests passed, 0 tests failed``, all is well and you do not need to take any further action. After running the unit tests , make sure to remove the &#39;test&#39; text that you&#39;ve typed in here, Qt will not compile the code as long as it is there. There is a possibility of one or more unit tests failing, though. Usually, there is no cause for alarm, as this just means that your computer is rounding some variables a bit differently, so that the 15th or 16th digit is different from what we expect. Just to be sure, however, you should &quot;open an issue on Github&quot;: https://github.com/Tudat/tudat/issues/new In this issue, attach the file ``LastTest.log``, which should be in the ``/Testing/Temporary/`` directory in your build folder (which you specified in Step 2). In the issue description and title, note that it concerns failed unit test(s) and mention your operating system. We&#39;ll get back to you with a fix for the failure ASAP.
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">15</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span> <span class="n">Running</span> <span class="n">steps</span> <span class="k">for</span> <span class="n">project</span> <span class="n">TudatBundle</span><span class="o">...</span>
+<span class="mi">15</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span> <span class="n">Starting</span><span class="p">:</span> <span class="s2">&quot;/usr/bin/make&quot;</span> <span class="n">test</span>
+<span class="n">Running</span> <span class="n">tests</span><span class="o">...</span>
+<span class="n">Test</span> <span class="n">project</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">dominicdirkx</span><span class="o">/</span><span class="n">Software</span><span class="o">/</span><span class="n">tudat</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">tudatBundle</span><span class="o">-</span><span class="n">Desktop</span><span class="o">-</span><span class="n">Default</span>
+<span class="n">Start</span> <span class="mi">1</span><span class="p">:</span> <span class="n">test_Sofa</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">132</span> <span class="n">Test</span> <span class="mi">1</span><span class="p">:</span> <span class="n">test_Sofa</span> <span class="o">................................................</span> <span class="n">Passed</span> <span class="mf">0.03</span> <span class="n">sec</span>
+<span class="n">Start</span> <span class="mi">2</span><span class="p">:</span> <span class="n">test_AerodynamicMomentAndAerodynamicForce</span>
+<span class="mi">2</span><span class="o">/</span><span class="mi">132</span> <span class="n">Test</span> <span class="mi">2</span><span class="p">:</span> <span class="n">test_AerodynamicMomentAndAerodynamicForce</span> <span class="o">................</span> <span class="n">Passed</span> <span class="mf">0.22</span> <span class="n">sec</span>
+<span class="n">Start</span> <span class="mi">3</span><span class="p">:</span> <span class="n">test_AerodynamicsNamespace</span>
+<span class="mi">3</span><span class="o">/</span><span class="mi">132</span> <span class="n">Test</span> <span class="mi">3</span><span class="p">:</span> <span class="n">test_AerodynamicsNamespace</span> <span class="o">...............................</span> <span class="n">Passed</span> <span class="mf">0.00</span> <span class="n">sec</span>
+<span class="n">Start</span> <span class="mi">4</span><span class="p">:</span> <span class="n">test_AerodynamicCoefficientGenerator</span>
+<span class="mi">4</span><span class="o">/</span><span class="mi">132</span> <span class="n">Test</span> <span class="mi">4</span><span class="p">:</span> <span class="n">test_AerodynamicCoefficientGenerator</span> <span class="o">.....................</span> <span class="n">Passed</span> <span class="mf">0.03</span> <span class="n">sec</span>
+<span class="n">Start</span> <span class="mi">5</span><span class="p">:</span> <span class="n">test_ExponentialAtmosphere</span>
+<span class="mi">5</span><span class="o">/</span><span class="mi">132</span> <span class="n">Test</span> <span class="mi">5</span><span class="p">:</span> <span class="n">test_ExponentialAtmosphere</span> <span class="o">...............................</span> <span class="n">Passed</span> <span class="mf">0.00</span> <span class="n">sec</span>
+<span class="n">Start</span> <span class="mi">6</span><span class="p">:</span> <span class="n">test_TabulatedAtmosphere</span>
+<span class="mi">6</span><span class="o">/</span><span class="mi">132</span> <span class="n">Test</span> <span class="mi">6</span><span class="p">:</span> <span class="n">test_TabulatedAtmosphere</span> <span class="o">.................................</span> <span class="n">Passed</span> <span class="mf">0.04</span> <span class="n">sec</span>
+<span class="n">Start</span> <span class="mi">7</span><span class="p">:</span> <span class="n">test_TabulatedAerodynamicCoefficients</span>
+<span class="mi">7</span><span class="o">/</span><span class="mi">132</span> <span class="n">Test</span> <span class="mi">7</span><span class="p">:</span> <span class="n">test_TabulatedAerodynamicCoefficients</span> <span class="o">....................</span> <span class="n">Passed</span> <span class="mf">1.61</span> <span class="n">sec</span>
+<span class="n">Start</span> <span class="mi">8</span><span class="p">:</span> <span class="n">test_NRLMSISE00Atmosphere</span>
+<span class="mi">8</span><span class="o">/</span><span class="mi">132</span> <span class="n">Test</span> <span class="mi">8</span><span class="p">:</span> <span class="n">test_NRLMSISE00Atmosphere</span> <span class="o">................................</span> <span class="n">Passed</span> <span class="mf">0.01</span> <span class="n">sec</span>
+<span class="n">Start</span> <span class="mi">9</span><span class="p">:</span> <span class="n">test_AstrodynamicsFunctions</span>
+<span class="mi">9</span><span class="o">/</span><span class="mi">132</span> <span class="n">Test</span> <span class="mi">9</span><span class="p">:</span> <span class="n">test_AstrodynamicsFunctions</span> <span class="o">..............................</span> <span class="n">Passed</span> <span class="mf">0.00</span> <span class="n">sec</span>
+<span class="n">Start</span> <span class="mi">10</span><span class="p">:</span> <span class="n">test_OrbitalElementConversions</span>
+<span class="o">...</span>
+<span class="o">...</span>
+<span class="o">...</span>
+<span class="mi">130</span><span class="o">/</span><span class="mi">132</span> <span class="n">Test</span> <span class="mi">130</span><span class="p">:</span> <span class="n">test_SpiceInterface</span> <span class="o">......................................</span> <span class="n">Passed</span> <span class="mf">0.05</span> <span class="n">sec</span>
+<span class="n">Start</span> <span class="mi">131</span><span class="p">:</span> <span class="n">test_EnvironmentSetup</span>
+<span class="mi">131</span><span class="o">/</span><span class="mi">132</span> <span class="n">Test</span> <span class="mi">131</span><span class="p">:</span> <span class="n">test_EnvironmentSetup</span> <span class="o">....................................</span> <span class="n">Passed</span> <span class="mf">2.90</span> <span class="n">sec</span>
+<span class="n">Start</span> <span class="mi">132</span><span class="p">:</span> <span class="n">test_AccelerationModelSetup</span>
+<span class="mi">132</span><span class="o">/</span><span class="mi">132</span> <span class="n">Test</span> <span class="mi">132</span><span class="p">:</span> <span class="n">test_AccelerationModelSetup</span> <span class="o">..............................</span> <span class="n">Passed</span> <span class="mf">0.16</span> <span class="n">sec</span>
+<span class="mi">100</span><span class="o">%</span> <span class="n">tests</span> <span class="n">passed</span><span class="p">,</span> <span class="mi">0</span> <span class="n">tests</span> <span class="n">failed</span> <span class="n">out</span> <span class="n">of</span> <span class="mi">132</span>
+<span class="n">Total</span> <span class="n">Test</span> <span class="n">time</span> <span class="p">(</span><span class="n">real</span><span class="p">)</span> <span class="o">=</span> <span class="mf">59.57</span> <span class="n">sec</span>
+<span class="mi">15</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span> <span class="n">The</span> <span class="n">process</span> <span class="s2">&quot;/usr/bin/make&quot;</span> <span class="n">exited</span> <span class="n">normally</span><span class="o">.</span>
+<span class="mi">15</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span> <span class="n">Elapsed</span> <span class="n">time</span><span class="p">:</span> <span class="mi">01</span><span class="p">:</span><span class="mf">00.</span>
 </pre></div>
 </div>
+<p>If the output ends with <code class="docutils literal"><span class="pre">100%</span> <span class="pre">tests</span> <span class="pre">passed,</span> <span class="pre">0</span> <span class="pre">tests</span> <span class="pre">failed</span></code>, all is well and you do not need to take any further action. After running the unit tests, make sure to remove the ‘test’ text that you’ve typed in here, Qt will not compile the code as long as it is there. There is a possibility of one or more unit tests failing, though. Usually, there is no cause for alarm, as this just means that your computer is rounding some variables a bit differently, so that the 15th or 16th digit is different from what we expect. Just to be sure, however, you should “open an issue on Github”: <a class="reference external" href="https://github.com/Tudat/tudat/issues/new">https://github.com/Tudat/tudat/issues/new</a>. In this issue, attach the file <code class="docutils literal"><span class="pre">LastTest.log</span></code>, which should be in the <code class="docutils literal"><span class="pre">/Testing/Temporary/</span></code> directory in your build folder (which you specified in Step 2). In the issue description and title, note that it concerns failed unit test(s) and mention your operating system. We’ll get back to you with a fix for the failure ASAP.</p>
 <p>So, welcome to the Tudat universe :). The fun has just started though. You are now ready to run one of the many example applications that came bundled with Tudat, and this time it involves real simulations. The applications are explained in detail in the tutorials at&nbsp;Tutorials and Documentation. The next and last (optional) part explains you how to set-up a new application or add existing ones to your Tudat Bundle.</p>
 </div>
 
