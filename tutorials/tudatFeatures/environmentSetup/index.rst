@@ -462,7 +462,7 @@ Aerodynamic coefficient interface
 
 .. class:: TabulatedAerodynamicCoefficientSettings
 
-   Settings for tabulated aerodynamic coefficients as a function of given independent variables. These tables can be defined either manually or loaded from a file, as discussed in more detail here HERE LINK BROKEN. Coefficients can be defined as a function of angle of sideslip, angle of attack, Mach number or altitude. If you simulation requires any other dependencies for the coefficients, please open an issue on Github requesting feature.
+   Settings for tabulated aerodynamic coefficients as a function of given independent variables. These tables can be defined either manually or loaded from a file, as discussed in more detail :ref:`here <tudatFeaturesAerodynamicGuidanceReadingAerodynamicCoefficients>`. Coefficients can be defined as a function of angle of sideslip, angle of attack, Mach number or altitude. If you simulation requires any other dependencies for the coefficients, please open an issue on Github requesting feature.
 
 .. method:: Local Inclination methods
 

@@ -323,6 +323,8 @@ Compared to the :class:`FlightConditionsBasedAerodynamicGuidance` class define
 
 As with the previous examples, the values to which the control surface deflections are set are quite arbitrary and not based on any particularly realistic model. They are defined for illustration purposes only. A key difference between the manner in which the aerodynamic angles and the control surface deflections are handled by the guidance object is that the angles are computed but not set by the object (the angles are retrieved and set in the body model by the :class:`AerodynamicAngleCalculator`). The control surface deflections on the other hand are both computed and set by the guidance object.
 
+.. _tudatFeaturesAerodynamicGuidanceReadingAerodynamicCoefficients:
+
 Reading aerodynamic coefficients from Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 For many simulations/analyses involving atmospheric flight, the aerodynamic coefficients will be provided in tabulated form. If put into the correct file format, these files can be read into Tudat used during the orbit propagation. By specifying the physical meaning of the independent variables of the aerodynamic coefficients, no action on the side of the user is required to update the aerodynamic coefficients to their correct values during propagation. Here, we give an overview and some examples on how to load aerodynamic coefficients from a file.
