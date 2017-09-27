@@ -2,21 +2,58 @@
 
 Create a Dynamics Simulator Object
 ==================================
-At the moment, the following dynamics simulators are available or under development in Tudat:
+At the moment, the following :class:`DynamicSimulator` options are available or under development in Tudat:
 
 - Single-arc dynamics simulator.
-- Multi-arc dynamics simulator (under development).
+- Multi-arc dynamics simulator.
 - Hybrid dynamics simulator (under development).
 
-The :literal:`bodyMap`, :literal:`integratorSettigns` and the :literal:`propagatorSettings` are binded together when the :literal:`dynamicsSimulator` is created as shown below:
+These are implemented in derived classes and are discussed below. 
 
-.. code-block:: cpp
+.. class:: SingleArcDynamicsSimulator
+   
+   This derived class simulates single arc dynamics and its constructor is:
 
-    // Create simulation object and propagate dynamics.
-    SingleArcDynamicsSimulator< > dynamicsSimulator(
-                bodyMap, integratorSettings, propagatorSettings );
+   .. code-block:: cpp
 
-By default, the equations of motion are integrated once the object is created. This can be changed by adding additional arguments, as shown below:
+      SingleArcDynamicsSimulator( bodyMap,
+      				  integratorSettings, 
+      				  propagatorSettings );
+
+   where:
+
+   - :literal:`bodyMap`
+
+      :class:`NamedBodyMap` the map containing al the objects of type :class:`Body` used in the simulation.
+
+   - :literal:`integratorSettings`
+
+      :class:`IntergratorSettings` contains the settings of the integrator used, as discussed in :ref:`tudatFeaturesIntegratorSettings`.
+
+   - :literal:`propagatorSettings`
+
+      :class:`PropagatorSettings` contains the settings that defines how the orbit is propagated, as described in :ref:`tudatFeaturesPropagatorSettings`.
+
+.. class:: MultiArcDynamicsSimulator
+   
+   This derived class allows the numerical propagation to be performed in an arc-wise manner. It is constructed using:
+
+   .. code-block:: cpp
+   
+    MultiArcDynamicsSimulator(
+            bodyMap,
+            integratorSettings,
+            propagatorSettings,
+            arcStartTimes )
+
+   where:
+
+   - :literal:`arcStartTimes`
+
+      :literal:`std::vector< double >` contains the times at which the separate arcs start.
+      
+
+By default, the equations of motion are integrated once the object is created. This can be changed by adding additional arguments to the cosntructors of the :class:`DynamicsSimulator`, as shown below for the :class:`SingleArcDynamicsSimulator`:
 
 .. code-block:: cpp
 
@@ -33,7 +70,9 @@ where:
 - :literal:`setIntegratedResult`
     Boolean to determine whether to automatically use the integrated results to set ephemerides (default true).
 
-.. warning:: It is important to ensure that the propagator settings are compatible with the dynamics simulator type selected. During otherwise will result in exception being thrown during run-time.
+.. warning:: It is important to ensure that the propagator settings are compatible with the dynamics simulator type selected. Otherwise it will result in an exception being thrown during run-time.
+
+
 
 Retrieving the propagation history
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

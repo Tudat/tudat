@@ -4,7 +4,7 @@ Download using SmartGit (User)
 ------------------------------
 This guide is intended for Tudat users. A more elaborate guide for developers on how to setup SmartGit and clone Tudat Bundle go to the :ref:`downloadTudatBundleSmartgitDeveloper` guide.
 
-1. Setup SmartGit
+Setup SmartGit
 ~~~~~~~~~~~~~~~~~
 **Step 1.1: Download SmartGit**
     Download SmartGit for your operating system. Note that for Linux the package might be available through your package manager, see Linux/Debian instructions. Note that SmartGit comes bundled with JRE (Java Runtime Environment) on Windows and Mac OS X. On Linux you need to install ``jre-openjdk``.
@@ -24,7 +24,7 @@ This guide is intended for Tudat users. A more elaborate guide for developers on
 **Step 1.6: Complete the configuration**
     The next two steps can be left as default. If you already have a GitHub account you can link this to SmartGit. This can however be easily done later too.
 
-2. Add the Tudat Bundle repository
+Add the Tudat Bundle repository
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Step 2.1: Clone an existing repository**
     At first launch you will be welcomed and asked to create/clone/reopen a repository, choose ``Clone`` and click ``Ok``.
