@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
@@ -37,7 +39,7 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../index.html"/>
         <link rel="next" title="Github Basics" href="githubBasics.html"/>
-        <link rel="prev" title="7.3. External Libraries: JSONCPP" href="../tutorials/tudatFeatures/otherLibraries/jsoncpp.html"/> 
+        <link rel="prev" title="MATLAB Interface" href="../tutorials/matlabInterface/index.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -93,6 +95,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials and Documentation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Developer Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="githubBasics.html">Github Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extendingJSON/index.html">Extending the JSON interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extendingMATLAB/index.html">Extending the MATLAB interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howToWriteTheWiki.html">How to Write the Wiki</a></li>
 </ul>
 </li>
@@ -171,15 +175,28 @@
 <li class="toctree-l2"><a class="reference internal" href="githubBasics.html#branching-and-checking-out">Branching and checking out</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="extendingJSON/index.html">Extending the JSON interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="extendingJSON/basics.html">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extendingJSON/valueConversions.html">Value conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extendingJSON/enhancedDeserialization.html">Enhanced deserialisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extendingJSON/enhancedValueAccess.html">Enhanced value access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extendingJSON/enhancedValueSet.html">Enhanced value set</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extendingJSON/validation.html">Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extendingJSON/enumerations.html">Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extendingJSON/sharedPointers.html">Shared pointers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extendingJSON/otherTypes.html">Other types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extendingJSON/unitTesting.html">Unit testing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extendingMATLAB/index.html">Extending the MATLAB interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="extendingMATLAB/basics.html">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extendingMATLAB/addingFeatures.html">Adding features</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="howToWriteTheWiki.html">How to Write the Wiki</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howToWriteTheWiki.html#the-documentation-framework">The documentation framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howToWriteTheWiki.html#installing-the-documentation-tools">Installing the documentation tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howToWriteTheWiki.html#wiki-style-guide">Wiki style guide</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="howToWriteTheWiki.html#linking-rst-files">Linking <code class="docutils literal"><span class="pre">.rst</span></code> files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="howToWriteTheWiki.html#indentation-in-restructuredtext">Indentation in reStructuredText</a></li>
-<li class="toctree-l3"><a class="reference internal" href="howToWriteTheWiki.html#use-of-special-commands">Use of special commands</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="howToWriteTheWiki.html#wiki-style-guide">Wiki style guide</a></li>
 </ul>
 </li>
 </ul>
@@ -199,7 +216,7 @@
         <a href="githubBasics.html" class="btn btn-neutral float-right" title="Github Basics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../tutorials/tudatFeatures/otherLibraries/jsoncpp.html" class="btn btn-neutral" title="7.3. External Libraries: JSONCPP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../tutorials/matlabInterface/index.html" class="btn btn-neutral" title="MATLAB Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -231,6 +248,7 @@
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
             VERSION:'',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -256,7 +274,28 @@
           SphinxRtdTheme.StickyNav.enable();
       });
   </script>
-   
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
 
 </body>
 </html>

@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
@@ -111,6 +113,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../jsonInterface/index.html">JSON Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../matlabInterface/index.html">MATLAB Interface</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
@@ -295,7 +299,7 @@
 <div><ul>
 <li><p class="first"><code class="docutils literal"><span class="pre">integrationTimeFunction</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">boost::function&lt;</span> <span class="pre">double(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> that returns the integration time of the observable as a function of observation time (function input). In many cases, the integration time will be constant, and you may use a <code class="docutils literal"><span class="pre">boost::lambda</span></code>, so for a conmstant 60 s integration time:</p>
+<div><p><code class="docutils literal"><span class="pre">boost::function&lt;</span> <span class="pre">double(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> that returns the integration time of the observable as a function of observation time (function input). In many cases, the integration time will be constant, and you may use a <code class="docutils literal"><span class="pre">boost::lambda</span></code>, so for a constant 60 s integration time:</p>
 </div></blockquote>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span>  <span class="n">integrationTimeFunction</span> <span class="o">=</span>
     <span class="n">boost</span><span class="o">::</span><span class="n">lambda</span><span class="o">::</span><span class="n">constant</span><span class="p">(</span> <span class="mf">60.0</span> <span class="p">);</span>
@@ -614,6 +618,7 @@
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
             VERSION:'',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -639,7 +644,28 @@
           SphinxRtdTheme.StickyNav.enable();
       });
   </script>
-   
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
 
 </body>
 </html>

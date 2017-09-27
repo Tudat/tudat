@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
@@ -37,7 +39,7 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../index.html"/>
         <link rel="up" title="Developer Guide" href="index.html"/>
-        <link rel="prev" title="Github Basics" href="githubBasics.html"/> 
+        <link rel="prev" title="Adding features" href="extendingMATLAB/addingFeatures.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -93,6 +95,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials and Documentation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Developer Guide</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="githubBasics.html">Github Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extendingJSON/index.html">Extending the JSON interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extendingMATLAB/index.html">Extending the MATLAB interface</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">How to Write the Wiki</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#the-documentation-framework">The documentation framework</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#installing-the-documentation-tools">Installing the documentation tools</a></li>
@@ -497,7 +501,7 @@ This text WILL NOT be recognized within code-block.
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="githubBasics.html" class="btn btn-neutral" title="Github Basics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="extendingMATLAB/addingFeatures.html" class="btn btn-neutral" title="Adding features" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -529,6 +533,7 @@ This text WILL NOT be recognized within code-block.
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
             VERSION:'',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -554,7 +559,28 @@ This text WILL NOT be recognized within code-block.
           SphinxRtdTheme.StickyNav.enable();
       });
   </script>
-   
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
 
 </body>
 </html>
