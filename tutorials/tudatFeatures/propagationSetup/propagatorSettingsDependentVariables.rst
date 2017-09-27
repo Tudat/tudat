@@ -6,7 +6,7 @@ By default, the :class:`DynamicsSimulator` propagates the state of a body which 
 
 Saving dependent variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-The dependent variables are computed during the body propagation, thus the user must provide a list of dependent variables to save prior creating the :literal:`DynamicsSimulator`:
+The dependent variables are computed during the body propagation, thus the user must provide a list of dependent variables to save prior creating the :class:`DynamicsSimulator`:
 
 .. code-block:: cpp
 
@@ -24,11 +24,11 @@ where:
 
 - :class:`SingleDependentVariableSaveSettings`
 
-   Defines the derived-class being used and must match with :literal:`variableType`.
+   Defines the derived class being used and must match with :literal:`variableType`.
 
 - :literal:`variableType`
 
-   Indicates the variable type and must match with one of the :literal:`enum` values in :class:`PropagationDependentVariables`. A detailed description of how is done is given in the next section.
+   Indicates the variable type and must match with one of the :literal:`enum` values in :class:`PropagationDependentVariables`. A detailed description of how this is done is given in the next section.
 
 - :literal:`associatedBody`
 
@@ -38,7 +38,7 @@ where:
 
    Optional argument that provides a secondary body that may be necessary to save the dependent variable. By default, this argument is empty.
 
-Once the list of dependent variables to save has been populated, a :literal:`boost::shared_ptr< DependentVariableSaveSettings >` object needs to be created and passed to :literal:`propagatorSettings`:
+Once the list of dependent variables to save has been populated, a :class:`DependentVariableSaveSettings` object needs to be created and passed to :class:`PropagatorSettings`:
 
 .. code-block:: cpp
 
@@ -52,7 +52,7 @@ Once the list of dependent variables to save has been populated, a :literal:`boo
             ( centralBodies, accelerationModelMap, bodiesToPropagate, systemInitialState,
               terminationSettings, propagator, dependentVariablesToSave );
 
-.. note:: In the example above, the :class:`TranslationalStatePropagatorSettings` derived-class is used. Please note that any of the derived-classes described in :ref:`tudatFeaturesPropagatorSettings` can be used, as long as these support dependent variable saving.
+.. note:: In the example above, the :class:`TranslationalStatePropagatorSettings` derived class is used. Please note that any of the derived classes described in :ref:`tudatFeaturesPropagatorSettings` can be used, as long as these support dependent variable saving.
 
 
 Available dependent variables
@@ -65,8 +65,7 @@ The framework discussed in the previous section explains how the :literal:`depen
 
    .. code-block:: cpp
 
-      dependentVariablesList.push_back(
-                   boost::make_shared< SingleDependentVariableSaveSettings >( variableType, associatedBody, secondaryBody ) );
+      SingleDependentVariableSaveSettings( variableType, associatedBody, secondaryBody )
 
    where:
 
@@ -90,6 +89,7 @@ The framework discussed in the previous section explains how the :literal:`depen
       - :literal:`control_surface_deflection_dependent_variable`
       - :literal:`total_mass_rate_dependent_variables`
       - :literal:`periapsis_altitude_dependent_variable`
+      - :literal:`total_torque_norm_dependent_variable`
 
       **Variables returning an** :literal:`Eigen::VectorXd`
 
@@ -102,16 +102,22 @@ The framework discussed in the previous section explains how the :literal:`depen
       - :literal:`aerodynamic_moment_coefficients_dependent_variable`
       - :literal:`lvlh_to_inertial_frame_rotation_dependent_variable`
       - :literal:`rotation_matrix_to_body_fixed_frame_variable`
+      - :literal:`total_torque_dependent_variable`
+      - :literal:`single_torque_dependent_variable`
+      - :literal:`single_torque_norm_dependent_variable`
+      - :literal:`body_fixed_groundspeed_based_velocity_variable`
 
 .. class:: SingleAccelerationDependentVariableSaveSettings
 
-   This derived-class is used to retrieve acceleration-related dependent variables. A large number of acceleration models are supported and both the acceleration-norm and the acceleration-vector can be saved. Variables are saved to the :literal:`dependentVariablesList` using the following code:
+   This derived class is used to retrieve acceleration-related dependent variables. A large number of acceleration models are supported and both the acceleration-norm and the acceleration-vector can be saved. Variables are saved to the :literal:`dependentVariablesList` using the following code:
 
    .. code-block:: cpp
 
-      dependentVariablesList.push_back(
-                boost::make_shared< SingleAccelerationDependentVariableSaveSettings >(
-                    accelerationModeType, bodyUndergoingAcceleration, bodyExertingAcceleration, useNorm ) );
+      SingleAccelerationDependentVariableSaveSettings(
+                accelerationModeType, 
+      		bodyUndergoingAcceleration, 
+      		bodyExertingAcceleration, 
+      		useNorm )
 
    where:
 
@@ -146,13 +152,12 @@ The framework discussed in the previous section explains how the :literal:`depen
 
 .. class:: IntermediateAerodynamicRotationVariableSaveSettings
 
-   This derived-class is used to retrieve the rotation matrix between two desired frames. Variables are saved to the :literal:`dependentVariablesList` using the following code:
+   This derived class is used to retrieve the rotation matrix between two desired frames. Variables are saved to the :literal:`dependentVariablesList` using the following code:
 
    .. code-block:: cpp
 
-      dependentVariablesList.push_back(
-                boost::make_shared< IntermediateAerodynamicRotationVariableSaveSettings >(
-                    associatedBody, baseFrame, targetFrame ) );
+      IntermediateAerodynamicRotationVariableSaveSettings(
+                    associatedBody, baseFrame, targetFrame )
 
    where:
 
@@ -177,13 +182,12 @@ The framework discussed in the previous section explains how the :literal:`depen
 
 .. class:: BodyAerodynamicAngleVariableSaveSettings
 
-   This derived-class is used to retrieve a number of rotation angles. Variables are saved to the :literal:`dependentVariablesList` using the following code:
+   This derived class is used to retrieve a number of rotation angles. Variables are saved to the :literal:`dependentVariablesList` using the following code:
 
    .. code-block:: cpp
 
-      dependentVariablesList.push_back(
-                boost::make_shared< BodyAerodynamicAngleVariableSaveSettings >(
-                    associatedBody, angle ) );
+      BodyAerodynamicAngleVariableSaveSettings(
+                    associatedBody, angle )
 
    where:
 
@@ -203,4 +207,3 @@ The framework discussed in the previous section explains how the :literal:`depen
       - :literal:`angle_of_sideslip`
       - :literal:`bank_angle`
 
-.. warning:: At the moment, all the multi-dimensional dependent variables are pushed to the end of the save-file. This is currently being fixed, such that the save order is the same as the declaration order. Please refer to the following Pull Request for further details: https://github.com/Tudat/tudat/pull/191

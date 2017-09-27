@@ -50,7 +50,7 @@ The contents of the state derivative function can be freely defined according to
 
 Using the integrator object
 ***************************
-Once the :literal:`integrator` object has been created, the multiple functions available within the :literal:`NumericalIntegratorXdPointer` class can be accessed. The following functions are available and they are exemplified using the :literal:`integrator` and the :literal:`stateDerivativeFunction` declared above:
+Once the :literal:`integrator` object has been created, the multiple functions available within the :class:`NumericalIntegrator` class can be accessed. The following functions are available and they are exemplified using the :literal:`integrator` and the :literal:`stateDerivativeFunction` declared above:
 
 - :literal:`getNextStepSize( )`
 
@@ -93,8 +93,6 @@ Once the :literal:`integrator` object has been created, the multiple functions a
         Eigen::VectorXd stateAtIntervalEnd = integrator->integrateTo( intervalEnd , initialTimeStep );
 
 .. note:: The functions described above are virtual functions and thus redefined for each integrator method described in this page. Selection of the integrator method is made at the stage of creating the integrator object, where selection of the functions is taken care of by the implementation framework.
-
-
 
 
 Selecting a numerical integrator
