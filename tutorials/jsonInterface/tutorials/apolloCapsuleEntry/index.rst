@@ -147,9 +147,9 @@ Now, we can write our :literal:`main` function, which uses the custom class :cla
       const std::string cppFilePath( __FILE__ );
       const std::string cppFolder = cppFilePath.substr( 0, cppFilePath.find_last_of("/\\") + 1 );
 
-      ApolloJsonSimulationManager jsonSimulationManager;
-      jsonSimulationManager.setUpFromJSONFile( cppFolder + "apolloCapsuleEntry.json" );
-      jsonSimulationManager.run( );
+      ApolloJsonSimulationManager jsonSimulationManager( cppFolder + "apolloCapsuleEntry.json" );
+      jsonSimulationManager.updateSettings( );
+      jsonSimulationManager.runPropagation( );
       jsonSimulationManager.exportResults( );
 
       return EXIT_SUCCESS;

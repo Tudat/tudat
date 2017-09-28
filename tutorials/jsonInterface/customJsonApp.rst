@@ -14,9 +14,9 @@ A simple JSON-based application contains just a few lines of code:
 
   int main( )
   {
-    tudat::json_interface::JsonSimulationManager< > jsonSimulationManager;
-    jsonSimulationManager.setUpFromJSONFile( "main.json" );
-    jsonSimulationManager.run( );
+    tudat::json_interface::JsonSimulationManager< > jsonSimulationManager( "main.json" );
+    jsonSimulationManager.updateSettings( );
+    jsonSimulationManager.runPropagation( );
     jsonSimulationManager.exportResults( );
     return EXIT_SUCCESS;
   }
@@ -31,9 +31,9 @@ which will always use the file :class:`main.json` in the current working directo
   int main( int argc, char* argv[ ] )
   {
     const std::string inputPath = argv[ 1 ];
-    tudat::json_interface::JsonSimulationManager< > jsonSimulationManager;
-    jsonSimulationManager.setUpFromJSONFile( inputPath );
-    jsonSimulationManager.run( );
+    tudat::json_interface::JsonSimulationManager< > jsonSimulationManager( inputPath );
+    jsonSimulationManager.updateSettings( );
+    jsonSimulationManager.runPropagation( );
     jsonSimulationManager.exportResults( );
     return EXIT_SUCCESS;
   }
@@ -42,13 +42,13 @@ which is basically the implementation of the :literal:`json_interface` applicati
 
 The four basic steps in a JSON-based applications are:
 
-  1. Create a :class:`JsonSimulationManager` object (line 6). This class takes two template arguments, the first being the type to be used for the independent variable (the epoch) and the second the scalar type for the state variable (position, velocity, mass, etc.). When these types are not specified, the default values (:class:`double`) are used, i.e. :literal:`JsonSimulationManager< >` is equivalent to :literal:`JsonSimulationManager< double, double >`.
+  1. Create a :class:`JsonSimulationManager` object (line 6). This class takes two template arguments, the first being the type to be used for the independent variable (the epoch) and the second the scalar type for the state variable (position, velocity, mass, etc.). When these types are not specified, the default values (:class:`double`) are used, i.e. :literal:`JsonSimulationManager< >` is equivalent to :literal:`JsonSimulationManager< double, double >`. The input argument is the absolute or relative path to a JSON file.
+
+  .. note:: When creating a :class:`JsonSimulationManager` using this constructor, the current working directory is set to the directory in which the specified file is located.
   
-  2. Set up the simulation (line 7). This can be done by providing the absolute or relative path to a JSON file, using the method :literal:`setUpFromJSONFile( const std::string& )`, or by providing the JSON object directly, using the method :literal:`setUpFromJSONObject( const nlohmann::json& )`. In this case, the :literal:`nlohmann::json` object can be created manually or parsed from an input file.
+  2. Set up the simulation (line 7). This uses the information contained in the JSON objects parsed from the specified input file to create all the settings objects necessary for the simulation (integrator, bodies, propagator, etc.).
   
-  .. note:: When calling the method :literal:`setUpFromJSONFile( const std::string& )`, the current working directory is set to the directory in which the specified file is located.
-  
-  3. Run the simulation (line 8). In addition to integrating the equations of motion, calling the method :literal:`run` this will also check whether there are unused keys, print messages and/or generate a file with all the settings that are going be used depending on the settings specified in the key :jsonkey:`options` of the JSON object.
+  3. Run the propagation (line 8). In addition to integrating the equations of motion, calling the method :literal:`run` this will also check whether there are unused keys, print messages and/or generate a file with all the settings that are going be used depending on the settings specified in the key :jsonkey:`options` of the JSON object.
 
   4. Export the results (line 9). Calling the method :literal:`exportResults` will generate the output files with the requested results specified in the key :jsonkey:`export` of the JSON object.
   
@@ -61,8 +61,9 @@ When setting up the simulation (step 2), the following virtual method is called:
 .. code-block:: cpp
   :linenos:
   
-  virtual void updateSettingsFromJSONObject( )
+  virtual void updateSettings( )
   {
+      ...
       resetIntegratorSettings( );
       resetSpice( );
       resetBodies( );              // must be called after resetIntegratorSettings and resetSpice
@@ -80,7 +81,7 @@ Note that each of the methods called by this method is also virtual. This means 
 
 In practice, this means that :literal:`resetBodies` must be called after :literal:`resetIntegratorSettings` and :literal:`resetSpice`, and :literal:`resetPropagatorSettings` must be called after :literal:`resetBodies` and :literal:`resetExportSettings`.
 
-Thus, to avoid undefined behaviour, rather than overriding the :literal:`updateSettingsFromJSONObject` method, one would override just some of the virtual methods called therein. It is recommended to call the original implementation inside the custom implementations of these methods, and then provide additional steps. For instance, before the :literal:`main` function:
+Thus, to avoid undefined behaviour, rather than overriding the :literal:`updateSettings` method, one would override just some of the virtual methods called therein. It is recommended to call the original implementation inside the custom implementations of these methods, and then provide additional steps. For instance, before the :literal:`main` function:
 
 .. code-block:: cpp
   :linenos:
