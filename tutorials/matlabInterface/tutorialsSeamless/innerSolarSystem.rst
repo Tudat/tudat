@@ -1,4 +1,4 @@
-.. _matlabInterface_tutorials_seamless_innerSolarSystem:
+.. _matlabInterface_tutorialsSeamless_innerSolarSystem:
 
 Inner Solar System Propagation
 ==============================
@@ -10,7 +10,7 @@ This tutorial describes how to propagate the orbit of the inner Solar system bod
   tudatBundle/matlabInterface/Examples/Seamless/innerSolarSystem.m
 
 
-The first step is to include the source code of the MATLAB Interface to MATLAB's path in the current session so that all the classes needed to set up the simulation can be accessed. This is done by writing:
+The first step is to include the source code of the MATLAB Interface into MATLAB's path in the current session so that all the classes needed to set up the simulation can be accessed. This is done by writing:
 
 .. code-block:: matlab
 

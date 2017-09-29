@@ -1,7 +1,7 @@
-.. _matlabInterface_tutorials_seamless:
+.. _matlabInterface_tutorialsSeamless:
 
-Seamless
-========
+Tutorials: Seamless
+===================
 
 
 

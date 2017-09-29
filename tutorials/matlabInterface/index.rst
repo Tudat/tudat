@@ -10,5 +10,6 @@ These pages of the wiki describe how the MATLAB interface can be used to run Tud
 
    installation
    usage
-   tutorials/index
+   tutorialsSeamless/index
+   tutorialsInputOutput/index
 
