@@ -24,7 +24,7 @@ Parse a JSON-formatted :class:`std::string` as :class:`nlohmann::json` (deserial
 .. code-block:: cpp
     
     std::string str = "[0, 1, 2]";
-    nlohmann::json j = json::parse( str );
+    nlohmann::json j = nlohmann::json::parse( str );
 
 
 Parse a JSON file as :class:`nlohmann::json` (deserialisation):
@@ -33,7 +33,7 @@ Parse a JSON file as :class:`nlohmann::json` (deserialisation):
     
     std::string filePath = ...
     std::ifstream stream( filePath );
-    nlohmann::json j = json::parse( stream );
+    nlohmann::json j = nlohmann::json::parse( stream );
     
 Convert a :class:`nlohmann::json` object to JSON-formatted :class:`std::string` (serialisation):
 
@@ -57,43 +57,44 @@ Print a :class:`nlohmann::json` object as JSON-formatted text (serialisation):
 
 
 .. _extendingJSON_basics_valueTypes:
+
 Value types
 ~~~~~~~~~~~
 
-A :class:`nlohmann::json` object can have 6 possible value types. The value type of a :class:`nlohmann::json` object can be inferred during construction, or later through its lifecycle. The value type of a :class:`nlohmann::json` object can change.
+A :class:`nlohmann::json` object can have 6 possible value types. The value type of a :class:`nlohmann::json` object can be inferred during construction, or later during its lifecycle. The value type of a :class:`nlohmann::json` object can change.
 
     - :jsontype:`null`
     
       .. code-block:: cpp
           
-          nlohmann::json j;                                      // j.is_null( ) -> true
+          nlohmann::json j;                            // j.is_null( ) -> true
           
-          nlohmann::json k = ...                                 // k.is_null( ) -> false
+          nlohmann::json k = ...                       // k.is_null( ) -> false
           k = json( );                                 // k.is_null( ) -> true
 
-    - :jsontype:`object`: similar to :class:`std::map`, but with the possibility to mix different value types.
+    - :jsontype:`object`: similar to :class:`std::map`, but with the possibility to mix different value types and with keys always of type string.
     
       .. code-block:: cpp
           
           nlohmann::json j = { { "a", "zero" }, { "b", 1 } };    // j.is_object( ) -> true
-          j[ "b" ];                                    // 1
-          j.size( );                                   // 2
+          j[ "b" ];                                              // 1
+          j.size( );                                             // 2
           
           nlohmann::json k;                                      // k.is_object( ) -> false
-          k[ "a" ] = 0;                                // k.is_object( ) -> true
+          k[ "a" ] = 0;                                          // k.is_object( ) -> true
 
     - :jsontype:`array`: similar to :class:`std::vector`, but with the possibility to mix different value types.
     
       .. code-block:: cpp
           
-          nlohmann::json j = { 0, "one" };                       // j.is_array( ) -> true
+          nlohmann::json j = { 0, "one" };             // j.is_array( ) -> true
           j[ 1 ];                                      // "one"
           j.empty( );                                  // false
           
           nlohmann::json k;                                      // k.is_array( ) -> false
           k[ 0 ] = 0.5;                                // k.is_array( ) -> true
           k.push_back( "pi" );                         // 
-          k[ "b" ] = 1;                                // run-time error
+          // k[ "b" ] = 1;                             // run-time error
           k = json( );                                 // k.is_null( ) -> true
           k[ "b" ] = 1;                                // k.is_object( ) -> true
 
