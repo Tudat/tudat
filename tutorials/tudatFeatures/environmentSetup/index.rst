@@ -8,7 +8,17 @@ On this page, we will give an overview of how the environment is represented in 
 
 Setting up the Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-In Tudat, the physical environment is defined by a list of :class:`Body` objects, each of which represents either a celestial body, or a manmade vehicle. Consequently, all properties that are required for computing e.g. accelerations are stored in :class:`Body` objects. Typically the entire environment is stored in a named list of :class:`Body` object, the standard typedef for which is the :class:`NamedBodyMap`. (It as an unordered map of shared pointers to body objects, see this wiki page for a discussion of shared pointers; don't worry if you're not sure what a shared pointer or unordered map is at this point.).
+In Tudat, the physical environment is defined by a list of :class:`Body` objects, each of which represents either a celestial body, or a manmade vehicle. Consequently, all properties that are required for computing e.g. accelerations are stored in :class:`Body` objects.
+
+.. class:: Body
+  
+   Container for all properties of a body required for computing e.g. accelerations.
+
+Typically the entire environment is stored in a named list of :class:`Body` object, the standard typedef for which is the :class:`NamedBodyMap`.
+
+.. class:: NamedBodyMap
+
+   An unordered map of shared pointers to :class:`Body` objects, see :ref:`this <externalBoost>` wiki page for a discussion of shared pointers; don't worry if you're not sure what a shared pointer or unordered map is at this point.
 
 Manually creating the environment
 *********************************
@@ -50,7 +60,11 @@ This calls the constructors of the :class:`SpiceEphemeris` and :class:`Gravit
 
 Creating the environment from :class:`BodySettings`
 ***************************************************
-Manually creating all objects defining the full environment is possible, but not recommended. In particular, various environment models are interdependent and these dependencies must be fully and consistently defined for the code to function properly. To this end, we provide a :class:`BodySettings` object, in which the general properties of each environment model can be set (see above for the list of the available types of environment models). We note that for :class:`Body` objects that represent vehicles, the manual creation is typically used, as the vehicle conditions may depend on the celestial bodies, but not vice versa.
+Manually creating all objects defining the full environment is possible, but not recommended. In particular, various environment models are interdependent and these dependencies must be fully and consistently defined for the code to function properly. To this end, we provide a :class:`BodySettings` object.
+
+.. class:: BodySettings
+
+   Class in which the general properties of each environment model can be set (see above for the list of the available types of environment models). We note that for :class:`Body` objects that represent vehicles, the manual creation is typically used, as the vehicle conditions may depend on the celestial bodies, but not vice versa.
 
 In many cases, default properties of (celestial) bodies may be used by calling the :literal:`getDefaultBodySettings` function, so that the user does not need to define all required properties line-by-line. At present, the following default settings are used (none if not in list):
 
@@ -126,6 +140,10 @@ The full list of available environment model settings is described below.
 Atmosphere model
 ****************
 
+.. class:: AtmosphereModel
+
+   Base class for all atmosphere models. This model is constructed using the settings classes described below.
+
 .. class:: AtmosphereSettings
 
    The base class for atmosphere settings. Models currently available through the :class:`BodySettings` architecture are (with examples when defining settings for Earth):
@@ -173,6 +191,10 @@ Atmosphere model
 
 Ephemeris model
 ****************  
+
+.. class:: Ephemeris
+  
+   Base class for the ephemeris. It is constructed using one of the settings classes below.
 
 .. class:: EphemerisSettings
 
@@ -280,6 +302,10 @@ Ephemeris model
 Gravity field model
 ****************
 
+.. class:: GravityFieldModel
+
+   Base class for the gravity field model, set using the settings classes described below.
+
 .. class:: GravityFieldSettings
 
    Base class for the gravity field settings. Models currently available through the :class:`BodySettings` architecture can be called by the following:
@@ -318,6 +344,10 @@ Gravity field model
 
 Rotational model
 ****************
+
+.. class:: RotationalEphemeris
+
+   Base class for the rotational ephemeris model, set using the settings classes described below.
 
 .. class:: RotationModelSettings
 
@@ -366,6 +396,10 @@ Rotational model
 Torque model
 ************
 
+.. class:: TorqueModel
+
+   Base class for the torque model, set using the settings classes described below.
+
 .. class:: TorqueSettings
 
    Base class for the torque settings used for rotational dynamics as set in :class:`RotationalStatePropagatorSettings`. Type of torque is selected by passing the correct parameter to the constructor. Currently two types of torques are implemented: ``second_order_gravitational_torque`` (interaction of point-mass of body A with J\ :sub:`2` of body B) and ``aerodynamic_torque`` (settings for coefficients defined same as for aerodynamic acceleration).
@@ -377,6 +411,10 @@ Torque model
 
 Body shape model
 ****************
+
+.. class:: BodyShapeModel
+
+   Base class for body shape models. It is constructed using the settings described below.
 
 .. class:: BodyShapeSettings
 
@@ -413,6 +451,10 @@ Body shape model
 Radiation pressure interface
 ****************************
 
+.. class:: RadiationPressureInterface
+
+   Class containing the properties of a solar radiation pressure acceleration model. It is constructed using the settings classes below. 
+
 .. class:: RadiationPressureInterfaceSettings
 
    Base class for the radiation pressure interface settings. A separate model can be used for different bodies emitting radiation (key values of radiationPressureSettings) Models currently available through the :class:`BodySettings` architecture are:
@@ -440,6 +482,10 @@ Radiation pressure interface
 
 Aerodynamic coefficient interface
 *********************************
+
+.. class:: AerodynamicCoefficientInterface
+
+   Base class containing the aerodynamic coefficient interface set by the settings classes below.
 
 .. class:: AerodynamicCoefficientSettings
 
@@ -470,6 +516,10 @@ Aerodynamic coefficient interface
 
 Time-variations of the gravity field
 ************************************
+
+.. class:: GravityFieldVariations
+
+   Virtual base class for spherical harmonic gravity field variations. Constructed using the settings classes below.
 
 .. class:: GravityFieldVariationSettings
 
