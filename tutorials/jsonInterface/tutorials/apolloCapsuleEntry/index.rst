@@ -132,11 +132,11 @@ Finally, we also override the method :literal:`resetPropagatorSettings`:
       getPropagatorSettings( )->resetInitialStates( systemInitialState );
   }
 
-After calling the original implementation in line 4 (this won't result in a JSON validation error because the the key :jsonkey:`propagators[0].initialStates` was defined with a placeholder value), we perform two tasks: defining an angle of attach for Apollo, in lines 9-11; and resetting the propagator's initial states in lines 13-30.
+After calling the original implementation in line 4 (this won't result in a JSON validation error because the the key :jsonkey:`propagators[0].initialStates` was defined with a placeholder value), we perform two tasks: defining an angle of attach for Apollo, in lines 7-9; and resetting the propagator's initial states in lines 12-29.
 
 The angle of attack is defined by modifying Apollo's flight conditions. This can only be done once the flight conditions have been created, i.e. after :literal:`JsonSimulationManager::resetPropagatorSettings( )` has been called, since this method will create the acceleration aerodynamic models based on the body map created previously.
 
-Then, we define the spherical initial state of Apollo, convert it to Cartesian components and transform it to the global frame, using Earth's rotational ephemeris object, and the simulation start epoch, which can be retrieved using the method :literal:`getStartEpoch( )`. To get the simulation end epoch, the method :literal:`getEndEpoch( )` can be used, which will return :literal:`TUDAT_NAN` if no time termination condition has been defined. Once we have created the combined vector of initial states, :literal:`systemInitialState`, which must include all the states of all the bodies and propagators, we reset the propagator's initial states in line 30. Note that :literal:`getPropagatorSettings( )` always return a :class:`MultiTypePropagatorSettings`, even when only one propagator is used (in which case it will only contain one :class:`SingleArcPropagatorSettings`). The method :literal:`resetInitialStates` of :class:`MultiTypePropagatorSettings` will reset the states of the *children* single-arc propagators, as well as the combined states of the *parent* multi-type propagator.
+Then, we define the spherical initial state of Apollo, convert it to Cartesian components and transform it to the global frame, using Earth's rotational ephemeris object, and the simulation start epoch, which can be retrieved using the method :literal:`getStartEpoch( )`. To get the simulation end epoch, the method :literal:`getEndEpoch( )` can be used, which will return :literal:`TUDAT_NAN` if no time termination condition has been defined. Once we have created the combined vector of initial states, :literal:`systemInitialState`, which must include all the states of all the bodies and propagators, we reset the propagator's initial states in line 30. Note that :literal:`getPropagatorSettings( )` always returns a :class:`MultiTypePropagatorSettings`, even when only one propagator is used (in which case it will only contain one :class:`SingleArcPropagatorSettings`). The method :literal:`resetInitialStates` of :class:`MultiTypePropagatorSettings` will reset the states of the *children* single-arc propagators, as well as the combined states of the *parent* multi-type propagator.
 
 Now, we can write our :literal:`main` function, which uses the custom class :class:`ApolloJsonSimulationManager`:
 
@@ -155,3 +155,8 @@ Now, we can write our :literal:`main` function, which uses the custom class :cla
       return EXIT_SUCCESS;
   }
 
+After running the application, the results can be found in the directory:
+
+.. code-block:: txt
+
+  tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/SimulationOutput/ApolloCapsuleExampleJSON

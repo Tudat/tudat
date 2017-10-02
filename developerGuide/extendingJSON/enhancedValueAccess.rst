@@ -155,7 +155,7 @@ When using the :literal:`getValue` function, the following :class:`nlohmann::jso
   {
     "type": "rungeKutta4",
     "stepSize": 10,
-    "#keypath": [ "~", "integrator" ],
+    "#keypath": ["~", "integrator"],
     "#root": {
       "initialEpoch": 0,
       "finalEpoch": 3600,
@@ -182,8 +182,8 @@ When using the :literal:`getValue` function, the following :class:`nlohmann::jso
       "propagators": [
         {
           "integratedStateType": "translational",
-          "bodiesToPropagate": [ "asterix" ],
-          "centralBodies": [ "Earth" ],
+          "bodiesToPropagate": ["asterix"],
+          "centralBodies": ["Earth"],
           "accelerations": {
             "asterix": {
               "Earth": [
@@ -431,7 +431,7 @@ generate the following :class:`nlohmann::json` object:
     "@2": {
       "type": "rungeKutta4"
     },
-    "#keypath": [ "~", "integrator" ],
+    "#keypath": ["~", "integrator"],
     "#root": {}
   }
 

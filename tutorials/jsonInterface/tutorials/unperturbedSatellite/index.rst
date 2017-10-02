@@ -6,11 +6,11 @@
 Unperturbed Earth-orbiting satellite
 ====================================
 
-This page describes how to set up the propagation of the unperturbed Earth-orbiting satellite described in `this page <../../../applicationWalkthroughs/unperturbedEarthOrbitingSatellite.html>`_ using the :literal:`json_interface`.
+This page describes how to set up the propagation of the unperturbed Earth-orbiting satellite described in :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` using the :literal:`json_interface`.
 
 The first step is to define the file tree. Since this is a simple example, there is no need to split the root input file into several files. Thus, we will have just a single file called :class:`main.json`.
 
-We define the key :jsonkey:`initialEpoch` at root level, which will be used as initial time for the integrator and for interpolation of the Spice ephemeris. We also define the key :jsonkey:`finalEpoch`, which is used for interpolation of the Spice ephemeris and to create a time-based termination condition. In both cases, we need to specify the values in seconds since J2000. In this case, :jsonkey:`globalFrameOrigin` is not specified, so the default values of :literal:`"SSB"` (Solar system barycentre) is used. The :jsonkey:`globalFrameOrientation` is set to :literal:`J2000`.
+We define the key :jsonkey:`initialEpoch` at root level, which will be used as initial time for the integrator and for interpolation of the Spice ephemeris. We also define the key :jsonkey:`finalEpoch`, which is used for interpolation of the Spice ephemeris and to create a time-based termination condition. In both cases, we need to specify the values in seconds since J2000. In this case, :jsonkey:`globalFrameOrigin` is not specified, so the default value of :literal:`"SSB"` (Solar system barycentre) is used. The :jsonkey:`globalFrameOrientation` is set to :literal:`J2000`.
 
 Then, we request using the standard Spice kernels, namely :class:`pck00010.tpc`, :class:`gm_de431.tpc`, :class:`de430_small.bsp` and :class:`pck00010.tpc`. We do this by defining the key :jsonkey:`spice` to be:
 
@@ -23,7 +23,7 @@ Then, we request using the standard Spice kernels, namely :class:`pck00010.tpc`,
 
 We disable preloading of the ephemeris of the celestial bodies from the period :jsonkey:`initialEpoch` to :jsonkey:`finalEpoch`.
 
-The next step is to define the body settings. In this case, only Earth and the orbiting body (named :literal:`Asterix`) are considered. Thus, we set the key :literal:`bodies` to be:
+The next step is to define the body settings. In this case, only Earth and the orbiting body (named :jsonkey:`Asterix`) are considered. Thus, we set the key :jsonkey:`bodies` to be:
 
 .. code-block:: json
 
@@ -60,8 +60,8 @@ Then, we specify the propagator settings. In this case, we are going to propagat
   [
     {
       "integratedStateType": "translational",
-      "centralBodies": [ "Earth" ],
-      "bodiesToPropagate": [ "Asterix" ],
+      "centralBodies": ["Earth"],
+      "bodiesToPropagate": ["Asterix"],
       "accelerations": {
         "Asterix": {
           "Earth": [
@@ -74,7 +74,7 @@ Then, we specify the propagator settings. In this case, we are going to propagat
     }
   ]
 
-We specify the key :jsonkey:`propagators[0].accelerations`, an object containing lists of accelerations. The inner keys (in this case, :jsonkey:`Earth`) are the names of the bodies exerting the accelerations, while the outer keys (in this case, :jsonkey:`Asterix`), are the names of the bodies undergoing the accelerations. Thus, :jsonkey:`accelerations.Asterix.Earth` is read as accelerations on Asterix caused by Earth. In this case, the only acceleration is Earth's point-mass gravity.
+We specify the key :jsonkey:`propagators[0].accelerations`, an object containing lists of accelerations. The inner keys (in this case, :jsonkey:`Earth`) are the names of the bodies exerting the accelerations, while the outer keys (in this case, :jsonkey:`Asterix`), are the names of the bodies undergoing the accelerations. Thus, :jsonkey:`accelerations.Asterix.Earth` is read as "accelerations on Asterix caused by Earth". In this case, the only acceleration is Earth's point-mass gravity.
 
 In this case, some keys of :jsonkey:`propagators[0]` have been omitted. For instance, the key :literal:`type` has not been specified, meaning that the default value :literal:`"cowell"` is used.
 
@@ -104,9 +104,9 @@ Then, we have to define the files to which the results of the integration should
     }
   ]
 
-Here, each element in the array will result in the generation of a different output file; in this case, only one file (:class:`stateHistory.txt` in the same directory as the input file) will be created. This file will contain a matrix of results, where each row corresponds to an epoch. By default, the key :jsonkey:`epochsInFirstColumn` is set to :literal:`true`, which means that the first column of the matrix will contain the epochs, and subsequent columns will contain the values of the variables specified in the key :jsonkey:`variables`. In this case, only the state (of the propagated body).
+Here, each element in the array will result in the generation of a different output file; in this case, only one file (:class:`stateHistory.txt` in the same directory as the input file) will be created. This file will contain a matrix of results, where each row corresponds to an epoch. The key :jsonkey:`epochsInFirstColumn` defaults to :literal:`true`, which means that the first column of the matrix will contain the epochs, and subsequent columns will contain the values of the variables specified in the key :jsonkey:`variables`. In this case, only the state (of the propagated body).
 
-We can now carry out the propagation. However, if we want a file containing all the settings actually used by Tudat to be generated (including all default settings), we must specify the :jsonkey:`options` to be:
+We can now carry out the propagation. However, if we want a file containing all the settings actually used by Tudat to be generated (including all default settings), we must specify the :jsonkey:`options` key to be:
 
 .. code-block:: json
 

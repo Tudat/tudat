@@ -94,13 +94,13 @@ Since these variables are used in several places (for defining termination condi
 
   {
     "termination": {
-      "variable": [ "$(variables.json){satellite.altitude}" ],
+      "variable": ["$(variables.json){satellite.altitude}"],
       "lowerLimit": 110E+3
     }
     "export": [
       {
         "file": "finalAltitude.txt",
-        "variables": [ "$(variables.json){satellite.altitude}" ],
+        "variables": ["$(variables.json){satellite.altitude}"],
         "onlyFinalStep": true,
         "epochsInFirstColumn": false
       },
