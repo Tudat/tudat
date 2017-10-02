@@ -23,7 +23,7 @@ Now, we create a :class:`Simulation` object specifying the initial epoch by prov
   simulation = Simulation(0);
   simulation.spice.preloadEphemeris = false;
 
-We do not specify a final epoch because there is no time termination condition. Later we will defined a termination condition based on the periapsis altitude of the propagated body. Since the propagation period is not known (we know the initial epoch but not the final epoch), the ephemeris of the celestial bodies cannot be preloaded from Spice, so we set :literal:`simulation.spice.preloadEphemeris` to :literal:`false`.
+We do not specify a final epoch because there is no time termination condition. Later we will define a termination condition based on the periapsis altitude of the propagated body. Since the propagation period is not known (we know the initial epoch but not the final epoch), the ephemeris of the celestial bodies cannot be preloaded from Spice, so we set :literal:`simulation.spice.preloadEphemeris` to :literal:`false`.
 
 Next, we create the bodies. In this case, the only non-celestial body is named :literal:`satellite`:
 
@@ -84,7 +84,7 @@ Finally, we define the integrator settings, in this case we use a variable step-
   integrator.saveFrequency = 5;
   simulation.integrator = integrator;
   
-All the settings needed to run the simulation have been defined, except for the mass and reference area of satellite. In this example, we are going to run the simulation several times for different masses and reference areas, saving the results of each case in a cell array called :literal:`results`:
+All the settings needed to run the simulation have been defined, except for the mass and reference area of :literal:`satellite`. In this example, we are going to run the simulation several times for different masses and reference areas, saving the results of each case in a cell array called :literal:`results`:
 
 .. code-block:: matlab
 
@@ -110,9 +110,9 @@ Finally, we can use the saved results to plot the apoapsis and periapsis for eac
 
 .. image:: multiplePropagations.png
 
-Note the use of the function :literal:`apoapsisPeriapsisAltitudesHistory` from the :literal:`plot` package. This function takes as first argument a results object, which can be a cell array of results matrices (with epochs in the fist column and cartesian states in the columns 2 to 7) or a single results matrix. Additional options for plotting can be provided as a set of key-value pairs. The only mandatory option is the :literal:`CentralBody`, whose average radius is used to compute altitudes. Other optional arguments are :literal:`TimeUnits`, :literal:`Title`, :literal:`Legends` and :literal:`LineStyle`.
+Note the use of the function :literal:`apoapsisPeriapsisAltitudesHistory` from the :literal:`plot` package. This function takes as first argument a results object, which can be a cell array of results matrices (with epochs in the fist column and Cartesian states in the columns 2 to 7) or a single results matrix. Additional options for plotting can be provided as a set of key-value pairs. The only mandatory argument is the :literal:`CentralBody`, whose average radius is used to compute altitudes. Other optional arguments are :literal:`TimeUnits`, :literal:`Title`, :literal:`Legends` and :literal:`LineStyle`.
 
-This function, as well as the :literal:`plot.keplerianComponentsHistory` function, also accept providing the data to be plotted in other formats. For instance:
+This function, as well as the :literal:`plot.keplerianComponentsHistory` function, also accept providing the data to be plotted in other formats. For instance (the first two lines are equivalent):
 
 .. code-block:: matlab
 

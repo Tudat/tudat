@@ -12,11 +12,11 @@ The example described on this page is identical to that described in :ref:`jsonI
 
   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/lifetimeMaximisation.cpp
 
-In this case, the file :class:`lifetimeMaximisation.json` used as input for all the propagations is identical to the file :class:`shared.json` created in :ref:`jsonInterface_tutorials_lifetimeMaximisation`.
+The file :class:`lifetimeMaximisation.json` used as input for all the propagations is identical to the file :class:`shared.json` created in :ref:`jsonInterface_tutorials_lifetimeMaximisation`.
 
 In this case, we do not write a C++ application because we want to use Tudat features that cannot be provided through a JSON file, but because we want to avoid having to generate a different input file for each propagation. The disadvantage of this choice is that we cannot use parallel processing, as all the propagations will be run sequentially by a single process, while when using the :literal:`json_interface` with different input files, we are able to run many cases concurrently.
 
-In this case there is no need to write a derived class of :class:`JsonSimulationManager` with custom implementations for virtual methods. We can simply modify the JSON object containing the settings read from the JSON file before it is actually used to set up the simulation objects. Thus, this all the code we need to write:
+In this case there is no need to write a derived class of :class:`JsonSimulationManager` with custom implementations for virtual methods. We can simply modify the JSON object containing the settings read from the JSON file before it is actually used to set up the simulation objects. Thus, all the code we need to write is:
 
 .. code-block:: cpp
   :linenos:
@@ -78,6 +78,6 @@ And so are these two lines too:
   std::cout << jsonSimulationManager.getJsonObject( ).at( "initialEpoch" ) << std::endl;
   std::cout << jsonSimulationManager.at( "initialEpoch" ) << std::endl;
 
-Inside the loop, in which we iterate for each of the propagations to be carried out, we modify the keys :jsonkey:`initialEpoch` and :jsonkey:`finalEpoch` of the JSON object. Additionally, we want each propagation to generate an output file with a unique name, so we also modify the key :literal:`export[0].file`. Then, we can set up the simulation, run the propagation and export the results.
+Inside the loop, in which we iterate for each of the propagations to be carried out, we modify the keys :jsonkey:`initialEpoch` and :jsonkey:`finalEpoch` of the JSON object. Additionally, we want each propagation to generate an output file with a unique name, so we also modify the key :jsonkey:`export[0].file`. Then, we can set up the simulation, run the propagation and export the results.
 
 After the first propagation has been completed, we turn off warnings for unused keys. This is done to silence warnings about the key :jsonkey:`bodies.satellite.initialState` being unused. When running the first propagation, the Keplerian state defined in :jsonkey:`bodies.satellite.initialState` is converted to Cartesian and assigned to :jsonkey:`propagators[0].initialStates`. Further propagations find that the key :jsonkey:`propagators[0].initialStates` is defined, and thus they do not use the information at :jsonkey:`bodies.satellite.initialState`, resulting in an unused key warning if we do not set the key :jsonkey:`options.unusedKey` to :literal:`"continueSilently"`.

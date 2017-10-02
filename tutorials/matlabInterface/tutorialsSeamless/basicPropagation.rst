@@ -35,7 +35,7 @@ Next, we create the bodies. For an unperturbed orbit, the mass of the satellite 
   satellite.initialState.eccentricity = 0.1;
   satellite.initialState.inclination = deg2rad(5);
 
-Note that some of the Keplerian components have been omitted, and thus they are assumed to be zero.
+Note that some of the Keplerian components have been omitted, and thus they are assumed to be zero. The semi-major axis cannot be omitted when providing a Keplerian state.
 
 Now, we add the bodies to the simulation by calling the method :literal:`addBodies` of the :literal:`simulation` object. There exist predefined objects for celestial bodies (namely the Sun, the Moon and the eight planets), so these objects can be added directly without the need to specify their properties:
 
@@ -76,7 +76,7 @@ All the settings needed to run the simulation have been defined. Thus, we can wr
 
   simulation.run();
 
-This method creates a temporary input file and calls the :literal:`json_interface` application, generating a temporary output file containing the state of the satellite for each integration step. Then, it loads this results into the struct :literal:`results` of the :literal:`simulation` object. Finally, all the temporary files are deleted.
+This method creates a temporary input file and calls the :literal:`json_interface` application, generating a temporary output file containing the state of the satellite for each integration step. Then, it loads these results into the struct :literal:`results` of the :literal:`simulation` object. Finally, all the temporary files are deleted.
 
 After running the simulation, if no specific results have been requested, we can obtain the numerical solution of the equations of motion from :literal:`simulation.results.numericalSolution`. This is a matrix containing in each row the results of an integration step. The first column contains the epochs, while the columns 2 to 7 contain the associated Cartesian states of the satellite.
 

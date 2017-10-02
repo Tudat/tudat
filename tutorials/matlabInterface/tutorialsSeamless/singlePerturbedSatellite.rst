@@ -92,7 +92,7 @@ All the settings needed to run the simulation have been defined. Thus, we can wr
 
   simulation.run();
 
-This method creates a temporary input file and calls the :literal:`json_interface` application, generating a temporary output file containing the state of the satellite for each integration step. Then, it loads this results into the struct :literal:`results` of the :literal:`simulation` object. Finally, all the temporary files are deleted.
+This method creates a temporary input file and calls the :literal:`json_interface` application, generating a temporary output file containing the values of the variables that were requested to be saved. Then, it loads these results into the struct :literal:`results` of the :literal:`simulation` object. Finally, all the temporary files are deleted.
 
 After running the simulation, we can obtain the requested results from :literal:`simulation.results.t` and :literal:`simulation.results.h`, which are column vectors containing the values of these variables at each integration step. We can use the results to generate a plot of the altitude of :literal:`asterix`:
 
@@ -103,7 +103,7 @@ After running the simulation, we can obtain the requested results from :literal:
   grid on;
   ylabel('Altitude [km]');
 
-Note the use of the :literal:`epochToDate` function of the :literal:`convert` package, which converts seconds since J2000 to a :literal:`datetime` object.
+Note the use of the :literal:`epochToDate` function of the :literal:`convert` package, which converts seconds since J2000 to a :class:`datetime` object.
 
 Then, we can run another propagation just by modifying a few parameters. For instance, we can propagate the orbit of a satellite with a larger area and smaller mass, similar to a solar sail. We can do this by writing:
 
@@ -113,7 +113,7 @@ Then, we can run another propagation just by modifying a few parameters. For ins
   asterix.referenceArea = 40;
   simulation.run();
 
-Since the class :literal:`Body` derives from :literal:`handle`, which behaves similar to a shared pointer, when we modify the body :literal:`asterix`, the property :literal:`simulation.bodies.asterix` is updated automatically. Then, we can run the simulation again (with the updated properties) and use the new results to add a curve to the current plot:
+Since the class :class:`Body` derives from :class:`handle`, whose behaviour is similar to that of a shared pointer, when we modify the body :literal:`asterix`, the property :literal:`simulation.bodies.asterix` is updated automatically. Then, we can run the simulation again (with the updated properties) and use the new results to add a curve to the current plot:
 
 .. code-block:: matlab
 

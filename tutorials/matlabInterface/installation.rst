@@ -3,7 +3,7 @@
 Installation
 ============
 
-1. Clone the `tudatBundle:json <https://github.com/aleixpinardell/tudatBundle>`_ repository and its submodules:
+1. Clone the `tudatBundle:json <https://github.com/aleixpinardell/tudatBundle/tree/json/>`_ repository and its submodules:
 
   .. code-block:: txt
     

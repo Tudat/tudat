@@ -10,7 +10,7 @@ This tutorial describes how to propagate the orbit of a perturbed satellite abou
   tudatBundle/matlabInterface/Examples/Seamless/thrustAccelerationFromFile.m
 
 
-This example is identical to the one described in :ref:`matlabInterface_tutorialsSeamless_thrustAccelerationFromFile`, the only difference being that instead of creating the thrust force by defining its direction and (constant) magnitude, we provide the components of the thrust vector for several epochs using a tabulated file. This data is then interpolated and used to compute the thrust. Thus, the set-up process is not repeated here. The only difference is the part of the code in which the :class:`Thrust` object is created:
+This example is identical to the one described in :ref:`matlabInterface_tutorialsSeamless_thrustAlongVelocityVector`, the only difference being that instead of creating the thrust force by defining its direction and (constant) magnitude, we provide the components of the thrust vector for several epochs using a tabulated file. This data is then interpolated and used to compute the thrust at each integration step. Thus, the set-up process is not repeated here. The only difference is the part of the code in which the :class:`Thrust` object is created:
 
 .. code-block:: matlab
 
@@ -47,7 +47,7 @@ After having defined all the setting needed for the propagation, we can write:
 
   simulation.run();
 
-Now we can plot the temporal evolution of the altitude and mass of the body. We compute the altitude using the function :literal:`altitude` of the package :literal:`compute`, which takes as arguments a matrix of Cartesian states (retrieved from columns 2 to 7 of the numerical solution) and the body from which to retrieve the average radius. The mass is retrieved from the eight column of the numerical solution matrix:
+Now we can plot the temporal evolution of the altitude and mass of the body. We compute the altitude using the function :literal:`altitude` of the package :literal:`compute`, which takes as arguments a matrix of Cartesian states (retrieved from columns 2 to 7 of the numerical solution) and the body from which to retrieve the average radius. The mass is retrieved from the eighth column of the numerical solution matrix:
 
 .. code-block:: matlab
 

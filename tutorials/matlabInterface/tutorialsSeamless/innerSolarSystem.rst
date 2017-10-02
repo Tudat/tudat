@@ -3,7 +3,7 @@
 Inner Solar System Propagation
 ==============================
 
-This tutorial describes how to propagate the orbit of the inner Solar system bodies can be propagated using the MATLAB Interface, similar to the example :ref:`walkthroughsInnerSolarSystemPropagation` written in C++. The code for this example can be found at:
+This tutorial describes how the orbit of the inner Solar system bodies can be propagated using the MATLAB Interface, similar to the example :ref:`walkthroughsInnerSolarSystemPropagation` written in C++. The code for this example can be found at:
 
 .. code-block:: txt
 
@@ -41,12 +41,12 @@ Now we need to specify the accelerations acting on each body. The accelerations 
   for i = 1:length(bodyNames)
       for j = 1:length(bodyNames)
           if i ~= j
-              accelerations.(bodyNames{j}).(bodyNames{i}) = {PointMassGravity()};
+              accelerations.(bodyNames{i}).(bodyNames{j}) = {PointMassGravity()};
           end
       end
   end
   
-Note that the named of the bodies have been retrieved from :literal:`fieldnames(simulation.bodies)`.
+Note that the names of the bodies have been retrieved from :literal:`fieldnames(simulation.bodies)`.
 
 Then, we create the settings for the propagation. We are going to propagate the translational state of the celestial bodies. Thus, we use a :class:`TranslationalPropagator`:
 
@@ -73,7 +73,7 @@ All the settings needed to run the simulation have been defined. Thus, we can wr
 
   simulation.run();
 
-This method creates a temporary input file and calls the :literal:`json_interface` application, generating a temporary output file containing the state of the satellite for each integration step. Then, it loads this results into the struct :literal:`results` of the :literal:`simulation` object. Finally, all the temporary files are deleted.
+This method creates a temporary input file and calls the :literal:`json_interface` application, generating a temporary output file containing the state of the satellite for each integration step. Then, it loads these results into the struct :literal:`results` of the :literal:`simulation` object. Finally, all the temporary files are deleted.
 
 After running the simulation, if no specific results have been requested, we can obtain the numerical solution of the equations of motion from :literal:`simulation.results.numericalSolution`. This is a matrix containing in each row the results of an integration step. The first column contains the epochs, while the columns 2 to 7 contain the associated Cartesian states of the first propagated body (the Sun), columns 8 to 13 the Cartesian states of the second propagated body (Mercury), and so on. We can retrieve the positions for each body and save them in the struct :literal:`r` by writing:
 

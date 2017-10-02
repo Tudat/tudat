@@ -42,7 +42,7 @@ Now, we add the bodies to the simulation by calling the method :literal:`addBodi
 
   simulation.addBodies(Sun,Earth,Moon,vehicle);
 
-Now we need to specify the accelerations acting on :literal:`asterix`:
+Now we need to specify the accelerations acting on :literal:`vehicle`:
 
 .. code-block:: matlab
 

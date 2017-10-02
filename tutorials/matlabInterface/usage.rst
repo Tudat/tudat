@@ -6,7 +6,7 @@
 Usage
 =====
 
-To use the MATLAB Interface, you first need to include the directories containing the code in your MATLAB path for the current MATLAB's session. You can do this by writing at the beginning of your script:
+To use the MATLAB Interface, you first need to include the directories containing the code into your MATLAB's path for the current MATLAB's session. You can do this by writing at the beginning of your script:
 
 .. code-block:: matlab
   
@@ -28,7 +28,7 @@ In the following sections, the steps to be followed for each of these modes are 
 Setting up the simulation
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The setting for a Tudat simulation are defined by creating a :class:`Simulation` object in MATLAB. Then, this object is used to create a JSON input file that will be provided to the :literal:`json_interface` application, either manually by the user or internally by MATLAB.
+The settings for a Tudat simulation are defined by creating a :class:`Simulation` object in MATLAB. Then, this object is used to create a JSON input file that will be provided to the :literal:`json_interface` application, either manually by the user or internally by MATLAB.
 
 The properties that can be defined for this :class:`Simulation` object are very similar to those that can be defined for a JSON Interface. You can read the :ref:`jsonInterface_keys` for an exhaustive list of possible keys. Here, only the most frequently-used features, and those that in the MATLAB Interface are set up in a different way, will be discussed.
 
@@ -106,16 +106,16 @@ Finally, when all the bodies needed for the simulation have been created, they h
   
   simulation.addBodies(Sun,earth,Moon,body);
 
-Note that we can directly add celestial bodies for which we do not have to defined additional properties (in this case, :class:`Sun` and :class:`Moon`).
+Note that we can directly add celestial bodies for which we have not defined additional properties (in this case, :class:`Sun` and :class:`Moon`).
 
-We can also modify the bodies after having added them to the :class:`Simulation` by writing:
+We can also modify the bodies after having added them to :literal:`simulation` by writing:
 
 .. code-block:: matlab
   
   simulation.bodies.Asterix.mass = 5000;
   simulation.bodies.Earth.ephemeris = ConstantEphemeris(zeros(6,1));
   
-Note that hear we refer to the bodies by their names (:literal:`Asterix`, :literal:`Earth`) and not by the name of the MATLAB variables in which they are stored (:literal:`body`, :literal:`earth`). We can also modify the body objects directly, and :literal:`simulation` will be updated automatically. For instance, these two lines are equivalent and can be written safely after the call to :literal:`addBodies`:
+Note that here we refer to the bodies by their names (:literal:`Asterix`, :literal:`Earth`) and not by the name of the MATLAB variables in which they are stored (:literal:`body`, :literal:`earth`). We can also modify the body objects directly, and :literal:`simulation` will be updated automatically. For instance, these two lines are equivalent to the previous code block and can be written safely after the call to :literal:`addBodies`:
 
 .. code-block:: matlab
   
@@ -140,7 +140,7 @@ However, this creates a non-functional object, as the propagators supported by T
   propagator.bodiesToPropagate = {body};
   propagator.centralBodies = {earth};
 
-Since we can propagate the states of several bodies, we have to provide a list (i.e. a cell array of objects) to the property :jsonkey:`bodiesToPropagate`. We also must specify a central body for each of the bodies to be propagated through :jsonkey:`centralBodies`. We can provide either a list of :class:`Body` objects or a list of body names. The following two lines are equivalent:
+Since we can propagate the states of several bodies, we have to provide a list (i.e. a cell array of objects) to the property :jsonkey:`bodiesToPropagate`. We also must specify a central body for each of the bodies to be propagated through :jsonkey:`centralBodies`. We can provide either a list of :class:`Body` objects or a list of body names. The following two lines are equivalent to the last two lines of the previous code block:
 
 .. code-block:: matlab
 
@@ -203,7 +203,7 @@ If we want to use a variable step-size integrator, we can write:
   integrator.maximumStepSize = 1e4;
   integrator.errorTolerance = 1e-11;
 
-Settings the property :literal:`errorTolerance` sets both the :jsonkey:`relativeErrorTolerance` and :jsonkey:`absoluteErrorTolerance` keys.
+Setting the property :literal:`errorTolerance` sets both the :jsonkey:`relativeErrorTolerance` and :jsonkey:`absoluteErrorTolerance` keys.
 
 Then, we add the integrator to the :class:`Simulation` object:
 
@@ -223,9 +223,9 @@ The other required key, :jsonkey:`integrator.initialEpoch`, is retrieved from th
 Requesting results
 ******************
 
-In order to define the variables whose values have to be either exported to output files and/or loaded into MATLAB after running the propagation, we need to define Tudat variables in MATLAB. There exist four fundamental variable types: :literal:`independent`, :literal:`state`, :literal:`cpuTime` and :literal:`dependent`. The independent variable is typically the epoch (in seconds since J2000), the state is a vector containing all the states of all the bodies being propagated and the CPU time variables represents the cumulative computation time up to each integration step. There exist many dependent variables whose value can be saved, such as altitude, Mach number, relative position, etc.
+In order to define the variables whose values have to be either exported to output files and/or loaded into MATLAB after running the propagation, we need to define Tudat variables in MATLAB. There exist four fundamental variable types: :literal:`independent`, :literal:`state`, :literal:`cpuTime` and :literal:`dependent`. The independent variable is typically the epoch (in seconds since J2000), the state is a vector containing all the states of all the bodies being propagated and the CPU time variable represents the cumulative computation time up to each integration step. There exist many dependent variables whose value can be saved, such as altitude, Mach number, relative position, etc.
 
-Creating a Tudat variable in MATLAB can be done by writing:
+Creating a Tudat variable in MATLAB can be done in several ways:
 
 .. code-block:: matlab
 
@@ -256,14 +256,14 @@ A few dependent variables, such as :literal:`acceleration` or :literal:`accelera
   drag = Variable('Asterix.acceleration@aerodynamic-Earth');
   srp = Variable('Asterix.acceleration@cannonBallRadiationPressure-Sun');
 
-For vectorial variable, if we are only interested in one of the components, we can add the index of the component we want at the end. For instance, for the x-component of aerodynamic drag:
+For vectorial variables, if we are only interested in one of the components, we can add the index of the component we want at the end. For instance, for the x-component of aerodynamic drag:
 
 .. code-block:: matlab
 
   drag_x = Variable('Asterix.acceleration@aerodynamic-Earth[0]');
   drag_x = Variable('Asterix.acceleration@aerodynamic-Earth(1)');
 
-Note that, when using the C++ syntax (:literal:`[index]`), the indices start from 0, while when using the MATLAB syntax (:literal:`(index)`), the indices start from 1. Thus, the two previous lines are equivalent.
+Note that, when using the C++ syntax, i.e. :literal:`[index]`, the indices start from 0, while when using the MATLAB syntax, i.e. :literal:`(index)`, the indices start from 1. Thus, the two previous lines are equivalent.
 
 Once that we have created the variables that we want to compute, we can configure the :class:`Simulation` object to export their values to an output file (for each integration step). We do this by writing:
 
@@ -300,7 +300,7 @@ Defining termination conditions
 
 For the propagation to terminate, we have to define termination conditions; otherwise, it will go on forever or terminate with an error when undefined behaviour is reached (e.g. the satellite reaches infinite velocity, its altitude goes below zero, etc.).
 
-It is possible to define termination conditions for any :class:`Variable` object. The time-termination condition is based on an upper limit for the value of the independent variable. However, we need not specify this condition manually; it will be created automatically by Tudat if the property of :literal:`finalEpoch` of the :class:`Simulation` object has been defined.
+It is possible to define termination conditions for any :class:`Variable` object. The time-termination condition is based on a limit for the value of the independent variable. However, we need not specify this condition manually; it will be created automatically by Tudat if the property of :literal:`finalEpoch` of the :class:`Simulation` object has been defined.
 
 In some case, we want to provide additional conditions, such as terminating the propagation when the satellite's altitude goes below 100 km. We can do this by writing:
 
@@ -330,12 +330,12 @@ In any case, if :literal:`simulation.finalEpoch` has been defined, a time-based 
 
 .. code-block:: matlab
 
-  simulation.finalEpoch = 86400;
+  simulation.finalEpoch = 1e5;
   simulation.termination = Variable('Asterix.machNumber') < 1 | Variable('independent') > 1e5;
 
 
-Defining options for the :literal:`json_interface` application
-**************************************************************
+Defining application options
+****************************
 
 It is possible to specify options for the :literal:`json_interface` application called by MATLAB or called directly by the user with the JSON files generated by MATLAB as input files by changing the properties of :literal:`simulation.options`:
 
@@ -371,7 +371,7 @@ which exports the object :literal:`simulation` to the file :class:`main.json`. T
 
 which will generate the output files specified in the key :jsonkey:`export`.
 
-For generating `modular files <../../jsonInterface/modularFiles.html>`_, one can write e.g.:
+For generating `modular files <../jsonInterface/modularFiles.html>`_, one can write e.g.:
 
 .. code-block:: matlab
 
@@ -393,7 +393,7 @@ Which will generate the file :class:`rk4.json` containing only the integrator se
 
 The function :literal:`json.modular` exports the object :literal:`integrator` to the file :class:`rk4.json` and returns the string :literal:`$(rk4.json)`, which is assigned to :literal:`simulation.integrator`.
 
-For `multi-case propagations <../../jsonInterface/multicase.html>`_, one can write e.g.:
+For `multi-case propagations <../jsonInterface/multicase.html>`_, one can write e.g.:
 
 .. code-block:: matlab
 
@@ -419,7 +419,7 @@ which generates the file :class:`shared.json` containing the shared settings, an
     }
   ]
 
-If no output files are to be generated, the same behaviour can be achieved just by writing:
+If no output files are to be generated (seamless mode), the same behaviour can be achieved just by writing:
 
 .. code-block:: matlab
 
@@ -430,7 +430,7 @@ If no output files are to be generated, the same behaviour can be achieved just 
   for i = 1:10
     body.mass = i*1000;
     simulation.run();
-    results{i} = simulation.results();
+    results{i} = simulation.results;
   end
 
 

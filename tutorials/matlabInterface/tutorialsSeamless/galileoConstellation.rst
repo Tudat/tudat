@@ -56,7 +56,7 @@ Now we need to specify the initial stat for each satellite. The semi-major axis 
 
 For this case, :literal:`raans` is a vector containing the initial longitudes of the ascending nodes for each satellite, namely :literal:`0` for the first 10, :literal:`120` for satellites 11 to 20, and :literal:`240` for satellites 21 to 30. For each orbital plane, the satellites are evenly distributed, so the :literal:`trueAnomalies` vector is simply :literal:`linspace(0,360-360/10,10)` repeated 3 times (one for each orbital plane).
 
-We assign the initial state of each satellite by writing:
+We set the initial state of each satellite by writing:
 
 .. code-block:: matlab
 
@@ -70,7 +70,7 @@ We assign the initial state of each satellite by writing:
 
 Note that in the first line inside the loop, a :class:`Body` object is assigned to the variable :literal:`satellite`. Since the :class:`Body` class derives from :class:`handle`, updating :literal:`satellite` also updates automatically :literal:`simulation.bodies.(satelliteNames{i})`.
 
-Then, we create the settings for the propagation. We are going to propagate the translational state of the satellites. Thus, we use a :class:`TranslationalPropagator`, and specify the accelerations acting on each body. The only acceleration acting on each body is just Earth's spherical-harmonics gravitational attractions. We can define all the accelerations by writing a for-loop:
+Then, we create the settings for the propagation. We are going to propagate the translational state of the satellites. Thus, we use a :class:`TranslationalPropagator`, and specify the accelerations acting on each body. The only acceleration acting on each body is just Earth's spherical-harmonics gravitational attraction. We can define all the accelerations by writing a for-loop:
 
 .. code-block:: matlab
 
@@ -91,7 +91,7 @@ Then, we define the integrator settings, in this case we use a Runge-Kutta 4 int
   simulation.integrator.type = Integrators.rungeKutta4;
   simulation.integrator.stepSize = 30;
 
-Finally, we define the results to be saved. In this case, we are only interested in the relative position of each satellite with respect to Earth (and the corresponding epochs). Although this information could be retrieved from the matrix :literal:`simulation.results.numericalSolution` after running the simulation, we would need to determine which are the columns that correspond to the Cartesian position of each satellite. This is not difficult to do (using a loop for instance), but we can avoid it asking to save the following 30 variables:
+Finally, we define the results to be saved. In this case, we are only interested in the relative position of each satellite with respect to Earth (and the corresponding epochs). Although this information could be retrieved from the matrix :literal:`simulation.results.numericalSolution` after running the simulation, we would need to determine which are the columns that correspond to the Cartesian position of each satellite. This is not difficult to do (using a loop, for instance), but we can avoid it by asking to save the following 30 variables:
 
 .. code-block:: matlab
 
@@ -107,9 +107,9 @@ All the settings needed to run the simulation have been defined. Thus, we can wr
 
   simulation.run();
 
-This method creates a temporary input file and calls the :literal:`json_interface` application, generating a temporary output file containing the state of the satellite for each integration step. Then, it loads this results into the struct :literal:`results` of the :literal:`simulation` object. Finally, all the temporary files are deleted.
+This method creates a temporary input file and calls the :literal:`json_interface` application, generating a temporary output file containing the requested results. Then, it loads these results into the struct :literal:`results` of the :literal:`simulation` object. Finally, all the temporary files are deleted.
 
-We can now generate a 3D plot containing the orbits of the satellites (by plotting the positions of the satellites for all the integration epochs) and we also add the body Earth (to scale, using its average radius) and the final positions of the 30 satellites of the Galileo constellation:
+We can now generate a 3D plot showing the orbits of the satellites (by plotting the positions of the satellites for all the integration epochs) and we also add the body Earth (to scale, using its average radius) and the final positions of the 30 satellites of the Galileo constellation:
 
 .. code-block:: matlab
 
