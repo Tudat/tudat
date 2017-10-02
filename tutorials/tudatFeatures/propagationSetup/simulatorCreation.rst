@@ -2,13 +2,17 @@
 
 Create a Dynamics Simulator Object
 ==================================
-At the moment, the following :class:`DynamicSimulator` options are available or under development in Tudat:
+At the moment, the following :class:`DynamicsSimulator` options are available or under development in Tudat:
 
 - Single-arc dynamics simulator.
 - Multi-arc dynamics simulator.
 - Hybrid dynamics simulator (under development).
 
 These are implemented in derived classes and are discussed below. 
+
+.. class:: DynamicsSimulator
+
+   Base class from which the classes below are derived.
 
 .. class:: SingleArcDynamicsSimulator
    
@@ -28,7 +32,7 @@ These are implemented in derived classes and are discussed below.
 
    - :literal:`integratorSettings`
 
-      :class:`IntergratorSettings` contains the settings of the integrator used, as discussed in :ref:`tudatFeaturesIntegratorSettings`.
+      :class:`IntegratorSettings` contains the settings of the integrator used, as discussed in :ref:`tudatFeaturesIntegratorSettings`.
 
    - :literal:`propagatorSettings`
 
@@ -51,6 +55,12 @@ These are implemented in derived classes and are discussed below.
    - :literal:`arcStartTimes`
 
       :literal:`std::vector< double >` contains the times at which the separate arcs start.
+
+.. class:: HybridDynamicsSimulator
+
+   Allows some bodies to be propagated in a single arc, and some in a multi-arc fashion. This has the strict requirement that the single-arc bodies’ dynamics does not depend on the multi-arc bodies. For instance, the multi-arc bodies are typically spacecraft and the single-arc bodies solar system bodies. The vehicles do not exert an acceleration on the planets, but the planets exert accelerations on the spacecraft. When using hybrid-arc propagation, the single-arc bodies are first propagated, followed by the multi-arc bodies. 
+
+   .. note:: This feature is under development, and therefore not yet available in the current version of Tudat. 
       
 
 By default, the equations of motion are integrated once the object is created. This can be changed by adding additional arguments to the cosntructors of the :class:`DynamicsSimulator`, as shown below for the :class:`SingleArcDynamicsSimulator`:

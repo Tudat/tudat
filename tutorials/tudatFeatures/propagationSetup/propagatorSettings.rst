@@ -6,6 +6,10 @@ This page presents an overview of the available options within :class:`Propagato
 
 Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesIntegratorSettings`, various derived classes are used to implement different settings:
 
+.. class:: PropagatorSettings
+
+   Base class from which the other settings classes described below are derived.
+
 .. class:: TranslationalStatePropagatorSettings
 
     This class implements the framework required to propagate the translation state of a body. The constructor of this derived class is overloaded allowing two types of termination conditions:

@@ -120,7 +120,13 @@ This creates and sets aerodynamic angles that are zero at t=500 s, where the ang
    - A definition of a :literal:`void updateGuidance( const double currentTime )` function in the derived class, which is called every time step to compute the current angles as a function of time.
    - The calculation of :literal:`currentAngleOfAttack_`, :literal:`currentAngleOfSideslip_` and :literal:`currentBankAngle_` in this function. Whichever values these variables are set to in the :literal:`updateGuidance` function are the values that will be used during the current time step.
 
-The example of aerodynamic guidance given above is not very representative, of course. In general, you will want to define your body's orientation as a function of its current state/environment, etc. To accomplish this, you can add the body map (or any its contents) as member variables to your :class:`AerodynamicGuidance` derived class. In many cases, the required information will be stored in the :class:`FlightConditions` object, which stores data on altitude, density, airspeed, etc. To compute orientation angles from these flight conditions:
+The example of aerodynamic guidance given above is not very representative, of course. In general, you will want to define your body's orientation as a function of its current state/environment, etc. To accomplish this, you can add the body map (or any its contents) as member variables to your :class:`AerodynamicGuidance` derived class. In many cases, the required information will be stored in the :class:`FlightConditions` object. 
+
+.. class:: FlightConditions
+
+   Class which stores data on altitude, density, airspeed, etc. 
+
+To compute orientation angles from these flight conditions:
 
 .. code-block:: cpp
 

@@ -19,7 +19,12 @@ In fact, when creating settings for a thrust force, the user needs to provide se
         SelectedAccelerationMap accelerationSettingsMap;
         accelerationSettingsMap[ "Vehicle" ][ "Vehicle" ].push_back( boost::make_shared< ThrustAccelerationSettings >( thrustDirectionSettings, thrustMagnitudeSettings ) ); 
 
-In the above code snippet, two things may stand out. First of all, we define the thrust force as one that the vehicle exerts on itself. Secondly, to define the thrust force, the user must provide two objects: one of type (derived from) :class:`ThrustDirectionGuidanceSettings` and :class:`ThrustEngineSettings`.
+In the above code snippet, two things may stand out. First of all, we define the thrust force as one that the vehicle exerts on itself. Secondly, to define the thrust force, the user must provide two objects: one of type (derived from) :class:`ThrustDirectionGuidanceSettings` and :class:`ThrustEngineSettings`. The settings are used to create a :class:`ThrustAcceleration` acceleration object. 
+
+.. class:: ThrustAcceleration
+
+   Class contaning the properties of the thrust acceleration. Set by the settings classes described below.
+   
 
 Thrust direction
 ~~~~~~~~~~~~~~~~
@@ -82,10 +87,13 @@ To define the thrust magnitude, there are presently three available types of set
 
 .. class:: FromBodyThrustEngineSettings
 
-   A Body object may be endowed with a :class:`VehicleSystems` property, which defines the suite of hardware that it carries. One of the systems that may be defined in the :class:`VehicleSystems` object is a list of :class:`EngineModel` objects (stored in a list). In an object of the :class:`EngineModel` derived class, settings similar to those in the previous two thrust magnitude settings may be stored. However, using the interface with an engine model allows a more integrated systems/trajectory simulation to be performed, with applications in e.g. MDO. It allows multiple engine models, each with their own properties, to be defined. We provide thrust engine settings that use the thrust from one or all of the :class:`EngineModel` objects that a vehicle is endowed with, in this class. It requires the following settings:
+   A :class:`Body` object may be endowed with a :class:`VehicleSystems` property, which defines the suite of hardware that it carries. One of the systems that may be defined in the :class:`VehicleSystems` object which is a list of :class:`EngineModel` objects (stored in a list). We provide thrust engine settings that use the thrust from one or all of the :class:`EngineModel` objects that a vehicle is endowed with, in this class. It requires the following settings:
 
-        - A boolean defining whether all engines (i.e. all entries in the :literal:`engineModels` member of the VehicleSystems object in the vehicle's Body object.
-        - The name of the engine that is to be used for the thrust (to be empty if all engines are used)
+      - A boolean defining whether all engines (i.e. all entries in the :literal:`engineModels` member of the :class:`VehicleSystems` object in the vehicle's :class:`Body` object.
+      - The name of the engine that is to be used for the thrust (to be empty if all engines are used)
 
+.. class:: EngineModel
 
+   Class in which the model of the engine is saved. Settings similar to those in the previous two thrust magnitude settings may be stored. However, using the interface with an engine model allows a more integrated systems/trajectory simulation to be performed, with applications in e.g. MDO. It allows multiple engine models, each with their own properties, to be defined. 
 
+   .. note:: Currently this class in under development, note that this is still a priliminary version.

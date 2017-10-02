@@ -19,6 +19,10 @@ Single-variable interpolator creation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Creating interpolators of a single independent variable is most easily done in Tudat by creating an :class:`InterpolatorSettings` object, and passing this to the ``createOneDimensionalInterpolator`` function.
 
+.. class:: InterpolatorSettings
+
+   Class containing settings to setup an interpolator.
+
 .. code-block:: cpp
 
     // Load data.
@@ -41,9 +45,9 @@ The interpolator itself is of the type ``boost::shared_ptr< OneDimensionalInterp
 
 The different interpolator types are handled in a similar manner:
 
-    - **Piece-wise constant:** Requires no additional information to the ``createOneDimensionalInterpolator`` and is defined by using the ``InterpolatorSettings`` base class (with ``piecewise_constant_interpolator`` as argument).
-    - **Linear:** Requires no additional information to the ``createOneDimensionalInterpolator`` and is defined by using the ``InterpolatorSettings`` base class (with ``linear_interpolator`` as argument).
-    - **Cubic spline:** Requires no additional information to the ``createOneDimensionalInterpolator`` and is defined by using the ``InterpolatorSettings`` base class (with ``cubic_spline_interpolator`` as argument).
+    - **Piece-wise constant:** Requires no additional information to the ``createOneDimensionalInterpolator`` and is defined by using the :class:`InterpolatorSettings` base class (with ``piecewise_constant_interpolator`` as argument).
+    - **Linear:** Requires no additional information to the ``createOneDimensionalInterpolator`` and is defined by using the :class:`InterpolatorSettings` base class (with ``linear_interpolator`` as argument).
+    - **Cubic spline:** Requires no additional information to the ``createOneDimensionalInterpolator`` and is defined by using the :class:`InterpolatorSettings` base class (with ``cubic_spline_interpolator`` as argument).
 
         .. note:: Note that for the cubic spline implementation, natural boundary conditions are imposed (2nd derivatives at the boundaries equal to zero) and the first derivatives are continuous throughout the curve.
 
@@ -73,7 +77,11 @@ Lagrange interpolator
 ~~~~~~~~~~~~~~~~~~~~~
 This interpolation routine uses an nth degree polynomial to approximate a function from (n+1) data points. In our implementation, you can use a large data set of m data points (with m > n) to generate a set of interpolating polynomials. When interpolating a data point, the interpolation routine will automatically select the polynomial where the requested data point lies between the two middle points, to prevent wild oscillations (which occur at the edge of the polynomial). At the boundaries of the full interval, a cubic spline interpolator is used.
 
-To create a Lagrange interpolator, the number of data points used for each interpolating polynomial should be defined, using the dedicated derived class :class:`LagrangeInterpolatorSettings`. For example, when using 8 data points per polynomial, the following code should be used:
+To create a Lagrange interpolator, the number of data points used for each interpolating polynomial should be defined, using the dedicated derived class :class:`LagrangeInterpolatorSettings`. The input argument for this class is the amount of points per polynomial. An example, when using 8 data points per polynomial, is described below:
+
+.. class:: LagrangeInterpolatorSettings
+
+   Derived class used for the settings of a lagrange interpolator.
 
 .. code-block:: cpp
 
