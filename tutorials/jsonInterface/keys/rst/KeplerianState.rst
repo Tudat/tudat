@@ -3,7 +3,8 @@
 .. role:: jsonkey
 .. role:: arrow
 
-- :jsontype:`string` :jsonkey:`centralBody` (mandatory).
+- :jsontype:`string` :jsonkey:`centralBodyGravitationalParameter` (optional).
+- :jsontype:`string` :jsonkey:`centralBodyAverageRadius` (optional).
 - :jsontype:`number` :jsonkey:`semiMajorAxis` (mandatory/optional).
 - :jsontype:`number` :jsonkey:`eccentricity` (mandatory/optional).
 - :jsontype:`number` :jsonkey:`inclination` (mandatory/optional).

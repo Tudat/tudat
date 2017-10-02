@@ -6,7 +6,7 @@
 Modular files
 =============
 
-The :literal:`json_interface` allows the use of modular JSON input files. This means that a simulation can be set up by using different files. Since the list of settings to be provided can be very long, in some cases it is convenient to specify those settings in different files. Additionally, modularity allows re-using parts from other projects, and a set of files containing settings for e.g. several integrators can be provided and then only one of them be used by referencing it from the root input file (i.e. the file provided as command-line argument to the :literal:`json_interface` application).
+The JSON Interface allows the use of modular JSON input files. This means that a simulation can be set up by using different files. Since the list of settings to be provided can be very long, in some cases it is convenient to specify those settings in different files. Additionally, modularity allows re-using parts from other projects, and a set of files containing settings for e.g. several integrators can be provided and then only one of them be used by referencing it from the root input file (i.e. the file provided as command-line argument to the :literal:`json_interface` application).
 
 Modularity can be nested, i.e. not only the root input file, but any file, can contain references to other files. The contents of a file can be included by using the following special string:
 
@@ -28,7 +28,7 @@ Modularity can be nested, i.e. not only the root input file, but any file, can c
     "maximumStepSize": 1e4
   }
 
-After parsing by :literal:`json_interface`, this will result in:
+After parsing by the JSON Interface, this will result in:
 
 .. code-block:: json
   :caption: :class:`main.json`

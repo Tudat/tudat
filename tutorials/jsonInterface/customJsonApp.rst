@@ -52,9 +52,9 @@ The four basic steps in a JSON-based applications are:
 
   4. Export the results (line 9). Calling the method :literal:`exportResults` will generate the output files with the requested results specified in the key :jsonkey:`export` of the JSON object.
   
-Since not all Tudat features are supported by the JSON interface, in some cases it will be necessary to perform some additional steps between step 2 and 3, i.e. the simulation will be first set up from a JSON file, then additional settings will be provided manually, and the the simulation will be run. Then, optionally, the results can be exported using the :literal:`exportResults` method. However, defining the additional settings between lines 7 and 8 does not always lead to the desired results, since step 2 is a complex process in which some variable depend from each another.
+Since not all Tudat features are supported by the JSON interface, in some cases it will be necessary to perform some additional steps between step 2 and 3, i.e. the simulation will be first set up from a JSON file, then additional settings will be provided manually, and the the simulation will be run. Then, optionally, the results can be exported using the :literal:`exportResults` method. However, defining the additional settings between lines 7 and 8 does not always lead to the desired results, since step 2 is a complex process in which some variables depend on each another.
 
-Imagine that the aerodynamic coefficients of the body to propagate are not specified in the JSON file because they will be provided manually in the C++ file. This may result in an error, since trying to set up a simulation in which one wants to save e.g. the aerodynamic drag on a body with no aerodynamic coefficients interface will result in an error, which is generated while setting up the simulation and not when actually running it. Using a placeholder aerodynamic coefficients interface in the JSON file (e.g. zero force coefficients), this will result in a successful simulation set up, but then, when one wants to reset the aerodynamic coefficients interface in the C++ application manually, it is necessary to reset also all objects that had been set up based on the placeholder coefficients (e.g. the vehicle's flight conditions). This can be complex and is prone to leading to errors (sometimes run-time errors, sometimes successful simulation in which the results are wrong!), so a different approach is followed when writing custom C++ applications.
+Imagine that the aerodynamic coefficients of the body to propagate are not specified in the JSON file because they will be provided manually in the C++ file. This may result in an error, since trying to set up a simulation in which one wants to save e.g. the aerodynamic drag on a body with no aerodynamic coefficients interface will result in an error, which is generated while setting up the simulation and not when actually running it. Using a placeholder aerodynamic coefficients interface in the JSON file (e.g. zero force coefficients), this will result in a successful simulation set up, but then, when one wants to reset the aerodynamic coefficients interface in the C++ application manually, it is necessary to reset also all objects that had been set up based on the placeholder coefficients (e.g. the vehicle's flight conditions). This can be complex and is prone to leading to errors (sometimes run-time errors, sometimes successful simulations in which the results are wrong), so a different approach is followed when writing custom C++ applications.
 
 When setting up the simulation (step 2), the following virtual method is called:
 
@@ -73,7 +73,7 @@ When setting up the simulation (step 2), the following virtual method is called:
       resetDynamicsSimulator( );
   }
 
-Note that each of the methods called by this method is also virtual. This means that a derived class of :literal:`JsonSimulationManager` can be created if a custom implementation of any of these methods is needed. The method :literal:`updateSettingsFromJSONObject` is generally not overridden, as it is dangerous to modify the order in which each of the virtual methods is called. In one *does* want to modify this method, the following has to be taken into account:
+Note that each of the methods called by this method is also virtual. This means that a derived class of :class:`JsonSimulationManager` can be created if a custom implementation of any of these methods is needed. The method :literal:`updateSettingsFromJSONObject` is generally not overridden, as it is dangerous to modify the order in which each of the virtual methods is called. In one *does* want to modify this method, the following has to be taken into account:
 
   - The default implementation of :literal:`resetBodies` uses the integrator settings' initial time to interpolate the ephemeris of celestial bodies if Spice is enabled and the key :jsonkey:`spice.preloadEpehemeris` is set to :literal:`true`.
   
@@ -108,7 +108,7 @@ Then, in the :literal:`main` function, we only need to change line 6 to:
 
 .. code-block:: cpp
   
-  CustomJsonSimulationManager jsonSimulationManager;
+  CustomJsonSimulationManager jsonSimulationManager( inputPath );
 
 If one wants to perform some operations on the results of the integration before exporting them, or does not want to export them to an output file, the call to the :literal:`exportResults` methods can be omitted, and the results can be retrieved from:
 
