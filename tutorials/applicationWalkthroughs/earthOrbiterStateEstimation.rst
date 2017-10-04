@@ -178,7 +178,7 @@ Creating the :class:`OrbitDeterminationManager` object and the :literal:`measure
     std::vector< boost::shared_ptr< ObservationViabilitySettings > > observationViabilitySettings;
     observationViabilitySettings.push_back( boost::make_shared< ObservationViabilitySettings >(
                                                 minimum_elevation_angle, std::make_pair( "Earth", "" ), "",
-                                                5.0 * mathematical_constants::PI / 180.0 ) );
+                                                unit_conversions::convertDegreesToRadians( 5.0 ) ) );
     PerObservableObservationViabilityCalculatorList viabilityCalculators = createObservationViabilityCalculators(
                 bodyMap, linkEndsPerObservable, observationViabilitySettings );
                 

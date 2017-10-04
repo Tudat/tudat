@@ -2,7 +2,7 @@
 
 Inner Solar System Propagation
 ==============================
-The example described on this page aims to simulate the dynamics of the main celestial bodies in the inner solar system. The code for this tutorial is located in your Tudat Bundle at::
+The example described on this page aims to simulate the dynamics of the main celestial bodies in the inner solar system. The code for this tutorial is given here on Github, and is also located in your tudat bundle at::
 
    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/innerSolarSystemPropagation.cpp
 
@@ -10,7 +10,7 @@ For this example, we have the following problem statement:
 
 *Given the position and velocity of the main celestial bodies in the inner solar system at a certain point in time, what will their position and velocity after a certain period of time?*
 
-.. warning:: The example described in this page assumes that the user has read the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite`. This page only describes the differences with respect to such example, so please go back before proceding.
+.. warning:: The example described in this page assumes that the user has read the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite`. This page only describes the differences with respect to such example, so please go back before proceeding.
 
 Set up the environment
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -163,6 +163,9 @@ Once this step is completed, the :class:`DynamicsSimulator` object is created an
    SingleArcDynamicsSimulator< > dynamicsSimulator(
       bodyMap, integratorSettings, propagatorSettings, true, false, false );
 
+.. tip:: Please go to :ref:`tudatFeaturesSimulatorCreation` for further details on the :class:`DynamicsSimulator` and derived classes.
+
+
 Save the propagation results
 ****************************
 The final step in the :literal:`for` loop is to save the propagation results to a file. First, the propagation history is retrieved from the :literal:`dynamicsSimulator`:
@@ -171,7 +174,7 @@ The final step in the :literal:`for` loop is to save the propagation results to 
 
    std::map< double, Eigen::VectorXd > integrationResult = dynamicsSimulator.getEquationsOfMotionNumericalSolution( );
 
-where the retrieved result is an :literal:`std::map` with a :literal:`double` as key (the simulation time) and a :literal:`Eigen::VectorXd` of 1x36 elements, containing the 6-variable state for the six bodies. Next, an :literal:`std::vector` where each of its elements is an :literal:`std::map` that contains the propagation history of a single body:
+where the retrieved result is an :literal:`std::map` with a :literal:`double` as key (the simulation time) and a :literal:`Eigen::VectorXd` of 1x36 elements, containing the 6-variable state for the six bodies. Next, a :literal:`std::vector` is created where each of its elements is an :literal:`std::map` that contains the propagation history of a single body:
 
 .. code-block:: cpp
 
@@ -205,3 +208,15 @@ Finally, each of the :literal:`std::map` within :literal:`allBodiesPropagationHi
          std::numeric_limits< double >::digits10,
          "," );
   }
+
+Results
+~~~~~~~
+The orbit of the propagated bodies are shown below. First the orbits are shown in the inertial frame. Then case 1 is shown first where the Solar System Barycenter is considered as the central body. Finally case 2 where the higher hierarchical body is used as respective central body.
+
+.. figure:: images/InnerSolarSystemOverview.png
+.. figure:: images/InnerSolarSystemOrbitsBaryCenter.png
+.. figure:: images/InnerSolarSystemOrbits.png
+
+.. tip:: Open the figure(s) in a new tab for more detail.
+
+

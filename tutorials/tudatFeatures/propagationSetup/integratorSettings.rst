@@ -2,57 +2,72 @@
 
 Integrator Settings
 ===================
-As the name suggests, the integrator settings tell the dynamics simulator how to integrate numerically the equations of motion that govern the orbital mechanics to simulate. The integrator settings are defined using two derived classes, depending on whether the integrator to be used is a fixed step-size integrator or a variable step-size integrator.
+As the name suggests, the integrator settings tell the dynamics simulator how to integrate numerically the equations of motion that govern the orbital mechanics to simulate. The :class:`IntegratorSettings` are defined using two derived classes, depending on whether the integrator to be used is a fixed step-size integrator or a variable step-size integrator.
 
-Propagation with a fixed step-size integrator
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In order to use a fixed step-size integrator, the following constructor needs to be created in your :literal:`main` function. The constructor is created as a :literal:`shared_ptr` where the arguments to the constructor are passed by using :literal:`make_shared`:
 
-.. code-block:: cpp
+.. class:: IntegratorSettings 
+   
+   This class is used to define the settings for fixed step-size integration. The constructor for this base class is:
 
-    boost::shared_ptr< IntegratorSettings< > > integratorSettings =
-                boost::make_shared< IntegratorSettings< > >
-                ( integratorType, simulationStartEpoch, fixedStepSize );
+   .. code-block:: cpp
 
-where the following arguments need to be passed:
+      IntegratorSettings( integratorType,
+      			  simulationStartEpoch,
+      			  fixedStepSize )
 
-- :literal:`integratorType`
-    Defines the fixed step-size integrator type to be used. Currently the only options available are :literal:`euler` and :literal:`rungeKutta4`.
-- :literal:`simulationStartEpoch`
-    Defines the simulation's start epoch. It must be a :literal:`double` variable-type.
-- :literal:`fixedStepSize`
-    Defines the fixed step-size to be used either by the :literal:`euler` or the :literal:`rungeKutta4` numerical integrator. It must be a :literal:`double` variable-type.
+   where:
 
-Propagation with a variable step-size integrator
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In order to use a variable step-size integrator, the following constructor needs to be created in your :literal:`main` function. Similarly to the fixed-step size integrator settings, this is done by means of a boost pointer libraries:
+   - :literal:`integratorType`
 
-.. code-block:: cpp
+      :class:`AvailableIntegrators` which defines the fixed step-size integrator type to be used. Currently the only options available are :literal:`euler` and :literal:`rungeKutta4`.
 
-    boost::shared_ptr< IntegratorSettings< > > integratorSettings =
-                boost::make_shared< RungeKuttaVariableStepSizeSettings< > >
-                            integratorType,
-                            initialTime,
-                            initialTimeStep,
-                            coefficientSet,
-                            minimumStepSize
-                            maximumStepSize );
+   - :literal:`simulationStartEpoch`
 
-where the following arguments need to be passed:
+      :literal:`double` that defines the simulation's start epoch. 
 
-- :literal:`integratorType`
-    Defines the fixed step-size integrator type to be used. The only option available is :literal:`rungeKuttaVariableStepSize`.
-- :literal:`initialTime`
-    Defines the simulation's initial time. It must be a :literal:`double` variable-type.
-- :literal:`initialTimeStep`
-    Defines the initial step-size to be used either by the :literal:`rungeKuttaVariableStepSize` numerical integrator. It must be a :literal:`double` variable-type.
-- :literal:`coefficientSet`
-    Defines the coefficient set to be used by the :literal:`rungeKuttaVariableStepSize` numerical integrator. The list of available coefficient sets is given in :ref:`tudatFeaturesIntegrators`.
-- :literal:`minimumStepSize`
-    Defines the minimum step-size that the :literal:`rungeKuttaVariableStepSize` numerical integrator can take. It must be a :literal:`double` variable-type.
-- :literal:`maximumStepSize`
-    Defines the maximum step-size that the :literal:`rungeKuttaVariableStepSize` numerical integrator can take. It must be a :literal:`double` variable-type.
+   - :literal:`fixedStepSize`
 
-.. note:: Aside from the arguments listed in this page, the :class:`IntegratorSettings` derived classes offer a number of optional arguments. The reader is advised to examine the Doxygen documentation included in the code for further details.
+      :literal:`double` that defines the fixed step-size to be used either by the :literal:`euler` or the :literal:`rungeKutta4` numerical integrator. 
+
+.. class:: RungeKuttaVariableStepSizeSettings
+   
+   This class is used to define the settings for variable step-size integration. The constructor for this derived class is:
+
+   .. code-block:: cpp
+   
+      RungeKuttaVariableStepSizeSettings( integratorType,
+                            		  initialTime,
+                            		  initialTimeStep,
+                            		  coefficientSet,
+                            		  minimumStepSize,
+                            		  maximumStepSize )
+
+   where:
+
+   - :literal:`integratorType`
+
+      :class:`AvailableIntegrators` which defines the fixed step-size integrator type to be used. The only option available is :literal:`rungeKuttaVariableStepSize`.
+
+   - :literal:`initialTime`
+
+      :literal:`double` that defines the simulation's initial time. It must be a :literal:`double` variable-type.
+   
+   - :literal:`initialTimeStep`
+
+      :literal:`double` that defines the initial step-size to be used either by the :literal:`rungeKuttaVariableStepSize` numerical integrator. It must be a :literal:`double` variable-type. 
+
+   - :literal:`coefficientSet`
+
+      :class:`RungeKuttaCoefficients::CoefficientSets` that defines the coefficient set to be used by the :literal:`rungeKuttaVariableStepSize` numerical integrator. The list of available coefficient sets is given in :ref:`tudatFeaturesIntegrators`.
+
+   - :literal:`minimumStepSize`
+
+      :literal:`double` that defines the minimum step-size that the :literal:`rungeKuttaVariableStepSize` numerical integrator can take. 
+
+   - :literal:`maximumStepSize`
+
+      :literal:`double` that defines the maximum step-size that the :literal:`rungeKuttaVariableStepSize` numerical integrator can take.
+
+.. note:: Aside from the arguments listed in this page, the :class:`IntegratorSettings` class and derived classes described here offer a number of optional arguments. The reader is advised to examine the Doxygen documentation included in the code for further details.
 
 .. warning:: Make sure that a compatible :literal:`integratorType` is selected, otherwise a runtime exception will be thrown.

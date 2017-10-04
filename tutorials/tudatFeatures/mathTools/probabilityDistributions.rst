@@ -39,7 +39,9 @@ where the ``probabilityDistribution`` object is created by the ``createBoostRand
 
     - The type of probability distribution variable, defined by a Tudat-defined enum (we list all options below)
     - A list of parameters that define the properties of the distribution
-    - The InvertibleContinuousProbabilityDistribution probability distribution comes with three functions that you can used:
+
+The :class:`InvertibleContinuousProbabilityDistribution` probability distribution comes with three functions that you can used:
+
     - The evaluatePdf function, giving the PDF at a given point in sample space
     - The evaluateCdf function, giving the CDF at a given point in sample space
     - The evaluateInverseCdf function, giving the point in sample space for a given CDF values (which must be between 0 and 1). Note that this is also referred to as a quantile function.
@@ -73,7 +75,7 @@ To create one of the 6 distributions listed above, for each of which the inverti
     - First argument: ``exponential_boost_distribution``.
     - Second argument: vector containing (in order) 1) Lambda parameter of exponential distribution.
 
-***Gamma distribution**
+**Gamma distribution**
 
     - First argument: ``gamma_boost_distribution``.
     - Second argument: vector containing (in order) 1) shape (k) parameter of distribution 2) scale (theta) parameter of distribution.

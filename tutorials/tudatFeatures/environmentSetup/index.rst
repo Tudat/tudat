@@ -37,14 +37,16 @@ To actually define the physical properties of the environment, a :class:`Body`�
     - **Mass model:** defines the mass of a body (possibly as a function of time). This separate function is typically used for vehicles only. For celestial bodies, the mass is typically derived from the gravity field member (if applicable).
     - **Vehicle system models:** This is a container object that stores properties of systems and physical properties of a vehicle. The options in this container are presently limited to propulsion systems and some physical characteristics related to entry heating.
 
-These properties can be set manually or default settings can be used. For instance, to manually create and set an ephemeris (from Spice w.r.t. the barycenter) and gravity field (point-mass only) object in the 'Earth' entry of the body map, the following can be used:
+These properties can be set manually or default settings can be used. For instance, to manually create and set an ephemeris (from Spice w.r.t. the barycenter) and gravity field (point-mass only) object in the ``"Earth"`` entry of the body map, the following can be used:
 
 .. code-block:: cpp
 
     bodyMap[ "Earth" ]->setEphemeris( boost::make_shared< SpiceEphemeris >( "Earth", "SSB", false, false, true, "J2000" ) ); 
     bodyMap[ "Earth" ]->setGravityFieldModel( boost::make_shared< GravityFieldModel >( 3.986004418E14 ) );  
 
-This calls the constructors of the :class:`SpiceEphemeris` and :class:`GravityFieldModel` classes (see here and here for details), and assigns the objects that are constructed to the "Earth" entry of the ``bodyMap``.
+This calls the constructors of the :class:`SpiceEphemeris` and :class:`GravityFieldModel` classes, and assigns the objects that are constructed to the "Earth" entry of the ``bodyMap``.
+
+.. _tudatFeaturesCreatingTheEnvironment:
 
 Creating the environment from :class:`BodySettings`
 ***************************************************
@@ -73,7 +75,7 @@ The default settings for a body are loaded as follows:
     std::map< std::string, boost::shared_ptr< BodySettings > > bodySettings =
                 getDefaultBodySettings( bodyNames, initialEphemerisTime - buffer, finalEphemerisTime + buffer );
 
-The reasons for passing the initial/final time (as well as the 'buffer') are discussed in more detail here:"http://tudat.tudelft.nl/projects/tudat/wiki/timeBuffer". As can be seen from the above, the settings for the environment are stored in a map of pointers to :class:`BodySettings` objects (with the key the name of the associated bodies). If you have a look at the definition of the :class:`BodySettings` class (in ``SimulationSetup/createBodies.h``), you will see that this type is simply a contained for a list of specific environment settings, which we discuss in more detail below. As a result, specifying settings for a given type of environment model requires the creation of an object of the correct type of class (derived class of :class:`EphemerisSettings` for defining an ephemeris; derived class of :class:`BodyShapeSettings` for defining a body shape etc.)
+The reasons for passing the initial/final time (as well as the 'buffer') are discussed in more detail :ref:`here <http://tudat.tudelft.nl/projects/tudat/wiki/timeBuffer>`. As can be seen from the above, the settings for the environment are stored in a map of pointers to :class:`BodySettings` objects (with the key the name of the associated bodies). If you have a look at the definition of the :class:`BodySettings` class (in ``SimulationSetup/createBodies.h``), you will see that this type is simply a container for a list of specific environment settings, which we discuss in more detail below. As a result, specifying settings for a given type of environment model requires the creation of an object of the correct type of class (derived class of :class:`EphemerisSettings` for defining an ephemeris; derived class of :class:`BodyShapeSettings` for defining a body shape etc.)
 
 Often, one will wish to load the default settings, but make slight modifications or additions to it before creating the :class:`NamedBodyMap`. This can be achieved as follows for the example of a shape model: we want an oblate spheroid shape model instead of a spherical shape model for Earth.
 
@@ -119,221 +121,367 @@ if you want to use a central gravity field with the gravitational parameter take
 
 To find out which input arguments must be provided to create a specific settings class, have a look at the documentation in the code (written above the code for the constructor of the settings class you are interested in). Below, we give examples of each type of environment model setting.
 
-The full list of available environment model settings is:
+The full list of available environment model settings is described below.
 
-    **Atmosphere model:** defined in the atmosphereSettings member (of type ``shared_ptr< AtmosphereSettings >``). Models currently available through the :class:`BodySettings` architecture are (with examples when defining settings for Earth):
+Atmosphere model
+****************
+
+.. class:: AtmosphereSettings
+
+   The base class for atmosphere settings. Models currently available through the :class:`BodySettings` architecture are (with examples when defining settings for Earth):
     
-        - **Exponential atmosphere:** Simple atmosphere model independent of time, latitude and longitude based on an exponentially decaying density profile with a constant temperature. Settings stored in :class:`ExponentialAtmosphereSettings` object.
+.. class:: ExponentialAtmosphereSettings
 
-        .. code-block:: cpp
+   Simple atmosphere model independent of time, latitude and longitude based on an exponentially decaying density profile with a constant temperature.
 
-            bodySettings[ "Earth" ]->atmosphereSettings = boost::make_shared< ExponentialAtmosphereSettings >( 7.2E3, 290.0, 1.225, 287.06 ); 
+   .. code-block:: cpp
 
-        for an exponential atmosphere with a scale height of 7200 m, a constant temperature of 290 K, a density at 0 m altitude of 1.225 kg/m^3 and a specific gas constant of 287.06 J/(kg K).
+      bodySettings[ "Earth" ]->atmosphereSettings = boost::make_shared< ExponentialAtmosphereSettings >( 7.2E3, 290.0, 1.225, 287.06 ); 
 
-        - **Tabulated atmosphere:** Atmosphere model with properties (pressure, density, temperature) read in from a file. Current implementation is independent of time, latitude and longitude. Settings stored in TabulatedAtmosphereSettings object. 
+   for an exponential atmosphere with a scale height of 7200 m, a constant temperature of 290 K, a density at 0 m altitude of 1.225 kg/m^3 and a specific gas constant of 287.06 J/(kg K).
 
-        .. code-block:: cpp
+.. class:: TabulatedAtmosphereSettings
 
-            std::string atmosphereFile = ...
-            bodySettings[ "Earth" ]->atmosphereSettings = boost::make_shared< TabulatedAtmosphereSettings >( atmosphereFile ); 
+   Atmosphere model with properties (pressure, density, temperature) read in from a file. Current implementation is independent of time, latitude and longitude. 
 
-        which will read the atmospheric properties from the file atmosphereFile (with four columns altitude and associated presure, density and temperature).
+   .. code-block:: cpp
 
-        - **NRLMSISE00:** Atmosphere model using the NRLMSISE-00 atmosphere model. To use this model, the :literal:`USE_NRLMSISE` flag in your top-level :literal:`CMakeLists` must be set to true. No derived class of :class:`AtmosphereSettings` base class required, created by passing :literal:`nrlmsise00` as argument to base class constructor.
+      std::string atmosphereFile = ...
+      bodySettings[ "Earth" ]->atmosphereSettings = boost::make_shared< TabulatedAtmosphereSettings >( atmosphereFile ); 
 
-        .. code-block:: cpp
+   which will read the atmospheric properties from the file ``atmosphereFile`` (with four columns altitude and associated presure, density and temperature).
 
-            bodySettings[ "Earth" ]->atmosphereSettings = boost::make_shared< AtmosphereSettings >( nrlmsise00 ); 
+.. method:: NRLMSISE-00 
+    
+   This can be used to select the NRLMSISE-00 atmosphere model. To use this model, the :literal:`USE_NRLMSISE` flag in your top-level :literal:`CMakeLists` must be set to true. No derived class of :class:`AtmosphereSettings` base class required, the model can be created by passing :literal:`nrlmsise00` as argument to base class constructor. 
 
-    **Ephemeris model:** defined in the ephemerisSettings (of type ``shared_ptr< EphemerisSettings >``). Models currently available through the :class:`BodySettings` architecture are:
+   .. code-block:: cpp
 
-        - **Approximate planet positions:** Highly simplified model of ephemerides of major Solar system bodies (model described here). Both a three-dimensional, and circular coplanar approximation may be used. Settings stored in ApproximatePlanetPositionSettings object. 
+      bodySettings[ "Earth" ]->atmosphereSettings = boost::make_shared< AtmosphereSettings >( nrlmsise00 );  
 
-        .. code-block:: cpp
+.. class:: CustomWindModelSettings
 
-            bodySettings[ "Jupiter" ]->ephemerisSettings = boost::make_shared< ApproximatePlanetPositionSettings >( ephemerides::ApproximatePlanetPositionsBase::jupiter, false ); 
+   Custom wind model which can be used to retrieve a wind vector. This wind vector is in the body-fixed, body-centered reference frame. 
 
-        where the first constructor argument is taken from the enum in approximatePlanetPositionsBase.h, and the second argument (false) denotes that the circular coplanar approximation is not made.
+   .. code-block:: cpp
+   
+      bodySettings[ "Earth" ]->atmosphereSettings = boost::make_shared< CustomWindModelSettings >(  windFunction )
+   
+   where ``windFunction`` is a ``boost::function`` with inputs; altitude, longitude, latitude and time (for more details about boost: :ref:`externalBoost`).
 
-         - **Direct Spice ephemeris:** Ephemeris retrieved directly using the Spice toolbox (see this wiki page). Settings stored in DirectSpiceEphemerisSettings object. 
 
-        .. code-block:: cpp
 
-            std::string frameOrigin = "SSB";
-            std::string frameOrientation = "J2000";
-            bodySettings[ "Jupiter" ]->ephemerisSettings = boost::make_shared< DirectSpiceEphemerisSettings >( frameOrigin, frameOrientation ); 
+Ephemeris model
+****************  
 
-        creating a barycentric (SSB) ephemeris with axes along J2000, with data directly from spice.
+.. class:: EphemerisSettings
 
-        - **Interpolated Spice ephemeris:** Using this option the state of the body is retrieved at regular intervals, and used to create an interpolator, before setting up environment. This has the advantage of only requiring calls to Spice outside of the propagation inner loop, reducing computation time. However, it has the downside of begin applicable only during a limited time interval. Settings stored in InterpolatedSpiceEphemerisSettings object. 
+   Base class for the ephemeris settings. Models currently available through the :class:`BodySettings` architecture and set by their respective derived classes are:
 
-        .. code-block:: cpp
+.. class:: ApproximatePlanetPositionSettings
 
-            double initialTime = 0.0;
-            double finalTime = 1.0E8;
-            double timeStep = 3600.0;
-            std::string frameOrigin = "SSB";
-            std::string frameOrientation = "J2000";
-            bodySettings[ "Jupiter" ]->ephemerisSettings = boost::make_shared< InterpolatedSpiceEphemerisSettings >(
-                initialTime, finalTime, timeStep, frameOrigin, frameOrientation ); 
+   Highly simplified model of ephemerides of major Solar system bodies (model described here). Both a three-dimensional, and circular coplanar approximation may be used. 
 
-        creating a barycentric (SSB) ephemeris with axes along J2000, with data retrieved from Spice at 3600 s intervals between t=0 and t=1.0E8, using a 6th order Lagrange interpolator. Settings for the interpolator (discussed here, can be added as a sixth argument if you wish to use a different interpolation method)
+   .. code-block:: cpp
 
-        - **Tabulated ephemeris:** Ephemeris created directly by interpolating user-specified states as a function of time. Settings stored in TabulatedEphemerisSettings object.
+       bodySettings[ "Jupiter" ]->ephemerisSettings = boost::make_shared< ApproximatePlanetPositionSettings >( ephemerides::ApproximatePlanetPositionsBase::jupiter, false ); 
 
-        .. code-block:: cpp
+   where the first constructor argument is taken from the enum in approximatePlanetPositionsBase.h, and the second argument (false) denotes that the circular coplanar approximation is not made.
 
-            std::map< double, Eigen::Vector6d > bodyStateHistory ...
-            std::string frameOrigin = "SSB";
-            std::string frameOrientation = "J2000";
-            bodySettings[ "Jupiter" ]->ephemerisSettings = boost::make_shared< TabulatedEphemerisSettings >(
-                bodyStateHistory, frameOrigin, frameOrientation ); 
+.. class:: DirectSpiceEphermerisSettings
 
-        creating an ephemeris interpolated (with 6th order Lagrange interpolation) from the data in bodyStateHistory, which contains the Cartesian state (w.r.t. SSB; axes along J2000) for a given number of times (map keys).
+   Ephemeris retrieved directly using :ref:`tudatFeaturesSpice`.
 
-        - **Kepler ephemeris:** Ephemeris modelled as being a perfect Kepler orbit. Settings stored in KeplerEphemerisSettings object.
+   .. code-block:: cpp
 
-        .. code-block:: cpp
+       std::string frameOrigin = "SSB";
+       std::string frameOrientation = "J2000";
+       bodySettings[ "Jupiter" ]->ephemerisSettings = boost::make_shared< DirectSpiceEphemerisSettings >( frameOrigin, frameOrientation ); 
 
-            Eigen::Vector6d initialStateInKeplerianElements = ...
-            double epochOfInitialState = ...
-            double centralBodyGravitationalParameter = ...
-            std::string frameOrigin = "SSB";
-            std::string frameOrientation = "J2000";
-            bodySettings[ "Jupiter" ]->ephemerisSettings = boost::make_shared< KeplerEphemerisSettings >(
-                initialStateInKeplerianElements, epochOfInitialState, centralBodyGravitationalParameter, frameOrigin, frameOrientation ); 
+   creating a barycentric (SSB) ephemeris with axes along J2000, with data directly from spice.
 
-        creating a Kepler orbit as ephemeris using the given kepler elements and associated initial time and gravitational parameter. See this page for more details on orbital elements in Tudat.
+.. class:: InterpolatedSpiceEphemerisSettings 
+      
+   Using this option the state of the body is retrieved at regular intervals, and used to create an interpolator, before setting up environment. This has the advantage of only requiring calls to Spice outside of the propagation inner loop, reducing computation time. However, it has the downside of begin applicable only during a limited time interval.
 
-        - **Constant ephemeris:** Ephemeris modelled as being independent of time. Settings stored in ConstantEphemerisSettings object.
+   .. code-block:: cpp
 
-        .. code-block:: cpp
+       double initialTime = 0.0;
+       double finalTime = 1.0E8;
+       double timeStep = 3600.0;
+       std::string frameOrigin = "SSB";
+       std::string frameOrientation = "J2000";
+       bodySettings[ "Jupiter" ]->ephemerisSettings = boost::make_shared< InterpolatedSpiceEphemerisSettings >(
+           initialTime, finalTime, timeStep, frameOrigin, frameOrientation ); 
 
-            Eigen::Vector6d constantCartesianState = ...
-            std::string frameOrigin = "SSB";
-            std::string frameOrientation = "J2000";
-            bodySettings[ "Jupiter" ]->ephemerisSettings = boost::make_shared< ConstantEphemerisSettings >(
-                constantCartesianState, frameOrigin, frameOrientation ); 
+   creating a barycentric (SSB) ephemeris with axes along J2000, with data retrieved from Spice at 3600 s intervals between t=0 and t=1.0E8, using a 6th order Lagrange interpolator. Settings for the interpolator (discussed here, can be added as a sixth argument if you wish to use a different interpolation method)
 
-    **Gravity field model:** defined in the gravityFieldSettings (of type shared_ptr< GravityFieldSettings >). Models currently available through the BodySettings architecture are:
+.. class:: TabulatedEphemerisSettings
 
-        - **Central (user-defined):** Point-mass gravity field model, with user-defined gravitational parameter. Settings stored in CentralGravityFieldSettings object.
+   Ephemeris created directly by interpolating user-specified states as a function of time.
 
-        .. code-block:: cpp
+   .. code-block:: cpp
 
-            double gravitationalParameter = ...
-            bodySettings[ "Earth" ]->gravityFieldSettings = boost::make_shared< CentralGravityFieldSettings >( gravitationalParameter );
+       std::map< double, Eigen::Vector6d > bodyStateHistory ...
+       std::string frameOrigin = "SSB";
+       std::string frameOrientation = "J2000";
+       bodySettings[ "Jupiter" ]->ephemerisSettings = boost::make_shared< TabulatedEphemerisSettings >(
+           bodyStateHistory, frameOrigin, frameOrientation ); 
 
-        - **Central (from Spice):** Point-mass gravity field model, with gravitational parameter from Spice. No derived class of GravityFieldSettings base class required, created by passing central_spice as argument to base class constructor.
+   creating an ephemeris interpolated (with 6th order Lagrange interpolation) from the data in bodyStateHistory, which contains the Cartesian state (w.r.t. SSB; axes along J2000) for a given number of times (map keys).
 
-        .. code-block:: cpp
+.. class::  KeplerEphemerisSettings
 
-            bodySettings[ "Earth" ]->gravityFieldSettings = boost::make_shared< GravityFieldSettings >( central_spice ); 
+   Ephemeris modelled as being a perfect Kepler orbit. 
 
-        - **Spherical harmonic:** Gravity field model as a spherical harmonic expansion. Settings stored in SphericalHarmonicsGravityFieldSettings object. 
+   .. code-block:: cpp
 
-        .. code-block:: cpp
+       Eigen::Vector6d initialStateInKeplerianElements = ...
+       double epochOfInitialState = ...
+       double centralBodyGravitationalParameter = ...
+       std::string frameOrigin = "SSB";
+       std::string frameOrientation = "J2000";
+       bodySettings[ "Jupiter" ]->ephemerisSettings = boost::make_shared< KeplerEphemerisSettings >(
+           initialStateInKeplerianElements, epochOfInitialState, centralBodyGravitationalParameter, frameOrigin, frameOrientation ); 
 
-            double gravitationalParameter = ...
-            double referenceRadius = ...
-            Eigen::MatrixXd cosineCoefficients =  // NOTE: entry (i,j) denotes coefficient at degree i and order j
-            Eigen::MatrixXd sineCoefficients =  // NOTE: entry (i,j) denotes coefficient at degree i and order j
-            std::string associatedReferenceFrame = ...
-            bodySettings[ "Earth" ]->gravityFieldSettings = boost::make_shared< SphericalHarmonicsGravityFieldSettings >( gravitationalParameter, referenceRadius, cosineCoefficients, sineCoefficients, associatedReferenceFrame ); 
+   creating a Kepler orbit as ephemeris using the given kepler elements and associated initial time and gravitational parameter. See :ref:`tudatFeaturesFrameStateTransformations` for more details on orbital elements in Tudat.
 
-        The associatedReferenceFrame reference frame must presently be the same frame as the target frame of the body's rotation model (see below). It represents the frame to which the spherical harmonic field is fixed.
+.. class:: ConstantEphemerisSettings
 
-    **Rotation model:** defined in the rotationModelSettings (of type shared_ptr< RotationModelSettings >). Models currently available through the BodySettings architecture are:
+   Ephemeris modelled as being independent of time.
 
-        - **Simple rotation model:** Rotation model with constant orientation of the rotation axis, and constant rotation rate about local z-axis. Settings stored in SimpleRotationModelSettings object.
+   .. code-block:: cpp
 
-        .. code-block:: cpp
+       Eigen::Vector6d constantCartesianState = ...
+       std::string frameOrigin = "SSB";
+       std::string frameOrientation = "J2000";
+       bodySettings[ "Jupiter" ]->ephemerisSettings = boost::make_shared< ConstantEphemerisSettings >(
+           constantCartesianState, frameOrigin, frameOrientation ); 
 
-            Eigen::Quaterniond initialOrientation = ...
-            double initialTime = ...
-            double rotationRate = ...
-            std::string originalFrame = "J2000";
-            std::string targetFrame = "IAU_Earth";
-            bodySettings[ "Earth" ]->rotationModelSettings = boost::make_shared< SimpleRotationModelSettings >( 
-                originalFrame, targetFrame , initialOrientation, initialTime, rotationRate ); 
+.. method:: Multi-arc ephemeris
 
-        where the rotation from originalFrame to targetFrame at initialTime is given by the quaternion initialOrientation. This is mapped to other times using the rotation rate rotationRate.
+   An ephemeris model (for translational state) that allows the body’s state to be defined by distinct ephemeris models over different arcs. Class is implemented to support multi-arc propagation/estimation. No derived class of :class:`EphemerisSettings` base class required, the created ephemeris can be made multi-arc by using the ``resetMakeMultiArcEphemeris`` function of the :class:`EphemerisSettings` class. The resulting :class:`Ephemeris` object will then be :class:`MultiArcEphemeris` (with the same ephemeris model for each arc when created, according to the settings in the :class:`EphemerisSettings` object)
 
-        - **Spice rotation model:** Rotation model directly obtained from Spice. No derived class of RotationModelSettings base class required, created by passing spice_rotation_model as argument to base class constructor.
+   .. code-block:: cpp
 
-        .. code-block:: cpp
+      bodySettings[ "Earth" ]->ephemerisSettings-> resetMakeMultiArcEphemeris( true );   
 
-            std::string originalFrame = "J2000";
-            std::string targetFrame = "IAU_Earth";
-            bodySettings[ "Earth" ]->rotationModelSettings = boost::make_shared< RotationModelSettings >( spice_rotation_model, originalFrame, targetFrame ); 
+.. class:: CustomEphemerisSettings
 
-    **Shape model:** defined in the shapeModelSettings (of type shared_ptr< BodyShapeSettings >). Models currently available through the BodySettings architecture are:
+   Allows user to provide arbitrary boost function as ephemeris model. 
 
-        - **Spherical shape model:** Model defining a body shape as a perfect sphere, with the sphere radius provided by the user. Settings stored in SphericalBodyShapeSettings object.
+   .. code-block:: cpp
 
-        .. code-block:: cpp
+      boost::shared_ptr< EphemerisSettings > customEphemerisSettings =
+                   boost::make_shared< CustomEphemerisSettings >(
+                      customBoostFunction, frameOrigin, frameOrientation );
 
-            double bodyRadius = 6378.0E3;
-            bodySettings[ "Earth" ]->shapeModelSettings = boost::make_shared< SphericalBodyShapeSettings >( bodyRadius ); 
 
-        - **Spherical shape model from spice:** Model defining a body shape as a perfect sphere, with the sphere radius retrieved from Spice. No derived class of BodyShapeSettings base class required, created by passing spherical_spice as argument to base class constructor.
+Gravity field model
+****************
 
-        .. code-block:: cpp
+.. class:: GravityFieldSettings
 
-            double bodyRadius = 6378.0E3;
-            bodySettings[ "Earth" ]->shapeModelSettings = boost::make_shared< BodyShapeSettings >( spherical_spice ); 
+   Base class for the gravity field settings. Models currently available through the :class:`BodySettings` architecture can be called by the following:
 
-        - **Oblate spheroid shape model:** Model defining a body shape as a flattened sphere, with the equatorial radius and flattening provided by the user. Settings stored in OblateSphericalBodyShapeSettings object.
+.. class:: CentralGravityFieldSettings
 
-        .. code-block:: cpp
+   Point-mass gravity field model, with user-defined gravitational parameter. 
 
-            double bodyRadius = 6378.0E3;
-            double bodyFlattening = 1.0 / 300.0;
-            bodySettings[ "Earth" ]->shapeModelSettings = boost::make_shared< OblateSphericalBodyShapeSettings >( bodyRadius, bodyFlattening ); 
+   .. code-block:: cpp
 
-    **Radiation pressure model:** defined in the radiationPressureSettings (of type map< string, shared_ptr< RadiationPressureInterfaceSettings > >). A separate model can be used for different bodies emitting radiation (key valyes of radiationPressureSettings) Models currently available through the BodySettings architecture are:
+       double gravitationalParameter = ...
+       bodySettings[ "Earth" ]->gravityFieldSettings = boost::make_shared< CentralGravityFieldSettings >( gravitationalParameter );
 
-        - **Cannon-ball model:** Properties for a cannonball radiation pressure model, i.e. effective force colinear with vector from source to target. Settings stored in CannonBallRadiationPressureInterfaceSettings object.
+.. method:: Point-mass gravity field model from Spice
 
-        .. code-block:: cpp
+   Point-mass gravity field model, with gravitational parameter from Spice. No derived class of :class:`GravityFieldSettings` base class required, created by passing ``central_spice`` as argument to base class constructor.
 
-            std::string sourceBody = "Sun";
-            double area = 20.0;
-            const double radiationPressureCoefficient = 1.2;
-            const std::vector< std::string > occultingBodies;
-            occultingBodies.push_back( "Earth" );
-            bodySettings[ "TestVehicle" ]->radiationPressureSettings[ sourceBody ] = boost::make_shared< CannonBallRadiationPressureInterfaceSettings >(
-                sourceBody, area, radiationPressureCoefficient, occultingBodies ); 
+   .. code-block:: cpp
 
-        Creating cannonball radiation pressure settings for radiation due to the Sun, acting on the "TestVehicle" body, where the occultations due to the Earth are taken into account.
+       bodySettings[ "Earth" ]->gravityFieldSettings = boost::make_shared< GravityFieldSettings >( central_spice ); 
 
-        .. note:: Occultations by multiple bodies are not yet supported. Please contact the Tudat suppport team if you wish to use multiple occultations.
+.. class:: SphericalHarmonicsGravityFieldSettings
 
-    **Aerodynamic coefficients:** defined in the aerodynamicCoefficientSettings (of type shared_ptr< AerodynamicCoefficientSettings >). Models currently available through the BodySettings architecture are:
+   Gravity field model as a spherical harmonic expansion. 
 
-        - **Constant coefficients:** Settings for constant (not a function of any independent variables) aerodynamic coefficients. Settings stored in ConstantAerodynamicCoefficientSettings object.
+   .. code-block:: cpp
 
-        .. code-block:: cpp
+       double gravitationalParameter = ...
+       double referenceRadius = ...
+       Eigen::MatrixXd cosineCoefficients =  // NOTE: entry (i,j) denotes coefficient at degree i and order j
+       Eigen::MatrixXd sineCoefficients =  // NOTE: entry (i,j) denotes coefficient at degree i and order j
+       std::string associatedReferenceFrame = ...
+       bodySettings[ "Earth" ]->gravityFieldSettings = boost::make_shared< SphericalHarmonicsGravityFieldSettings >( gravitationalParameter, referenceRadius, cosineCoefficients, sineCoefficients, associatedReferenceFrame ); 
 
-            double referenceArea = 20.0;
-            Eigen::Vector3d constantCoefficients;
-            constantCoefficients( 0 ) = 1.5;
-            constantCoefficients( 2 ) = 0.3;
-            bodySettings[ "TestVehicle" ]->aerodynamicCoefficientSettings = boost::make_shared< ConstantAerodynamicCoefficientSettings >( 
-                referenceArea, constantCoefficients, true, true ); 
+   The associatedReferenceFrame reference frame must presently be the same frame as the target frame of the body's rotation model (see below). It represents the frame to which the spherical harmonic field is fixed.
 
-        For constant drag coefficient of 1.5 and lift coefficient of 0.3.
+Rotational model
+****************
 
-        - **Tabulated:** Settings for tabulated aerodynamic coefficients as a function of given independent variables. Settings stored in TabulatedAerodynamicCoefficientSettings object. These tables can be defined either manually or loaded from a file, as discussed in more detail here Coefficients can be defined as a function of angle of sideslip, angle of attack, Mach number or altitude. If you simulation requires any other dependencies for the coefficients, please open an issue on Github requesting feature.
+.. class:: RotationModelSettings
 
-        - **Local inclination methods:** Settings for aerodynamic coefficients computed internally using a shape model of the vehicle, valid for hypersonic Mach numbers. Currently, this type of aerodynamic coefficients can only be set manually in the :class:`Body` object directly.
+   Base class for the rotational model settings. Models currently available through the :class:`BodySettings` architecture are:
 
-    **Gravity field variations:** defined in the gravityFieldVariationSettings (of type vector< shared_ptr< GravityFieldVariationSettings > >). Any number of gravity field variations may be used (hence the use of a vector). NOTE: You can only use gravity field variations for bodies where you have defined a spherical harmonic gravity field (through the use of SphericalHarmonicsGravityFieldSettings). Models currently available through the BodySettings architecture are:
+.. class:: SimpleRotationModelSettings
 
-        - **First-order solid body tide:** Tidal variation of the gravity field using first-order tidal theory. Settings stored in BasicSolidBodyGravityFieldVariationSettings object.
+   Rotation model with constant orientation of the rotation axis, and constant rotation rate about local z-axis. 
 
-        - **Tabulated gravity field variations:** Variations in spherical harmonic coefficients tabulated as a function of time. Settings stored in TabulatedGravityFieldVariationSettings object.
+   .. code-block:: cpp
+
+       Eigen::Quaterniond initialOrientation = ...
+       double initialTime = ...
+       double rotationRate = ...
+       std::string originalFrame = "J2000";
+       std::string targetFrame = "IAU_Earth";
+       bodySettings[ "Earth" ]->rotationModelSettings = boost::make_shared< SimpleRotationModelSettings >( 
+           originalFrame, targetFrame , initialOrientation, initialTime, rotationRate ); 
+
+   where the rotation from originalFrame to targetFrame at initialTime is given by the quaternion initialOrientation. This is mapped to other times using the rotation rate rotationRate.
+
+.. method:: Spice Rotation model
+
+   Rotation model directly obtained from Spice. No derived class of :class:`RotationModelSettings` base class required, created by passing ``spice_rotation_model`` as argument to base class constructor.
+
+   .. code-block:: cpp
+
+       std::string originalFrame = "J2000";
+       std::string targetFrame = "IAU_Earth";
+       bodySettings[ "Earth" ]->rotationModelSettings = boost::make_shared< RotationModelSettings >( spice_rotation_model, originalFrame, targetFrame ); 
+
+.. method:: Tabulated RotationalEphermeis model
+
+   Rotation model obtained from an interpolator, with dependent variable a ``Eigen::VectorXd`` of size 7. Currently the settings interface is not yet implemented but the functionality is implemented in :class:`TabulatedRotationalEphemeris`. The tabulated rotational ephemeris can be implemented as follows:
+
+   .. code-block:: cpp
+
+      // Create tabulated rotational model
+      boost::shared_ptr< TabulatedRotationalEphemeris< double, double > > tabulatedEphemeris =
+              boost::make_shared< TabulatedRotationalEphemeris<  double, double > >( rotationInterpolator );
+
+.. method:: Constant Rotation Model
+
+   Rotation model with a constant value for the rotation. Currently the settings interface is not yet implemented. 
+
+Torque model
+************
+
+.. class:: TorqueSettings
+
+   Base class for the torque settings used for rotational dynamics as set in :class:`RotationalStatePropagatorSettings`. Type of torque is selected by passing the correct parameter to the constructor. Currently two types of torques are implemented: ``second_order_gravitational_torque`` (interaction of point-mass of body A with J\ :sub:`2` of body B) and ``aerodynamic_torque`` (settings for coefficients defined same as for aerodynamic acceleration).
+
+   .. code-block:: cpp
+
+    TorqueSettings( torqueType );
+
+
+Body shape model
+****************
+
+.. class:: BodyShapeSettings
+
+   Base class for the body shape settings. Models currently available through the :class:`BodySettings` architecture are:
+
+.. class:: SphericalBodyShapeSettings
+
+   Model defining a body shape as a perfect sphere, with the sphere radius provided by the user. 
+
+   .. code-block:: cpp
+
+       double bodyRadius = 6378.0E3;
+       bodySettings[ "Earth" ]->shapeModelSettings = boost::make_shared< SphericalBodyShapeSettings >( bodyRadius ); 
+
+.. method:: Perfect sphere
+
+   Model defining a body shape as a perfect sphere, with the sphere radius retrieved from Spice. No derived class of :class:`BodyShapeSettings` base class required, created by passing ``spherical_spice`` as argument to base class constructor.
+
+   .. code-block:: cpp
+
+       double bodyRadius = 6378.0E3;
+       bodySettings[ "Earth" ]->shapeModelSettings = boost::make_shared< BodyShapeSettings >( spherical_spice ); 
+
+.. class:: OblateSphericalBodyShapeSettings  
+
+   Model defining a body shape as a flattened sphere, with the equatorial radius and flattening provided by the user. 
+
+   .. code-block:: cpp
+
+       double bodyRadius = 6378.0E3;
+       double bodyFlattening = 1.0 / 300.0;
+       bodySettings[ "Earth" ]->shapeModelSettings = boost::make_shared< OblateSphericalBodyShapeSettings >( bodyRadius, bodyFlattening ); 
+
+Radiation pressure interface
+****************************
+
+.. class:: RadiationPressureInterfaceSettings
+
+   Base class for the radiation pressure interface settings. A separate model can be used for different bodies emitting radiation (key values of radiationPressureSettings) Models currently available through the :class:`BodySettings` architecture are:
+
+.. class:: CannonBallRadiationPressureInterfaceSettings
+
+   Properties for a cannonball radiation pressure model, i.e. effective force colinear with vector from source to target.
+
+   .. code-block:: cpp
+
+       std::string sourceBody = "Sun";
+       double area = 20.0;
+       const double radiationPressureCoefficient = 1.2;
+       const std::vector< std::string > occultingBodies;
+       occultingBodies.push_back( "Earth" );
+       bodySettings[ "TestVehicle" ]->radiationPressureSettings[ sourceBody ] = boost::make_shared< CannonBallRadiationPressureInterfaceSettings >(
+           sourceBody, area, radiationPressureCoefficient, occultingBodies ); 
+
+   Creating cannonball radiation pressure settings for radiation due to the Sun, acting on the "TestVehicle" body, where the occultations due to the Earth are taken into account.
+
+   .. note:: Occultations by multiple bodies are not yet supported. Please contact the Tudat suppport team if you wish to use multiple occultations.
+
+   .. _aerodynamicCoefficientOptions:
+
+
+Aerodynamic coefficient interface
+*********************************
+
+.. class:: AerodynamicCoefficientSettings
+
+   Base class for the aerodynamic coefficient settings. Models currently available through the :class:`BodySettings` architecture are:
+         
+.. class:: ConstantAerodynamicCoefficientSettings
+
+   Settings for constant (not a function of any independent variables) aerodynamic coefficients. 
+
+   .. code-block:: cpp
+
+       double referenceArea = 20.0;
+       Eigen::Vector3d constantCoefficients;
+       constantCoefficients( 0 ) = 1.5;
+       constantCoefficients( 2 ) = 0.3;
+       bodySettings[ "TestVehicle" ]->aerodynamicCoefficientSettings = boost::make_shared< ConstantAerodynamicCoefficientSettings >( 
+           referenceArea, constantCoefficients, true, true ); 
+
+   For constant drag coefficient of 1.5 and lift coefficient of 0.3.
+
+.. class:: TabulatedAerodynamicCoefficientSettings
+
+   Settings for tabulated aerodynamic coefficients as a function of given independent variables. These tables can be defined either manually or loaded from a file, as discussed in more detail :ref:`here <tudatFeaturesAerodynamicGuidanceReadingAerodynamicCoefficients>`. Coefficients can be defined as a function of angle of sideslip, angle of attack, Mach number or altitude. If you simulation requires any other dependencies for the coefficients, please open an issue on Github requesting feature.
+
+.. method:: Local Inclination methods
+
+   Settings for aerodynamic coefficients computed internally using a shape model of the vehicle, valid for hypersonic Mach numbers. Currently, this type of aerodynamic coefficients can only be set manually in the :class:`Body` object directly.
+
+Time-variations of the gravity field
+************************************
+
+.. class:: GravityFieldVariationSettings
+
+   Base class for the gravity field variation settings. Any number of gravity field variations may be used (hence the use of a vector). NOTE: You can only use gravity field variations for bodies where you have defined a spherical harmonic gravity field (through the use of :class:`SphericalHarmonicsGravityFieldSettings`). Models currently available through the :class:`BodySettings` architecture are:
+
+.. class:: BasicSolidBodyGravityFieldVariationSettings
+
+   Tidal variation of the gravity field using first-order tidal theory. 
+
+.. class:: TabulatedGravityFieldVariationSettings
+
+   Variations in spherical harmonic coefficients tabulated as a function of time. 
 
 The Environment During Propagation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -347,7 +495,7 @@ Each :class:`Body` object and its constituent members is updated to the curren
 
 The Environment Valid Time-Range
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Most of the environment models are valid for any time, but there is a key exception. In particular, the default settings do not directly use the Spice ephemerides, but retrieve the state for each body from Spice, and then create a :class:`TabulatedEphemeris` (which is only valid in the given time range), as opposed to a :class:`SpiceEphemeris`, which is valid for the entire time interval that the Spice kernels contain data. This approach is taken for computational reasons: retrieving a state from Spice is very time-consuming, much more so than retrieving it from a 6th- or 8th-order Lagrange interpolator that is used here for the tabulated ephemeris. An additional consequence of this is that the start and end time of the environment must be slightly (3 times the integration time step) larger than that which is used for the actual propagation, as a Lagrange interpolator can be unreliable at the edges of its domain. It is also possible to use the :class:`SpiceEphemeris` directly, at the expense of longer runtimes, by creating the ``bodySettings`` amd ``bodyMap`` as:
+Most of the environment models are valid for any time, but there is a key exception. In particular, the default settings do not directly use the Spice ephemerides, but retrieve the state for each body from Spice, and then create a :class:`TabulatedEphemeris` (which is only valid in the given time range, of which settings are explained in :class:`TabulatedEphemerisSettings`), as opposed to a :class:`SpiceEphemeris` (as discussed in :class:`DirectSpiceEphermerisSettings`), which is valid for the entire time interval that the Spice kernels contain data. This approach is taken for computational reasons: retrieving a state from Spice is very time-consuming, much more so than retrieving it from a 6th- or 8th-order Lagrange interpolator that is used here for the tabulated ephemeris. An additional consequence of this is that the start and end time of the environment must be slightly (3 times the integration time step) larger than that which is used for the actual propagation, as a Lagrange interpolator can be unreliable at the edges of its domain. It is also possible to use the :class:`SpiceEphemeris` directly, at the expense of longer runtimes, by creating the ``bodySettings`` and ``bodyMap`` as:
 
 .. code-block:: cpp
 

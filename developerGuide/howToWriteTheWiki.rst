@@ -10,7 +10,7 @@ The backbone of this wiki is reStructuredText, which is simply plain text with a
 
 The "compiler" used is Sphinx (http://www.sphinx-doc.org/en/stable/), a documentation generator widely used by the Python community but also useful for other software projects. Sphinx allows the user separate style work from documentation work, in a similar way that LaTeX documentation works. This wiki uses a style provided by Read the Docs (https://readthedocs.org/), again widely used by a number of software projects due to its beauty, flexibility and cross-compatibility with a number of vieweing devices.
 
-Ultimately, the produced :literal:`.html` files can be then hosted online and viewed under a web browser. This wiki is hosted under the Github Pages framework, which allows easy hosting of the :literal:`.html` files, an integrated backup solution and collaboration with git version control.
+Ultimately, the produced :literal:`.html` files can be hosted online and viewed under a web browser. This wiki is hosted under the Github Pages framework, which allows easy hosting of the :literal:`.html` files, an integrated backup solution and collaboration with git version control.
 
 A top-level view of the documentation framework can be seen in the following figure:
 
@@ -84,29 +84,8 @@ The documentation using reStructuredText and Sphinx requires relatively few tool
 
    Contents of the :literal:`Makefile`:
 
-   .. code-block:: makefile
-
-      # Minimal makefile for Sphinx documentation
-      #
-
-      # You can set these variables from the command line.
-      SPHINXOPTS    =
-      SPHINXBUILD   = python -msphinx
-      SPHINXPROJ    = TUDelftAstrodynamicsToolbox
-      SOURCEDIR     = source
-      BUILDDIR      = build
-
-      # Put it first so that "make" without argument is like "make help".
-      help:
-	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-
-      .PHONY: help Makefile
-
-      # Catch-all target: route all unknown targets to Sphinx using the new
-      # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
-      %: Makefile
-	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-
+   .. literalinclude:: Makefile.txt
+      :language: makefile
 
 **6. Compiling the wiki**
    To compile the wiki, navigate using the terminal to the folder containing the :literal:`make.bat` file and launch the following command::

@@ -2,7 +2,7 @@
 
 Un-guided Capsule Entry
 =======================
-The example described on this page is that of Apollo on a reentry trajectory towards the surface of Earth. The code for this tutorial is located in your Tudat Bundle at::
+The example described on this page is that of Apollo on a re-entry trajectory towards the surface of Earth. The code for this tutorial is given here on Github, and is also located in your tudat bundle at::
 
    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/apolloCapsuleEntry.cpp
 
@@ -10,11 +10,11 @@ For this example, we have the following problem statement:
 
 *Given the position and velocity of the Apollo capsule at a certain point in time with respect to the Earth, what will its position and velocity be once it reaches an altitude of 25 km over the surface of Earth?*
 
-.. warning:: The example described in this page assumes that the user has read the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite`. This page only describes the differences with respect to such example, so please go back before proceding.
+.. warning:: The example described in this page assumes that the user has read the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite`. This page only describes the differences with respect to such example, so please go back before proceeding.
 
 Create the vehicle
 ~~~~~~~~~~~~~~~~~~
-First, the vehicle is created by placing an :literal:`"Apollo"` entry in the :literal:`bodyMap`, as shown below:
+First, the vehicle is created by placing an :literal:`"Apollo"` entry vehicle in the :literal:`bodyMap`, as shown below:
 
 .. code-block:: cpp
 
@@ -29,11 +29,7 @@ Once that is done, an :class:`AerodynamicCoefficientInterface` is linked to the 
     bodyMap[ "Apollo" ]->setAerodynamicCoefficientInterface(
                 unit_tests::getApolloCoefficientInterface( ) );
 
-Note that in this case a pre-made interface that is part of the following Unit Tests is used::
-
-    /tudatBundle/tudat/Tudat/Astrodynamics/Aerodynamics/UnitTests/testApolloCapsuleCoefficients.h
-
-In this case, the :literal:`getApolloCoefficientInterface( )` function returns a :class:`HypersonicLocalInclinationAnalysis` object, which is a derived-class from :class:`AerodynamicCoefficientInterface`. Such object computes the aerodynamic coefficients during propagation by means of a local-inclination method. Finally, the mass of the Apollo capsule is set and the body creation is finalized:
+In this example a pre-made interface is used to define the aerodynamic coefficients. The :literal:`getApolloCoefficientInterface( )` function returns a :class:`HypersonicLocalInclinationAnalysis` object, which is a derived-class from :class:`AerodynamicCoefficientInterface`. It computes the aerodynamic coefficients during propagation by means of a local-inclination method. Finally, the mass of the Apollo capsule is set and the body creation is finalized:
 
 .. code-block:: cpp
 
@@ -46,7 +42,7 @@ In this case, the :literal:`getApolloCoefficientInterface( )` function returns a
 
 Set up the acceleration models
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-A major difference with respect to the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` is the use of a spherical-harmonic gravity model and the presence of an aerodynamic force on the vehicle. Such acceleration models are added to the :literal:`accelerationMap` as follows:
+A major difference with respect to the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` is the use of a spherical-harmonic gravity model and the presence of an aerodynamic force on the vehicle. The spherical-harmonic gravity model is selected by the derived-class :class:`SphericalHarmonicAccelerationSettings` with degree and order as input parameters. Both acceleration models are added to the :literal:`accelerationMap` as follows:
 
 .. code-block:: cpp
 
@@ -56,18 +52,20 @@ A major difference with respect to the :ref:`walkthroughsUnperturbedEarthOrbitin
     accelerationsOfApollo[ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( aerodynamic ) );
     accelerationMap[  "Apollo" ] = accelerationsOfApollo;
 
-A crucial step in reentry modelling is the definition of a :class:`AerodynamicGuidance` model. Controlling the orientation of the vehicle during atmospheric flight plays an important role in the shape of the trajectory as well as on the magnitude of the aerodynamic and thermal loads. In this example, a simple fixed-angle aerodynamic guidance is used:
+A crucial step in re-entry modelling is the definition of a :class:`AerodynamicGuidance` model. Controlling the orientation of the vehicle during atmospheric flight plays an important role in the shape of the trajectory as well as on the magnitude of the aerodynamic and thermal loads. In this example, a simple fixed-angle aerodynamic guidance model is used. This is implemented using a :literal:`boost::lambda::constant` function (explained in detail :ref:`here <externalBoostExamplesFunction>`). In short this function always outputs the value of :literal:`constantAngleOfAttack` which in turn sets the orientation angles of the :literal:`"Apollo"` body:
 
 .. code-block:: cpp
 
     // Define constant 30 degree angle of attack
-    double constantAngleOfAttack = 30.0 * mathematical_constants::PI / 180.0;
+    double constantAngleOfAttack = unit_conversions::convertDegreesToRadians(30.0);
     bodyMap.at( "Apollo" )->getFlightConditions( )->getAerodynamicAngleCalculator( )->setOrientationAngleFunctions(
-                boost::lambda::constant( constantAngleOfAttack ) );
+                boost::lambda::constant( constantAngleOfAttack ) ); 
+
+.. tip:: To view the available options for aerodynamic guidance check out the :ref:`tudatFeaturesAerodynamicGuidance` section. 
 
 Set up the propagation settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In most reentry studies, it is convenient to define the entry conditions using a spherical state. The following entry state is used:
+In most re-entry studies, it is convenient to define the entry conditions using a spherical state. The following entry state is used:
 
 - Altitude: 120 km
 - Latitude: 0 deg
@@ -84,12 +82,15 @@ Such state must is defined and converted to Cartesian state variables as follows
     Eigen::Vector6d apolloSphericalEntryState;
     apolloSphericalEntryState( SphericalOrbitalStateElementIndices::radiusIndex ) =
             spice_interface::getAverageRadius( "Earth" ) + 120.0E3;
-    apolloSphericalEntryState( SphericalOrbitalStateElementIndices::latitudeIndex ) = 0.0;
-    apolloSphericalEntryState( SphericalOrbitalStateElementIndices::longitudeIndex ) = 1.2;
+    apolloSphericalEntryState( SphericalOrbitalStateElementIndices::latitudeIndex ) =
+            unit_conversions::convertDegreesToRadians( 0.0 );
+    apolloSphericalEntryState( SphericalOrbitalStateElementIndices::longitudeIndex ) = 
+            unit_conversions::convertDegreesToRadians( 68.75 );
     apolloSphericalEntryState( SphericalOrbitalStateElementIndices::speedIndex ) = 7.7E3;
     apolloSphericalEntryState( SphericalOrbitalStateElementIndices::flightPathIndex ) =
-            -0.9 * mathematical_constants::PI / 180.0;
-    apolloSphericalEntryState( SphericalOrbitalStateElementIndices::headingAngleIndex ) = 0.6;
+            unit_conversions::convertDegreesToRadians( -0.9 );
+    apolloSphericalEntryState( SphericalOrbitalStateElementIndices::headingAngleIndex ) = 
+            unit_conversions::convertDegreesToRadians( 34.37 );
 
     // Convert apollo state from spherical elements to Cartesian elements.
     Eigen::Vector6d systemInitialState = convertSphericalOrbitalToCartesianState(
@@ -99,7 +100,7 @@ Such state must is defined and converted to Cartesian state variables as follows
 
 Create a list of dependent variables to save
 ********************************************
-In this example, a number of dependent variables are saved to plot the trajectory of Apollo after reentry. The following dependent variables are saved:
+In this example, a number of dependent variables are saved to plot the trajectory of Apollo after re-entry. The following dependent variables are saved:
 
 - Mach number
 - Altitude
@@ -113,7 +114,7 @@ First, a :literal:`dependentVariablesList` needs to be created, which will list 
     // Define list of dependent variables to save.
     std::vector< boost::shared_ptr< SingleDependentVariableSaveSettings > > dependentVariablesList;
 
-Next, the list is populated with the desired dependent variables. Please go to :ref:`tudatFeaturesPropagatorSettingsDependentVariables` for further details on the various dependent variables that an be stored:
+Next, the list is populated with the desired dependent variables. Please go to :ref:`tudatFeaturesPropagatorSettingsDependentVariables` for further details on the various dependent variables that can be stored:
 
 .. code-block:: cpp
 
@@ -135,7 +136,7 @@ Next, the list is populated with the desired dependent variables. Please go to :
 
 Define the termination conditions
 *********************************
-Finally, the termination conditions are established. In this example, the reentry trajectory is propagated until Apollo's altitude drops below 25 km:
+Finally, the termination conditions are established. The termination settings are stored in the :class:`PropagationTerminationSettings` object. In this example, the re-entry trajectory is propagated until Apollo's altitude drops below 25 km. The boolean in the constructor of the derived-class :class:`PropagationDependentVariableTerminationSettings` indicates whether the simulation is terminated when :literal:`terminationDependentVariable` goes below the supplied value (true) or above (false):
 
 .. code-block:: cpp
 
@@ -147,5 +148,15 @@ Finally, the termination conditions are established. In this example, the reentr
             boost::make_shared< PropagationDependentVariableTerminationSettings >(
                 terminationDependentVariable, 25.0E3, true );
 
-Please go to :ref:`tudatFeaturesPropagatorSettingsTermination` for a detailed description of the available termination conditions.
+.. tip:: Please go to :ref:`tudatFeaturesPropagatorSettingsTermination` for a detailed description of the available termination conditions.
+
+Results
+~~~~~~~
+
+Below the history of some of the saved parameters is shown. One can see the capsule skipping several times before it's final descent into the atmosphere until reaching 25km altitude. 
+
+.. figure:: images/apolloResults.png
+
+.. tip:: Open the figure in a new tab for more detail.
+
 
