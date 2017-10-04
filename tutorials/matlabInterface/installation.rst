@@ -22,3 +22,13 @@ Installation
     tudat.test()
 
 If you want to move, rename or delete your tudatBundle/matlabInterface directory, remove it first from MATLAB's path by using :literal:`pathtool`.
+
+When building with Qt Creator and running the tests in MATLAB, if all of them fail, the source of the problem may have to do with MATLAB being unable to locate some of the dynamic libraries. Pick one of the tests and run in from Qt creator. It it passes, then in Qt creator go to Projects > Build > Build Environment and check the value of the variable PATH. If some of the paths indicated there refer to Qt, you will have to add them to the MATLAB Interface manually. For instance, in MATLAB's Command Window:
+
+.. code-block:: matlab
+
+  tudat.PATH('C:\Qt\Tools\mingw492_32\bin')
+  
+This setting is set permanently, so you won't need to run this command again in future MATLAB sessions. If you need to specify several paths, use :literal:`;` as separator (on UNIX systems, using :literal:`:` as separator is also valid).
+
+After performing this step, try running the tests again. If all of them fail, open an issue on GitHub. If only some of them fail, open an individual issue on GitHub for each. Depending on the severity and percentage of features affected by the problem, you may be able to run the examples in the :class:`tudatBundle/matlabInterface/Examples` folder.
