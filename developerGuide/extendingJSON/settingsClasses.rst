@@ -362,7 +362,7 @@ An example of a :literal:`to_json` function is provided below:
       {
           boost::shared_ptr< SimpleRotationModelSettings > simpleRotationModelSettings =
                   boost::dynamic_pointer_cast< SimpleRotationModelSettings >( rotationModelSettings );
-          enforceNonNullPointer( simpleRotationModelSettings );
+          assertNonNullPointer( simpleRotationModelSettings );
           jsonObject[ K::initialOrientation ] = simpleRotationModelSettings->getInitialOrientation( );
           jsonObject[ K::initialTime ] = simpleRotationModelSettings->getInitialTime( );
           jsonObject[ K::rotationRate ] = simpleRotationModelSettings->getRotationRate( );
@@ -383,7 +383,7 @@ An example of a :literal:`to_json` function is provided below:
 
 First, a check on the nullity of the shared pointer is done. If it is :literal:`NULL`, the null :class:`nlohmann::json` object won't be modified. Otherwise, the settings object will be used to define the keys of the :class:`nlohmann::json` object.
 
-The structure is similar to the one for :literal:`from_json` functions. The main difference is that the :literal:`[]` mutator operator is used to modify the :class:`nlohmann::json` object, instead of using the :literal:`getValue` function to access it. Additionally, in every switch case the original shared pointer has to be dynamically casted to the corresponding derived class. Then, the function :literal:`enforceNonNullPointer` is called. This throws an :literal:`NullPointerError` when the settings derived class and the value of its type property do not match.
+The structure is similar to the one for :literal:`from_json` functions. The main difference is that the :literal:`[]` mutator operator is used to modify the :class:`nlohmann::json` object, instead of using the :literal:`getValue` function to access it. Additionally, in every switch case the original shared pointer has to be dynamically casted to the corresponding derived class. Then, the function :literal:`assertNonNullPointer` is called. This throws an :literal:`NullPointerError` when the settings derived class and the value of its type property do not match.
 
 Some switch cases, such as :literal:`spice_rotation_model`, are empty because they do not contain additional information other than that of the original base class. Thus, the only needed statement is :literal:`return;`.
 

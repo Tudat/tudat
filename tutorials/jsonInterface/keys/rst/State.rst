@@ -3,7 +3,7 @@
 .. role:: jsonkey
 .. role:: arrow
 
-- :jsontype:`string` :jsonkey:`type` (mandatory). Possible values: :literal:`"cartesian"`, :literal:`"keplerian"`.
+- :jsontype:`string` :jsonkey:`type` (mandatory). Possible values: :literal:`"cartesian"`, :literal:`"keplerian"`, :literal:`"spherical"`.
 
 .. container:: toggle
 
@@ -20,3 +20,11 @@
 		:arrow:`Keplerian State`
 
 	.. include:: rst/KeplerianState.rst
+
+.. container:: toggle
+
+	.. container:: header
+
+		:arrow:`Spherical State`
+
+	.. include:: rst/SphericalState.rst

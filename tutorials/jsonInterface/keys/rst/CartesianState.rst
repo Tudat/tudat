@@ -3,9 +3,9 @@
 .. role:: jsonkey
 .. role:: arrow
 
-- :jsontype:`number` :jsonkey:`x` (mandatory).
-- :jsontype:`number` :jsonkey:`y` (mandatory).
-- :jsontype:`number` :jsonkey:`z` (mandatory).
-- :jsontype:`number` :jsonkey:`vx` (mandatory).
-- :jsontype:`number` :jsonkey:`vy` (mandatory).
-- :jsontype:`number` :jsonkey:`vz` (mandatory).
+- :jsontype:`number` :jsonkey:`x` (optional).
+- :jsontype:`number` :jsonkey:`y` (optional).
+- :jsontype:`number` :jsonkey:`z` (optional).
+- :jsontype:`number` :jsonkey:`vx` (optional).
+- :jsontype:`number` :jsonkey:`vy` (optional).
+- :jsontype:`number` :jsonkey:`vz` (optional).
