@@ -15,11 +15,11 @@ Installation
 
 3. Install MATLAB R2016b or later.
 
-4. After choosing a definitive location for your tudatBundle directory, run the script :class:`matlabInterface/setup.m` in MATLAB.
+4. After choosing a definitive location for your tudatBundle directory, run the script :class:`tudatBundle/matlabInterface/setup.m` in MATLAB.
 
-5. Run the script :class:`matlabInterface/build.m` in MATLAB to compile all the necessary targets for the MATLAB Interface to work.
+5. Run the script :class:`tudatBundle/matlabInterface/build.m` in MATLAB to compile all the necessary targets for the MATLAB Interface to work.
 
-6. If you get an error or prefer to compile the targets manually, you can use Qt Creator. After the project tudatBundle has been built, run the MATLAB Interface's unit tests by writing in MATLAB's Command Window:
+6. If you get an error or prefer to compile the targets manually, you can use Qt Creator (see how to :ref:`setupDevelopmentEnvironment`). After the project tudatBundle has been built, run the MATLAB Interface's unit tests by writing in MATLAB's Command Window:
 
   .. code-block:: matlab
     
