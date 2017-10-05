@@ -9,13 +9,17 @@ Installation
     
     git clone -b json --recursive https://github.com/aleixpinardell/tudatBundle
 
+  If you don't have git installed on your machine, download it from `here <https://git-scm.com/downloads>`_.
+
 2. Install `CMake <https://cmake.org>`_.
 
-3. After choosing a definitive location for your tudatBundle directory, run the script :class:`matlabInterface/setup.m` in MATLAB.
+3. Install MATLAB R2016b or later.
 
-4. Run the script :class:`matlabInterface/build.m` in MATLAB to compile all the necessary targets for the MATLAB Interface to work.
+4. After choosing a definitive location for your tudatBundle directory, run the script :class:`matlabInterface/setup.m` in MATLAB.
 
-5. If you get an error or prefer to compile the targets manually, you can use Qt Creator. After the project tudatBundle has been built, run the MATLAB Interface's unit tests by writing in MATLAB's Command Window:
+5. Run the script :class:`matlabInterface/build.m` in MATLAB to compile all the necessary targets for the MATLAB Interface to work.
+
+6. If you get an error or prefer to compile the targets manually, you can use Qt Creator. After the project tudatBundle has been built, run the MATLAB Interface's unit tests by writing in MATLAB's Command Window:
 
   .. code-block:: matlab
     
