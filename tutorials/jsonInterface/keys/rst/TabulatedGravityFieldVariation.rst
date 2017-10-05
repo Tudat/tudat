@@ -15,4 +15,4 @@
 
 			:arrow:`Interpolator`
 
-		.. include:: rst/Interpolator.rst
+		.. include:: Interpolator.rst

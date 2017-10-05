@@ -21,7 +21,7 @@ It is also possible to use the :literal:`json_interface` application from Qt Cre
    :hidden:
    :maxdepth: 2
 
-   keys/index
+   keys/rst/index
    modularFiles
    multicase
    customJsonApp

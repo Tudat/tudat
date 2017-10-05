@@ -11,7 +11,7 @@
 
 		:arrow:`Exponential Atmosphere`
 
-	.. include:: rst/ExponentialAtmosphere.rst
+	.. include:: ExponentialAtmosphere.rst
 
 .. container:: toggle
 
@@ -19,7 +19,7 @@
 
 		:arrow:`Tabulated Atmosphere`
 
-	.. include:: rst/TabulatedAtmosphere.rst
+	.. include:: TabulatedAtmosphere.rst
 
 .. container:: toggle
 
@@ -27,4 +27,4 @@
 
 		:arrow:`NRLMSISE00 Atmosphere`
 
-	.. include:: rst/NRLMSISE00Atmosphere.rst
+	.. include:: NRLMSISE00Atmosphere.rst

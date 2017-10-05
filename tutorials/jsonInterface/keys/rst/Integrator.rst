@@ -14,7 +14,7 @@
 
 		:arrow:`Euler Integrator`
 
-	.. include:: rst/EulerIntegrator.rst
+	.. include:: EulerIntegrator.rst
 
 .. container:: toggle
 
@@ -22,7 +22,7 @@
 
 		:arrow:`Runge-Kutta 4 Integrator`
 
-	.. include:: rst/RungeKutta4Integrator.rst
+	.. include:: RungeKutta4Integrator.rst
 
 .. container:: toggle
 
@@ -30,4 +30,4 @@
 
 		:arrow:`Runge-Kutta Variable Step-Size Integrator`
 
-	.. include:: rst/RungeKuttaVariableStepSizeIntegrator.rst
+	.. include:: RungeKuttaVariableStepSizeIntegrator.rst

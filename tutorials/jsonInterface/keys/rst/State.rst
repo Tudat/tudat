@@ -11,7 +11,7 @@
 
 		:arrow:`Cartesian State`
 
-	.. include:: rst/CartesianState.rst
+	.. include:: CartesianState.rst
 
 .. container:: toggle
 
@@ -19,7 +19,7 @@
 
 		:arrow:`Keplerian State`
 
-	.. include:: rst/KeplerianState.rst
+	.. include:: KeplerianState.rst
 
 .. container:: toggle
 
@@ -27,4 +27,4 @@
 
 		:arrow:`Spherical State`
 
-	.. include:: rst/SphericalState.rst
+	.. include:: SphericalState.rst

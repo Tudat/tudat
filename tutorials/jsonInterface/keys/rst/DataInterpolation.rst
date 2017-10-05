@@ -11,7 +11,7 @@
 
 			:arrow:`Data`
 
-		.. include:: rst/Data.rst
+		.. include:: Data.rst
 - :jsontype:`object` :jsonkey:`interpolator` (mandatory). Object containing the settings to create the interpolator to be used to interpolate the data.
 
 	.. container:: toggle
@@ -20,4 +20,4 @@
 
 			:arrow:`Interpolator`
 
-		.. include:: rst/Interpolator.rst
+		.. include:: Interpolator.rst

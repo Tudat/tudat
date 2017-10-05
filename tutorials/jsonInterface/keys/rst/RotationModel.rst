@@ -13,4 +13,4 @@
 
 		:arrow:`Simple Rotation Model`
 
-	.. include:: rst/SimpleRotationModel.rst
+	.. include:: SimpleRotationModel.rst

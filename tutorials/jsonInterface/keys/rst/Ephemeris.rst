@@ -13,7 +13,7 @@
 
 		:arrow:`Constant Ephemeris`
 
-	.. include:: rst/ConstantEphemeris.rst
+	.. include:: ConstantEphemeris.rst
 
 .. container:: toggle
 
@@ -21,7 +21,7 @@
 
 		:arrow:`Kepler Ephemeris`
 
-	.. include:: rst/KeplerEphemeris.rst
+	.. include:: KeplerEphemeris.rst
 
 .. container:: toggle
 
@@ -29,7 +29,7 @@
 
 		:arrow:`Approximate Planet Positions Ephemeris`
 
-	.. include:: rst/ApproximatePlanetPositionsEphemeris.rst
+	.. include:: ApproximatePlanetPositionsEphemeris.rst
 
 .. container:: toggle
 
@@ -37,7 +37,7 @@
 
 		:arrow:`Direct Spice Ephemeris`
 
-	.. include:: rst/DirectSpiceEphemeris.rst
+	.. include:: DirectSpiceEphemeris.rst
 
 .. container:: toggle
 
@@ -45,7 +45,7 @@
 
 		:arrow:`Interpolated Spice Ephemeris`
 
-	.. include:: rst/InterpolatedSpiceEphemeris.rst
+	.. include:: InterpolatedSpiceEphemeris.rst
 
 .. container:: toggle
 
@@ -53,4 +53,4 @@
 
 		:arrow:`Tabulated Ephemeris`
 
-	.. include:: rst/TabulatedEphemeris.rst
+	.. include:: TabulatedEphemeris.rst

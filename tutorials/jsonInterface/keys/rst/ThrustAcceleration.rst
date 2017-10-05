@@ -11,7 +11,7 @@
 
 			:arrow:`Thrust Direction`
 
-		.. include:: rst/ThrustDirection.rst
+		.. include:: ThrustDirection.rst
 - :jsontype:`object` :jsonkey:`magnitude` (mandatory). Settings for the magnitude of the thrust.
 
 	.. container:: toggle
@@ -20,4 +20,4 @@
 
 			:arrow:`Thrust Magnitude`
 
-		.. include:: rst/ThrustMagnitude.rst
+		.. include:: ThrustMagnitude.rst

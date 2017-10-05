@@ -15,7 +15,7 @@
 
 			:arrow:`Spice`
 
-		.. include:: rst/Spice.rst
+		.. include:: Spice.rst
 - :jsontype:`object` :jsonkey:`bodies` (mandatory). Used to define all the bodies to be considered in the propagation. The keys of the object are the body names.
 
 	.. container:: toggle
@@ -24,7 +24,7 @@
 
 			:arrow:`Body`
 
-		.. include:: rst/Body.rst
+		.. include:: Body.rst
 - :jsontype:`object[]` :jsonkey:`propagators` (mandatory). Used to define the propagator(s).
 
 	.. container:: toggle
@@ -33,7 +33,7 @@
 
 			:arrow:`Propagator`
 
-		.. include:: rst/Propagator.rst
+		.. include:: Propagator.rst
 - :jsontype:`object` :jsonkey:`integrator` (mandatory). Used to define the integrator.
 
 	.. container:: toggle
@@ -42,7 +42,7 @@
 
 			:arrow:`Integrator`
 
-		.. include:: rst/Integrator.rst
+		.. include:: Integrator.rst
 - :jsontype:`object` :jsonkey:`termination` (optional). Used to define termination condition(s). The time termination condition will be created automatically and added to the provided conditions (if any) if the key :jsonkey:`.finalEpoch` is specified. Either a single termination condition object or a multiple termination condition object can be provided.
 
 	.. container:: toggle
@@ -51,7 +51,7 @@
 
 			:arrow:`Single Termination Condition`
 
-		.. include:: rst/SingleTerminationCondition.rst
+		.. include:: SingleTerminationCondition.rst
 
 	.. container:: toggle
 
@@ -59,7 +59,7 @@
 
 			:arrow:`Multiple Termination Condition`
 
-		.. include:: rst/MultipleTerminationCondition.rst
+		.. include:: MultipleTerminationCondition.rst
 - :jsontype:`object[]` :jsonkey:`export` (optional). Used to define the export settings. Each element represents an output file to which results will be saved.
 
 	.. container:: toggle
@@ -68,7 +68,7 @@
 
 			:arrow:`Export`
 
-		.. include:: rst/Export.rst
+		.. include:: Export.rst
 - :jsontype:`object` :jsonkey:`options` (optional). Used to configure options for the application.
 
 	.. container:: toggle
@@ -77,4 +77,4 @@
 
 			:arrow:`Options`
 
-		.. include:: rst/Options.rst
+		.. include:: Options.rst

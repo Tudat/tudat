@@ -11,4 +11,4 @@
 
 		:arrow:`From Thrust Mass Rate Model`
 
-	.. include:: rst/FromThrustMassRateModel.rst
+	.. include:: FromThrustMassRateModel.rst

@@ -13,4 +13,4 @@
 
 			:arrow:`Acceleration`
 
-		.. include:: rst/Acceleration.rst
+		.. include:: Acceleration.rst
