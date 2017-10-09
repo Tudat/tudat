@@ -23,7 +23,9 @@ Qt debugger
 ***********
 This build in debugger is available on all platforms. It can be started from within Qt by selecting ``Debug -> Start Debugging -> Start Debugging``. 
 
-In the debugger console the output of the debugger can be seen. This often gives information on where your problem arises. 
+In the debugger console the output of the debugger can be seen. This often gives information on where your problem arises. The following is an example of the output of the Qt built in debugger for an error occuring in the FlightConditions update function. 
+
+.. figure:: images/QtDebugger.png
 
 gdb debugger
 ************
@@ -47,6 +49,10 @@ Followed by::
 This will run the application and stops when it stumbles upon debugging symbols. If your application crashes the error can be traced back at this point by using::
 
    (gdb) backtrace
+
+When applied to the same example as for the Qt build-in debugger, gdb provide the following output in the terminal:
+
+.. literalinclude:: DebuggingOutput.txt
 
 
 Searching Tudat project files

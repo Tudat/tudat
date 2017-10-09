@@ -1,0 +1,52 @@
+dominic@dominic-Precision-7510:~/Software/tudatBundle/tudatExampleApplications/satellitePropagatorExamples/bin/applications$ gdb ./application_ApolloEntry 
+GNU gdb (Ubuntu 7.11.1-0ubuntu1~16.5) 7.11.1
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ./application_ApolloEntry...(no debugging symbols found)...done.
+(gdb) run
+Starting program: /home/dominic/Software/tudatBundle/tudatExampleApplications/satellitePropagatorExamples/bin/applications/application_ApolloEntry 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+Dependent variables being saved, output vectors contain: 
+Vector entry, Vector contents
+0, Mach number of Apollo
+1, Altitude of Apollo w.r.t. Earth
+2, Single acceleration norm of type aerodynamic , acting on Apollo, exerted by Earth
+3, Aerodynamic force coefficients of Apollo
+terminate called after throwing an instance of 'std::out_of_range'
+  what():  vector::_M_range_check: __n (which is 1) >= this->size() (which is 0)
+
+Program received signal SIGABRT, Aborted.
+0x00007ffff6f02428 in __GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:54
+54	../sysdeps/unix/sysv/linux/raise.c: No such file or directory.
+(gdb) backtrace
+#0  0x00007ffff6f02428 in __GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:54
+#1  0x00007ffff6f0402a in __GI_abort () at abort.c:89
+#2  0x00007ffff784584d in __gnu_cxx::__verbose_terminate_handler() () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#3  0x00007ffff78436b6 in ?? () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#4  0x00007ffff7843701 in std::terminate() () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#5  0x00007ffff7843919 in __cxa_throw () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#6  0x00007ffff786c3f7 in std::__throw_out_of_range_fmt(char const*, ...) () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#7  0x000000000076e584 in tudat::aerodynamics::FlightConditions::updateConditions(double) ()
+#8  0x00000000005b11a0 in tudat::propagators::EnvironmentUpdater<double, double>::updateEnvironment(double, std::unordered_map<tudat::propagators::IntegratedStateType, Eigen::Matrix<double, -1, 1, 0, -1, 1>, std::hash<tudat::propagators::IntegratedStateType>, std::equal_to<tudat::propagators::IntegratedStateType>, std::allocator<std::pair<tudat::propagators::IntegratedStateType const, Eigen::Matrix<double, -1, 1, 0, -1, 1> > > > const&, std::vector<tudat::propagators::IntegratedStateType, std::allocator<tudat::propagators::IntegratedStateType> > const&) ()
+#9  0x0000000000633c61 in boost::function3<void, double, std::unordered_map<tudat::propagators::IntegratedStateType, Eigen::Matrix<double, -1, 1, 0, -1, 1>, std::hash<tudat::propagators::IntegratedStateType>, std::equal_to<tudat::propagators::IntegratedStateType>, std::allocator<std::pair<tudat::propagators::IntegratedStateType const, Eigen::Matrix<double, -1, 1, 0, -1, 1> > > > const&, std::vector<tudat::propagators::IntegratedStateType, std::allocator<tudat::propagators::IntegratedStateType> > >::operator()(double, std::unordered_map<tudat::propagators::IntegratedStateType, Eigen::Matrix<double, -1, 1, 0, -1, 1>, std::hash<tudat::propagators::IntegratedStateType>, std::equal_to<tudat::propagators::IntegratedStateType>, std::allocator<std::pair<tudat::propagators::IntegratedStateType const, Eigen::Matrix<double, -1, 1, 0, -1, 1> > > > const&, std::vector<tudat::propagators::IntegratedStateType, std::allocator<tudat::propagators::IntegratedStateType> >) const ()
+#10 0x00000000005b369c in tudat::propagators::DynamicsStateDerivativeModel<double, double>::computeStateDerivative(double, Eigen::Matrix<double, -1, -1, 0, -1, -1> const&) ()
+#11 0x0000000000633523 in boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<Eigen::Matrix<double, -1, -1, 0, -1, -1>, boost::_mfi::mf2<Eigen::Matrix<double, -1, -1, 0, -1, -1>, tudat::propagators::DynamicsStateDerivativeModel<double, double>, double, Eigen::Matrix<double, -1, -1, 0, -1, -1> const&>, boost::_bi::list3<boost::_bi::value<boost::shared_ptr<tudat::propagators::DynamicsStateDerivativeModel<double, double> > >, boost::arg<1>, boost::arg<2> > >, Eigen::Matrix<double, -1, -1, 0, -1, -1>, double, Eigen::Matrix<double, -1, -1, 0, -1, -1> const&>::invoke(boost::detail::function::function_buffer&, double, Eigen::Matrix<double, -1, -1, 0, -1, -1> const&) ()
+#12 0x00000000006464d3 in boost::detail::function::function_obj_invoker2<boost::function<Eigen::Matrix<double, -1, -1, 0, -1, -1> (double, Eigen::Matrix<double, -1, -1, 0, -1, -1> const&)>, Eigen::Matrix<double, -1, 1, 0, -1, 1>, double, Eigen::Matrix<double, -1, 1, 0, -1, 1> const&>::invoke(boost::detail::function::function_buffer&, double, Eigen::Matrix<double, -1, 1, 0, -1, 1> const&) ()
+#13 0x000000000063b089 in tudat::propagators::PropagationTerminationReason tudat::propagators::integrateEquationsFromIntegrator<Eigen::Matrix<double, -1, 1, 0, -1, 1>, double, double>(boost::shared_ptr<tudat::numerical_integrators::NumericalIntegrator<double, Eigen::Matrix<double, -1, 1, 0, -1, 1>, Eigen::Matrix<double, -1, 1, 0, -1, 1>, double> >, double, boost::function<bool (double)>, std::map<double, Eigen::Matrix<double, -1, 1, 0, -1, 1>, std::less<double>, std::allocator<std::pair<double const, Eigen::Matrix<double, -1, 1, 0, -1, 1> > > >&, std::map<double, Eigen::Matrix<double, -1, 1, 0, -1, 1>, std::less<double>, std::allocator<std::pair<double const, Eigen::Matrix<double, -1, 1, 0, -1, 1> > > >&, boost::function<Eigen::Matrix<double, -1, 1, 0, -1, 1> ()>, int, double) ()
+#14 0x0000000000639154 in tudat::propagators::EquationIntegrationInterface<Eigen::Matrix<double, -1, 1, 0, -1, 1>, double>::integrateEquations(boost::function<Eigen::Matrix<double, -1, 1, 0, -1, 1> (double, Eigen::Matrix<double, -1, 1, 0, -1, 1> const&)>, std::map<double, Eigen::Matrix<double, -1, 1, 0, -1, 1>, std::less<double>, std::allocator<std::pair<double const, Eigen::Matrix<double, -1, 1, 0, -1, 1> > > >&, Eigen::Matrix<double, -1, 1, 0, -1, 1>, boost::shared_ptr<tudat::numerical_integrators::IntegratorSettings<double> >, boost::function<bool (double)>, std::map<double, Eigen::Matrix<double, -1, 1, 0, -1, 1>, std::less<double>, std::allocator<std::pair<double const, Eigen::Matrix<double, -1, 1, 0, -1, 1> > > >&, boost::function<Eigen::Matrix<double, -1, 1, 0, -1, 1> ()>, double) ()
+#15 0x00000000005b41fd in tudat::propagators::SingleArcDynamicsSimulator<double, double>::integrateEquationsOfMotion(Eigen::Matrix<double, -1, -1, 0, -1, -1> const&) ()
+#16 0x000000000059e667 in tudat::propagators::SingleArcDynamicsSimulator<double, double>::SingleArcDynamicsSimulator(std::unordered_map<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, boost::shared_ptr<tudat::simulation_setup::Body>, std::hash<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::equal_to<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, boost::shared_ptr<tudat::simulation_setup::Body> > > > const&, boost::shared_ptr<tudat::numerical_integrators::IntegratorSettings<double> >, boost::shared_ptr<tudat::propagators::PropagatorSettings<double> >, bool, bool, bool) ()
+#17 0x0000000000595a83 in main ()
+
