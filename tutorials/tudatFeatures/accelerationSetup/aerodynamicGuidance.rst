@@ -231,7 +231,7 @@ In computing your aerodynamic guidance commands, you will likely need to use a n
 
 Control surface deflections
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-For a realistic vehicle entry/ascent trajectory propagation, it will often be necessary to include control surface deflections in the numerical propagation see this page here BROKEN HERE LINK to learn how to load/define the aerodynamic influence of control surfaces).
+For a realistic vehicle entry/ascent trajectory propagation, it will often be necessary to include control surface deflections in the numerical propagation. How to load/define the aerodynamic influence of control surfaces is discussed at the end of this page.
 
 To use the control surface increments, the control surface deflections have to be set, either to a constant value before stating the propagation, or every time step by a user-defined guidance system. In each case, the control surface deflections are stored in a :class:`VehicleSystems` object, which is a member of a :class:`Body` object. The vehicle systems represent a collection of all physical (hardware) properties of a vehicle including the control surface deflections and properties. Presently, the only quantities that are stored for the control surfaces are the current deflection.
 
