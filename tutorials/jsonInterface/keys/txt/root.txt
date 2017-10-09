@@ -1,0 +1,30 @@
+number | initialEpoch | Used for the initial time of the integrator (if not provided inside the integrator object) and for interpolation of Spice ephemeris (if Spice enabled and set to preload ephemeris). | o
+
+number | finalEpoch | Used for interpolation of Spice ephemeris (if Spice enabled and set to preload ephemeris) and to create the time-termination condition. If smaller than :jsonkey:`initialEpoch`, the dynamics will be propagated backwards in time. | o
+
+string | globalFrameOrigin | Used to set the global frame origin for the propagation. | o | SSB
+
+string | globalFrameOrientation | Used to set the global frame orientation for the propagation. Updates the frame orientation of ephemeris and rotation model settings if not specified. | o | ECLIPJ2000
+
+object | spice | Used to provide Spice settings. | o
++ Spice
+
+object | bodies | Used to define all the bodies to be considered in the propagation. The keys of the object are the body names. | m
++ Body
+
+object[] | propagators | Used to define the propagator(s). | m
++ Propagator
+
+object | integrator | Used to define the integrator. | m
++ Integrator
+
+object | termination | Used to define termination condition(s). The time termination condition will be created automatically and added to the provided conditions (if any) if the key :jsonkey:`.finalEpoch` is specified. Either a single termination condition object or a multiple termination condition object can be provided. | o
++ Single Termination Condition
++ Multiple Termination Condition
+
+object[] | export | Used to define the export settings. Each element represents an output file to which results will be saved. | o
++ Export
+
+object | options | Used to configure options for the application. | o
++ Options
+

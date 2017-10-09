@@ -1,0 +1,130 @@
+{
+  "bodies": {
+    "Asterix": null,
+    "Earth": {
+      "atmosphere": {
+        "file": "${ATMOSPHERE_TABLES_PATH}/USSA1976Until100kmPer100mUntil1000kmPer1000m.dat",
+        "type": "tabulated"
+      },
+      "ephemeris": {
+        "constantState": [
+          [
+            0.0
+          ],
+          [
+            0.0
+          ],
+          [
+            0.0
+          ],
+          [
+            0.0
+          ],
+          [
+            0.0
+          ],
+          [
+            0.0
+          ]
+        ],
+        "frameOrientation": "J2000",
+        "frameOrigin": "SSB",
+        "type": "constant"
+      },
+      "gravityField": {
+        "model": "egm96",
+        "type": "sphericalHarmonic"
+      },
+      "rotationModel": {
+        "originalFrame": "J2000",
+        "targetFrame": "IAU_Earth",
+        "type": "spice"
+      },
+      "shapeModel": {
+        "radius": 6371008.36666667,
+        "type": "spherical"
+      }
+    }
+  },
+  "export": [
+    {
+      "epochsInFirstColumn": true,
+      "file": "stateHistory.txt",
+      "numericalPrecision": 16,
+      "onlyFinalStep": false,
+      "onlyInitialStep": false,
+      "variables": [
+        {
+          "type": "state"
+        }
+      ]
+    }
+  ],
+  "globalFrameOrientation": "J2000",
+  "globalFrameOrigin": "SSB",
+  "integrator": {
+    "initialTime": 0.0,
+    "saveFrequency": 1,
+    "stepSize": 10.0,
+    "type": "rungeKutta4"
+  },
+  "options": {
+    "defaultValueUsedForMissingKey": "continueSilently",
+    "fullSettingsFile": "fullSettings.json",
+    "notifyOnPropagationStart": false,
+    "notifyOnPropagationTermination": false,
+    "tagOutputFilesIfPropagationFails": true,
+    "unusedKey": "printWarning"
+  },
+  "propagators": [
+    {
+      "accelerations": {
+        "Asterix": {
+          "Earth": [
+            {
+              "type": "pointMassGravity"
+            }
+          ]
+        }
+      },
+      "bodiesToPropagate": [
+        "Asterix"
+      ],
+      "centralBodies": [
+        "Earth"
+      ],
+      "initialStates": [
+        [
+          7037613.72352386
+        ],
+        [
+          3237952.92678759
+        ],
+        [
+          2150476.15106024
+        ],
+        [
+          -1465.37073667488
+        ],
+        [
+          -41.0666336979955
+        ],
+        [
+          6622.85625637087
+        ]
+      ],
+      "integratedStateType": "translational",
+      "type": "cowell"
+    }
+  ],
+  "spice": {
+    "preloadEphemeris": false,
+    "useStandardKernels": true
+  },
+  "termination": {
+    "upperLimit": 86400.0,
+    "variable": {
+      "type": "independent"
+    }
+  }
+}

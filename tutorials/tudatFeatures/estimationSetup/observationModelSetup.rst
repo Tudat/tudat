@@ -100,7 +100,7 @@ where no input on the type of observable is given (it is :literal:`one_way_diffe
 
    - :literal:`integrationTimeFunction`
 
-      :literal:`boost::function< double( const double ) >` that returns the integration time of the observable as a function of observation time (function input). In many cases, the integration time will be constant, and you may use a :literal:`boost::lambda`, so for a conmstant 60 s integration time:
+      :literal:`boost::function< double( const double ) >` that returns the integration time of the observable as a function of observation time (function input). In many cases, the integration time will be constant, and you may use a :literal:`boost::lambda`, so for a constant 60 s integration time:
       
      .. code-block:: cpp
 

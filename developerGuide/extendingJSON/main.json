@@ -1,0 +1,77 @@
+{
+  "initialEpoch": 0,
+  "finalEpoch": 3600,
+  "spice": {
+    "kernels": [
+      "${SPICE_KERNELS_PATH}/pck00009.tpc",
+      "${SPICE_KERNELS_PATH}/de-403-masses.tpc",
+      "${SPICE_KERNELS_PATH}/de421.bsp"
+    ]
+  },
+  "bodies": {
+    "Earth": {
+      "useDefaultSettings": true,
+      "ephemeris": {
+        "constantState": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "type": "constant"
+      }
+    },
+    "asterix": {
+      "initialState": {
+        "semiMajorAxis": 7.5E+6,
+        "eccentricity": 0.1,
+        "inclination": 1.4888,
+        "type": "keplerian"
+      }
+    }
+  },
+  "propagators": [
+    {
+      "centralBodies": "Earth",
+      "accelerations": {
+        "asterix": {
+          "Earth": {
+            "type": "pointMassGravity"
+          }
+        }
+      },
+      "integratedStateType": "translational",
+      "bodiesToPropagate": "asterix"
+    }
+  ],
+  "integrator": {
+    "type": "rungeKutta4",
+    "stepSize": 10
+  },
+  "export": [
+    {
+      "file": "@path(epochs.txt)",
+      "variables": [
+        {
+          "type": "independent"
+        }
+      ],
+      "epochsInFirstColumn": false
+    },
+    {
+      "file": "@path(states.txt)",
+      "variables": [
+        {
+          "type": "state"
+        }
+      ],
+      "epochsInFirstColumn": false
+    }
+  ],
+  "options": {
+    "defaultValueUsedForMissingKey": "continueSilently",
+    "unusedKey": "printWarning"
+  }
+}
