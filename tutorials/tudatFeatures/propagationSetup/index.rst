@@ -5,8 +5,85 @@ Simulator Set-Up
 
 One of the core elements of the Tudat libraries is its simulator framework. The goal of this page is discuss the implementation of such framework as well as the numerous options available. The top-level framework of the simulator is shown below:
 
-.. figure:: images/TudatSimulatorArchitecture.jpg   
-   :align: center
+
+.. graphviz::
+
+   digraph
+   {
+      # General diagram settings
+      rankdir = "LR";
+      splines = ortho;    
+      compound = true;  
+
+
+      # general node settings 
+      node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+
+
+      # specific node color settings
+      DynamicsSimulator [color = lightgreen];
+      NamedBodyMap [color = lightblue];
+
+      
+      # Hyperlinks (Sphinx auto referencing not working here, need to link to exact web adres)
+      NamedBodyMap [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#NamedBodyMap", target = "_top"];
+      DynamicsSimulator [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/simulatorCreation.html#DynamicsSimulator", target = "_top"];
+      IntegratorSettings [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/integratorSettings.html#IntegratorSettings", target = "_top"];
+      "RungeKuttaVariable\nStepSizeSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/integratorSettings.html#RungeKuttaVariableStepSizeSettings", target = "_top"];
+      TranslationalState [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/propagatorSettings.html#TranslationalStatePropagatorSettings", target = "_top"];
+      RotationalState [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/propagatorSettings.html#RotationalStatePropagatorSettings", target = "_top"];
+      Mass [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/propagatorSettings.html#MassPropagatorSettings", target = "_top"];
+      Custom [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/propagatorSettings.html#CustomPropagatorSettings", target = "_top"];
+      MultiType [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/propagatorSettings.html#MultiTypePropagatorSettings", target = "_top"];      
+      MultiArc [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/propagatorSettings.html#MultiArcPropagatorSettings", target = "_top"];      
+
+      subgraph clusterIntegratorSettings
+      {
+         # cluster settings
+         label = "IntegratorSettings";
+         fontsize = 9;
+         style = dashed;
+         rank = min;
+
+ 
+         # IntegratorSettings input
+         integratorType -> IntegratorSettings;
+         simulationStartEpoch -> IntegratorSettings;
+         "(initial) stepSize" -> IntegratorSettings;
+
+
+         # RungeKuttaVariableStepSizeSettings input
+         integratorType -> "RungeKuttaVariable\nStepSizeSettings";
+         simulationStartEpoch -> "RungeKuttaVariable\nStepSizeSettings";
+         "(initial) stepSize" -> "RungeKuttaVariable\nStepSizeSettings";
+         "min/max stepsize" -> "RungeKuttaVariable\nStepSizeSettings";
+      }
+
+
+      subgraph clusterPropagatorSettings
+      {
+         # cluster settings
+         label = "PropagatorSettings";
+         fontsize = 9;
+         style = dashed;
+         rank = min;
+         
+         TranslationalState -> RotationalState [style = invis];
+         Mass -> Custom [style = invis];
+         MultiType -> MultiArc [style = invis];
+ 
+      }
+
+
+      # DynamicsSimulator input
+      NamedBodyMap -> DynamicsSimulator;
+      IntegratorSettings -> DynamicsSimulator [ltail = clusterIntegratorSettings];
+      Custom -> DynamicsSimulator [ltail = clusterPropagatorSettings];      
+
+      {rank = same; NamedBodyMap, DynamicsSimulator}
+
+   }
+
 
 The top-element in such framework is the :class:`DynamicsSimulator`, which is in charge of propagating the equations of motion using the environment and acceleration models discussed in :ref:`tudatFeaturesEnvironmentIndex` and :ref:`tudatFeaturesAccelerationIndex`, respectively. The orbit propation is done according to the specified :class:`IntegratorSettings` and the :class:`PropagatorSettings`, which are discussed in detail in :ref:`tudatFeaturesIntegratorSettings` and :ref:`tudatFeaturesPropagatorSettings`.
 

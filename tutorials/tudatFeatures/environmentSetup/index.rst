@@ -13,15 +13,16 @@ On this page, we will give an overview of how the environment is represented in 
       # General diagram settings
       rankdir = "LR";
       splines = ortho;    
-      compound = true;   
+      compound = true;  
 
 
       # general node settings 
-      node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 8];
+      node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
 
 
       # specific node color settings
-      NamedBodyMap [color = lightblue];
+      NamedBodyMap [color = lightgreen];
+      BodySettings [color = lightblue];
 
 
       # Hyperlinks (Sphinx auto referencing not working here, need to link to exact web adres)
@@ -55,7 +56,7 @@ On this page, we will give an overview of how the environment is represented in 
       {
          # cluster settings
          label = "User-defined environment settings";
-         fontsize = 8;
+         fontsize = 9;
          style = dashed;
          rank = min;
 
