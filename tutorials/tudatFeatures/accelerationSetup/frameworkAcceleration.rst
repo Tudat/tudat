@@ -123,7 +123,7 @@ As stated above, the :literal:`createAccelerationModelsMap` function uses your e
 
 .. class:: MutualSphericalHarmonicAccelerationSettings
 
-   This model is typically only used for detailed propagation of planetary systems, and discussed in more detail here BROKEN HERE LINK. It is added to :class:`SelectedAccelerationMap` as follows, for example of acceleration exerted on "Io" by "Jupiter":
+   This model is typically only used for detailed propagation of planetary systems. It is added to :class:`SelectedAccelerationMap` as follows, for example of acceleration exerted on "Io" by "Jupiter":
 
    .. code-block:: cpp
 
