@@ -32,13 +32,18 @@ The documentation using reStructuredText and Sphinx requires relatively few tool
       sudo apt-get install python pip
       pip install sphinx sphinx-autobuild
 
-**3. Clone the** :literal:`source` **repository**
+**3. Install Graphviz**
+   The Graphviz software is used for creating the diagrams in the documentation, it is installed using::
+
+      sudo apt-get install graphviz
+
+**4. Clone the** :literal:`source` **repository**
    This repository contains the :literal:`.rst` source files that make up the wiki. These are stored under the :literal:`source` branch within the :literal:`tudat` repository of https://github.com/Tudat/tudat. Place the contents of this repository inside a :literal:`source` folder.
 
-**4. Clone the** :literal:`gh-pages` **repository**
+**5. Clone the** :literal:`gh-pages` **repository**
    This repository contains the :literal:`.html` files that build the wiki website. These are stored under the :literal:`gh-pages` branch within the :literal:`tudat` repository of https://github.com/Tudat/tudat. Place the contents of this repository inside a :literal:`build/html` folder, next to your :literal:`source` folder.
 
-**5. Create the** :literal:`make.bat` **and the** :literal:`Makefile` **files**
+**6. Create the** :literal:`make.bat` **and the** :literal:`Makefile` **files**
    These two files should be placed next to the folders. They allow to build the wiki from the terminal with few commands.
 
    Contents of the :literal:`make.bat`:
@@ -87,7 +92,7 @@ The documentation using reStructuredText and Sphinx requires relatively few tool
    .. literalinclude:: Makefile.txt
       :language: makefile
 
-**6. Compiling the wiki**
+**7. Compiling the wiki**
    To compile the wiki, navigate using the terminal to the folder containing the :literal:`make.bat` file and launch the following command::
 
       make html
