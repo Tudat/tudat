@@ -12,6 +12,7 @@ One of the core elements of the Tudat libraries is its simulator framework. The 
    {
       # General diagram settings
       rankdir = "LR";
+      ranksep = "1.0"
       splines = ortho;    
       compound = true;  
 
@@ -44,6 +45,8 @@ One of the core elements of the Tudat libraries is its simulator framework. The 
          fontsize = 9;
          style = dashed;
          rank = min;
+         href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/integratorSettings.html";
+         target = "_top";
 
  
          # IntegratorSettings input
@@ -67,6 +70,8 @@ One of the core elements of the Tudat libraries is its simulator framework. The 
          fontsize = 9;
          style = dashed;
          rank = min;
+         href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/propagatorSettings.html";
+         target = "_top";
          
          TranslationalState -> RotationalState [style = invis];
          Mass -> Custom [style = invis];
@@ -98,12 +103,16 @@ As shown in the figure above, there are various types of :class:`IntegratorSetti
 **Propagator Settings**
     - :class:`TranslationalStatePropagatorSettings`
         This derived class defines the settings to propagate the translational dynamics.
+    - :class:`RotationalStatePropagatorSettings`
+        This derived class defines the settings to propagate the rotational dynamics.
     - :class:`MassPropagationSettings`
         This derived class defines the settings to propagate the mass of a body.
     - :class:`CustomStatePropagationSettings`
         This derived class allows the propagation of user-defined dynamics.
     - :class:`MultiTypeProgationSettings`
         This derived class allows to propagate simultaneously the various propagator classes defined above.
+    - :class:`MultiArcProgationSettings`
+        This derived class allows to propagate the dynamics for multiple arcs.
 
 The reader is referred to the following sections to examine in detail how to create the dynamics simulator:
 
