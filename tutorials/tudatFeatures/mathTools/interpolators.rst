@@ -37,7 +37,7 @@ Creating interpolators of a single independent variable is most easily done in T
                 stateMap, interpolatorSettings );
 
     // Interpolate
-    Eigen::Vector6d interpolatedResult = interpolator.interpolate(0.0);
+    Eigen::Vector6d interpolatedResult = interpolator->interpolate(0.0);
 
 In this example, the ``stateMap`` contains the data that is interpolated, using the ``double`` key (time) as independent variable and the ``Eigen::Vector6d`` value (state) as dependent variable. The interpolation type is linear, and the ``interpolatorSettings`` object is created by passing only the argument ``linear_interpolator``.
 
@@ -71,7 +71,7 @@ The different interpolator types are handled in a similar manner:
                      stateMap, interpolatorSettings, stateDerivativeMap );
 
          // Interpolate
-         Eigen::Vector6d interpolatedResult = interpolator.interpolate(0.0);
+         Eigen::Vector6d interpolatedResult = interpolator->interpolate(0.0);
 
 Lagrange interpolator
 ~~~~~~~~~~~~~~~~~~~~~
@@ -97,5 +97,5 @@ To create a Lagrange interpolator, the number of data points used for each inter
                 stateMap, interpolatorSettings );
 
     // Interpolate
-    Eigen::Vector6d interpolatedResult = interpolator.interpolate(0.0);
+    Eigen::Vector6d interpolatedResult = interpolator->interpolate(0.0);
 
