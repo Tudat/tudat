@@ -6,7 +6,7 @@
 Multi-case simulations
 ======================
 
-The :literal:`json_interface` allows combining several input files to generate a single object that is used to set up a propagation. This is slightly different than the modular files described in the previous page. In the previous case, during the creation of the root input file, the special strings :literal:`"$(file.json)"` were replaced by the contents of the reference file. In this case, the contents of two files are combined, processing first one object and then (re-)defining the keys specified in the second object. This is done by writing, for instance:
+The JSON Interface allows combining several input files to generate a single object that is used to set up a propagation. This is slightly different than the modular files described in the previous page. In the previous case, during the creation of the root input file, the special strings :literal:`"$(file.json)"` were replaced by the contents of the reference file. In this case, the contents of two files are combined, processing first one object and then (re-)defining the keys specified in the second object. This is done by writing, for instance:
 
 .. code-block:: json
   :caption: :class:`mass8000.json`
@@ -49,7 +49,7 @@ parsing the file :class:`mass8000.json` will result in the following object:
     }
   }
 
-Even when the fields :jsonkey:`satellite.mass` or :jsonkey:`satellite` are undefined in :class:`shared.json`, the same combined object would be obtained.
+Even when the keys :jsonkey:`satellite.mass` or :jsonkey:`satellite` are undefined in :class:`shared.json`, the same combined object would be obtained.
 
 This feature is especially useful when running multi-case simulations (for solving optimisation problems), as it allows the user to define the shared settings in a file, that is referenced from mergeable files in which some keys (the optimisation variables) are (re-)defined. In this way, repeating the same information in every file is avoided, which can lead to large file sizes specially for complex propagations or when the number of simulations to be run is large.
 
@@ -68,7 +68,7 @@ For instance, the following tree structure can be used to run the same simulatio
   |      
   | shared.json
 
-Then, the :literal:`json_interface` application is called for each of the files inside the :class:`inputs` directory. Note that there is no need to call it for the file :class:`shared.json`. If one has `GNU Parallel <https://www.gnu.org/software/parallel/>`_ installed, is is possible to run the simulations in parallel by writing in Terminal:
+Then, the :literal:`json_interface` application is called for each of the files inside the :class:`inputs` directory. Note that there is no need to call it for the file :class:`shared.json`. If one has `GNU Parallel <https://www.gnu.org/software/parallel/>`_ installed, it is possible to run the simulations in parallel by writing in Terminal:
 
 .. code-block:: txt
 
@@ -240,7 +240,7 @@ However, there is a way to avoid having to include this additional line in each 
 
   - **Declaration file**: file in which a JSON key and corresponding value are defined.
   - **Parent file**: file from which the declaration file is referenced.
-  - **Root file**: file provided as input argument to :literal:`json_interface`.
+  - **Root file**: file provided as input argument to the :literal:`json_interface` application.
 
 Then, the following special variables can be used inside strings anywhere in input files, which will be replaced by:
 
@@ -277,6 +277,6 @@ When running :literal:`json_interface mass8000.json`, the string :literal:`"@pat
 
   - When a path is provided as a plain string (e.g. :literal:`"relativePath"`), it must be relative to the root file.
   - When a path is provided using the :literal:`@path` keyword (e.g. :literal:`"@path(relativePath)"`), it must be relative to the declaration file.
-  - When a path is used to include (parts of) the contents of another JSON file (e.g. :literal:`"$(shared.json)"`), the :literal:`@path` keyword is not be used and it must be relative to the declaration file.
+  - When a special string is used to include (parts of) the contents of another JSON file (e.g. :literal:`"$(shared.json)"`), the :literal:`@path` keyword is not used and it must be relative to the declaration file.
 
-It is recommended to never provide relative paths as plain strings, and to always use either :literal:`@path()` or :literal:`$()`, so that the paths are always specified relative to the declaration file. When no modular or mergeable files are used, the root file and the definition file are always the same, so using the :literal:`@path` keyword makes is unnecessary but still recommended, as the project could be modularised in the future or parts parts of it may be end up being used in other projects, potentially requiring the use of the :literal:`@path` keyword.
+It is recommended to never provide relative paths as plain strings, and to always use either :literal:`@path()` or :literal:`$()`, so that the paths are always specified relative to the declaration file. When no modular or mergeable files are used, the root file and the definition file are always the same, so using the :literal:`@path` keyword makes it unnecessary but still recommended, as the project could be modularised in the future or parts parts of it may be end up being used in other projects, potentially requiring the use of the :literal:`@path` keyword.

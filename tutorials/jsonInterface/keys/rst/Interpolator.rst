@@ -13,4 +13,4 @@
 
 		:arrow:`LagrangeInterpolator`
 
-	.. include:: rst/LagrangeInterpolator.rst
+	.. include:: LagrangeInterpolator.rst

@@ -12,14 +12,11 @@ However, there is nothing like a :literal:`setValue` function, and :class:`KeyPa
 
 Nonetheless, there are a few functions provided by the :literal:`json_interface` that can make the writing of :literal:`to_json` functions easier, namely:
 
-- :literal:`void assignIfNotNaN( json& j, const std::string& key, const EquatableType& value )`
-  Updates or defines :literal:`j[ key ]` only if :literal:`value == value` (this comparison returns :literal:`false` for :literal:`TUDAT_NAN`). Can only be used when the comparison operator is defined for :literal:`EquatableType`.
+- :literal:`void assignIfNotNaN( nlohmann::json& j, const std::string& key, const EquatableType& value )`: updates or defines :literal:`j[ key ]` only if :literal:`value == value` (this comparison returns :literal:`false` for :literal:`TUDAT_NAN`). Can only be used when the comparison operator is defined for :literal:`EquatableType`.
 
-- :literal:`void assignIfNotNull( json& j, const std::string& key, const boost::shared_ptr< T >& object )`
-  Updates or defines :literal:`j[ key ]` only if :literal:`object != NULL`.
+- :literal:`void assignIfNotNull( nlohmann::json& j, const std::string& key, const boost::shared_ptr< T >& object )`: updates or defines :literal:`j[ key ]` only if :literal:`object != NULL`.
 
-- :literal:`void assignIfNotEmpty( json& j, const std::string& key, const ContainerType& container )`
-  Updates or defines :literal:`j[ key ]` only if :literal:`object.empty( ) == false`. Can only be used when the method :literal:`empty` is defined for :literal:`ContainerType`.
+- :literal:`void assignIfNotEmpty( nlohmann::json& j, const std::string& key, const ContainerType& container )`: updates or defines :literal:`j[ key ]` only if :literal:`object.empty( ) == false`. Can only be used when the method :literal:`empty` is defined for :literal:`ContainerType`.
 
 Note that the following is not possible:
 
@@ -27,7 +24,8 @@ Note that the following is not possible:
   
   nlohmann::json mainJson;
   KeyPath keyPath = "integrator" / "type";
-  mainJson[ keyPath ] = "rungeKutta4";                    // compile error
+  mainJson[ keyPath ] = "rungeKutta4";             // compile error
+  mainJson[ "integrator.type" ] = "rungeKutta4";   // wrong! {"integrator.type":"rungeKutta4"}
 
 Instead, the default basic value set methods have to be used:
 
@@ -40,20 +38,20 @@ If one wants to use the properties of a given object to update the keys of a :cl
 
 .. code-block:: cpp
   
-  inline void to_json( json& j, const Integrator& integrator )
+  inline void to_json( nlohmann::json& j, const Integrator& integrator )
   {
       j[ "type" ] = integrator.type;
       j[ "stepSize" ] = integrator.stepSize;
-      j[ ".." / "initialEpoch" ] = integrator.initialTime;   // compile error
+      j[ "<-" / "initialEpoch" ] = integrator.initialTime;   // compile error
   }
 
-this is not possible (yet). This kind of implementation is required only once in the whole :literal:`json_interface` interface, when converting a :class:`Simulation` object to :class:`nlohmann::json`, as the information contained in the propagator settings is stored in three different places in the simulation object (part of its information is stored in the key :jsonkey:`propagators` of the :literal:`mainJson`, the termination settings are stored in the key :jsonkey:`termination` of the :literal:`mainJson`, and the print interval is stored in the :literal:`options.printInterval` key path of the :literal:`mainJson`). To do so, the following implementation was chosen (code has been simplified):
+this is not possible (yet). This kind of implementation is required only once in the whole JSON Interface library, when converting a :class:`Simulation` object to :class:`nlohmann::json`, as the information contained in the propagator settings is stored in three different places in the simulation object (part of its information is stored in the key :jsonkey:`propagators` of the :literal:`mainJson`, the termination settings are stored in the key :jsonkey:`termination` of the :literal:`mainJson`, and the print interval is stored in the :jsonkey:`options.printInterval` key path of the :literal:`mainJson`). To do so, the following implementation was chosen (code has been simplified):
 
 .. code-block:: cpp
   :caption: :class:`simulation.h`
   :name: simulation-h
   
-  void to_json( json& mainJson, const Simulation& simulation )
+  void to_json( nlohmann::json& mainJson, const Simulation& simulation )
   {
       ...
       mainJson[ "integrator" ] = simulation.integrator;
@@ -67,7 +65,7 @@ this is not possible (yet). This kind of implementation is required only once in
   
   namespace propagators
   {
-      void to_json( json& mainJson, const Propagator& propagator )
+      void to_json( nlohmann::json& mainJson, const Propagator& propagator )
       {
           mainJson[ "propagators" ][ 0 ][ "type" ] = propagator.type;
           mainJson[ "propagators" ][ 0 ][ "centralBodies" ] = propagator.centralBodies;
@@ -77,4 +75,4 @@ this is not possible (yet). This kind of implementation is required only once in
       }
   }
 
-This is the only case in which a :literal:`to_json` function is manually called in the :literal:`json_interface`. Note that, when passed to the :literal:`to_json` function, the :literal:`mainJson` object is not re-initialised, so the keys defined before this function call are kept.
+This is the only case in which a :literal:`to_json` function is manually called in the JSON Interface library. Note that, when passed to the :literal:`to_json` function, the :literal:`mainJson` object is not re-initialised, so the keys defined before this function call are kept.

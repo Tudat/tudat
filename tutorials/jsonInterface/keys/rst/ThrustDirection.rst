@@ -12,4 +12,4 @@
 
 		:arrow:`Colinear With State Segment Thrust Direction`
 
-	.. include:: rst/ColinearWithStateSegmentThrustDirection.rst
+	.. include:: ColinearWithStateSegmentThrustDirection.rst

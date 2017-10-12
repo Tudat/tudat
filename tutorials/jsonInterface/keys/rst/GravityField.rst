@@ -11,7 +11,7 @@
 
 		:arrow:`Point Mass Gravity Field`
 
-	.. include:: rst/PointMassGravityField.rst
+	.. include:: PointMassGravityField.rst
 
 .. container:: toggle
 
@@ -19,7 +19,7 @@
 
 		:arrow:`Spherical Harmonic Gravity Field from built-in model`
 
-	.. include:: rst/SphericalHarmonicGravityFieldfrombuiltinmodel.rst
+	.. include:: SphericalHarmonicGravityFieldfrombuiltinmodel.rst
 
 .. container:: toggle
 
@@ -27,7 +27,7 @@
 
 		:arrow:`Spherical Harmonic Gravity Field from custom file`
 
-	.. include:: rst/SphericalHarmonicGravityFieldfromcustomfile.rst
+	.. include:: SphericalHarmonicGravityFieldfromcustomfile.rst
 
 .. container:: toggle
 
@@ -35,4 +35,4 @@
 
 		:arrow:`Spherical Harmonic Gravity Field with manual coefficients`
 
-	.. include:: rst/SphericalHarmonicGravityFieldwithmanualcoefficients.rst
+	.. include:: SphericalHarmonicGravityFieldwithmanualcoefficients.rst

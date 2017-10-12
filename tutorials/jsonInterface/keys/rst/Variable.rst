@@ -11,4 +11,4 @@
 
 		:arrow:`Dependent Variable`
 
-	.. include:: rst/DependentVariable.rst
+	.. include:: DependentVariable.rst

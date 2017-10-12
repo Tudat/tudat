@@ -5,7 +5,7 @@ JSON Interface
 
 These pages of the wiki detail how the JSON interface can be used to run propagations by providing JSON input files and provide a few tutorials showcasing the main features.
 
-The application :literal:`json_interface` can be used to run Tudat propagations by providing the path to a JSON input file as command-line argument in Terminal:
+The :literal:`json_interface` application can be used to run Tudat propagations by providing the path to a JSON input file as command-line argument in Terminal:
 
 .. code-block:: txt
 
@@ -21,7 +21,7 @@ It is also possible to use the :literal:`json_interface` application from Qt Cre
    :hidden:
    :maxdepth: 2
 
-   keys/index
+   keys/rst/index
    modularFiles
    multicase
    customJsonApp

@@ -14,7 +14,7 @@
 
 		:arrow:`Acceleration Dependent Variable`
 
-	.. include:: rst/AccelerationDependentVariable.rst
+	.. include:: AccelerationDependentVariable.rst
 
 .. container:: toggle
 
@@ -22,7 +22,7 @@
 
 		:arrow:`Torque Dependent Variable`
 
-	.. include:: rst/TorqueDependentVariable.rst
+	.. include:: TorqueDependentVariable.rst
 
 .. container:: toggle
 
@@ -30,7 +30,7 @@
 
 		:arrow:`Intermediate Aerodynamic Rotation Matrix Dependent Variable`
 
-	.. include:: rst/IntermediateAerodynamicRotationMatrixDependentVariable.rst
+	.. include:: IntermediateAerodynamicRotationMatrixDependentVariable.rst
 
 .. container:: toggle
 
@@ -38,4 +38,4 @@
 
 		:arrow:`Relative Body Aerodynamic Orientation Angle Variable`
 
-	.. include:: rst/RelativeBodyAerodynamicOrientationAngleVariable.rst
+	.. include:: RelativeBodyAerodynamicOrientationAngleVariable.rst

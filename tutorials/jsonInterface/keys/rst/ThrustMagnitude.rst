@@ -11,7 +11,7 @@
 
 		:arrow:`Constant Thrust Magnitude`
 
-	.. include:: rst/ConstantThrustMagnitude.rst
+	.. include:: ConstantThrustMagnitude.rst
 
 .. container:: toggle
 
@@ -19,4 +19,4 @@
 
 		:arrow:`From Engine Thrust Magnitude`
 
-	.. include:: rst/FromEngineThrustMagnitude.rst
+	.. include:: FromEngineThrustMagnitude.rst
