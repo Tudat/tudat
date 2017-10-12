@@ -10,7 +10,7 @@ The tutorials on these pages focus on the elements of Tudat that you'll need fro
 
     ../pathTo/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/
 
-where "pathTo" is the directory where you extracted the Tudat Bundle. When browsing the files in this directory you will see, among others, the "singleSatellitePropagator.cpp" and "singlePerturbedSatellitePropagator.cpp" files, which we will discuss here among other examples.
+where "pathTo" is the directory where you extracted the Tudat Bundle. When browsing the files in this directory you will see, among others, the ``singleSatellitePropagator.cpp`` and ``singlePerturbedSatellitePropagator.cpp`` files, which we will discuss here among other examples.
 
 Example tutorials
 ~~~~~~~~~~~~~~~~~

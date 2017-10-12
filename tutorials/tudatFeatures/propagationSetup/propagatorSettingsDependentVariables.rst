@@ -138,11 +138,11 @@ The framework discussed in the previous section explains how the :literal:`depen
 
    - :literal:`bodyUndergoingAcceleration`
 
-      :literal:`std::string` variable that indicates the body that experiences the acceleration that needs to be retrieved. Make sure that the body's name is listed in :class:`BodyMap`.
+      :literal:`std::string` variable that indicates the body that experiences the acceleration that needs to be retrieved. Make sure that the body's name is listed in :class:`NamedBodyMap`.
 
    - :literal:`bodyExertingAcceleration`
 
-      :literal:`std::string` variable that indicates the body that exerts the acceleration that needs to be retrieved on :literal:`bodyUndergoingAcceleration`. Make sure that the body's name is listed in :class:`BodyMap`.
+      :literal:`std::string` variable that indicates the body that exerts the acceleration that needs to be retrieved on :literal:`bodyUndergoingAcceleration`. Make sure that the body's name is listed in :class:`NamedBodyMap`.
 
    - :literal:`useNorm`
 
@@ -163,7 +163,7 @@ The framework discussed in the previous section explains how the :literal:`depen
 
    - :literal:`associatedBody`
 
-      :literal:`std::string` variable that indicates the body for which a rotation matrix is to be saved. Make sure that the body's name is listed in :class:`BodyMap`.
+      :literal:`std::string` variable that indicates the body for which a rotation matrix is to be saved. Make sure that the body's name is listed in :class:`NamedBodyMap`.
 
    - :literal:`baseFrame`
 
@@ -193,7 +193,7 @@ The framework discussed in the previous section explains how the :literal:`depen
 
    - :literal:`associatedBody`
 
-      :literal:`std::string` variable that indicates the body for which the :literal:`angle` is to be saved. Make sure that the body's name is listed in :class:`BodyMap`.
+      :literal:`std::string` variable that indicates the body for which the :literal:`angle` is to be saved. Make sure that the body's name is listed in :class:`NamedBodyMap`.
 
    - :literal:`angle`
 

@@ -5,13 +5,17 @@ Implementation Framework of the Acceleration Settings
 
 Acceleration settings
 ~~~~~~~~~~~~~~~~~~~~~
-The settings for accelerations are defined and stored by the user in a :class:`SelectedAccelerationMap`, which is :literal:`typedef` for:
+The settings for accelerations are defined and stored by the user in a :class:`SelectedAccelerationMap`. 
 
-.. code-block:: cpp
+.. class:: SelectedAccelerationMap
 
-        std::map< std::string, std::map< std::string, std::vector< boost::shared_ptr< AccelerationSettings > > > >
+   This is a  :literal:`typedef` for:
 
-This is a double map (with twice a string as a key). The two levels correspond to the names of bodies undergoing an acceleration (first key) , and those for bodies exerting an acceleration (second key). This allows any number of bodies to be propagated, undergoing any number (and type) of accelerations from any number of bodies.
+   .. code-block:: cpp
+
+         std::map< std::string, std::map< std::string, std::vector< boost::shared_ptr< AccelerationSettings > > > >
+
+   This is a double map (with twice a string as a key). The two levels correspond to the names of bodies undergoing an acceleration (first key) , and those for bodies exerting an acceleration (second key). This allows any number of bodies to be propagated, undergoing any number (and type) of accelerations from any number of bodies.
 For a given environment, most acceleration models are completely defined by:
 
     - Type of acceleration model (a list is provided in the :class:`AvailableAcceleration` enum in ``Tudat/Astrodynamics/BasicAstrodynamics/accelerationModelTypes.h``).
@@ -119,7 +123,7 @@ As stated above, the :literal:`createAccelerationModelsMap` function uses your e
 
 .. class:: MutualSphericalHarmonicAccelerationSettings
 
-   This model is typically only used for detailed propagation of planetary systems, and discussed in more detail here BROKEN HERE LINK. It is added to :class:`SelectedAccelerationMap` as follows, for example of acceleration exerted on "Io" by "Jupiter":
+   This model is typically only used for detailed propagation of planetary systems. It is added to :class:`SelectedAccelerationMap` as follows, for example of acceleration exerted on "Io" by "Jupiter":
 
    .. code-block:: cpp
 
@@ -165,8 +169,8 @@ As stated above, the :literal:`createAccelerationModelsMap` function uses your e
    Requires the following environment models to be defined:
 
    - Atmosphere model for body exerting acceleration (set by :class:`AtmosphereSettings`).
-   - Shape model for body exerting acceleration (set by :class:`ShapeModelSettings`).
-   - Aerodynamic coefficient interface for body undergoing acceleration (set by :class:`AerodynamicCoefficientInterfaceSettings`). NOTE: In the case that the aerodynamic coefficients are defined as a function of the vehicle orientation (e.g. angle of attack and sideslip angle), these angles can be manually or automatically defined. We have dedicated a specific page to this here BROKEN HERE LINK.
+   - Shape model for body exerting acceleration (set by :class:`BodyShapeSettings`).
+   - Aerodynamic coefficient interface for body undergoing acceleration (set by :class:`AerodynamicCoefficientSettings`). NOTE: In the case that the aerodynamic coefficients are defined as a function of the vehicle orientation (e.g. angle of attack and sideslip angle), these angles can be manually or automatically defined. 
    - Mass model for body undergoing acceleration.
    - Current state of body undergoing acceleration and body with atmosphere.
 

@@ -1,0 +1,26 @@
+{% extends "!page.html" %}
+
+{% set css_files = css_files + ["_static/custom.css"] %}
+
+{% block footer %}
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+{% endblock %}

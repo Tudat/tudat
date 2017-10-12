@@ -10,6 +10,10 @@ The :class:`PropagationTerminationSettings` are a key parameter in the propagati
 
 The different types of :class:`PropagationTerminationSettings` are implemented by means of derived classes and custom constructors, as detailed in this page. 
 
+.. class:: PropagationTerminationSettings
+
+   Base class for the termination settings of the propagation. Different options are implemented in the derived classes below.
+
 .. class:: PropagationTimeTerminationSettings
 
    As the name suggests, these settings will cause the propagation to terminate after a certain time has passed. Please note that the simulator will finish the final time-step, which may cause the termination time to be slightly overpassed. The constructor is:
