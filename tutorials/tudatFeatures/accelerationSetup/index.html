@@ -185,7 +185,75 @@
             
   <div class="section" id="acceleration-set-up">
 <span id="tudatfeaturesaccelerationindex"></span><h1>4. Acceleration Set-Up<a class="headerlink" href="#acceleration-set-up" title="Permalink to this headline">¶</a></h1>
-<p>These pages of the wiki will help you build a strong knowledge basis to get started with Tudat. It is mandatory to understand the concepts taught here before proceding any further.</p>
+<p>These pages of the wiki will help you build a strong knowledge basis to get started with Tudat. It is mandatory to understand the concepts taught here before proceding any further. Below a graphical representation of the acceleration setup is shown after which a list of content is shown.</p>
+<object data="../../../_images/graphviz-c2c10e0bfd9536c0e2a97d402e425a41f6417540.svg" type="image/svg+xml">
+            <p class="warning">digraph
+{
+   # General diagram settings
+   rankdir = &quot;TB&quot;;
+   splines = ortho;
+   compound = true;
+
+
+   # general node settings
+   node [shape = box, style = filled, width = 1.5, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+
+
+   # specific node color settings
+   NamedBodyMap, bodiesToPropagate, centralBodies, AccelerationSettings [color = lightblue];
+   AccelerationModel [color= lightgreen];
+
+
+   subgraph clusterAccelerationType
+   {
+      label = AccelerationType;
+      fontsize = 9;
+      style = dashed;
+
+      {rank = same; &quot;Undefined acceleration&quot;, &quot;Central gravity&quot;, Aerodynamic, &quot;Third body \ncentral gravity&quot;};
+      {rank = same; &quot;Third body spherical \nharmonic gravity&quot;, &quot;Thrust&quot;, &quot;Cannon ball \nradiation pressure&quot;, &quot;Spherical harmonic \ngravity&quot; };
+      {rank = same; &quot;Third body mutual \nspherical harmonic gravity&quot;, &quot;Mutual spherical \nharmonic gravity&quot;, &quot;Relativistic correction&quot;, Empirical};
+
+      &quot;Third body \ncentral gravity&quot; -&gt; &quot;Third body spherical \nharmonic gravity&quot; [style = invis];
+      &quot;Third body spherical \nharmonic gravity&quot; -&gt; &quot;Third body mutual \nspherical harmonic gravity&quot; [style = invis];
+      &quot;Central gravity&quot; -&gt; &quot;Third body \ncentral gravity&quot; [style = invis];
+      &quot;Spherical harmonic \ngravity&quot; -&gt; &quot;Third body spherical \nharmonic gravity&quot; [style = invis];
+      &quot;Undefined acceleration&quot; -&gt; &quot;Central gravity&quot; [style = invis];
+      &quot;Thrust&quot; -&gt; &quot;Spherical harmonic \ngravity&quot; [style = invis];
+   }
+
+
+   # AccelerationSettings input
+   &quot;Additional \ninformation&quot; -&gt; AccelerationSettings;
+   &quot;Third body mutual \nspherical harmonic gravity&quot; -&gt; AccelerationSettings [ltail = clusterAccelerationType];
+
+
+   # AccelerationModel input
+   AccelerationSettings -&gt; AccelerationModel;
+   bodiesToPropagate -&gt; AccelerationModel;
+   centralBodies -&gt; AccelerationModel;
+   NamedBodyMap -&gt; AccelerationModel;
+
+
+   # Structure the layout
+   {rank = same; NamedBodyMap, AccelerationModel, centralBodies, bodiesToPropagate};
+   {rank = same; AccelerationSettings, &quot;Additional \ninformation&quot;};
+
+   # Hyperlinks (Sphinx auto referencing not working here, need to link to exact web adres)
+   &quot;AccelerationSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings&quot;, target = &quot;_top&quot;];
+   &quot;Central gravity&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings&quot;, target = &quot;_top&quot;];
+   &quot;AccelerationModel&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html##SelectedAccelerationMap&quot;, target = &quot;_top&quot;];
+   NamedBodyMap [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#NamedBodyMap&quot;, target = &quot;_top&quot;];
+   &quot;Undefined acceleration&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings&quot;, target = &quot;_top&quot;];
+   &quot;Spherical harmonic \ngravity&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#SphericalHarmonicAccelerationSettings&quot;, target = &quot;_top&quot;];
+   &quot;Mutual spherical \nharmonic gravity&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings&quot;, target = &quot;_top&quot;];
+   &quot;Aerodynamic&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings&quot;, target = &quot;_top&quot;];
+   &quot;Cannon ball \nradiation pressure&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings&quot;, target = &quot;_top&quot;];
+   &quot;Thrust&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#ThrustAccelerationSettings&quot;, target = &quot;_top&quot;];
+   &quot;Relativistic correction&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#RelativisticAccelerationCorrectionSettings&quot;, target = &quot;_top&quot;];
+   &quot;Empirical&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#EmpiricalAccelerationSettings&quot;, target = &quot;_top&quot;];
+
+}</p></object>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="frameworkAcceleration.html">4.1. Implementation Framework of the Acceleration Settings</a><ul>
@@ -274,7 +342,6 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

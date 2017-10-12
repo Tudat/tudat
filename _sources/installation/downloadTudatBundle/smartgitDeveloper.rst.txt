@@ -35,6 +35,8 @@ Create a GitHub account if you haven't done so yet. A GitHub account is complete
 
 **Step 2.2: Apply for a free account upgrade**
 
+   Applying for the free upgrade is easily done via :ref:`this <https://education.github.com/discount_requests/new>` link and tick boxes: Student and Individual account. Then enter the requested information.
+
 Fork both the Tudat Bundle and the Tudat repositories and Clone them locally
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Step 3.1: Fork Tudat Bundle**

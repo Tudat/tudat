@@ -189,10 +189,10 @@
             
   <div class="section" id="propagator-settings-dependent-variables">
 <span id="tudatfeaturespropagatorsettingsdependentvariables"></span><h1>5.4. Propagator Settings: Dependent Variables<a class="headerlink" href="#propagator-settings-dependent-variables" title="Permalink to this headline">¶</a></h1>
-<p>By default, the <code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code> propagates the state of a body which uniquely defines its position and velocity. However, it is possible to define a number of dependent variables that are derived from such state. These dependent variables can be used as termination conditions as discussed in <a class="reference internal" href="propagatorSettingsTermination.html#tudatfeaturespropagatorsettingstermination"><span class="std std-ref">Propagator Settings: Termination Settings</span></a> or saved for further post-processing. This page describes the dependent variables currently available and how these are retrieved from Tudat.</p>
+<p>By default, the <a class="reference internal" href="simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> propagates the state of a body which uniquely defines its position and velocity. However, it is possible to define a number of dependent variables that are derived from such state. These dependent variables can be used as termination conditions as discussed in <a class="reference internal" href="propagatorSettingsTermination.html#tudatfeaturespropagatorsettingstermination"><span class="std std-ref">Propagator Settings: Termination Settings</span></a> or saved for further post-processing. This page describes the dependent variables currently available and how these are retrieved from Tudat.</p>
 <div class="section" id="saving-dependent-variables">
 <h2>5.4.1. Saving dependent variables<a class="headerlink" href="#saving-dependent-variables" title="Permalink to this headline">¶</a></h2>
-<p>The dependent variables are computed during the body propagation, thus the user must provide a list of dependent variables to save prior creating the <code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code>:</p>
+<p>The dependent variables are computed during the body propagation, thus the user must provide a list of dependent variables to save prior creating the <a class="reference internal" href="simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a>:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define list of dependent variables to save.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">dependentVariablesList</span><span class="p">;</span>
 </pre></div>
@@ -225,7 +225,7 @@
 </div></blockquote>
 </li>
 </ul>
-<p>Once the list of dependent variables to save has been populated, a <code class="xref py py-class docutils literal"><span class="pre">DependentVariableSaveSettings</span></code> object needs to be created and passed to <code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code>:</p>
+<p>Once the list of dependent variables to save has been populated, a <code class="xref py py-class docutils literal"><span class="pre">DependentVariableSaveSettings</span></code> object needs to be created and passed to <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a>:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create object with list of dependent variables</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">DependentVariableSaveSettings</span> <span class="o">&gt;</span> <span class="n">dependentVariablesToSave</span> <span class="o">=</span>
       <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">dependentVariablesList</span> <span class="p">);</span>
@@ -244,7 +244,7 @@
 </div>
 <div class="section" id="available-dependent-variables">
 <h2>5.4.2. Available dependent variables<a class="headerlink" href="#available-dependent-variables" title="Permalink to this headline">¶</a></h2>
-<p>The framework discussed in the previous section explains how the <code class="docutils literal"><span class="pre">dependentVariablesList</span></code> is populated and passed to the <code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code>. The goal of this section is to list the available dependent variables and to explain how these are pushed to the <code class="docutils literal"><span class="pre">dependentVariablesList</span></code>.</p>
+<p>The framework discussed in the previous section explains how the <code class="docutils literal"><span class="pre">dependentVariablesList</span></code> is populated and passed to the <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a>. The goal of this section is to list the available dependent variables and to explain how these are pushed to the <code class="docutils literal"><span class="pre">dependentVariablesList</span></code>.</p>
 <dl class="class">
 <dt id="SingleDependentVariableSaveSettings">
 <em class="property">class </em><code class="descname">SingleDependentVariableSaveSettings</code><a class="headerlink" href="#SingleDependentVariableSaveSettings" title="Permalink to this definition">¶</a></dt>
@@ -328,12 +328,12 @@
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">bodyUndergoingAcceleration</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">std::string</span></code> variable that indicates the body that experiences the acceleration that needs to be retrieved. Make sure that the body’s name is listed in <code class="xref py py-class docutils literal"><span class="pre">BodyMap</span></code>.</p>
+<div><p><code class="docutils literal"><span class="pre">std::string</span></code> variable that indicates the body that experiences the acceleration that needs to be retrieved. Make sure that the body’s name is listed in <a class="reference internal" href="../environmentSetup/index.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a>.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">bodyExertingAcceleration</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">std::string</span></code> variable that indicates the body that exerts the acceleration that needs to be retrieved on <code class="docutils literal"><span class="pre">bodyUndergoingAcceleration</span></code>. Make sure that the body’s name is listed in <code class="xref py py-class docutils literal"><span class="pre">BodyMap</span></code>.</p>
+<div><p><code class="docutils literal"><span class="pre">std::string</span></code> variable that indicates the body that exerts the acceleration that needs to be retrieved on <code class="docutils literal"><span class="pre">bodyUndergoingAcceleration</span></code>. Make sure that the body’s name is listed in <a class="reference internal" href="../environmentSetup/index.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a>.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">useNorm</span></code></p>
@@ -360,7 +360,7 @@
 <ul>
 <li><p class="first"><code class="docutils literal"><span class="pre">associatedBody</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">std::string</span></code> variable that indicates the body for which a rotation matrix is to be saved. Make sure that the body’s name is listed in <code class="xref py py-class docutils literal"><span class="pre">BodyMap</span></code>.</p>
+<div><p><code class="docutils literal"><span class="pre">std::string</span></code> variable that indicates the body for which a rotation matrix is to be saved. Make sure that the body’s name is listed in <a class="reference internal" href="../environmentSetup/index.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a>.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">baseFrame</span></code></p>
@@ -396,7 +396,7 @@
 <ul>
 <li><p class="first"><code class="docutils literal"><span class="pre">associatedBody</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">std::string</span></code> variable that indicates the body for which the <code class="docutils literal"><span class="pre">angle</span></code> is to be saved. Make sure that the body’s name is listed in <code class="xref py py-class docutils literal"><span class="pre">BodyMap</span></code>.</p>
+<div><p><code class="docutils literal"><span class="pre">std::string</span></code> variable that indicates the body for which the <code class="docutils literal"><span class="pre">angle</span></code> is to be saved. Make sure that the body’s name is listed in <a class="reference internal" href="../environmentSetup/index.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a>.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">angle</span></code></p>
@@ -474,7 +474,6 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

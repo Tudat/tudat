@@ -188,11 +188,89 @@
   <div class="section" id="simulator-set-up">
 <span id="tudatfeaturessimulatorindex"></span><h1>5. Simulator Set-Up<a class="headerlink" href="#simulator-set-up" title="Permalink to this headline">¶</a></h1>
 <p>One of the core elements of the Tudat libraries is its simulator framework. The goal of this page is discuss the implementation of such framework as well as the numerous options available. The top-level framework of the simulator is shown below:</p>
-<div class="figure align-center">
-<img alt="../../../_images/TudatSimulatorArchitecture.jpg" src="../../../_images/TudatSimulatorArchitecture.jpg" />
-</div>
-<p>The top-element in such framework is the <code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code>, which is in charge of propagating the equations of motion using the environment and acceleration models discussed in <a class="reference internal" href="../environmentSetup/index.html#tudatfeaturesenvironmentindex"><span class="std std-ref">Environment Set-up</span></a> and <a class="reference internal" href="../accelerationSetup/index.html#tudatfeaturesaccelerationindex"><span class="std std-ref">Acceleration Set-Up</span></a>, respectively. The orbit propation is done according to the specified <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> and the <code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code>, which are discussed in detail in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a> and <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>.</p>
-<p>As shown in the figure above, there are various types of <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> and <code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code> depending on the particularities of the application at hand. The different types are implemented by means of derived classes, as discussed below:</p>
+<object data="../../../_images/graphviz-801d2d696596e5f19d737f26355db87f841c71f2.svg" type="image/svg+xml">
+            <p class="warning">digraph
+{
+   # General diagram settings
+   rankdir = &quot;LR&quot;;
+   ranksep = &quot;1.0&quot;
+   splines = ortho;
+   compound = true;
+
+
+   # general node settings
+   node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+
+
+   # specific node color settings
+   DynamicsSimulator [color = lightgreen];
+   NamedBodyMap [color = lightblue];
+
+
+   # Hyperlinks (Sphinx auto referencing not working here, need to link to exact web adres)
+   NamedBodyMap [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#NamedBodyMap&quot;, target = &quot;_top&quot;];
+   DynamicsSimulator [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/simulatorCreation.html#DynamicsSimulator&quot;, target = &quot;_top&quot;];
+   IntegratorSettings [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/integratorSettings.html#IntegratorSettings&quot;, target = &quot;_top&quot;];
+   &quot;RungeKuttaVariable\nStepSizeSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/integratorSettings.html#RungeKuttaVariableStepSizeSettings&quot;, target = &quot;_top&quot;];
+   TranslationalState [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/propagatorSettings.html#TranslationalStatePropagatorSettings&quot;, target = &quot;_top&quot;];
+   RotationalState [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/propagatorSettings.html#RotationalStatePropagatorSettings&quot;, target = &quot;_top&quot;];
+   Mass [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/propagatorSettings.html#MassPropagatorSettings&quot;, target = &quot;_top&quot;];
+   Custom [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/propagatorSettings.html#CustomPropagatorSettings&quot;, target = &quot;_top&quot;];
+   MultiType [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/propagatorSettings.html#MultiTypePropagatorSettings&quot;, target = &quot;_top&quot;];
+   MultiArc [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/propagatorSettings.html#MultiArcPropagatorSettings&quot;, target = &quot;_top&quot;];
+
+   subgraph clusterIntegratorSettings
+   {
+      # cluster settings
+      label = &quot;IntegratorSettings&quot;;
+      fontsize = 9;
+      style = dashed;
+      rank = min;
+      href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/integratorSettings.html&quot;;
+      target = &quot;_top&quot;;
+
+
+      # IntegratorSettings input
+      integratorType -&gt; IntegratorSettings;
+      simulationStartEpoch -&gt; IntegratorSettings;
+      &quot;(initial) stepSize&quot; -&gt; IntegratorSettings;
+
+
+      # RungeKuttaVariableStepSizeSettings input
+      integratorType -&gt; &quot;RungeKuttaVariable\nStepSizeSettings&quot;;
+      simulationStartEpoch -&gt; &quot;RungeKuttaVariable\nStepSizeSettings&quot;;
+      &quot;(initial) stepSize&quot; -&gt; &quot;RungeKuttaVariable\nStepSizeSettings&quot;;
+      &quot;min/max stepsize&quot; -&gt; &quot;RungeKuttaVariable\nStepSizeSettings&quot;;
+   }
+
+
+   subgraph clusterPropagatorSettings
+   {
+      # cluster settings
+      label = &quot;PropagatorSettings&quot;;
+      fontsize = 9;
+      style = dashed;
+      rank = min;
+      href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/propagatorSettings.html&quot;;
+      target = &quot;_top&quot;;
+
+      TranslationalState -&gt; RotationalState [style = invis];
+      Mass -&gt; Custom [style = invis];
+      MultiType -&gt; MultiArc [style = invis];
+
+   }
+
+
+   # DynamicsSimulator input
+   NamedBodyMap -&gt; DynamicsSimulator;
+   IntegratorSettings -&gt; DynamicsSimulator [ltail = clusterIntegratorSettings];
+   Custom -&gt; DynamicsSimulator [ltail = clusterPropagatorSettings];
+
+   {rank = same; NamedBodyMap, DynamicsSimulator}
+
+}</p></object>
+<p>The top-element in such framework is the <a class="reference internal" href="simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a>, which is in charge of propagating the equations of motion using the environment and acceleration models discussed in <a class="reference internal" href="../environmentSetup/index.html#tudatfeaturesenvironmentindex"><span class="std std-ref">Environment Set-up</span></a> and <a class="reference internal" href="../accelerationSetup/index.html#tudatfeaturesaccelerationindex"><span class="std std-ref">Acceleration Set-Up</span></a>, respectively. The orbit propation is done according to the specified <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> and the <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a>, which are discussed in detail in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a> and <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>.</p>
+<p>As shown in the figure above, there are various types of <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> and <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> depending on the particularities of the application at hand. The different types are implemented by means of derived classes, as discussed below:</p>
 <dl class="docutils">
 <dt><strong>Integrator Settings</strong></dt>
 <dd><ul class="first last simple">
@@ -216,6 +294,11 @@
 </dl>
 </li>
 <li><dl class="first docutils">
+<dt><a class="reference internal" href="propagatorSettings.html#RotationalStatePropagatorSettings" title="RotationalStatePropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">RotationalStatePropagatorSettings</span></code></a></dt>
+<dd>This derived class defines the settings to propagate the rotational dynamics.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
 <dt><code class="xref py py-class docutils literal"><span class="pre">MassPropagationSettings</span></code></dt>
 <dd>This derived class defines the settings to propagate the mass of a body.</dd>
 </dl>
@@ -228,6 +311,11 @@
 <li><dl class="first docutils">
 <dt><code class="xref py py-class docutils literal"><span class="pre">MultiTypeProgationSettings</span></code></dt>
 <dd>This derived class allows to propagate simultaneously the various propagator classes defined above.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="xref py py-class docutils literal"><span class="pre">MultiArcProgationSettings</span></code></dt>
+<dd>This derived class allows to propagate the dynamics for multiple arcs.</dd>
 </dl>
 </li>
 </ul>
@@ -307,7 +395,6 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

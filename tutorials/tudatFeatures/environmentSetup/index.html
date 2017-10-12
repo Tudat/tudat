@@ -187,13 +187,89 @@
   <div class="section" id="environment-set-up">
 <span id="tudatfeaturesenvironmentindex"></span><h1>3. Environment Set-up<a class="headerlink" href="#environment-set-up" title="Permalink to this headline">¶</a></h1>
 <p>Models for the physical environment are one of the cornerstones of a numerical astrodynamics toolbox. Here, we define the environment in the broadest sense, including all physical properties of the solar system, such as atmospheres and gravity fields, but also any models for the orbits and rotations of these bodies.</p>
-<p>On this page, we will give an overview of how the environment is represented in Tudat, which models have been implemented, and how to create the environment that is tailored to your needs.</p>
+<p>On this page, we will give an overview of how the environment is represented in Tudat, which models have been implemented, and how to create the environment that is tailored to your needs. A graphical representation of the basic structure for implementing the environment is shown below. For the options within these settings object, please click on the object in the figure.</p>
+<object data="../../../_images/graphviz-3b9ade046100b915d78f4cb4011749fc5b9b492a.svg" type="image/svg+xml">
+            <p class="warning">digraph
+{
+   # General diagram settings
+   rankdir = &quot;LR&quot;;
+   splines = ortho;
+   compound = true;
+
+
+   # general node settings
+   node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+
+
+   # specific node color settings
+   NamedBodyMap [color = lightgreen];
+   BodySettings [color = lightblue];
+
+
+   # Hyperlinks (Sphinx auto referencing not working here, need to link to exact web adres)
+   &quot;GravityField\nVariationSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#GravityFieldVariationSettings&quot;, target = &quot;_top&quot;];
+   &quot;RotationModelSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#RotationalModelSettings&quot;, target = &quot;_top&quot;];
+   &quot;Aerodynamic\nCoefficientSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#AeroDynamicCoefficientSettings&quot;, target = &quot;_top&quot;];
+   &quot;BodyShapeSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#BodyShapeSettings&quot;, target = &quot;_top&quot;];
+   &quot;TorqueSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#TorqueSettings&quot;, target = &quot;_top&quot;];
+   &quot;RadiationPressure\nInterfaceSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#RadiationPressureInterfaceSettings&quot;, target = &quot;_top&quot;];
+   &quot;AtmosphereSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#AtmosphereSettings&quot;, target = &quot;_top&quot;];
+   &quot;GravityFieldSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#GravityFieldSettings&quot;, target = &quot;_top&quot;];
+   &quot;EphemerisSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#EphemerisSettings&quot;, target = &quot;_top&quot;];
+   BodySettings [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#BodySettings&quot;, target = &quot;_top&quot;];
+   NamedBodyMap [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#NamedBodyMap&quot;, target = &quot;_top&quot;];
+
+
+   # NamedBodyMap input
+   BodySettings -&gt; NamedBodyMap;
+
+
+   # BodySettings input
+   EphemerisSettings -&gt; BodySettings [ltail = clusterEnvironmentSettings];
+   getDefaultSettings -&gt; BodySettings;
+   bodyNames -&gt; getDefaultSettings;
+
+   {rank = same; BodySettings, NamedBodyMap};
+
+
+   # Cluster all environment settings derived classes
+   subgraph clusterEnvironmentSettings
+   {
+      # cluster settings
+      label = &quot;User-defined environment settings&quot;;
+      fontsize = 9;
+      style = dashed;
+      rank = min;
+
+      # Make three collumns
+      {rank = same; AtmosphereSettings, EphemerisSettings, GravityFieldSettings};
+      {rank = same; &quot;GravityField\nVariationSettings&quot;, RotationModelSettings, &quot;Aerodynamic\nCoefficientSettings&quot;};
+      {rank = same; TorqueSettings, BodyShapeSettings, &quot;RadiationPressure\nInterfaceSettings&quot;};
+
+      BodyShapeSettings -&gt; EphemerisSettings [style = invis];
+      RotationModelSettings -&gt; BodyShapeSettings [style = invis];
+   }
+
+}</p></object>
 <div class="section" id="setting-up-the-environment">
 <h2>3.1. Setting up the Environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this headline">¶</a></h2>
-<p>In Tudat, the physical environment is defined by a list of&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;objects, each of which represents either a celestial body, or a manmade vehicle. Consequently, all properties that are required for computing e.g. accelerations are stored in&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;objects. Typically the entire environment is stored in a named list of&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;object, the standard typedef for which is the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code>. (It as an unordered map of shared pointers to body objects, see&nbsp;this wiki page&nbsp;for a discussion of shared pointers; don’t worry if you’re not sure what a shared pointer or unordered map is at this point.).</p>
+<p>In Tudat, the physical environment is defined by a list of&nbsp;<a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;objects, each of which represents either a celestial body, or a manmade vehicle. Consequently, all properties that are required for computing e.g. accelerations are stored in&nbsp;<a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;objects.</p>
+<dl class="class">
+<dt id="Body">
+<em class="property">class </em><code class="descname">Body</code><a class="headerlink" href="#Body" title="Permalink to this definition">¶</a></dt>
+<dd><p>Container for all properties of a body required for computing e.g. accelerations.</p>
+</dd></dl>
+
+<p>Typically the entire environment is stored in a named list of&nbsp;<a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object, the standard typedef for which is the&nbsp;<a class="reference internal" href="#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a>.</p>
+<dl class="class">
+<dt id="NamedBodyMap">
+<em class="property">class </em><code class="descname">NamedBodyMap</code><a class="headerlink" href="#NamedBodyMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>An unordered map of shared pointers to <a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> objects, see&nbsp;<a class="reference internal" href="../../prerequiredKnowledge/externalLibraries/boost.html#externalboost"><span class="std std-ref">this</span></a> wiki page&nbsp;for a discussion of shared pointers; don’t worry if you’re not sure what a shared pointer or unordered map is at this point.</p>
+</dd></dl>
+
 <div class="section" id="manually-creating-the-environment">
 <h3>3.1.1. Manually creating the environment<a class="headerlink" href="#manually-creating-the-environment" title="Permalink to this headline">¶</a></h3>
-<p>The following shows how to manually declare a&nbsp;<code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code>, and then create entries in this body map for a number of bodies:</p>
+<p>The following shows how to manually declare a&nbsp;<a class="reference internal" href="#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a>, and then create entries in this body map for a number of bodies:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span><span class="p">;</span>
 <span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
 <span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Moon&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
@@ -202,7 +278,7 @@
 </pre></div>
 </div>
 <p>This creates four body objects (representing three celestial bodies and one vehicle; Tudat does not distinguish between the two). However, these bodies do not yet have any physical properties, the&nbsp;<code class="docutils literal"><span class="pre">bodyMap</span></code>&nbsp;created above now only indicates the&nbsp;existence&nbsp;of these four bodies.</p>
-<p>To actually define the physical properties of the environment, a&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;object may be endowed with any of a number of properties. In particular, the following properties may be set. A more extensive list of possible model types is given at the end of this tutorial page:</p>
+<p>To actually define the physical properties of the environment, a&nbsp;<a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object may be endowed with any of a number of properties. In particular, the following properties may be set. A more extensive list of possible model types is given at the end of this tutorial page:</p>
 <blockquote>
 <div><ul class="simple">
 <li><strong>Ephemeris:</strong> defines the state of the body as a function of time (Dynamical Barycentric Time seconds since J2000 is default).</li>
@@ -222,11 +298,17 @@
 <span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setGravityFieldModel</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GravityFieldModel</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mf">3.986004418E14</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>This calls the constructors of the&nbsp;<a class="reference internal" href="../otherLibraries/spice.html#SpiceEphemeris" title="SpiceEphemeris"><code class="xref py py-class docutils literal"><span class="pre">SpiceEphemeris</span></code></a>&nbsp;and&nbsp;<code class="xref py py-class docutils literal"><span class="pre">GravityFieldModel</span></code>&nbsp;classes, and assigns the objects that are constructed to the&nbsp;”Earth”&nbsp;entry of the&nbsp;<code class="docutils literal"><span class="pre">bodyMap</span></code>.</p>
+<p>This calls the constructors of the&nbsp;<a class="reference internal" href="../otherLibraries/spice.html#SpiceEphemeris" title="SpiceEphemeris"><code class="xref py py-class docutils literal"><span class="pre">SpiceEphemeris</span></code></a>&nbsp;and&nbsp;<a class="reference internal" href="#GravityFieldModel" title="GravityFieldModel"><code class="xref py py-class docutils literal"><span class="pre">GravityFieldModel</span></code></a>&nbsp;classes, and assigns the objects that are constructed to the&nbsp;”Earth”&nbsp;entry of the&nbsp;<code class="docutils literal"><span class="pre">bodyMap</span></code>.</p>
 </div>
 <div class="section" id="creating-the-environment-from-bodysettings">
-<span id="tudatfeaturescreatingtheenvironment"></span><h3>3.1.2. Creating the environment from&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code><a class="headerlink" href="#creating-the-environment-from-bodysettings" title="Permalink to this headline">¶</a></h3>
-<p>Manually creating all objects defining the full environment is possible, but not recommended. In particular, various environment models are interdependent and these dependencies must be fully and consistently defined for the code to function properly. To this end, we provide a&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code>&nbsp;object, in which the general properties of each environment model can be set (see above for the list of the available types of environment models). We note that for&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;objects that represent vehicles, the manual creation is typically used, as the vehicle conditions may depend on the celestial bodies, but not&nbsp;vice versa.</p>
+<span id="tudatfeaturescreatingtheenvironment"></span><h3>3.1.2. Creating the environment from&nbsp;<a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a><a class="headerlink" href="#creating-the-environment-from-bodysettings" title="Permalink to this headline">¶</a></h3>
+<p>Manually creating all objects defining the full environment is possible, but not recommended. In particular, various environment models are interdependent and these dependencies must be fully and consistently defined for the code to function properly. To this end, we provide a&nbsp;<a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;object.</p>
+<dl class="class">
+<dt id="BodySettings">
+<em class="property">class </em><code class="descname">BodySettings</code><a class="headerlink" href="#BodySettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class in which the general properties of each environment model can be set (see above for the list of the available types of environment models). We note that for&nbsp;<a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;objects that represent vehicles, the manual creation is typically used, as the vehicle conditions may depend on the celestial bodies, but not&nbsp;vice versa.</p>
+</dd></dl>
+
 <p>In many cases, default properties of (celestial) bodies may be used by calling the&nbsp;<code class="docutils literal"><span class="pre">getDefaultBodySettings</span></code>&nbsp;function, so that the user does not need to define all required properties line-by-line. At present, the following default settings are used (none if not in list):</p>
 <blockquote>
 <div><ul class="simple">
@@ -250,12 +332,12 @@
             <span class="n">getDefaultBodySettings</span><span class="p">(</span> <span class="n">bodyNames</span><span class="p">,</span> <span class="n">initialEphemerisTime</span> <span class="o">-</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">finalEphemerisTime</span> <span class="o">+</span> <span class="n">buffer</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The reasons for passing the initial/final time (as well as the ‘buffer’) are discussed in more detail <span class="xref std std-ref">here</span>. As can be seen from the above, the settings for the environment are stored in a map of pointers to&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code>&nbsp;objects (with the key the name of the associated bodies). If you have a look at the definition of the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code>&nbsp;class (in&nbsp;<code class="docutils literal"><span class="pre">SimulationSetup/createBodies.h</span></code>), you will see that this type is simply a container for a list of specific environment settings, which we discuss in more detail below. As a result, specifying settings for a given type of environment model requires the creation of an object of the correct type of class (derived class of&nbsp;<a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a>&nbsp;for defining an ephemeris; derived class of&nbsp;<a class="reference internal" href="#BodyShapeSettings" title="BodyShapeSettings"><code class="xref py py-class docutils literal"><span class="pre">BodyShapeSettings</span></code></a>&nbsp;for defining a body shape&nbsp;etc.)</p>
-<p>Often, one will wish to load the default settings, but make slight modifications or additions to it before creating the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code>. This can be achieved as follows for the example of a shape model: we want an oblate spheroid shape model instead of a spherical shape model for Earth.</p>
+<p>The reasons for passing the initial/final time (as well as the ‘buffer’) are discussed in more detail at the end of this page. As can be seen from the above, the settings for the environment are stored in a map of pointers to&nbsp;<a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;objects (with the key the name of the associated bodies). If you have a look at the definition of the&nbsp;<a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;class (in&nbsp;<code class="docutils literal"><span class="pre">SimulationSetup/createBodies.h</span></code>), you will see that this type is simply a container for a list of specific environment settings, which we discuss in more detail below. As a result, specifying settings for a given type of environment model requires the creation of an object of the correct type of class (derived class of&nbsp;<a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a>&nbsp;for defining an ephemeris; derived class of&nbsp;<a class="reference internal" href="#BodyShapeSettings" title="BodyShapeSettings"><code class="xref py py-class docutils literal"><span class="pre">BodyShapeSettings</span></code></a>&nbsp;for defining a body shape&nbsp;etc.)</p>
+<p>Often, one will wish to load the default settings, but make slight modifications or additions to it before creating the&nbsp;<a class="reference internal" href="#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a>. This can be achieved as follows for the example of a shape model: we want an oblate spheroid shape model instead of a spherical shape model for Earth.</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OblateSphericalBodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mf">6378.0E3</span><span class="p">,</span> <span class="mf">0.01</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>which changes the shape model settings of the Earth from the default spherical to the oblate spheroid. A list of available environment models, as well as the manner in which to provide settings for them, is provided at the end of this tutorial. The above appproach is identical for adding or modifying environment model settings (that is, it does not matter whether Earth already had <code class="docutils literal"><span class="pre">shapeModelSettings</span></code> or not). Once the settings for the environment model have been defined, the following creates the actual&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;objects and all associated environment models</p>
+<p>which changes the shape model settings of the Earth from the default spherical to the oblate spheroid. A list of available environment models, as well as the manner in which to provide settings for them, is provided at the end of this tutorial. The above appproach is identical for adding or modifying environment model settings (that is, it does not matter whether Earth already had <code class="docutils literal"><span class="pre">shapeModelSettings</span></code> or not). Once the settings for the environment model have been defined, the following creates the actual&nbsp;<a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;objects and all associated environment models</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -274,7 +356,7 @@
 </div>
 <div class="section" id="available-settings-for-the-environment-models">
 <h2>3.2. Available Settings for the Environment Models<a class="headerlink" href="#available-settings-for-the-environment-models" title="Permalink to this headline">¶</a></h2>
-<p>Here, we will provide a full list of the available properties of the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code>&nbsp;object. Each type of environment model has one base class to define settings for the creation of the model). Often, a specific derived class is implemented for a specific environment model of a given class, in which any additional information that may be needed can be provided. For instance, when defining a gravity field model, one can simply use:</p>
+<p>Here, we will provide a full list of the available properties of the&nbsp;<a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;object. Each type of environment model has one base class to define settings for the creation of the model). Often, a specific derived class is implemented for a specific environment model of a given class, in which any additional information that may be needed can be provided. For instance, when defining a gravity field model, one can simply use:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">central_spice</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -287,9 +369,15 @@
 <div class="section" id="atmosphere-model">
 <h3>3.2.1. Atmosphere model<a class="headerlink" href="#atmosphere-model" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
+<dt id="AtmosphereModel">
+<em class="property">class </em><code class="descname">AtmosphereModel</code><a class="headerlink" href="#AtmosphereModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for all atmosphere models. This model is constructed using the settings classes described below.</p>
+</dd></dl>
+
+<dl class="class">
 <dt id="AtmosphereSettings">
 <em class="property">class </em><code class="descname">AtmosphereSettings</code><a class="headerlink" href="#AtmosphereSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>The base class for atmosphere settings. Models currently available through the <code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code> architecture are (with examples when defining settings for Earth):</p>
+<dd><p>The base class for atmosphere settings. Models currently available through the <a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> architecture are (with examples when defining settings for Earth):</p>
 </dd></dl>
 
 <dl class="class">
@@ -336,9 +424,15 @@
 <div class="section" id="ephemeris-model">
 <h3>3.2.2. Ephemeris model<a class="headerlink" href="#ephemeris-model" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
+<dt id="Ephemeris">
+<em class="property">class </em><code class="descname">Ephemeris</code><a class="headerlink" href="#Ephemeris" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for the ephemeris. It is constructed using one of the settings classes below.</p>
+</dd></dl>
+
+<dl class="class">
 <dt id="EphemerisSettings">
 <em class="property">class </em><code class="descname">EphemerisSettings</code><a class="headerlink" href="#EphemerisSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the ephemeris settings. Models currently available through the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code>&nbsp;architecture and set by their respective derived classes are:</p>
+<dd><p>Base class for the ephemeris settings. Models currently available through the&nbsp;<a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;architecture and set by their respective derived classes are:</p>
 </dd></dl>
 
 <dl class="class">
@@ -425,7 +519,7 @@
 <dl class="method">
 <dt>
 <code class="descname">Multi-arc ephemeris</code></dt>
-<dd><p>An ephemeris model (for translational state) that allows the body’s state to be defined by distinct ephemeris models over different arcs. Class is implemented to support multi-arc propagation/estimation. No derived class of&nbsp;<a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a> base class required, the created ephemeris can be made multi-arc by using the <code class="docutils literal"><span class="pre">resetMakeMultiArcEphemeris</span></code> function of the <a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a> class. The resulting <code class="xref py py-class docutils literal"><span class="pre">Ephemeris</span></code> object will then be <code class="xref py py-class docutils literal"><span class="pre">MultiArcEphemeris</span></code> (with the same ephemeris model for each arc when created, according to the settings in the <a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a> object)</p>
+<dd><p>An ephemeris model (for translational state) that allows the body’s state to be defined by distinct ephemeris models over different arcs. Class is implemented to support multi-arc propagation/estimation. No derived class of&nbsp;<a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a> base class required, the created ephemeris can be made multi-arc by using the <code class="docutils literal"><span class="pre">resetMakeMultiArcEphemeris</span></code> function of the <a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a> class. The resulting <a class="reference internal" href="#Ephemeris" title="Ephemeris"><code class="xref py py-class docutils literal"><span class="pre">Ephemeris</span></code></a> object will then be <code class="xref py py-class docutils literal"><span class="pre">MultiArcEphemeris</span></code> (with the same ephemeris model for each arc when created, according to the settings in the <a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a> object)</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span><span class="o">-&gt;</span> <span class="n">resetMakeMultiArcEphemeris</span><span class="p">(</span> <span class="nb">true</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -446,9 +540,15 @@
 <div class="section" id="gravity-field-model">
 <h3>3.2.3. Gravity field model<a class="headerlink" href="#gravity-field-model" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
+<dt id="GravityFieldModel">
+<em class="property">class </em><code class="descname">GravityFieldModel</code><a class="headerlink" href="#GravityFieldModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for the gravity field model, set using the settings classes described below.</p>
+</dd></dl>
+
+<dl class="class">
 <dt id="GravityFieldSettings">
 <em class="property">class </em><code class="descname">GravityFieldSettings</code><a class="headerlink" href="#GravityFieldSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the gravity field settings. Models currently available through the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code>&nbsp;architecture can be called by the following:</p>
+<dd><p>Base class for the gravity field settings. Models currently available through the&nbsp;<a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;architecture can be called by the following:</p>
 </dd></dl>
 
 <dl class="class">
@@ -489,9 +589,15 @@
 <div class="section" id="rotational-model">
 <h3>3.2.4. Rotational model<a class="headerlink" href="#rotational-model" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
+<dt id="RotationalEphemeris">
+<em class="property">class </em><code class="descname">RotationalEphemeris</code><a class="headerlink" href="#RotationalEphemeris" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for the rotational ephemeris model, set using the settings classes described below.</p>
+</dd></dl>
+
+<dl class="class">
 <dt id="RotationModelSettings">
 <em class="property">class </em><code class="descname">RotationModelSettings</code><a class="headerlink" href="#RotationModelSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the rotational model settings. Models currently available through the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code>&nbsp;architecture are:</p>
+<dd><p>Base class for the rotational model settings. Models currently available through the&nbsp;<a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;architecture are:</p>
 </dd></dl>
 
 <dl class="class">
@@ -542,6 +648,12 @@
 <div class="section" id="torque-model">
 <h3>3.2.5. Torque model<a class="headerlink" href="#torque-model" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
+<dt id="TorqueModel">
+<em class="property">class </em><code class="descname">TorqueModel</code><a class="headerlink" href="#TorqueModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for the torque model, set using the settings classes described below.</p>
+</dd></dl>
+
+<dl class="class">
 <dt id="TorqueSettings">
 <em class="property">class </em><code class="descname">TorqueSettings</code><a class="headerlink" href="#TorqueSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for the torque settings used for rotational dynamics as set in <a class="reference internal" href="../propagationSetup/propagatorSettings.html#RotationalStatePropagatorSettings" title="RotationalStatePropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">RotationalStatePropagatorSettings</span></code></a>. Type of torque is selected by passing the correct parameter to the constructor. Currently two types of torques are implemented: <code class="docutils literal"><span class="pre">second_order_gravitational_torque</span></code> (interaction of point-mass of body A with J<sub>2</sub> of body B) and <code class="docutils literal"><span class="pre">aerodynamic_torque</span></code> (settings for coefficients defined same as for aerodynamic acceleration).</p>
@@ -554,9 +666,15 @@
 <div class="section" id="body-shape-model">
 <h3>3.2.6. Body shape model<a class="headerlink" href="#body-shape-model" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
+<dt id="BodyShapeModel">
+<em class="property">class </em><code class="descname">BodyShapeModel</code><a class="headerlink" href="#BodyShapeModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for body shape models. It is constructed using the settings described below.</p>
+</dd></dl>
+
+<dl class="class">
 <dt id="BodyShapeSettings">
 <em class="property">class </em><code class="descname">BodyShapeSettings</code><a class="headerlink" href="#BodyShapeSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the body shape settings. Models currently available through the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code>&nbsp;architecture are:</p>
+<dd><p>Base class for the body shape settings. Models currently available through the&nbsp;<a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;architecture are:</p>
 </dd></dl>
 
 <dl class="class">
@@ -594,9 +712,15 @@
 <div class="section" id="radiation-pressure-interface">
 <h3>3.2.7. Radiation pressure interface<a class="headerlink" href="#radiation-pressure-interface" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
+<dt id="RadiationPressureInterface">
+<em class="property">class </em><code class="descname">RadiationPressureInterface</code><a class="headerlink" href="#RadiationPressureInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class containing the properties of a solar radiation pressure acceleration model. It is constructed using the settings classes below.</p>
+</dd></dl>
+
+<dl class="class">
 <dt id="RadiationPressureInterfaceSettings">
 <em class="property">class </em><code class="descname">RadiationPressureInterfaceSettings</code><a class="headerlink" href="#RadiationPressureInterfaceSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the radiation pressure interface settings. A separate model can be used for different bodies emitting radiation (key values of&nbsp;radiationPressureSettings) Models currently available through the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code>&nbsp;architecture are:</p>
+<dd><p>Base class for the radiation pressure interface settings. A separate model can be used for different bodies emitting radiation (key values of&nbsp;radiationPressureSettings) Models currently available through the&nbsp;<a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;architecture are:</p>
 </dd></dl>
 
 <dl class="class">
@@ -623,9 +747,15 @@
 <div class="section" id="aerodynamic-coefficient-interface">
 <span id="aerodynamiccoefficientoptions"></span><h3>3.2.8. Aerodynamic coefficient interface<a class="headerlink" href="#aerodynamic-coefficient-interface" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
+<dt id="AerodynamicCoefficientInterface">
+<em class="property">class </em><code class="descname">AerodynamicCoefficientInterface</code><a class="headerlink" href="#AerodynamicCoefficientInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class containing the aerodynamic coefficient interface set by the settings classes below.</p>
+</dd></dl>
+
+<dl class="class">
 <dt id="AerodynamicCoefficientSettings">
 <em class="property">class </em><code class="descname">AerodynamicCoefficientSettings</code><a class="headerlink" href="#AerodynamicCoefficientSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the aerodynamic coefficient settings. Models currently available through the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code>&nbsp;architecture are:</p>
+<dd><p>Base class for the aerodynamic coefficient settings. Models currently available through the&nbsp;<a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;architecture are:</p>
 </dd></dl>
 
 <dl class="class">
@@ -652,16 +782,22 @@
 <dl class="method">
 <dt>
 <code class="descname">Local Inclination methods</code></dt>
-<dd><p>Settings for aerodynamic coefficients computed internally using a shape model of the vehicle, valid for hypersonic Mach numbers. Currently, this type of aerodynamic coefficients can only be set manually in the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;object directly.</p>
+<dd><p>Settings for aerodynamic coefficients computed internally using a shape model of the vehicle, valid for hypersonic Mach numbers. Currently, this type of aerodynamic coefficients can only be set manually in the&nbsp;<a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object directly.</p>
 </dd></dl>
 
 </div>
 <div class="section" id="time-variations-of-the-gravity-field">
 <h3>3.2.9. Time-variations of the gravity field<a class="headerlink" href="#time-variations-of-the-gravity-field" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
+<dt id="GravityFieldVariations">
+<em class="property">class </em><code class="descname">GravityFieldVariations</code><a class="headerlink" href="#GravityFieldVariations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Virtual base class for spherical harmonic gravity field variations. Constructed using the settings classes below.</p>
+</dd></dl>
+
+<dl class="class">
 <dt id="GravityFieldVariationSettings">
 <em class="property">class </em><code class="descname">GravityFieldVariationSettings</code><a class="headerlink" href="#GravityFieldVariationSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the gravity field variation settings. Any number of gravity field variations may be used (hence the use of a vector). NOTE: You can only use gravity field variations for bodies where you have defined a spherical harmonic gravity field (through the use of&nbsp;<a class="reference internal" href="#SphericalHarmonicsGravityFieldSettings" title="SphericalHarmonicsGravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicsGravityFieldSettings</span></code></a>). Models currently available through the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code>&nbsp;architecture are:</p>
+<dd><p>Base class for the gravity field variation settings. Any number of gravity field variations may be used (hence the use of a vector). NOTE: You can only use gravity field variations for bodies where you have defined a spherical harmonic gravity field (through the use of&nbsp;<a class="reference internal" href="#SphericalHarmonicsGravityFieldSettings" title="SphericalHarmonicsGravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicsGravityFieldSettings</span></code></a>). Models currently available through the&nbsp;<a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;architecture are:</p>
 </dd></dl>
 
 <dl class="class">
@@ -680,7 +816,7 @@
 </div>
 <div class="section" id="the-environment-during-propagation">
 <h2>3.3. The Environment During Propagation<a class="headerlink" href="#the-environment-during-propagation" title="Permalink to this headline">¶</a></h2>
-<p>Each&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;object and its constituent members is updated to the current state and time automatically during the numerical propagation. We stress that only those models that are relevant for a given propagation are updated every time step (this is handled automatically, without user intervention). Most time-dependent properties of the body are set in the environment models themselves. However, a number are updated and stored directly in the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">Body</span></code>&nbsp;object. These are:</p>
+<p>Each&nbsp;<a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object and its constituent members is updated to the current state and time automatically during the numerical propagation. We stress that only those models that are relevant for a given propagation are updated every time step (this is handled automatically, without user intervention). Most time-dependent properties of the body are set in the environment models themselves. However, a number are updated and stored directly in the&nbsp;<a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object. These are:</p>
 <blockquote>
 <div><ul class="simple">
 <li>The current translational state of the body</li>
@@ -758,7 +894,6 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

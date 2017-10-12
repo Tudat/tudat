@@ -189,8 +189,14 @@
             
   <div class="section" id="propagator-settings-basics">
 <span id="tudatfeaturespropagatorsettings"></span><h1>5.2. Propagator Settings: Basics<a class="headerlink" href="#propagator-settings-basics" title="Permalink to this headline">¶</a></h1>
-<p>This page presents an overview of the available options within <code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code>. As the name suggests, these settings define how the orbit is propagated within the <code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code>.</p>
+<p>This page presents an overview of the available options within <a class="reference internal" href="#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a>. As the name suggests, these settings define how the orbit is propagated within the <a class="reference internal" href="simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a>.</p>
 <p>Similarly to the <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> discussed in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a>, various derived classes are used to implement different settings:</p>
+<dl class="class">
+<dt id="PropagatorSettings">
+<em class="property">class </em><code class="descname">PropagatorSettings</code><a class="headerlink" href="#PropagatorSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class from which the other settings classes described below are derived.</p>
+</dd></dl>
+
 <dl class="class">
 <dt id="TranslationalStatePropagatorSettings">
 <em class="property">class </em><code class="descname">TranslationalStatePropagatorSettings</code><a class="headerlink" href="#TranslationalStatePropagatorSettings" title="Permalink to this definition">¶</a></dt>
@@ -425,7 +431,7 @@
 <dt id="MultiTypePropagatorSettings">
 <em class="property">class </em><code class="descname">MultiTypePropagatorSettings</code><a class="headerlink" href="#MultiTypePropagatorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
-<div><p>This class is used to propagate multiple types of <code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code> concurrently. The constructor of this class is overloaded depending on how the list of propagator settings is passed:</p>
+<div><p>This class is used to propagate multiple types of <a class="reference internal" href="#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> concurrently. The constructor of this class is overloaded depending on how the list of propagator settings is passed:</p>
 <dl class="method">
 <dt>
 <code class="descname">Using an std::vector</code></dt>
@@ -439,7 +445,7 @@
 <ul>
 <li><p class="first"><code class="docutils literal"><span class="pre">propagatorSettingsMap</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">boost::shared_ptr&lt;</span> <span class="pre">PropagatorSettings&lt;</span> <span class="pre">StateScalarType</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> where each element contains a pointer to a <code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code> class. This class is the simplest to use, since it allows to pass a set of unsorted <code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code> derived classes by means of the <code class="docutils literal"><span class="pre">push_back</span></code> method of <code class="docutils literal"><span class="pre">std::vector</span></code>.</p>
+<div><p><code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">boost::shared_ptr&lt;</span> <span class="pre">PropagatorSettings&lt;</span> <span class="pre">StateScalarType</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> where each element contains a pointer to a <a class="reference internal" href="#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> class. This class is the simplest to use, since it allows to pass a set of unsorted <a class="reference internal" href="#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> derived classes by means of the <code class="docutils literal"><span class="pre">push_back</span></code> method of <code class="docutils literal"><span class="pre">std::vector</span></code>.</p>
 </div></blockquote>
 </li>
 </ul>
@@ -458,7 +464,7 @@
 <ul>
 <li><p class="first"><code class="docutils literal"><span class="pre">propagatorSettingsMap</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">std::map&lt;</span> <span class="pre">IntegratedStateType,</span> <span class="pre">std::vector&lt;</span> <span class="pre">boost::shared_ptr&lt;</span> <span class="pre">PropagatorSettings&lt;</span> <span class="pre">StateScalarType</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> where each element contains a pointer to a <code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code> class. This class requires a sorted list <code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code> derived classes.</p>
+<div><p><code class="docutils literal"><span class="pre">std::map&lt;</span> <span class="pre">IntegratedStateType,</span> <span class="pre">std::vector&lt;</span> <span class="pre">boost::shared_ptr&lt;</span> <span class="pre">PropagatorSettings&lt;</span> <span class="pre">StateScalarType</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> where each element contains a pointer to a <a class="reference internal" href="#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> class. This class requires a sorted list <a class="reference internal" href="#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> derived classes.</p>
 </div></blockquote>
 </li>
 </ul>
@@ -557,7 +563,6 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

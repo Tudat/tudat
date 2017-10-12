@@ -283,11 +283,11 @@
 <h2>7.2. Defining Estimation Settings<a class="headerlink" href="#defining-estimation-settings" title="Permalink to this headline">¶</a></h2>
 <p>We have now defined the settings for the observation models that are to be used. Next are the settings for the parameters that are to be estimated. In this tutorial, we use only a limited set of parameters, namely:</p>
 <ul class="simple">
-<li>The spacecraft initial state <span class="math">\(x_{0}\)</span>, where use only a single arc to estimate its dynamics.</li>
-<li>A constant radiation pressure coefficient <span class="math">\(C_{r}\)</span> of the spacecraft (assuming a cannonball radiation pressure model)</li>
-<li>A constant aerodynamic drag coefficient <span class="math">\(C_{D}\)</span> of the spacecraft</li>
-<li>Spherical harmonic cosine coefficients at degree 2, and orders 0 to 2 (so <span class="math">\(C_{20}, C_{21}, C_{22}\)</span>)</li>
-<li>Spherical harmonic sine coefficients at degree 2, and orders 1 to 2 (so <span class="math">\(S_{21}, S_{22}\)</span>)</li>
+<li>The spacecraft initial state , where use only a single arc to estimate its dynamics.</li>
+<li>A constant radiation pressure coefficient  of the spacecraft (assuming a cannonball radiation pressure model)</li>
+<li>A constant aerodynamic drag coefficient  of the spacecraft</li>
+<li>Spherical harmonic cosine coefficients at degree 2, and orders 0 to 2 (so )</li>
+<li>Spherical harmonic sine coefficients at degree 2, and orders 1 to 2 (so )</li>
 </ul>
 <p>Defining the settings for these parameters is done by:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">parameterNames</span><span class="p">;</span>
@@ -302,7 +302,7 @@
                               <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="n">spherical_harmonics_sine_coefficient_block</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>details on the set up of the parameters can be found on the page <a class="reference internal" href="../tudatFeatures/estimationSetup/parameterEstimationSettings.html#parametersettingcreation"><span class="std std-ref">Creating Estimated Parameters</span></a>. The general idea behind the settings may be familiar: they are similar to the acceleration settings. Some parameters (<span class="math">\(C_{r}\)</span> and <span class="math">\(C_{D}\)</span>) require no information in addition to the type of parameter and associated bodies and are created using the <a class="reference internal" href="../tudatFeatures/estimationSetup/parameterEstimationSettings.html#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal"><span class="pre">EstimatableParameterSettings</span></code></a> base class. The other parameters require                               additional information, and have a dedicated derived class.</p>
+<p>details on the set up of the parameters can be found on the page <a class="reference internal" href="../tudatFeatures/estimationSetup/parameterEstimationSettings.html#parametersettingcreation"><span class="std std-ref">Creating Estimated Parameters</span></a>. The general idea behind the settings may be familiar: they are similar to the acceleration settings. Some parameters ( and ) require no information in addition to the type of parameter and associated bodies and are created using the <a class="reference internal" href="../tudatFeatures/estimationSetup/parameterEstimationSettings.html#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal"><span class="pre">EstimatableParameterSettings</span></code></a> base class. The other parameters require                               additional information, and have a dedicated derived class.</p>
 <p>Now, the actual objects that are used in the simulation are created by:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create parameters</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">estimatable_parameters</span><span class="o">::</span><span class="n">EstimatableParameterSet</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">parametersToEstimate</span> <span class="o">=</span>
@@ -356,7 +356,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>So, we start simulating at <span class="math">\(t=t_{0}+1000\)</span> (with <span class="math">\(t_{0}\)</span> the start time of the simulation), and then simulate 500 simulations 20 seconds apart at the start of each of the 3 days in the simulations. This list of time is then stored in the <code class="docutils literal"><span class="pre">baseTimeList</span></code> vector.</p>
+<p>So, we start simulating at  (with  the start time of the simulation), and then simulate 500 simulations 20 seconds apart at the start of each of the 3 days in the simulations. This list of time is then stored in the <code class="docutils literal"><span class="pre">baseTimeList</span></code> vector.</p>
 <p>In general, observation times will be different for each link end/observable type. Here, however, we take a simpler approach and use the same observation time for each link:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create measureement simulation input</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">ObservableType</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">LinkEnds</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">,</span> <span class="n">LinkEndType</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">measurementSimulationInput</span><span class="p">;</span>
@@ -408,7 +408,7 @@
 <span class="n">initialParameterEstimate</span> <span class="o">+=</span> <span class="n">parameterPerturbation</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>In which we perturb the initial position and velocity by 10 m and 0.01 m/s, respectively. Both <span class="math">\(C_{r}\)</span> and  <span class="math">\(C_{D}\)</span>, we perturb by 0.01. Note that only the parameters of the model are changed, so that the estimation should converge (to within its numerical capabilities) to the original parameter set.</p>
+<p>In which we perturb the initial position and velocity by 10 m and 0.01 m/s, respectively. Both  and  , we perturb by 0.01. Note that only the parameters of the model are changed, so that the estimation should converge (to within its numerical capabilities) to the original parameter set.</p>
 <p>We define the input to the estimation with the <a class="reference internal" href="../tudatFeatures/estimationSetup/estimationExecution.html#PodInput" title="PodInput"><code class="xref py py-class docutils literal"><span class="pre">PodInput</span></code></a> class:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define estimation input</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">PodInput</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">podInput</span> <span class="o">=</span>
@@ -428,7 +428,7 @@
 <span class="n">podInput</span><span class="o">-&gt;</span><span class="n">setConstantPerObservableWeightsMatrix</span><span class="p">(</span> <span class="n">weightPerObservable</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Which sets the expected range data precision at 1.0 m, the angular position data at 10 mrad, and the Doppler data at <span class="math">\(10^{-11}\)</span> (Doppler data is range-rate uncertainty non-dimensionalized by speed of light).</p>
+<p>Which sets the expected range data precision at 1.0 m, the angular position data at 10 mrad, and the Doppler data at  (Doppler data is range-rate uncertainty non-dimensionalized by speed of light).</p>
 <p>The estimation is then performed by:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Perform estimation</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">PodOutput</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">podOutput</span> <span class="o">=</span> <span class="n">orbitDeterminationManager</span><span class="p">.</span><span class="n">estimateParameters</span><span class="p">(</span>
@@ -514,7 +514,6 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

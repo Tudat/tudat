@@ -187,13 +187,7 @@
 <span id="jsoninterface-tutorials-lifetimemaximisation"></span><h1>Perturbed Earth-orbiting satellite lifetime maximisation<a class="headerlink" href="#perturbed-earth-orbiting-satellite-lifetime-maximisation" title="Permalink to this headline">¶</a></h1>
 <p>This page describes how to set up a single-variable optimisation of the lifetime of an Earth-orbiting satellite using the <code class="docutils literal"><span class="pre">json_interface</span></code>.</p>
 <p>The rate of decrease of the perigee altitude is assumed to be a good indicator of the lifetime of the satellite. If a small rate of decrease is undergone, longer lifetimes can be expected, and vice versa. Thus, the optimisation problem is defined as:</p>
-<div class="math">
-\[minimise\,-\frac{h_{p_f} - h_{p_0}}{t_f - t_0}\]</div>
 <p>subject to:</p>
-<div class="math">
-\[\begin{split}0 \le t_0 &amp;\le 1\text{ Julian year} \\
-t_f - t_0 &amp;&lt;  1\text{ Julian year} \\
-h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
 <p>The initial sate of the satellite is given by:</p>
 <blockquote>
 <div><ul class="simple">
@@ -207,7 +201,7 @@ h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
 <blockquote>
 <div><ul class="simple">
 <li>Mass of 400 kg.</li>
-<li>Reference area of 10 <span class="math">\(\text{m}^2\)</span>.</li>
+<li>Reference area of 10 .</li>
 <li>Drag coefficient of 2.2.</li>
 <li>Radiation pressure coefficients of 1.5.</li>
 </ul>
@@ -221,7 +215,7 @@ h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
 <li>Solar radiation pressure (with occultations by the Earth).</li>
 </ul>
 </div></blockquote>
-<p>The first step is to define the initial epoch and the maximum final epoch. Since <span class="math">\(t_0\)</span> is the optimisation variable, and the value of <span class="math">\(t_f\)</span> depends on <span class="math">\(t_0\)</span>, these two variable cannot be defined in a shared JSON file, but have to be defined individually for each case. A total of 365 days (one for each day of the year 2000) will be propagated.</p>
+<p>The first step is to define the initial epoch and the maximum final epoch. Since  is the optimisation variable, and the value of  depends on , these two variable cannot be defined in a shared JSON file, but have to be defined individually for each case. A total of 365 days (one for each day of the year 2000) will be propagated.</p>
 <p>The first step is to define the file tree. In this case, we will have a <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code> file containing the settings shared by all propagations, and then an <code class="xref py py-class docutils literal"><span class="pre">inputs</span></code> folder where the individual root input files for each case will be located. After running the propagations, an <code class="docutils literal"><span class="pre">outputs</span></code> folder containing the results for each case will be generated. Thus, the file tree will look like this:</p>
 <div class="highlight-txt"><div class="highlight"><pre><span></span>lifetimeMaximisation
 |
@@ -364,10 +358,7 @@ h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
 <p>Note the usage of <code class="docutils literal"><span class="pre">${ROOT_FILE_STEM}</span></code> in the path of the output file. Since we are going to generate a root input file for each day of year 2000, a different output file for each case will be generated. These files must have different names. Instead of defining this key in each of the individual files, we define it in the <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code> file using the special string <code class="docutils literal"><span class="pre">${ROOT_FILE_STEM}</span></code>, which will be replaced by e.g. <code class="docutils literal"><span class="pre">day1</span></code> when running <code class="docutils literal"><span class="pre">json_interface</span> <span class="pre">day1.json</span></code>.</p>
 <p>We also specify the list of variables to be exported. Only the initial and final epoch and perigee altitude are relevant. The epoch is outputted in the first column of the generated files automatically (unless <span class="jsonkey">epochsInFirstColumn</span> is set to <code class="docutils literal"><span class="pre">false</span></code>). We request to output only the results of the initial and final epochs by settings <span class="jsonkey">onlyInitialStep</span> and <span class="jsonkey">onlyFinalStep</span> to <code class="docutils literal"><span class="pre">true</span></code> (note that these keys are not mutually exclusive, i.e. settings both to <code class="docutils literal"><span class="pre">true</span></code> will result in a results matrix with two rows corresponding to the initial and final epochs). The variable to be outputted is the satellite’s periapsis altitude w.r.t. Earth.</p>
 <p>Finally, we have to define the termination conditions, which are:</p>
-<div class="math">
-\[\begin{split}t_f &amp;&lt; t_0 + 1\text{ Julian year} \\
-h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
-<p>Since <span class="math">\(t_0\)</span> is not a shared property, one of the termination conditions will be different for each propagation. However, there is no need to manually define the time-based termination condition because <code class="docutils literal"><span class="pre">json_interface</span></code> will create automatically from the key <span class="jsonkey">finalEpoch</span> defined at root level, and add it to other conditions (which means that, if the condition defined manually OR the condition created from <span class="jsonkey">finalEpoch</span> are met, the propagation will terminate). Thus, we only need to specify the termination condition for the periapsis altitude, by defining the key <span class="jsonkey">termination</span> at root level to be:</p>
+<p>Since  is not a shared property, one of the termination conditions will be different for each propagation. However, there is no need to manually define the time-based termination condition because <code class="docutils literal"><span class="pre">json_interface</span></code> will create automatically from the key <span class="jsonkey">finalEpoch</span> defined at root level, and add it to other conditions (which means that, if the condition defined manually OR the condition created from <span class="jsonkey">finalEpoch</span> are met, the propagation will terminate). Thus, we only need to specify the termination condition for the periapsis altitude, by defining the key <span class="jsonkey">termination</span> at root level to be:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="s">&quot;variable&quot;</span><span class="o">:</span> <span class="s">&quot;${export[0].variables[0]}&quot;</span><span class="p">,</span>
   <span class="s">&quot;lowerLimit&quot;</span><span class="o">:</span> <span class="mi">110000</span>
@@ -717,7 +708,6 @@ h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
       <script type="text/javascript" src="../../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

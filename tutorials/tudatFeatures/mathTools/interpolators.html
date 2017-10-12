@@ -202,7 +202,13 @@
 <p>The first four options are interpolation routines with a single independent variable. The final one can be used for interpolation from an arbitrary number of independent variables.</p>
 <div class="section" id="single-variable-interpolator-creation">
 <h2>2.1.1. Single-variable interpolator creation<a class="headerlink" href="#single-variable-interpolator-creation" title="Permalink to this headline">¶</a></h2>
-<p>Creating interpolators of a single independent variable is most easily done in Tudat by creating an <code class="xref py py-class docutils literal"><span class="pre">InterpolatorSettings</span></code> object, and passing this to the <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> function.</p>
+<p>Creating interpolators of a single independent variable is most easily done in Tudat by creating an <a class="reference internal" href="#InterpolatorSettings" title="InterpolatorSettings"><code class="xref py py-class docutils literal"><span class="pre">InterpolatorSettings</span></code></a> object, and passing this to the <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> function.</p>
+<dl class="class">
+<dt id="InterpolatorSettings">
+<em class="property">class </em><code class="descname">InterpolatorSettings</code><a class="headerlink" href="#InterpolatorSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class containing settings to setup an interpolator.</p>
+</dd></dl>
+
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Load data.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="n">stateMap</span><span class="p">;</span>
 <span class="n">stateMap</span> <span class="o">=</span> <span class="p">....</span>
@@ -215,7 +221,7 @@
             <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span> <span class="p">);</span>
 
 <span class="c1">// Interpolate</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="p">.</span><span class="n">interpolate</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>In this example, the <code class="docutils literal"><span class="pre">stateMap</span></code> contains the data that is interpolated, using the <code class="docutils literal"><span class="pre">double</span></code> key (time) as independent variable and the <code class="docutils literal"><span class="pre">Eigen::Vector6d</span></code> value (state) as dependent variable. The interpolation type is linear, and the <code class="docutils literal"><span class="pre">interpolatorSettings</span></code> object is created by passing only the argument <code class="docutils literal"><span class="pre">linear_interpolator</span></code>.</p>
@@ -223,11 +229,11 @@
 <p>The different interpolator types are handled in a similar manner:</p>
 <blockquote>
 <div><ul>
-<li><p class="first"><strong>Piece-wise constant:</strong> Requires no additional information to the <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> and is defined by using the <code class="docutils literal"><span class="pre">InterpolatorSettings</span></code> base class (with <code class="docutils literal"><span class="pre">piecewise_constant_interpolator</span></code> as argument).</p>
+<li><p class="first"><strong>Piece-wise constant:</strong> Requires no additional information to the <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> and is defined by using the <a class="reference internal" href="#InterpolatorSettings" title="InterpolatorSettings"><code class="xref py py-class docutils literal"><span class="pre">InterpolatorSettings</span></code></a> base class (with <code class="docutils literal"><span class="pre">piecewise_constant_interpolator</span></code> as argument).</p>
 </li>
-<li><p class="first"><strong>Linear:</strong> Requires no additional information to the <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> and is defined by using the <code class="docutils literal"><span class="pre">InterpolatorSettings</span></code> base class (with <code class="docutils literal"><span class="pre">linear_interpolator</span></code> as argument).</p>
+<li><p class="first"><strong>Linear:</strong> Requires no additional information to the <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> and is defined by using the <a class="reference internal" href="#InterpolatorSettings" title="InterpolatorSettings"><code class="xref py py-class docutils literal"><span class="pre">InterpolatorSettings</span></code></a> base class (with <code class="docutils literal"><span class="pre">linear_interpolator</span></code> as argument).</p>
 </li>
-<li><p class="first"><strong>Cubic spline:</strong> Requires no additional information to the <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> and is defined by using the <code class="docutils literal"><span class="pre">InterpolatorSettings</span></code> base class (with <code class="docutils literal"><span class="pre">cubic_spline_interpolator</span></code> as argument).</p>
+<li><p class="first"><strong>Cubic spline:</strong> Requires no additional information to the <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> and is defined by using the <a class="reference internal" href="#InterpolatorSettings" title="InterpolatorSettings"><code class="xref py py-class docutils literal"><span class="pre">InterpolatorSettings</span></code></a> base class (with <code class="docutils literal"><span class="pre">cubic_spline_interpolator</span></code> as argument).</p>
 <blockquote>
 <div><div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -255,7 +261,7 @@
             <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span><span class="p">,</span> <span class="n">stateDerivativeMap</span> <span class="p">);</span>
 
 <span class="c1">// Interpolate</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="p">.</span><span class="n">interpolate</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -264,7 +270,13 @@
 <div class="section" id="lagrange-interpolator">
 <h2>2.1.2. Lagrange interpolator<a class="headerlink" href="#lagrange-interpolator" title="Permalink to this headline">¶</a></h2>
 <p>This interpolation routine uses an nth degree polynomial to approximate a function from (n+1) data points. In our implementation, you can use a large data set of m data points (with m &gt; n) to generate a set of interpolating polynomials. When interpolating a data point, the interpolation routine will automatically select the polynomial where the requested data point lies between the two middle points, to prevent wild oscillations (which occur at the edge of the polynomial). At the boundaries of the full interval, a cubic spline interpolator is used.</p>
-<p>To create a Lagrange interpolator, the number of data points used for each interpolating polynomial should be defined, using the dedicated derived class <code class="xref py py-class docutils literal"><span class="pre">LagrangeInterpolatorSettings</span></code>. For example, when using 8 data points per polynomial, the following code should be used:</p>
+<p>To create a Lagrange interpolator, the number of data points used for each interpolating polynomial should be defined, using the dedicated derived class <a class="reference internal" href="#LagrangeInterpolatorSettings" title="LagrangeInterpolatorSettings"><code class="xref py py-class docutils literal"><span class="pre">LagrangeInterpolatorSettings</span></code></a>. The input argument for this class is the amount of points per polynomial. An example, when using 8 data points per polynomial, is described below:</p>
+<dl class="class">
+<dt id="LagrangeInterpolatorSettings">
+<em class="property">class </em><code class="descname">LagrangeInterpolatorSettings</code><a class="headerlink" href="#LagrangeInterpolatorSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Derived class used for the settings of a lagrange interpolator.</p>
+</dd></dl>
+
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Load data for values at node points</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="n">stateMap</span><span class="p">;</span>
 <span class="n">stateMap</span> <span class="o">=</span> <span class="p">....</span>
@@ -277,7 +289,7 @@
             <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span> <span class="p">);</span>
 
 <span class="c1">// Interpolate</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="p">.</span><span class="n">interpolate</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -338,7 +350,6 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

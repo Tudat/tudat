@@ -189,12 +189,18 @@
 <span id="tudatfeaturesframeworkaccelerations"></span><h1>4.1. Implementation Framework of the Acceleration Settings<a class="headerlink" href="#implementation-framework-of-the-acceleration-settings" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="acceleration-settings">
 <h2>4.1.1. Acceleration settings<a class="headerlink" href="#acceleration-settings" title="Permalink to this headline">¶</a></h2>
-<p>The settings for accelerations are defined and stored by the user in a <code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code>, which is <code class="docutils literal"><span class="pre">typedef</span></code> for:</p>
+<p>The settings for accelerations are defined and stored by the user in a <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a>.</p>
+<dl class="class">
+<dt id="SelectedAccelerationMap">
+<em class="property">class </em><code class="descname">SelectedAccelerationMap</code><a class="headerlink" href="#SelectedAccelerationMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a  <code class="docutils literal"><span class="pre">typedef</span></code> for:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>This is a double map (with twice a string as a key). The two levels correspond to the names of bodies undergoing an acceleration (first key) , and those for bodies exerting an acceleration (second key). This allows any number of bodies to be propagated, undergoing any number (and type) of accelerations from any number of bodies.
-For a given environment, most acceleration models are completely defined by:</p>
+<p>This is a double map (with twice a string as a key). The two levels correspond to the names of bodies undergoing an acceleration (first key) , and those for bodies exerting an acceleration (second key). This allows any number of bodies to be propagated, undergoing any number (and type) of accelerations from any number of bodies.</p>
+</dd></dl>
+
+<p>For a given environment, most acceleration models are completely defined by:</p>
 <blockquote>
 <div><ul class="simple">
 <li>Type of acceleration model (a list is provided in the <code class="xref py py-class docutils literal"><span class="pre">AvailableAcceleration</span></code> enum in <code class="docutils literal"><span class="pre">Tudat/Astrodynamics/BasicAstrodynamics/accelerationModelTypes.h</span></code>).</li>
@@ -216,11 +222,11 @@ For a given environment, most acceleration models are completely defined by:</p>
 </pre></div>
 </div>
 <p>A full list of the available acceleration models, as well as their required input and environment models, is given at the end of this page. One KEY point to understand is that, when creating an object of the <a class="reference internal" href="#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a> type (or its derived class), you must not provide any of the third body acceleration types (<code class="docutils literal"><span class="pre">third_body_central_gravity</span></code>, <code class="docutils literal"><span class="pre">third_body_spherical_harmonic_gravity</span></code>, <code class="docutils literal"><span class="pre">third_body_mutual_spherical_harmonic_gravity</span></code>) as input. If you wish to use a third-body gravity acceleration (typically from a point mass), simply provide <code class="docutils literal"><span class="pre">central_gravity</span></code> as input. Depending on the settings for your central bodies, the code will automatically create the corresponding acceleration object (central or third-body).</p>
-<p>Having defined all the required settings for the accelerations in your <code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code>, you can create the actual acceleration models by using the <code class="docutils literal"><span class="pre">createAccelerationModelsMap</span></code> function. This function requires four input parameters:</p>
+<p>Having defined all the required settings for the accelerations in your <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a>, you can create the actual acceleration models by using the <code class="docutils literal"><span class="pre">createAccelerationModelsMap</span></code> function. This function requires four input parameters:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Full environment, as defined by a <code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code>.</li>
-<li>Settings for the acceleration models, given by <code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code>.</li>
+<li>Full environment, as defined by a <a class="reference internal" href="../environmentSetup/index.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a>.</li>
+<li>Settings for the acceleration models, given by <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a>.</li>
 <li>A list of bodies to numerically propagate.</li>
 <li>A list of central bodies (one for each numerically propagated body).</li>
 </ul>
@@ -257,7 +263,7 @@ For a given environment, most acceleration models are completely defined by:</p>
 </div>
 <div class="section" id="available-acceleration-models">
 <h2>4.1.2. Available acceleration models<a class="headerlink" href="#available-acceleration-models" title="Permalink to this headline">¶</a></h2>
-<p>As stated above, the <code class="docutils literal"><span class="pre">createAccelerationModelsMap</span></code> function uses your environment and settings for the accelerations to automatically retrieve and put together all functions used to calculate the accelerations during each function evaluation of the numerical scheme. For reference, we provide a list of available acceleration models, below, including example of how to add settings for the model to the <code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code>. In addition, we define the list of environment models required for their creation.</p>
+<p>As stated above, the <code class="docutils literal"><span class="pre">createAccelerationModelsMap</span></code> function uses your environment and settings for the accelerations to automatically retrieve and put together all functions used to calculate the accelerations during each function evaluation of the numerical scheme. For reference, we provide a list of available acceleration models, below, including example of how to add settings for the model to the <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a>. In addition, we define the list of environment models required for their creation.</p>
 <dl class="class">
 <dt id="AccelerationSettings">
 <em class="property">class </em><code class="descname">AccelerationSettings</code><a class="headerlink" href="#AccelerationSettings" title="Permalink to this definition">¶</a></dt>
@@ -267,7 +273,7 @@ For a given environment, most acceleration models are completely defined by:</p>
 <dl class="method">
 <dt>
 <code class="descname">Point mass gravity</code></dt>
-<dd><p>Settings for a point mass gravity acceleration. No derived class of <a class="reference internal" href="#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a> is required, this acceleration setting are constructed by feeding <code class="docutils literal"><span class="pre">central_gravity</span></code> to the constructor. Added to <code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code> as follows, for example of acceleration exerted on “Apollo” by “Earth”:</p>
+<dd><p>Settings for a point mass gravity acceleration. No derived class of <a class="reference internal" href="#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a> is required, this acceleration setting are constructed by feeding <code class="docutils literal"><span class="pre">central_gravity</span></code> to the constructor. Added to <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a> as follows, for example of acceleration exerted on “Apollo” by “Earth”:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettings</span><span class="p">;</span>
 <span class="n">accelerationSettings</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
@@ -282,7 +288,7 @@ For a given environment, most acceleration models are completely defined by:</p>
 <dl class="class">
 <dt id="SphericalHarmonicAccelerationSettings">
 <em class="property">class </em><code class="descname">SphericalHarmonicAccelerationSettings</code><a class="headerlink" href="#SphericalHarmonicAccelerationSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Settings for the accelerations as set by <a class="reference internal" href="../environmentSetup/index.html#SphericalHarmonicsGravityFieldSettings" title="SphericalHarmonicsGravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicsGravityFieldSettings</span></code></a>. Added to <code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code> as follows, for example of acceleration exerted on “Apollo” by “Earth”:</p>
+<dd><p>Settings for the accelerations as set by <a class="reference internal" href="../environmentSetup/index.html#SphericalHarmonicsGravityFieldSettings" title="SphericalHarmonicsGravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicsGravityFieldSettings</span></code></a>. Added to <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a> as follows, for example of acceleration exerted on “Apollo” by “Earth”:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettings</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">maximumDegree</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">maximumOrder</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
@@ -300,7 +306,7 @@ For a given environment, most acceleration models are completely defined by:</p>
 <dl class="class">
 <dt id="MutualSphericalHarmonicAccelerationSettings">
 <em class="property">class </em><code class="descname">MutualSphericalHarmonicAccelerationSettings</code><a class="headerlink" href="#MutualSphericalHarmonicAccelerationSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>This model is typically only used for detailed propagation of planetary systems, and discussed in more detail here BROKEN HERE LINK. It is added to <code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code> as follows, for example of acceleration exerted on “Io” by “Jupiter”:</p>
+<dd><p>This model is typically only used for detailed propagation of planetary systems. It is added to <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a> as follows, for example of acceleration exerted on “Io” by “Jupiter”:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettings</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">maximumDegreeOfIo</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">maximumOrderOfIo</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
@@ -334,7 +340,7 @@ For a given environment, most acceleration models are completely defined by:</p>
 <dl class="method">
 <dt>
 <code class="descname">Aerodynamic acceleration</code></dt>
-<dd><p>No derived class of <a class="reference internal" href="#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a> required, accessed by feeding <code class="docutils literal"><span class="pre">aerodynamic</span></code> to the constructor. Added to <code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code> as follows, for example of acceleration exerted on “Apollo” by “Earth” (e.g. atmosphere model belonging to Earth):</p>
+<dd><p>No derived class of <a class="reference internal" href="#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a> required, accessed by feeding <code class="docutils literal"><span class="pre">aerodynamic</span></code> to the constructor. Added to <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a> as follows, for example of acceleration exerted on “Apollo” by “Earth” (e.g. atmosphere model belonging to Earth):</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettings</span><span class="p">;</span>
 <span class="n">accelerationSettings</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">aerodynamic</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
@@ -342,8 +348,8 @@ For a given environment, most acceleration models are completely defined by:</p>
 <p>Requires the following environment models to be defined:</p>
 <ul class="simple">
 <li>Atmosphere model for body exerting acceleration (set by <a class="reference internal" href="../environmentSetup/index.html#AtmosphereSettings" title="AtmosphereSettings"><code class="xref py py-class docutils literal"><span class="pre">AtmosphereSettings</span></code></a>).</li>
-<li>Shape model for body exerting acceleration (set by <code class="xref py py-class docutils literal"><span class="pre">ShapeModelSettings</span></code>).</li>
-<li>Aerodynamic coefficient interface for body undergoing acceleration (set by <code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientInterfaceSettings</span></code>). NOTE: In the case that the aerodynamic coefficients are defined as a function of the vehicle orientation (e.g. angle of attack and sideslip angle), these angles can be manually or automatically defined. We have dedicated a specific page to this here BROKEN HERE LINK.</li>
+<li>Shape model for body exerting acceleration (set by <a class="reference internal" href="../environmentSetup/index.html#BodyShapeSettings" title="BodyShapeSettings"><code class="xref py py-class docutils literal"><span class="pre">BodyShapeSettings</span></code></a>).</li>
+<li>Aerodynamic coefficient interface for body undergoing acceleration (set by <a class="reference internal" href="../environmentSetup/index.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientSettings</span></code></a>). NOTE: In the case that the aerodynamic coefficients are defined as a function of the vehicle orientation (e.g. angle of attack and sideslip angle), these angles can be manually or automatically defined.</li>
 <li>Mass model for body undergoing acceleration.</li>
 <li>Current state of body undergoing acceleration and body with atmosphere.</li>
 </ul>
@@ -356,7 +362,7 @@ For a given environment, most acceleration models are completely defined by:</p>
 <dl class="method">
 <dt>
 <code class="descname">Cannonball radiation pressure</code></dt>
-<dd><p>No derived class of <a class="reference internal" href="#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a> required, accessed by feeding <code class="docutils literal"><span class="pre">cannon_ball_radiation_pressure</span></code> to the constructor. Added to <code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code> as follows, for example of acceleration exerted on “Apollo” by “Sun”:</p>
+<dd><p>No derived class of <a class="reference internal" href="#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a> required, accessed by feeding <code class="docutils literal"><span class="pre">cannon_ball_radiation_pressure</span></code> to the constructor. Added to <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a> as follows, for example of acceleration exerted on “Apollo” by “Sun”:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettings</span><span class="p">;</span>
 <span class="n">accelerationSettings</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Sun&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">cannon_ball_radiation_pressure</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
@@ -381,7 +387,7 @@ For a given environment, most acceleration models are completely defined by:</p>
 <dl class="class">
 <dt id="RelativisticAccelerationCorrectionSettings">
 <em class="property">class </em><code class="descname">RelativisticAccelerationCorrectionSettings</code><a class="headerlink" href="#RelativisticAccelerationCorrectionSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A first-order (in <span class="math">\(1/c^{2}\)</span>) correction to the acceleration due to the influence of relativity. It implements the model of Chapter 10, Section 3 of the IERS 2010 Conventions. These settings  require:</p>
+<dd><p>A first-order (in ) correction to the acceleration due to the influence of relativity. It implements the model of Chapter 10, Section 3 of the IERS 2010 Conventions. These settings  require:</p>
 <blockquote>
 <div><ul class="simple">
 <li>Boolean whether to include the Schwarzschild correction term</li>
@@ -429,7 +435,7 @@ For a given environment, most acceleration models are completely defined by:</p>
 <dl class="class">
 <dt id="FromThrustMassModelSettings">
 <em class="property">class </em><code class="descname">FromThrustMassModelSettings</code><a class="headerlink" href="#FromThrustMassModelSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Using this mass-rate model, the change in vehicle mass due to the expulsion of propellant is taken into account when propagating a vehicle’s dynamics. It retrieves the required data from a <code class="xref py py-class docutils literal"><span class="pre">ThrustAcceleration</span></code> object (set by <a class="reference internal" href="#ThrustAccelerationSettings" title="ThrustAccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustAccelerationSettings</span></code></a>), ensuring full consistency between the two. Two option are available when creating this type of mass-rate model:</p>
+<dd><p>Using this mass-rate model, the change in vehicle mass due to the expulsion of propellant is taken into account when propagating a vehicle’s dynamics. It retrieves the required data from a <a class="reference internal" href="thrustModels.html#ThrustAcceleration" title="ThrustAcceleration"><code class="xref py py-class docutils literal"><span class="pre">ThrustAcceleration</span></code></a> object (set by <a class="reference internal" href="#ThrustAccelerationSettings" title="ThrustAccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustAccelerationSettings</span></code></a>), ensuring full consistency between the two. Two option are available when creating this type of mass-rate model:</p>
 <ul class="simple">
 <li>Use all thrust forces acting on a single body, combined into a single mass-rate model. This will in most cases be the model of choice, as there is often no need to distinguish between thrust sources when computing the mass rate: only the total amount of propellant usage is relevant. This option is toggled by setting the <code class="docutils literal"><span class="pre">useAllThrustModels</span></code> input argument of the <a class="reference internal" href="#FromThrustMassModelSettings" title="FromThrustMassModelSettings"><code class="xref py py-class docutils literal"><span class="pre">FromThrustMassModelSettings</span></code></a> constructor to true.</li>
 <li>Use a single thrust model, defined by a string-identifier. When creating a thrust model, a <code class="docutils literal"><span class="pre">thrustOriginId</span></code> input is provided to the <a class="reference internal" href="thrustModels.html#ThrustEngineSettings" title="ThrustEngineSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustEngineSettings</span></code></a> settings constructor. Only in the <a class="reference internal" href="thrustModels.html#FromBodyThrustEngineSettings" title="FromBodyThrustEngineSettings"><code class="xref py py-class docutils literal"><span class="pre">FromBodyThrustEngineSettings</span></code></a> derived class is this thrust origin id set to anything else than an empty string: it represents the engine name.</li>
@@ -494,7 +500,6 @@ For a given environment, most acceleration models are completely defined by:</p>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

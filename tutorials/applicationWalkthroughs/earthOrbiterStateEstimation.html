@@ -230,16 +230,16 @@
 </div>
 <p>We use the same link ends/observable types as in the previous example. However, we extend our list of estimated parameters to:</p>
 <ul class="simple">
-<li>The spacecraft initial states <span class="math">\(x(t_{j)}\)</span> for 10 arcs, with <span class="math">\(j=1..10\)</span>, <span class="math">\(t_{j+1}-t_{j}\)</span> = 3 days</li>
-<li>Parameteric Post-Newtonian (PPN) parameter <span class="math">\(\gamma\)</span>. Parameter equals 1 in general relativity</li>
-<li>A constant radiation pressure coefficient <span class="math">\(C_{r}\)</span> of the spacecraft (assuming a cannonball radiation pressure model)</li>
-<li>A constant aerodynamic drag coefficient <span class="math">\(C_{D}\)</span> of the spacecraft</li>
-<li>Constant Earth rotation rate <span class="math">\(\omega_{E}\)</span></li>
-<li>Pole position of Earth rotation axis, parameterized by its right ascension and declination <span class="math">\(\alpha_{E}\)</span> and <span class="math">\(\delta_{E}\)</span></li>
-<li>Earth-fixed position of ground stations “Station1” and “Station2”  <span class="math">\(\mathbf{x}_{GS,1}^{(E)}\)</span> and <span class="math">\(\mathbf{x}_{GS,2}^{(E)}\)</span>.</li>
-<li>Absolute observation bias <span class="math">\(K_{a}\)</span> for the first two links used for one-way range</li>
-<li>Spherical harmonic cosine coefficients <span class="math">\(C_{lm}\)</span> at degree <span class="math">\(l=2..8\)</span> and orders <span class="math">\(m=0..l\)</span>.</li>
-<li>Spherical harmonic cosine coefficients <span class="math">\(S_{lm}\)</span> at degree <span class="math">\(l=2..8\)</span> and orders <span class="math">\(m=1..l\)</span>.</li>
+<li>The spacecraft initial states  for 10 arcs, with ,  = 3 days</li>
+<li>Parameteric Post-Newtonian (PPN) parameter . Parameter equals 1 in general relativity</li>
+<li>A constant radiation pressure coefficient  of the spacecraft (assuming a cannonball radiation pressure model)</li>
+<li>A constant aerodynamic drag coefficient  of the spacecraft</li>
+<li>Constant Earth rotation rate </li>
+<li>Pole position of Earth rotation axis, parameterized by its right ascension and declination  and </li>
+<li>Earth-fixed position of ground stations “Station1” and “Station2”   and .</li>
+<li>Absolute observation bias  for the first two links used for one-way range</li>
+<li>Spherical harmonic cosine coefficients  at degree  and orders .</li>
+<li>Spherical harmonic cosine coefficients  at degree  and orders .</li>
 <li>Empirical accelerations in along- and across-track directions (both sine and cosine of true anomaly components), estimated in a multi-arc fashion, using 2 arcs over the full simulation period.</li>
 </ul>
 <p>Which is achieved by the following block of code:</p>
@@ -350,7 +350,7 @@
             <span class="n">bodyMap</span><span class="p">,</span> <span class="n">linkEndsPerObservable</span><span class="p">,</span> <span class="n">observationViabilitySettings</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The objects that are created by the <code class="docutils literal"><span class="pre">createObservationViabilityCalculators</span></code> function will be used to only use those observations for which the elevation angle at each ground station is larger than <span class="math">\(5^{\circ}\)</span>.</p>
+<p>The objects that are created by the <code class="docutils literal"><span class="pre">createObservationViabilityCalculators</span></code> function will be used to only use those observations for which the elevation angle at each ground station is larger than .</p>
 <p>An additional modification to the observation simulation that we will make, w.r.t. previous tutorial, is that we will no introduce noise in the simulations. We use a relatively simple model for the noise, setting Gaussian, time-independent and time-uncorrelated distribution for the noise of each observable:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define noise levels</span>
 <span class="kt">double</span> <span class="n">rangeNoise</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
@@ -378,7 +378,7 @@
                          <span class="n">boost</span><span class="o">::</span><span class="n">assign</span><span class="o">::</span><span class="n">list_of</span><span class="p">(</span> <span class="mf">0.0</span> <span class="p">)(</span> <span class="n">dopplerNoise</span> <span class="p">),</span> <span class="mf">0.0</span> <span class="p">),</span> <span class="n">_1</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Which generates noise functions that put a 0.1 m noise on range, 0.1 mrad noise on the angular position, and <span class="math">\(10^{-12}\)</span> noise on the Doppler observation. The syntax of the above code ise described in more detail on the page on <a class="reference internal" href="../tudatFeatures/estimationSetup/observationSimulation.html#observationnoise"><span class="std std-ref">Observation Noise</span></a>. The observations are simulated similarly as before:</p>
+<p>Which generates noise functions that put a 0.1 m noise on range, 0.1 mrad noise on the angular position, and  noise on the Doppler observation. The syntax of the above code ise described in more detail on the page on <a class="reference internal" href="../tudatFeatures/estimationSetup/observationSimulation.html#observationnoise"><span class="std std-ref">Observation Noise</span></a>. The observations are simulated similarly as before:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Simulate observations</span>
 <span class="n">PodInputDataType</span> <span class="n">observationsAndTimes</span> <span class="o">=</span> <span class="n">simulateObservationsWithNoise</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span>
             <span class="n">measurementSimulationInput</span><span class="p">,</span> <span class="n">orbitDeterminationManager</span><span class="p">.</span><span class="n">getObservationSimulators</span><span class="p">(</span> <span class="p">),</span> <span class="n">noiseFunctions</span><span class="p">,</span>
@@ -442,7 +442,6 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
