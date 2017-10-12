@@ -98,7 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tudatFeatures/index.html">Tudat Libraries</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">JSON Interface</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="keys/index.html">List of keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keys/rst/index.html">List of keys</a></li>
 <li class="toctree-l3"><a class="reference internal" href="modularFiles.html">Modular files</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Multi-case simulations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="customJsonApp.html">Writing custom JSON-based applications</a></li>
@@ -178,7 +178,7 @@
             
   <div class="section" id="multi-case-simulations">
 <span id="jsoninterface-multicase"></span><h1>Multi-case simulations<a class="headerlink" href="#multi-case-simulations" title="Permalink to this headline">¶</a></h1>
-<p>The <code class="docutils literal"><span class="pre">json_interface</span></code> allows combining several input files to generate a single object that is used to set up a propagation. This is slightly different than the modular files described in the previous page. In the previous case, during the creation of the root input file, the special strings <code class="docutils literal"><span class="pre">&quot;$(file.json)&quot;</span></code> were replaced by the contents of the reference file. In this case, the contents of two files are combined, processing first one object and then (re-)defining the keys specified in the second object. This is done by writing, for instance:</p>
+<p>The JSON Interface allows combining several input files to generate a single object that is used to set up a propagation. This is slightly different than the modular files described in the previous page. In the previous case, during the creation of the root input file, the special strings <code class="docutils literal"><span class="pre">&quot;$(file.json)&quot;</span></code> were replaced by the contents of the reference file. In this case, the contents of two files are combined, processing first one object and then (re-)defining the keys specified in the second object. This is done by writing, for instance:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">mass8000.json</span></code></span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
 <div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">[</span>
@@ -219,7 +219,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Even when the fields <span class="jsonkey">satellite.mass</span> or <span class="jsonkey">satellite</span> are undefined in <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code>, the same combined object would be obtained.</p>
+<p>Even when the keys <span class="jsonkey">satellite.mass</span> or <span class="jsonkey">satellite</span> are undefined in <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code>, the same combined object would be obtained.</p>
 <p>This feature is especially useful when running multi-case simulations (for solving optimisation problems), as it allows the user to define the shared settings in a file, that is referenced from mergeable files in which some keys (the optimisation variables) are (re-)defined. In this way, repeating the same information in every file is avoided, which can lead to large file sizes specially for complex propagations or when the number of simulations to be run is large.</p>
 <p>For instance, the following tree structure can be used to run the same simulations with a variable value for the mass of the vehicle:</p>
 <div class="highlight-txt"><div class="highlight"><pre><span></span>root
@@ -234,7 +234,7 @@
 | shared.json
 </pre></div>
 </div>
-<p>Then, the <code class="docutils literal"><span class="pre">json_interface</span></code> application is called for each of the files inside the <code class="xref py py-class docutils literal"><span class="pre">inputs</span></code> directory. Note that there is no need to call it for the file <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code>. If one has <a class="reference external" href="https://www.gnu.org/software/parallel/">GNU Parallel</a> installed, is is possible to run the simulations in parallel by writing in Terminal:</p>
+<p>Then, the <code class="docutils literal"><span class="pre">json_interface</span></code> application is called for each of the files inside the <code class="xref py py-class docutils literal"><span class="pre">inputs</span></code> directory. Note that there is no need to call it for the file <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code>. If one has <a class="reference external" href="https://www.gnu.org/software/parallel/">GNU Parallel</a> installed, it is possible to run the simulations in parallel by writing in Terminal:</p>
 <div class="highlight-txt"><div class="highlight"><pre><span></span>parallel json_interface ::: inputs/*.json
 </pre></div>
 </div>
@@ -400,7 +400,7 @@
 <div><ul class="simple">
 <li><strong>Declaration file</strong>: file in which a JSON key and corresponding value are defined.</li>
 <li><strong>Parent file</strong>: file from which the declaration file is referenced.</li>
-<li><strong>Root file</strong>: file provided as input argument to <code class="docutils literal"><span class="pre">json_interface</span></code>.</li>
+<li><strong>Root file</strong>: file provided as input argument to the <code class="docutils literal"><span class="pre">json_interface</span></code> application.</li>
 </ul>
 </div></blockquote>
 <p>Then, the following special variables can be used inside strings anywhere in input files, which will be replaced by:</p>
@@ -441,10 +441,10 @@
 <div><ul class="simple">
 <li>When a path is provided as a plain string (e.g. <code class="docutils literal"><span class="pre">&quot;relativePath&quot;</span></code>), it must be relative to the root file.</li>
 <li>When a path is provided using the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword (e.g. <code class="docutils literal"><span class="pre">&quot;&#64;path(relativePath)&quot;</span></code>), it must be relative to the declaration file.</li>
-<li>When a path is used to include (parts of) the contents of another JSON file (e.g. <code class="docutils literal"><span class="pre">&quot;$(shared.json)&quot;</span></code>), the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword is not be used and it must be relative to the declaration file.</li>
+<li>When a special string is used to include (parts of) the contents of another JSON file (e.g. <code class="docutils literal"><span class="pre">&quot;$(shared.json)&quot;</span></code>), the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword is not used and it must be relative to the declaration file.</li>
 </ul>
 </div></blockquote>
-<p>It is recommended to never provide relative paths as plain strings, and to always use either <code class="docutils literal"><span class="pre">&#64;path()</span></code> or <code class="docutils literal"><span class="pre">$()</span></code>, so that the paths are always specified relative to the declaration file. When no modular or mergeable files are used, the root file and the definition file are always the same, so using the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword makes is unnecessary but still recommended, as the project could be modularised in the future or parts parts of it may be end up being used in other projects, potentially requiring the use of the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword.</p>
+<p>It is recommended to never provide relative paths as plain strings, and to always use either <code class="docutils literal"><span class="pre">&#64;path()</span></code> or <code class="docutils literal"><span class="pre">$()</span></code>, so that the paths are always specified relative to the declaration file. When no modular or mergeable files are used, the root file and the definition file are always the same, so using the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword makes it unnecessary but still recommended, as the project could be modularised in the future or parts parts of it may be end up being used in other projects, potentially requiring the use of the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword.</p>
 </div>
 
 

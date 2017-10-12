@@ -98,7 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../tudatFeatures/index.html">Tudat Libraries</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../index.html">JSON Interface</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../../keys/index.html">List of keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../keys/rst/index.html">List of keys</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../modularFiles.html">Modular files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../multicase.html">Multi-case simulations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../customJsonApp.html">Writing custom JSON-based applications</a></li>
@@ -106,6 +106,7 @@
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Unperturbed Earth-orbiting satellite</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../lifetimeMaximisation/index.html">Perturbed Earth-orbiting satellite lifetime maximisation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../apolloCapsuleEntry/index.html">Apollo Capsule Entry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lifetimeMaximisationCPP/index.html">Perturbed Earth-orbiting satellite lifetime maximisation using a custom C++ application</a></li>
 </ul>
 </li>
 </ul>
@@ -185,9 +186,9 @@
             
   <div class="section" id="unperturbed-earth-orbiting-satellite">
 <span id="jsoninterface-tutorials-basicpropagation"></span><h1>Unperturbed Earth-orbiting satellite<a class="headerlink" href="#unperturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
-<p>This page describes how to set up the propagation of the unperturbed Earth-orbiting satellite described in <a class="reference external" href="../../../applicationWalkthroughs/unperturbedEarthOrbitingSatellite.html">this page</a> using the <code class="docutils literal"><span class="pre">json_interface</span></code>.</p>
+<p>This page describes how to set up the propagation of the unperturbed Earth-orbiting satellite described in <a class="reference internal" href="../../../applicationWalkthroughs/unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> using the <code class="docutils literal"><span class="pre">json_interface</span></code>.</p>
 <p>The first step is to define the file tree. Since this is a simple example, there is no need to split the root input file into several files. Thus, we will have just a single file called <code class="xref py py-class docutils literal"><span class="pre">main.json</span></code>.</p>
-<p>We define the key <span class="jsonkey">initialEpoch</span> at root level, which will be used as initial time for the integrator and for interpolation of the Spice ephemeris. We also define the key <span class="jsonkey">finalEpoch</span>, which is used for interpolation of the Spice ephemeris and to create a time-based termination condition. In both cases, we need to specify the values in seconds since J2000. In this case, <span class="jsonkey">globalFrameOrigin</span> is not specified, so the default values of <code class="docutils literal"><span class="pre">&quot;SSB&quot;</span></code> (Solar system barycentre) is used. The <span class="jsonkey">globalFrameOrientation</span> is set to <code class="docutils literal"><span class="pre">J2000</span></code>.</p>
+<p>We define the key <span class="jsonkey">initialEpoch</span> at root level, which will be used as initial time for the integrator and for interpolation of the Spice ephemeris. We also define the key <span class="jsonkey">finalEpoch</span>, which is used for interpolation of the Spice ephemeris and to create a time-based termination condition. In both cases, we need to specify the values in seconds since J2000. In this case, <span class="jsonkey">globalFrameOrigin</span> is not specified, so the default value of <code class="docutils literal"><span class="pre">&quot;SSB&quot;</span></code> (Solar system barycentre) is used. The <span class="jsonkey">globalFrameOrientation</span> is set to <code class="docutils literal"><span class="pre">J2000</span></code>.</p>
 <p>Then, we request using the standard Spice kernels, namely <code class="xref py py-class docutils literal"><span class="pre">pck00010.tpc</span></code>, <code class="xref py py-class docutils literal"><span class="pre">gm_de431.tpc</span></code>, <code class="xref py py-class docutils literal"><span class="pre">de430_small.bsp</span></code> and <code class="xref py py-class docutils literal"><span class="pre">pck00010.tpc</span></code>. We do this by defining the key <span class="jsonkey">spice</span> to be:</p>
 <div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;useStandardKernels&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
@@ -196,7 +197,7 @@
 </pre></div>
 </div>
 <p>We disable preloading of the ephemeris of the celestial bodies from the period <span class="jsonkey">initialEpoch</span> to <span class="jsonkey">finalEpoch</span>.</p>
-<p>The next step is to define the body settings. In this case, only Earth and the orbiting body (named <code class="docutils literal"><span class="pre">Asterix</span></code>) are considered. Thus, we set the key <code class="docutils literal"><span class="pre">bodies</span></code> to be:</p>
+<p>The next step is to define the body settings. In this case, only Earth and the orbiting body (named <span class="jsonkey">Asterix</span>) are considered. Thus, we set the key <span class="jsonkey">bodies</span> to be:</p>
 <div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
@@ -226,8 +227,8 @@
 <div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">[</span>
   <span class="p">{</span>
     <span class="nt">&quot;integratedStateType&quot;</span><span class="p">:</span> <span class="s2">&quot;translational&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;centralBodies&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;Earth&quot;</span> <span class="p">],</span>
-    <span class="nt">&quot;bodiesToPropagate&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;Asterix&quot;</span> <span class="p">],</span>
+    <span class="nt">&quot;centralBodies&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Earth&quot;</span><span class="p">],</span>
+    <span class="nt">&quot;bodiesToPropagate&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Asterix&quot;</span><span class="p">],</span>
     <span class="nt">&quot;accelerations&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -241,7 +242,7 @@
 <span class="p">]</span>
 </pre></div>
 </div>
-<p>We specify the key <span class="jsonkey">propagators[0].accelerations</span>, an object containing lists of accelerations. The inner keys (in this case, <span class="jsonkey">Earth</span>) are the names of the bodies exerting the accelerations, while the outer keys (in this case, <span class="jsonkey">Asterix</span>), are the names of the bodies undergoing the accelerations. Thus, <span class="jsonkey">accelerations.Asterix.Earth</span> is read as accelerations on Asterix caused by Earth. In this case, the only acceleration is Earth’s point-mass gravity.</p>
+<p>We specify the key <span class="jsonkey">propagators[0].accelerations</span>, an object containing lists of accelerations. The inner keys (in this case, <span class="jsonkey">Earth</span>) are the names of the bodies exerting the accelerations, while the outer keys (in this case, <span class="jsonkey">Asterix</span>), are the names of the bodies undergoing the accelerations. Thus, <span class="jsonkey">accelerations.Asterix.Earth</span> is read as “accelerations on Asterix caused by Earth”. In this case, the only acceleration is Earth’s point-mass gravity.</p>
 <p>In this case, some keys of <span class="jsonkey">propagators[0]</span> have been omitted. For instance, the key <code class="docutils literal"><span class="pre">type</span></code> has not been specified, meaning that the default value <code class="docutils literal"><span class="pre">&quot;cowell&quot;</span></code> is used.</p>
 <p>The next step is to define the integrator settings. The initial time is retrieved from the key <span class="jsonkey">initialEpoch</span> defined at root level, so it is sufficient to define the key <span class="jsonkey">integrator</span> to be equal to the following object:</p>
 <div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -264,8 +265,8 @@
 <span class="p">]</span>
 </pre></div>
 </div>
-<p>Here, each element in the array will result in the generation of a different output file; in this case, only one file (<code class="xref py py-class docutils literal"><span class="pre">stateHistory.txt</span></code> in the same directory as the input file) will be created. This file will contain a matrix of results, where each row corresponds to an epoch. By default, the key <span class="jsonkey">epochsInFirstColumn</span> is set to <code class="docutils literal"><span class="pre">true</span></code>, which means that the first column of the matrix will contain the epochs, and subsequent columns will contain the values of the variables specified in the key <span class="jsonkey">variables</span>. In this case, only the state (of the propagated body).</p>
-<p>We can now carry out the propagation. However, if we want a file containing all the settings actually used by Tudat to be generated (including all default settings), we must specify the <span class="jsonkey">options</span> to be:</p>
+<p>Here, each element in the array will result in the generation of a different output file; in this case, only one file (<code class="xref py py-class docutils literal"><span class="pre">stateHistory.txt</span></code> in the same directory as the input file) will be created. This file will contain a matrix of results, where each row corresponds to an epoch. The key <span class="jsonkey">epochsInFirstColumn</span> defaults to <code class="docutils literal"><span class="pre">true</span></code>, which means that the first column of the matrix will contain the epochs, and subsequent columns will contain the values of the variables specified in the key <span class="jsonkey">variables</span>. In this case, only the state (of the propagated body).</p>
+<p>We can now carry out the propagation. However, if we want a file containing all the settings actually used by Tudat to be generated (including all default settings), we must specify the <span class="jsonkey">options</span> key to be:</p>
 <div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;fullSettingsFile&quot;</span><span class="p">:</span> <span class="s2">&quot;@path(fullSettings.json)&quot;</span>
 <span class="p">}</span>
@@ -332,7 +333,15 @@
 56
 57
 58
-59</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">{</span>
+59
+60
+61
+62
+63
+64
+65
+66
+67</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;initialEpoch&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
   <span class="nt">&quot;finalEpoch&quot;</span><span class="p">:</span> <span class="mi">86400</span><span class="p">,</span>
   <span class="nt">&quot;globalFrameOrientation&quot;</span><span class="p">:</span> <span class="s2">&quot;J2000&quot;</span><span class="p">,</span>
@@ -364,13 +373,19 @@
   <span class="nt">&quot;propagators&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
       <span class="nt">&quot;integratedStateType&quot;</span><span class="p">:</span> <span class="s2">&quot;translational&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;centralBodies&quot;</span><span class="p">:</span> <span class="s2">&quot;Earth&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;bodiesToPropagate&quot;</span><span class="p">:</span> <span class="s2">&quot;Asterix&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;centralBodies&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Earth&quot;</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;bodiesToPropagate&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Asterix&quot;</span>
+      <span class="p">],</span>
       <span class="nt">&quot;accelerations&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
-          <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;pointMassGravity&quot;</span>
-          <span class="p">}</span>
+          <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;pointMassGravity&quot;</span>
+            <span class="p">}</span>
+          <span class="p">]</span>
         <span class="p">}</span>
       <span class="p">}</span>
     <span class="p">}</span>
@@ -382,9 +397,11 @@
   <span class="nt">&quot;export&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
       <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;@path(stateHistory.txt)&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;variables&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;state&quot;</span>
-      <span class="p">}</span>
+      <span class="nt">&quot;variables&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;state&quot;</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
     <span class="p">}</span>
   <span class="p">],</span>
   <span class="nt">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -530,7 +547,8 @@
 127
 128
 129
-130</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">{</span>
+130
+131</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;bodies&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
     <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -582,7 +600,7 @@
     <span class="p">{</span>
       <span class="nt">&quot;epochsInFirstColumn&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
       <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;stateHistory.txt&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;numericalPrecision&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+      <span class="nt">&quot;numericalPrecision&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
       <span class="nt">&quot;onlyFinalStep&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
       <span class="nt">&quot;onlyInitialStep&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
       <span class="nt">&quot;variables&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -595,6 +613,7 @@
   <span class="nt">&quot;globalFrameOrientation&quot;</span><span class="p">:</span> <span class="s2">&quot;J2000&quot;</span><span class="p">,</span>
   <span class="nt">&quot;globalFrameOrigin&quot;</span><span class="p">:</span> <span class="s2">&quot;SSB&quot;</span><span class="p">,</span>
   <span class="nt">&quot;integrator&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;assessPropagationTerminationConditionDuringIntegrationSubsteps&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
     <span class="nt">&quot;initialTime&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
     <span class="nt">&quot;saveFrequency&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="nt">&quot;stepSize&quot;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>

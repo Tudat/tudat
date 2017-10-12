@@ -38,9 +38,9 @@
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
-        <link rel="up" title="Extending the JSON interface" href="index.html"/>
+        <link rel="up" title="Extending the JSON Interface" href="index.html"/>
         <link rel="next" title="Unit testing" href="unitTesting.html"/>
-        <link rel="prev" title="Shared pointers" href="sharedPointers.html"/> 
+        <link rel="prev" title="Settings classes" href="settingsClasses.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -96,7 +96,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials and Documentation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Developer Guide</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../githubBasics.html">Github Basics</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="index.html">Extending the JSON interface</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Extending the JSON Interface</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="basics.html">Basics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="valueConversions.html">Value conversions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="enhancedDeserialization.html">Enhanced deserialisation</a></li>
@@ -104,12 +104,12 @@
 <li class="toctree-l3"><a class="reference internal" href="enhancedValueSet.html">Enhanced value set</a></li>
 <li class="toctree-l3"><a class="reference internal" href="validation.html">Validation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="enumerations.html">Enumerations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sharedPointers.html">Shared pointers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settingsClasses.html">Settings classes</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Other types</a></li>
 <li class="toctree-l3"><a class="reference internal" href="unitTesting.html">Unit testing</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../extendingMATLAB/index.html">Extending the MATLAB interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extendingMATLAB/index.html">Extending the MATLAB Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guideToDebugging.html">Guide To Debugging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cppTutorials.html">C++ Tutorials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howToWriteTheWiki.html">How to Write the Wiki</a></li>
@@ -161,7 +161,7 @@
         
           <li><a href="../index.html">Developer Guide</a> &raquo;</li>
         
-          <li><a href="index.html">Extending the JSON interface</a> &raquo;</li>
+          <li><a href="index.html">Extending the JSON Interface</a> &raquo;</li>
         
       <li>Other types</li>
     
@@ -184,7 +184,7 @@
             
   <div class="section" id="other-types">
 <span id="extendingjson-othertypes"></span><h1>Other types<a class="headerlink" href="#other-types" title="Permalink to this headline">¶</a></h1>
-<p>Some types that are not used to store settings require different <code class="docutils literal"><span class="pre">to_json</span></code> and <code class="docutils literal"><span class="pre">from_json</span></code> implementations. If these types are prone to be used in different parts of the <code class="docutils literal"><span class="pre">json_interface</span></code>, their <code class="docutils literal"><span class="pre">to_json</span></code> and <code class="docutils literal"><span class="pre">from_json</span></code> should be declared in <code class="xref py py-class docutils literal"><span class="pre">Tudat/InputOutput/JsonInterface/Support/valueConversions.h</span></code>. As discussed previously, there are already some functions there, such as custom implementations for <code class="xref py py-class docutils literal"><span class="pre">std::map</span></code> and <code class="xref py py-class docutils literal"><span class="pre">std::unordered_map</span></code> that ignore the special keys, for <code class="xref py py-class docutils literal"><span class="pre">std::vector</span></code> containing non-primitive types, and for <code class="xref py py-class docutils literal"><span class="pre">Eigen::Matrix</span></code>.</p>
+<p>Some types that are not used to store settings require different <code class="docutils literal"><span class="pre">to_json</span></code> and <code class="docutils literal"><span class="pre">from_json</span></code> implementations. If these types are prone to be used in different parts of the <code class="docutils literal"><span class="pre">json_interface</span></code>, their <code class="docutils literal"><span class="pre">to_json</span></code> and <code class="docutils literal"><span class="pre">from_json</span></code> should be declared in <code class="xref py py-class docutils literal"><span class="pre">Tudat/JsonInterface/Support/valueConversions.h</span></code>. As discussed previously, there are already some functions in that file, such as custom implementations for <code class="xref py py-class docutils literal"><span class="pre">std::map</span></code> and <code class="xref py py-class docutils literal"><span class="pre">std::unordered_map</span></code> that ignore the special keys, for <code class="xref py py-class docutils literal"><span class="pre">std::vector</span></code> containing non-primitive types, and for <code class="xref py py-class docutils literal"><span class="pre">Eigen::Matrix</span></code>.</p>
 <p>Additionally, there are functions for <code class="xref py py-class docutils literal"><span class="pre">std::complex</span></code>, so that the following is possible:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">j</span> <span class="o">=</span> <span class="s">&quot;(1,-0.5)&quot;</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">complex</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">complexNumber</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>         <span class="c1">// 1 - 0.5i</span>
@@ -230,7 +230,7 @@
         <a href="unitTesting.html" class="btn btn-neutral float-right" title="Unit testing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="sharedPointers.html" class="btn btn-neutral" title="Shared pointers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="settingsClasses.html" class="btn btn-neutral" title="Settings classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

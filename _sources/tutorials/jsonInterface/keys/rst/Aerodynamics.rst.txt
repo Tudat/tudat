@@ -18,7 +18,7 @@
 
 		:arrow:`Constant Coefficients Aerodynamics`
 
-	.. include:: rst/ConstantCoefficientsAerodynamics.rst
+	.. include:: ConstantCoefficientsAerodynamics.rst
 
 .. container:: toggle
 
@@ -26,4 +26,4 @@
 
 		:arrow:`Tabulated Coefficients Aerodynamics`
 
-	.. include:: rst/TabulatedCoefficientsAerodynamics.rst
+	.. include:: TabulatedCoefficientsAerodynamics.rst

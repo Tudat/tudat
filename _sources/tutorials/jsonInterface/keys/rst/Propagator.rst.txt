@@ -13,7 +13,7 @@
 
 		:arrow:`Translational Propagator`
 
-	.. include:: rst/TranslationalPropagator.rst
+	.. include:: TranslationalPropagator.rst
 
 .. container:: toggle
 
@@ -21,7 +21,7 @@
 
 		:arrow:`Mass Propagator`
 
-	.. include:: rst/MassPropagator.rst
+	.. include:: MassPropagator.rst
 
 .. container:: toggle
 
@@ -29,4 +29,4 @@
 
 		:arrow:`Rotational Propagator`
 
-	.. include:: rst/RotationalPropagator.rst
+	.. include:: RotationalPropagator.rst

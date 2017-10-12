@@ -39,7 +39,7 @@
         <link rel="search" title="Search" href="../../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../../index.html"/>
         <link rel="up" title="Tutorials" href="../index.html"/>
-        <link rel="next" title="MATLAB Interface" href="../../../matlabInterface/index.html"/>
+        <link rel="next" title="Perturbed Earth-orbiting satellite lifetime maximisation using a custom C++ application" href="../lifetimeMaximisationCPP/index.html"/>
         <link rel="prev" title="Perturbed Earth-orbiting satellite lifetime maximisation" href="../lifetimeMaximisation/index.html"/> 
 
   
@@ -98,7 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../tudatFeatures/index.html">Tudat Libraries</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../index.html">JSON Interface</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../../keys/index.html">List of keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../keys/rst/index.html">List of keys</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../modularFiles.html">Modular files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../multicase.html">Multi-case simulations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../customJsonApp.html">Writing custom JSON-based applications</a></li>
@@ -106,6 +106,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../unperturbedSatellite/index.html">Unperturbed Earth-orbiting satellite</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../lifetimeMaximisation/index.html">Perturbed Earth-orbiting satellite lifetime maximisation</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Apollo Capsule Entry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lifetimeMaximisationCPP/index.html">Perturbed Earth-orbiting satellite lifetime maximisation using a custom C++ application</a></li>
 </ul>
 </li>
 </ul>
@@ -197,7 +198,6 @@
 <li>Setting a body’s <a class="reference internal" href="../../../tudatFeatures/environmentSetup/index.html#AerodynamicCoefficientInterface" title="AerodynamicCoefficientInterface"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientInterface</span></code></a> directly instead of using an <a class="reference internal" href="../../../tudatFeatures/environmentSetup/index.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientSettings</span></code></a> object.</li>
 <li>Using the function <code class="docutils literal"><span class="pre">tudat_applications::getOutputPath(</span> <span class="pre">)</span></code>.</li>
 <li>Settings an angle of attach for a body.</li>
-<li>Defining the initial state using spherical elements.</li>
 </ul>
 </div></blockquote>
 <p>This functionality has to be implemented in the C++ application. However, as for any JSON-based application, the first step is to generate the input file. This file is located in your Tudat Bundle at:</p>
@@ -209,8 +209,7 @@
 <div><ul class="simple">
 <li>The key <span class="jsonkey">spice.preloadEphemeris</span> has to be set to <code class="docutils literal"><span class="pre">false</span></code> because the key <span class="jsonkey">finalEpoch</span> is not defined, so it is not possible to interpolate the ephemeris of celestial bodies.</li>
 <li>For the body <code class="docutils literal"><span class="pre">Apollo</span></code>, only the mass is specified; the aerodynamic settings (including coefficients and reference area) will be loaded manually in the C++ application.</li>
-<li>If the initial state is not defined, the JSON validator will throw an <code class="xref py py-class docutils literal"><span class="pre">UndefinedKeyError</span></code>. Thus, a placeholder initial state, which will be modified in the C++ app, is used for key <span class="jsonkey">propagators[0].initialStates</span>, which is set to <code class="docutils literal"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0]</span></code>.</li>
-<li>In the same way, since the key <span class="jsonkey">file</span> of the export settings is mandatory, a placeholder empty string is provided for <span class="jsonkey">export[0].file</span> and <span class="jsonkey">export[1].file</span>, which will be then redefined in the C++ application.</li>
+<li>Since the key <span class="jsonkey">file</span> of the export settings is mandatory, a placeholder empty string is provided for <span class="jsonkey">export[0].file</span> and <span class="jsonkey">export[1].file</span>, which will be then redefined in the C++ application.</li>
 <li>The variable representing Apollo’s altitude w.r.t. Earth is used twice: as termination condition and as dependent variable to be exported to an output file. Rather than repeating it twice, the key <span class="jsonkey">export[1].variables[1]</span> has been set to reference the termination’s variable by using the special string <code class="docutils literal"><span class="pre">&quot;${termination.variable}&quot;</span></code>.</li>
 </ul>
 </div></blockquote>
@@ -275,27 +274,7 @@
  7
  8
  9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">virtual</span> <span class="kt">void</span> <span class="nf">resetPropagatorSettings</span><span class="p">(</span> <span class="p">)</span>
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">virtual</span> <span class="kt">void</span> <span class="nf">resetPropagatorSettings</span><span class="p">(</span> <span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">// First, call the original resetPropagatorSettings, which uses the information in the JSON file</span>
     <span class="n">JsonSimulationManager</span><span class="o">::</span><span class="n">resetPropagatorSettings</span><span class="p">(</span> <span class="p">);</span>
@@ -304,45 +283,27 @@
     <span class="kt">double</span> <span class="n">constantAngleOfAttack</span> <span class="o">=</span> <span class="mf">30.0</span> <span class="o">*</span> <span class="n">tudat</span><span class="o">::</span><span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span> <span class="o">/</span> <span class="mf">180.0</span><span class="p">;</span>
     <span class="n">getBody</span><span class="p">(</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getAerodynamicAngleCalculator</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span>
             <span class="n">setOrientationAngleFunctions</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">lambda</span><span class="o">::</span><span class="n">constant</span><span class="p">(</span> <span class="n">constantAngleOfAttack</span> <span class="p">)</span> <span class="p">);</span>
-
-    <span class="c1">// Set spherical elements for Apollo.</span>
-    <span class="k">using</span> <span class="k">namespace</span> <span class="n">tudat</span><span class="o">::</span><span class="n">orbital_element_conversions</span><span class="p">;</span>
-    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">apolloSphericalEntryState</span><span class="p">;</span>
-    <span class="n">apolloSphericalEntryState</span><span class="p">(</span> <span class="n">SphericalOrbitalStateElementIndices</span><span class="o">::</span><span class="n">radiusIndex</span> <span class="p">)</span> <span class="o">=</span>
-            <span class="n">getBody</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getShapeModel</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getAverageRadius</span><span class="p">(</span> <span class="p">)</span> <span class="o">+</span> <span class="mf">120.0E3</span><span class="p">;</span>
-    <span class="n">apolloSphericalEntryState</span><span class="p">(</span> <span class="n">SphericalOrbitalStateElementIndices</span><span class="o">::</span><span class="n">latitudeIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
-    <span class="n">apolloSphericalEntryState</span><span class="p">(</span> <span class="n">SphericalOrbitalStateElementIndices</span><span class="o">::</span><span class="n">longitudeIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
-    <span class="n">apolloSphericalEntryState</span><span class="p">(</span> <span class="n">SphericalOrbitalStateElementIndices</span><span class="o">::</span><span class="n">speedIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">7.7E3</span><span class="p">;</span>
-    <span class="n">apolloSphericalEntryState</span><span class="p">(</span> <span class="n">SphericalOrbitalStateElementIndices</span><span class="o">::</span><span class="n">flightPathIndex</span> <span class="p">)</span> <span class="o">=</span>
-            <span class="o">-</span><span class="mf">0.9</span> <span class="o">*</span> <span class="n">tudat</span><span class="o">::</span><span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span> <span class="o">/</span> <span class="mf">180.0</span><span class="p">;</span>
-    <span class="n">apolloSphericalEntryState</span><span class="p">(</span> <span class="n">SphericalOrbitalStateElementIndices</span><span class="o">::</span><span class="n">headingAngleIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">;</span>
-
-    <span class="c1">// Convert apollo state from spherical elements to Cartesian elements.</span>
-    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">systemInitialState</span> <span class="o">=</span> <span class="n">convertSphericalOrbitalToCartesianState</span><span class="p">(</span> <span class="n">apolloSphericalEntryState</span> <span class="p">);</span>
-    <span class="n">systemInitialState</span> <span class="o">=</span> <span class="n">tudat</span><span class="o">::</span><span class="n">ephemerides</span><span class="o">::</span><span class="n">transformStateToGlobalFrame</span><span class="p">(</span>
-                <span class="n">systemInitialState</span><span class="p">,</span> <span class="n">getStartEpoch</span><span class="p">(</span> <span class="p">),</span> <span class="n">getBody</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
-
-    <span class="c1">// Reset initial states (zero placeholder vector had been specified in the JSON file)</span>
-    <span class="n">getPropagatorSettings</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">resetInitialStates</span><span class="p">(</span> <span class="n">systemInitialState</span> <span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </td></tr></table></div>
-<p>After calling the original implementation in line 4 (this won’t result in a JSON validation error because the the key <span class="jsonkey">propagators[0].initialStates</span> was defined with a placeholder value), we perform two tasks: defining an angle of attach for Apollo, in lines 9-11; and resetting the propagator’s initial states in lines 13-30.</p>
-<p>The angle of attack is defined by modifying Apollo’s flight conditions. This can only be done once the flight conditions have been created, i.e. after <code class="docutils literal"><span class="pre">JsonSimulationManager::resetPropagatorSettings(</span> <span class="pre">)</span></code> has been called, since this method will create the acceleration aerodynamic models based on the body map created previously.</p>
-<p>Then, we define the spherical initial state of Apollo, convert it to Cartesian components and transform it to the global frame, using Earth’s rotational ephemeris object, and the simulation start epoch, which can be retrieved using the method <code class="docutils literal"><span class="pre">getStartEpoch(</span> <span class="pre">)</span></code>. To get the simulation end epoch, the method <code class="docutils literal"><span class="pre">getEndEpoch(</span> <span class="pre">)</span></code> can be used, which will return <code class="docutils literal"><span class="pre">TUDAT_NAN</span></code> if no time termination condition has been defined. Once we have created the combined vector of initial states, <code class="docutils literal"><span class="pre">systemInitialState</span></code>, which must include all the states of all the bodies and propagators, we reset the propagator’s initial states in line 30. Note that <code class="docutils literal"><span class="pre">getPropagatorSettings(</span> <span class="pre">)</span></code> always return a <a class="reference internal" href="../../../tudatFeatures/propagationSetup/propagatorSettings.html#MultiTypePropagatorSettings" title="MultiTypePropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">MultiTypePropagatorSettings</span></code></a>, even when only one propagator is used (in which case it will only contain one <code class="xref py py-class docutils literal"><span class="pre">SingleArcPropagatorSettings</span></code>). The method <code class="docutils literal"><span class="pre">resetInitialStates</span></code> of <a class="reference internal" href="../../../tudatFeatures/propagationSetup/propagatorSettings.html#MultiTypePropagatorSettings" title="MultiTypePropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">MultiTypePropagatorSettings</span></code></a> will reset the states of the <em>children</em> single-arc propagators, as well as the combined states of the <em>parent</em> multi-type propagator.</p>
+<p>After calling the original implementation in line 4, we define an angle of attach for Apollo. This is done by modifying Apollo’s flight conditions. This can only be done once the flight conditions have been created, i.e. after <code class="docutils literal"><span class="pre">JsonSimulationManager::resetPropagatorSettings(</span> <span class="pre">)</span></code> has been called, since this method will create the acceleration aerodynamic models based on the body map created previously.</p>
 <p>Now, we can write our <code class="docutils literal"><span class="pre">main</span></code> function, which uses the custom class <code class="xref py py-class docutils literal"><span class="pre">ApolloJsonSimulationManager</span></code>:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span> <span class="p">)</span>
 <span class="p">{</span>
     <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">cppFilePath</span><span class="p">(</span> <span class="n">__FILE__</span> <span class="p">);</span>
     <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">cppFolder</span> <span class="o">=</span> <span class="n">cppFilePath</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cppFilePath</span><span class="p">.</span><span class="n">find_last_of</span><span class="p">(</span><span class="s">&quot;/</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">);</span>
 
-    <span class="n">ApolloJsonSimulationManager</span> <span class="n">jsonSimulationManager</span><span class="p">;</span>
-    <span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">setUpFromJSONFile</span><span class="p">(</span> <span class="n">cppFolder</span> <span class="o">+</span> <span class="s">&quot;apolloCapsuleEntry.json&quot;</span> <span class="p">);</span>
-    <span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">run</span><span class="p">(</span> <span class="p">);</span>
+    <span class="n">ApolloJsonSimulationManager</span> <span class="n">jsonSimulationManager</span><span class="p">(</span> <span class="n">cppFolder</span> <span class="o">+</span> <span class="s">&quot;apolloCapsuleEntry.json&quot;</span> <span class="p">);</span>
+    <span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">updateSettings</span><span class="p">(</span> <span class="p">);</span>
+    <span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">runPropagation</span><span class="p">(</span> <span class="p">);</span>
     <span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">exportResults</span><span class="p">(</span> <span class="p">);</span>
 
     <span class="k">return</span> <span class="n">EXIT_SUCCESS</span><span class="p">;</span>
 <span class="p">}</span>
+</pre></div>
+</div>
+<p>After running the application, the results can be found in the directory:</p>
+<div class="highlight-txt"><div class="highlight"><pre><span></span>tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/SimulationOutput/ApolloCapsuleExampleJSON
 </pre></div>
 </div>
 </div>
@@ -357,7 +318,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../../matlabInterface/index.html" class="btn btn-neutral float-right" title="MATLAB Interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../lifetimeMaximisationCPP/index.html" class="btn btn-neutral float-right" title="Perturbed Earth-orbiting satellite lifetime maximisation using a custom C++ application" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../lifetimeMaximisation/index.html" class="btn btn-neutral" title="Perturbed Earth-orbiting satellite lifetime maximisation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

@@ -38,7 +38,7 @@
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
-        <link rel="up" title="Extending the JSON interface" href="index.html"/>
+        <link rel="up" title="Extending the JSON Interface" href="index.html"/>
         <link rel="next" title="Enhanced deserialisation" href="enhancedDeserialization.html"/>
         <link rel="prev" title="Basics" href="basics.html"/> 
 
@@ -96,7 +96,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials and Documentation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Developer Guide</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../githubBasics.html">Github Basics</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="index.html">Extending the JSON interface</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Extending the JSON Interface</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="basics.html">Basics</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Value conversions</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#conversion-to-nlohmann-json">Conversion to <code class="docutils literal"><span class="pre">nlohmann::json</span></code></a></li>
@@ -108,12 +108,12 @@
 <li class="toctree-l3"><a class="reference internal" href="enhancedValueSet.html">Enhanced value set</a></li>
 <li class="toctree-l3"><a class="reference internal" href="validation.html">Validation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="enumerations.html">Enumerations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sharedPointers.html">Shared pointers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settingsClasses.html">Settings classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="otherTypes.html">Other types</a></li>
 <li class="toctree-l3"><a class="reference internal" href="unitTesting.html">Unit testing</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../extendingMATLAB/index.html">Extending the MATLAB interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extendingMATLAB/index.html">Extending the MATLAB Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guideToDebugging.html">Guide To Debugging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cppTutorials.html">C++ Tutorials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howToWriteTheWiki.html">How to Write the Wiki</a></li>
@@ -165,7 +165,7 @@
         
           <li><a href="../index.html">Developer Guide</a> &raquo;</li>
         
-          <li><a href="index.html">Extending the JSON interface</a> &raquo;</li>
+          <li><a href="index.html">Extending the JSON Interface</a> &raquo;</li>
         
       <li>Value conversions</li>
     
@@ -192,11 +192,11 @@
 <h2>Conversion to <code class="xref py py-class docutils literal"><span class="pre">nlohmann::json</span></code><a class="headerlink" href="#conversion-to-nlohmann-json" title="Permalink to this headline">¶</a></h2>
 <p>The value of (the elements of) a <code class="xref py py-class docutils literal"><span class="pre">nlohmann::json</span></code> object can be set as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">myInt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">j</span> <span class="o">=</span> <span class="n">myInt</span><span class="p">;</span>          <span class="c1">// j.is_numeric( ) -&gt; true</span>
+<span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">j</span> <span class="o">=</span> <span class="n">myInt</span><span class="p">;</span>  <span class="c1">// j.is_numeric( ) -&gt; true</span>
 
 <span class="kt">double</span> <span class="n">myDouble</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
-<span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">k</span><span class="p">;</span>                  <span class="c1">// k.is_null( ) -&gt; true</span>
-<span class="n">k</span><span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="n">myDouble</span><span class="p">;</span>       <span class="c1">// k.is_array( ) &amp;&amp; k[ 0 ].is_numeric( ) &amp;&amp; j == k[ 0 ] -&gt; true</span>
+<span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">k</span><span class="p">;</span>          <span class="c1">// k.is_null( ) -&gt; true</span>
+<span class="n">k</span><span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="n">myDouble</span><span class="p">;</span>         <span class="c1">// k.is_array( ) &amp;&amp; k[ 0 ].is_numeric( ) &amp;&amp; j == k[ 0 ] -&gt; true</span>
 </pre></div>
 </div>
 <p>However, this does not work (yet):</p>
@@ -214,6 +214,7 @@
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="p">...</span>
 <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">j</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">to_json</span><span class="p">(</span> <span class="n">j</span><span class="p">,</span> <span class="s">&quot;hi&quot;</span> <span class="p">);</span>
+<span class="k">return</span> <span class="n">j</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Indeed, <code class="docutils literal"><span class="pre">to_json</span></code> functions are defined for many frequently used types in the file <code class="docutils literal"><span class="pre">&quot;json/src/json.hpp&quot;</span></code>. These functions are always defined in the namespace of the type that is on the right-hand side of the assignment. We can create <code class="docutils literal"><span class="pre">to_json</span></code> functions for our custom classes:</p>
@@ -237,15 +238,14 @@
 <div class="literal-block-wrapper docutils container" id="jsoninterface-h">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">jsonInterface.h</span></code></span><a class="headerlink" href="#jsoninterface-h" title="Permalink to this code">¶</a></div>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;json/src/json.hpp&quot;</span><span class="cp"></span>
-<span class="k">using</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="o">=</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="p">;</span>
 <span class="cp">#include</span> <span class="cpf">&quot;dog.h&quot;</span><span class="cp"></span>
 
 <span class="k">namespace</span> <span class="n">animals</span>
 <span class="p">{</span>
-    <span class="kt">void</span> <span class="n">to_json</span><span class="p">(</span> <span class="n">json</span><span class="o">&amp;</span> <span class="n">j</span><span class="p">,</span> <span class="k">const</span> <span class="n">Dog</span><span class="o">&amp;</span> <span class="n">dog</span> <span class="p">)</span>
+    <span class="kt">void</span> <span class="n">to_json</span><span class="p">(</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">j</span><span class="p">,</span> <span class="k">const</span> <span class="n">Dog</span><span class="o">&amp;</span> <span class="n">dog</span> <span class="p">)</span>
     <span class="p">{</span>
-        <span class="n">j</span><span class="p">[</span> <span class="s">&quot;name&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">dog</span><span class="p">.</span><span class="n">name</span><span class="p">;</span>      <span class="c1">// std::to_json( json&amp;, const string&amp; ) will be called</span>
-        <span class="n">j</span><span class="p">[</span> <span class="s">&quot;weight&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">dog</span><span class="p">.</span><span class="n">weight</span><span class="p">;</span>  <span class="c1">// to_json( json&amp;, const double&amp; ) will be called</span>
+        <span class="n">j</span><span class="p">[</span> <span class="s">&quot;name&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">dog</span><span class="p">.</span><span class="n">name</span><span class="p">;</span>      <span class="c1">// std::to_json( nlohmann::json&amp;, const string&amp; ) will be called</span>
+        <span class="n">j</span><span class="p">[</span> <span class="s">&quot;weight&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">dog</span><span class="p">.</span><span class="n">weight</span><span class="p">;</span>  <span class="c1">// to_json( nlohmann::json&amp;, const double&amp; ) will be called</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -258,7 +258,7 @@
 <span class="kt">void</span> <span class="nf">printDog</span><span class="p">(</span> <span class="p">)</span>
 <span class="p">{</span>
     <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">jsonDog</span> <span class="o">=</span> <span class="n">animals</span><span class="o">::</span><span class="n">Dog</span><span class="p">(</span> <span class="s">&quot;Senda&quot;</span><span class="p">,</span> <span class="mi">20</span> <span class="p">);</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">jsonDog</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>    <span class="c1">// {&quot;name&quot;:&quot;Senda&quot;,&quot;weight&quot;:20}</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">jsonDog</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>                      <span class="c1">// {&quot;name&quot;:&quot;Senda&quot;,&quot;weight&quot;:20}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -268,15 +268,15 @@
 <h2>Conversion from <code class="xref py py-class docutils literal"><span class="pre">nlohmann::json</span></code><a class="headerlink" href="#conversion-from-nlohmann-json" title="Permalink to this headline">¶</a></h2>
 <p>The value of the elements of a <code class="xref py py-class docutils literal"><span class="pre">nlohmann::json</span></code> object can be accessed as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">j</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;no&quot;</span><span class="p">,</span> <span class="s">&quot;yes&quot;</span> <span class="p">};</span>
-<span class="n">j</span><span class="p">[</span> <span class="mi">0</span> <span class="p">];</span>                                             <span class="c1">// &quot;no&quot;</span>
-<span class="n">j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="mi">1</span> <span class="p">);</span>                                          <span class="c1">// &quot;yes&quot;</span>
+<span class="n">j</span><span class="p">[</span> <span class="mi">0</span> <span class="p">];</span>                                                    <span class="c1">// &quot;no&quot;</span>
+<span class="n">j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="mi">1</span> <span class="p">);</span>                                                 <span class="c1">// &quot;yes&quot;</span>
 
 <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">k</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span> <span class="s">&quot;half&quot;</span><span class="p">,</span> <span class="mf">0.5</span> <span class="p">},</span> <span class="p">{</span> <span class="s">&quot;twice&quot;</span><span class="p">,</span> <span class="mf">2.0</span> <span class="p">}</span> <span class="p">};</span>
-<span class="n">k</span><span class="p">[</span> <span class="s">&quot;half&quot;</span> <span class="p">];</span>                                        <span class="c1">// 0.5</span>
-<span class="n">k</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="s">&quot;twice&quot;</span> <span class="p">);</span>                                    <span class="c1">// 2.0</span>
+<span class="n">k</span><span class="p">[</span> <span class="s">&quot;half&quot;</span> <span class="p">];</span>                                               <span class="c1">// 0.5</span>
+<span class="n">k</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="s">&quot;twice&quot;</span> <span class="p">);</span>                                           <span class="c1">// 2.0</span>
 </pre></div>
 </div>
-<p>However, as discussed in <span class="xref std std-ref">extendingJSON_basics_valueTypes</span>, the returned values are not numbers or strings, but <code class="xref py py-class docutils literal"><span class="pre">nlohmann::json</span></code> objects. Thus:</p>
+<p>However, as discussed in <a class="reference internal" href="basics.html#extendingjson-basics-valuetypes"><span class="std std-ref">Value types</span></a>, the returned values are not numbers or strings, but <code class="xref py py-class docutils literal"><span class="pre">nlohmann::json</span></code> objects. Thus:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">+</span> <span class="s">&quot;, thanks&quot;</span><span class="p">;</span>          <span class="c1">// compile error</span>
 
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">no</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span> <span class="mi">0</span> <span class="p">];</span>                        <span class="c1">// &quot;no&quot;</span>
@@ -287,32 +287,33 @@
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span> <span class="n">j</span><span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;, thanks&quot;</span><span class="p">;</span>     <span class="c1">// compile error</span>
 </pre></div>
 </div>
-<p>However, an explicit conversion is always possible by calling the <code class="docutils literal"><span class="pre">get</span></code> method:</p>
+<p>However, an explicit conversion is always possible by calling the templated <code class="docutils literal"><span class="pre">get</span></code> method:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span> <span class="mi">0</span> <span class="p">].</span><span class="n">get</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;, thanks&quot;</span><span class="p">;</span>     <span class="c1">// &quot;no, thanks&quot;</span>
 </pre></div>
 </div>
 <p>What is happening behind the scenes, either when an implicit conversion takes place or the <code class="docutils literal"><span class="pre">get</span></code> method is called, is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span><span class="p">;</span>                <span class="c1">// str -&gt; &quot;&quot;</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="p">...</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span><span class="p">;</span>                <span class="c1">// str -&gt; &quot;&quot;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">from_json</span><span class="p">(</span> <span class="n">j</span><span class="p">,</span> <span class="n">str</span> <span class="p">);</span>       <span class="c1">// str -&gt; &quot;no&quot;</span>
+<span class="k">return</span> <span class="n">str</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">from_json</span></code> functions must be defined in the namespace of the type we are converting to. Many are pre-defined for frequently-used types. But, for our <code class="xref py py-class docutils literal"><span class="pre">Dog</span></code> class, this is not possible yet:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">jsonDog</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span> <span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;Senda&quot;</span> <span class="p">},</span> <span class="p">{</span> <span class="s">&quot;weight&quot;</span><span class="p">,</span> <span class="mi">20</span> <span class="p">}</span> <span class="p">};</span>
-<span class="n">Dog</span> <span class="n">dog</span> <span class="o">=</span> <span class="n">jsonDog</span><span class="p">;</span>                                          <span class="c1">// compile error</span>
+<span class="n">Dog</span> <span class="n">dog</span> <span class="o">=</span> <span class="n">jsonDog</span><span class="p">;</span>                                                   <span class="c1">// compile error</span>
 </pre></div>
 </div>
 <p>We have to define its <code class="docutils literal"><span class="pre">from_json</span></code> function:</p>
 <div class="literal-block-wrapper docutils container" id="jsoninterface-h-from-json">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">jsonInterface.h</span></code></span><a class="headerlink" href="#jsoninterface-h-from-json" title="Permalink to this code">¶</a></div>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;json/src/json.hpp&quot;</span><span class="cp"></span>
-<span class="k">using</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="o">=</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="p">;</span>
 <span class="cp">#include</span> <span class="cpf">&quot;dog.h&quot;</span><span class="cp"></span>
 
 <span class="k">namespace</span> <span class="n">animals</span>
 <span class="p">{</span>
     <span class="p">...</span>
 
-    <span class="kt">void</span> <span class="n">from_json</span><span class="p">(</span> <span class="k">const</span> <span class="n">json</span><span class="o">&amp;</span> <span class="n">j</span><span class="p">,</span> <span class="n">Dog</span><span class="o">&amp;</span> <span class="n">dog</span> <span class="p">)</span>
+    <span class="kt">void</span> <span class="n">from_json</span><span class="p">(</span> <span class="k">const</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">j</span><span class="p">,</span> <span class="n">Dog</span><span class="o">&amp;</span> <span class="n">dog</span> <span class="p">)</span>
     <span class="p">{</span>
         <span class="n">dog</span> <span class="o">=</span> <span class="n">Dog</span><span class="p">(</span> <span class="n">j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="s">&quot;name&quot;</span> <span class="p">),</span> <span class="n">j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="s">&quot;weight&quot;</span> <span class="p">)</span> <span class="p">);</span>
     <span class="p">}</span>
@@ -321,8 +322,10 @@
 </div>
 </div>
 <p>However, we are still getting a compile error, because this is happening behind the scenes:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">animals</span><span class="o">::</span><span class="n">Dog</span> <span class="n">dog</span><span class="p">;</span>                  <span class="c1">// compile error: Dog is not default-constructible!</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="p">...</span>
+<span class="n">animals</span><span class="o">::</span><span class="n">Dog</span> <span class="n">dog</span><span class="p">;</span>                  <span class="c1">// compile error: Dog is not default-constructible!</span>
 <span class="n">animals</span><span class="o">::</span><span class="n">from_json</span><span class="p">(</span> <span class="n">j</span><span class="p">,</span> <span class="n">dog</span> <span class="p">);</span>
+<span class="k">return</span> <span class="n">dog</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Thus, we need to define a default constructor for the class <code class="xref py py-class docutils literal"><span class="pre">Dog</span></code>. We can do this by providing default values for all the arguments in the constructor:</p>
@@ -345,7 +348,7 @@
 </div>
 <p>Now, we can do:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">jsonDog</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span> <span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;Senda&quot;</span> <span class="p">},</span> <span class="p">{</span> <span class="s">&quot;weight&quot;</span><span class="p">,</span> <span class="mi">20</span> <span class="p">}</span> <span class="p">};</span>
-<span class="n">Dog</span> <span class="n">dog</span> <span class="o">=</span> <span class="n">jsonDog</span><span class="p">;</span>                                          <span class="c1">// fine</span>
+<span class="n">Dog</span> <span class="n">dog</span> <span class="o">=</span> <span class="n">jsonDog</span><span class="p">;</span>                                                   <span class="c1">// fine</span>
 </pre></div>
 </div>
 </div>

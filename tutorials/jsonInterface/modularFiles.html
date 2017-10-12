@@ -40,7 +40,7 @@
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
         <link rel="up" title="JSON Interface" href="index.html"/>
         <link rel="next" title="Multi-case simulations" href="multicase.html"/>
-        <link rel="prev" title="List of keys" href="keys/index.html"/> 
+        <link rel="prev" title="List of keys" href="keys/rst/index.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -98,7 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tudatFeatures/index.html">Tudat Libraries</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">JSON Interface</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="keys/index.html">List of keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keys/rst/index.html">List of keys</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Modular files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="multicase.html">Multi-case simulations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="customJsonApp.html">Writing custom JSON-based applications</a></li>
@@ -178,7 +178,7 @@
             
   <div class="section" id="modular-files">
 <span id="jsoninterface-modularfiles"></span><h1>Modular files<a class="headerlink" href="#modular-files" title="Permalink to this headline">¶</a></h1>
-<p>The <code class="docutils literal"><span class="pre">json_interface</span></code> allows the use of modular JSON input files. This means that a simulation can be set up by using different files. Since the list of settings to be provided can be very long, in some cases it is convenient to specify those settings in different files. Additionally, modularity allows re-using parts from other projects, and a set of files containing settings for e.g. several integrators can be provided and then only one of them be used by referencing it from the root input file (i.e. the file provided as command-line argument to the <code class="docutils literal"><span class="pre">json_interface</span></code> application).</p>
+<p>The JSON Interface allows the use of modular JSON input files. This means that a simulation can be set up by using different files. Since the list of settings to be provided can be very long, in some cases it is convenient to specify those settings in different files. Additionally, modularity allows re-using parts from other projects, and a set of files containing settings for e.g. several integrators can be provided and then only one of them be used by referencing it from the root input file (i.e. the file provided as command-line argument to the <code class="docutils literal"><span class="pre">json_interface</span></code> application).</p>
 <p>Modularity can be nested, i.e. not only the root input file, but any file, can contain references to other files. The contents of a file can be included by using the following special string:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">main.json</span></code></span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
@@ -200,7 +200,7 @@
 </pre></div>
 </div>
 </div>
-<p>After parsing by <code class="docutils literal"><span class="pre">json_interface</span></code>, this will result in:</p>
+<p>After parsing by the JSON Interface, this will result in:</p>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">main.json</span></code></span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
 <div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -258,13 +258,13 @@
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">main.json</span></code></span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
 <div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;termination&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;variable&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;$(variables.json){satellite.altitude}&quot;</span> <span class="p">],</span>
+    <span class="nt">&quot;variable&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;$(variables.json){satellite.altitude}&quot;</span><span class="p">],</span>
     <span class="nt">&quot;lowerLimit&quot;</span><span class="p">:</span> <span class="mf">110E+3</span>
   <span class="p">}</span>
   <span class="s2">&quot;export&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
       <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;finalAltitude.txt&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;variables&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;$(variables.json){satellite.altitude}&quot;</span> <span class="p">],</span>
+      <span class="nt">&quot;variables&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;$(variables.json){satellite.altitude}&quot;</span><span class="p">],</span>
       <span class="nt">&quot;onlyFinalStep&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
       <span class="nt">&quot;epochsInFirstColumn&quot;</span><span class="p">:</span> <span class="kc">false</span>
     <span class="p">},</span>
@@ -367,7 +367,7 @@
         <a href="multicase.html" class="btn btn-neutral float-right" title="Multi-case simulations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="keys/index.html" class="btn btn-neutral" title="List of keys" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="keys/rst/index.html" class="btn btn-neutral" title="List of keys" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

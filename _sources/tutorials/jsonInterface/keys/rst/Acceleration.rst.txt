@@ -11,7 +11,7 @@
 
 		:arrow:`Spherical Harmonic Gravity Acceleration`
 
-	.. include:: rst/SphericalHarmonicGravityAcceleration.rst
+	.. include:: SphericalHarmonicGravityAcceleration.rst
 
 .. container:: toggle
 
@@ -19,7 +19,7 @@
 
 		:arrow:`Mutual Spherical Harmonic Gravity Acceleration`
 
-	.. include:: rst/MutualSphericalHarmonicGravityAcceleration.rst
+	.. include:: MutualSphericalHarmonicGravityAcceleration.rst
 
 .. container:: toggle
 
@@ -27,7 +27,7 @@
 
 		:arrow:`Thrust Acceleration`
 
-	.. include:: rst/ThrustAcceleration.rst
+	.. include:: ThrustAcceleration.rst
 
 .. container:: toggle
 
@@ -35,7 +35,7 @@
 
 		:arrow:`Interpolated Thrust Acceleration`
 
-	.. include:: rst/InterpolatedThrustAcceleration.rst
+	.. include:: InterpolatedThrustAcceleration.rst
 
 .. container:: toggle
 
@@ -43,7 +43,7 @@
 
 		:arrow:`Relativistic Correction Acceleration`
 
-	.. include:: rst/RelativisticCorrectionAcceleration.rst
+	.. include:: RelativisticCorrectionAcceleration.rst
 
 .. container:: toggle
 
@@ -51,4 +51,4 @@
 
 		:arrow:`Empirical Acceleration`
 
-	.. include:: rst/EmpiricalAcceleration.rst
+	.. include:: EmpiricalAcceleration.rst
