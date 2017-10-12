@@ -120,7 +120,13 @@ This creates and sets aerodynamic angles that are zero at t=500 s, where the ang
    - A definition of a :literal:`void updateGuidance( const double currentTime )` function in the derived class, which is called every time step to compute the current angles as a function of time.
    - The calculation of :literal:`currentAngleOfAttack_`, :literal:`currentAngleOfSideslip_` and :literal:`currentBankAngle_` in this function. Whichever values these variables are set to in the :literal:`updateGuidance` function are the values that will be used during the current time step.
 
-The example of aerodynamic guidance given above is not very representative, of course. In general, you will want to define your body's orientation as a function of its current state/environment, etc. To accomplish this, you can add the body map (or any its contents) as member variables to your :class:`AerodynamicGuidance` derived class. In many cases, the required information will be stored in the :class:`FlightConditions` object, which stores data on altitude, density, airspeed, etc. To compute orientation angles from these flight conditions:
+The example of aerodynamic guidance given above is not very representative, of course. In general, you will want to define your body's orientation as a function of its current state/environment, etc. To accomplish this, you can add the body map (or any its contents) as member variables to your :class:`AerodynamicGuidance` derived class. In many cases, the required information will be stored in the :class:`FlightConditions` object. 
+
+.. class:: FlightConditions
+
+   Class which stores data on altitude, density, airspeed, etc. 
+
+To compute orientation angles from these flight conditions:
 
 .. code-block:: cpp
 
@@ -225,7 +231,7 @@ In computing your aerodynamic guidance commands, you will likely need to use a n
 
 Control surface deflections
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-For a realistic vehicle entry/ascent trajectory propagation, it will often be necessary to include control surface deflections in the numerical propagation see this page here BROKEN HERE LINK to learn how to load/define the aerodynamic influence of control surfaces).
+For a realistic vehicle entry/ascent trajectory propagation, it will often be necessary to include control surface deflections in the numerical propagation. How to load/define the aerodynamic influence of control surfaces is discussed at the end of this page.
 
 To use the control surface increments, the control surface deflections have to be set, either to a constant value before stating the propagation, or every time step by a user-defined guidance system. In each case, the control surface deflections are stored in a :class:`VehicleSystems` object, which is a member of a :class:`Body` object. The vehicle systems represent a collection of all physical (hardware) properties of a vehicle including the control surface deflections and properties. Presently, the only quantities that are stored for the control surfaces are the current deflection.
 
