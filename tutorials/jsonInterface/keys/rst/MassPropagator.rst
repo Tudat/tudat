@@ -11,4 +11,4 @@
 
 			:arrow:`Mass Rate Model`
 
-		.. include:: rst/MassRateModel.rst
+		.. include:: MassRateModel.rst

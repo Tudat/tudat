@@ -14,4 +14,4 @@
 
 			:arrow:`Model Interpolation`
 
-		.. include:: rst/ModelInterpolation.rst
+		.. include:: ModelInterpolation.rst

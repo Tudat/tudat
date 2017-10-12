@@ -11,7 +11,7 @@
 
 		:arrow:`Spherical Shape Model`
 
-	.. include:: rst/SphericalShapeModel.rst
+	.. include:: SphericalShapeModel.rst
 
 .. container:: toggle
 
@@ -19,4 +19,4 @@
 
 		:arrow:`Oblate Spheroid Shape Model`
 
-	.. include:: rst/OblateSpheroidShapeModel.rst
+	.. include:: OblateSpheroidShapeModel.rst

@@ -11,4 +11,4 @@
 
 			:arrow:`Torque`
 
-		.. include:: rst/Torque.rst
+		.. include:: Torque.rst

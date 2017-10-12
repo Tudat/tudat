@@ -11,6 +11,6 @@
 
 			:arrow:`Variable`
 
-		.. include:: rst/Variable.rst
+		.. include:: Variable.rst
 - :jsontype:`number` :jsonkey:`lowerLimit` (mandatory if :jsonkey:`upperLimit` undefined). The propagation will terminate if the value of :jsonkey:`variable` is smaller than this value (or larger than :jsonkey:`upperLimit` if defined).
 - :jsontype:`number` :jsonkey:`upperLimit` (mandatory if :jsonkey:`lowerLimit` undefined). The propagation will terminate if the value of :jsonkey:`variable` is larger than this value (or smaller than :jsonkey:`lowerLimit` if defined).

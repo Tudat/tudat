@@ -1,6 +1,6 @@
 .. _extendingJSON:
 
-Extending the JSON interface
+Extending the JSON Interface
 ============================
 
 The goal of this page is to document how the :ref:`jsonInterface` can be updated to support new/additional features of Tudat.
@@ -15,7 +15,7 @@ The goal of this page is to document how the :ref:`jsonInterface` can be updated
    enhancedValueSet
    validation
    enumerations
-   sharedPointers
+   settingsClasses
    otherTypes
    unitTesting
 

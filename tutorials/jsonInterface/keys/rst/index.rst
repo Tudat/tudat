@@ -22,5 +22,5 @@ In some parts, key paths are used to refer to the key of a given object in the J
 
 :showall:`Unfold All` :hideall:`Fold All`
 
-.. include:: rst/root.rst
+.. include:: root.rst
 

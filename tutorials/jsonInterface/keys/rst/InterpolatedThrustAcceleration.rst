@@ -11,7 +11,7 @@
 
 			:arrow:`Data Interpolation`
 
-		.. include:: rst/DataInterpolation.rst
+		.. include:: DataInterpolation.rst
 - :jsontype:`number` :jsonkey:`specificImpulse` (mandatory). Constant specific impulse.
 - :jsontype:`string` :jsonkey:`frame` (mandatory). Identifier of frame in which thrust returned by interpolator is expressed. Possible values: :literal:`"intertial"`, :literal:`"lvlh"`.
 - :jsontype:`string` :jsonkey:`centralBody` (mandatory). Name of the central body.
