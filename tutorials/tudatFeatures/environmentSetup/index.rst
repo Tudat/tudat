@@ -30,7 +30,6 @@ On this page, we will give an overview of how the environment is represented in 
       "RotationModelSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#RotationalModelSettings", target = "_top"];
       "Aerodynamic\nCoefficientSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#AeroDynamicCoefficientSettings", target = "_top"];
       "BodyShapeSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#BodyShapeSettings", target = "_top"];
-      "TorqueSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#TorqueSettings", target = "_top"];
       "RadiationPressure\nInterfaceSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#RadiationPressureInterfaceSettings", target = "_top"];
       "AtmosphereSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#AtmosphereSettings", target = "_top"];
       "GravityFieldSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#GravityFieldSettings", target = "_top"];
@@ -41,15 +40,25 @@ On this page, we will give an overview of how the environment is represented in 
 
       # NamedBodyMap input
       BodySettings -> NamedBodyMap;
+      "User-defined \nbodies" [style = dotted, fillcolor = lightgrey, color = black];
+      "User-defined \nbodies" -> NamedBodyMap;
+      {rank = same; BodySettings, NamedBodyMap};
 
 
       # BodySettings input
       EphemerisSettings -> BodySettings [ltail = clusterEnvironmentSettings];
-      getDefaultSettings -> BodySettings;
-      bodyNames -> getDefaultSettings;
+      getDefaultBodySettings -> BodySettings;
       
-      {rank = same; BodySettings, NamedBodyMap};
 
+      # getDefaultBodySettings input
+      bodyNames -> getDefaultBodySettings;
+      "(initial/final) time" -> getDefaultBodySettings;
+      "(initial/final) time" [style = dotted, fillcolor = lightgrey, color = black];
+
+		#point0 [shape = point, style = vis, width = 0.1];
+      #point0 -> "setGlobalFrame\nBodyEphemerides";
+      #point0 -> "NamedBodyMap"; 
+      #BodySettings -> point0;
 
       # Cluster all environment settings derived classes
       subgraph clusterEnvironmentSettings
@@ -62,13 +71,45 @@ On this page, we will give an overview of how the environment is represented in 
 
          # Make three collumns
          {rank = same; AtmosphereSettings, EphemerisSettings, GravityFieldSettings};
-         {rank = same; "GravityField\nVariationSettings", RotationModelSettings, "Aerodynamic\nCoefficientSettings"};
-         {rank = same; TorqueSettings, BodyShapeSettings, "RadiationPressure\nInterfaceSettings"};
+         {rank = same; "GravityField\nVariationSettings", "RadiationPressure\nInterfaceSettings"};
+         {rank = same; "Aerodynamic\nCoefficientSettings", BodyShapeSettings, RotationModelSettings};
 
          BodyShapeSettings -> EphemerisSettings [style = invis];
-         RotationModelSettings -> BodyShapeSettings [style = invis];
+         "RadiationPressure\nInterfaceSettings" -> BodyShapeSettings [style = invis];
+         "GravityField\nVariationSettings" -> RotationModelSettings [style = invis];
       }
-     
+      "setGlobalFrame\nBodyEphemerides" -> NamedBodyMap [dir = both];
+
+		
+		
+      {"RadiationPressure\nInterfaceSettings", "GravityField\nVariationSettings" [fillcolor = lightcoral]};
+   }
+
+.. graphviz::
+
+   digraph
+   {
+      # General diagram settings
+      rankdir = "LR";
+      splines = ortho;    
+      compound = true;  
+
+      subgraph clusterLegend
+      {
+      rank = min;
+      style = dashed;
+
+
+     	# general node settings 
+     	node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+
+
+   	"List of settings" [ fillcolor = lightcoral];
+     	"Main block" [fillcolor = lightgreen];
+     	"Optional input" [style = dotted, fillcolor = lightgrey, color = black];
+     	"Input for \nmain block" [fillcolor = lightblue];
+     	"Optional input"-> "List of settings" -> "Input for \nmain block" -> "Main block" [style = invis];
+      }
    }
 
 
