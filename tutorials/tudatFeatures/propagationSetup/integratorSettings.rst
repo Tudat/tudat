@@ -40,7 +40,9 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
                             		  initialTimeStep,
                             		  coefficientSet,
                             		  minimumStepSize,
-                            		  maximumStepSize )
+                            		  maximumStepSize,
+                            		  relativeErrorTolerence,
+                            		  absoluteErrorTolerence )
 
    where:
 
@@ -67,6 +69,15 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
    - :literal:`maximumStepSize`
 
       :literal:`double` that defines the maximum step-size that the :literal:`rungeKuttaVariableStepSize` numerical integrator can take.
+
+   - :literal:`relativeErrorTolerance`
+
+      :literal:`double` that defines the relative error tolerance for step size control of the :literal:`rungeKuttaVariableStepSize` numerical integrator.
+
+   - :literal:`absoluteErrorTolerance`
+
+      :literal:`double` that defines the absolute error tolerance for step size control of the :literal:`rungeKuttaVariableStepSize` numerical integrator.
+
 
 .. note:: Aside from the arguments listed in this page, the :class:`IntegratorSettings` class and derived classes described here offer a number of optional arguments. The reader is advised to examine the Doxygen documentation included in the code for further details.
 
