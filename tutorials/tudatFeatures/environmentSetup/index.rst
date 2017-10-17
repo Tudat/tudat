@@ -357,7 +357,7 @@ Ephemeris model
        bodySettings[ "Jupiter" ]->ephemerisSettings = boost::make_shared< TabulatedEphemerisSettings >(
            bodyStateHistory, frameOrigin, frameOrientation ); 
 
-   creating an ephemeris interpolated (with 6th order Lagrange interpolation) from the data in bodyStateHistory, which contains the Cartesian state (w.r.t. SSB; axes along J2000) for a given number of times (map keys).
+   creating an ephemeris interpolated (with 6th order Lagrange interpolation) from the data in bodyStateHistory, which contains the Cartesian state (w.r.t. SSB; axes along J2000) for a given number of times (map keys, valid time range between first and last time in this map). 
 
 .. class::  KeplerEphemerisSettings
 
