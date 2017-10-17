@@ -16,19 +16,19 @@ Common Eigen types
 ~~~~~~~~~~~~~~~~~~
 A couple of Eigen types that are frequently used in Tudat are presented in this table:
 
-+-------------+-----------------+----------------+------------------------+
-|**Type Name**|**Fixed/Dynamic**|**Eigen/Tudat** | **Example Link**       |
-+-------------+-----------------+----------------+------------------------+
-| Vector3d    | Fixed           | Eigen          | Tutorial Eigen Vectors |
-+-------------+-----------------+----------------+------------------------+
-| Vector6d    | Fixed           | Tudat          | Tutorial Eigen Vectors |
-+-------------+-----------------+----------------+------------------------+
-| VectorXd    | Dynamic         | Eigen          | Tutorial Eigen Vectors |
-+-------------+-----------------+----------------+------------------------+
-| Matrix3d    | Fixed           | Eigen          | Eigen Matrix Example   |
-+-------------+-----------------+----------------+------------------------+
-| MatrixXd    | Dynamic         | Eigen          | Eigen Matrix Example   |
-+-------------+-----------------+----------------+------------------------+
++-------------+-----------------+----------------+---------------------------------------------------------------------------------------------+
+|**Type Name**|**Fixed/Dynamic**|**Eigen/Tudat** | **Example Link**                                                                            |
++-------------+-----------------+----------------+---------------------------------------------------------------------------------------------+
+| Vector3d    | Fixed           | Eigen          | :ref:`Tutorial Eigen Vectors <externalEigenExamples>`                                       |
++-------------+-----------------+----------------+---------------------------------------------------------------------------------------------+
+| Vector6d    | Fixed           | Tudat          | :ref:`Tutorial Eigen Vectors <externalEigenExamples>`                                       |
++-------------+-----------------+----------------+---------------------------------------------------------------------------------------------+
+| VectorXd    | Dynamic         | Eigen          | :ref:`Tutorial Eigen Vectors <externalEigenExamples>`                                       |
++-------------+-----------------+----------------+---------------------------------------------------------------------------------------------+
+| Matrix3d    | Fixed           | Eigen          | `Eigen Matrix Example <https://eigen.tuxfamily.org/dox/group__TutorialMatrixClass.html>`_   |
++-------------+-----------------+----------------+---------------------------------------------------------------------------------------------+
+| MatrixXd    | Dynamic         | Eigen          | `Eigen Matrix Example <https://eigen.tuxfamily.org/dox/group__TutorialMatrixClass.html>`_   |
++-------------+-----------------+----------------+---------------------------------------------------------------------------------------------+
 
 The table indicates whether it is a fixed size type or a dynamically sized type (second column). This is also indicated by the type name: the X indicates that the number of rows (and columns, for a matrix) are dynamically allocated at compile time. There is a difference between the fixed size types and the dynamically sized types. Information on when to use which type can be found below.
 
