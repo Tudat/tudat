@@ -4,13 +4,18 @@ C++ Tutorials
 =============
 This page links to tutorials for C++ features commonly used within Tudat. It contains links to existing tutorials online and gives some code examples of its use within Tudat. 
 
+C++ basics
+~~~~~~~~~~
+
+For those who are not familiar with the  C++ language, some excellent tutorials can be found at `cplusplus.com <http://www.cplusplus.com>`_. Also, this site contains documentation of the standard C++ library ``std::`` and could be of use when using functions from it.
+
 Iterators
 ~~~~~~~~~
 
 Iterators are used in Tudat to acces elements of containers. It provides a general method of accesing elements of containers independent of the container type. 
 
-A short description of iterators is written by  Alex Allain on 'Cprogramming.com' and can be found `here <https://www.cprogramming.com/tutorial/stl/iterators.html>`_. 
-A more elaborate tutorial which also explains the different iterator types is written by K. Hong on 'BoboToBogo.com` and can be found `here <http://www.bogotobogo.com/cplusplus/stl3_iterators.php>`_.
+A short description of iterators is written by  Alex Allain on `Cprogramming.com <https://www.cprogramming.com/tutorial/stl/iterators.html>`_. 
+A more elaborate tutorial which also explains the different iterator types is written by K. Hong on `BoboToBogo.com <http://www.bogotobogo.com/cplusplus/stl3_iterators.php>`_.
 
 Below are some examples of how iterators are used within Tudat. The first is from :ref:`walkthroughsInnerSolarSystemPropagation`. Here an iterator is used to obtain the propagation history of all propagated bodies from the ``integrationResult`` container as obtained from the :class:`DynamicsSimulator`:
 

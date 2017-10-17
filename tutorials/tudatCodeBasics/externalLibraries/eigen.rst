@@ -4,7 +4,7 @@ Eigen: Basic Concepts
 =====================
 This page provides an overview of the available information on the Eigen external library. Eigen is a C++ library specifically for linear algebra. This library is extensively used throughout Tudat for all linear algebra computations. Eigen is a pure template library defined in header files only. This means that Eigen does not need to be compiled and its header files can be used right away.
 
-Eigen's documentation is considered to be very good and extensive, so it is recommended that you check out the documentation on the Eigen website. Not only do they provide documentation on the code, the website also includes a long tutorial.
+Eigen's documentation is considered to be very good and extensive, so it is recommended that you check out the documentation on the :ref:`Eigen website<http://eigen.tuxfamily.org/index.php?title=Main_Page>. Not only do they provide documentation on the code, the website also includes a long tutorial.
 
 Why use Eigen?
 ~~~~~~~~~~~~~~
