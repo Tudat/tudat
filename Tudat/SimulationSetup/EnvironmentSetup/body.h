@@ -1058,8 +1058,8 @@ public:
     {
         if( groundStationMap.count( stationName ) == 0 )
         {
-            throw std::runtime_error( "Error, station " + stationName + " does not exist" );
-        }
+	    throw std::runtime_error( "Error, station " + stationName + " does not exist" );
+	}
 
         return groundStationMap.at( stationName );
     }
