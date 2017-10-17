@@ -13,7 +13,7 @@
 
 			:arrow:`State`
 
-		.. include:: rst/State.rst
+		.. include:: State.rst
 - :jsontype:`number` :jsonkey:`mass` (optional). Initial/constant mass. Used to define the constant mass of the body or its initial mass when it is varying, in which case it will be used to define an entry of the propagator's initial states (if not defined).
 - :jsontype:`number[7]` :jsonkey:`rotationalState` (optional). Initial rotational state. Used to define a segment of the propagator's initial states (if not defined).
 - :jsontype:`number` :jsonkey:`referenceArea` (optional). Area to be used for aerodynamics and radiation pressure settings (if not defined for these individual objects).
@@ -25,7 +25,7 @@
 
 			:arrow:`Aerodynamics`
 
-		.. include:: rst/Aerodynamics.rst
+		.. include:: Aerodynamics.rst
 - :jsontype:`object` :jsonkey:`atmosphere` (optional). Used to provide atmosphere settings of the body.
 
 	.. container:: toggle
@@ -34,7 +34,7 @@
 
 			:arrow:`Atmosphere`
 
-		.. include:: rst/Atmosphere.rst
+		.. include:: Atmosphere.rst
 - :jsontype:`object` :jsonkey:`ephemeris` (optional). Used to provide ephemeris settings of the body.
 
 	.. container:: toggle
@@ -43,7 +43,7 @@
 
 			:arrow:`Ephemeris`
 
-		.. include:: rst/Ephemeris.rst
+		.. include:: Ephemeris.rst
 - :jsontype:`object` :jsonkey:`gravityField` (optional). Used to provide gravity field settings of the body.
 
 	.. container:: toggle
@@ -52,7 +52,7 @@
 
 			:arrow:`Gravity Field`
 
-		.. include:: rst/GravityField.rst
+		.. include:: GravityField.rst
 - :jsontype:`object[]` :jsonkey:`gravityFieldVariation` (optional). Used to provide a list of gravity field variation settings.
 
 	.. container:: toggle
@@ -61,7 +61,7 @@
 
 			:arrow:`Gravity Field Variation`
 
-		.. include:: rst/GravityFieldVariation.rst
+		.. include:: GravityFieldVariation.rst
 - :jsontype:`object` :jsonkey:`radiationPressure` (optional). Used to provide a map of radiation pressure settings, in which the keys are the names of the radiating bodies causing a radiation pressure on the body.
 
 	.. container:: toggle
@@ -70,7 +70,7 @@
 
 			:arrow:`Radiation Pressure`
 
-		.. include:: rst/RadiationPressure.rst
+		.. include:: RadiationPressure.rst
 - :jsontype:`object` :jsonkey:`rotationModel` (optional). Used to provide rotation model settings of the body.
 
 	.. container:: toggle
@@ -79,7 +79,7 @@
 
 			:arrow:`Rotation Model`
 
-		.. include:: rst/RotationModel.rst
+		.. include:: RotationModel.rst
 - :jsontype:`object` :jsonkey:`shapeModel` (optional). Used to provide shape model settings.
 
 	.. container:: toggle
@@ -88,4 +88,4 @@
 
 			:arrow:`Shape Model`
 
-		.. include:: rst/ShapeModel.rst
+		.. include:: ShapeModel.rst

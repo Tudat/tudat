@@ -12,7 +12,7 @@
 
 			:arrow:`Variable`
 
-		.. include:: rst/Variable.rst
+		.. include:: Variable.rst
 - :jsontype:`string` :jsonkey:`header` (optional). Header to be included in the first line of the output file.
 - :jsontype:`boolean` :jsonkey:`epochsInFirstColumn` (optional). Whether to include the epochs in the first column of the results matrix. Default value: :literal:`true`.
 - :jsontype:`boolean` :jsonkey:`onlyInitialStep` (optional). Whether to save only the values corresponding to the initial integration step. Does not override :jsonkey:`onlyFinalStep`. Default value: :literal:`false`.

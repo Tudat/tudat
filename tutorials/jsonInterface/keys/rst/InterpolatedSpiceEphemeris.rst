@@ -14,5 +14,5 @@
 
 			:arrow:`Interpolator`
 
-		.. include:: rst/Interpolator.rst
+		.. include:: Interpolator.rst
 - :jsontype:`boolean` :jsonkey:`useLongDoubleStates` (optional). Whether to use long double states doubles for higher precision. Default value: :literal:`false`.

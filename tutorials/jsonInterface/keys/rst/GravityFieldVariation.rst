@@ -11,7 +11,7 @@
 
 		:arrow:`Basic Solid Body Gravity Field Variation`
 
-	.. include:: rst/BasicSolidBodyGravityFieldVariation.rst
+	.. include:: BasicSolidBodyGravityFieldVariation.rst
 
 .. container:: toggle
 
@@ -19,4 +19,4 @@
 
 		:arrow:`Tabulated Gravity Field Variation`
 
-	.. include:: rst/TabulatedGravityFieldVariation.rst
+	.. include:: TabulatedGravityFieldVariation.rst

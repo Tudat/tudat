@@ -13,4 +13,4 @@
 
 		:arrow:`Cannon Ball Radiation Pressure`
 
-	.. include:: rst/CannonBallRadiationPressure.rst
+	.. include:: CannonBallRadiationPressure.rst

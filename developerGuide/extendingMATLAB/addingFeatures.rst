@@ -3,7 +3,7 @@
 Adding features
 ===============
 
-For each settings-containing class, a directory is added to :class:`tudatBundle/matlabInterface/MatlabInterface`. The name of this directory is irrelevant for the code to work, but it is preferable to the same name for the directory as for the base class. The name of the files do have to coincide with the name of the classes/enumerations. For instance, for the :class:`Integrator` class, we will create the file :class:`MatlabInterface/Integrator/Integrator.m`. In that same directory, we will add all the files for the derived classes (in this case only :class:`VariableStepSizeIntegrator.m`) as well as the files for the enumerations needed by these classes (in this case, :class:`Integrators.m` and :class:`RungeKuttaCoefficientSets.m`). Note that the name of the enumerations is in plural, and do not include the word :class:`Type` at the end. In the same way, the settings-containing classes do not add the word :class:`Settings` at the name: this is done to avoid repeating :class:`Settings` and :class:`Type` everywhere in the code unnecessarily, as in the MATLAB interface all the custom classes are used to define settings and all the enumerations to defined types, so it is not necessary to explicitly add this information to their names.
+For each settings-containing class, a directory is added to :class:`tudatBundle/matlabInterface/MatlabInterface`. The name of this directory is irrelevant for the code to work, but it is preferable to the same name for the directory as for the base class. The name of the files do have to coincide with the name of the classes/enumerations. For instance, for the :class:`Integrator` class, we will create the file :class:`MatlabInterface/Integrator/Integrator.m`. In that same directory, we will add all the files for the derived classes (in this case only :class:`VariableStepSizeIntegrator.m`) as well as the files for the enumerations needed by these classes (in this case, :class:`Integrators.m` and :class:`RungeKuttaCoefficientSets.m`). Note that the name of the enumerations is in plural, and does not include the word :class:`Type` at the end. In the same way, the settings-containing classes do not add the word :class:`Settings` at the name: this is done to avoid repeating :class:`Settings` and :class:`Type` everywhere in the code unnecessarily, as in the MATLAB interface all the custom classes are used to define settings and all the enumerations to defined types, so it is not necessary to explicitly add this information to their names.
 
 In some cases, when a class can only be contained by another class, it is recommended to put that class (and its derived classes and associated enumerations) in a directory inside the parent's class directory. For instance, the file :class:`MatlabInterface/Body/GravityField/GravityField.m` is in a directory inside the :class:`MatlabInterface/Body` directory because only :class:`Body` objects can contain :class:`GravityField` objects when setting up a valid Tudat simulation.
 
@@ -91,11 +91,11 @@ Dependent properties can be used as shortcuts to other properties. For instance,
       ...
   end
 
-The classes provided in the MATLAB Interface do not provide functionality, they are just classes containing settings that can be converted to JSON. Thus, they do not contain many methods (normally, just those overriding the methods of :literal:`jsonable` to determine which properties are mandatory, paths, etc.). One exception is the :class:`Simulation` class, which does include some methods that add functionality, such as those for running the simulation, adding bodies, defining results to be exported to JSON files or to be imported from a Tudat propagation into MATLAB, etc.
+The classes provided in the MATLAB Interface do not provide functionality, they are just classes containing settings that can be converted to JSON. Thus, they do not contain many methods (normally, just those overriding the methods of :class:`jsonable` to determine which properties are mandatory, paths, etc.). One exception is the :class:`Simulation` class, which does include some methods that add functionality, such as those for running the simulation, adding bodies, defining results to be exported to JSON files or to be imported from a Tudat propagation into MATLAB, etc.
 
-For other classes, in addition to getters and setters for dependent properties and overriding the function needed to determine their JSON representation, we need write the following methods:
+For other classes, in addition to getters and setters for dependent properties and overriding the function needed to determine their JSON representation, we need to write the following methods:
 
-- **Setters for properties storing enumeration values**, in order to enable using a char rather than an enumeration value when defining it. For instance:
+- **Setters for properties storing enumeration values**, in order to enable using a char (in addition to an enumeration value) when defining it. For instance:
   
   .. code-block:: matlab
     :caption: :class:`MatlabInterface/Integrator/VariableStepSizeIntegrator.m`
@@ -118,7 +118,7 @@ For other classes, in addition to getters and setters for dependent properties a
     ...
     end
   
-  In this way, this two assignments result in a valid integrator:
+  In this way, these two assignments are equivalent and both result in a valid integrator:
   
   .. code-block:: matlab
     
@@ -151,7 +151,7 @@ For other classes, in addition to getters and setters for dependent properties a
         end
     end
     
-  When getting the :class:`centralBody` property of a :class:`Thrust` object, a char will be returned even if the user assigned a :class:`Body` object to this property; in that case, the transient property :literal:`name` of the body will be used. Thus, the following two assignment are valid:
+  When getting the :class:`centralBody` property of a :class:`Thrust` object, a char will be returned even if the user assigned a :class:`Body` object to this property; in that case, the transient property :literal:`name` of the body will be used. Thus, the following two assignments are equivalent and valid:
   
   .. code-block:: matlab
     
@@ -164,7 +164,7 @@ For other classes, in addition to getters and setters for dependent properties a
 Constructors
 ************
 
-We can provide constructors for the setting-containing classes. Usually, in the classes provided in the MATLAB interface, a type containing an enumeration value is provided as first (and only) argument and assigned to a :literal:`type` property:
+We can provide constructors for the settings-containing classes. Usually, in the classes provided in the MATLAB interface, a type containing an enumeration value is provided as first (and only) argument and assigned to a :literal:`type` property:
 
 .. code-block:: matlab
   :caption: :class:`MatlabInterface/Acceleration.m`
@@ -190,7 +190,7 @@ Providing constructors with additional arguments is discouraged, as this usually
   
   integrator = VariableStepSizeIntegrator(10,'rungeKuttaFehlberg78',1,1000,1E-9,1E-9);
 
-If the user writes this in their MATLAB script, it is difficult to know what each parameter represents. If one checks the constructor definition (in MATLAB, only one constructor can be provided per class), it will look like :literal:`VariableStepSizeIntegrator(varargin)` in most cases, which does not provided useful information. Moreover, if more properties are added in the future, these could only be added at the end of the list of input arguments; otherwise existing code would be broken (or worse, would still run but generating in wrong results). Thus, it is recommended to create instances of settings-containing objects using an empty constructor whenever possible:
+If the user writes this in their MATLAB script, it is difficult to know what each parameter represents. If one checks the constructor definition (in MATLAB, only one constructor can be provided per class), it will look like :literal:`VariableStepSizeIntegrator(varargin)` in most cases, which does not provide useful information. Moreover, if more properties are added in the future, these could only be added at the end of the list of input arguments; otherwise existing code would be broken (or worse, would still run but generating in wrong results). Thus, it is recommended to create instances of settings-containing objects using an empty constructor whenever possible:
 
 .. code-block:: matlab
   
@@ -211,7 +211,7 @@ In any case, **an empty constructor must always be provided** (i.e. the length o
   simulation.integrator.stepSize = 20;
   json.export(simulation,'main.json');
 
-because in the constructor of :class:`Simulation`, the property :literal:`integrator` is assigned to :literal:`Integrator()`. If we skip this step, the code above would still be valid, but the property :literal:`simulation.integrator` would be a :class:`struct` instead of an :class:`Integrator` object, so all the functionality defined in the :class:`Integrator` class for converting to JSON would be lost. This means that, all the properties storing settings-containing objects must be initialised in the constructor with their corresponding empty constructors to prevent this problems. For instance:
+because in the constructor of :class:`Simulation`, the property :literal:`integrator` is set to :literal:`Integrator()`. If we skip this step, the code above would still be valid, but the property :literal:`simulation.integrator` would be a :class:`struct` instead of an :class:`Integrator` object, so all the functionality defined in the :class:`Integrator` class for converting to JSON would be lost. This means that, all the properties storing settings-containing objects must be initialised in the constructor with their corresponding empty constructors to prevent this problems. For instance:
 
 .. code-block:: matlab
   :caption: :class:`MatlabInterface/Acceleration/Thrust.m`

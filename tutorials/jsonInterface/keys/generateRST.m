@@ -108,7 +108,7 @@ try
                     tab = sprintf('\t');
                 end
                 fprintf(fid,'\n\n%s.. container:: toggle\n\n%s\t.. container:: header\n\n%s\t\t',tab,tab,tab);
-                fprintf(fid,':arrow:`%s`\n\n%s\t.. include:: rst/%s.rst',childName,tab,childFilename);
+                fprintf(fid,':arrow:`%s`\n\n%s\t.. include:: %s.rst',childName,tab,childFilename);
             end
         end
         fprintf(fid,'\n');
