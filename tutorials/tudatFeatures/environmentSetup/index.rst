@@ -500,22 +500,6 @@ Rotational model
 
    Rotation model with a constant value for the rotation. Currently the settings interface is not yet implemented. 
 
-Torque model
-************
-
-.. class:: TorqueModel
-
-   Base class for the torque model, set using the settings classes described below.
-
-.. class:: TorqueSettings
-
-   Base class for the torque settings used for rotational dynamics as set in :class:`RotationalStatePropagatorSettings`. Type of torque is selected by passing the correct parameter to the constructor. Currently two types of torques are implemented: ``second_order_gravitational_torque`` (interaction of point-mass of body A with J\ :sub:`2` of body B) and ``aerodynamic_torque`` (settings for coefficients defined same as for aerodynamic acceleration).
-
-   .. code-block:: cpp
-
-    TorqueSettings( torqueType );
-
-
 Body shape model
 ****************
 
