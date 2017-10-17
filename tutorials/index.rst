@@ -12,7 +12,7 @@ We recommend to start going through the :ref:`preknowledgeIndex` pages, since th
 .. toctree::
    :hidden:
 
-   prerequiredKnowledge/index
+   tudatCodeBasics/index
    applicationWalkthroughs/index
    tudatFeatures/index
    jsonInterface/index

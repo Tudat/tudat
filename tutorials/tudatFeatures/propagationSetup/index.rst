@@ -24,7 +24,7 @@ One of the core elements of the Tudat libraries is its simulator framework. The 
       # specific node color settings
       DynamicsSimulator [color = lightgreen];
       NamedBodyMap, MultiArc, "RungeKuttaVariable\nStepSizeSettings", IntegratorSettings [color = lightblue];
-      "DependentVariable(s)\nNumerical Solution", "Equations of Motion\nNumerical Solution" [color = cyan];
+      "DependentVariable(s)\nNumerical Solution", "Equations of Motion\nNumerical Solution" [color = peachpuff];
       
       # Hyperlinks (Sphinx auto referencing not working here, need to link to exact web adres)
       NamedBodyMap [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#NamedBodyMap", target = "_top"];
@@ -120,7 +120,7 @@ One of the core elements of the Tudat libraries is its simulator framework. The 
    	"Main block" [fillcolor = lightgreen];
      	"Optional input" [style = dotted, fillcolor = lightgrey, color = black];
      	"Input for \nmain block" [fillcolor = lightblue];
-      Output [color = cyan];
+      Output [color = peachpuff];
      	"Optional input"-> "Input for \nmain block" -> "Main block" -> "Output" [style = invis];
       }
    }

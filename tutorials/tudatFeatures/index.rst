@@ -22,7 +22,7 @@ These pages of the wiki provide further details about critical libraries necessa
       # specific node color settings
       DynamicsSimulator [color = lightgreen];
       IntegratorSettings, NamedBodyMap, PropagatorSettings [color = lightblue];
-      "DependentVariable(s)\nNumerical Solution", "Equations of Motion\nNumerical Solution" [color = cyan]; 
+      "DependentVariable(s)\nNumerical Solution", "Equations of Motion\nNumerical Solution" [color = peachpuff]; 
 
 
       # Hyperlinks (Sphinx auto referencing not working here, need to link to exact web adres)
@@ -149,7 +149,7 @@ These pages of the wiki provide further details about critical libraries necessa
    	"Main block" [fillcolor = lightgreen];
      	"Optional input" [style = dotted, fillcolor = lightgrey, color = black];
      	"Input for \nmain block" [fillcolor = lightblue];
-      Output [color = cyan];
+      Output [color = peachpuff];
      	"Optional input"-> "Input for \nmain block" -> "Main block" -> "Output" [style = invis];
       }
    }
