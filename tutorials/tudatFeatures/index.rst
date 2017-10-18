@@ -55,9 +55,9 @@ These pages of the wiki provide further details about critical libraries necessa
       {   
          style = dashed;
          dependentVariables [style = dotted , fillcolor = lightgrey, color = black];
-         "final time" -> TerminationSettings;
-         "final time" [style = dotted, fillcolor = lightgrey, color = black];
-         {rank = same; dependentVariables, TerminationSettings, initialBodyStates}
+         "simulationEndEpoch" -> TerminationSettings;
+         "simulationEndEpoch" [style = dotted, fillcolor = lightgrey, color = black];
+         {rank = same; TerminationSettings, initialBodyStates}
 
       }
 
@@ -72,7 +72,6 @@ These pages of the wiki provide further details about critical libraries necessa
       BodySettings -> NamedBodyMap;
       "User-defined \nbodies" [style = dotted, fillcolor = lightgrey, color = black];
       "User-defined \nbodies" -> NamedBodyMap;
-      "(initial/final) time" -> "User-defined \nbodies" [style = invis];
 
       subgraph clusterNamedBodyMap
       {   
@@ -119,11 +118,13 @@ These pages of the wiki provide further details about critical libraries necessa
       DynamicsSimulator -> "Equations of Motion\nNumerical Solution";
       DynamicsSimulator -> "DependentVariable(s)\nNumerical Solution" [constraint = false];
 
-     
                
       # Define rank and connections of some blocks for positioning 
       {rank = same; PropagatorSettings, IntegratorSettings, NamedBodyMap, AccelerationModel, "User-defined \nbodies" }
       "(initial/final) time" -> simulationStartEpoch [style = invis];		
+      "IntegratorSettings" -> "User-defined \nbodies" [style = invis];
+      "(initial/final) time" -> "User-defined \nbodies" [style = invis];
+      dependentVariables -> initialBodyStates [style = invis];
 
    }
 
