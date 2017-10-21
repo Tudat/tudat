@@ -94,7 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials and Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../prerequiredKnowledge/index.html">Pre-required Knowledge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../prerequiredKnowledge/index.html">Getting Started with Tudat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">1. Basic Astrodynamics Tools</a><ul class="current">
@@ -306,7 +306,7 @@ Converting to/from Cartesian state requires an additional piece of information i
 </div>
 <div class="section" id="modified-equinoctial-elements">
 <h3>1.1.1.3. Modified Equinoctial elements<a class="headerlink" href="#modified-equinoctial-elements" title="Permalink to this headline">¶</a></h3>
-<p>The modified equinoctial elements are typically used for orbits with eccentricities near 0 or 1 and/or inclinations near 0 or . The element indices in Tudat are the following:</p>
+<p>The modified equinoctial elements are typically used for orbits with eccentricities near 0 or 1 and/or inclinations near 0 or <span class="math">\(\pi\)</span>. The element indices in Tudat are the following:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Modified equinoctial element vector indices.</span>
 <span class="k">enum</span> <span class="n">ModifiedEquinoctialElementVectorIndices</span>
 <span class="p">{</span>
@@ -319,7 +319,7 @@ Converting to/from Cartesian state requires an additional piece of information i
 <span class="p">};</span>
 </pre></div>
 </div>
-<p>The modified equinoctial elements consists of 6 elements. The conversion to/from Cartesian elements requires the gravitation parameter of the body w.r.t. which the Modified Equinoctial elements are defined. Furthermore, a <code class="docutils literal"><span class="pre">bool</span></code> is used to indicate whether the singularity of this element set occurs for inclinations of 0 or . The conversion from Cartesian elements is done as:</p>
+<p>The modified equinoctial elements consists of 6 elements. The conversion to/from Cartesian elements requires the gravitation parameter of the body w.r.t. which the Modified Equinoctial elements are defined. Furthermore, a <code class="docutils literal"><span class="pre">bool</span></code> is used to indicate whether the singularity of this element set occurs for inclinations of 0 or <span class="math">\(\pi\)</span>. The conversion from Cartesian elements is done as:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">cartesianState</span> <span class="o">=</span> <span class="p">....</span>
 <span class="kt">double</span> <span class="n">centralBodyGravitationalParameter</span> <span class="o">=</span> <span class="p">...</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">cartesianState</span> <span class="o">=</span> <span class="n">convertCartesianToModifiedEquinoctial</span><span class="p">(</span> <span class="n">cartesianState</span><span class="p">,</span> <span class="n">centralBodyGravitationalParameter</span><span class="p">,</span> <span class="n">flipSingularityToZeroInclination</span> <span class="p">);</span>
@@ -488,6 +488,7 @@ Converting to/from Cartesian state requires an additional piece of information i
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

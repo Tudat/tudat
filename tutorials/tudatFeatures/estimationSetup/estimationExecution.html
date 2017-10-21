@@ -94,7 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials and Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../prerequiredKnowledge/index.html">Pre-required Knowledge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../prerequiredKnowledge/index.html">Getting Started with Tudat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
@@ -240,7 +240,7 @@
 </div></blockquote>
 <p>After the creation of the <a class="reference internal" href="#OrbitDeterminationManager" title="OrbitDeterminationManager"><code class="xref py py-class docutils literal"><span class="pre">OrbitDeterminationManager</span></code></a> object, a number of objects are created internally that can be used for various purposes:</p>
 <ul class="simple">
-<li>An object with base class <code class="xref py py-class docutils literal"><span class="pre">VariationalEquationsSolver</span></code>, which contains the numerically propagated variational equations and dynamics, can be retrieved using the <code class="docutils literal"><span class="pre">getVariationalEquationsSolver</span></code> member function.</li>
+<li>An object with base class <a class="reference internal" href="../propagationSetup/variationalSimulatorCreation.html#VariationalEquationsSolver" title="VariationalEquationsSolver"><code class="xref py py-class docutils literal"><span class="pre">VariationalEquationsSolver</span></code></a>, which contains the numerically propagated variational equations and dynamics, can be retrieved using the <code class="docutils literal"><span class="pre">getVariationalEquationsSolver</span></code> member function.</li>
 <li>A list of objects with base class <code class="xref py py-class docutils literal"><span class="pre">ObservationSimulatorBase</span></code> (one per observable type) to simulate observations, discussed in more detail on the page on <a class="reference internal" href="observationSimulation.html#creatingobservationsimulators"><span class="std std-ref">Creating the Observation Simulator</span></a></li>
 <li>A list of objects with base class <code class="xref py py-class docutils literal"><span class="pre">ObservationManagerBase</span></code> (one per observable type) to simulate observations and the associated partial derivatives. These objects are not directly accesed by users. Their output (partial derivatives of observables) are provided <em>a posterior</em> through an object of type <code class="xref py py-class docutils literal"><span class="pre">PodOutput</span></code>, discussed on the page on <a class="reference internal" href="#estimationoutput"><span class="std std-ref">Estimation output</span></a>.</li>
 </ul>
@@ -272,7 +272,7 @@
 </div>
 <div class="section" id="estimation-output">
 <span id="estimationoutput"></span><h2>6.5.3. Estimation output<a class="headerlink" href="#estimation-output" title="Permalink to this headline">¶</a></h2>
-<p>When performing the estimation, the code rescales the values of all parameters , where we denote the scaled parameters as , so that all partials  w.r.t. lie in the range . To provide transparency, it is the covariance and partial derivative matrix of these scaled parameters that is saved to the <code class="docutils literal"><span class="pre">PodOutput</span></code> object. However, the following functions allow you to retrieve the information w.r.t. the <em>unscaled</em> parameters:</p>
+<p>When performing the estimation, the code rescales the values of all parameters <span class="math">\(p\)</span>, where we denote the scaled parameters as <span class="math">\(\tilde{h}\)</span>, so that all partials <span class="math">\(\partial h/\partial\tilde{p}\)</span> w.r.t. lie in the range <span class="math">\([-1,1]\)</span>. To provide transparency, it is the covariance and partial derivative matrix of these scaled parameters that is saved to the <code class="docutils literal"><span class="pre">PodOutput</span></code> object. However, the following functions allow you to retrieve the information w.r.t. the <em>unscaled</em> parameters:</p>
 <ul class="simple">
 <li>Inverse covariance, obtained using the <code class="docutils literal"><span class="pre">getUnnormalizedInverseCovarianceMatrix</span></code> function.</li>
 <li>Covariance, obtained using the <code class="docutils literal"><span class="pre">getUnnormalizedCovarianceMatrix</span></code> function. Note that this only produces valid results if the problem is not ill-posed.</li>
@@ -337,6 +337,7 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

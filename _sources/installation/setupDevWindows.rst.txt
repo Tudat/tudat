@@ -6,10 +6,10 @@ This section of the guide refers to the installation of the IDE under Windows. T
 
 CMake
 ~~~~~
-So, we are now going to walk through the process of installing CMake on your computer, after which we will install Qt Creator, which comes bundled with the compiler and related tools. We use CMake to manage software project(s), and to instruct your compiler how to generate and link libraries.
+So, we are now going to walk through the process of installing CMake on your computer, after which we will install Qt Creator, which comes bundled with the compiler and related tools. We use CMake to manage software project(s), and to instruct your compiler how to generate and link libraries.
 
 **Step 1: Download CMake**
-    To download CMake, go to the `CMake website <https://cmake.org/download/>`_ and look for the Windows Installer ``cmake-[version]-win32-x86.msi`` at the top of table for Binary distributions. Click the link, and choose Run or Save (if available) in order to get the installer on your computer.
+    To download CMake, go to the `CMake website <https://cmake.org/download/>`_ and look for the Windows Installer ``cmake-[version]-win32-x86.msi`` at the top of table for Binary distributions. Click the link, and choose Run or Save (if available) in order to get the installer on your computer.
 
 **Step 2: Install CMake**
     If your installer does not run automatically once the download has been completed, go to your Downloads directory and start the installer by double-clicking on it. Click on Run if your operating system tells you it does not recognize the publisher. You now get to the welcome screen for the CMake installer. You will have to press Next and accept the License Agreement (if you choose) and Next again. Now you will get to the Install Options. Make sure to select either Add CMake to the system PATH for *all users* (preferred) or *current user* (alternatively).
@@ -35,9 +35,12 @@ Now we are going to walk through the process of installing Qt Creator on your co
    Do not install in Program Files, instead install Qt in your C:/ directory (or D:/ ...). Do not install it in the Program Files (x86) directory (or any directory with spaces), since this is know to cause issues later on.
 
 **Step 4: Select custom installation components**
-    Click Next until you get to the Select Components step. Here you get the option to select which parts of the Qt SDK you wish to install, shown below. Only Qt Creator (default, can not be unchecked) and MinGW (latest version) from the Tools section are necessary.
+    Click Next until you get to the Select Components step. Here you get the option to select which parts of the Qt SDK you wish to install, shown below. Only Qt Creator (default, can not be unchecked) and MinGW (latest version) from the Tools section are necessary. The debugger is recommended.
 
-    .. warning:: It is necessary to have MinGW 4.9.1 (or greater), otherwise you will not be able to compile the Tudat libraries.
+    .. warning:: It is necessary to have MinGW 4.9.1 (or greater), and recommended to use MinGW 5.3.0 (or greater).
+
+.. figure:: images/qtInstall.png
+
 
 **Step 5: Complete the installation**
     Click Next to go to the License Agreement, where you find the license attached to the use of Qt. Scroll through it if you wish to know what you are accepting. Agree to the conditions and continue to the next step. You can choose to have shortcuts installed or not. Now you can click Install to start the installation. QtCreator and MinGW will be installed on your computer.
@@ -45,8 +48,14 @@ Now we are going to walk through the process of installing Qt Creator on your co
 **Step 6: Configure Qt Creator**
     Open Qt Creator and go to Tools/Options. Under the Build & Run section, choose the Kits tab and select Desktop. Please verify the following:
 
-    - The compiler is set to MinGW 4.9.1 (or newer).
-    - The CMake tool is present.
-    - The primary generator is MinGW and secondary generator is CodeBlocks.
+   .. figure:: images/compilerCheck.png
+
+Specifically:
+
+    - The compiler is set to MinGW (4.9.1 or higher required, 5.3.0 or higher recommended), shown above, in red.
+    - The CMake tool is present, shown above in blue. Note that the name of the CMake tool may be different than below. If no CMake options are available,  go to the CMake tab and click 'Add'. Navigate to the directory where you installed cmake, and select :literal:`.../CMake/bin/cmake.exe` as the CMake tool.
+    - The primary generator is MinGW and secondary generator is CodeBlocks, shown above in green.
+
+
 
 The next step is to download the Tudat bundle. Click next to go there.

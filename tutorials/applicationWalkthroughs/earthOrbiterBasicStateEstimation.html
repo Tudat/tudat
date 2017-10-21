@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>7. Orbit Determination and Parameter Estimation (Basic) &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>8. Orbit Determination and Parameter Estimation (Basic) &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -39,8 +39,8 @@
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
         <link rel="up" title="Application Walkthroughs" href="index.html"/>
-        <link rel="next" title="8. Orbit Determination and Parameter Estimation" href="earthOrbiterStateEstimation.html"/>
-        <link rel="prev" title="6. Use of Thrust: User-defined Thrust Vector" href="useOfThrustUserDefinedThrustVector.html"/> 
+        <link rel="next" title="9. Orbit Determination and Parameter Estimation" href="earthOrbiterStateEstimation.html"/>
+        <link rel="prev" title="7. Variational Equations Propagation" href="variationalEquationsPropagation.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -94,7 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorials and Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../prerequiredKnowledge/index.html">Pre-required Knowledge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../prerequiredKnowledge/index.html">Getting Started with Tudat</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Walkthroughs</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html#example-tutorials">Example tutorials</a><ul class="current">
@@ -104,8 +104,9 @@
 <li class="toctree-l4"><a class="reference internal" href="innerSolarSystemPropagation.html">4. Inner Solar System Propagation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="useOfThrustThrustForceAlongVelocityVector.html">5. Use of Thrust: Thrust Force Along Velocity Vector</a></li>
 <li class="toctree-l4"><a class="reference internal" href="useOfThrustUserDefinedThrustVector.html">6. Use of Thrust: User-defined Thrust Vector</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">7. Orbit Determination and Parameter Estimation (Basic)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="earthOrbiterStateEstimation.html">8. Orbit Determination and Parameter Estimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variationalEquationsPropagation.html">7. Variational Equations Propagation</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">8. Orbit Determination and Parameter Estimation (Basic)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthOrbiterStateEstimation.html">9. Orbit Determination and Parameter Estimation</a></li>
 </ul>
 </li>
 </ul>
@@ -164,7 +165,7 @@
         
           <li><a href="index.html">Application Walkthroughs</a> &raquo;</li>
         
-      <li>7. Orbit Determination and Parameter Estimation (Basic)</li>
+      <li>8. Orbit Determination and Parameter Estimation (Basic)</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -184,7 +185,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="orbit-determination-and-parameter-estimation-basic">
-<span id="earthorbiterbasicstateestimation"></span><h1>7. Orbit Determination and Parameter Estimation (Basic)<a class="headerlink" href="#orbit-determination-and-parameter-estimation-basic" title="Permalink to this headline">¶</a></h1>
+<span id="earthorbiterbasicstateestimation"></span><h1>8. Orbit Determination and Parameter Estimation (Basic)<a class="headerlink" href="#orbit-determination-and-parameter-estimation-basic" title="Permalink to this headline">¶</a></h1>
 <p>In all previous tutorials, we were only concerned with the propagation of orbits, and the analysis of the numerical results. In this tutorial, we will show how to simulate tracking observables, and use these observations to estimate the state of a spacecraft, as well as a variety of physical parameters of the environment. The estimation framework in Tudat has a broad variety of features, and we only cover the basic aspects here. A tutorial of more extensive features is given on the page <a class="reference internal" href="earthOrbiterStateEstimation.html#earthorbiterstateestimation"><span class="std std-ref">Orbit Determination and Parameter Estimation</span></a></p>
 <blockquote>
 <div><p>The code for this tutorial is given on Github, and is also located in your tudat bundle at:</p>
@@ -220,7 +221,7 @@
 </div>
 <p>The subsequent creation of acceleration, propagation and integration settings is done in the same manner as previous tutorials.</p>
 <div class="section" id="defining-observation-settings">
-<h2>7.1. Defining Observation Settings<a class="headerlink" href="#defining-observation-settings" title="Permalink to this headline">¶</a></h2>
+<h2>8.1. Defining Observation Settings<a class="headerlink" href="#defining-observation-settings" title="Permalink to this headline">¶</a></h2>
 <p>In Tudat, an observation model is referred to a number of link ends (see <a class="reference internal" href="../tudatFeatures/estimationSetup/linkEndSetup.html#linkendsetup"><span class="std std-ref">Setting up the link ends</span></a>). For a one-way range model, for instance, a receiver and transmitter are required, both of which are termed a ‘link end’. An <code class="docutils literal"><span class="pre">enum</span></code> termed <code class="docutils literal"><span class="pre">LinkEndType</span></code> is available that lists all the possible kinds of link ends. A full list of observation models, as well as the link ends that they require, is given on the pahe <a class="reference internal" href="../tudatFeatures/estimationSetup/observationModelSetup.html#observationtypes"><span class="std std-ref">Observation Types</span></a>. A set of link ends used for a given observable are stored in a <code class="docutils literal"><span class="pre">LinkEnds</span></code> type, which is a <code class="docutils literal"><span class="pre">typedef</span></code> for <code class="docutils literal"><span class="pre">std::map&lt;</span> <span class="pre">LinkEndType,</span> <span class="pre">std::pair&lt;</span> <span class="pre">std::string,</span> <span class="pre">std::string</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code>. As you can see, the map value is a pair of strings. The first entry of the string is the body on which the link end is placed, the second entry the reference point on this body (typically the ground station). In the case where teh second entry is empty (as is often the case for spacecraft), the body’s center of mass is used.</p>
 <p>Here, we want to create a set of link ends that use each of the ground stations as a receiver, and the spacecraft as a transmitter, as well as vice versa. We do this by:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create list of link ends in which station is receiver and in which station is transmitter (with spacecraft other link end).</span>
@@ -280,14 +281,14 @@
 <p>Where we have defined a map <code class="docutils literal"><span class="pre">ObservationSettingsMap</span></code> (a typedef for <code class="docutils literal"><span class="pre">std::multimap&lt;</span> <span class="pre">LinkEnds,</span> <span class="pre">boost::shared_ptr&lt;</span> <span class="pre">ObservationSettings</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code>) that contains all the settings necessary to create the observation models.</p>
 </div>
 <div class="section" id="defining-estimation-settings">
-<h2>7.2. Defining Estimation Settings<a class="headerlink" href="#defining-estimation-settings" title="Permalink to this headline">¶</a></h2>
+<h2>8.2. Defining Estimation Settings<a class="headerlink" href="#defining-estimation-settings" title="Permalink to this headline">¶</a></h2>
 <p>We have now defined the settings for the observation models that are to be used. Next are the settings for the parameters that are to be estimated. In this tutorial, we use only a limited set of parameters, namely:</p>
 <ul class="simple">
-<li>The spacecraft initial state , where use only a single arc to estimate its dynamics.</li>
-<li>A constant radiation pressure coefficient  of the spacecraft (assuming a cannonball radiation pressure model)</li>
-<li>A constant aerodynamic drag coefficient  of the spacecraft</li>
-<li>Spherical harmonic cosine coefficients at degree 2, and orders 0 to 2 (so )</li>
-<li>Spherical harmonic sine coefficients at degree 2, and orders 1 to 2 (so )</li>
+<li>The spacecraft initial state <span class="math">\(x_{0}\)</span>, where use only a single arc to estimate its dynamics.</li>
+<li>A constant radiation pressure coefficient <span class="math">\(C_{r}\)</span> of the spacecraft (assuming a cannonball radiation pressure model)</li>
+<li>A constant aerodynamic drag coefficient <span class="math">\(C_{D}\)</span> of the spacecraft</li>
+<li>Spherical harmonic cosine coefficients at degree 2, and orders 0 to 2 (so <span class="math">\(C_{20}, C_{21}, C_{22}\)</span>)</li>
+<li>Spherical harmonic sine coefficients at degree 2, and orders 1 to 2 (so <span class="math">\(S_{21}, S_{22}\)</span>)</li>
 </ul>
 <p>Defining the settings for these parameters is done by:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">parameterNames</span><span class="p">;</span>
@@ -302,7 +303,7 @@
                               <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="n">spherical_harmonics_sine_coefficient_block</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>details on the set up of the parameters can be found on the page <a class="reference internal" href="../tudatFeatures/estimationSetup/parameterEstimationSettings.html#parametersettingcreation"><span class="std std-ref">Creating Estimated Parameters</span></a>. The general idea behind the settings may be familiar: they are similar to the acceleration settings. Some parameters ( and ) require no information in addition to the type of parameter and associated bodies and are created using the <a class="reference internal" href="../tudatFeatures/estimationSetup/parameterEstimationSettings.html#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal"><span class="pre">EstimatableParameterSettings</span></code></a> base class. The other parameters require                               additional information, and have a dedicated derived class.</p>
+<p>details on the set up of the parameters can be found on the page <a class="reference internal" href="../tudatFeatures/estimationSetup/parameterEstimationSettings.html#parametersettingcreation"><span class="std std-ref">Creating Estimated Parameters</span></a>. The general idea behind the settings may be familiar: they are similar to the acceleration settings. Some parameters (<span class="math">\(C_{r}\)</span> and <span class="math">\(C_{D}\)</span>) require no information in addition to the type of parameter and associated bodies and are created using the <a class="reference internal" href="../tudatFeatures/estimationSetup/parameterEstimationSettings.html#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal"><span class="pre">EstimatableParameterSettings</span></code></a> base class. The other parameters require                               additional information, and have a dedicated derived class.</p>
 <p>Now, the actual objects that are used in the simulation are created by:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create parameters</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">estimatable_parameters</span><span class="o">::</span><span class="n">EstimatableParameterSet</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">parametersToEstimate</span> <span class="o">=</span>
@@ -324,7 +325,7 @@
 <p>Which provides information on the physical meaning of the entries of the parameter vector (note that the order is not necessarilly the same as in the <code class="docutils literal"><span class="pre">parameterNames</span></code> list). Here, the initial state starts at index 0, the radiation pressure at index 6, <em>etc.</em></p>
 </div>
 <div class="section" id="initializing-dynamics-observation-models-and-partial-derivatives">
-<h2>7.3. Initializing Dynamics, Observation Models and Partial Derivatives<a class="headerlink" href="#initializing-dynamics-observation-models-and-partial-derivatives" title="Permalink to this headline">¶</a></h2>
+<h2>8.3. Initializing Dynamics, Observation Models and Partial Derivatives<a class="headerlink" href="#initializing-dynamics-observation-models-and-partial-derivatives" title="Permalink to this headline">¶</a></h2>
 <p>All required objects that compute the dynamics, variational equations, observation models and observation partials are created by the following line of code:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create orbit determination object (propagate orbit, create observation models)</span>
 <span class="n">OrbitDeterminationManager</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">orbitDeterminationManager</span> <span class="o">=</span>
@@ -336,7 +337,7 @@
 <p>The <a class="reference internal" href="../tudatFeatures/estimationSetup/estimationExecution.html#OrbitDeterminationManager" title="OrbitDeterminationManager"><code class="xref py py-class docutils literal"><span class="pre">OrbitDeterminationManager</span></code></a> object that is created will automatically propagate the dynamics (accordinng to the <span class="xref std std-ref">integratorSettings</span> and <span class="xref std std-ref">propagatorSettings</span>), as well as the associated variational equations (according to <span class="xref std std-ref">propagatorSettings</span>). Observation models are created using <code class="docutils literal"><span class="pre">observationSettingsMap</span></code>, as well as the associated models for the observation partial derivatives. More details can be found on the page on <a class="reference internal" href="../tudatFeatures/estimationSetup/estimationExecution.html#estimationobjectcreation"><span class="std std-ref">Creating the estimation object</span></a>.</p>
 </div>
 <div class="section" id="simulating-observations">
-<h2>7.4. Simulating Observations<a class="headerlink" href="#simulating-observations" title="Permalink to this headline">¶</a></h2>
+<h2>8.4. Simulating Observations<a class="headerlink" href="#simulating-observations" title="Permalink to this headline">¶</a></h2>
 <p>The tutorial is concerned with using <em>simulated</em> data to perform the estimation. Here, we discuss how to generate simulated observations. First, we start by defining the times at which we want to simulate observations:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define time of first observation</span>
 <span class="kt">double</span> <span class="n">observationTimeStart</span> <span class="o">=</span> <span class="n">initialEphemerisTime</span> <span class="o">+</span> <span class="mf">1000.0</span><span class="p">;</span>
@@ -356,7 +357,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>So, we start simulating at  (with  the start time of the simulation), and then simulate 500 simulations 20 seconds apart at the start of each of the 3 days in the simulations. This list of time is then stored in the <code class="docutils literal"><span class="pre">baseTimeList</span></code> vector.</p>
+<p>So, we start simulating at <span class="math">\(t=t_{0}+1000\)</span> (with <span class="math">\(t_{0}\)</span> the start time of the simulation), and then simulate 500 simulations 20 seconds apart at the start of each of the 3 days in the simulations. This list of time is then stored in the <code class="docutils literal"><span class="pre">baseTimeList</span></code> vector.</p>
 <p>In general, observation times will be different for each link end/observable type. Here, however, we take a simpler approach and use the same observation time for each link:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create measureement simulation input</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">ObservableType</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">LinkEnds</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">,</span> <span class="n">LinkEndType</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">measurementSimulationInput</span><span class="p">;</span>
@@ -393,7 +394,7 @@
 <p>In this simulation, we have completely neglected the fact that the spacecraft may not be visible from the ground station from which the observation is taken.  Tudat has the capabilities to prune the observations with this (and other) checks, but this is discussed in a later tutorial (and in more detail on the page on <a class="reference internal" href="../tudatFeatures/estimationSetup/observationSimulation.html#observationviability"><span class="std std-ref">Observation Viability Setttings</span></a>). The simulated data type <code class="docutils literal"><span class="pre">observationsAndTimes</span></code> now contains a simulated observables, along with information on the associated observable type, link ends and times.</p>
 </div>
 <div class="section" id="performing-the-estimation">
-<h2>7.5. Performing the estimation<a class="headerlink" href="#performing-the-estimation" title="Permalink to this headline">¶</a></h2>
+<h2>8.5. Performing the estimation<a class="headerlink" href="#performing-the-estimation" title="Permalink to this headline">¶</a></h2>
 <p>Now that we have our simulated data and our estimation objects all ready to go, we can perform the actual simulated estimation. Since this is a simulated scenario without noise, we first need to perturb our parameter vector a bit, otherwise the postfit residuals will all be exactly zero even on the first iteration. This we do by:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Perturb parameter estimate</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Dynamic</span><span class="p">,</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="n">initialParameterEstimate</span> <span class="o">=</span>
@@ -408,7 +409,7 @@
 <span class="n">initialParameterEstimate</span> <span class="o">+=</span> <span class="n">parameterPerturbation</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>In which we perturb the initial position and velocity by 10 m and 0.01 m/s, respectively. Both  and  , we perturb by 0.01. Note that only the parameters of the model are changed, so that the estimation should converge (to within its numerical capabilities) to the original parameter set.</p>
+<p>In which we perturb the initial position and velocity by 10 m and 0.01 m/s, respectively. Both <span class="math">\(C_{r}\)</span> and  <span class="math">\(C_{D}\)</span>, we perturb by 0.01. Note that only the parameters of the model are changed, so that the estimation should converge (to within its numerical capabilities) to the original parameter set.</p>
 <p>We define the input to the estimation with the <a class="reference internal" href="../tudatFeatures/estimationSetup/estimationExecution.html#PodInput" title="PodInput"><code class="xref py py-class docutils literal"><span class="pre">PodInput</span></code></a> class:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define estimation input</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">PodInput</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">podInput</span> <span class="o">=</span>
@@ -428,7 +429,7 @@
 <span class="n">podInput</span><span class="o">-&gt;</span><span class="n">setConstantPerObservableWeightsMatrix</span><span class="p">(</span> <span class="n">weightPerObservable</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Which sets the expected range data precision at 1.0 m, the angular position data at 10 mrad, and the Doppler data at  (Doppler data is range-rate uncertainty non-dimensionalized by speed of light).</p>
+<p>Which sets the expected range data precision at 1.0 m, the angular position data at 10 mrad, and the Doppler data at <span class="math">\(10^{-11}\)</span> (Doppler data is range-rate uncertainty non-dimensionalized by speed of light).</p>
 <p>The estimation is then performed by:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Perform estimation</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">PodOutput</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">podOutput</span> <span class="o">=</span> <span class="n">orbitDeterminationManager</span><span class="p">.</span><span class="n">estimateParameters</span><span class="p">(</span>
@@ -469,10 +470,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="earthOrbiterStateEstimation.html" class="btn btn-neutral float-right" title="8. Orbit Determination and Parameter Estimation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="earthOrbiterStateEstimation.html" class="btn btn-neutral float-right" title="9. Orbit Determination and Parameter Estimation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="useOfThrustUserDefinedThrustVector.html" class="btn btn-neutral" title="6. Use of Thrust: User-defined Thrust Vector" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="variationalEquationsPropagation.html" class="btn btn-neutral" title="7. Variational Equations Propagation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -514,6 +515,7 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -490,13 +490,13 @@
 <div><ul class="simple">
 <li>The maps are of the same size (i.e. same number of integration steps performed).</li>
 <li>The difference between initial and final epochs is smaller than the specified tolerance:<ul>
-<li></li>
-<li></li>
+<li><span class="math">\(|t_0^{(JSON)} - t_0^{(C++)}| &lt; tolerance\)</span></li>
+<li><span class="math">\(|t_f^{(JSON)} - t_f^{(C++)}| &lt; tolerance\)</span></li>
 </ul>
 </li>
-<li>For each vector  specified by the values of <code class="docutils literal"><span class="pre">indices</span></code> and <code class="docutils literal"><span class="pre">sizes</span></code>, the smallest of the relative and absolute errors obtained by comparing their norms at the initial and final epochs is smaller than the specified tolerance:<ul>
-<li></li>
-<li></li>
+<li>For each vector <span class="math">\(v\)</span> specified by the values of <code class="docutils literal"><span class="pre">indices</span></code> and <code class="docutils literal"><span class="pre">sizes</span></code>, the smallest of the relative and absolute errors obtained by comparing their norms at the initial and final epochs is smaller than the specified tolerance:<ul>
+<li><span class="math">\(err(|v_0^{(JSON)}|, |v_0^{(C++)}|) &lt; tolerance\)</span></li>
+<li><span class="math">\(err(|v_f^{(JSON)}|, |v_f^{(C++)}|) &lt; tolerance\)</span></li>
 </ul>
 </li>
 </ul>
@@ -504,7 +504,7 @@
 <p>For instance, for the example described above, the macro performs 7 tests: map size, initial and final epochs, initial and final distances and initial and final speeds.</p>
 <div class="admonition caution">
 <p class="first admonition-title">Caution</p>
-<p class="last">The definition of  is not identical for MATLAB and C++. Thus, when converting the same number from degrees to radians both in MATLAB and in C++, a slightly different number will be obtained. This may result in an error in the initial state (in the order of ) that can build up during the propagation leading to significant errors for the final epoch if the propagation period is long. Thus, it is recommended to provide the values directly in radians both in MATLAB and C++ when writing unit tests, so that the initial states match exactly.</p>
+<p class="last">The definition of <span class="math">\(\pi\)</span> is not identical for MATLAB and C++. Thus, when converting the same number from degrees to radians both in MATLAB and in C++, a slightly different number will be obtained. This may result in an error in the initial state (in the order of <span class="math">\(10^{-14}\)</span>) that can build up during the propagation leading to significant errors for the final epoch if the propagation period is long. Thus, it is recommended to provide the values directly in radians both in MATLAB and C++ when writing unit tests, so that the initial states match exactly.</p>
 </div>
 </div>
 </div>
@@ -564,6 +564,7 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
