@@ -221,5 +221,24 @@ Which generates noise functions that put a 0.1 m noise on range, 0.1 mrad noise 
     PodInputDataType observationsAndTimes = simulateObservationsWithNoise< double, double >(
                 measurementSimulationInput, orbitDeterminationManager.getObservationSimulators( ), noiseFunctions,
                 viabilityCalculators );
+                
+
+The rest of the code runs the same as in the previous example. To analyze the output, we ship a Matlab script with the example application, and show some of its output below. Since we are using different data types with weights :math:`w_{i}=1/\sigma_{i}^{2}` (with :math:`\sigma_{i}` the uncertainty on the observation) that differ by orders of magnitude, we rescale variables such as the partial derivatives, residuals, etc. when plotting them, to be able to compare the various data types.               
+
+We first show the correlation matrix:
                
-               
+.. figure:: images/estimationCorrelations.png
+
+where the indices for the patrameters differ by 1, compared to the list given above (since Matlab starts counting at 1, and C++ at 0).
+
+Next, the matrix of partial derivatives, scaled by :math:`\sigma_{i}^{-1}`, on a logarithmic scale. The different arcs/observables/link ends are clearly visible in the matrix of partial derivatives (see the page on :ref:`observationSimulation` on how to interpret the order of the rows of the matrix; columns correspond to the parameters).
+
+.. figure:: images/estimationPartials.png
+
+We show the evolution of the observation residuals below (again scaled by :math:`\sigma_{i}^{-1}`) as a function of iteration. In the final iteration, the residuals have converged to a Gaussian distribution with 0 mean and standard deviation 1. 
+
+.. figure:: images/residualHistograms.png
+
+Finally, we give the ratio of true to formal error of the estimated parameters (as a histogram and as a function of parameter index). The histogram very roughly corresponds to the expected behaviour (Gaussian distribution with 0 mean and standard deviation 1).  
+
+.. figure:: images/errorRatios.png
