@@ -119,3 +119,4 @@ These pages of the wiki provide further details about critical libraries necessa
    propagationSetup/index
    estimationSetup/index
    otherLibraries/index
+   optimizationTools/index
