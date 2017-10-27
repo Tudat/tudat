@@ -1,7 +1,7 @@
 .. _preknowledgeIndex:
 
-Tudat code basics 
-=================
+Getting Started with Tudat 
+==========================
 
 These pages of the wiki will help you build a strong knowledge basis to get started with Tudat. It treats some functions of external libraries often used in Tudat. It contains  concepts which are mandatory to understand the Tudat example code discussed later. But also, it contains some additional concepts which are used within Tudat but are not necessary to understand the Tudat example code. The following concepts should be understood before proceeding further:
 
