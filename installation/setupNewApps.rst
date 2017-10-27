@@ -3,20 +3,20 @@
 Setup New Applications
 ======================
 
-This guide will show how to start add new and existing applications to the Tudat Bundle environment. Existing applications (by another user) are considered new to the system, thus the process is the same. The guide assumes that you you have already set-up the build environment, and downloaded, configured and build the Tudat libraries.
+This guide will show how to start adding new applications to the Bundle environment. The guide assumes that you you have already set-up the build environment, and downloaded, configured and build the Tudat libraries.
 
-New applications are added to the ``tudatBundle/tudatApplications`` folder, which is empty by default. Moreover, new applications are expected to have their own repository, since the tudatBundle git repository is set to not track any changes inside the tudatApplications folder by design.
+New applications are typically added to the ``tudatBundle/tudatApplications`` folder, which is empty by default. Moreover, these new applications are expected to have their own hithub repository, since the tudatBundle git repository is set to not track any changes inside the tudatApplications folder.
 
-As mentioned previously, you can start a new (empty) repository or continue developing an existing repository. You also have the options to make the repository private or public. This leads to the following three slightly different approaches:
+You can either start a new (empty) repository or continue developing from an existing repository (for instance by retrieving it from Github). You also have the options to make the repository private or public. This leads to the following three slightly different approaches:
 
-- **A:** Create a new empty repository (private or public).
-- **B:** Continue an existing public repository and make it private (for Space Project students).
-- **C:** Continue an existing private/public repository and keep it as is.
+- **A:** Create a new empty repository (private or public).
+- **B:** Continue an existing public repository and make it private (for AE4467 students).
+- **C:** Continue an existing private/public repository and keep it as is.
 
-Note this same **A**, **B**, **C** notation is used further on in the guide as well. You can skip sections not applicable to your use case.
+Note this same **A**, **B**, **C** notation is used further on in the guide as well. You can skip sections not applicable to your use case.
 
 **Step 1: Setting up a repository for your app**
-    **(A + B)** Go to https://github.com/new and create a new repository for your application. It is recommended to set the scope to private. If the private option is unavailable to you go back and follow the guide on creating a GitHub account. Note that it is not easy to change the name of your repository, so choose wisely!
+    **(A + B)** Go to https://github.com/new and create a new repository for your application. It is recommended to set the scope to private. If the private option is unavailable to you go back and follow the guide on creating a GitHub account. Note that it is not easy to change the name of your repository, so choose wisely!
 
     **(B)** Fork a repository and make it private. Scroll down to the bottom and choose ``Import code``. Fill in the the url of the repository (in this case https://github.com/tudat/tudatAssignments.git). Click ``Begin import``.
 
@@ -51,4 +51,4 @@ Note this same **A**, **B**, **C** notation is used further on in the guide 
 **Step 6: Invite a collaborators to (private) repository**
     Go to the ``Settings/Collaborators`` of the repository. Add other users that you want to invite to the repository.
 
-You have now reached the end of the installation documentation and are ready to set-up your own applications and add those of others. It is a good idea to have a look at all the applications that already came with Tudat and follow the Tutorials and Documentation. See you around!
+You have now reached the end of the installation documentation and are ready to set-up your own applications and add those of others. It is a good idea to have a look at all the applications that already came with Tudat and follow the Tutorials and Documentation. See you around!

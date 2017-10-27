@@ -7,22 +7,22 @@ Download using SmartGit (Developer)
 
 Setup SmartGit
 ~~~~~~~~~~~~~~~~~
-**Step 1.1: Download SmartGit**
-    Download SmartGit for your operating system. Note that for Linux the package might be available through your package manager, see Linux/Debian instructions. Note that SmartGit comes bundled with JRE (java runtime environment) on Windows and Mac OS X. On Linux you need to install ``jre-openjdk``.
+**Step 1.1: Download SmartGit**
+    Download SmartGit for your operating system `here <http://www.syntevo.com/smartgit/>`_ . Note that for Linux the package might be available through your package manager, see Linux/Debian instructions. Note that SmartGit comes bundled with JRE (java runtime environment) on Windows and Mac OS X. On Linux you need to install ``jre-openjdk``.
 
-**Step 1.2: Install SmartGit**
+**Step 1.2: Install SmartGit**
     The installation should be straight-forward and the default installation is fine.
 
-**Step 1.3: Launch SmartGit**
+**Step 1.3: Launch SmartGit**
     At the end of the installation you will be prompted to launch SmartGit. A shortcut should have been added to your program list.
 
-**Step 1.4: Choose a license type**
-    SmartGit is free for non-commercial use. On first launch SmartGit will ask you to accept EULA and choose a license type. Choose non-commercial if you are planning to use SmartGit non-commercially (like for Tudat). You will be asked to confirm your choice.
+**Step 1.4: Choose a license type**
+    SmartGit is free for non-commercial use. On first launch SmartGit will ask you to accept EULA and choose a license type. Choose non-commercial if you are planning to use SmartGit non-commercially (like for Tudat). You will be asked to confirm your choice.
 
-**Step 1.5: Fill in your user information**
+**Step 1.5: Fill in your user information**
     Please fill in your username and e-mail address. This information will be used to attribute you when you commit code changes.
 
-**Step 1.6: Complete the configuration**
+**Step 1.6: Complete the configuration**
     The next two steps can be left as default. If you already have a GitHub account you can link this to SmartGit. This can however be easily done later too.
 
 
@@ -30,12 +30,12 @@ Create a GitHub account
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Create a GitHub account if you haven't done so yet. A GitHub account is completely free and provides you with hosting for your software projects. It also allows you to fork other repositories to create your own improved version of a piece of code.
 
-**Step 2.1: Sign-up for a GitHub account**
+**Step 2.1: Sign-up for a GitHub account**
     As a student you can upgrade your free account to a personal account (normally $7/month). With a personal account you can have unlimited private repositories. Private repositories can be very helpful when developing new unreleased programs and/or writing your thesis.
 
-**Step 2.2: Apply for a free account upgrade**
+**Step 2.2: Apply for a free account upgrade**
 
-   Applying for the free upgrade is easily done via :ref:`this <https://education.github.com/discount_requests/new>` link and tick boxes: Student and Individual account. Then enter the requested information.
+   Applying for the free upgrade is easily done via `this <https://education.github.com/discount_requests/new>`_ link and tick boxes: Student and Individual account. Then enter the requested information.
 
 Fork both the Tudat Bundle and the Tudat repositories and Clone them locally
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
