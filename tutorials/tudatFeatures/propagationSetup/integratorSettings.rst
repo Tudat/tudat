@@ -11,11 +11,15 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
    .. code-block:: cpp
 
-      IntegratorSettings( integratorType,
+      IntegratorSettings<TimeType>( integratorType,
       			  simulationStartEpoch,
       			  fixedStepSize )
 
    where:
+
+   - :literal:`TimeType`
+   
+      Template argument used to set the precision of the time, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal`long double`. 
 
    - :literal:`integratorType`
 
@@ -23,11 +27,11 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
    - :literal:`simulationStartEpoch`
 
-      :literal:`double` that defines the simulation's start epoch. 
+      :literal:`TimeType` that defines the simulation's start epoch. 
 
    - :literal:`fixedStepSize`
 
-      :literal:`double` that defines the fixed step-size to be used either by the :literal:`euler` or the :literal:`rungeKutta4` numerical integrator. 
+      :literal:`TimeType` that defines the fixed step-size to be used either by the :literal:`euler` or the :literal:`rungeKutta4` numerical integrator. 
 
 .. class:: RungeKuttaVariableStepSizeSettings
    
@@ -35,26 +39,32 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
    .. code-block:: cpp
    
-      RungeKuttaVariableStepSizeSettings( integratorType,
-                            		  initialTime,
+      RungeKuttaVariableStepSizeSettings<TimeType>( integratorType,
+                            		  simulationStartEpoch,
                             		  initialTimeStep,
                             		  coefficientSet,
                             		  minimumStepSize,
-                            		  maximumStepSize )
+                            		  maximumStepSize,
+                            		  relativeErrorTolerence,
+                            		  absoluteErrorTolerence )
 
    where:
+
+    - :literal:`TimeType`
+   
+      Template argument used to set the precision of the time, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal`long double`. 
 
    - :literal:`integratorType`
 
       :class:`AvailableIntegrators` which defines the fixed step-size integrator type to be used. The only option available is :literal:`rungeKuttaVariableStepSize`.
 
-   - :literal:`initialTime`
+   - :literal:`simulationStartEpoch`
 
-      :literal:`double` that defines the simulation's initial time. It must be a :literal:`double` variable-type.
+      :literal:`TimeType` that defines the simulation's initial time. It must be a :literal:`double` variable-type.
    
    - :literal:`initialTimeStep`
 
-      :literal:`double` that defines the initial step-size to be used either by the :literal:`rungeKuttaVariableStepSize` numerical integrator. It must be a :literal:`double` variable-type. 
+      :literal:`TimeType` that defines the initial step-size to be used either by the :literal:`rungeKuttaVariableStepSize` numerical integrator. It must be a :literal:`double` variable-type. 
 
    - :literal:`coefficientSet`
 
@@ -62,11 +72,20 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
    - :literal:`minimumStepSize`
 
-      :literal:`double` that defines the minimum step-size that the :literal:`rungeKuttaVariableStepSize` numerical integrator can take. 
+      :literal:`TimeType` that defines the minimum step-size that the :literal:`rungeKuttaVariableStepSize` numerical integrator can take. 
 
    - :literal:`maximumStepSize`
 
-      :literal:`double` that defines the maximum step-size that the :literal:`rungeKuttaVariableStepSize` numerical integrator can take.
+      :literal:`TimeType` that defines the maximum step-size that the :literal:`rungeKuttaVariableStepSize` numerical integrator can take.
+
+   - :literal:`relativeErrorTolerance`
+
+      :literal:`TimeType` that defines the relative error tolerance for step size control of the :literal:`rungeKuttaVariableStepSize` numerical integrator.
+
+   - :literal:`absoluteErrorTolerance`
+
+      :literal:`TimeType` that defines the absolute error tolerance for step size control of the :literal:`rungeKuttaVariableStepSize` numerical integrator.
+
 
 .. note:: Aside from the arguments listed in this page, the :class:`IntegratorSettings` class and derived classes described here offer a number of optional arguments. The reader is advised to examine the Doxygen documentation included in the code for further details.
 

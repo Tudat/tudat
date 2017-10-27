@@ -18,7 +18,7 @@ The final two pages, :ref:`jsonInterface` pages, and :ref:`matlabInterface` page
 .. toctree::
    :hidden:
 
-   prerequiredKnowledge/index
+   gettingStarted/index
    applicationWalkthroughs/index
    tudatFeatures/index
    jsonInterface/index

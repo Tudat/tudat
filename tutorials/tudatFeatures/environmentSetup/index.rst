@@ -30,7 +30,6 @@ On this page, we will give an overview of how the environment is represented in 
       "RotationModelSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#RotationalModelSettings", target = "_top"];
       "Aerodynamic\nCoefficientSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#AeroDynamicCoefficientSettings", target = "_top"];
       "BodyShapeSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#BodyShapeSettings", target = "_top"];
-      "TorqueSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#TorqueSettings", target = "_top"];
       "RadiationPressure\nInterfaceSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#RadiationPressureInterfaceSettings", target = "_top"];
       "AtmosphereSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#AtmosphereSettings", target = "_top"];
       "GravityFieldSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#GravityFieldSettings", target = "_top"];
@@ -41,15 +40,25 @@ On this page, we will give an overview of how the environment is represented in 
 
       # NamedBodyMap input
       BodySettings -> NamedBodyMap;
+      "User-defined \nbodies" [style = dotted, fillcolor = lightgrey, color = black];
+      "User-defined \nbodies" -> NamedBodyMap;
+      {rank = same; BodySettings, NamedBodyMap};
 
 
       # BodySettings input
       EphemerisSettings -> BodySettings [ltail = clusterEnvironmentSettings];
-      getDefaultSettings -> BodySettings;
-      bodyNames -> getDefaultSettings;
+      getDefaultBodySettings -> BodySettings;
       
-      {rank = same; BodySettings, NamedBodyMap};
 
+      # getDefaultBodySettings input
+      bodyNames -> getDefaultBodySettings;
+      "(initial/final) time" -> getDefaultBodySettings;
+      "(initial/final) time" [style = dotted, fillcolor = lightgrey, color = black];
+
+		#point0 [shape = point, style = vis, width = 0.1];
+      #point0 -> "setGlobalFrame\nBodyEphemerides";
+      #point0 -> "NamedBodyMap"; 
+      #BodySettings -> point0;
 
       # Cluster all environment settings derived classes
       subgraph clusterEnvironmentSettings
@@ -62,13 +71,45 @@ On this page, we will give an overview of how the environment is represented in 
 
          # Make three collumns
          {rank = same; AtmosphereSettings, EphemerisSettings, GravityFieldSettings};
-         {rank = same; "GravityField\nVariationSettings", RotationModelSettings, "Aerodynamic\nCoefficientSettings"};
-         {rank = same; TorqueSettings, BodyShapeSettings, "RadiationPressure\nInterfaceSettings"};
+         {rank = same; "GravityField\nVariationSettings", "RadiationPressure\nInterfaceSettings"};
+         {rank = same; "Aerodynamic\nCoefficientSettings", BodyShapeSettings, RotationModelSettings};
 
          BodyShapeSettings -> EphemerisSettings [style = invis];
-         RotationModelSettings -> BodyShapeSettings [style = invis];
+         "RadiationPressure\nInterfaceSettings" -> BodyShapeSettings [style = invis];
+         "GravityField\nVariationSettings" -> RotationModelSettings [style = invis];
       }
-     
+      "setGlobalFrame\nBodyEphemerides" -> NamedBodyMap [dir = both];
+
+		
+		
+      {"RadiationPressure\nInterfaceSettings", "GravityField\nVariationSettings" [fillcolor = lightcoral]};
+   }
+
+.. graphviz::
+
+   digraph
+   {
+      # General diagram settings
+      rankdir = "LR";
+      splines = ortho;    
+      compound = true;  
+
+      subgraph clusterLegend
+      {
+      rank = min;
+      style = dashed;
+
+
+     	# general node settings 
+     	node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+
+
+   	"List of settings" [ fillcolor = lightcoral];
+     	"Main block" [fillcolor = lightgreen];
+     	"Optional input" [style = dotted, fillcolor = lightgrey, color = black];
+     	"Input for \nmain block" [fillcolor = lightblue];
+     	"Optional input"-> "List of settings" -> "Input for \nmain block" -> "Main block" [style = invis];
+      }
    }
 
 
@@ -316,7 +357,7 @@ Ephemeris model
        bodySettings[ "Jupiter" ]->ephemerisSettings = boost::make_shared< TabulatedEphemerisSettings >(
            bodyStateHistory, frameOrigin, frameOrientation ); 
 
-   creating an ephemeris interpolated (with 6th order Lagrange interpolation) from the data in bodyStateHistory, which contains the Cartesian state (w.r.t. SSB; axes along J2000) for a given number of times (map keys).
+   creating an ephemeris interpolated (with 6th order Lagrange interpolation) from the data in bodyStateHistory, which contains the Cartesian state (w.r.t. SSB; axes along J2000) for a given number of times (map keys, valid time range between first and last time in this map). 
 
 .. class::  KeplerEphemerisSettings
 
@@ -458,22 +499,6 @@ Rotational model
 .. method:: Constant Rotation Model
 
    Rotation model with a constant value for the rotation. Currently the settings interface is not yet implemented. 
-
-Torque model
-************
-
-.. class:: TorqueModel
-
-   Base class for the torque model, set using the settings classes described below.
-
-.. class:: TorqueSettings
-
-   Base class for the torque settings used for rotational dynamics as set in :class:`RotationalStatePropagatorSettings`. Type of torque is selected by passing the correct parameter to the constructor. Currently two types of torques are implemented: ``second_order_gravitational_torque`` (interaction of point-mass of body A with J\ :sub:`2` of body B) and ``aerodynamic_torque`` (settings for coefficients defined same as for aerodynamic acceleration).
-
-   .. code-block:: cpp
-
-    TorqueSettings( torqueType );
-
 
 Body shape model
 ****************

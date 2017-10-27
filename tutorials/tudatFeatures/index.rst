@@ -12,6 +12,7 @@ These pages of the wiki provide further details about critical libraries necessa
       # general graph settings    
       rankdir = "LR";
       splines = ortho;
+      compound = true;
       
 
       # general node settings 
@@ -21,6 +22,7 @@ These pages of the wiki provide further details about critical libraries necessa
       # specific node color settings
       DynamicsSimulator [color = lightgreen];
       IntegratorSettings, NamedBodyMap, PropagatorSettings [color = lightblue];
+      "DependentVariable(s)\nNumerical Solution", "Equations of Motion\nNumerical Solution" [color = peachpuff]; 
 
 
       # Hyperlinks (Sphinx auto referencing not working here, need to link to exact web adres)
@@ -52,26 +54,33 @@ These pages of the wiki provide further details about critical libraries necessa
       subgraph clusterPropagatorSettings
       {   
          style = dashed;
-         dependentVariables, TerminationSettings, initialBodyStates;
          dependentVariables [style = dotted , fillcolor = lightgrey, color = black];
+         "simulationEndEpoch" -> TerminationSettings;
+         "simulationEndEpoch" [style = dotted, fillcolor = lightgrey, color = black];
+         {rank = same; TerminationSettings, initialBodyStates}
+
       }
 
 
       # BodySettings input
       "User-defined \nenvironment settings" -> BodySettings;
-      getDefaultSettings -> BodySettings;
-      bodyNames -> getDefaultSettings;
+      getDefaultBodySettings -> BodySettings;
+      bodyNames -> getDefaultBodySettings;
 
 
       # NamedBodyMap input
       BodySettings -> NamedBodyMap;
+      "User-defined \nbodies" [style = dotted, fillcolor = lightgrey, color = black];
+      "User-defined \nbodies" -> NamedBodyMap;
 
       subgraph clusterNamedBodyMap
       {   
          style = dashed;
+         "(initial/final) time" -> getDefaultBodySettings;
+         "(initial/final) time" [style = dotted, fillcolor = lightgrey, color = black];
          "User-defined \nenvironment settings" [style = dotted , fillcolor = lightgrey, color = black];
          { rank = same; "User-defined \nenvironment settings", BodySettings } 
-         { rank = same; bodyNames, getDefaultSettings } 
+         { rank = same; bodyNames, getDefaultBodySettings, "(initial/final) time" } 
       }
      
 
@@ -103,9 +112,47 @@ These pages of the wiki provide further details about critical libraries necessa
          style = dashed;
          integratorType, simulationStartEpoch, "(initial) stepSize";
       } 
+
+      {rank = same; DynamicsSimulator, "Equations of Motion\nNumerical Solution", "DependentVariable(s)\nNumerical Solution"};
+
+      DynamicsSimulator -> "Equations of Motion\nNumerical Solution";
+      DynamicsSimulator -> "DependentVariable(s)\nNumerical Solution" [constraint = false];
+
                
-      # Define rank of some blocks for nice alignment 
-      { rank = same; PropagatorSettings, IntegratorSettings, NamedBodyMap, AccelerationModel }
+      # Define rank and connections of some blocks for positioning 
+      {rank = same; PropagatorSettings, IntegratorSettings, NamedBodyMap, AccelerationModel, "User-defined \nbodies" }
+      "(initial/final) time" -> simulationStartEpoch [style = invis];		
+      "IntegratorSettings" -> "User-defined \nbodies" [style = invis];
+      "(initial/final) time" -> "User-defined \nbodies" [style = invis];
+      dependentVariables -> initialBodyStates [style = invis];
+
+   }
+
+.. graphviz::
+
+   digraph
+   {
+      # General diagram settings
+      rankdir = "LR";
+      splines = ortho;    
+      compound = true;  
+
+      subgraph clusterLegend
+      {
+      rank = min;
+      style = dashed;
+
+
+     	# general node settings 
+     	node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+
+
+   	"Main block" [fillcolor = lightgreen];
+     	"Optional input" [style = dotted, fillcolor = lightgrey, color = black];
+     	"Input for \nmain block" [fillcolor = lightblue];
+      Output [color = peachpuff];
+     	"Optional input"-> "Input for \nmain block" -> "Main block" -> "Output" [style = invis];
+      }
    }
 
 .. toctree::

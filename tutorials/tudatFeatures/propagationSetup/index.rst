@@ -12,7 +12,7 @@ One of the core elements of the Tudat libraries is its simulator framework. The 
    {
       # General diagram settings
       rankdir = "LR";
-      ranksep = "1.0"
+      #ranksep = "1.0"
       splines = ortho;    
       compound = true;  
 
@@ -23,8 +23,8 @@ One of the core elements of the Tudat libraries is its simulator framework. The 
 
       # specific node color settings
       DynamicsSimulator [color = lightgreen];
-      NamedBodyMap [color = lightblue];
-
+      NamedBodyMap, MultiArc, "RungeKuttaVariable\nStepSizeSettings", IntegratorSettings [color = lightblue];
+      "DependentVariable(s)\nNumerical Solution", "Equations of Motion\nNumerical Solution" [color = peachpuff];
       
       # Hyperlinks (Sphinx auto referencing not working here, need to link to exact web adres)
       NamedBodyMap [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#NamedBodyMap", target = "_top"];
@@ -44,7 +44,6 @@ One of the core elements of the Tudat libraries is its simulator framework. The 
          label = "IntegratorSettings";
          fontsize = 9;
          style = dashed;
-         rank = min;
          href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/integratorSettings.html";
          target = "_top";
 
@@ -59,36 +58,72 @@ One of the core elements of the Tudat libraries is its simulator framework. The 
          integratorType -> "RungeKuttaVariable\nStepSizeSettings";
          simulationStartEpoch -> "RungeKuttaVariable\nStepSizeSettings";
          "(initial) stepSize" -> "RungeKuttaVariable\nStepSizeSettings";
-         "min/max stepsize" -> "RungeKuttaVariable\nStepSizeSettings";
+         "Additional \nsettings" -> "RungeKuttaVariable\nStepSizeSettings";
       }
 
 
-      subgraph clusterPropagatorSettings
+      subgraph clusterSingleArcPropagatorSettings
       {
          # cluster settings
-         label = "PropagatorSettings";
+         label = "Single-arc PropagatorSettings";
          fontsize = 9;
          style = dashed;
-         rank = min;
+         compound = true;
          href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/propagatorSettings.html";
          target = "_top";
-         
+
+         MultiType;
          TranslationalState -> RotationalState [style = invis];
          Mass -> Custom [style = invis];
-         MultiType -> MultiArc [style = invis];
- 
       }
 
-
-      # DynamicsSimulator input
+     
+      # DynamicsSimulator input, use points for "or" blocks
       NamedBodyMap -> DynamicsSimulator;
-      IntegratorSettings -> DynamicsSimulator [ltail = clusterIntegratorSettings];
-      Custom -> DynamicsSimulator [ltail = clusterPropagatorSettings];      
+      or0, or1 [shape = circle, width = 0.2, fillcolor = white, color = black, label = or];
+      Custom -> or1 -> DynamicsSimulator [ltail = clusterSingleArcPropagatorSettings];
+      MultiArc -> or1 [constraint = false];
+      IntegratorSettings -> or0 -> DynamicsSimulator;
+      "RungeKuttaVariable\nStepSizeSettings" -> or0;
 
-      {rank = same; NamedBodyMap, DynamicsSimulator}
+      # DynamicsSimulator output
+      DynamicsSimulator -> "Equations of Motion\nNumerical Solution";
+      DynamicsSimulator -> "DependentVariable(s)\nNumerical Solution";
+      {rank = same; "Equations of Motion\nNumerical Solution", "DependentVariable(s)\nNumerical Solution"};
 
+
+      # Extra lines for posisitioning of nodes
+      {rank = same; NamedBodyMap, DynamicsSimulator}    
+      MultiType -> MultiArc [ltail = clusterSingleArcPropagatorSettings];
+      Mass -> Custom [style = invis];
    }
 
+.. graphviz::
+
+   digraph
+   {
+      # General diagram settings
+      rankdir = "LR";
+      splines = ortho;    
+      compound = true;  
+
+      subgraph clusterLegend
+      {
+      rank = min;
+      style = dashed;
+
+
+     	# general node settings 
+     	node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+
+
+   	"Main block" [fillcolor = lightgreen];
+     	"Optional input" [style = dotted, fillcolor = lightgrey, color = black];
+     	"Input for \nmain block" [fillcolor = lightblue];
+      Output [color = peachpuff];
+     	"Optional input"-> "Input for \nmain block" -> "Main block" -> "Output" [style = invis];
+      }
+   }
 
 The top-element in such framework is the :class:`DynamicsSimulator`, which is in charge of propagating the equations of motion using the environment and acceleration models discussed in :ref:`tudatFeaturesEnvironmentIndex` and :ref:`tudatFeaturesAccelerationIndex`, respectively. The orbit propation is done according to the specified :class:`IntegratorSettings` and the :class:`PropagatorSettings`, which are discussed in detail in :ref:`tudatFeaturesIntegratorSettings` and :ref:`tudatFeaturesPropagatorSettings`.
 
