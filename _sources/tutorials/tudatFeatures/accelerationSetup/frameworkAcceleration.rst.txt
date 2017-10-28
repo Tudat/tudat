@@ -217,6 +217,23 @@ As stated above, the :literal:`createAccelerationModelsMap` function uses your e
     
 .. _tudatFeaturesFrameworkAccelerationsMassRateModelSetup:
 
+Rotational model setup
+~~~~~~~~~~~~~~~~~~~~
+The rotational model setup is similar to the translational acceleration setup described above. 
+
+.. class:: TorqueModel
+
+   Class for the torque model, set using the settings class described below.
+
+.. class:: TorqueSettings
+
+   Base class for the torque settings used for rotational dynamics as set in :class:`RotationalStatePropagatorSettings`. Type of torque is selected by passing the correct parameter to the constructor. Currently two types of torques are implemented: ``second_order_gravitational_torque`` (interaction of point-mass of body A with J\ :sub:`2` of body B) and ``aerodynamic_torque`` (settings for coefficients defined same as for aerodynamic acceleration).
+
+   .. code-block:: cpp
+
+    TorqueSettings( torqueType );
+
+
 Mass rate model setup
 ~~~~~~~~~~~~~~~~~~~~~
 Although propagating a body's translational dynamics is the backbone of Tudat's simulations, it is also possible to propagate a vehicle's mass (either concurrently or separately). The manner in which the models that govern the 'mass dynamics', i.e. mass-rate models, are handled in the code is very similar to the acceleration models: a list of settings for the models is created by the user, which are then used to create the required objects. The list to be created by the user is:

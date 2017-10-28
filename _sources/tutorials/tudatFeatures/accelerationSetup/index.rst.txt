@@ -22,7 +22,8 @@ These pages of the wiki will help you build a strong knowledge basis to get star
       # specific node color settings
       NamedBodyMap, bodiesToPropagate, centralBodies, AccelerationSettings [color = lightblue];
       AccelerationModel [color= lightgreen];
-
+      Empirical, "Relativistic correction", "Mutual spherical \nharmonic gravity", Thrust [color =  darkturquoise]; 
+      "Additional \ninformation" [style = dotted, fillcolor = lightgrey, color = black];
 
       subgraph clusterAccelerationType
       {
@@ -30,22 +31,23 @@ These pages of the wiki will help you build a strong knowledge basis to get star
          fontsize = 9;
          style = dashed;
       
-         {rank = same; "Undefined acceleration", "Central gravity", Aerodynamic, "Third body \ncentral gravity"};
-         {rank = same; "Third body spherical \nharmonic gravity", "Thrust", "Cannon ball \nradiation pressure", "Spherical harmonic \ngravity" };
-         {rank = same; "Third body mutual \nspherical harmonic gravity", "Mutual spherical \nharmonic gravity", "Relativistic correction", Empirical};
+         {rank = same; "Cannon ball \nradiation pressure", "Central gravity", Aerodynamic};
+         {rank = same; "Thrust","Spherical harmonic \ngravity" };
+         {rank = same; "Mutual spherical \nharmonic gravity", "Relativistic correction", Empirical};
          
-         "Third body \ncentral gravity" -> "Third body spherical \nharmonic gravity" [style = invis];
-         "Third body spherical \nharmonic gravity" -> "Third body mutual \nspherical harmonic gravity" [style = invis];
-         "Central gravity" -> "Third body \ncentral gravity" [style = invis];
-         "Spherical harmonic \ngravity" -> "Third body spherical \nharmonic gravity" [style = invis];
-         "Undefined acceleration" -> "Central gravity" [style = invis];
-         "Thrust" -> "Spherical harmonic \ngravity" [style = invis];
+         "Mutual spherical \nharmonic gravity" -> "Spherical harmonic \ngravity" -> "Central gravity" [style = invis];
+         Empirical -> Thrust -> Aerodynamic [style = invis];
+         "Cannon ball \nradiation pressure" -> "Central gravity" [style = invis];
+
       }
-          
+      
+      Aerodynamic -> "Additional \ninformation"-> NamedBodyMap [style = invis];
+      "Mutual spherical \nharmonic gravity" -> bodiesToPropagate [style = invis];
+      AccelerationSettings -> bodiesToPropagate [style = invis];
 
       # AccelerationSettings input
       "Additional \ninformation" -> AccelerationSettings;
-      "Third body mutual \nspherical harmonic gravity" -> AccelerationSettings [ltail = clusterAccelerationType];    
+      "Central gravity" -> AccelerationSettings [ltail = clusterAccelerationType];    
 
       
       # AccelerationModel input
@@ -64,7 +66,6 @@ These pages of the wiki will help you build a strong knowledge basis to get star
       "Central gravity" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings", target = "_top"];
       "AccelerationModel" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html##SelectedAccelerationMap", target = "_top"];
       NamedBodyMap [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#NamedBodyMap", target = "_top"];
-      "Undefined acceleration" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings", target = "_top"];
       "Spherical harmonic \ngravity" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#SphericalHarmonicAccelerationSettings", target = "_top"];
       "Mutual spherical \nharmonic gravity" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings", target = "_top"];
       "Aerodynamic" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings", target = "_top"];
@@ -75,6 +76,32 @@ These pages of the wiki will help you build a strong knowledge basis to get star
 
    }
 
+.. graphviz::
+
+   digraph
+   {
+      # General diagram settings
+      rankdir = "LR";
+      splines = ortho;    
+      compound = true;  
+
+      subgraph clusterLegend
+      {
+      rank = min;
+      style = dashed;
+
+
+     	# general node settings 
+     	node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+
+
+   	"Object requiring \nadditional information" [ fillcolor = darkturquoise];
+     	"Main block" [fillcolor = lightgreen];
+     	"Optional input" [style = dotted, fillcolor = lightgrey, color = black];
+     	"Input for \nmain block" [fillcolor = lightblue];
+     	"Optional input"-> "Object requiring \nadditional information" -> "Input for \nmain block" -> "Main block" [style = invis];
+      }
+   }
 .. toctree::
 
    frameworkAcceleration

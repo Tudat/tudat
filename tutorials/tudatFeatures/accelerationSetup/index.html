@@ -94,7 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials and Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../prerequiredKnowledge/index.html">Getting Started with Tudat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../gettingStarted/index.html">Getting Started with Tudat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
@@ -186,7 +186,7 @@
   <div class="section" id="acceleration-set-up">
 <span id="tudatfeaturesaccelerationindex"></span><h1>4. Acceleration Set-Up<a class="headerlink" href="#acceleration-set-up" title="Permalink to this headline">¶</a></h1>
 <p>These pages of the wiki will help you build a strong knowledge basis to get started with Tudat. It is mandatory to understand the concepts taught here before proceding any further. Below a graphical representation of the acceleration setup is shown after which a list of content is shown.</p>
-<object data="../../../_images/graphviz-c2c10e0bfd9536c0e2a97d402e425a41f6417540.svg" type="image/svg+xml">
+<object data="../../../_images/graphviz-1a80f71a7fb441f72438ab7bb04c3b92ea8b2aef.svg" type="image/svg+xml">
             <p class="warning">digraph
 {
    # General diagram settings
@@ -202,7 +202,8 @@
    # specific node color settings
    NamedBodyMap, bodiesToPropagate, centralBodies, AccelerationSettings [color = lightblue];
    AccelerationModel [color= lightgreen];
-
+   Empirical, &quot;Relativistic correction&quot;, &quot;Mutual spherical \nharmonic gravity&quot;, Thrust [color =  darkturquoise];
+   &quot;Additional \ninformation&quot; [style = dotted, fillcolor = lightgrey, color = black];
 
    subgraph clusterAccelerationType
    {
@@ -210,22 +211,23 @@
       fontsize = 9;
       style = dashed;
 
-      {rank = same; &quot;Undefined acceleration&quot;, &quot;Central gravity&quot;, Aerodynamic, &quot;Third body \ncentral gravity&quot;};
-      {rank = same; &quot;Third body spherical \nharmonic gravity&quot;, &quot;Thrust&quot;, &quot;Cannon ball \nradiation pressure&quot;, &quot;Spherical harmonic \ngravity&quot; };
-      {rank = same; &quot;Third body mutual \nspherical harmonic gravity&quot;, &quot;Mutual spherical \nharmonic gravity&quot;, &quot;Relativistic correction&quot;, Empirical};
+      {rank = same; &quot;Cannon ball \nradiation pressure&quot;, &quot;Central gravity&quot;, Aerodynamic};
+      {rank = same; &quot;Thrust&quot;,&quot;Spherical harmonic \ngravity&quot; };
+      {rank = same; &quot;Mutual spherical \nharmonic gravity&quot;, &quot;Relativistic correction&quot;, Empirical};
 
-      &quot;Third body \ncentral gravity&quot; -&gt; &quot;Third body spherical \nharmonic gravity&quot; [style = invis];
-      &quot;Third body spherical \nharmonic gravity&quot; -&gt; &quot;Third body mutual \nspherical harmonic gravity&quot; [style = invis];
-      &quot;Central gravity&quot; -&gt; &quot;Third body \ncentral gravity&quot; [style = invis];
-      &quot;Spherical harmonic \ngravity&quot; -&gt; &quot;Third body spherical \nharmonic gravity&quot; [style = invis];
-      &quot;Undefined acceleration&quot; -&gt; &quot;Central gravity&quot; [style = invis];
-      &quot;Thrust&quot; -&gt; &quot;Spherical harmonic \ngravity&quot; [style = invis];
+      &quot;Mutual spherical \nharmonic gravity&quot; -&gt; &quot;Spherical harmonic \ngravity&quot; -&gt; &quot;Central gravity&quot; [style = invis];
+      Empirical -&gt; Thrust -&gt; Aerodynamic [style = invis];
+      &quot;Cannon ball \nradiation pressure&quot; -&gt; &quot;Central gravity&quot; [style = invis];
+
    }
 
+   Aerodynamic -&gt; &quot;Additional \ninformation&quot;-&gt; NamedBodyMap [style = invis];
+   &quot;Mutual spherical \nharmonic gravity&quot; -&gt; bodiesToPropagate [style = invis];
+   AccelerationSettings -&gt; bodiesToPropagate [style = invis];
 
    # AccelerationSettings input
    &quot;Additional \ninformation&quot; -&gt; AccelerationSettings;
-   &quot;Third body mutual \nspherical harmonic gravity&quot; -&gt; AccelerationSettings [ltail = clusterAccelerationType];
+   &quot;Central gravity&quot; -&gt; AccelerationSettings [ltail = clusterAccelerationType];
 
 
    # AccelerationModel input
@@ -244,7 +246,6 @@
    &quot;Central gravity&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings&quot;, target = &quot;_top&quot;];
    &quot;AccelerationModel&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html##SelectedAccelerationMap&quot;, target = &quot;_top&quot;];
    NamedBodyMap [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#NamedBodyMap&quot;, target = &quot;_top&quot;];
-   &quot;Undefined acceleration&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings&quot;, target = &quot;_top&quot;];
    &quot;Spherical harmonic \ngravity&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#SphericalHarmonicAccelerationSettings&quot;, target = &quot;_top&quot;];
    &quot;Mutual spherical \nharmonic gravity&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings&quot;, target = &quot;_top&quot;];
    &quot;Aerodynamic&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings&quot;, target = &quot;_top&quot;];
@@ -254,12 +255,38 @@
    &quot;Empirical&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#EmpiricalAccelerationSettings&quot;, target = &quot;_top&quot;];
 
 }</p></object>
+<object data="../../../_images/graphviz-3c28fd20e3861e7965bedc388a54f8fc55de85cf.svg" type="image/svg+xml">
+            <p class="warning">digraph
+{
+   # General diagram settings
+   rankdir = &quot;LR&quot;;
+   splines = ortho;
+   compound = true;
+
+   subgraph clusterLegend
+   {
+   rank = min;
+   style = dashed;
+
+
+     # general node settings
+     node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+
+
+     &quot;Object requiring \nadditional information&quot; [ fillcolor = darkturquoise];
+     &quot;Main block&quot; [fillcolor = lightgreen];
+     &quot;Optional input&quot; [style = dotted, fillcolor = lightgrey, color = black];
+     &quot;Input for \nmain block&quot; [fillcolor = lightblue];
+     &quot;Optional input&quot;-&gt; &quot;Object requiring \nadditional information&quot; -&gt; &quot;Input for \nmain block&quot; -&gt; &quot;Main block&quot; [style = invis];
+   }
+}</p></object>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="frameworkAcceleration.html">4.1. Implementation Framework of the Acceleration Settings</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="frameworkAcceleration.html#acceleration-settings">4.1.1. Acceleration settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="frameworkAcceleration.html#available-acceleration-models">4.1.2. Available acceleration models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="frameworkAcceleration.html#mass-rate-model-setup">4.1.3. Mass rate model setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frameworkAcceleration.html#rotational-model-setup">4.1.3. Rotational model setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frameworkAcceleration.html#mass-rate-model-setup">4.1.4. Mass rate model setup</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="aerodynamicGuidance.html">4.2. Aerodynamic Guidance</a><ul>

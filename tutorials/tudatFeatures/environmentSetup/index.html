@@ -94,7 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials and Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../prerequiredKnowledge/index.html">Getting Started with Tudat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../gettingStarted/index.html">Getting Started with Tudat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
@@ -188,7 +188,7 @@
 <span id="tudatfeaturesenvironmentindex"></span><h1>3. Environment Set-up<a class="headerlink" href="#environment-set-up" title="Permalink to this headline">¶</a></h1>
 <p>Models for the physical environment are one of the cornerstones of a numerical astrodynamics toolbox. Here, we define the environment in the broadest sense, including all physical properties of the solar system, such as atmospheres and gravity fields, but also any models for the orbits and rotations of these bodies.</p>
 <p>On this page, we will give an overview of how the environment is represented in Tudat, which models have been implemented, and how to create the environment that is tailored to your needs. A graphical representation of the basic structure for implementing the environment is shown below. For the options within these settings object, please click on the object in the figure.</p>
-<object data="../../../_images/graphviz-3b9ade046100b915d78f4cb4011749fc5b9b492a.svg" type="image/svg+xml">
+<object data="../../../_images/graphviz-cb6d4a600a7c0b42c81a1a39e8660949616cb1f0.svg" type="image/svg+xml">
             <p class="warning">digraph
 {
    # General diagram settings
@@ -211,7 +211,6 @@
    &quot;RotationModelSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#RotationalModelSettings&quot;, target = &quot;_top&quot;];
    &quot;Aerodynamic\nCoefficientSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#AeroDynamicCoefficientSettings&quot;, target = &quot;_top&quot;];
    &quot;BodyShapeSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#BodyShapeSettings&quot;, target = &quot;_top&quot;];
-   &quot;TorqueSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#TorqueSettings&quot;, target = &quot;_top&quot;];
    &quot;RadiationPressure\nInterfaceSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#RadiationPressureInterfaceSettings&quot;, target = &quot;_top&quot;];
    &quot;AtmosphereSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#AtmosphereSettings&quot;, target = &quot;_top&quot;];
    &quot;GravityFieldSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#GravityFieldSettings&quot;, target = &quot;_top&quot;];
@@ -222,15 +221,25 @@
 
    # NamedBodyMap input
    BodySettings -&gt; NamedBodyMap;
+   &quot;User-defined \nbodies&quot; [style = dotted, fillcolor = lightgrey, color = black];
+   &quot;User-defined \nbodies&quot; -&gt; NamedBodyMap;
+   {rank = same; BodySettings, NamedBodyMap};
 
 
    # BodySettings input
    EphemerisSettings -&gt; BodySettings [ltail = clusterEnvironmentSettings];
-   getDefaultSettings -&gt; BodySettings;
-   bodyNames -&gt; getDefaultSettings;
+   getDefaultBodySettings -&gt; BodySettings;
 
-   {rank = same; BodySettings, NamedBodyMap};
 
+   # getDefaultBodySettings input
+   bodyNames -&gt; getDefaultBodySettings;
+   &quot;(initial/final) time&quot; -&gt; getDefaultBodySettings;
+   &quot;(initial/final) time&quot; [style = dotted, fillcolor = lightgrey, color = black];
+
+             #point0 [shape = point, style = vis, width = 0.1];
+   #point0 -&gt; &quot;setGlobalFrame\nBodyEphemerides&quot;;
+   #point0 -&gt; &quot;NamedBodyMap&quot;;
+   #BodySettings -&gt; point0;
 
    # Cluster all environment settings derived classes
    subgraph clusterEnvironmentSettings
@@ -243,13 +252,43 @@
 
       # Make three collumns
       {rank = same; AtmosphereSettings, EphemerisSettings, GravityFieldSettings};
-      {rank = same; &quot;GravityField\nVariationSettings&quot;, RotationModelSettings, &quot;Aerodynamic\nCoefficientSettings&quot;};
-      {rank = same; TorqueSettings, BodyShapeSettings, &quot;RadiationPressure\nInterfaceSettings&quot;};
+      {rank = same; &quot;GravityField\nVariationSettings&quot;, &quot;RadiationPressure\nInterfaceSettings&quot;};
+      {rank = same; &quot;Aerodynamic\nCoefficientSettings&quot;, BodyShapeSettings, RotationModelSettings};
 
       BodyShapeSettings -&gt; EphemerisSettings [style = invis];
-      RotationModelSettings -&gt; BodyShapeSettings [style = invis];
+      &quot;RadiationPressure\nInterfaceSettings&quot; -&gt; BodyShapeSettings [style = invis];
+      &quot;GravityField\nVariationSettings&quot; -&gt; RotationModelSettings [style = invis];
    }
+   &quot;setGlobalFrame\nBodyEphemerides&quot; -&gt; NamedBodyMap [dir = both];
 
+
+
+   {&quot;RadiationPressure\nInterfaceSettings&quot;, &quot;GravityField\nVariationSettings&quot; [fillcolor = lightcoral]};
+}</p></object>
+<object data="../../../_images/graphviz-8e66d0fef1bde28fb37a80cf5e49f7483ea7ec20.svg" type="image/svg+xml">
+            <p class="warning">digraph
+{
+   # General diagram settings
+   rankdir = &quot;LR&quot;;
+   splines = ortho;
+   compound = true;
+
+   subgraph clusterLegend
+   {
+   rank = min;
+   style = dashed;
+
+
+     # general node settings
+     node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+
+
+     &quot;List of settings&quot; [ fillcolor = lightcoral];
+     &quot;Main block&quot; [fillcolor = lightgreen];
+     &quot;Optional input&quot; [style = dotted, fillcolor = lightgrey, color = black];
+     &quot;Input for \nmain block&quot; [fillcolor = lightblue];
+     &quot;Optional input&quot;-&gt; &quot;List of settings&quot; -&gt; &quot;Input for \nmain block&quot; -&gt; &quot;Main block&quot; [style = invis];
+   }
 }</p></object>
 <div class="section" id="setting-up-the-environment">
 <h2>3.1. Setting up the Environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this headline">¶</a></h2>
@@ -264,7 +303,7 @@
 <dl class="class">
 <dt id="NamedBodyMap">
 <em class="property">class </em><code class="descname">NamedBodyMap</code><a class="headerlink" href="#NamedBodyMap" title="Permalink to this definition">¶</a></dt>
-<dd><p>An unordered map of shared pointers to <a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> objects, see&nbsp;<a class="reference internal" href="../../prerequiredKnowledge/externalLibraries/boost.html#externalboost"><span class="std std-ref">this</span></a> wiki page&nbsp;for a discussion of shared pointers; don’t worry if you’re not sure what a shared pointer or unordered map is at this point.</p>
+<dd><p>An unordered map of shared pointers to <a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> objects, see&nbsp;<a class="reference internal" href="../../gettingStarted/externalLibraries/boost.html#externalboost"><span class="std std-ref">this</span></a> wiki page&nbsp;for a discussion of shared pointers; don’t worry if you’re not sure what a shared pointer or unordered map is at this point.</p>
 </dd></dl>
 
 <div class="section" id="manually-creating-the-environment">
@@ -417,7 +456,7 @@
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CustomWindModelSettings</span> <span class="o">&gt;</span><span class="p">(</span>  <span class="n">windFunction</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>where <code class="docutils literal"><span class="pre">windFunction</span></code> is a <code class="docutils literal"><span class="pre">boost::function</span></code> with inputs; altitude, longitude, latitude and time (for more details about boost: <a class="reference internal" href="../../prerequiredKnowledge/externalLibraries/boost.html#externalboost"><span class="std std-ref">Boost: Basic Concepts</span></a>).</p>
+<p>where <code class="docutils literal"><span class="pre">windFunction</span></code> is a <code class="docutils literal"><span class="pre">boost::function</span></code> with inputs; altitude, longitude, latitude and time (for more details about boost: <a class="reference internal" href="../../gettingStarted/externalLibraries/boost.html#externalboost"><span class="std std-ref">Boost: Basic Concepts</span></a>).</p>
 </dd></dl>
 
 </div>
@@ -484,7 +523,7 @@
     <span class="n">bodyStateHistory</span><span class="p">,</span> <span class="n">frameOrigin</span><span class="p">,</span> <span class="n">frameOrientation</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>creating an ephemeris interpolated (with 6th order Lagrange interpolation) from the data in&nbsp;bodyStateHistory, which contains the Cartesian state (w.r.t. SSB; axes along J2000) for a given number of times (map keys).</p>
+<p>creating an ephemeris interpolated (with 6th order Lagrange interpolation) from the data in&nbsp;bodyStateHistory, which contains the Cartesian state (w.r.t. SSB; axes along J2000) for a given number of times (map keys, valid time range between first and last time in this map).</p>
 </dd></dl>
 
 <dl class="class">
@@ -645,26 +684,8 @@
 </dd></dl>
 
 </div>
-<div class="section" id="torque-model">
-<h3>3.2.5. Torque model<a class="headerlink" href="#torque-model" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
-<dt id="TorqueModel">
-<em class="property">class </em><code class="descname">TorqueModel</code><a class="headerlink" href="#TorqueModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the torque model, set using the settings classes described below.</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="TorqueSettings">
-<em class="property">class </em><code class="descname">TorqueSettings</code><a class="headerlink" href="#TorqueSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the torque settings used for rotational dynamics as set in <a class="reference internal" href="../propagationSetup/propagatorSettings.html#RotationalStatePropagatorSettings" title="RotationalStatePropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">RotationalStatePropagatorSettings</span></code></a>. Type of torque is selected by passing the correct parameter to the constructor. Currently two types of torques are implemented: <code class="docutils literal"><span class="pre">second_order_gravitational_torque</span></code> (interaction of point-mass of body A with J<sub>2</sub> of body B) and <code class="docutils literal"><span class="pre">aerodynamic_torque</span></code> (settings for coefficients defined same as for aerodynamic acceleration).</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">TorqueSettings</span><span class="p">(</span> <span class="n">torqueType</span> <span class="p">);</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</div>
 <div class="section" id="body-shape-model">
-<h3>3.2.6. Body shape model<a class="headerlink" href="#body-shape-model" title="Permalink to this headline">¶</a></h3>
+<h3>3.2.5. Body shape model<a class="headerlink" href="#body-shape-model" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="BodyShapeModel">
 <em class="property">class </em><code class="descname">BodyShapeModel</code><a class="headerlink" href="#BodyShapeModel" title="Permalink to this definition">¶</a></dt>
@@ -710,7 +731,7 @@
 
 </div>
 <div class="section" id="radiation-pressure-interface">
-<h3>3.2.7. Radiation pressure interface<a class="headerlink" href="#radiation-pressure-interface" title="Permalink to this headline">¶</a></h3>
+<h3>3.2.6. Radiation pressure interface<a class="headerlink" href="#radiation-pressure-interface" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="RadiationPressureInterface">
 <em class="property">class </em><code class="descname">RadiationPressureInterface</code><a class="headerlink" href="#RadiationPressureInterface" title="Permalink to this definition">¶</a></dt>
@@ -745,7 +766,7 @@
 
 </div>
 <div class="section" id="aerodynamic-coefficient-interface">
-<span id="aerodynamiccoefficientoptions"></span><h3>3.2.8. Aerodynamic coefficient interface<a class="headerlink" href="#aerodynamic-coefficient-interface" title="Permalink to this headline">¶</a></h3>
+<span id="aerodynamiccoefficientoptions"></span><h3>3.2.7. Aerodynamic coefficient interface<a class="headerlink" href="#aerodynamic-coefficient-interface" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="AerodynamicCoefficientInterface">
 <em class="property">class </em><code class="descname">AerodynamicCoefficientInterface</code><a class="headerlink" href="#AerodynamicCoefficientInterface" title="Permalink to this definition">¶</a></dt>
@@ -787,7 +808,7 @@
 
 </div>
 <div class="section" id="time-variations-of-the-gravity-field">
-<h3>3.2.9. Time-variations of the gravity field<a class="headerlink" href="#time-variations-of-the-gravity-field" title="Permalink to this headline">¶</a></h3>
+<h3>3.2.8. Time-variations of the gravity field<a class="headerlink" href="#time-variations-of-the-gravity-field" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="GravityFieldVariations">
 <em class="property">class </em><code class="descname">GravityFieldVariations</code><a class="headerlink" href="#GravityFieldVariations" title="Permalink to this definition">¶</a></dt>

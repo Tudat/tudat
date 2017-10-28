@@ -21,7 +21,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         .. code-block:: cpp
 
-            TranslationalStatePropagatorSettings( centralBodies,
+            TranslationalStatePropagatorSettings<StateScalarType>, ( centralBodies,
                                                   accelerationsMap,
                                                   bodiesToIntegrate,
                                                   initialBodyStates,
@@ -31,6 +31,10 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         where:
 
+        - :literal:`StateScalarType`
+   
+            Template argument used to set the precision of the state, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal`long double`. 
+        
         - :literal:`centralBodies`
 
             :literal:`std::vector< std::string >` that contains the names of the central bodies and must match with those in the :class:`BodyMap`.
@@ -73,7 +77,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         .. code-block:: cpp
 
-            TranslationalStatePropagatorSettings( centralBodies,
+            TranslationalStatePropagatorSettings<StateScalarType>( centralBodies,
                                                   accelerationsMap,
                                                   bodiesToIntegrate,
                                                   initialBodyStates,
@@ -93,7 +97,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
    .. code-block:: cpp
 
-      RotationalStatePropagatorSettings( 
+      RotationalStatePropagatorSettings<StateScalarType>( 
       		torqueModelMap,
                 bodiesToIntegrate,
                 initialBodyStates,
@@ -115,7 +119,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         .. code-block:: cpp
 
-            MassPropagatorSettings(
+            MassPropagatorSettings<StateScalarType>(
                     bodiesWithMassToPropagate,
                     massRateModels,
                     initialBodyMasses,
@@ -140,7 +144,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         .. code-block:: cpp
 
-            MassPropagatorSettings(
+            MassPropagatorSettings<StateScalarType>(
                     bodiesWithMassToPropagate,
                     massRateModels,
                     initialBodyMasses,
@@ -162,7 +166,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
     
         .. code-block:: cpp
 
-            CustomStatePropagatorSettings(
+            CustomStatePropagatorSettings<StateScalarType,TimeType>(
                 stateDerivativeFunction,
                 initialState,
                 terminationSettings,
@@ -170,19 +174,23 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         where:
 
+        - :literal:`TimeType`
+   
+            Template argument used to set the precision of the time, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal`long double`. 
+
         - :literal:`stateDerivativeFunction`
 
-            :literal:`boost::function< double( const double , const double ) >` that must comply with the requirements discussed in :ref:`tudatFeaturesIntegrators`.
+            :literal:`boost::function< StateScalarType( const TimeType , const StateScalarType ) >` that must comply with the requirements discussed in :ref:`tudatFeaturesIntegrators`.
 
         - :literal:`initialState`
 
-            :literal:`double` that stores the initial state.
+            :literal:`StateScalarType` that stores the initial state.
 
     .. method:: Using a vector state
     
         .. code-block:: cpp
 
-            CustomStatePropagatorSettings(
+            CustomStatePropagatorSettings<StateScalarType,TimeType>(
                 stateDerivativeFunction,
                 initialState,
                 terminationSettings,
@@ -206,7 +214,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         .. code-block:: cpp
 
-            MultiTypePropagatorSettings(
+            MultiTypePropagatorSettings<StateScalarType>(
                 propagatorSettingsMap,
                 terminationSettings,
                 dependentVariablesToSave )
@@ -221,7 +229,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         .. code-block:: cpp
 
-            MultiTypePropagatorSettings(
+            MultiTypePropagatorSettings<StateScalarType>(
                 propagatorSettingsMap,
                 terminationSettings,
                 dependentVariablesToSave )
@@ -241,7 +249,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
    .. code-block:: cpp
 
-      MultiArcPropagatorSettings(
+      MultiArcPropagatorSettings<StateScalarType>(
             singleArcSettings,
             transferInitialStateInformationPerArc)
 

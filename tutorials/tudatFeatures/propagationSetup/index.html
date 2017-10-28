@@ -94,7 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials and Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../prerequiredKnowledge/index.html">Getting Started with Tudat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../gettingStarted/index.html">Getting Started with Tudat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
@@ -189,12 +189,12 @@
   <div class="section" id="simulator-set-up">
 <span id="tudatfeaturessimulatorindex"></span><h1>5. Simulator Set-Up<a class="headerlink" href="#simulator-set-up" title="Permalink to this headline">¶</a></h1>
 <p>One of the core elements of the Tudat libraries is its simulator framework. The goal of this page is discuss the implementation of such framework as well as the numerous options available. The top-level framework of the simulator is shown below:</p>
-<object data="../../../_images/graphviz-801d2d696596e5f19d737f26355db87f841c71f2.svg" type="image/svg+xml">
+<object data="../../../_images/graphviz-5026ea38f6855abbea1c8e550cb90d858edef796.svg" type="image/svg+xml">
             <p class="warning">digraph
 {
    # General diagram settings
    rankdir = &quot;LR&quot;;
-   ranksep = &quot;1.0&quot;
+   #ranksep = &quot;1.0&quot;
    splines = ortho;
    compound = true;
 
@@ -205,8 +205,8 @@
 
    # specific node color settings
    DynamicsSimulator [color = lightgreen];
-   NamedBodyMap [color = lightblue];
-
+   NamedBodyMap, MultiArc, &quot;RungeKuttaVariable\nStepSizeSettings&quot;, IntegratorSettings [color = lightblue];
+   &quot;DependentVariable(s)\nNumerical Solution&quot;, &quot;Equations of Motion\nNumerical Solution&quot; [color = peachpuff];
 
    # Hyperlinks (Sphinx auto referencing not working here, need to link to exact web adres)
    NamedBodyMap [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#NamedBodyMap&quot;, target = &quot;_top&quot;];
@@ -226,7 +226,6 @@
       label = &quot;IntegratorSettings&quot;;
       fontsize = 9;
       style = dashed;
-      rank = min;
       href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/integratorSettings.html&quot;;
       target = &quot;_top&quot;;
 
@@ -241,36 +240,71 @@
       integratorType -&gt; &quot;RungeKuttaVariable\nStepSizeSettings&quot;;
       simulationStartEpoch -&gt; &quot;RungeKuttaVariable\nStepSizeSettings&quot;;
       &quot;(initial) stepSize&quot; -&gt; &quot;RungeKuttaVariable\nStepSizeSettings&quot;;
-      &quot;min/max stepsize&quot; -&gt; &quot;RungeKuttaVariable\nStepSizeSettings&quot;;
+      &quot;Additional \nsettings&quot; -&gt; &quot;RungeKuttaVariable\nStepSizeSettings&quot;;
    }
 
 
-   subgraph clusterPropagatorSettings
+   subgraph clusterSingleArcPropagatorSettings
    {
       # cluster settings
-      label = &quot;PropagatorSettings&quot;;
+      label = &quot;Single-arc PropagatorSettings&quot;;
       fontsize = 9;
       style = dashed;
-      rank = min;
+      compound = true;
       href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/propagationSetup/propagatorSettings.html&quot;;
       target = &quot;_top&quot;;
 
+      MultiType;
       TranslationalState -&gt; RotationalState [style = invis];
       Mass -&gt; Custom [style = invis];
-      MultiType -&gt; MultiArc [style = invis];
-
    }
 
 
-   # DynamicsSimulator input
+   # DynamicsSimulator input, use points for &quot;or&quot; blocks
    NamedBodyMap -&gt; DynamicsSimulator;
-   IntegratorSettings -&gt; DynamicsSimulator [ltail = clusterIntegratorSettings];
-   Custom -&gt; DynamicsSimulator [ltail = clusterPropagatorSettings];
+   or0, or1 [shape = circle, width = 0.2, fillcolor = white, color = black, label = or];
+   Custom -&gt; or1 -&gt; DynamicsSimulator [ltail = clusterSingleArcPropagatorSettings];
+   MultiArc -&gt; or1 [constraint = false];
+   IntegratorSettings -&gt; or0 -&gt; DynamicsSimulator;
+   &quot;RungeKuttaVariable\nStepSizeSettings&quot; -&gt; or0;
 
+   # DynamicsSimulator output
+   DynamicsSimulator -&gt; &quot;Equations of Motion\nNumerical Solution&quot;;
+   DynamicsSimulator -&gt; &quot;DependentVariable(s)\nNumerical Solution&quot;;
+   {rank = same; &quot;Equations of Motion\nNumerical Solution&quot;, &quot;DependentVariable(s)\nNumerical Solution&quot;};
+
+
+   # Extra lines for posisitioning of nodes
    {rank = same; NamedBodyMap, DynamicsSimulator}
-
+   MultiType -&gt; MultiArc [ltail = clusterSingleArcPropagatorSettings];
+   Mass -&gt; Custom [style = invis];
 }</p></object>
-<p>The top-element in such framework is the <code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code>, which is in charge of propagating the equations of motion using the environment and acceleration models discussed in <a class="reference internal" href="../environmentSetup/index.html#tudatfeaturesenvironmentindex"><span class="std std-ref">Environment Set-up</span></a> and <a class="reference internal" href="../accelerationSetup/index.html#tudatfeaturesaccelerationindex"><span class="std std-ref">Acceleration Set-Up</span></a>, respectively. The orbit propation is done according to the specified <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> and the <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a>, which are discussed in detail in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a> and <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>.</p>
+<object data="../../../_images/graphviz-8ee54f6bc863de6bba108d22944711b3d34e923b.svg" type="image/svg+xml">
+            <p class="warning">digraph
+{
+   # General diagram settings
+   rankdir = &quot;LR&quot;;
+   splines = ortho;
+   compound = true;
+
+   subgraph clusterLegend
+   {
+   rank = min;
+   style = dashed;
+
+
+     # general node settings
+     node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+
+
+     &quot;Main block&quot; [fillcolor = lightgreen];
+     &quot;Optional input&quot; [style = dotted, fillcolor = lightgrey, color = black];
+     &quot;Input for \nmain block&quot; [fillcolor = lightblue];
+   Output [color = peachpuff];
+     &quot;Optional input&quot;-&gt; &quot;Input for \nmain block&quot; -&gt; &quot;Main block&quot; -&gt; &quot;Output&quot; [style = invis];
+   }
+}</p></object>
+<p>The top-element in such framework is the <a class="reference internal" href="simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a>, which is in charge of propagating the equations of motion using the environment and acceleration models discussed in <a class="reference internal" href="../environmentSetup/index.html#tudatfeaturesenvironmentindex"><span class="std std-ref">Environment Set-up</span></a> and <a class="reference internal" href="../accelerationSetup/index.html#tudatfeaturesaccelerationindex"><span class="std std-ref">Acceleration Set-Up</span></a>, respectively. The orbit propation is done according to the specified <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> and the <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a>, which are discussed in detail in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a> and <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>.</p>
 <p>As shown in the figure above, there are various types of <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> and <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> depending on the particularities of the application at hand. The different types are implemented by means of derived classes, as discussed below:</p>
 <dl class="docutils">
 <dt><strong>Integrator Settings</strong></dt>
