@@ -84,7 +84,19 @@ For this example, the second option is of course a bit 'non-standard'. However, 
 
 Available acceleration models
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-As stated above, the :literal:`createAccelerationModelsMap` function uses your environment and settings for the accelerations to automatically retrieve and put together all functions used to calculate the accelerations during each function evaluation of the numerical scheme. For reference, we provide a list of available acceleration models, below, including example of how to add settings for the model to the :class:`SelectedAccelerationMap`. In addition, we define the list of environment models required for their creation.
+As stated above, the :literal:`createAccelerationModelsMap` function uses your environment and settings for the accelerations to automatically retrieve and put together all functions used to calculate the accelerations during each function evaluation of the numerical scheme. For reference, we first provide a bried list of available acceleration models:
+
+- Point-mass gravity (central of third-body)
+- Spherical harmonic gravity (central of third-body)
+- Mutual spherical harmonic gravity (central of third-body)
+- Aerodynamic acceleration
+- Cannonball radiation pressure     
+- Thrust acceleration
+- Relativistic acceleration correction (IERS 2010 Conventions)
+- Empiricical accelerations (constant, sine and cosine of true anomaly components in RSW frame)
+- Tidal effect on natural satellites (Lainey et al., 2007, 2012)
+
+Subsequently, we provide details on how to add settings for the model to the :class:`SelectedAccelerationMap`. In addition, we define the list of environment models required for their creation.
 
 .. class:: AccelerationSettings
 
@@ -196,29 +208,73 @@ As stated above, the :literal:`createAccelerationModelsMap` function uses your e
 
    - Mass of body undergoing acceleration.
    - Settings for both the direction and magnitude of the thrust force (set by :class:`ThrustEngineSettings`). These models may in turn have additional environmental dependencies. 
+   
+Setting up a thrust acceleration is discussed in more detail on the page :ref:`tudatFeaturesThrustModels`.
     
 .. class:: RelativisticAccelerationCorrectionSettings
 
-   A first-order (in :math:`1/c^{2}`) correction to the acceleration due to the influence of relativity. It implements the model of Chapter 10, Section 3 of the IERS 2010 Conventions. These settings  require:
+   A first-order (in :math:`1/c^{2}`) correction to the acceleration due to the influence of relativity. It implements the model of Chapter 10, Section 3 of the IERS 2010 Conventions. It requires a specific derived class of :class:`AccelerationSettings`. Added to :class:`SelectedAccelerationMap` as follows, for example that includes all three contributions (Schwarzschild, Lense-Thirring and de Sitter)
+   
+   .. code-block:: cpp
 
-    - Boolean whether to include the Schwarzschild correction term
-    - Boolean whether to include the Lense-Thirring correction term
-    - Boolean whether to include the de Sitter correction term
-    - The name of the so-called 'primary body', for a planetary orbiter this should be set as the Sun (only relevant for de Sitter correction)
-    - The angular momentum vector of the orbited body (only relevant for Lense-Thirring correction)
+    SelectedAccelerationMap accelerationSettings;
+    bool calculateSchwarzschildCorrection = true;
+    bool calculateLenseThirringCorrection = true;
+    bool calculateDeSitterCorrection = true;
+    std::string primaryBody = "Sun";
+    const Eigen::Vector3d marsAngularMomentum = ...
+    accelerationSettings[ "Orbiter" ][ "Mars" ] = boost::make_shared< RelativisticAccelerationCorrectionSettings >( 
+       calculateSchwarzschildCorrection, calculateLenseThirringCorrection,  calculateDeSitterCorrection, primaryBody,
+       centralBodyAngularMomentum )
+
+Here, the 'primary body' for a planetary orbiter should always be set as the Sun (only relevant for de Sitter correction). The angular momentum vector of the orbited body is only relevant for Lense-Thirring correction.
     
 .. class:: EmpiricalAccelerationSettings
     
-   A constant/once-per-orbit acceleration, expressed in the RSW frame, for which the mangitude is determined empirically (typically during an orbit determination process). The acceleration components are defined according to Montenbruck and Gill (2000), with a total of 9 components: a constant, sine and cosine term (with true anomaly as argument) for each of the three independent directions of the RSW frame. The settings require:
+   A constant/once-per-orbit acceleration, expressed in the RSW frame, for which the mangitude is determined empirically (typically during an orbit determination process). The acceleration components are defined according to Montenbruck and Gill (2000), with a total of 9 components: a constant, sine and cosine term (with true anomaly as argument) for each of the three independent directions of the RSW frame. The settings object (for a vehicle called "Orbiter" around Mars) is created as:
+
+   .. code-block:: cpp
+   
+      SelectedAccelerationMap accelerationSettings;
+      Eigen::Vector3d constantAcceleration = ( Eigen::Vector3d( ) << 0.4, -0.1, 0.05 ).finished( );
+      Eigen::Vector3d sineAcceleration = ( Eigen::Vector3d( ) << 0.0, 0.02, 0.0 ).finished( );
+      Eigen::Vector3d cosineAcceleration = ( Eigen::Vector3d( ) << -0.01, 0.0, 0.0 ).finished( );
+      accelerationSettings[ "Orbiter" ][ "Mars" ] = boost::make_shared< EmpiricalAccelerationSettings >( 
+         constantAcceleration, sineAcceleration, cosineAcceleration );
+
+Where the three input variables represent:
        
     - Vector containing the constant terms of the accelerations in the R, S and W directions.
     - Vector containing the sine terms of the accelerations in the R, S and W directions.
     - Vector containing the cosine terms of the accelerations in the R, S and W directions.
+
     
 .. _tudatFeaturesFrameworkAccelerationsMassRateModelSetup:
 
+.. class:: DirectTidalDissipationAccelerationSettings
+    
+  The direct of tidal effects in a satellite system, applied directly as an acceleration (as opposed to a modification of spherical harmonic coefficients). The model is based on Lainey et al. (2007,2012). It can compute either the acceleration due to tides, and in particular tidal dissipation, on a planetary satellites. The accelertion can compute either the effect of tide raised on the satellite by the planet, or on the planet by the satellite. The satellite is assumed to be tidally locked to the planet.
+   
+   .. code-block:: cpp
+
+      double loveNumber = 0.1;
+      double timeLag = 100.0;
+    
+      SelectedAccelerationMap accelerationSettings;
+      accelerationSettings[ "Io" ][ "Jupiter" ] = boost::make_shared< DirectTidalDissipationAccelerationSettings >(
+         loveNumber, timeLag, false, false );      
+
+Where the three input variables represent:       
+                   
+    - Value of the k2 Love number (real value) that is used.
+    - Value of the tidal time lag (in seconds) that is used.
+    - Boolean denoting whether the term independent of the time lag is to be computed (default true)
+    - Boolean denoting whether the tide raised on the planet is to be modelled (if true), or the tide raised on the satellite (if false). Default is true.
+
+.. _tudatFeaturesFrameworkTorqueModelSetup:    
+
 Rotational model setup
-~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
 The rotational model setup is similar to the translational acceleration setup described above. 
 
 .. class:: TorqueModel
@@ -233,6 +289,8 @@ The rotational model setup is similar to the translational acceleration setup de
 
     TorqueSettings( torqueType );
 
+
+.. _tudatFeaturesFrameworkMassRateModelSetup:
 
 Mass rate model setup
 ~~~~~~~~~~~~~~~~~~~~~

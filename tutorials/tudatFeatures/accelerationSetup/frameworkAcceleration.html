@@ -263,7 +263,19 @@
 </div>
 <div class="section" id="available-acceleration-models">
 <h2>4.1.2. Available acceleration models<a class="headerlink" href="#available-acceleration-models" title="Permalink to this headline">¶</a></h2>
-<p>As stated above, the <code class="docutils literal"><span class="pre">createAccelerationModelsMap</span></code> function uses your environment and settings for the accelerations to automatically retrieve and put together all functions used to calculate the accelerations during each function evaluation of the numerical scheme. For reference, we provide a list of available acceleration models, below, including example of how to add settings for the model to the <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a>. In addition, we define the list of environment models required for their creation.</p>
+<p>As stated above, the <code class="docutils literal"><span class="pre">createAccelerationModelsMap</span></code> function uses your environment and settings for the accelerations to automatically retrieve and put together all functions used to calculate the accelerations during each function evaluation of the numerical scheme. For reference, we first provide a bried list of available acceleration models:</p>
+<ul class="simple">
+<li>Point-mass gravity (central of third-body)</li>
+<li>Spherical harmonic gravity (central of third-body)</li>
+<li>Mutual spherical harmonic gravity (central of third-body)</li>
+<li>Aerodynamic acceleration</li>
+<li>Cannonball radiation pressure</li>
+<li>Thrust acceleration</li>
+<li>Relativistic acceleration correction (IERS 2010 Conventions)</li>
+<li>Empiricical accelerations (constant, sine and cosine of true anomaly components in RSW frame)</li>
+<li>Tidal effect on natural satellites (Lainey et al., 2007, 2012)</li>
+</ul>
+<p>Subsequently, we provide details on how to add settings for the model to the <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a>. In addition, we define the list of environment models required for their creation.</p>
 <dl class="class">
 <dt id="AccelerationSettings">
 <em class="property">class </em><code class="descname">AccelerationSettings</code><a class="headerlink" href="#AccelerationSettings" title="Permalink to this definition">¶</a></dt>
@@ -384,25 +396,40 @@
 </ul>
 </dd></dl>
 
+<p>Setting up a thrust acceleration is discussed in more detail on the page <a class="reference internal" href="thrustModels.html#tudatfeaturesthrustmodels"><span class="std std-ref">Thrust Guidance</span></a>.</p>
 <dl class="class">
 <dt id="RelativisticAccelerationCorrectionSettings">
 <em class="property">class </em><code class="descname">RelativisticAccelerationCorrectionSettings</code><a class="headerlink" href="#RelativisticAccelerationCorrectionSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A first-order (in <span class="math">\(1/c^{2}\)</span>) correction to the acceleration due to the influence of relativity. It implements the model of Chapter 10, Section 3 of the IERS 2010 Conventions. These settings  require:</p>
-<blockquote>
-<div><ul class="simple">
-<li>Boolean whether to include the Schwarzschild correction term</li>
-<li>Boolean whether to include the Lense-Thirring correction term</li>
-<li>Boolean whether to include the de Sitter correction term</li>
-<li>The name of the so-called ‘primary body’, for a planetary orbiter this should be set as the Sun (only relevant for de Sitter correction)</li>
-<li>The angular momentum vector of the orbited body (only relevant for Lense-Thirring correction)</li>
-</ul>
-</div></blockquote>
+<dd><p>A first-order (in <span class="math">\(1/c^{2}\)</span>) correction to the acceleration due to the influence of relativity. It implements the model of Chapter 10, Section 3 of the IERS 2010 Conventions. It requires a specific derived class of <a class="reference internal" href="#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a>. Added to <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a> as follows, for example that includes all three contributions (Schwarzschild, Lense-Thirring and de Sitter)</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettings</span><span class="p">;</span>
+<span class="kt">bool</span> <span class="n">calculateSchwarzschildCorrection</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<span class="kt">bool</span> <span class="n">calculateLenseThirringCorrection</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<span class="kt">bool</span> <span class="n">calculateDeSitterCorrection</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">primaryBody</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
+<span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">marsAngularMomentum</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">accelerationSettings</span><span class="p">[</span> <span class="s">&quot;Orbiter&quot;</span> <span class="p">][</span> <span class="s">&quot;Mars&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">RelativisticAccelerationCorrectionSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+   <span class="n">calculateSchwarzschildCorrection</span><span class="p">,</span> <span class="n">calculateLenseThirringCorrection</span><span class="p">,</span>  <span class="n">calculateDeSitterCorrection</span><span class="p">,</span> <span class="n">primaryBody</span><span class="p">,</span>
+   <span class="n">centralBodyAngularMomentum</span> <span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
+<p>Here, the ‘primary body’ for a planetary orbiter should always be set as the Sun (only relevant for de Sitter correction). The angular momentum vector of the orbited body is only relevant for Lense-Thirring correction.</p>
 <dl class="class">
 <dt id="EmpiricalAccelerationSettings">
 <em class="property">class </em><code class="descname">EmpiricalAccelerationSettings</code><a class="headerlink" href="#EmpiricalAccelerationSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A constant/once-per-orbit acceleration, expressed in the RSW frame, for which the mangitude is determined empirically (typically during an orbit determination process). The acceleration components are defined according to Montenbruck and Gill (2000), with a total of 9 components: a constant, sine and cosine term (with true anomaly as argument) for each of the three independent directions of the RSW frame. The settings require:</p>
+<dd><p>A constant/once-per-orbit acceleration, expressed in the RSW frame, for which the mangitude is determined empirically (typically during an orbit determination process). The acceleration components are defined according to Montenbruck and Gill (2000), with a total of 9 components: a constant, sine and cosine term (with true anomaly as argument) for each of the three independent directions of the RSW frame. The settings object (for a vehicle called “Orbiter” around Mars) is created as:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettings</span><span class="p">;</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">constantAcceleration</span> <span class="o">=</span> <span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">0.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.05</span> <span class="p">).</span><span class="n">finished</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">sineAcceleration</span> <span class="o">=</span> <span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.0</span> <span class="p">).</span><span class="n">finished</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">cosineAcceleration</span> <span class="o">=</span> <span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span> <span class="p">).</span><span class="n">finished</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">accelerationSettings</span><span class="p">[</span> <span class="s">&quot;Orbiter&quot;</span> <span class="p">][</span> <span class="s">&quot;Mars&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">EmpiricalAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+   <span class="n">constantAcceleration</span><span class="p">,</span> <span class="n">sineAcceleration</span><span class="p">,</span> <span class="n">cosineAcceleration</span> <span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>Where the three input variables represent:</p>
 <blockquote>
 <div><ul class="simple">
 <li>Vector containing the constant terms of the accelerations in the R, S and W directions.</li>
@@ -410,11 +437,34 @@
 <li>Vector containing the cosine terms of the accelerations in the R, S and W directions.</li>
 </ul>
 </div></blockquote>
+<span class="target" id="tudatfeaturesframeworkaccelerationsmassratemodelsetup"></span><dl class="class">
+<dt id="DirectTidalDissipationAccelerationSettings">
+<em class="property">class </em><code class="descname">DirectTidalDissipationAccelerationSettings</code><a class="headerlink" href="#DirectTidalDissipationAccelerationSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The direct of tidal effects in a satellite system, applied directly as an acceleration (as opposed to a modification of spherical harmonic coefficients). The model is based on Lainey et al. (2007,2012). It can compute either the acceleration due to tides, and in particular tidal dissipation, on a planetary satellites. The accelertion can compute either the effect of tide raised on the satellite by the planet, or on the planet by the satellite. The satellite is assumed to be tidally locked to the planet.</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">loveNumber</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">timeLag</span> <span class="o">=</span> <span class="mf">100.0</span><span class="p">;</span>
+
+<span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettings</span><span class="p">;</span>
+<span class="n">accelerationSettings</span><span class="p">[</span> <span class="s">&quot;Io&quot;</span> <span class="p">][</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DirectTidalDissipationAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+   <span class="n">loveNumber</span><span class="p">,</span> <span class="n">timeLag</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
 </dd></dl>
 
+<p>Where the three input variables represent:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Value of the k2 Love number (real value) that is used.</li>
+<li>Value of the tidal time lag (in seconds) that is used.</li>
+<li>Boolean denoting whether the term independent of the time lag is to be computed (default true)</li>
+<li>Boolean denoting whether the tide raised on the planet is to be modelled (if true), or the tide raised on the satellite (if false). Default is true.</li>
+</ul>
+</div></blockquote>
 </div>
 <div class="section" id="rotational-model-setup">
-<span id="tudatfeaturesframeworkaccelerationsmassratemodelsetup"></span><h2>4.1.3. Rotational model setup<a class="headerlink" href="#rotational-model-setup" title="Permalink to this headline">¶</a></h2>
+<span id="tudatfeaturesframeworktorquemodelsetup"></span><h2>4.1.3. Rotational model setup<a class="headerlink" href="#rotational-model-setup" title="Permalink to this headline">¶</a></h2>
 <p>The rotational model setup is similar to the translational acceleration setup described above.</p>
 <dl class="class">
 <dt id="TorqueModel">
@@ -433,7 +483,7 @@
 
 </div>
 <div class="section" id="mass-rate-model-setup">
-<h2>4.1.4. Mass rate model setup<a class="headerlink" href="#mass-rate-model-setup" title="Permalink to this headline">¶</a></h2>
+<span id="tudatfeaturesframeworkmassratemodelsetup"></span><h2>4.1.4. Mass rate model setup<a class="headerlink" href="#mass-rate-model-setup" title="Permalink to this headline">¶</a></h2>
 <p>Although propagating a body’s translational dynamics is the backbone of Tudat’s simulations, it is also possible to propagate a vehicle’s mass (either concurrently or separately). The manner in which the models that govern the ‘mass dynamics’, i.e. mass-rate models, are handled in the code is very similar to the acceleration models: a list of settings for the models is created by the user, which are then used to create the required objects. The list to be created by the user is:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">MassRateModelSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">massRateModelSettings</span><span class="p">;</span>
 </pre></div>

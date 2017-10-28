@@ -22,7 +22,7 @@ These pages of the wiki will help you build a strong knowledge basis to get star
       # specific node color settings
       NamedBodyMap, bodiesToPropagate, centralBodies, AccelerationSettings [color = lightblue];
       AccelerationModel [color= lightgreen];
-      Empirical, "Relativistic correction", "Mutual spherical \nharmonic gravity", Thrust [color =  darkturquoise]; 
+      Empirical, "Relativistic correction", "Mutual spherical \nharmonic gravity", "Tidal Dissipation", "Thrust" [color =  darkturquoise]; 
       "Additional \ninformation" [style = dotted, fillcolor = lightgrey, color = black];
 
       subgraph clusterAccelerationType
@@ -32,7 +32,7 @@ These pages of the wiki will help you build a strong knowledge basis to get star
          style = dashed;
       
          {rank = same; "Cannon ball \nradiation pressure", "Central gravity", Aerodynamic};
-         {rank = same; "Thrust","Spherical harmonic \ngravity" };
+         {rank = same; "Thrust", "Tidal Dissipation", "Spherical harmonic \ngravity" };
          {rank = same; "Mutual spherical \nharmonic gravity", "Relativistic correction", Empirical};
          
          "Mutual spherical \nharmonic gravity" -> "Spherical harmonic \ngravity" -> "Central gravity" [style = invis];
@@ -71,6 +71,7 @@ These pages of the wiki will help you build a strong knowledge basis to get star
       "Aerodynamic" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings", target = "_top"];
       "Cannon ball \nradiation pressure" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings", target = "_top"];
       "Thrust" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#ThrustAccelerationSettings", target = "_top"];
+      "Thrust" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#DissipationAccelerationSettings", target = "_top"];
       "Relativistic correction" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#RelativisticAccelerationCorrectionSettings", target = "_top"];
       "Empirical" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#EmpiricalAccelerationSettings", target = "_top"];
 
