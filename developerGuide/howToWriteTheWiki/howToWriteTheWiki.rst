@@ -281,4 +281,10 @@ The following issues on the `github project page <https://github.com/Tudat/tudat
 - Low Priority.
  
    - "Next" button on installation pages should skip the pages of other operating systems.
+   - Explain important functions in Basics/utilities.h
+   - Classes which need to be defined:
+      EstimatableParameter, EstimatebleParametersEnum, SimpleRotationalEphemeris, CustomAerodynamicCoefficientInterface, GroundStationState, PPNParameterSet, BasicSolidBodyTideGravityFieldVariations, ConstantObservationBias, ConstantRelativeObservationBias.
+   - Fix large literals which go beyond page margins such as in ` Defining estimation input <http://tudat.tudelft.nl/tutorials/tudatFeatures/estimationSetup/estimationExecution.html#defining-estimation-input>`_. 
+
+
 
