@@ -60,7 +60,7 @@ Please complete all checks and copy the output (even if a check seems succesfull
     **Solution A:** Make sure the software is installed (and up-to-date).
 
     - Please make sure CMake has been installed on your system.
-    - If so try uninstall and reinstalling the latest version, please follow the Installation Guide to make sure you don't miss any steps.
+    - If so try uninstall and reinstalling the latest version, please follow the Installation Guide to make sure you don't miss any steps.
     - In case of CMake version CMake 3.4 or earlier, it needs to be fully uninstalled before installing 3.5 or later.
 
     **Solution B:** Make sure the software is added to the path.
@@ -68,6 +68,8 @@ Please complete all checks and copy the output (even if a check seems succesfull
     - On both Windows and OS X, some software is not added to the path by default.
     - Usually this is an option inside the installation (not for CMake under OS X), reinstalling and selecting this option should fix the issue.
     - If not you need to manually add the directory that contains the executables to you path, see instructions below.
+
+.. _troubleshootingConfig:
 
 Troubleshooting configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -89,7 +91,7 @@ The configuration of your project includes downloading the Tudat Bundle source a
 
 **Step 2.2: Check if Boost build succesfully**
 
-    - Go to the ``tudatBundle/boost/stage/lib`` folder and verify all the libraries are present.
+    - Go to the ``tudatBundle/boost/stage/lib`` folder and verify all the libraries are present.
 
     - Make note of all files in this folder.
     - Go to the ``tudatBundle/boost/boost`` folder and locate ``version.hpp``.
@@ -119,7 +121,7 @@ The configuration of your project includes downloading the Tudat Bundle source a
 
     1. Find the Boost version TudatBundle is trying to build.
         1. Open tudatBundle/CMakeLists.txt
-        2. Look for the uncommented (without a # in front) instance of set(BoostVersion 1.XX.0).
+        2. Look for the uncommented (without a # in front) instance of set(BoostVersion 1.XX.0).
     2. https://sourceforge.net/projects/boost/files/boost/
         1. Pick the version corresponding to your version. Do not select beta.
         2. It doesn't matter which archive type you select, generally pick .tar.bz2 for Linux and OS X and .zip for Windows.
@@ -132,14 +134,14 @@ The configuration of your project includes downloading the Tudat Bundle source a
         1. ./b2 toolset=gcc link=static threading=multi --build-dir=Build stage variant=release --layout=tagged cxxflags=-std=c++11 --with-filesystem --with-system --with-thread --with-regex --with-date_time --with-test
         2. .\b2.exe toolset=gcc link=static threading=multi --build-dir=Build stage variant=release --layout=tagged cxxflags=-std=c++11 --with-filesystem --with-system --with-thread --with-regex --with-date_time --with-test
     7. In case of errors try to identify if bjam fails for each module or only for select modules.
-    8. Rerun the b2 command several times, each time with only one and a different --with-[module] argument.
+    8. Rerun the b2 command several times, each time with only one and a different --with-[module] argument.
 
     .. note::Make logs of bootstrap and b2 command
 
 **Step 2.5: Check QtCreator CMake binary**
 
     1. To verify the toolchain is correctly configured, open QtCreator, go to Preferences/Options, select the Build & Run section and switch to the CMake tab
-    2. It is very important that the QtCreator is pointed to the correct cmake binary. CMake ships with multiple binaries and often the wrong one is selected. The correct binaries are:
+    2. It is very important that the QtCreator is pointed to the correct cmake binary. CMake ships with multiple binaries and often the wrong one is selected. The correct binaries are:
         1. C:\Program Files (x86)\CMake\bin\cmake.exe instead of C:\Program Files (x86)\CMake\bin\cmake-gui.exe
         2. /usr/bin/cmake or /usr/local/bin/cmake instead of /usr/local/bin/cmake-gui
     3. /Applications/CMake.app/Contents/bin/cmake instead of /Applications/CMake.app/Contents/MacOS/CMake or /Applications/CMake.app.
@@ -218,7 +220,7 @@ Below are several tools and tricks that are essential for troubleshooting your i
         gcc -v > gcc_log.txt         (normal output to logfile, errors to screen) 
         gcc -v > gcc_log.txt 2>&1    (normal and error output to logfile)
 
-    Unfortunately while creating a log file you can not see the output as it is directed to the file instead of the screen. On Linux and OS X there is a command called tee, which does both::
+    Unfortunately while creating a log file you can not see the output as it is directed to the file instead of the screen. On Linux and OS X there is a command called tee, which does both::
 
         gcc -v | tee gcc_log.txt         (normal output to file and screen, errors screen only)
         gcc -v  2>&1 | tee gcc_log.txt   (normal and error output to logfile and screen, FREFERRED)
@@ -243,10 +245,10 @@ Below are several tools and tricks that are essential for troubleshooting your i
 
     Each user has a user-specific PATH directories and ones that it inherits from system. Usually we recommend installing a new directory entry for the PATH variable for the system (a.k.a. for all users). Usually during the setup of the application that we want to use from the command line there are some installation options that we can set such that the installer takes care of this. If you haven't done so it will be easiest to go back to the installer for the program and check if such an options exists, before attempting to do so manually.
 
-    .. warning:: This can break your system 
- 
+    .. warning:: This can break your system 
+ 
     Follow these three essential steps carefully before attempting:
- 
+ 
         1. Make sure that the directory your want to add is not already in the list.
         2. Backup current PATH var before modifying (instructions included below).
         3. Quadruple check for typos in the directory name you're adding. Example below uses MyApp
