@@ -37,7 +37,7 @@ These are functions that return the root-path of the library (or a particular fo
 
 File-readers
 ************
-If neeeded, you can use this functionality as a starting point to create your own file-reader for your specific file type. If you run into issues when doing so, please contact the Tudat support team. However, there is a dedicated file-reader available in the Tudat library:
+If needed, you can use this functionality as a starting point to create your own file-reader for your specific file type. If you run into issues when doing so, please contact the Tudat support team. However, there is a dedicated file-reader available in the Tudat library:
 
 :literal:`readMatrixFromFile` (Tudat)
     This function can be used to read a simple text file with separated numbers. The documentation includes the options for a separator and the character used to skip a line (e.g. a comment-line). Note that the new-line character (\n) is reserved to split the lines of the matrix.
@@ -53,6 +53,33 @@ The :literal:`InputOutput` directory in the Tudat library also contains function
 
 Examples
 ~~~~~~~~
+
+Text file to MatrixXd
+*********************
+
+An example of reading data from a text file to a :literal:`Eigen::MatrixXd` is shown in detail in :ref:`walkthroughsUseOfThrustUserDefinedThrustVector`. A small overview is presented here:
+
+For example a file named :literal:`.txt` contains data structured as follows::
+
+    0       0 0 5
+    6068    0 1 5
+    6097    1.0 0 5
+    6097.5  0.8 0 5
+    6098    0.6 0.1 5
+    6099    0.1 0.5 5
+    12192   0.2 1.0 4.5
+    18288   0.3 1.5 4.0
+    243575  0.4 2.0 3.0
+    3.999e6 1.0 1.0 2.0
+    4e6     1.1 5.0 1.0
+
+thus 4 columns spaced with tabs. This file can be read with the following code::
+
+       Eigen::MatrixXd thrustForceMatrix =
+              tudat::input_output::readMatrixFromFile( cppFolder + "nameOfFile.txt" , " \t", "#" );
+
+where the first argument is the relative path to the :literal:`.txt` file, the second argument indicates the type(s) of separator(s) used (multiple seperators possible). The last argument indicates the character used for lines to be skipped. 
+
 Data-map (double,double) to text file
 *************************************
 A data map is a template class that is defined by its key-type and value-type:
