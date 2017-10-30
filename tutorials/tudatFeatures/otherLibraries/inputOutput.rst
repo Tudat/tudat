@@ -47,11 +47,24 @@ File-writers
 The :literal:`InputOutput` directory in the Tudat library also contains functionality to write data (e.g. the propagation history of a satellite) to a file. The following function is available:
 
 :literal:`writeDataMapToTextFile` (Tudat)
-    This function writes data stored in a map to a text file. A number of overloads exists for this function based on the input given to the function. Furthermore, the data-map can store different types of data (e.g. doubles and Eigen vectors, which are typical types for the propagation history).
+    This function writes data stored in a map to a text file. A number of overloads exists for this function based on the input given to the function. Furthermore, the data-map can store different types of data (e.g. doubles and Eigen vectors, which are typical types for the propagation history). The following overload is most relevant:
 
-    The simplest input consists of the data-map and the file-name, the function writes data stored in the map to text file, using default KeyType-precision and ValueType-precision (digits10 from "limits" standard library), output directory (Tudat root-path), and delimiter (space).
+   .. code-block:: cpp
 
-Examples
+      writeDataMapToTextFile(dataMap, 
+      	outputFileName,
+      	outputDirectory,
+      	fileHeader,
+      	precisionOfKeyType,
+      	precisionOfValueType,
+      	delimiter)
+
+   If only the dataMap and file-name are provided, the default KeyType-precision and ValueType-precision (digits10 from "limits" standard library), output directory (Tudat root-path), and delimiter (space) are used. If also the outputDirectory is provided an empty file header, a precision of 16 significant digits and a tab as delimiter are used, but these can be user-specified.
+
+:literal:`writeMatrixToTextFile` (Tudat)
+   This function writes data stored in a :literal:`Eigen::Matrix` to a text file. The input required are the Matrix itself and the file-name.
+
+
 ~~~~~~~~
 
 Text file to MatrixXd
