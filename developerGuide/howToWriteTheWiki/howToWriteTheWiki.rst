@@ -258,3 +258,27 @@ The following commands are available within reStructuredText
 - :literal:`use of semi-colon after a paragraph::`
    Introduces a box of monospaced text without mark-up. Generally used to define file locations.
 
+
+Upcoming improvements
+~~~~~~~~~~~~~~~~~~~~~
+
+The following issues on the `github project page <https://github.com/Tudat/tudat/labels/documentation>`_ need to be resolved. Other improvements to the documentation are:
+
+- High priority.
+
+   - Add list of errors to error page.
+   - Update basic input-output page. Cross reference to this page, and write readData example.
+  
+- Medium priority.
+
+   - Update Qt project tree page to new layout occuring in latest Qt release.
+   - Extending setup new application tutorial. Tutorial should include step by step guide for copying/editing CMake files etc. and verify the template application with latest Tudat.
+   - Tutorial for linking own code and making it visible inside Qt project tree.
+   - Page explaining the CMake files.
+   - Discuss setGlobalFrameBodyEphemerides function on environment settings page
+   - Write "Updating Tudat" page. Inlcuding tutorial for switching branches etc.
+   
+- Low Priority.
+ 
+   - "Next" button on installation pages should skip the pages of other operating systems.
+
