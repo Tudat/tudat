@@ -3,11 +3,11 @@
 Orbit Determination and Parameter Estimation
 ============================================
 
-In the previous tutorial (see :ref:`earthOrbiterBasicStateEstimation`) we introduced the basic features of orbit determination, including simulating observables, defining parameters and performing the estimation. However, various features were not discussed, and a number of assumption were unrealistic. In this tutorial, we discuss a more comprehensive example of orbit determination
+In the previous tutorial (see :ref:`earthOrbiterBasicStateEstimation`) we introduced the basic features of orbit determination, including simulating observables, defining parameters and performing the estimation. However, various features were not discussed, and a number of assumption were unrealistic. In this tutorial, we discuss a more comprehensive example of orbit determination.
 
- The code for this tutorial is given on Github, and is also located in your tudat bundle at::
+The code for this tutorial is given on Github, and is also located in your tudat bundle at::
 
-    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/earthOrbiterStateEstimation.cpp
+   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/earthOrbiterStateEstimation.cpp
 
 As you can see in the code, setting up the environment is done in a similar manner as the previous tutorial. One difference is introduced: the simulation now runs over 30 days instead of 3. For the acceleration models, we make two additions compared to the previous tutorial: a relativistic acceleration correction, and an empirical acceleration. Both are added because we want to estimate properties of these acceleration models in this example.  
 
