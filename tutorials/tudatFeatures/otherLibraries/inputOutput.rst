@@ -47,7 +47,7 @@ File-writers
 The :literal:`InputOutput` directory in the Tudat library also contains functionality to write data (e.g. the propagation history of a satellite) to a file. The following function is available:
 
 :literal:`writeDataMapToTextFile` (Tudat)
-    This function writes data stored in a map to a text file. A number of overloads exists for this function based on the input given to the function. Furthermore, the data-map can store different types of data (e.g. doubles and Eigen vectors, which are typical types for the propagation history). The following overload is most relevant:
+   This function writes data stored in a map to a text file. A number of overloads exists for this function based on the input given to the function. Furthermore, the data-map can store different types of data (e.g. doubles and Eigen vectors, which are typical types for the propagation history). The following overload is most relevant:
 
    .. code-block:: cpp
 
@@ -62,11 +62,10 @@ The :literal:`InputOutput` directory in the Tudat library also contains function
    If only the dataMap and file-name are provided, the default KeyType-precision and ValueType-precision (digits10 from "limits" standard library), output directory (Tudat root-path), and delimiter (space) are used. If also the outputDirectory is provided an empty file header, a precision of 16 significant digits and a tab as delimiter are used, but these can be user-specified.
 
 :literal:`writeMatrixToTextFile` (Tudat)
-   This function writes data stored in a :literal:`Eigen::Matrix` to a text file. The input required are the Matrix itself and the file-name.
+   This function writes data stored in a :literal:`Eigen::Matrix` to a text file. The input required are the Matrix itself and the file-name. Note that any scalarType and number of rows and collumns can be used.
 
-
+Examples
 ~~~~~~~~
-
 Text file to MatrixXd
 *********************
 
@@ -145,6 +144,23 @@ This data-map can be stored to a file using:
 
     tudat::input_output::writeDataMapToTextFile(
                 keyDoubleValueVector3dMap, "keyDoubleValueVector3dMapDataFile" );
+
+Eigen::Matrix3d to text file
+****************************
+An example of a matrix to save:
+
+.. code-block:: cpp
+
+   Eigen::Matrix3d squareDoubleValueMatrix;
+   squareDoubleValueMatrix << 1, 2, 3, 4, 5, 6, 7, 8, 9;
+
+This can be saved to a text file using:
+
+.. code-block:: cpp
+
+   tudat::input_output::writeMatrixToTextFile(
+   				squareDoubleValueMatrix, "squareDoubleValueMatrixFile")     
+
 
 Storing propagation history
 ***************************
