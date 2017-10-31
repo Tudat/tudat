@@ -161,3 +161,6 @@ We also show plots of the acceleration (in an inertial frame) and force (in the 
 
 .. figure:: images/accelerationThrustFromFile.png
 
+The dependent variable history (accelerations) are obtained from the :literal:`getDependentVariableHistory` function inside the :class:`DynamicsSimulator` class. The resulting :literal:`std::map` can be saved as discussed in :ref:`tudatFeaturesInputOutput`. 
+
+

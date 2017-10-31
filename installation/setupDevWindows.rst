@@ -21,7 +21,7 @@ So, we are now going to walk through the process of installing CMake on your com
 
 Qt Creator & MinGW
 ~~~~~~~~~~~~~~~~~~
-Now we are going to walk through the process of installing Qt Creator on your computer. This will also install the MinGW, a Minimalist GNU Environmentn for Windows, containing (amongst others) GNU C++ compilers and Make programs.
+Now we are going to walk through the process of installing Qt Creator on your computer. This will also install the MinGW, a Minimalist GNU Environment for Windows, containing (amongst others) GNU C++ compilers and Make programs.
 
 **Step 1: Download the installer**
     To begin the installation, use the following link to download the installer for the Qt SDK: http://www.qt.io/download-open-source/ As before it is best to choose to Run the installer directly.

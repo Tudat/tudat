@@ -11,6 +11,5 @@ In these pages of the wiki you will find a number of tutorials that will help yo
    githubBasics/githubBasics
    extendingJSON/index
    extendingMATLAB/index
-   guideToDebugging/guideToDebugging
    howToWriteTheWiki/howToWriteTheWiki
 

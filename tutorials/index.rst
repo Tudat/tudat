@@ -23,4 +23,6 @@ The final two pages, :ref:`jsonInterface` pages, and :ref:`matlabInterface` page
    tudatFeatures/index
    jsonInterface/index
    matlabInterface/index
+   troubleshooting/index
+
 

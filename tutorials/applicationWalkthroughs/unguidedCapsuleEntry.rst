@@ -153,7 +153,7 @@ Finally, the termination conditions are established. The termination settings ar
 Results
 ~~~~~~~
 
-Below the history of some of the saved parameters is shown. One can see the capsule skipping several times before it's final descent into the atmosphere until reaching 25km altitude. 
+Below the history of some of the saved parameters is shown. One can see the capsule skipping several times before it's final descent into the atmosphere until reaching 25km altitude. The dependent variable history can be obtained in Tudat from the :literal:`getDependentVariableHistory` function inside the :class:`DynamicsSimulator` class. The resulting :literal:`std::map` can be saved as discussed in :ref:`tudatFeaturesInputOutput`. 
 
 .. figure:: images/apolloResults.png
 

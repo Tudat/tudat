@@ -191,7 +191,7 @@ where the retrieved result is an :literal:`std::map` with a :literal:`double` as
       }
    }
 
-Finally, each of the :literal:`std::map` within :literal:`allBodiesPropagationHistory` are written to individual :literal:`.dat` files:
+Finally, each of the :literal:`std::map` within :literal:`allBodiesPropagationHistory` are written to individual :literal:`.dat` files using the :literal:`writeDataMapToFile` as discussed in :ref:`tudatFeaturesInputOutput`:
 
 .. code-block:: cpp
 
