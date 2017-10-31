@@ -269,6 +269,8 @@ The following issues on the `github project page <https://github.com/Tudat/tudat
    - Add list of errors to error page.
    - Update basic input-output page. Cross reference to this page, and write readData example.
    - Get Doxygen online. 
+   - Group troubleshooting.
+   - Coding mistakes, commas in JSON files. 
   
 - Medium priority.
 
@@ -285,7 +287,5 @@ The following issues on the `github project page <https://github.com/Tudat/tudat
    - Explain important functions in Basics/utilities.h
    - Classes which need to be defined:
       EstimatableParameter, EstimatebleParametersEnum, SimpleRotationalEphemeris, CustomAerodynamicCoefficientInterface, GroundStationState, PPNParameterSet, BasicSolidBodyTideGravityFieldVariations, ConstantObservationBias, ConstantRelativeObservationBias.
-   - Fix large literals which go beyond page margins such as in ` Defining estimation input <http://tudat.tudelft.nl/tutorials/tudatFeatures/estimationSetup/estimationExecution.html#defining-estimation-input>`_. 
-
-
+   - Fix large literals which go beyond page margins such as in `Defining estimation input <http://tudat.tudelft.nl/tutorials/tudatFeatures/estimationSetup/estimationExecution.html#defining-estimation-input>`_. 
 
