@@ -20,23 +20,7 @@ where :literal:`dependentVariableList` is populated as follows:
       dependentVariablesList.push_back(
                 boost::make_shared< SingleDependentVariableSaveSettings >( variableType , associatedBody , secondaryBody ) );
 
-where:
-
-- :class:`SingleDependentVariableSaveSettings`
-
-   Defines the derived class being used and must match with :literal:`variableType`.
-
-- :literal:`variableType`
-
-   Indicates the variable type and must match with one of the :literal:`enum` values in :class:`PropagationDependentVariables`. A detailed description of how this is done is given in the next section.
-
-- :literal:`associatedBody`
-
-   Indicates to which body the saved dependent variables are associated.
-
-- :literal:`secondaryBody`
-
-   Optional argument that provides a secondary body that may be necessary to save the dependent variable. By default, this argument is empty.
+The details of the creation of the settings :class:`SingleDependentVariableSaveSettings` object are discussed below.
 
 Once the list of dependent variables to save has been populated, a :class:`DependentVariableSaveSettings` object needs to be created and passed to :class:`PropagatorSettings`:
 
@@ -54,9 +38,91 @@ Once the list of dependent variables to save has been populated, a :class:`Depen
 
 .. note:: In the example above, the :class:`TranslationalStatePropagatorSettings` derived class is used. Please note that any of the derived classes described in :ref:`tudatFeaturesPropagatorSettings` can be used, as long as these support dependent variable saving.
 
-
 Available dependent variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Below, we provide a list of all dependent variables that can be saved using Tudat, with a link to the corresponding (derived class) of :class:`SingleDependentVariableSaveSettings`, and associated input. In some cases, the requirements on teh environment for a variable to be saved are not necesarilly intuitive. In those cases, we mention the requirements explicitly. 
+
+    - **Mach number** in atmosphere. Requires an aerodynamic acceleration to be acting on the vehicle. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`mach_number_dependent_variable` as :literal:`variableType`.
+    
+    - **Altitude** above body exerting aerodynamic acceleration. Requires an aerodynamic acceleration to be acting on the vehicle. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`altitude_dependent_variable` as :literal:`variableType`.
+    
+    - **Airspeed** in atmosphere of body exerting aerodynamic acceleration. Requires an aerodynamic acceleration to be acting on the vehicle. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`airspeed_dependent_variable` as :literal:`variableType`.
+
+    - **Local density** in atmosphere of body exerting aerodynamic acceleration (at position of body undergoing acceleration). Requires an aerodynamic acceleration to be acting on the vehicle. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`local_density_dependent_variable` as :literal:`variableType`.
+
+    - **Local temperature** in atmosphere of body exerting aerodynamic acceleration (at position of body undergoing acceleration). Requires an aerodynamic acceleration to be acting on the vehicle. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`local_temperature_dependent_variable` as :literal:`variableType`.
+
+    - **Relative speed** (scalar velocity) of body w.r.t. a second body (between centers of mass). Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`relative_speed_dependent_variable` as :literal:`variableType`.
+
+    - **Relative velocity** of body w.r.t. a second body (between centers of mass). Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`relative_velocity_dependent_variable` as :literal:`variableType`.
+
+    - **Relative distance** of body from a second body (between centers of mass). Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`relative_position_dependent_variable` as :literal:`variableType`.
+
+    - **Relative position** of body w.r.t. a second body (between centers of mass). Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`relative_position_dependent_variable` as :literal:`variableType`.
+
+    - **Radiation pressure coefficient** of body, due to radiation exerted by another body. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`radiation_pressure_dependent_variable` as :literal:`variableType`.
+
+    - **Total acceleration** acting on a body. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`total_acceleration_dependent_variable` as :literal:`variableType`.
+    
+    - **Total torque** acting on a body. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`total_torque_dependent_variable` as :literal:`variableType`.        
+        
+    - **Total mass rate** of body. Requires mass to be one of the numerically propagated variables. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`total_mass_rate_dependent_variables` as :literal:`variableType`.
+    
+    - **Norm of total acceleration** acting on a body. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`total_acceleration_norm_dependent_variable` as :literal:`variableType`.
+
+    - **Norm of total torque** acting on a body. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`total_torque_norm_dependent_variable` as :literal:`variableType`.
+    
+    - **Norm of single acceleration** acting on a body. Defined by creating a :class:`SingleAccelerationDependentVariableSaveSettings`, with :literal:`useNorm` set to true.
+    
+    - **Single acceleration** acting on a body. Defined by creating a :class:`SingleAccelerationDependentVariableSaveSettings`, with :literal:`useNorm` set to false.
+       
+    - **Norm of single torque** acting on a body. Defined by creating a :class:`SingleTorqueDependentVariableSaveSettings`, with :literal:`useNorm` set to true.
+    
+    - **Single torque** acting on a body. Defined by creating a :class:`SingleTorqueDependentVariableSaveSettings`, with :literal:`useNorm` set to false.
+
+    - **Aerodynamic force coefficients** of a body. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`aerodynamic_force_coefficients_dependent_variable` as :literal:`variableType`.
+
+    - **Aerodynamic moment coefficients** of a body. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`aerodynamic_moment_coefficients_dependent_variable` as :literal:`variableType`.
+    
+    - **Rotation matrix to body-fixed frame** of a body. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`rotation_matrix_to_body_fixed_frame_variable` as :literal:`variableType`. 
+    
+    - **Rotation matrix between frames**  used for aerodynamics.  Defined by creating a :class:`IntermediateAerodynamicRotationVariableSaveSettings` class, with the two frames (start and end frames) provided as input. The following frames can be used (see Mooij, 1994 for details):
+       - Inertial frame
+       - Body-fixed (corotating) frame of central body. 
+       - Vehicle-centered vertical frame
+       - Vehicle-centered trajectory frame
+       - Vehicle-centered aerodynamic frame
+       - Vehicle-fixed body frame
+    - **Rotation angle**  used for aerodynamics.  Defined by creating a :class:`BodyAerodynamicAngleVariableSaveSettings` class, with the desired angle provided as input. The following angles can be used (see Mooij, 1994 for details):
+       - Latitude angle
+       - Longitude angle
+       - Heading angle
+       - Flight-tah angle
+       - Angle of attack
+       - Sideslip angle
+       - Bank angle
+    - **Airspeed-based velocity** vector (body velocity w.r.t. wind vector, assumes corotating atmosphere if no wind model is defined). Requires an aerodynamic acceleration to be acting on the vehicle.  Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`body_fixed_airspeed_based_velocity_variable` as :literal:`variableType`.
+    
+    - **Groundspeed-based velocity** vector (equal to airspeed-based velocity in absence of wind). Requires an aerodynamic acceleration to be acting on the vehicle.  Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`body_fixed_groundspeed_based_velocity_variable` as :literal:`variableType`.
+
+
+    - **G-load** induced by aerodynamic acceleration. Requires an aerodynamic acceleration to be acting on the vehicle.  Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`total_aerodynamic_g_load_variable` as :literal:`variableType`.
+
+    - **Stagnation point-heat flux** induced by atmospheric friction. Requires an aerodynamic acceleration to be acting on the vehicle, and a nose radius to be defined on the vehicle.  Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`stagnation_point_heat_flux_dependent_variable` as :literal:`variableType`.
+    
+    - **Geodetic latitude** (w.r.t. central body). Requires an aerodynamic acceleration to be acting on the vehicle.  Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`geodetic_latitude_dependent_variable` as :literal:`variableType`. 
+        
+    - **Control surface deflection** of a given aerodynamic control surface of body. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`control_surface_deflection_dependent_variable` as :literal:`variableType`. 
+
+    - **Keplerian state** of body. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`keplerian_state_dependent_variable` as :literal:`variableType`. 
+
+    - **Rotation of LVLH to inertial frame**, Rotation matrix from Local Vertical, Local Horizontal (LVLH) frame of body to inertial frame**. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`lvlh_to_inertial_frame_rotation_dependent_variable` as :literal:`variableType`. 
+    
+    - **Periapsis altitude**, based on current osculating elements. NOTE: THIS COMPUTATON USES THE AVERAGE RADIUS OF THE CENTRAL BODY, NOT THE LOCAL RADIUS. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`periapsis_altitude_dependent_variable` as :literal:`variableType`.
+
+Setting up dependent variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The framework discussed in the previous section explains how the :literal:`dependentVariablesList` is populated and passed to the :class:`PropagatorSettings`. The goal of this section is to list the available dependent variables and to explain how these are pushed to the :literal:`dependentVariablesList`.
 
 .. class:: SingleDependentVariableSaveSettings
@@ -65,59 +131,67 @@ The framework discussed in the previous section explains how the :literal:`depen
 
    .. code-block:: cpp
 
-      SingleDependentVariableSaveSettings( variableType, associatedBody, secondaryBody )
-
+      dependentVariablesList.push_back(
+                boost::make_shared< SingleDependentVariableSaveSettings >( variableType , associatedBody , secondaryBody ) );
+                
    where:
 
    - :literal:`variableType`
 
       :class:`PropagationDependentVariables` variable that can take the following values:
 
-      **Variables returning a** :literal:`double`
+      **Variables returning a** dependent variable of size 1
 
       - :literal:`mach_number_dependent_variable`
       - :literal:`altitude_dependent_variable`
       - :literal:`airspeed_dependent_variable`
       - :literal:`local_density_dependent_variable`
-      - :literal:`relative_speed_dependent_variable`
-      - :literal:`relative_distance_dependent_variable`
-      - :literal:`radiation_pressure_dependent_variable`
-      - :literal:`total_aerodynamic_g_load_variable`
+      - :literal:`relative_speed_dependent_variable` (Secondary body defines body w.r.t. which the relative speed is computed). 
+      - :literal:`relative_distance_dependent_variable` (Secondary body defines body w.r.t. which the relative distance is computed).
+      - :literal:`radiation_pressure_dependent_variable` (Secondary body defines the source of radiation for which the readiation pressure coefficient is to be provided).
+      - :literal:`total_aerodynamic_g_load_variable` (Secondary body defines body with atmosphere that exerts the aerodynamic acceleration that induces the g-load).
       - :literal:`stagnation_point_heat_flux_dependent_variable`
       - :literal:`local_temperature_dependent_variable`
       - :literal:`geodetic_latitude_dependent_variable`
-      - :literal:`control_surface_deflection_dependent_variable`
+      - :literal:`control_surface_deflection_dependent_variable` (Secondary body defines name of control surface for which deflection is to be provided).
       - :literal:`total_mass_rate_dependent_variables`
-      - :literal:`periapsis_altitude_dependent_variable`
+      - :literal:`periapsis_altitude_dependent_variable` (Secondary body defines body w.r.t. which the periapsis altitude is computed). 
       - :literal:`total_torque_norm_dependent_variable`
 
-      **Variables returning an** :literal:`Eigen::VectorXd`
+      **Variables returning a** multi-valued dependent variable
 
-      - :literal:`relative_position_dependent_variable`
-      - :literal:`relative_velocity_dependent_variable`
+      - :literal:`relative_position_dependent_variable` (Secondary body defines body w.r.t. which the relative position is computed).
+      - :literal:`relative_velocity_dependent_variable` (Secondary body defines body w.r.t. which the relative velocity is computed).
       - :literal:`body_fixed_airspeed_based_velocity_variable`
       - :literal:`total_acceleration_norm_dependent_variable`
       - :literal:`total_acceleration_dependent_variable`
       - :literal:`aerodynamic_force_coefficients_dependent_variable`
       - :literal:`aerodynamic_moment_coefficients_dependent_variable`
-      - :literal:`lvlh_to_inertial_frame_rotation_dependent_variable`
+      - :literal:`lvlh_to_inertial_frame_rotation_dependent_variable` (Secondary body defines body w.r.t. which the state is computed when determining the matrix, taken as SSB if left empty).
       - :literal:`rotation_matrix_to_body_fixed_frame_variable`
       - :literal:`total_torque_dependent_variable`
       - :literal:`single_torque_dependent_variable`
       - :literal:`single_torque_norm_dependent_variable`
       - :literal:`body_fixed_groundspeed_based_velocity_variable`
+      - :literal:`keplerian_state_dependent_variable` (Secondary body defines body w.r.t. which the keplerian state is computed).
 
+- :literal:`associatedBody`
+
+   Indicates to which body the saved dependent variables are associated.
+
+- :literal:`secondaryBody`
+
+   Optional argument that provides a secondary body that may be necessary to save the dependent variable. By default, this argument is empty. In the list above, it is indicated which parameters require a secondaryBody to be defined, and what this parameter represents.
+   
 .. class:: SingleAccelerationDependentVariableSaveSettings
 
    This derived class is used to retrieve acceleration-related dependent variables. A large number of acceleration models are supported and both the acceleration-norm and the acceleration-vector can be saved. Variables are saved to the :literal:`dependentVariablesList` using the following code:
 
    .. code-block:: cpp
 
-      SingleAccelerationDependentVariableSaveSettings(
-                accelerationModeType, 
-      		bodyUndergoingAcceleration, 
-      		bodyExertingAcceleration, 
-      		useNorm )
+            dependentVariablesList.push_back(
+                boost::make_shared< SingleAccelerationDependentVariableSaveSettings >(
+                accelerationModeType, bodyUndergoingAcceleration, bodyExertingAcceleration, useNorm )
 
    where:
 
@@ -155,8 +229,9 @@ The framework discussed in the previous section explains how the :literal:`depen
    This derived class is used to retrieve the rotation matrix between two desired frames. Variables are saved to the :literal:`dependentVariablesList` using the following code:
 
    .. code-block:: cpp
-
-      IntermediateAerodynamicRotationVariableSaveSettings(
+      
+            dependentVariablesList.push_back(
+                boost::make_shared< IntermediateAerodynamicRotationVariableSaveSettings >(
                     associatedBody, baseFrame, targetFrame )
 
    where:
@@ -186,7 +261,9 @@ The framework discussed in the previous section explains how the :literal:`depen
 
    .. code-block:: cpp
 
-      BodyAerodynamicAngleVariableSaveSettings(
+      
+            dependentVariablesList.push_back(
+                boost::make_shared< BodyAerodynamicAngleVariableSaveSettings >(
                     associatedBody, angle )
 
    where:
