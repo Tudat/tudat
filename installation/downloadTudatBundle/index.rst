@@ -16,6 +16,6 @@ To download the Tudat Bundle you have several options, which are more or less ad
 .. toctree::
    :maxdepth: 1
 
-   downloadTudatBundle/smartgitUser
-   downloadTudatBundle/smartgitDeveloper
-   downloadTudatBundle/commandLine
+   smartgitUser
+   smartgitDeveloper
+   commandLine
