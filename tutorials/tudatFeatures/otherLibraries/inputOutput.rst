@@ -168,4 +168,10 @@ A good example on how to store the propagation history in a data map can be foun
 
     tudatBundle/tudatApplications/satellitePropagatorExamples/SatellitePropagatorExamples
 
-The applications in both :literal:`asterixAndObelixPropagator.cpp` and :literal:`galileoConstellationSimulator.cpp` contain examples on how to store the propagation history to a data file.
+An example of saving the propagation history to a data file is described at the end of the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` walkthrough. 
+
+
+Storing dependent variable history
+**********************************
+Dependent variables can be saved to a data file similar to the propagation history. Instead of the ``getEquationOfMotionNumericalSolution()`` function the ``getDependentVariableHistory()`` function of the :class:`DynamicsSimulator` class is used to obtain the Data-map. Which can be saved as described above.
+
