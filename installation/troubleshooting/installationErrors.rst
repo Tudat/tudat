@@ -8,23 +8,46 @@ This page contains often encountered errors during installation of Tudat. If you
 Opening CMake
 ~~~~~~~~~~~~~
 
-- Compiler not found
+- Compiler not found::
 
-   .. figure:: images/compilerNotFound.png
+      -- The C compiler identification is unknown
+      -- The CXX compiler identification is unknown
+      CMake Error at CMakeLists.txt:14 (project):
+       The CMAKE_C_COMPILER:
 
-   This indicates that your C and or C++ compiler are not set correctly. This screenshot indicates an error for the C compiler, for the C++ compiler case :literal:`CMAKE_CXX_COMPILER` instead of :literal:`CMAKE_C_COMPILER` will give the error. This can be fixed by following the steps in QtCreator Kits in :ref:`verifyKitsAndCMake` 
+        cl
+
+       is not a full path and was not found in the PATH.
+
+       Tell CMake where to find the compiler by setting either the environment
+       variable "CC" or the CMake cache entry CMAKE_C_COMPILER to the full path to
+       the compiler, or to the compiler name if it is in the PATH. 
+
+
+      CMake Error at CMakeLists.txt:14 (project):
+       The CMAKE_CXX_COMPILER:
    
- - Cmake tool incorrect::
+        cl
 
-       Running "/usr/bin/cmake /home/dominic/Software/tudatBundle -GNinja -DCMAKE_CXX_COMPILER:STRING=/usr/bin/clang++ -DCMAKE_C_COMPILER:STRING=/usr/bin/clang '-DCMAKE_PREFIX_PATH:STRING=%  ]
-       {Qt:QT_INSTALL_PREFIX}' -DQT_QMAKE_EXECUTABLE:STRING=" in /home/dominic/Software/build-tudatBundle-Desktop-Default.
-       -- Configuring incomplete, errors occurred!
-       See also "/home/dominic/Software/build-tudatBundle-Desktop-Default/CMakeFiles/CMakeOutput.log".
-       See also "/home/dominic/Software/build-tudatBundle-Desktop-Default/CMakeFiles/CMakeError.log".
-       CMake Error: CMake was unable to find a build program corresponding to "Ninja".  CMAKE_MAKE_PROGRAM is not set.  You probably need to select a different build tool.   
-       *** cmake process exited with exit code 1.
+       is not a full path and was not found in the PATH
 
-   This indicates that your CMake generator is not set correctly. This can be fixed by following the steps in QtCreator Kits in :ref:`verifyKitsAndCMake`. 
+       Tell CMake where to find the compiler by setting either the environment
+       variable "CXX" or the CMake cache entry CMAKE_CXX_COMPILER to the full path
+       to the compiler, or to the compiler name if it is in the PATH. 
+   
+ This indicates that your C and or C++ compiler are not set correctly. This screenshot indicates an error for the C compiler, for the C++ compiler case :literal:`CMAKE_CXX_COMPILER` instead of :literal:`CMAKE_C_COMPILER` will give the error. This can be fixed by following the steps in QtCreator Kits in :ref:`verifyKitsAndCMake` 
+   
+- Cmake tool incorrect::
+
+    Running "/usr/bin/cmake /home/dominic/Software/tudatBundle -GNinja -DCMAKE_CXX_COMPILER:STRING=/usr/bin/clang++ -DCMAKE_C_COMPILER:STRING=/usr/bin/clang '-DCMAKE_PREFIX_PATH:STRING=%  ]
+    {Qt:QT_INSTALL_PREFIX}' -DQT_QMAKE_EXECUTABLE:STRING=" in /home/dominic/Software/build-tudatBundle-Desktop-Default.
+    -- Configuring incomplete, errors occurred!
+    See also "/home/dominic/Software/build-tudatBundle-Desktop-Default/CMakeFiles/CMakeOutput.log".
+    See also "/home/dominic/Software/build-tudatBundle-Desktop-Default/CMakeFiles/CMakeError.log".
+    CMake Error: CMake was unable to find a build program corresponding to "Ninja".  CMAKE_MAKE_PROGRAM is not set.  You probably need to select a different build tool.   
+    *** cmake process exited with exit code 1.
+
+ This indicates that your CMake generator is not set correctly. This can be fixed by following the steps in QtCreator Kits in :ref:`verifyKitsAndCMake`. 
 
 - Nothing happens (no output, no error message) when opening CMake
 
@@ -43,19 +66,19 @@ Verify Build & Run options
 
 - QtCreator CMake binary
 
-   1. Open QtCreator, go to Preferences/Options, select the Build & Run section and switch to the CMake tab
+   1. Open QtCreator, go to ``Preferences/Options``, select the ``Build & Run`` section and switch to the ``CMake`` tab
    2. It is very important that the QtCreator is pointed to the correct cmake binary. CMake ships with multiple binaries and often the wrong one is selected. The correct binaries are:
 
-      - C:\Program Files (x86)\CMake\bin\cmake.exe instead of C:\Program Files (x86)\CMake\bin\cmake-gui.exe
-      - /usr/bin/cmake or /usr/local/bin/cmake instead of /usr/local/bin/cmake-gui
+      - ``C:\Program Files (x86)\CMake\bin\cmake.exe`` instead of ``C:\Program Files (x86)\CMake\bin\cmake-gui.exe``
+      - ``/usr/bin/cmake or /usr/local/bin/cmake`` instead of ``/usr/local/bin/cmake-gui``
 
-   3. /Applications/CMake.app/Contents/bin/cmake instead of /Applications/CMake.app/Contents/MacOS/CMake or /Applications/CMake.app.
+   3. ``/Applications/CMake.app/Contents/bin/cmake`` instead of ``/Applications/CMake.app/Contents/MacOS/CMake`` or ``/Applications/CMake.app``.
 
    .. note:: Make a screenshot of the CMake tab if problems persist.
 
 - QtCreator Kits
 
-   1. Open QtCreator, go to Preferences/Options, select the Build & Run section and switch to the Kits tab
+   1. Open QtCreator, go to ``Preferences/Options``, select the ``Build & Run`` section and switch to the ``Kits`` tab
    2. Verify settings:
 
       - Generator: Unix Makefiles / MinGW Makefiles
@@ -112,7 +135,7 @@ Downloading/compiling boost
 
 - :literal:`file COPY cannot find boost_.../stage`
 
-   This error was fixed by removing the ~ from the TEMP and TMP directory. See `github issue 259 <https://github.com/Tudat/tudat/issues/259>`_ for more details on the iss
+   This error was fixed by removing the ``~`` from the ``TEMP`` and ``TMP`` directory. See `github issue 259 <https://github.com/Tudat/tudat/issues/259>`_ for more details on the issue.
 
 
    
