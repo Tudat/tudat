@@ -272,7 +272,6 @@ The following issues on the `github project page <https://github.com/Tudat/tudat
 - Medium priority.
 
    - Update Qt project tree page to new layout occuring in latest Qt release.
-   - Extending setup new application tutorial. Tutorial should include step by step guide for copying/editing CMake files etc. and verify the template application with latest Tudat.
    - Tutorial for linking own code and making it visible inside Qt project tree.
    - Page explaining the CMake files.
    - Write "Updating Tudat" page. Inlcuding tutorial for switching branches etc.
