@@ -266,10 +266,7 @@ The following issues on the `github project page <https://github.com/Tudat/tudat
 
 - High priority.
 
-   - Add list of errors to error page.
-   - Update basic input-output page. Cross reference to this page, and write readData example.
    - Get Doxygen online. 
-   - Group troubleshooting.
    - Coding mistakes, commas in JSON files. 
   
 - Medium priority.
