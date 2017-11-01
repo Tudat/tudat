@@ -5,7 +5,7 @@ Setup New Applications
 
 This guide will show how to start adding new applications to the Bundle environment. The guide assumes that you you have already set-up the build environment, and downloaded, configured and build the Tudat libraries.
 
-New applications are typically added to the ``tudatBundle/tudatApplications`` folder, which is empty by default. Moreover, these new applications are expected to have their own hithub repository, since the tudatBundle git repository is set to not track any changes inside the tudatApplications folder.
+New applications are typically added to the ``tudatBundle/tudatApplications`` folder, which is empty by default. Moreover, these new applications are expected to have their own github repository, since the tudatBundle git repository is set to not track any changes inside the tudatApplications folder.
 
 You can either start a new (empty) repository or continue developing from an existing repository (for instance by retrieving it from Github). You also have the options to make the repository private or public. This leads to the following three slightly different approaches:
 
