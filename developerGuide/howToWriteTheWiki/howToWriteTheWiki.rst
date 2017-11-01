@@ -275,7 +275,6 @@ The following issues on the `github project page <https://github.com/Tudat/tudat
    - Extending setup new application tutorial. Tutorial should include step by step guide for copying/editing CMake files etc. and verify the template application with latest Tudat.
    - Tutorial for linking own code and making it visible inside Qt project tree.
    - Page explaining the CMake files.
-   - Discuss setGlobalFrameBodyEphemerides function on environment settings page
    - Write "Updating Tudat" page. Inlcuding tutorial for switching branches etc.
    
 - Low Priority.
