@@ -228,7 +228,7 @@ The following commands are available within reStructuredText
 
 - :literal:`.. warning::`, :literal:`.. note::`, :literal:`.. tip::`
 
-   These commands place coloured boxes which highlight particular content relevant to the current page. :literal:`.. warning::` should be used for critical information will likely lead to issues if ignored. :literal:`.. warning::` should be used to extend the information beyond the regular paragraphs for further clarification, but is not critical for the end-user. :literal:`.. tip::` should be used for non-critical information that can help the user in solve further problems than the one treated.
+   These commands place coloured boxes which highlight particular content relevant to the current page. :literal:`.. warning::` should be used for critical information will likely lead to issues if ignored. :literal:`.. note::` should be used to extend the information beyond the regular paragraphs for further clarification, but is not critical for the end-user. :literal:`.. tip::` should be used for non-critical information that can help the user in solve further problems than the one treated.
 
 - :literal:`.. code-block:: cpp`
 
@@ -272,10 +272,7 @@ The following issues on the `github project page <https://github.com/Tudat/tudat
 - Medium priority.
 
    - Update Qt project tree page to new layout occuring in latest Qt release.
-   - Tutorial for linking own code and making it visible inside Qt project tree.
-   - Page explaining the CMake files.
-   - Write "Updating Tudat" page. Inlcuding tutorial for switching branches etc.
-   
+
 - Low Priority.
  
    - "Next" button on installation pages should skip the pages of other operating systems.
