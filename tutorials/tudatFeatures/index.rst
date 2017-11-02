@@ -3,7 +3,7 @@
 Tudat Libraries
 ===============
 
-These pages of the wiki provide further details about critical libraries necessary when setting up a simulation. A graphical representation is shown below, linked to the corresponding section of the Tudat libraries. Below the diagram the list of content are presented in the preferred order of reading and they follow how they should be typically be added to the simulation source file.
+These pages of the wiki provide further details about critical libraries necessary when setting up a simulation. A graphical representation is shown below, linked to the corresponding section of the Tudat libraries. Below the diagram the list of content are presented in the preferred order of reading and they follow how they should be typically added to the simulation source file.
 
 .. graphviz::
 
