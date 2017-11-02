@@ -194,7 +194,7 @@ These lines create CMake macro's to be used later in the file.
          nrlmsise00)
    endif()
 
-These lines are used to find external libraries and include them in the list of directories used by CMake such that they can be found when called inside your code. It reports the to the user whether or not certain libraries are used. The lines:
+These lines are used to find external libraries and include them in the list of directories used by CMake such that they can be found when called inside your code. It reports to the user whether or not certain libraries are used. The lines:
 
 .. code-block:: cmake
 
@@ -225,29 +225,30 @@ The first line indicates the name of the "to be created" application and the mai
 Linking own code
 ~~~~~~~~~~~~~~~~
 
-In case you write additional code to be used in your application structured in source and header files the following steps need to be taken:
+In case you write additional code to be used in your application structured in source and header files the steps below need to be taken, this also makes the files visible in your Qt project tree:
    
 **Step 1: set source files** 
    
 .. code-block:: cmake
 
     set(SOURCES
-      "${SRCROOT}/myCode.cpp"
+      "${SRCROOT}/myCode.cpp")
 
 **Step 2: set header files**
 
 .. code-block:: cmake
 
    set(HEADERS
-      "${SRCROOT}/myCode.h"
+      "${SRCROOT}/myCode.h")
 
+.. tip:: Any amount of source and header files can be added to a library. Add new files seperated by a space or on a new line.
 
 **Step 3: add static library**
 
 .. code-block:: cmake
 
    add_library(libraryName STATIC ${SOURCES})
-   setup_library_target(libraryName "${SRCROOT}")
+   setup_tudat_library_target(libraryName "${SRCROOT}")
 
 **Step 4: add library to target_link list**
 
