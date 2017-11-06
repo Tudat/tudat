@@ -11,6 +11,7 @@ Welcome to the troubleshooting guide. You have most likely been asked to come he
    debuggers
    searchingTudat
    frequentMistakes
+   frequentMistakesJson
 
 
 
