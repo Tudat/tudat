@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3. Frequently made coding mistakes - C++ &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>4. Frequently made coding mistakes - Json &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -39,8 +39,8 @@
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
         <link rel="up" title="Troubleshooting" href="index.html"/>
-        <link rel="next" title="4. Frequently made coding mistakes - Json" href="frequentMistakesJson.html"/>
-        <link rel="prev" title="2. Searching Tudat project files" href="searchingTudat.html"/> 
+        <link rel="next" title="Developer Guide" href="../../developerGuide/index.html"/>
+        <link rel="prev" title="3. Frequently made coding mistakes - C++" href="frequentMistakes.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -102,8 +102,11 @@
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Troubleshooting</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="debuggers.html">1. Debuggers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="searchingTudat.html">2. Searching Tudat project files</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">3. Frequently made  coding mistakes - C++</a></li>
-<li class="toctree-l3"><a class="reference internal" href="frequentMistakesJson.html">4. Frequently made  coding mistakes - Json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="frequentMistakes.html">3. Frequently made  coding mistakes - C++</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4. Frequently made  coding mistakes - Json</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#incorrect-comma-placement">4.1. Incorrect comma placement</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -158,13 +161,13 @@
         
           <li><a href="index.html">Troubleshooting</a> &raquo;</li>
         
-      <li>3. Frequently made  coding mistakes - C++</li>
+      <li>4. Frequently made  coding mistakes - Json</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/tutorials/troubleshooting/frequentMistakes.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/tutorials/troubleshooting/frequentMistakesJson.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -177,19 +180,61 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="frequently-made-coding-mistakes-c">
-<span id="troubleshootingfrequentmistakes"></span><h1>3. Frequently made  coding mistakes - C++<a class="headerlink" href="#frequently-made-coding-mistakes-c" title="Permalink to this headline">¶</a></h1>
-<p>This section sums op some of the most made mistakes leading to failures either in runtime or during compilation. This page is under construction and will be elaborated in the future.</p>
-<ul>
-<li><p class="first">Accessing vector elements out of vector bounds:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="p">::</span><span class="n">Vector2d</span> <span class="n">vectorOfLengthTwo</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">);</span>
-<span class="n">double</span> <span class="n">intermediateResult</span> <span class="o">=</span> <span class="n">vectorOfLengthTwo</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+  <div class="section" id="frequently-made-coding-mistakes-json">
+<span id="troubleshootingfrequentmistakesjson"></span><h1>4. Frequently made  coding mistakes - Json<a class="headerlink" href="#frequently-made-coding-mistakes-json" title="Permalink to this headline">¶</a></h1>
+<p>This section sums op some of the most made mistakes leading to failures when loading a .json file.</p>
+<div class="section" id="incorrect-comma-placement">
+<h2>4.1. Incorrect comma placement<a class="headerlink" href="#incorrect-comma-placement" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Comma placement in .json file is very exacting. The following code, for instance, is incorrect:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;bodies&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="s2">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">},</span>
+<span class="s2">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">},</span>
+<span class="s2">&quot;Moon&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">}</span>
+<span class="s2">&quot;asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
 </pre></div>
 </div>
-</li>
-</ul>
-<blockquote>
-<div>This will actually work, but the value obtained <code class="docutils literal"><span class="pre">intermediateResult</span></code> is the value located just next to the <code class="docutils literal"><span class="pre">vectorOfLengthTwo</span></code> in your memory and could be anything.</div></blockquote>
+<p>This will give the following error:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Parse</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">file</span> <span class="s2">&quot;/jsonFileDirectory/jsonFileName.json&quot;</span> <span class="n">at</span> <span class="n">line</span> <span class="mi">19</span><span class="p">,</span> <span class="n">col</span> <span class="mf">17.</span>
+<span class="n">terminate</span> <span class="n">called</span> <span class="n">after</span> <span class="n">throwing</span> <span class="n">an</span> <span class="n">instance</span> <span class="n">of</span> <span class="s1">&#39;nlohmann::detail::parse_error&#39;</span>
+<span class="n">what</span><span class="p">():</span>  <span class="p">[</span><span class="n">json</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">parse_error</span><span class="o">.</span><span class="mi">101</span><span class="p">]</span> <span class="n">parse</span> <span class="n">error</span> <span class="n">at</span> <span class="mi">426</span><span class="p">:</span> <span class="n">syntax</span> <span class="n">error</span> <span class="o">-</span> <span class="n">unexpected</span> <span class="n">string</span> <span class="n">literal</span><span class="p">;</span> <span class="n">expected</span> <span class="s1">&#39;}&#39;</span>
+</pre></div>
+</div>
+<p>Where the final line <code class="docutils literal"><span class="pre">&quot;asterix&quot;:</span> <span class="pre">{</span></code> correspond to line 19 of the input file.</p>
+<p>The error occurs because, when defining the list of <code class="docutils literal"><span class="pre">bodies</span></code>, each entry should be followed by a comma. Here, the comma after the <code class="docutils literal"><span class="pre">&quot;Moon&quot;</span></code> entry is missing, and should read:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;Moon&quot;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s2">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">},</span>
+</pre></div>
+</div>
+<p>So, a comma needed to be added to fix the error. In the case where a comma too <em>many</em> was added, for instance:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;bodies&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="s2">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">},</span>
+<span class="s2">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">},</span>
+<span class="s2">&quot;Moon&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A similar error will be given. The problem here is that, following the last body (here <code class="docutils literal"><span class="pre">&quot;Moon&quot;</span></code>), no comma should be given, and the entry should read:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;Moon&quot;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s2">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">},</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
 </div>
 
 
@@ -202,10 +247,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="frequentMistakesJson.html" class="btn btn-neutral float-right" title="4. Frequently made coding mistakes - Json" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../../developerGuide/index.html" class="btn btn-neutral float-right" title="Developer Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="searchingTudat.html" class="btn btn-neutral" title="2. Searching Tudat project files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="frequentMistakes.html" class="btn btn-neutral" title="3. Frequently made coding mistakes - C++" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
