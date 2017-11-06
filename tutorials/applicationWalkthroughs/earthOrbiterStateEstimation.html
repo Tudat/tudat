@@ -94,7 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorials and Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../prerequiredKnowledge/index.html">Getting Started with Tudat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gettingStarted/index.html">Getting Started with Tudat</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Walkthroughs</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html#example-tutorials">Example tutorials</a><ul class="current">
@@ -114,9 +114,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../tudatFeatures/index.html">Tudat Libraries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../jsonInterface/index.html">JSON Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://doxygen.frankhogervorst.nl">Doxygen</a></li>
 </ul>
 
             
@@ -186,13 +188,11 @@
             
   <div class="section" id="orbit-determination-and-parameter-estimation">
 <span id="earthorbiterstateestimation"></span><h1>9. Orbit Determination and Parameter Estimation<a class="headerlink" href="#orbit-determination-and-parameter-estimation" title="Permalink to this headline">¶</a></h1>
-<p>In the previous tutorial (see <a class="reference internal" href="earthOrbiterBasicStateEstimation.html#earthorbiterbasicstateestimation"><span class="std std-ref">Orbit Determination and Parameter Estimation (Basic)</span></a>) we introduced the basic features of orbit determination, including simulating observables, defining parameters and performing the estimation. However, various features were not discussed, and a number of assumption were unrealistic. In this tutorial, we discuss a more comprehensive example of orbit determination</p>
-<blockquote>
-<div><p>The code for this tutorial is given on Github, and is also located in your tudat bundle at:</p>
+<p>In the previous tutorial (see <a class="reference internal" href="earthOrbiterBasicStateEstimation.html#earthorbiterbasicstateestimation"><span class="std std-ref">Orbit Determination and Parameter Estimation (Basic)</span></a>) we introduced the basic features of orbit determination, including simulating observables, defining parameters and performing the estimation. However, various features were not discussed, and a number of assumption were unrealistic. In this tutorial, we discuss a more comprehensive example of orbit determination.</p>
+<p>The code for this tutorial is given on Github, and is also located in your tudat bundle at:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">earthOrbiterStateEstimation</span><span class="o">.</span><span class="n">cpp</span>
 </pre></div>
 </div>
-</div></blockquote>
 <p>As you can see in the code, setting up the environment is done in a similar manner as the previous tutorial. One difference is introduced: the simulation now runs over 30 days instead of 3. For the acceleration models, we make two additions compared to the previous tutorial: a relativistic acceleration correction, and an empirical acceleration. Both are added because we want to estimate properties of these acceleration models in this example.</p>
 <p>Since we want to make this tutorial more realistic than the previous one, we now propagate and estimate the state of the spacecraft over multiple arcs. We take a length of 3 days for each of them, using the same set of acceleration models, and the same numerical integration settings, for each arc. We need the following extra information, compared to the single arc case:</p>
 <ul class="simple">

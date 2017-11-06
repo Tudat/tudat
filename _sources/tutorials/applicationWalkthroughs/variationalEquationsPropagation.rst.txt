@@ -14,7 +14,6 @@ where :math:`\mathbf{x}` is the propagated state, :math:`\mathbf{p}` the vector 
 
 .. note:: In some literature, the sensitivity matrix is not defined separately, but the state transition matrix :math:`\Phi(t,t_{0})` is defined as :math:`\frac{\partial[\mathbf{x}(t);\text{ }\mathbf{p}]}{\partial[\mathbf{x}(t_{0};\text{ }\mathbf{p}])}`
 
- /
 The code for this tutorial is given on Github, and is also located in your tudat bundle at::
 
     tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/singlePerturbedSatelliteVariationalEquationsPropagator.cpp
@@ -73,7 +72,7 @@ So, instead of using a :class:`SingleArcDynamicsSimulator` object (which propaga
     std::map< double, Eigen::VectorXd > integrationResult =
             variationalEquationsSimulator.getDynamicsSimulator( )->getEquationsOfMotionNumericalSolution( );
             
-Finally, these maps are written to files, similarly to the previous examples. Note however, that the matrix entries of the first two maps in the above are spread out over a single row in the output file. The concatenation of the matrix entries is done row by row.
+Finally, these maps are written to files, similarly to the previous examples and discussed in :ref:`tudatFeaturesInputOutput`. Note however, that the matrix entries of the first two maps in the above are spread out over a single row in the output file. The concatenation of the matrix entries is done row by row.
 
 Below,a plot is given of the entries of the state transition matrix as a function of time. The current state entry is indicated by line style, the initial state entry by color.
 

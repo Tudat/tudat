@@ -122,70 +122,70 @@ To make use of the Tudat libraries, you need to compile them. Below we will guid
     Now all that remains to be done is to build the libraries. To do this, simply click on the "hammer" build icon at the bottom-left of your screen (or use the menu ``Build`` at the top and select ``Build all``). You will see a ``Compile Output`` console window pop-up, showing the status of the build process, as the compiler walks through all the project files, and generates the libraries that we need. The entire build process could take anywhere from 15 to several hours, depending on the specifications of your computer. Have patience! It will all work out in the end :). Once the building is complete, you're done! You have now successfully built Tudat and all required libraries on your computer.
     
 **Step 6: Running the unit tests**
-For each part of the code in Tudat, we have written unit tests, which are included in the repository. Before moving on with using Tudat, you should run all the unit tests to ensure that your installation is functioning as it should. To run all unit tests, go back to the project tab, and again go to the ``Build Steps`` block. In this block, uncheck the ``application_HelloWorld`` from the previous part and write "test" in the ``Additional Arguments`` line, as shown below. After running the unit tests, make sure to remove the "test" text that you've typed in here, Qt will not compile the code as long as it is there. Now, go back to your code by clicking on the ``Edit`` tab, and click the ``Compile`` (hammer) button on the lower left. In the ``Compile Output`` console window at the bottom of your screen, you should see all the unit tests being run, with output as follows::
+   For each part of the code in Tudat, we have written unit tests, which are included in the repository. Before moving on with using Tudat, you should run all the unit tests to ensure that your installation is functioning as it should. To run all unit tests, go back to the project tab, and again go to the ``Build Steps`` block. In this block, uncheck the ``application_HelloWorld`` from the previous part and write "test" in the ``Additional Arguments`` line, as shown below. After running the unit tests, make sure to remove the "test" text that you've typed in here, Qt will not compile the code as long as it is there. Now, go back to your code by clicking on the ``Edit`` tab, and click the ``Compile`` (hammer) button on the lower left. In the ``Compile Output`` console window at the bottom of your screen, you should see all the unit tests being run, with output as follows::
 
-    15:15:48: Running steps for project TudatBundle...
-    15:15:48: Starting: "/usr/bin/make" test
-    Running tests...
-    Test project /home/dominicdirkx/Software/tudat/build-tudatBundle-Desktop-Default
-    Start 1: test_Sofa
-    1/132 Test 1: test_Sofa ................................................ Passed 0.03 sec
-    Start 2: test_AerodynamicMomentAndAerodynamicForce
-    2/132 Test 2: test_AerodynamicMomentAndAerodynamicForce ................ Passed 0.22 sec
-    Start 3: test_AerodynamicsNamespace
-    3/132 Test 3: test_AerodynamicsNamespace ............................... Passed 0.00 sec
-    Start 4: test_AerodynamicCoefficientGenerator
-    4/132 Test 4: test_AerodynamicCoefficientGenerator ..................... Passed 0.03 sec
-    Start 5: test_ExponentialAtmosphere
-    5/132 Test 5: test_ExponentialAtmosphere ............................... Passed 0.00 sec
-    Start 6: test_TabulatedAtmosphere
-    6/132 Test 6: test_TabulatedAtmosphere ................................. Passed 0.04 sec
-    Start 7: test_TabulatedAerodynamicCoefficients
-    7/132 Test 7: test_TabulatedAerodynamicCoefficients .................... Passed 1.61 sec
-    Start 8: test_NRLMSISE00Atmosphere
-    8/132 Test 8: test_NRLMSISE00Atmosphere ................................ Passed 0.01 sec
-    Start 9: test_AstrodynamicsFunctions
-    9/132 Test 9: test_AstrodynamicsFunctions .............................. Passed 0.00 sec
-    Start 10: test_OrbitalElementConversions
-    ...
-    ...
-    ...
-    130/132 Test 130: test_SpiceInterface ...................................... Passed 0.05 sec
-    Start 131: test_EnvironmentSetup
-    131/132 Test 131: test_EnvironmentSetup .................................... Passed 2.90 sec
-    Start 132: test_AccelerationModelSetup
-    132/132 Test 132: test_AccelerationModelSetup .............................. Passed 0.16 sec
-    100% tests passed, 0 tests failed out of 132
-    Total Test time (real) = 59.57 sec
-    15:16:48: The process "/usr/bin/make" exited normally.
-    15:16:48: Elapsed time: 01:00.
+      15:15:48: Running steps for project TudatBundle...
+      15:15:48: Starting: "/usr/bin/make" test
+      Running tests...
+      Test project /home/dominicdirkx/Software/tudat/build-tudatBundle-Desktop-Default 
+      Start 1: test_Sofa
+      1/132 Test 1: test_Sofa ................................................ Passed 0.03 sec
+      Start 2: test_AerodynamicMomentAndAerodynamicForce
+      2/132 Test 2: test_AerodynamicMomentAndAerodynamicForce ................ Passed 0.22 sec
+      Start 3: test_AerodynamicsNamespace
+      3/132 Test 3: test_AerodynamicsNamespace ............................... Passed 0.00 sec
+      Start 4: test_AerodynamicCoefficientGenerator
+      4/132 Test 4: test_AerodynamicCoefficientGenerator ..................... Passed 0.03 sec
+      Start 5: test_ExponentialAtmosphere
+      5/132 Test 5: test_ExponentialAtmosphere ............................... Passed 0.00 sec
+      Start 6: test_TabulatedAtmosphere
+      6/132 Test 6: test_TabulatedAtmosphere ................................. Passed 0.04 sec
+      Start 7: test_TabulatedAerodynamicCoefficients
+      7/132 Test 7: test_TabulatedAerodynamicCoefficients .................... Passed 1.61 sec
+      Start 8: test_NRLMSISE00Atmosphere
+      8/132 Test 8: test_NRLMSISE00Atmosphere ................................ Passed 0.01 sec
+      Start 9: test_AstrodynamicsFunctions
+      9/132 Test 9: test_AstrodynamicsFunctions .............................. Passed 0.00 sec
+      Start 10: test_OrbitalElementConversions
+      ...
+      ...
+      ...
+      130/132 Test 130: test_SpiceInterface ...................................... Passed 0.05 sec
+      Start 131: test_EnvironmentSetup
+      131/132 Test 131: test_EnvironmentSetup .................................... Passed 2.90 sec
+      Start 132: test_AccelerationModelSetup
+      132/132 Test 132: test_AccelerationModelSetup .............................. Passed 0.16 sec
+      100% tests passed, 0 tests failed out of 132
+      Total Test time (real) = 59.57 sec
+      15:16:48: The process "/usr/bin/make" exited normally.
+      15:16:48: Elapsed time: 01:00.
 
-If the output ends with ``100% tests passed, 0 tests failed``, all is well and you do not need to take any further action. After running the unit tests, make sure to remove the 'test' text that you've typed in the project tab. There is a possibility of one or more unit tests failing, though. Usually, there is no cause for alarm, as this just means that your computer is rounding some variables a bit differently. To be sure, "open an issue on Github": https://github.com/Tudat/tudat/issues/new. In this issue, attach the file ``LastTest.log``, which should be in the ``/Testing/Temporary/`` directory in your build folder (which you specified in Step 2). In the issue description and title, note that it concerns failed unit test(s) and mention your operating system. We'll get back to you with a fix for the failure ASAP.
+   If the output ends with ``100% tests passed, 0 tests failed``, all is well and you do not need to take any further action. After running the unit tests, make sure to remove the 'test' text that you've typed in the project tab. If any tests fail the reader is refered to :ref:`debuggingFailedUnitTests`. 
 
 So, welcome to the Tudat universe :). You are now ready to run one of the many example applications that came bundled with Tudat, and this time it involves real simulations. The applications are explained in detail in the tutorials at Tutorials and Documentation. The next and last (optional) part explains you how to set-up a new application or add existing ones to your Tudat Bundle.
 
 **Step 7: Run An Example Application**
-    For your convenience, we have shipped some example applications for you to play around with. As the basis for your future applications, your Tudat Bundle is shipped with a number of example applications. To select a specific application to run, click on the ``Build and Run Settings`` (computer) icon and select your application. For starters, select :literal:`application_SingleSatellitePropagator` By clicking the ``Run`` button (play icon in bottom left), the code will be compiled and the selected application will be executed. However, this will also recompile all off the applications in your current project. Assuming that you have made no changes to the code, this process should be quite quick, but can take up to several minutes on a Windows machine. To tell Qt Creator to only build a single executable, click the project tab on the left. Subsequently, click on ``Details`` under ``Build Steps``. You will see a list of all applications and static libraries in the project. Select the one you want to compile (all dependencies of a given application will automatically be compiled as well). To ensure that the compiled executable always corresponds to the one you selected before, select _Current executable._ Now go back to your coding window by hitting ``Edit``. Click the ``Run`` button again. The output of your application is displayed in the ``Application Output`` box at the bottom of your screen. In addition, a folder 'SimulationOutput' will have been created in your :literal:`/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/` directory, containing the propagation output.
+   For your convenience, we have shipped some example applications for you to play around with. As the basis for your future applications, your Tudat Bundle is shipped with a number of example applications. To select a specific application to run, click on the ``Build and Run Settings`` (computer) icon and select your application. For starters, select :literal:`application_SingleSatellitePropagator` By clicking the ``Run`` button (play icon in bottom left), the code will be compiled and the selected application will be executed. However, this will also recompile all off the applications in your current project. Assuming that you have made no changes to the code, this process should be quite quick, but can take up to several minutes on a Windows machine. To tell Qt Creator to only build a single executable, click the project tab on the left. Subsequently, click on ``Details`` under ``Build Steps``. You will see a list of all applications and static libraries in the project. Select the one you want to compile (all dependencies of a given application will automatically be compiled as well). To ensure that the compiled executable always corresponds to the one you selected before, select _Current executable._ Now go back to your coding window by hitting ``Edit``. Click the ``Run`` button again. The output of your application is displayed in the ``Application Output`` box at the bottom of your screen. In addition, a folder 'SimulationOutput' will have been created in your :literal:`/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/` directory, containing the propagation output.
    
-.. code-block:: cpp
+   .. code-block:: cpp
 
-   Starting .../tudatBundle/tudatExampleApplications/satellitePropagatorExamples/bin/applications/application_SingleSatellitePropagator...
-   Single Earth-Orbiting Satellite Example.
-   The initial position vector of Asterix is [km]:
-   7037.48
-   3238.06
-   2150.72
-   The initial velocity vector of Asterix is [km/s]:
-   -1.46566
-   -0.0409584
-   6.6228
-   After 86400 seconds, the position vector of Asterix is [km]:
-   -4560.45
-   -1438.32
-    5973.99
-   And the velocity vector of Asterix is [km/s]:
-   -4.55021   
-   -2.41254
-   -4.95063
-   .../tudatBundle/tudatExampleApplications/satellitePropagatorExamples/bin/applications/application_SingleSatellitePropagator exited with code 0
+      Starting .../tudatBundle/tudatExampleApplications/satellitePropagatorExamples/bin/applications/application_SingleSatellitePropagator...
+      Single Earth-Orbiting Satellite Example.
+      The initial position vector of Asterix is [km]:
+      7037.48
+      3238.06
+      2150.72
+      The initial velocity vector of Asterix is [km/s]:
+      -1.46566
+      -0.0409584
+      6.6228
+      After 86400 seconds, the position vector of Asterix is [km]:
+      -4560.45
+      -1438.32
+       5973.99
+      And the velocity vector of Asterix is [km/s]:
+      -4.55021   
+      -2.41254
+      -4.95063
+      .../tudatBundle/tudatExampleApplications/satellitePropagatorExamples/bin/applications/application_SingleSatellitePropagator exited with code 0
       

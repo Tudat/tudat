@@ -94,7 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorials and Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../prerequiredKnowledge/index.html">Getting Started with Tudat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gettingStarted/index.html">Getting Started with Tudat</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Walkthroughs</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html#example-tutorials">Example tutorials</a><ul class="current">
@@ -114,9 +114,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../tudatFeatures/index.html">Tudat Libraries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../jsonInterface/index.html">JSON Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://doxygen.frankhogervorst.nl">Doxygen</a></li>
 </ul>
 
             
@@ -193,8 +195,7 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
 <p>where <span class="math">\(\mathbf{x}\)</span> is the propagated state, <span class="math">\(\mathbf{p}\)</span> the vector of a parameter vector (e.g. gravity field parameters, rotation model parameters, etc.), and <span class="math">\(t_{0}\)</span> denotes the initial time.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>In some literature, the sensitivity matrix is not defined separately, but the state transition matrix <span class="math">\(\Phi(t,t_{0})\)</span> is defined as <span class="math">\(\frac{\partial[\mathbf{x}(t);\text{ }\mathbf{p}]}{\partial[\mathbf{x}(t_{0};\text{ }\mathbf{p}])}\)</span></p>
-<p class="last">/</p>
+<p class="last">In some literature, the sensitivity matrix is not defined separately, but the state transition matrix <span class="math">\(\Phi(t,t_{0})\)</span> is defined as <span class="math">\(\frac{\partial[\mathbf{x}(t);\text{ }\mathbf{p}]}{\partial[\mathbf{x}(t_{0};\text{ }\mathbf{p}])}\)</span></p>
 </div>
 <p>The code for this tutorial is given on Github, and is also located in your tudat bundle at:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">singlePerturbedSatelliteVariationalEquationsPropagator</span><span class="o">.</span><span class="n">cpp</span>
@@ -237,7 +238,7 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
                <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">numerical_integrators</span><span class="o">::</span><span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">),</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">true</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>So, instead of using a <code class="xref py py-class docutils literal"><span class="pre">SingleArcDynamicsSimulator</span></code> object (which propagates only the state), we use <a class="reference internal" href="../tudatFeatures/propagationSetup/variationalSimulatorCreation.html#SingleArcVariationalEquationsSolver" title="SingleArcVariationalEquationsSolver"><code class="xref py py-class docutils literal"><span class="pre">SingleArcVariationalEquationsSolver</span></code></a> object (which propagates both the state and the variational equations). Details on the input to the object are discussed on the page <span class="xref std std-ref">variationalEquationsSolver</span>. Using the above, the equations are immediately propagated upon creation of the object. Retrieving the output is done as:</p>
+<p>So, instead of using a <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#SingleArcDynamicsSimulator" title="SingleArcDynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">SingleArcDynamicsSimulator</span></code></a> object (which propagates only the state), we use <a class="reference internal" href="../tudatFeatures/propagationSetup/variationalSimulatorCreation.html#SingleArcVariationalEquationsSolver" title="SingleArcVariationalEquationsSolver"><code class="xref py py-class docutils literal"><span class="pre">SingleArcVariationalEquationsSolver</span></code></a> object (which propagates both the state and the variational equations). Details on the input to the object are discussed on the page <span class="xref std std-ref">variationalEquationsSolver</span>. Using the above, the equations are immediately propagated upon creation of the object. Retrieving the output is done as:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="o">&gt;</span> <span class="n">stateTransitionResult</span> <span class="o">=</span>
         <span class="n">variationalEquationsSimulator</span><span class="p">.</span><span class="n">getNumericalVariationalEquationsSolution</span><span class="p">(</span> <span class="p">).</span><span class="n">at</span><span class="p">(</span> <span class="mi">0</span> <span class="p">);</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="o">&gt;</span> <span class="n">sensitivityResult</span> <span class="o">=</span>
@@ -246,7 +247,7 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
         <span class="n">variationalEquationsSimulator</span><span class="p">.</span><span class="n">getDynamicsSimulator</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Finally, these maps are written to files, similarly to the previous examples. Note however, that the matrix entries of the first two maps in the above are spread out over a single row in the output file. The concatenation of the matrix entries is done row by row.</p>
+<p>Finally, these maps are written to files, similarly to the previous examples and discussed in <a class="reference internal" href="../tudatFeatures/otherLibraries/inputOutput.html#tudatfeaturesinputoutput"><span class="std std-ref">Input/Output</span></a>. Note however, that the matrix entries of the first two maps in the above are spread out over a single row in the output file. The concatenation of the matrix entries is done row by row.</p>
 <p>Below,a plot is given of the entries of the state transition matrix as a function of time. The current state entry is indicated by line style, the initial state entry by color.</p>
 <div class="figure">
 <img alt="../../_images/variationalEquationsExample.png" src="../../_images/variationalEquationsExample.png" />

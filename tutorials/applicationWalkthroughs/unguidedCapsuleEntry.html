@@ -94,7 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorials and Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../prerequiredKnowledge/index.html">Getting Started with Tudat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gettingStarted/index.html">Getting Started with Tudat</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Walkthroughs</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html#example-tutorials">Example tutorials</a><ul class="current">
@@ -114,9 +114,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../tudatFeatures/index.html">Tudat Libraries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../jsonInterface/index.html">JSON Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://doxygen.frankhogervorst.nl">Doxygen</a></li>
 </ul>
 
             
@@ -231,7 +233,7 @@
 <span class="n">accelerationMap</span><span class="p">[</span>  <span class="s">&quot;Apollo&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">accelerationsOfApollo</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>A crucial step in re-entry modelling is the definition of a <a class="reference internal" href="../tudatFeatures/accelerationSetup/aerodynamicGuidance.html#AerodynamicGuidance" title="AerodynamicGuidance"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicGuidance</span></code></a> model. Controlling the orientation of the vehicle during atmospheric flight plays an important role in the shape of the trajectory as well as on the magnitude of the aerodynamic and thermal loads. In this example, a simple fixed-angle aerodynamic guidance model is used. This is implemented using a <code class="docutils literal"><span class="pre">boost::lambda::constant</span></code> function (explained in detail <a class="reference internal" href="../prerequiredKnowledge/externalLibraries/boostExamples.html#externalboostexamplesfunction"><span class="std std-ref">here</span></a>). In short this function always outputs the value of <code class="docutils literal"><span class="pre">constantAngleOfAttack</span></code> which in turn sets the orientation angles of the <code class="docutils literal"><span class="pre">&quot;Apollo&quot;</span></code> body:</p>
+<p>A crucial step in re-entry modelling is the definition of a <a class="reference internal" href="../tudatFeatures/accelerationSetup/aerodynamicGuidance.html#AerodynamicGuidance" title="AerodynamicGuidance"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicGuidance</span></code></a> model. Controlling the orientation of the vehicle during atmospheric flight plays an important role in the shape of the trajectory as well as on the magnitude of the aerodynamic and thermal loads. In this example, a simple fixed-angle aerodynamic guidance model is used. This is implemented using a <code class="docutils literal"><span class="pre">boost::lambda::constant</span></code> function (explained in detail <a class="reference internal" href="../gettingStarted/externalLibraries/boostExamples.html#externalboostexamplesfunction"><span class="std std-ref">here</span></a>). In short this function always outputs the value of <code class="docutils literal"><span class="pre">constantAngleOfAttack</span></code> which in turn sets the orientation angles of the <code class="docutils literal"><span class="pre">&quot;Apollo&quot;</span></code> body:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define constant 30 degree angle of attack</span>
 <span class="kt">double</span> <span class="n">constantAngleOfAttack</span> <span class="o">=</span> <span class="n">unit_conversions</span><span class="o">::</span><span class="n">convertDegreesToRadians</span><span class="p">(</span><span class="mf">30.0</span><span class="p">);</span>
 <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getAerodynamicAngleCalculator</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">setOrientationAngleFunctions</span><span class="p">(</span>
@@ -331,7 +333,7 @@
 </div>
 <div class="section" id="results">
 <h2>3.4. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
-<p>Below the history of some of the saved parameters is shown. One can see the capsule skipping several times before it’s final descent into the atmosphere until reaching 25km altitude.</p>
+<p>Below the history of some of the saved parameters is shown. One can see the capsule skipping several times before it’s final descent into the atmosphere until reaching 25km altitude. The dependent variable history can be obtained in Tudat from the <code class="docutils literal"><span class="pre">getDependentVariableHistory</span></code> function inside the <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> class. The resulting <code class="docutils literal"><span class="pre">std::map</span></code> can be saved as discussed in <a class="reference internal" href="../tudatFeatures/otherLibraries/inputOutput.html#tudatfeaturesinputoutput"><span class="std std-ref">Input/Output</span></a>.</p>
 <div class="figure">
 <img alt="../../_images/apolloResults.png" src="../../_images/apolloResults.png" />
 </div>

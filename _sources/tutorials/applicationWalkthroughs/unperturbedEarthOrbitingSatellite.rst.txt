@@ -284,6 +284,8 @@ where the retrieved result is a :literal:`std::map` where the key :literal:`doub
                                          std::numeric_limits< double >::digits10,
                                          "," );
 
+For more details about the input and output basics go to: :ref:`tudatFeaturesInputOutput`. 
+
 Results
 ~~~~~~~
 The output of the program should look similar to the output below::

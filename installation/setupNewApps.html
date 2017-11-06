@@ -39,7 +39,7 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../index.html"/>
         <link rel="up" title="Installation Guide" href="index.html"/>
-        <link rel="next" title="5. Troubleshooting" href="troubleshooting.html"/>
+        <link rel="next" title="5. Troubleshooting" href="troubleshooting/index.html"/>
         <link rel="prev" title="3. Configure Tudat Libraries" href="configureTudatLibraries.html"/> 
 
   
@@ -94,14 +94,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Start Page</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation Guide</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="setupDevEnvironment.html">1. Setup Development Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="downloadTudatBundle.html">2. Download Tudat Bundle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="downloadTudatBundle/index.html">2. Download Tudat Bundle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configureTudatLibraries.html">3. Configure Tudat Libraries</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">4. Setup New Applications</a></li>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">5. Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting/index.html">5. Troubleshooting</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials and Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developerGuide/index.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://doxygen.frankhogervorst.nl">Doxygen</a></li>
 </ul>
 
             
@@ -170,11 +171,11 @@
   <div class="section" id="setup-new-applications">
 <span id="setupnewapps"></span><h1>4. Setup New Applications<a class="headerlink" href="#setup-new-applications" title="Permalink to this headline">¶</a></h1>
 <p>This guide will show how to start adding new applications to the Bundle environment. The guide assumes that you you have already set-up the build environment, and downloaded, configured and build the Tudat libraries.</p>
-<p>New applications are typically added to the <code class="docutils literal"><span class="pre">tudatBundle/tudatApplications</span></code> folder, which is empty by default. Moreover, these new applications are expected to have their own hithub repository, since the tudatBundle git repository is set to not track any changes inside the tudatApplications folder.</p>
+<p>New applications are typically added to the <code class="docutils literal"><span class="pre">tudatBundle/tudatApplications</span></code> folder, which is empty by default. Moreover, these new applications are expected to have their own github repository, since the tudatBundle git repository is set to not track any changes inside the tudatApplications folder.</p>
 <p>You can either start a new (empty) repository or continue developing from an existing repository (for instance by retrieving it from Github). You also have the options to make the repository private or public. This leads to the following three slightly different approaches:</p>
 <ul class="simple">
 <li><strong>A:</strong> Create a new empty repository (private or public).</li>
-<li><strong>B:</strong> Continue an existing public repository and make it private (for AE4467 students).</li>
+<li><strong>B:</strong> Continue an existing public repository and make it private (for AE4867 students).</li>
 <li><strong>C:</strong> Continue an existing private/public repository and keep it as is.</li>
 </ul>
 <p>Note this same <strong>A</strong>, <strong>B</strong>, <strong>C</strong> notation is used further on in the guide as well. You can skip sections not applicable to your use case.</p>
@@ -185,20 +186,30 @@
 <p class="last"><strong>(C)</strong> Fork a repository and keep it public. Visit any repository on GitHub and click <code class="docutils literal"><span class="pre">Fork</span></code> at the top of the page.</p>
 </dd>
 <dt><strong>Step 2: Clone the repository in SmartGit</strong></dt>
-<dd><p class="first">Open SmartGit, go to <code class="docutils literal"><span class="pre">Repository</span></code> and choose <code class="docutils literal"><span class="pre">Clone...</span></code> Copy in the repository URL and choose <code class="docutils literal"><span class="pre">Next</span></code>. If your repository is private, you will need to enter your GitHub credentials! Select a local path.</p>
-<div class="last admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">It is highly recommended to create a new directory myApplication (in this guide, substitute for the repository name) under tudatBundle/tudatApplications.</p>
-</div>
-</dd>
+<dd>Open SmartGit, go to <code class="docutils literal"><span class="pre">Repository</span></code> and choose <code class="docutils literal"><span class="pre">Clone...</span></code> Copy in the repository URL and choose <code class="docutils literal"><span class="pre">Next</span></code>. If your repository is private, you will need to enter your GitHub credentials! Select the local path <code class="docutils literal"><span class="pre">tudatBundle/tudatApplications/myApplication</span></code> (create this directory yourself).</dd>
 </dl>
 <p><strong>Step 3: Copy and modify the template (A only)</strong></p>
 <blockquote>
 <div><div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Space Project: Only go through this step if installing a new empty repository. Do not go through this step for the space project!</p>
+<p class="last">AE4867: Only go through this step if installing a new empty repository. Do not go through this step for AE4867!</p>
 </div>
-<p>Open your file browser and navigate to <code class="docutils literal"><span class="pre">tudatBundle/tudatExampleApplications/templateApplication</span></code>. Copy the contents to <code class="docutils literal"><span class="pre">tudatBundle/tudatApplications/myApplication</span></code>. Rename <code class="docutils literal"><span class="pre">TemplateApplication</span></code> to <code class="docutils literal"><span class="pre">MyApplication</span></code>. Open <code class="docutils literal"><span class="pre">MyApplication/CMakeLists.txt</span></code> and replace the CMake project name <code class="docutils literal"><span class="pre">TemplateApplication</span></code> with your application.</p>
+<p>Open your file browser and navigate to <code class="docutils literal"><span class="pre">tudatBundle/tudatExampleApplications/templateApplication</span></code>. Copy the contents to <code class="docutils literal"><span class="pre">tudatBundle/tudatApplications/myApplication</span></code>. Rename the  <code class="docutils literal"><span class="pre">TemplateApplication</span></code> folder to <code class="docutils literal"><span class="pre">MyApplication</span></code>. Open <code class="docutils literal"><span class="pre">MyApplication/CMakeLists.txt</span></code> and replace the CMake project name <code class="docutils literal"><span class="pre">TemplateApplication</span></code> with your application:</p>
+<div class="highlight-cmake"><div class="highlight"><pre><span></span><span class="c"># Specify minimum CMake version required.</span>
+<span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">2.6</span><span class="p">)</span>
+
+<span class="c"># Specify project name.</span>
+<span class="nb">project</span><span class="p">(</span><span class="s">myApplication</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Furthermore, one can change the name of your code from <code class="docutils literal"><span class="pre">helloWorld</span></code> to <code class="docutils literal"><span class="pre">myApplication</span></code>. Don’t forget to change the names at the end of the <code class="docutils literal"><span class="pre">CMakelists.txt</span></code> accordingly:</p>
+<div class="highlight-cmake"><div class="highlight"><pre><span></span><span class="c"># Add helloWorld application.</span>
+<span class="nb">add_executable</span><span class="p">(</span><span class="s">application_myApplication</span> <span class="s2">&quot;${SRCROOT}/myApplication.cpp&quot;</span><span class="p">)</span>
+<span class="nb">setup_executable_target</span><span class="p">(</span><span class="s">application_myApplication</span> <span class="s2">&quot;${SRCROOT}&quot;</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">application_myApplication</span> <span class="s">tudat_gravitation</span> <span class="s">tudat_basic_astrodynamics</span> <span class="o">${</span><span class="nv">Boost_LIBRARIES</span><span class="o">}</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>A detailed explanation of the <code class="docutils literal"><span class="pre">CMakeLists.txt</span></code> file can be found in <a class="reference internal" href="../developerGuide/applicationCMakeLists/applicationCMakeLists.html#applicationcmakelists"><span class="std std-ref">Application CMakelists</span></a>.</p>
 </div></blockquote>
 <dl class="docutils">
 <dt><strong>Step 4: Add application to the Tudat Bundle</strong></dt>
@@ -206,8 +217,8 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">add_subdirectory</span><span class="p">(</span> <span class="s2">&quot;$</span><span class="si">{PROJECTROOT}</span><span class="s2">/tudatApplications/myApplication/MyApplication&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>In case you are following the space project, add the following instead:</p>
-<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">add_subdirectory</span><span class="p">(</span> <span class="s2">&quot;$</span><span class="si">{PROJECTROOT}</span><span class="s2">/tudatApplications/myApplication/spaceProjectAssignment1&quot;</span><span class="p">)</span>
+<p>In case you are following AE4867, add the following instead:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">add_subdirectory</span><span class="p">(</span> <span class="s2">&quot;$</span><span class="si">{PROJECTROOT}</span><span class="s2">/tudatApplications/myApplication/numericalAstrodynamicsAssignment1&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd>
@@ -216,9 +227,9 @@
 <blockquote>
 <div><div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Space Project: This step is only applicable when you have made changes to your code. You can skip this step for now.</p>
+<p class="last">AE4867: This step is only applicable when you have made changes to your code. You can skip this step for now.</p>
 </div>
-<p>When the application is modified or new code is added, it is recommended to commit these changes to the repository and push these changes to your GitHub account. In the case below the added code that was copied from the template is committed. This process, however, is general for any change to your application. Select the changes and right-click and choose <code class="docutils literal"><span class="pre">Commit...</span></code> Write a short commit message describing the changes just made. You can now choose to <code class="docutils literal"><span class="pre">Commit</span></code> (just record) or <code class="docutils literal"><span class="pre">Commit</span> <span class="pre">&amp;</span> <span class="pre">Push</span></code> (record and update GitHub).</p>
+<p>When the application is modified or new code is added, it is recommended to commit these changes to the repository and push these changes to your GitHub account. In SmartGit, select the changes and right-click and choose <code class="docutils literal"><span class="pre">Commit...</span></code>. Write a short commit message describing the changes just made. You can now choose to <code class="docutils literal"><span class="pre">Commit</span></code> (just record) or <code class="docutils literal"><span class="pre">Commit</span> <span class="pre">&amp;</span> <span class="pre">Push</span></code> (record and update GitHub).</p>
 </div></blockquote>
 <dl class="docutils">
 <dt><strong>Step 6: Invite a collaborators to (private) repository</strong></dt>
@@ -237,7 +248,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="troubleshooting.html" class="btn btn-neutral float-right" title="5. Troubleshooting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="troubleshooting/index.html" class="btn btn-neutral float-right" title="5. Troubleshooting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="configureTudatLibraries.html" class="btn btn-neutral" title="3. Configure Tudat Libraries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

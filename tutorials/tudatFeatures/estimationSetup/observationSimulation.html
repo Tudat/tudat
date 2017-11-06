@@ -94,7 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials and Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../prerequiredKnowledge/index.html">Getting Started with Tudat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../gettingStarted/index.html">Getting Started with Tudat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
@@ -115,9 +115,11 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../jsonInterface/index.html">JSON Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://doxygen.frankhogervorst.nl">Doxygen</a></li>
 </ul>
 
             
@@ -338,7 +340,7 @@
 <div class="section" id="observation-noise">
 <span id="observationnoise"></span><h2>6.3.4. Observation Noise<a class="headerlink" href="#observation-noise" title="Permalink to this headline">¶</a></h2>
 <p>In addition to the observation biases (see <a class="reference internal" href="observationModelSetup.html#observationbiases"><span class="std std-ref">Observation Biases</span></a>), which are part of the observation model and typically deterministic, stochastic noise may be added to the observations when simulating them.</p>
-<p>The interface for observation noise is made general, allowing both time-correlated and time-uncorrelated noise to be added: a function of type <code class="docutils literal"><span class="pre">boost::function&lt;</span> <span class="pre">double(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> must be created. Here, the function input is the current time, and the output the noise value. You are free to define this function in any way you like. Refer to the documentation of <code class="docutils literal"><span class="pre">boost::function</span></code> and <code class="docutils literal"><span class="pre">boost::bind</span></code> (see <a class="reference internal" href="../../prerequiredKnowledge/externalLibraries/boost.html#externalboost"><span class="std std-ref">Boost: Basic Concepts</span></a>).</p>
+<p>The interface for observation noise is made general, allowing both time-correlated and time-uncorrelated noise to be added: a function of type <code class="docutils literal"><span class="pre">boost::function&lt;</span> <span class="pre">double(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> must be created. Here, the function input is the current time, and the output the noise value. You are free to define this function in any way you like. Refer to the documentation of <code class="docutils literal"><span class="pre">boost::function</span></code> and <code class="docutils literal"><span class="pre">boost::bind</span></code> (see <a class="reference internal" href="../../gettingStarted/externalLibraries/boost.html#externalboost"><span class="std std-ref">Boost: Basic Concepts</span></a>).</p>
 <p>In typical basic simulation studies, time-uncorrelated white noise is used. To easily add this type of noise, you can make use of the Tudat interface to boost probability distributions/random number generation (see <a class="reference internal" href="../mathTools/probabilityDistributions.html#tudatfeaturesprobabilitydistributions"><span class="std std-ref">Probability Distributions</span></a>). As an example, the following will generate a function which generates which noise with a mean of 0.005 and a standard deviationof 0.003.</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define (arbitrary) noise properties</span>
 <span class="kt">double</span> <span class="n">meanValue</span> <span class="o">=</span> <span class="mf">5.0E-3</span>
