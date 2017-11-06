@@ -123,11 +123,9 @@ The resulting input file, containing all the settings, will be:
   :caption: :class:`main.json`
   :name: main-json
 
-After running in Terminal:
+After running in Terminal::
 
-.. code-block:: txt
-
-  json_inteface main.json
+   json_inteface main.json
 
 we will get a :class:`stateHistory.txt` file containing the results, and a :class:`fullSettings.json` file containing default settings and with some keys moved to a different place (e.g. :jsonkey:`bodies.Asterix.initialState` to :jsonkey:`propagators[0].initialStates`):
 
