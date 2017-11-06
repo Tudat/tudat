@@ -15,10 +15,10 @@ So, we are now going to walk through the process of installing CMake on your com
     Once you have successfully downloaded the ``.dmg`` file, simply double-click on it.
 
 **Step 3: Install CMake application**
-    To complete the installation you must solve the puzzle (no worries it's kindergarten stuff): drag and drop CMake onto the Applications folder.
+    To complete the installation, drag and drop CMake onto the Applications folder.
 
 **Step 4: Launch CMake**
-    Launch CMake from Launchpad or Spotlight.
+    Launch CMake from Launchpad or Spotlight. The interface that pops up is *only* used to perform step 5 of this guide. You do not need to fill anything in.
 
     .. note:: If you get the warning: "'CMake' can't be opened because it is from an unidentified developer.", please make sure to enable "Allow apps dowloaded from: Anywhere" under the "System Preferences" > "Security & Privacy".
  
