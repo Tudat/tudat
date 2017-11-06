@@ -8,7 +8,7 @@ Unperturbed Earth-orbiting satellite
 
 This page describes how to set up the propagation of the unperturbed Earth-orbiting satellite described in :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` using the :literal:`json_interface`.
 
-The first step is to define the file tree. Since this is a simple example, there is no need to split the root input file into several files. Thus, we will have just a single file called :class:`main.json`.
+The first step is to define the file tree. Since this is a simple example, there is no need to split the root input file into several files. Thus, we will have just a single file called :class:`main.json`. As shown at the end of this tutorial.
 
 We define the key :jsonkey:`initialEpoch` at root level, which will be used as initial time for the integrator and for interpolation of the Spice ephemeris. We also define the key :jsonkey:`finalEpoch`, which is used for interpolation of the Spice ephemeris and to create a time-based termination condition. In both cases, we need to specify the values in seconds since J2000. In this case, :jsonkey:`globalFrameOrigin` is not specified, so the default value of :literal:`"SSB"` (Solar system barycentre) is used. The :jsonkey:`globalFrameOrientation` is set to :literal:`J2000`.
 
