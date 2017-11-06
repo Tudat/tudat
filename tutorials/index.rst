@@ -23,8 +23,11 @@ If encountering any problems please visit the :ref:`troubleshootingTutorial` pag
    gettingStarted/index
    applicationWalkthroughs/index
    tudatFeatures/index
+   Doxygen <http://doxygen.tudat.tudelft.nl>
    jsonInterface/index
    matlabInterface/index
    troubleshooting/index
+
+
 
 

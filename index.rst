@@ -22,5 +22,4 @@ Tudat includes a wide variety of libraries, all the way from gravity models to n
    installation/index
    tutorials/index
    developerGuide/index
-   Doxygen <http://doxygen.frankhogervorst.nl>
 
