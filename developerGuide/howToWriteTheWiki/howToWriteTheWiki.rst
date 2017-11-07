@@ -120,6 +120,19 @@ The documentation using reStructuredText and Sphinx requires relatively few tool
       |
       | makefile
 
+Updating documentation
+~~~~~~~~~~~~~~~~~~~~~~
+If changes are made to the documentation (wiki and/or doxygen) . These changes need to be pushed to the correct repository. 
+
+**Wiki**
+
+For the wiki the contents of ``root/build/html/`` need to be pushed to https://github.com/Tudat/tudat/tree/gh-pages. 
+
+
+**Doxygen**
+
+For the Doxygen the contents of ``tudatBundle/tudat/Tudat/Documentation/`` need to be pushed to https://github.com/Tudat/tudatDoxygen. 
+
 
 Wiki style guide
 ~~~~~~~~~~~~~~~~
@@ -265,24 +278,16 @@ Upcoming improvements
 The following issues on the `github project page <https://github.com/Tudat/tudat/labels/documentation>`_ need to be resolved. Other improvements to the documentation are:
 
 - High priority.
-
-   - Make note of errors during windows build if it does not stop building it is no problem.
-   - Indicate relevant OS for settings in Qt configuration (Unix makefiles etc).
   
 - Medium priority.
 
    - Update Qt project tree page to new layout occuring in latest Qt release.
-   - Add git cheat sheet in github basics
-   - Update diagram Environment Settings with more input for setGlobalFrameBodyEphemeris
-   - Update Doxygen main page (it has old text in it refering to Tudat Core etc.).
 
 - Low Priority.
  
    - Explain important functions in Basics/utilities.h
-   - Add warning trick in Qt (display only errors)
-   - Change titles debugger section (Qt also uses gdb)
    - Classes which need to be defined:
-      EstimatableParameter, EstimatebleParametersEnum, SimpleRotationalEphemeris, CustomAerodynamicCoefficientInterface, GroundStationState, PPNParameterSet, BasicSolidBodyTideGravityFieldVariations, ConstantObservationBias, ConstantRelativeObservationBias, JsonSimulationManager
+      GroundStationState, PPNParameterSet, BasicSolidBodyTideGravityFieldVariations, ConstantObservationBias, ConstantRelativeObservationBias, JsonSimulationManager, MAssPropagationSettings, CustomStatePropagationSettings, MultiTypePropagationSettings, MultiArcPropagationSettings
    - Fix large literals which go beyond page margins such as in `Defining estimation input <http://tudat.tudelft.nl/tutorials/tudatFeatures/estimationSetup/estimationExecution.html#defining-estimation-input>`_. 
    - Extensively refer to the Tudat libraries in the JSON interface :ref:`jsonInterface_keys`.
 
