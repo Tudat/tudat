@@ -190,7 +190,7 @@
   <div class="section" id="apollo-capsule-entry">
 <span id="jsoninterface-tutorials-apollocapsuleentry"></span><h1>Apollo Capsule Entry<a class="headerlink" href="#apollo-capsule-entry" title="Permalink to this headline">¶</a></h1>
 <p>The example described on this page is that of Apollo on a reentry trajectory towards the surface of Earth. The code for this tutorial is located in your Tudat Bundle at:</p>
-<div class="highlight-txt"><div class="highlight"><pre><span></span>tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/apolloCapsuleEntryJSON.cpp
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">apolloCapsuleEntryJSON</span><span class="o">.</span><span class="n">cpp</span>
 </pre></div>
 </div>
 <p>In this tutorial, the creation of a custom JSON-based application is described. Read first the general introduction on <a class="reference internal" href="../../customJsonApp.html#jsoninterface-customjsonapp"><span class="std std-ref">Writing custom JSON-based applications</span></a> and the example <a class="reference internal" href="../../../applicationWalkthroughs/unguidedCapsuleEntry.html#walkthroughsunguidedcapsuleentry"><span class="std std-ref">Un-guided Capsule Entry</span></a>, which is identical to this one but without the use of JSON files.</p>
@@ -200,11 +200,11 @@
 <div><ul class="simple">
 <li>Setting a body’s <a class="reference internal" href="../../../tudatFeatures/environmentSetup/index.html#AerodynamicCoefficientInterface" title="AerodynamicCoefficientInterface"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientInterface</span></code></a> directly instead of using an <a class="reference internal" href="../../../tudatFeatures/environmentSetup/index.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientSettings</span></code></a> object.</li>
 <li>Using the function <code class="docutils literal"><span class="pre">tudat_applications::getOutputPath(</span> <span class="pre">)</span></code>.</li>
-<li>Settings an angle of attach for a body.</li>
+<li>Setting an angle of attack for a body.</li>
 </ul>
 </div></blockquote>
 <p>This functionality has to be implemented in the C++ application. However, as for any JSON-based application, the first step is to generate the input file. This file is located in your Tudat Bundle at:</p>
-<div class="highlight-txt"><div class="highlight"><pre><span></span>tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/apolloCapsuleEntry.json
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">apolloCapsuleEntry</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
 <p>A few remarks about the contents of this file can be made:</p>
@@ -289,7 +289,7 @@
 <span class="p">}</span>
 </pre></div>
 </td></tr></table></div>
-<p>After calling the original implementation in line 4, we define an angle of attach for Apollo. This is done by modifying Apollo’s flight conditions. This can only be done once the flight conditions have been created, i.e. after <code class="docutils literal"><span class="pre">JsonSimulationManager::resetPropagatorSettings(</span> <span class="pre">)</span></code> has been called, since this method will create the acceleration aerodynamic models based on the body map created previously.</p>
+<p>After calling the original implementation in line 4, we define an angle of attack for Apollo. This is done by modifying Apollo’s flight conditions. This can only be done once the flight conditions have been created, i.e. after <code class="docutils literal"><span class="pre">JsonSimulationManager::resetPropagatorSettings(</span> <span class="pre">)</span></code> has been called, since this method will create the acceleration aerodynamic models based on the body map created previously.</p>
 <p>Now, we can write our <code class="docutils literal"><span class="pre">main</span></code> function, which uses the custom class <code class="xref py py-class docutils literal"><span class="pre">ApolloJsonSimulationManager</span></code>:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span> <span class="p">)</span>
 <span class="p">{</span>
@@ -306,7 +306,7 @@
 </pre></div>
 </div>
 <p>After running the application, the results can be found in the directory:</p>
-<div class="highlight-txt"><div class="highlight"><pre><span></span>tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/SimulationOutput/ApolloCapsuleExampleJSON
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">SimulationOutput</span><span class="o">/</span><span class="n">ApolloCapsuleExampleJSON</span>
 </pre></div>
 </div>
 </div>

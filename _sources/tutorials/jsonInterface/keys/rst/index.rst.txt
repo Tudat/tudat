@@ -10,9 +10,9 @@
 List of keys
 ============
 
-In this page, an exhaustive list with the possible keys that can be defined in input JSON files for the :literal:`json_interface` application is provided.
+In this page, an exhaustive list with the possible keys that can be defined in input JSON files for the :literal:`json_interface` application is provided. These are used to create the settings as discussed in :ref:`tudatFeaturesIndex`. 
 
-The type :jsontype:`path` before a key name denotes that a :jsontype:`string` such as :literal:`"@path(relPath)"` has to be provided when using relative paths inside modular files. When providing absolute paths or not using modular files, both :literal:`"@path(file)"` and :literal:`"file"` will work.
+The type :jsontype:`path` before a key name denotes that a :jsontype:`string` such as :literal:`"@path(relPath)"` has to be provided when using relative paths inside :ref:`jsonInterface_modularFiles`. When providing absolute paths or not using modular files, both :literal:`"@path(file)"` and :literal:`"file"` will work.
 
 :jsontype:`T[]` denotes that an array of :jsontype:`T` is expected. If no number is indicated, there is no constraint on the size of the array. For instance, :jsontype:`number[6]` is used for state vectors. A second :jsontype:`[]` is used to represent matrices, e.g. :jsontype:`number[][]` corresponds to :class:`Eigen::MatrixXd`, and :jsontype:`number[3][3]` corresponds to :class:`Eigen::Matrix3d`. When a vector is expected (i.e. an :class:`Eigen::Matrix` with only one row and/or one column), it is possible to provide it as a an array of numbers (e.g. :literal:`[1, 2, 3]`) only if at least one of the dimensions of the expected :class:`Eigen::Matrix` is of fixed size, and this size matches the length of the provided array. If the expected matrix has dynamic size (both for the number of rows and columns), it is mandatory to provide an array of arrays (e.g. :literal:`[[1, 2, 3]]` will be converted to a matrix of dynamic size 1x3, while :literal:`[[1], [2], [3]]` will be converted to a matrix of dynamic size 3x1).
 

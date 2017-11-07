@@ -55,7 +55,7 @@ git
 We are now going to walk through the process of installing git on your computer. We use git to download the software of the project(s) and to make sure that you can always be up-to-date on the latest modifications to the code.
 
 **Step 1: Download git**
-    The install process for git is very similar to that for CMake: go to the `git website <https://git-scm.com/downloads>`_ to download the installer ``.dmg``.
+    The install process for git is very similar to that for CMake: go to the `git website <https://git-scm.com/downloads/>`_ to download the installer ``.dmg``.
 
 **Step 2: Install git**
     Run the ``.dmg`` and open the enclosed ``.pkg`` to install git on your system. Step through the installation and provide you administrator password when prompted.
@@ -73,7 +73,7 @@ Open the downloaded ``.dmg`` and execute the enclosed ``.pkg`` to start the inst
 Qt Creator
 ~~~~~~~~~~
 **Step 1: Download Qt Creator**
-    Download QtCreator from the `Qt website <https://www.qt.io/ide/>`_.
+    Download QtCreator from the `Qt website <https://www1.qt.io/download-open-source/>`_.
 
 **Step 2: Execute the installer**
     Open the downloaded ``.dmg`` and execute the enclosed installer.

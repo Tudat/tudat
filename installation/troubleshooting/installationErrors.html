@@ -365,29 +365,48 @@ CMake Error: CMake was unable to find a build program corresponding to &quot;Nin
 <div><p>This error was fixed by removing the <code class="docutils literal"><span class="pre">~</span></code> from the <code class="docutils literal"><span class="pre">TEMP</span></code> and <code class="docutils literal"><span class="pre">TMP</span></code> directory. See <a class="reference external" href="https://github.com/Tudat/tudat/issues/259">github issue 259</a> for more details on the issue.</p>
 </div></blockquote>
 </li>
+<li><p class="first">System <code class="docutils literal"><span class="pre">boost</span></code> library used on linux</p>
+<blockquote>
+<div><p>When boost is already installed on the system your compiler might prefer the system <code class="docutils literal"><span class="pre">boost</span></code> over the <code class="docutils literal"><span class="pre">boost</span></code> in your tudatBundle as discussed in <a class="reference external" href="https://github.com/Tudat/tudat/issues/203">this issue</a>. This could lead to incompatibility issues.</p>
+</div></blockquote>
+</li>
 </ul>
 </div>
 <div class="section" id="compilation-linking-of-code">
 <span id="debuggingcompilationlinkingcode"></span><h2>5.1.3. Compilation/linking of code<a class="headerlink" href="#compilation-linking-of-code" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
+<ul>
+<li><p class="first">Errors during compilation of Tudat on Windows</p>
+<blockquote>
+<div><p>Some error message could occur during the compilation of Tudat on Windows. However, if Qt is continuing compilation there is no need to worry.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Many warnings (yellow triangle with exclemation mark) during compilation.</p>
+<blockquote>
+<div><p>These warnings can be safely ignored. To mute warnings and only display errors please check <a class="reference internal" href="../../developerGuide/qtBasics/qtBasics.html#qtbasics"><span class="std std-ref">Qt Basics</span></a>.</p>
+</div></blockquote>
+</li>
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">Undefined</span> <span class="pre">reference</span> <span class="pre">to</span> <span class="pre">..../libsofa...</span> <span class="pre">or</span> <span class="pre">..../libsofa...</span></code></dt>
-<dd>This may occur if you are using multi-core compilation. Save the error output, and start the compilation again, if the same error occurs again, open an <a class="reference external" href="https://github.com/Tudat/tudat/issues/new">issue</a> on Github to report the issue.</dd>
+<dd><p class="first last">This may occur if you are using multi-core compilation. Save the error output, and start the compilation again, if the same error occurs again, open an <a class="reference external" href="https://github.com/Tudat/tudat/issues/new">issue</a> on Github to report the issue.</p>
+</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">Undefined</span> <span class="pre">reference</span> <span class="pre">to</span> <span class="pre">..../libtudat...</span></code></dt>
-<dd>This indicates that the required Tudat libraries cannot be found when compiling. If this happens for the Tudat libraries, copy the compile output to a text file, and open an <a class="reference external" href="https://github.com/Tudat/tudat/issues/new">issue</a> on Github. If it is your own program, first check if you have added the required link libraries to your CMake file.</dd>
+<dd><p class="first last">This indicates that the required Tudat libraries cannot be found when compiling. If this happens for the Tudat libraries, copy the compile output to a text file, and open an <a class="reference external" href="https://github.com/Tudat/tudat/issues/new">issue</a> on Github. If it is your own program, first check if you have added the required link libraries to your CMake file.</p>
+</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">Undefined</span> <span class="pre">reference</span> <span class="pre">to</span> <span class="pre">......libboost/</span></code></dt>
-<dd>This indicates that no compatible version of boost can be found when compiling the code. Most likely boost was not compiled correctly due to an incompatibility with your compiler. Check <a class="reference internal" href="#debuggingddownloadingcompilingboost"><span class="std std-ref">Downloading/compiling boost</span></a>, for compatibility between your compiler and boost version. If this does not resolve your problem, copy the compile output to a text file, retrieve the files listed under boost build failed, and open an <a class="reference external" href="https://github.com/Tudat/tudat/issues/new">issue</a> on Github.</dd>
+<dd><p class="first last">This indicates that no compatible version of boost can be found when compiling the code. Most likely boost was not compiled correctly due to an incompatibility with your compiler. Check <a class="reference internal" href="#debuggingddownloadingcompilingboost"><span class="std std-ref">Downloading/compiling boost</span></a>, for compatibility between your compiler and boost version. If this does not resolve your problem, copy the compile output to a text file, retrieve the files listed under boost build failed, and open an <a class="reference external" href="https://github.com/Tudat/tudat/issues/new">issue</a> on Github.</p>
+</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">Error</span> <span class="pre">&quot;out</span> <span class="pre">of</span> <span class="pre">memory</span> <span class="pre">allocating</span> <span class="pre">XXXX</span> <span class="pre">bytes&quot;</span></code></dt>
-<dd>This indicates that your compiler is using too much RAM, and your system cannot allocate it. First, copy your full compile output (tab at bottom of Qt Creator) to a text file. Then, change the <code class="docutils literal"><span class="pre">COMPILE_HIGH_ACCURACY_ESTIMATION_TESTS</span></code> CMake argument to OFF, and recompile. <em>Whether this fixes the error or not, open a Github issue</em>. This problem should have been corrected, and any occurence should be communicated.</dd>
+<dd><p class="first last">This indicates that your compiler is using too much RAM, and your system cannot allocate it. First, copy your full compile output (tab at bottom of Qt Creator) to a text file. Then, change the <code class="docutils literal"><span class="pre">COMPILE_HIGH_ACCURACY_ESTIMATION_TESTS</span></code> CMake argument to OFF, and recompile. <em>Whether this fixes the error or not, open a Github issue</em>. This problem should have been corrected, and any occurence should be communicated.</p>
+</dd>
 </dl>
 </li>
 </ul>
@@ -402,6 +421,11 @@ CMake Error: CMake was unable to find a build program corresponding to &quot;Nin
 </li>
 </ul>
 </div></blockquote>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">libbacktrace</span> <span class="pre">could</span> <span class="pre">not</span> <span class="pre">find</span> <span class="pre">executable</span> <span class="pre">to</span> <span class="pre">open</span></code></p>
+<p>This error is due to multi-core compilation on Windows. Restarting the compile process fixes the issue (multiple restarts could be required), or compile with a singly thread.</p>
+</li>
+</ul>
 </div>
 <div class="section" id="failed-unit-tests">
 <span id="debuggingfailedunittests"></span><h2>5.1.4. Failed unit tests<a class="headerlink" href="#failed-unit-tests" title="Permalink to this headline">¶</a></h2>

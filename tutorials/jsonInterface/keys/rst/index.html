@@ -181,8 +181,8 @@
             
   <div class="section" id="list-of-keys">
 <span id="jsoninterface-keys"></span><h1>List of keys<a class="headerlink" href="#list-of-keys" title="Permalink to this headline">¶</a></h1>
-<p>In this page, an exhaustive list with the possible keys that can be defined in input JSON files for the <code class="docutils literal"><span class="pre">json_interface</span></code> application is provided.</p>
-<p>The type <span class="jsontype">path</span> before a key name denotes that a <span class="jsontype">string</span> such as <code class="docutils literal"><span class="pre">&quot;&#64;path(relPath)&quot;</span></code> has to be provided when using relative paths inside modular files. When providing absolute paths or not using modular files, both <code class="docutils literal"><span class="pre">&quot;&#64;path(file)&quot;</span></code> and <code class="docutils literal"><span class="pre">&quot;file&quot;</span></code> will work.</p>
+<p>In this page, an exhaustive list with the possible keys that can be defined in input JSON files for the <code class="docutils literal"><span class="pre">json_interface</span></code> application is provided. These are used to create the settings as discussed in <a class="reference internal" href="../../../tudatFeatures/index.html#tudatfeaturesindex"><span class="std std-ref">Tudat Libraries</span></a>.</p>
+<p>The type <span class="jsontype">path</span> before a key name denotes that a <span class="jsontype">string</span> such as <code class="docutils literal"><span class="pre">&quot;&#64;path(relPath)&quot;</span></code> has to be provided when using relative paths inside <a class="reference internal" href="../../modularFiles.html#jsoninterface-modularfiles"><span class="std std-ref">Modular files</span></a>. When providing absolute paths or not using modular files, both <code class="docutils literal"><span class="pre">&quot;&#64;path(file)&quot;</span></code> and <code class="docutils literal"><span class="pre">&quot;file&quot;</span></code> will work.</p>
 <p><span class="jsontype">T[]</span> denotes that an array of <span class="jsontype">T</span> is expected. If no number is indicated, there is no constraint on the size of the array. For instance, <span class="jsontype">number[6]</span> is used for state vectors. A second <span class="jsontype">[]</span> is used to represent matrices, e.g. <span class="jsontype">number[][]</span> corresponds to <code class="xref py py-class docutils literal"><span class="pre">Eigen::MatrixXd</span></code>, and <span class="jsontype">number[3][3]</span> corresponds to <code class="xref py py-class docutils literal"><span class="pre">Eigen::Matrix3d</span></code>. When a vector is expected (i.e. an <code class="xref py py-class docutils literal"><span class="pre">Eigen::Matrix</span></code> with only one row and/or one column), it is possible to provide it as a an array of numbers (e.g. <code class="docutils literal"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code>) only if at least one of the dimensions of the expected <code class="xref py py-class docutils literal"><span class="pre">Eigen::Matrix</span></code> is of fixed size, and this size matches the length of the provided array. If the expected matrix has dynamic size (both for the number of rows and columns), it is mandatory to provide an array of arrays (e.g. <code class="docutils literal"><span class="pre">[[1,</span> <span class="pre">2,</span> <span class="pre">3]]</span></code> will be converted to a matrix of dynamic size 1x3, while <code class="docutils literal"><span class="pre">[[1],</span> <span class="pre">[2],</span> <span class="pre">[3]]</span></code> will be converted to a matrix of dynamic size 3x1).</p>
 <p>Some keys appear twice because they accept different value types (and a different description for each case is provided). For instance, the body’s initial state can be of value type <span class="jsontype">number[6]</span> (where a Cartesian state is assumed), or an <span class="jsontype">object</span> containing keys such as <span class="jsonkey">x</span>, <span class="jsonkey">vy</span>, <span class="jsonkey">semiMajorAxis</span>, <span class="jsonkey">inclination</span>, etc.</p>
 <p>In some parts, key paths are used to refer to the key of a given object in the JSON tree. The different keys are separated by dots. For instance <span class="jsonkey">atmosphere.type</span> refers to the key <span class="jsonkey">type</span> of an <span class="jsontype">object</span> assigned to the key <span class="jsonkey">atmosphere</span>. When the key path is absolute (or in other words relative to the JSON defined in the main input file), the key path starts with a dot (for instance, <span class="jsonkey">.initialEpoch</span> refers to the key <span class="jsonkey">initialEpoch</span> defined directly in the root object of the main input file). When the key path does not start with a dot, it is relative to the context in which it is mentioned. For arrays, the index (starting from zero) is used, so <span class="jsonkey">centralBodies[1]</span> refers to the second body in the <span class="jsontype">array</span> assigned to the key <span class="jsonkey">centralBodies</span>.</p>
@@ -213,7 +213,7 @@
 </div>
 </div></blockquote>
 </li>
-<li><p class="first"><span class="jsontype">object</span> <span class="jsonkey">bodies</span> (mandatory). Used to define all the bodies to be considered in the propagation. The keys of the object are the body names.</p>
+<li><p class="first"><span class="jsontype">object</span> <span class="jsonkey">bodies</span> (mandatory). Used to define all the bodies to be considered in the propagation, sets the Tudat <a class="reference internal" href="../../../tudatFeatures/environmentSetup/index.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a> class. The keys of the object are the body names.</p>
 <blockquote>
 <div><div class="toggle docutils container">
 <div class="header docutils container">
@@ -739,7 +739,7 @@
 </div>
 </div></blockquote>
 </li>
-<li><p class="first"><span class="jsontype">object[]</span> <span class="jsonkey">propagators</span> (mandatory). Used to define the propagator(s).</p>
+<li><p class="first"><span class="jsontype">object[]</span> <span class="jsonkey">propagators</span> (mandatory). Used to define the propagator(s), sets the Tudat <a class="reference internal" href="../../../tudatFeatures/propagationSetup/propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> class.</p>
 <blockquote>
 <div><div class="toggle docutils container">
 <div class="header docutils container">
@@ -990,7 +990,7 @@
 </div>
 </div></blockquote>
 </li>
-<li><p class="first"><span class="jsontype">object</span> <span class="jsonkey">integrator</span> (mandatory). Used to define the integrator.</p>
+<li><p class="first"><span class="jsontype">object</span> <span class="jsonkey">integrator</span> (mandatory). Used to define the integrator, sets the Tudat <a class="reference internal" href="../../../tudatFeatures/propagationSetup/integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> class.</p>
 <blockquote>
 <div><div class="toggle docutils container">
 <div class="header docutils container">
@@ -1037,7 +1037,7 @@
 </div>
 </div></blockquote>
 </li>
-<li><p class="first"><span class="jsontype">object</span> <span class="jsonkey">termination</span> (optional). Used to define termination condition(s). The time termination condition will be created automatically and added to the provided conditions (if any) if the key <span class="jsonkey">.finalEpoch</span> is specified. Either a single termination condition object or a multiple termination condition object can be provided.</p>
+<li><p class="first"><span class="jsontype">object</span> <span class="jsonkey">termination</span> (optional). Used to define termination condition(s), sets the Tudat <a class="reference internal" href="../../../tudatFeatures/propagationSetup/propagatorSettingsTermination.html#PropagationTerminationSettings" title="PropagationTerminationSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagationTerminationSettings</span></code></a> class. The time termination condition will be created automatically and added to the provided conditions (if any) if the key <span class="jsonkey">.finalEpoch</span> is specified. Either a single termination condition object or a multiple termination condition object can be provided.</p>
 <blockquote>
 <div><div class="toggle docutils container">
 <div class="header docutils container">
