@@ -16,7 +16,7 @@
 			:arrow:`Spice`
 
 		.. include:: Spice.rst
-- :jsontype:`object` :jsonkey:`bodies` (mandatory). Used to define all the bodies to be considered in the propagation. The keys of the object are the body names.
+- :jsontype:`object` :jsonkey:`bodies` (mandatory). Used to define all the bodies to be considered in the propagation, sets the Tudat :class:`NamedBodyMap` class. The keys of the object are the body names.
 
 	.. container:: toggle
 
@@ -25,7 +25,7 @@
 			:arrow:`Body`
 
 		.. include:: Body.rst
-- :jsontype:`object[]` :jsonkey:`propagators` (mandatory). Used to define the propagator(s).
+- :jsontype:`object[]` :jsonkey:`propagators` (mandatory). Used to define the propagator(s), sets the Tudat :class:`PropagatorSettings` class.
 
 	.. container:: toggle
 
@@ -34,7 +34,7 @@
 			:arrow:`Propagator`
 
 		.. include:: Propagator.rst
-- :jsontype:`object` :jsonkey:`integrator` (mandatory). Used to define the integrator.
+- :jsontype:`object` :jsonkey:`integrator` (mandatory). Used to define the integrator, sets the Tudat :class:`IntegratorSettings` class.
 
 	.. container:: toggle
 
@@ -43,7 +43,7 @@
 			:arrow:`Integrator`
 
 		.. include:: Integrator.rst
-- :jsontype:`object` :jsonkey:`termination` (optional). Used to define termination condition(s). The time termination condition will be created automatically and added to the provided conditions (if any) if the key :jsonkey:`.finalEpoch` is specified. Either a single termination condition object or a multiple termination condition object can be provided.
+- :jsontype:`object` :jsonkey:`termination` (optional). Used to define termination condition(s), sets the Tudat :class:`PropagationTerminationSettings` class. The time termination condition will be created automatically and added to the provided conditions (if any) if the key :jsonkey:`.finalEpoch` is specified. Either a single termination condition object or a multiple termination condition object can be provided.
 
 	.. container:: toggle
 

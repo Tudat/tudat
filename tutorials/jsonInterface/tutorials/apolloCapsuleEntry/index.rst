@@ -6,9 +6,7 @@
 Apollo Capsule Entry
 ====================
 
-The example described on this page is that of Apollo on a reentry trajectory towards the surface of Earth. The code for this tutorial is located in your Tudat Bundle at:
-
-.. code-block:: txt
+The example described on this page is that of Apollo on a reentry trajectory towards the surface of Earth. The code for this tutorial is located in your Tudat Bundle at::
 
   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/apolloCapsuleEntryJSON.cpp
 
@@ -20,11 +18,9 @@ The Tudat features that this application uses that are not supported by the JSON
 
   - Setting a body's :class:`AerodynamicCoefficientInterface` directly instead of using an :class:`AerodynamicCoefficientSettings` object.
   - Using the function :literal:`tudat_applications::getOutputPath( )`.
-  - Settings an angle of attach for a body.
+  - Setting an angle of attack for a body.
 
-This functionality has to be implemented in the C++ application. However, as for any JSON-based application, the first step is to generate the input file. This file is located in your Tudat Bundle at:
-
-.. code-block:: txt
+This functionality has to be implemented in the C++ application. However, as for any JSON-based application, the first step is to generate the input file. This file is located in your Tudat Bundle at::
 
   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/apolloCapsuleEntry.json
 
@@ -110,7 +106,7 @@ Finally, we also override the method :literal:`resetPropagatorSettings`:
               setOrientationAngleFunctions( boost::lambda::constant( constantAngleOfAttack ) );
   }
 
-After calling the original implementation in line 4, we define an angle of attach for Apollo. This is done by modifying Apollo's flight conditions. This can only be done once the flight conditions have been created, i.e. after :literal:`JsonSimulationManager::resetPropagatorSettings( )` has been called, since this method will create the acceleration aerodynamic models based on the body map created previously.
+After calling the original implementation in line 4, we define an angle of attack for Apollo. This is done by modifying Apollo's flight conditions. This can only be done once the flight conditions have been created, i.e. after :literal:`JsonSimulationManager::resetPropagatorSettings( )` has been called, since this method will create the acceleration aerodynamic models based on the body map created previously.
 
 Now, we can write our :literal:`main` function, which uses the custom class :class:`ApolloJsonSimulationManager`:
 
@@ -129,8 +125,6 @@ Now, we can write our :literal:`main` function, which uses the custom class :cla
       return EXIT_SUCCESS;
   }
 
-After running the application, the results can be found in the directory:
-
-.. code-block:: txt
+After running the application, the results can be found in the directory::
 
   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/SimulationOutput/ApolloCapsuleExampleJSON
