@@ -266,22 +266,20 @@ The following issues on the `github project page <https://github.com/Tudat/tudat
 
 - High priority.
 
-   - Coding mistakes, commas in JSON files. 
    - Make note of errors during windows build if it does not stop building it is no problem.
    - Indicate relevant OS for settings in Qt configuration (Unix makefiles etc).
-   - Update doxygen to latest Tudat 
   
 - Medium priority.
 
    - Update Qt project tree page to new layout occuring in latest Qt release.
    - Add git cheat sheet in github basics
    - Update diagram Environment Settings with more input for setGlobalFrameBodyEphemeris
-
+   - Update Doxygen main page (it has old text in it refering to Tudat Core etc.).
 
 - Low Priority.
  
    - Explain important functions in Basics/utilities.h
-   - Add warning tric in Qt (display only errors)
+   - Add warning trick in Qt (display only errors)
    - Change titles debugger section (Qt also uses gdb)
    - Classes which need to be defined:
       EstimatableParameter, EstimatebleParametersEnum, SimpleRotationalEphemeris, CustomAerodynamicCoefficientInterface, GroundStationState, PPNParameterSet, BasicSolidBodyTideGravityFieldVariations, ConstantObservationBias, ConstantRelativeObservationBias, JsonSimulationManager
