@@ -146,6 +146,14 @@ Downloading/compiling boost
 Compilation/linking of code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+- Errors during compilation of Tudat on Windows
+
+   Some error message could occur during the compilation of Tudat on Windows. However, if Qt is continuing compilation there is no need to worry.
+
+- Many warnings (yellow triangle with exclemation mark) during compilation.
+
+   These warnings can be safely ignored. To mute warnings and only display errors please check :ref:`qtBasics`.
+
 - ``Undefined reference to ..../libsofa... or ..../libsofa...`` 
    This may occur if you are using multi-core compilation. Save the error output, and start the compilation again, if the same error occurs again, open an `issue <https://github.com/Tudat/tudat/issues/new>`_ on Github to report the issue.
 
