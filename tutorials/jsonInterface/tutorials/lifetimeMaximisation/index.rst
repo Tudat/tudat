@@ -43,9 +43,7 @@ The following orbital perturbations are considered:
 
 The first step is to define the initial epoch and the maximum final epoch. Since :math:`t_0` is the optimisation variable, and the value of :math:`t_f` depends on :math:`t_0`, these two variable cannot be defined in a shared JSON file, but have to be defined individually for each case. A total of 365 days (one for each day of the year 2000) will be propagated.
 
-The first step is to define the file tree. In this case, we will have a :class:`shared.json` file containing the settings shared by all propagations, and then an :class:`inputs` folder where the individual root input files for each case will be located. After running the propagations, an :class:`outputs` folder containing the results for each case will be generated. Thus, the file tree will look like this eventually:
-
-.. code-block:: txt
+The first step is to define the file tree. In this case, we will have a :class:`shared.json` file containing the settings shared by all propagations, and then an :class:`inputs` folder where the individual root input files for each case will be located. After running the propagations, an :class:`outputs` folder containing the results for each case will be generated. Thus, the file tree will look like this eventually::
 
   lifetimeMaximisation
   | 
@@ -250,9 +248,7 @@ Then, we create each of the individual root files for each optimisation case. We
 
 Here, we use a mergeable input file, in which the settings from the file :class:`shared.json` are loaded first, and then the keys :jsonkey:`initialEpoch` and :jsonkey:`finalEpoch` defined. Note that when using the special string :literal:`"$(file.json){variable}"`, if the part :literal:`{variable}` is omitted, all the contents of the referenced file are imported.
 
-Finally, we have to run the :literal:`json_interface` for each of the file in the :class:`inputs` directory. We can do this manually or using `GNU Parallel <https://www.gnu.org/software/parallel/>`_:
-
-.. code-block:: txt
+Finally, we have to run the :literal:`json_interface` for each of the file in the :class:`inputs` directory. We can do this manually or using `GNU Parallel <https://www.gnu.org/software/parallel/>`_::
 
   parallel json_interface ::: inputs/*.json
 

@@ -73,7 +73,7 @@ When setting up the simulation (step 2), the following virtual method is called:
       resetDynamicsSimulator( );
   }
 
-Note that each of the methods called by this method is also virtual. This means that a derived class of :class:`JsonSimulationManager` can be created if a custom implementation of any of these methods is needed. The method :literal:`updateSettingsFromJSONObject` is generally not overridden, as it is dangerous to modify the order in which each of the virtual methods is called. In one *does* want to modify this method, the following has to be taken into account:
+Note that each of the methods called by this method is also virtual. This means that a derived class of :class:`JsonSimulationManager` can be created if a custom implementation of any of these methods is needed. The method :literal:`updateSettingsFromJSONObject` is generally not overridden, as it is dangerous to modify the order in which each of the virtual methods is called. If one *does* want to modify this method, the following has to be taken into account:
 
   - The default implementation of :literal:`resetBodies` uses the integrator settings' initial time to interpolate the ephemeris of celestial bodies if Spice is enabled and the key :jsonkey:`spice.preloadEpehemeris` is set to :literal:`true`.
   
