@@ -98,10 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../tudatFeatures/index.html">Tudat Libraries</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../index.html">JSON Interface</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../../keys/rst/index.html">List of keys</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../modularFiles.html">Modular files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../multicase.html">Multi-case simulations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../customJsonApp.html">Writing custom JSON-based applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basicJsonInterfaces.html">Basic JSON interfaces</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="../index.html">Tutorials</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Unperturbed Earth-orbiting satellite</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../lifetimeMaximisation/index.html">Perturbed Earth-orbiting satellite lifetime maximisation</a></li>
@@ -109,14 +106,18 @@
 <li class="toctree-l4"><a class="reference internal" href="../lifetimeMaximisationCPP/index.html">Perturbed Earth-orbiting satellite lifetime maximisation using a custom C++ application</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../keys/rst/index.html">List of keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../customJsonApp.html">Writing custom JSON-based applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../modularFiles.html">Modular files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../multicase.html">Multi-case simulations</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference external" href="http://doxygen.tudat.tudelft.nl">Doxygen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developerGuide/index.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference external" href="http://doxygen.frankhogervorst.nl">Doxygen</a></li>
 </ul>
 
             
@@ -189,7 +190,7 @@
   <div class="section" id="unperturbed-earth-orbiting-satellite">
 <span id="jsoninterface-tutorials-basicpropagation"></span><h1>Unperturbed Earth-orbiting satellite<a class="headerlink" href="#unperturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
 <p>This page describes how to set up the propagation of the unperturbed Earth-orbiting satellite described in <a class="reference internal" href="../../../applicationWalkthroughs/unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> using the <code class="docutils literal"><span class="pre">json_interface</span></code>.</p>
-<p>The first step is to define the file tree. Since this is a simple example, there is no need to split the root input file into several files. Thus, we will have just a single file called <code class="xref py py-class docutils literal"><span class="pre">main.json</span></code>.</p>
+<p>The first step is to define the file tree. Since this is a simple example, there is no need to split the root input file into several files. Thus, we will have just a single file called <code class="xref py py-class docutils literal"><span class="pre">main.json</span></code>. As shown at the end of this tutorial.</p>
 <p>We define the key <span class="jsonkey">initialEpoch</span> at root level, which will be used as initial time for the integrator and for interpolation of the Spice ephemeris. We also define the key <span class="jsonkey">finalEpoch</span>, which is used for interpolation of the Spice ephemeris and to create a time-based termination condition. In both cases, we need to specify the values in seconds since J2000. In this case, <span class="jsonkey">globalFrameOrigin</span> is not specified, so the default value of <code class="docutils literal"><span class="pre">&quot;SSB&quot;</span></code> (Solar system barycentre) is used. The <span class="jsonkey">globalFrameOrientation</span> is set to <code class="docutils literal"><span class="pre">J2000</span></code>.</p>
 <p>Then, we request using the standard Spice kernels, namely <code class="xref py py-class docutils literal"><span class="pre">pck00010.tpc</span></code>, <code class="xref py py-class docutils literal"><span class="pre">gm_de431.tpc</span></code>, <code class="xref py py-class docutils literal"><span class="pre">de430_small.bsp</span></code> and <code class="xref py py-class docutils literal"><span class="pre">pck00010.tpc</span></code>. We do this by defining the key <span class="jsonkey">spice</span> to be:</p>
 <div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -414,7 +415,7 @@
 </td></tr></table></div>
 </div>
 <p>After running in Terminal:</p>
-<div class="highlight-txt"><div class="highlight"><pre><span></span>json_inteface main.json
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">json_inteface</span> <span class="n">main</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
 <p>we will get a <code class="xref py py-class docutils literal"><span class="pre">stateHistory.txt</span></code> file containing the results, and a <code class="xref py py-class docutils literal"><span class="pre">fullSettings.json</span></code> file containing default settings and with some keys moved to a different place (e.g. <span class="jsonkey">bodies.Asterix.initialState</span> to <span class="jsonkey">propagators[0].initialStates</span>):</p>
