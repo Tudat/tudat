@@ -88,7 +88,7 @@ Next, we need to define which link ends are to be used for which observable. We 
 
 Where you can see that the :literal:`ObservableType` enum denote which types of observations are considered. Here, we limit ourselves to 1-way range, 1-way Doppler and angular position observables.
 
-Now that we've defined which link ends are used for which observables, we can start adding more properties to the observation models. This is done by using the :literal:`ObservationSettings` class. This class is discussed in more detail on the page :ref:`observationSettings`. For this tutorial, we restrict ourselves to simple observation models (which do not require any information in addition to their type) and we do not use observation biases or light-time corrections.
+Now that we've defined which link ends are used for which observables, we can start adding more properties to the observation models. This is done by using the :class:`ObservationSettings` class. This class is discussed in more detail on the page :ref:`observationSettings`. For this tutorial, we restrict ourselves to simple observation models (which do not require any information in addition to their type) and we do not use observation biases or light-time corrections.
 
 The resulting code to create settings for the observation models then becomes:
 
@@ -111,7 +111,7 @@ The resulting code to create settings for the observation models then becomes:
         }
     }
     
-Where we have defined a map :literal:`ObservationSettingsMap` (a typedef for :literal:`std::multimap< LinkEnds, boost::shared_ptr< ObservationSettings > >`) that contains all the settings necessary to create the observation models.
+Where we have defined a map :class:`ObservationSettingsMap` (a typedef for :literal:`std::multimap< LinkEnds, boost::shared_ptr< ObservationSettings > >`) that contains all the settings necessary to create the observation models.
 
 Defining Estimation Settings 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

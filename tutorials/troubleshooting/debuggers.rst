@@ -4,17 +4,17 @@ Debuggers
 =========
 Debuggers are essential in finding the source of your problems. They are able to provide you with information about where in your code a problem occurs. Several debuggers are available two of which are discussed here. 
 
-Qt debugger
-~~~~~~~~~~~
+Debugging in Qt
+~~~~~~~~~~~~~~~
 This build in debugger is available on all platforms. It can be started from within Qt by selecting ``Debug -> Start Debugging -> Start Debugging``. 
 
 In the debugger console the output of the debugger can be seen. This often gives information on where your problem arises. The following is an example of the output of the Qt built in debugger for an error occuring in the FlightConditions update function. 
 
 .. figure:: images/QtDebugger.png
 
-gdb debugger
-~~~~~~~~~~~~
-On linux use can be made of the gdb debugger. It is installed from the terminal by using (for debian-based distributions)::
+Debugging in Terminal
+~~~~~~~~~~~~~~~~~~~~~
+On linux the debugger can be called from Terminal. It is installed by using (for debian-based distributions)::
 
    $ sudo apt-get update
    $ sudo apt-get install gdb

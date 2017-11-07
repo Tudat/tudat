@@ -145,6 +145,31 @@ This data-map can be stored to a file using:
     tudat::input_output::writeDataMapToTextFile(
                 keyDoubleValueVector3dMap, "keyDoubleValueVector3dMapDataFile" );
 
+Data-map (int, Matrix3d) to text file
+***************************************
+An example of a data map, where the type of the key is a :literal:`int`, and the type of the value is an :literal:`Eigen::Matrix3d`:
+
+.. code-block:: cpp
+
+   Eigen::Matrix3d threeDimensionalMatrix;
+   threeDimensionalMatrix << 0, 1, 2, 3, 4, 5, 6, 7, 8;
+
+   std::map<int, Eigen::Matrix3d> matrixMap;
+   matrixMap[14] = threeDimensionalMatrix;
+
+This data-map can be stored to a file using:
+
+.. code-block:: cpp
+
+    tudat::input_output::writeDataMapToTextFile(
+                matrixMap, "matrixMap" );
+
+This results in::
+
+   14          0                 1                 2                 3                 4                 5                 6                 7                 8
+
+Note that all matrix entries are put on one line when writing a map to file. This makes the file easy to read by other programs. 
+
 Eigen::Matrix3d to text file
 ****************************
 An example of a matrix to save:
@@ -152,7 +177,7 @@ An example of a matrix to save:
 .. code-block:: cpp
 
    Eigen::Matrix3d squareDoubleValueMatrix;
-   squareDoubleValueMatrix << 1, 2, 3, 4, 5, 6, 7, 8, 9;
+   squareDoubleValueMatrix << 0, 1, 2, 3, 4, 5, 6, 7, 8;
 
 This can be saved to a text file using:
 
@@ -160,6 +185,15 @@ This can be saved to a text file using:
 
    tudat::input_output::writeMatrixToTextFile(
    				squareDoubleValueMatrix, "squareDoubleValueMatrixFile")     
+
+This results in::
+
+   0                	 1                	 2                
+   3                	 4                	 5                
+   6                	 7                	 8                
+
+Note the difference with saving matrices inside a map, which will put all matrix entries on one line.
+
 
 
 Storing propagation history
