@@ -16,9 +16,15 @@ The parameter estimation framework of Tudat allows an ever increasing variety of
 * Acceleration model properties, such as empirical acceleration magnitudes
 * Observation model properties, such as absolute and relative observation biases
 
-In Tudat, these parameters influence the simulation in a variety of manners, and during propagation and/or observation simulation, information of this parameter is transferred in manner different ways. To provide a unified framework for estimating any type of parameter, the :class:`EstimatableParameter` class has been set up. This class has interfaces to retrieve and reset parameters, providing a single interface for modifying/obtaining any of the parameters that Tudat supports. For each estimated parameter, there is a dedicated derived class of :class:`EstimatableParameter`. 
+In Tudat, these parameters influence the simulation in a variety of manners, and during propagation and/or observation simulation, information of this parameter is transferred in manner different ways. To provide a unified framework for estimating any type of parameter, the :class:`EstimatableParameter` class has been set up. 
 
-The full list of estimated parameters is stored in an object of type :class:`EstimatableParameterSet`. This class is templated by the state scalar type of the estimated initial state parameters. 
+.. class:: EstimatableParameter
+
+   This class has interfaces to retrieve and reset parameters, providing a single interface for modifying/obtaining any of the parameters that Tudat supports. For each estimated parameter, there is a dedicated derived class of :class:`EstimatableParameter`. 
+
+.. class:: EstimatableParameterSet
+
+   The full list of estimated parameters is stored in an object of type :class:`EstimatableParameterSet`. This class is templated by the state scalar type of the estimated initial state parameters. 
 
 .. note::
    For the remainder of this page, we will implicitly assume that the template argument of an :class:`EstimatableParameterSet` object is double, unless explicitly mentioned otherwise.
@@ -99,8 +105,8 @@ The framework discussed in the previous section explains how the :literal:`param
       :class:`EstimatebleParametersEnum` variable that can take the following values:
       
       - :literal:`gravitational_parameter`. Gravitational parameter of a body, linked to a :class:`GravityFieldModel` object, which may be a point-mass or (time-dependent) spherical harmonic field. Parameter size: 1. Secondary identifer: None.
-      - :literal:`constant_drag_coefficient`. Drag coefficient of a body that is constant, linked to a :class:`CustomAerodynamicCoefficientInterface` object, which must have 0 independent variables for the coefficients. Parameter size: 1. Secondary identifer: None.
-      - :literal:`constant_rotation_rate`. Rotation rate of a body around a fixed axis, linked to a :class:`SimpleRotationalEphemeris` object. Parameter size: 1. Secondary identifer: None.
+      - :literal:`constant_drag_coefficient`. Drag coefficient of a body that is constant, linked to a :class:`CustomAerodynamicCoefficientInterface` object derived from :class:`AerodynamicCoefficientInterface`, which must have 0 independent variables for the coefficients. Parameter size: 1. Secondary identifer: None.
+      - :literal:`constant_rotation_rate`. Rotation rate of a body around a fixed axis, linked to a :class:`SimpleRotationalEphemeris` object derived from :class:`RotationalEphemeris`. Parameter size: 1. Secondary identifer: None.
       - :literal:`radiation_pressure_coefficient`. Constant radiation pressure coefficient of a body, linked to a :class:`RadiationPressureInterface` object. Parameter size: 1. Secondary identifer: None.
       - :literal:`rotation_pole_position`. Fixed rotation axis about which a body rotates with a fixed rotation rate, linked to a :class:`SimpleRotationalEphemeris` object. Parameter size: 2 (denoting pole right ascension and declination). Secondary identifer: None.
       - :literal:`ground_station_position`. Fixed body-fixed position of a ground station on a body, linked to a :class:`GroundStationState` object (requires a :class:`GroundStationState` class). Parameter size: 3 (denoting body-fixed *x*, *y* and *z* Cartesian position). Secondary identifer: Ground station name.
