@@ -137,7 +137,9 @@ Downloading/compiling boost
 
    This error was fixed by removing the ``~`` from the ``TEMP`` and ``TMP`` directory. See `github issue 259 <https://github.com/Tudat/tudat/issues/259>`_ for more details on the issue.
 
+- System ``boost`` library used on linux
 
+   When boost is already installed on the system your compiler might prefer the system ``boost`` over the ``boost`` in your tudatBundle as discussed in `this issue <https://github.com/Tudat/tudat/issues/203>`_. This could lead to incompatibility issues. 
    
 .. _debuggingCompilationLinkingCode:
 
@@ -162,6 +164,12 @@ Compilation/linking of code
        (.text.startup+0x39): undefined reference to `WinMain@16'. 
      
    This error (or something similar) can occur (on Windows) if your compiler is in a directory containing a space (and possibly other non-standard character). Make sure that Qt and your compiler are installed in a directory like ``C:/Qt``, ``C:/mingw``, etc. Avoid the ``C:/Program Files`` directory.
+
+
+-  ``libbacktrace could not find executable to open``
+
+   This error is due to multi-core compilation on Windows. Restarting the compile process fixes the issue (multiple restarts could be required), or compile with a singly thread.
+
 
 .. _debuggingFailedUnitTests:
 
