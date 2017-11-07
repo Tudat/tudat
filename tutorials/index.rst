@@ -25,6 +25,9 @@ If encountering any problems please visit the :ref:`troubleshootingTutorial` pag
    tudatFeatures/index
    jsonInterface/index
    matlabInterface/index
+   Doxygen <http://doxygen.tudat.tudelft.nl>
    troubleshooting/index
+
+
 
 

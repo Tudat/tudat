@@ -16,3 +16,4 @@ Output console
 ~~~~~~~~~~~~~~
 The output console (indicated with green) is used to displays any issues encountered during compilation which help pinpoint any compilation problems. Furthermore, it is used to display the output of search results, applications and compilation of application. The last tab `General Messages` shows the output of CMake. 
  
+Warnings can be muted. Go to the issues tab of the output console and click icon with the yellow triangle with exclemation mark. Now only the errors are shown. If at any time you also want to see the warnings, just click the icon again.
