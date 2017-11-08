@@ -18,21 +18,25 @@ So, we are now going to walk through the process of installing CMake on your com
     To complete the installation, drag and drop CMake onto the Applications folder.
 
 **Step 4: Launch CMake**
-    Launch CMake from Launchpad or Spotlight. The interface that pops up is *only* used to perform step 5 of this guide. You do not need to fill anything in.
+    Launch CMake from Launchpad or Spotlight. The interface that pops up is *only* used to test whether CMake has been correctly installed, and to perform step 5 of this guide. You do not need to fill anything in.
 
-    .. note:: If you get the warning: "'CMake' can't be opened because it is from an unidentified developer.", please make sure to enable "Allow apps dowloaded from: Anywhere" under the "System Preferences" > "Security & Privacy".
+    .. error:: If you get the warning: "'CMake' can't be opened because it is from an unidentified developer.", please make sure to enable "Allow apps dowloaded from: Anywhere" under the "System Preferences" > "Security & Privacy".
  
 **Step 5: Add CMake to path**
-    From the "Tools" menu select "How to Install For Command Line Use". From the dialog that pops up, note the ``cmake-gui path``. Open a terminal by executing Cmd+Space, typing terminal and confirming with Enter. Type::
+    From the "Tools" menu select "How to Install For Command Line Use". From the dialog that pops up, note the ``cmake-gui path``, this may be required later. Open a terminal by executing Cmd+Space, typing terminal and confirming with Enter. Type::
 
         sudo mkdir -p /usr/local/bin
         sudo /Applications/CMake.app/Contents/bin/cmake-gui --install=/usr/local/bin
 
-    Hopefully no errors occured. Verify that it has been correctly installed to PATH by executing::
+    Hopefully no errors occured. 
+
+    .. error:: If an error occurs, check whether the path ``/Applications/CMake.app/Contents/bin/cmake-gui`` corresponds to the ``cmake-gui path`` that you noted down earlier. If not, change the above command so that the two match.
+
+    Now, Verify that it has been correctly installed to PATH by executing::
 
         cmake --version
 
-    .. note:: If cmake can't be found, even after succesfully installing CMake for command-line use, you first need to verify that the symbolic links were properly made, execute::
+    .. error:: If cmake can't be found, even after succesfully installing CMake for command-line use, you first need to verify that the symbolic links were properly made, execute::
 
             ln -al /usr/local/bin/cmake
 
@@ -48,7 +52,7 @@ So, we are now going to walk through the process of installing CMake on your com
 
         cmake --version
 
-     should now give you the desired result.
+     should now give you the desired result, showing some details on your CMake installation.
 
 git
 ~~~
