@@ -28,7 +28,7 @@ Setup SmartGit
 
 Create a GitHub account
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-Create a GitHub account if you haven't done so yet. A GitHub account is completely free and provides you with hosting for your software projects. It also allows you to fork other repositories to create your own improved version of a piece of code.
+`Create a GitHub account <https://github.com/join?source=header-home>`_ if you haven't done so yet. A GitHub account is completely free and provides you with hosting for your software projects. It also allows you to fork other repositories to create your own improved version of a piece of code.
 
 **Step 2.1: Sign-up for a GitHub account**
     As a student you can upgrade your free account to a personal account (normally $7/month). With a personal account you can have unlimited private repositories. Private repositories can be very helpful when developing new unreleased programs and/or writing your thesis.
@@ -43,7 +43,9 @@ Open SmartGit and click ``Repository`` and ``Clone``. Set the remote url to the 
 
   .. tip:: It is good practice to avoid long paths and names with special characters (preferably also no spaces). Pick something short and sensible. Especially If you are working on a Windows system, it is recommended that you place the Tudat Bundle directly in your C:\ drive, to avoid problems with filepath lengths.
   
- Congratulations! You have now downloaded the tudatBundle. You can now head to the :ref:`configureTudatLibraries` guide to configure the bundled libraries correctly and build them.
+Note that this step can take some time (up to tens of minutes), be patient and don't break off the cloning. 
+
+Congratulations! You have now downloaded the tudatBundle. You can now head to the :ref:`configureTudatLibraries` guide to configure the bundled libraries correctly and build them.
 
 
 
