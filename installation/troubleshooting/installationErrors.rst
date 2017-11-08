@@ -81,11 +81,13 @@ Verify Build & Run options
    1. Open QtCreator, go to ``Preferences/Options``, select the ``Build & Run`` section and switch to the ``Kits`` tab
    2. Verify settings:
 
-      - Generator: Unix Makefiles / MinGW Makefiles
+      - Generator:
+         - Unix Makefiles on Linux or Mac OS X
+         - MinGW Makefiles on Windows
       - Extra generator: CodeBlocks
       - Device type: Desktop
       - Compiler C/C++
-         - MinGW >= 4.9.2
+         - MinGW >= 5.3.0
          - GCC or Clang on Linux or Mac OS X
          - C compiler should be non-empty, it is needed for certain libraries.
 
@@ -166,12 +168,12 @@ Compilation/linking of code
 - ``Error "out of memory allocating XXXX bytes"``
    This indicates that your compiler is using too much RAM, and your system cannot allocate it. First, copy your full compile output (tab at bottom of Qt Creator) to a text file. Then, change the :literal:`COMPILE_HIGH_ACCURACY_ESTIMATION_TESTS` CMake argument to OFF, and recompile. *Whether this fixes the error or not, open a Github issue*. This problem should have been corrected, and any occurence should be communicated. 
 
- - ``Undefined reference to  `WinMain@16'``::
+- ``Undefined reference to  `WinMain@16'``::
 
-       Linking CXX executable ..... C:/PROGRA2/Qt/Tools/MINGW41/bin/../lib/gcc/i686-w64-mingw32/4.9.2/../../../../i686-w64-mingw32/lib/../lib/libmingw32.a(lib32_libmingw32_a-crt0_c.o):crt0_c.c:  
-       (.text.startup+0x39): undefined reference to `WinMain@16'. 
+   Linking CXX executable ..... C:/PROGRA2/Qt/Tools/MINGW41/bin/../lib/gcc/i686-w64-mingw32/4.9.2/../../../../i686-w64-mingw32/lib/../lib/libmingw32.a(lib32_libmingw32_a-crt0_c.o):crt0_c.c:  
+   (.text.startup+0x39): undefined reference to `WinMain@16'. 
      
-   This error (or something similar) can occur (on Windows) if your compiler is in a directory containing a space (and possibly other non-standard character). Make sure that Qt and your compiler are installed in a directory like ``C:/Qt``, ``C:/mingw``, etc. Avoid the ``C:/Program Files`` directory.
+  This error (or something similar) can occur (on Windows) if your compiler is in a directory containing a space (and possibly other non-standard character). Make sure that Qt and your compiler are installed in a directory like ``C:/Qt``, ``C:/mingw``, etc. Avoid the ``C:/Program Files`` directory.
 
 
 -  ``libbacktrace could not find executable to open``
