@@ -60,3 +60,9 @@ All repositories in the diagram have branches, but only those for the local repo
 If you clone a repository you also clone all branches. By default the master branch is available to you (what you see when you open a file in an editor or browse the code using a file explorer). You can view other branches by checking them out using your git client. You can also create new branches locally (and remotely as long as you have the proper privileges).
 
 As with forks, all users are encourage to develop code inside branches. This way your master branch can easily stay up-to-date with the official Tudat, from which you can branch further (different) developments or revert back to if everything goes wrong. You can create a new branch inside you git client. If your additions are mature enough, you might want to eventually merge your development branch into your master branch. Branching + merging and forking + pull requests are very similar in this respect. The former happens within a repository, while the latter is across repositories. You can also directly create a pull request of your development branch on the official master (YourAccount/MyFeature1 -> Tudat/master), bypassing merging into your own master entirely.
+
+Git cheat sheet
+~~~~~~~~~~~~~~~
+
+A usefull `cheat sheet <https://services.github.com/on-demand/downloads/github-git-cheat-sheet.pdf>`_ when using git from Terminal has been written by Github. 
+

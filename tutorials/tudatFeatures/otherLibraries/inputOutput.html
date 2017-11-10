@@ -319,11 +319,32 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="data-map-int-matrix3d-to-text-file">
+<h3>7.1.2.4. Data-map (int, Matrix3d) to text file<a class="headerlink" href="#data-map-int-matrix3d-to-text-file" title="Permalink to this headline">¶</a></h3>
+<p>An example of a data map, where the type of the key is a <code class="docutils literal"><span class="pre">int</span></code>, and the type of the value is an <code class="docutils literal"><span class="pre">Eigen::Matrix3d</span></code>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span> <span class="n">threeDimensionalMatrix</span><span class="p">;</span>
+<span class="n">threeDimensionalMatrix</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span><span class="o">&gt;</span> <span class="n">matrixMap</span><span class="p">;</span>
+<span class="n">matrixMap</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span> <span class="o">=</span> <span class="n">threeDimensionalMatrix</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This data-map can be stored to a file using:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="o">::</span><span class="n">input_output</span><span class="o">::</span><span class="n">writeDataMapToTextFile</span><span class="p">(</span>
+            <span class="n">matrixMap</span><span class="p">,</span> <span class="s">&quot;matrixMap&quot;</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>This results in:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">14</span>          <span class="mi">0</span>                 <span class="mi">1</span>                 <span class="mi">2</span>                 <span class="mi">3</span>                 <span class="mi">4</span>                 <span class="mi">5</span>                 <span class="mi">6</span>                 <span class="mi">7</span>                 <span class="mi">8</span>
+</pre></div>
+</div>
+<p>Note that all matrix entries are put on one line when writing a map to file. This makes the file easy to read by other programs.</p>
+</div>
 <div class="section" id="eigen-matrix3d-to-text-file">
-<h3>7.1.2.4. Eigen::Matrix3d to text file<a class="headerlink" href="#eigen-matrix3d-to-text-file" title="Permalink to this headline">¶</a></h3>
+<h3>7.1.2.5. Eigen::Matrix3d to text file<a class="headerlink" href="#eigen-matrix3d-to-text-file" title="Permalink to this headline">¶</a></h3>
 <p>An example of a matrix to save:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span> <span class="n">squareDoubleValueMatrix</span><span class="p">;</span>
-<span class="n">squareDoubleValueMatrix</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">;</span>
+<span class="n">squareDoubleValueMatrix</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>This can be saved to a text file using:</p>
@@ -331,9 +352,16 @@
                              <span class="n">squareDoubleValueMatrix</span><span class="p">,</span> <span class="s">&quot;squareDoubleValueMatrixFile&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>This results in:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">0</span>                     <span class="mi">1</span>                       <span class="mi">2</span>
+<span class="mi">3</span>                     <span class="mi">4</span>                       <span class="mi">5</span>
+<span class="mi">6</span>                     <span class="mi">7</span>                       <span class="mi">8</span>
+</pre></div>
+</div>
+<p>Note the difference with saving matrices inside a map, which will put all matrix entries on one line.</p>
 </div>
 <div class="section" id="storing-propagation-history">
-<h3>7.1.2.5. Storing propagation history<a class="headerlink" href="#storing-propagation-history" title="Permalink to this headline">¶</a></h3>
+<h3>7.1.2.6. Storing propagation history<a class="headerlink" href="#storing-propagation-history" title="Permalink to this headline">¶</a></h3>
 <p>A good example on how to store the propagation history in a data map can be found in the example applications in the Tudat Bundle. If you have downloaded the bundle, these examples can be found in:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span>
 </pre></div>
@@ -341,7 +369,7 @@
 <p>An example of saving the propagation history to a data file is described at the end of the <a class="reference internal" href="../../applicationWalkthroughs/unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> walkthrough.</p>
 </div>
 <div class="section" id="storing-dependent-variable-history">
-<h3>7.1.2.6. Storing dependent variable history<a class="headerlink" href="#storing-dependent-variable-history" title="Permalink to this headline">¶</a></h3>
+<h3>7.1.2.7. Storing dependent variable history<a class="headerlink" href="#storing-dependent-variable-history" title="Permalink to this headline">¶</a></h3>
 <p>Dependent variables can be saved to a data file similar to the propagation history. Instead of the <code class="docutils literal"><span class="pre">getEquationOfMotionNumericalSolution()</span></code> function the <code class="docutils literal"><span class="pre">getDependentVariableHistory()</span></code> function of the <a class="reference internal" href="../propagationSetup/simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> class is used to obtain the Data-map. Which can be saved as described above.</p>
 </div>
 </div>

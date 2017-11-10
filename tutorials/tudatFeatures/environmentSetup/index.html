@@ -190,7 +190,7 @@
 <span id="tudatfeaturesenvironmentindex"></span><h1>3. Environment Set-up<a class="headerlink" href="#environment-set-up" title="Permalink to this headline">¶</a></h1>
 <p>Models for the physical environment are one of the cornerstones of a numerical astrodynamics toolbox. Here, we define the environment in the broadest sense, including all physical properties of the solar system, such as atmospheres and gravity fields, but also any models for the orbits and rotations of these bodies.</p>
 <p>On this page, we will give an overview of how the environment is represented in Tudat, which models have been implemented, and how to create the environment that is tailored to your needs. A graphical representation of the basic structure for implementing the environment is shown below. For the options within these settings object, please click on the object in the figure.</p>
-<object data="../../../_images/graphviz-cb6d4a600a7c0b42c81a1a39e8660949616cb1f0.svg" type="image/svg+xml">
+<object data="../../../_images/graphviz-da25bc94ba1e9761f63604c8d6eb27ef251c6590.svg" type="image/svg+xml">
             <p class="warning">digraph
 {
    # General diagram settings
@@ -210,8 +210,8 @@
 
    # Hyperlinks (Sphinx auto referencing not working here, need to link to exact web adres)
    &quot;GravityField\nVariationSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#GravityFieldVariationSettings&quot;, target = &quot;_top&quot;];
-   &quot;RotationModelSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#RotationalModelSettings&quot;, target = &quot;_top&quot;];
-   &quot;Aerodynamic\nCoefficientSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#AeroDynamicCoefficientSettings&quot;, target = &quot;_top&quot;];
+   &quot;RotationModelSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#RotationModelSettings&quot;, target = &quot;_top&quot;];
+   &quot;Aerodynamic\nCoefficientSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#AerodynamicCoefficientSettings&quot;, target = &quot;_top&quot;];
    &quot;BodyShapeSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#BodyShapeSettings&quot;, target = &quot;_top&quot;];
    &quot;RadiationPressure\nInterfaceSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#RadiationPressureInterfaceSettings&quot;, target = &quot;_top&quot;];
    &quot;AtmosphereSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#AtmosphereSettings&quot;, target = &quot;_top&quot;];
@@ -262,7 +262,7 @@
       &quot;GravityField\nVariationSettings&quot; -&gt; RotationModelSettings [style = invis];
    }
    &quot;setGlobalFrame\nBodyEphemerides&quot; -&gt; NamedBodyMap [dir = both];
-
+   &quot;Frame origin\n&amp; orientation&quot; -&gt; &quot;setGlobalFrame\nBodyEphemerides&quot;;
 
 
    {&quot;RadiationPressure\nInterfaceSettings&quot;, &quot;GravityField\nVariationSettings&quot; [fillcolor = lightcoral]};
@@ -670,7 +670,7 @@
 
 <dl class="method">
 <dt>
-<code class="descname">Tabulated RotationalEphermeis model</code></dt>
+<code class="descname">Tabulated RotationalEphemeris model</code></dt>
 <dd><p>Rotation model obtained from an interpolator, with dependent variable a <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code> of size 7. Currently the settings interface is not yet implemented but the functionality is implemented in <code class="xref py py-class docutils literal"><span class="pre">TabulatedRotationalEphemeris</span></code>. The tabulated rotational ephemeris can be implemented as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create tabulated rotational model</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TabulatedRotationalEphemeris</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">tabulatedEphemeris</span> <span class="o">=</span>

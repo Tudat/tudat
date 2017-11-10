@@ -27,8 +27,8 @@ On this page, we will give an overview of how the environment is represented in 
 
       # Hyperlinks (Sphinx auto referencing not working here, need to link to exact web adres)
       "GravityField\nVariationSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#GravityFieldVariationSettings", target = "_top"];
-      "RotationModelSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#RotationalModelSettings", target = "_top"];
-      "Aerodynamic\nCoefficientSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#AeroDynamicCoefficientSettings", target = "_top"];
+      "RotationModelSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#RotationModelSettings", target = "_top"];
+      "Aerodynamic\nCoefficientSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#AerodynamicCoefficientSettings", target = "_top"];
       "BodyShapeSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#BodyShapeSettings", target = "_top"];
       "RadiationPressure\nInterfaceSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#RadiationPressureInterfaceSettings", target = "_top"];
       "AtmosphereSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#AtmosphereSettings", target = "_top"];
@@ -79,7 +79,7 @@ On this page, we will give an overview of how the environment is represented in 
          "GravityField\nVariationSettings" -> RotationModelSettings [style = invis];
       }
       "setGlobalFrame\nBodyEphemerides" -> NamedBodyMap [dir = both];
-
+      "Frame origin\n& orientation" -> "setGlobalFrame\nBodyEphemerides";
 		
 		
       {"RadiationPressure\nInterfaceSettings", "GravityField\nVariationSettings" [fillcolor = lightcoral]};
@@ -460,6 +460,7 @@ Rotational model
 
    Base class for the rotational model settings. Models currently available through the :class:`BodySettings` architecture are:
 
+
 .. class:: SimpleRotationModelSettings
 
    Rotation model with constant orientation of the rotation axis, and constant rotation rate about local z-axis. 
@@ -486,7 +487,7 @@ Rotational model
        std::string targetFrame = "IAU_Earth";
        bodySettings[ "Earth" ]->rotationModelSettings = boost::make_shared< RotationModelSettings >( spice_rotation_model, originalFrame, targetFrame ); 
 
-.. method:: Tabulated RotationalEphermeis model
+.. method:: Tabulated RotationalEphemeris model
 
    Rotation model obtained from an interpolator, with dependent variable a ``Eigen::VectorXd`` of size 7. Currently the settings interface is not yet implemented but the functionality is implemented in :class:`TabulatedRotationalEphemeris`. The tabulated rotational ephemeris can be implemented as follows:
 
