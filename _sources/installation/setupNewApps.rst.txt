@@ -16,7 +16,7 @@ You can either start a new (empty) repository or continue developing from an exi
 Note this same **A**, **B**, **C** notation is used further on in the guide as well. You can skip sections not applicable to your use case.
 
 **Step 1: Setting up a repository for your app**
-    **(A + B)** Go to https://github.com/new and create a new repository for your application. It is recommended to set the scope to private. If the private option is unavailable to you go back and follow the guide on creating a GitHub account. Note that it is not easy to change the name of your repository, so choose wisely!
+    **(A + B)** Go to https://github.com/new and create a new repository for your application. It is recommended (and for AE4867 **required**) to set the scope to private. If the private option is unavailable to you, go back and follow the guide on creating a GitHub account. Note that it is not easy to change the name of your repository, so choose wisely!
 
     **(B)** Fork a repository and make it private. Scroll down to the bottom and choose ``Import code``. Fill in the the url of the repository (in this case https://github.com/tudat/tudatAssignments.git). Click ``Begin import``.
 
