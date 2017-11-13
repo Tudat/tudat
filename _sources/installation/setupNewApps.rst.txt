@@ -23,7 +23,7 @@ Note this same **A**, **B**, **C** notation is used further on in the guide as w
     **(C)** Fork a repository and keep it public. Visit any repository on GitHub and click ``Fork`` at the top of the page.
 
 **Step 2: Clone the repository in SmartGit**
-    Open SmartGit, go to ``Repository`` and choose ``Clone...`` Copy in the repository URL and choose ``Next``. If your repository is private, you will need to enter your GitHub credentials! Select the local path ``tudatBundle/tudatApplications/myApplication`` (create this directory yourself).
+    Open SmartGit, go to ``Repository`` and choose ``Clone...`` Copy in the repository URL and choose ``Next``. If your repository is private, you will need to enter your GitHub credentials! Select the local path ``tudatBundle/tudatApplications/myApplication``. In general, select the name ``myApplication`` according to your preferences. For AE4867, use ``tudatBundle/tudatApplications/numericalAstrodynamics`` (create this directory yourself).
 
 **Step 3: Copy and modify the template (A only)**
 
@@ -58,7 +58,8 @@ Note this same **A**, **B**, **C** notation is used further on in the guide as w
 
     In case you are following AE4867, add the following instead::
 
-        add_subdirectory( "${PROJECTROOT}/tudatApplications/myApplication/numericalAstrodynamicsAssignment1")
+        add_subdirectory( "${PROJECTROOT}/tudatApplications/numericalAstrodynamics/assignment1")
+        add_subdirectory( "${PROJECTROOT}/tudatApplications/numericalAstrodynamics/assignment2")
 
 **Step 5: Commit changes to the application repository**
 
