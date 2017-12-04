@@ -217,13 +217,29 @@
 
 <span class="c1">// Create interpolator</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span> <span class="n">interpolatorSettings</span> <span class="o">=</span>
-    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">linear_interpolator</span> <span class="p">)</span>
+    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">linear_interpolator</span> <span class="p">);</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneDimensionalInterpolator</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">interpolator</span> <span class="o">=</span>
         <span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span>
             <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span> <span class="p">);</span>
 
 <span class="c1">// Interpolate</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Note that if the data you interpolate is a different type, this should be reflected in how the interpolator is created. For instance, for <code class="docutils literal"><span class="pre">std::map&lt;</span> <span class="pre">double,</span> <span class="pre">Eigen::Vector6d</span> <span class="pre">&gt;</span></code> input, use</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Load data.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">stateMap</span><span class="p">;</span>
+<span class="n">stateMap</span> <span class="o">=</span> <span class="p">....</span>
+
+<span class="c1">// Create interpolator</span>
+<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span> <span class="n">interpolatorSettings</span> <span class="o">=</span>
+    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">linear_interpolator</span> <span class="p">);</span>
+<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneDimensionalInterpolator</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">interpolator</span> <span class="o">=</span>
+        <span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span>
+            <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span> <span class="p">);</span>
+
+<span class="c1">// Interpolate</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>In this example, the <code class="docutils literal"><span class="pre">stateMap</span></code> contains the data that is interpolated, using the <code class="docutils literal"><span class="pre">double</span></code> key (time) as independent variable and the <code class="docutils literal"><span class="pre">Eigen::Vector6d</span></code> value (state) as dependent variable. The interpolation type is linear, and the <code class="docutils literal"><span class="pre">interpolatorSettings</span></code> object is created by passing only the argument <code class="docutils literal"><span class="pre">linear_interpolator</span></code>.</p>
