@@ -39,7 +39,7 @@ Creating interpolators of a single independent variable is most easily done in T
     // Interpolate
     Eigen::Vector6d interpolatedResult = interpolator->interpolate(0.0);
 
-Note that if the data you interpolate is a different type, this should be reflected in how the interpolator is created. For instance, for ``std::map< double, Eigen::Vector6d >`` input, use
+Note that if the data you interpolate is a different type, this should be reflected in how the interpolator is created. For instance, for ``std::map< double, Eigen::VectorXd >`` input, use
 
 .. code-block:: cpp
 
