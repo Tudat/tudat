@@ -31,13 +31,31 @@ Creating interpolators of a single independent variable is most easily done in T
 
     // Create interpolator
     boost::shared_ptr< interpolators::InterpolatorSettings > interpolatorSettings =
-        boost::make_shared< interpolators::InterpolatorSettings >( linear_interpolator ) 
+        boost::make_shared< interpolators::InterpolatorSettings >( linear_interpolator ); 
     boost::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector6d > > interpolator =
             interpolators::createOneDimensionalInterpolator(
                 stateMap, interpolatorSettings );
 
     // Interpolate
     Eigen::Vector6d interpolatedResult = interpolator->interpolate(0.0);
+
+Note that if the data you interpolate is a different type, this should be reflected in how the interpolator is created. For instance, for ``std::map< double, Eigen::Vector6d >`` input, use
+
+.. code-block:: cpp
+
+    // Load data.
+    std::map< double, Eigen::VectorXd > stateMap;
+    stateMap = ....
+
+    // Create interpolator
+    boost::shared_ptr< interpolators::InterpolatorSettings > interpolatorSettings =
+        boost::make_shared< interpolators::InterpolatorSettings >( linear_interpolator ); 
+    boost::shared_ptr< OneDimensionalInterpolator< double, Eigen::VectorXd > > interpolator =
+            interpolators::createOneDimensionalInterpolator(
+                stateMap, interpolatorSettings );
+
+    // Interpolate
+    Eigen::VectorXd interpolatedResult = interpolator->interpolate(0.0);
 
 In this example, the ``stateMap`` contains the data that is interpolated, using the ``double`` key (time) as independent variable and the ``Eigen::Vector6d`` value (state) as dependent variable. The interpolation type is linear, and the ``interpolatorSettings`` object is created by passing only the argument ``linear_interpolator``.
 
