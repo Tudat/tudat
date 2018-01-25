@@ -334,7 +334,7 @@ public:
         propagatorSettings_(
             boost::dynamic_pointer_cast< SingleArcPropagatorSettings< StateScalarType > >( propagatorSettings ) ),
         initialPropagationTime_( integratorSettings_->initialTime_ ), initialClockTime_( initialClockTime ),
-        propagationTerminationReason_( propagation_never_run )
+        propagationTerminationReason_( boost::make_shared< PropagationTerminationDetails >( propagation_never_run ) )
     {
         if( propagatorSettings == NULL )
         {
@@ -431,8 +431,7 @@ public:
                     stateDerivativeFunction_, equationsOfMotionNumericalSolutionRaw_,
                     dynamicsStateDerivative_->convertFromOutputSolution(
                         initialStates, this->initialPropagationTime_ ), integratorSettings_,
-                    boost::bind( &PropagationTerminationCondition::checkStopCondition,
-                                 propagationTerminationCondition_, _1, _2 ),
+                    propagationTerminationCondition_,
                     dependentVariableHistory_,
                     cummulativeComputationTimeHistory_,
                     dependentVariablesFunctions_,
@@ -615,7 +614,7 @@ public:
      * Function to retrieve the event that triggered the termination of the last propagation
      * \return Event that triggered the termination of the last propagation
      */
-    PropagationTerminationReason getPropagationTerminationReason()
+    boost::shared_ptr< PropagationTerminationDetails > getPropagationTerminationReason( )
     {
         return propagationTerminationReason_;
     }
@@ -627,7 +626,7 @@ public:
      */
     virtual bool integrationCompletedSuccessfully( ) const
     {
-        return propagationTerminationReason_ == termination_condition_reached;
+        return ( propagationTerminationReason_->getPropagationTerminationReason( ) == termination_condition_reached );
     }
 
 
@@ -769,7 +768,7 @@ protected:
     std::chrono::steady_clock::time_point initialClockTime_;
 
     //! Event that triggered the termination of the propagation
-    PropagationTerminationReason propagationTerminationReason_;
+    boost::shared_ptr< PropagationTerminationDetails > propagationTerminationReason_;
 
 };
 
@@ -1299,7 +1298,7 @@ protected:
     std::vector< double > arcStartTimes_;
 
     //! Event that triggered the termination of the propagation
-    std::vector< PropagationTerminationReason > propagationTerminationReasons_;
+    std::vector< boost::shared_ptr< PropagationTerminationDetails > > propagationTerminationReasons_;
 
     //! Propagator settings used by this objec
     boost::shared_ptr< MultiArcPropagatorSettings< StateScalarType > > multiArcPropagatorSettings_;
