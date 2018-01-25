@@ -138,6 +138,12 @@ public:
         return parameterDescription;
     }
 
+    bool getBiasIsAbsolute( )
+    {
+        return biasIsAbsolute_;
+    }
+
+
 protected:
 
 private:
@@ -337,6 +343,12 @@ public:
     {
         lookupScheme_ = lookupScheme;
     }
+
+    bool getBiasIsAbsolute( )
+    {
+        return biasIsAbsolute_;
+    }
+
 
 protected:
 
