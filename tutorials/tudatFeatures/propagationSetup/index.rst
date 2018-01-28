@@ -142,11 +142,11 @@ As shown in the figure above, there are various types of :class:`IntegratorSetti
         This derived class defines the settings to propagate the rotational dynamics.
     - :class:`MassPropagationSettings`
         This derived class defines the settings to propagate the mass of a body.
-    - :class:`CustomStatePropagationSettings`
+    - :class:`CustomStatePropagatorSettings`
         This derived class allows the propagation of user-defined dynamics.
-    - :class:`MultiTypeProgationSettings`
+    - :class:`MultiTypePropagatorSettings`
         This derived class allows to propagate simultaneously the various propagator classes defined above.
-    - :class:`MultiArcProgationSettings`
+    - :class:`MultiArcPropagatorSettings`
         This derived class allows to propagate the dynamics for multiple arcs.
 
 The reader is referred to the following sections to examine in detail how to create the dynamics simulator:
