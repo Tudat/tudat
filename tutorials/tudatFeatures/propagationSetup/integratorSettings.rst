@@ -2,7 +2,7 @@
 
 Integrator Settings
 ===================
-As the name suggests, the integrator settings tell the dynamics simulator how to integrate numerically the equations of motion that govern the orbital mechanics to simulate. The :class:`IntegratorSettings` are defined using two derived classes, depending on whether the integrator to be used is a fixed step-size integrator or a variable step-size integrator.
+As the name suggests, the integrator settings tell the dynamics simulator how to integrate numerically the equations of motion that govern the orbital mechanics to simulate. The :class:`IntegratorSettings` are defined using four derived classes, depending on whether the integrator to be used is a fixed step-size integrator or a variable step-size integrator.
 
 
 .. class:: IntegratorSettings 
@@ -19,7 +19,7 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
    - :literal:`TimeType`
    
-      Template argument used to set the precision of the time, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal`long double`. 
+      Template argument used to set the precision of the time, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal:`long double`. 
 
    - :literal:`integratorType`
 
@@ -52,7 +52,7 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
     - :literal:`TimeType`
    
-      Template argument used to set the precision of the time, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal`long double`. 
+      Template argument used to set the precision of the time, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal:`long double`. 
 
    - :literal:`integratorType`
 
@@ -85,6 +85,114 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
    - :literal:`absoluteErrorTolerance`
 
       :literal:`TimeType` that defines the absolute error tolerance for step size control of the :literal:`rungeKuttaVariableStepSize` numerical integrator.
+
+.. class:: BulirschStoerIntegratorSettings
+   
+   This class is used to define the settings for variable step-size integration using the Bulirsch-Stoer method. The constructor for this derived class is:
+
+   .. code-block:: cpp
+   
+      BulirschStoerIntegratorSettings<TimeType>(initialTime,
+                            		  initialTimeStep,
+                            		  extrapolationSequence,
+                            		  maximumNumberOfSteps,
+                            		  minimumStepSize,
+					  maximumStepSize,
+                            		  relativeErrorTolerence,
+                            		  absoluteErrorTolerence )
+
+   where:
+
+    - :literal:`TimeType`
+   
+      Template argument used to set the precision of the time, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal:`long double`. 
+
+
+   - :literal:`initialTime`
+
+      :literal:`TimeType` that defines the simulation's initial time. It must be a :literal:`double` variable-type.
+   
+   - :literal:`initialTimeStep`
+
+      :literal:`TimeType` that defines the initial step-size to be used either by the :literal:`BulirschStoerIntegrator` numerical integrator. It must be a :literal:`double` variable-type. 
+
+   - :literal:`extrapolationSequence`
+      	
+      :literal:`ExtrapolationMethodStepSequences` that defines the extrapolation sequence that is used for the :literal:`BulirschStoerIntegrator` numerical integrator.
+
+   - :literal:`maximumNumberOfSteps`
+
+      Number of integrations that are used for a single extrapolation. It must be a  :literal:`int` variable-type.
+  
+   - :literal:`minimumStepSize`
+
+      :literal:`TimeType` that defines the minimum step-size that the :literal:`BulirschStoerIntegrator` numerical integrator can take. 
+
+   - :literal:`maximumStepSize`
+
+      :literal:`TimeType` that defines the maximum step-size that the :literal:`BulirschStoerIntegrator` numerical integrator can take.
+
+   - :literal:`relativeErrorTolerance`
+
+      :literal:`TimeType` that defines the relative error tolerance for step size control of the :literal:`BulirschStoerIntegrator` numerical integrator.
+
+   - :literal:`absoluteErrorTolerance`
+
+      :literal:`TimeType` that defines the absolute error tolerance for step size control of the :literal:`BulirschStoerIntegrator` numerical integrator.
+
+.. class:: AdamsBashforthMoultonSettings
+   
+   This class is used to define the settings for variable step-size integration using the Adams-Bashfort-Moulton method. The constructor for this derived class is:
+
+   .. code-block:: cpp
+   
+      AdamsBashforthMoultonSettings<TimeType>(initialTime,
+                            		  initialTimeStep,
+                            		  minimumStepSize,
+					  maximumStepSize,
+                            		  relativeErrorTolerence,
+                            		  absoluteErrorTolerence,
+					  minimumOrder,
+					  maximumOrder )
+
+   where:
+
+    - :literal:`TimeType`
+   
+      Template argument used to set the precision of the time, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal:`long double`. 
+
+
+   - :literal:`initialTime`
+
+      :literal:`TimeType` that defines the simulation's initial time. It must be a :literal:`double` variable-type.
+   
+   - :literal:`initialTimeStep`
+
+      :literal:`TimeType` that defines the initial step-size to be used either by the :literal:`AdamsBashforthMoultonIntegrator` numerical integrator. It must be a :literal:`double` variable-type. 
+  
+   - :literal:`minimumStepSize`
+
+      :literal:`TimeType` that defines the minimum step-size that the :literal:`AdamsBashforthMoultonIntegrator` numerical integrator can take. 
+
+   - :literal:`maximumStepSize`
+
+      :literal:`TimeType` that defines the maximum step-size that the :literal:`AdamsBashforthMoultonIntegrator` numerical integrator can take.
+
+   - :literal:`relativeErrorTolerance`
+
+      :literal:`TimeType` that defines the relative error tolerance for step size control of the :literal:`AdamsBashforthMoultonIntegratorr` numerical integrator.
+
+   - :literal:`absoluteErrorTolerance`
+
+      :literal:`TimeType` that defines the absolute error tolerance for step size control of the :literal:`AdamsBashforthMoultonIntegrator` numerical integrator.
+
+   - :literal:`minimumOrder`
+
+      The minimum order of the integrator, the default value is 6. It must be a :literal:`int` variable-type.  
+
+   - :literal:`maximumOrder`
+
+      The maximum order of the integrator, the default value is 11. It must be a :literal:`int` variable-type.  
 
 
 .. note:: Aside from the arguments listed in this page, the :class:`IntegratorSettings` class and derived classes described here offer a number of optional arguments. The reader is advised to examine the Doxygen documentation included in the code for further details.
