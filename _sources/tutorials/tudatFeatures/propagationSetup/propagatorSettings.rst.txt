@@ -111,7 +111,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
       :class:`TorqueModelMap` List of torque models that are to be used in propagation.
 
 
-.. class:: MassPropagatorSettings
+.. class:: MassPropagationSettings
 
     This class implements the framework required to propagate the mass of a body. The constructor of this derived class is overloaded allowing either a single mass-rate per body or multiple mass-rates per body: 
 
@@ -119,7 +119,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         .. code-block:: cpp
 
-            MassPropagatorSettings<StateScalarType>(
+            MassPropagationSettings<StateScalarType>(
                     bodiesWithMassToPropagate,
                     massRateModels,
                     initialBodyMasses,
@@ -144,7 +144,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         .. code-block:: cpp
 
-            MassPropagatorSettings<StateScalarType>(
+            MassPropagationSettings<StateScalarType>(
                     bodiesWithMassToPropagate,
                     massRateModels,
                     initialBodyMasses,
@@ -157,7 +157,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
             :literal:`std::map< std::string, std::vector< boost::shared_ptr< MassRateModel > > >` that associates a :class:`std::vector` of :class:`MassRateModel` to each body with mass to be propagated.
 
-.. class:: CustomPropagatorSettings
+.. class:: CustomPropagationSettings
 
     This class allows the user to define and propagate its own state derivative function. The constructor of this derived class is overloaded allowing the user to either use a scalar state or vector state:
 
