@@ -282,6 +282,7 @@ The following issues on the `github project page <https://github.com/Tudat/tudat
 - Medium priority.
 
    - Update Qt project tree page to new layout occuring in latest Qt release.
+   - Move gh-pages and source branch of tudat repo to seperate repo.
 
 - Low Priority.
  
@@ -290,4 +291,6 @@ The following issues on the `github project page <https://github.com/Tudat/tudat
       GroundStationState, PPNParameterSet, BasicSolidBodyTideGravityFieldVariations, ConstantObservationBias, ConstantRelativeObservationBias, JsonSimulationManager, MAssPropagationSettings, CustomStatePropagationSettings, MultiTypePropagationSettings, MultiArcPropagationSettings
    - Fix large literals which go beyond page margins such as in `Defining estimation input <http://tudat.tudelft.nl/tutorials/tudatFeatures/estimationSetup/estimationExecution.html#defining-estimation-input>`_. 
    - Extensively refer to the Tudat libraries in the JSON interface :ref:`jsonInterface_keys`.
+   - Update the definition of the observation bias/bias estimation.
+   - Make the differences between Windows and *NIX instructions clear in <http://tudat.tudelft.nl/installation/troubleshooting/compilingBoostManually.html>_.
 
