@@ -94,6 +94,7 @@ Once the :literal:`integrator` object has been created, the multiple functions a
 
 .. note:: The functions described above are virtual functions and thus redefined for each integrator method described in this page. Selection of the integrator method is made at the stage of creating the integrator object, where selection of the functions is taken care of by the implementation framework.
 
+.. tip:: It is possible to integrate backwards in time by choosing an initial time step that is smaller then zero. If time is the chosen termination condition, the time at which the integration starts should also be larger then the final time.
 
 Selecting a numerical integrator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -172,6 +173,8 @@ where the following arguments are necessary:
 Using a numerical integrator to propagate an orbit
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The numerical integrators described in this page are commonly used to propagate the orbit of spacecraft and celestial bodies. The reader is referred to :ref:`tudatFeaturesIntegratorSettings`, which discusses the how the numerical integrator fit in the simulator framework of Tudat.
+
+
 
 
 
