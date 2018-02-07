@@ -18,11 +18,11 @@ In case it fails perform the following steps:
 3. Unpack the folder somewhere, for instance /home/user/boost or c:\boost.
 4. Open terminal emulator and go to the Boost folder.
 5. Run bootstrap:
-    1. ./bootstrap.sh --with-toolset=gcc
-    2. .\bootstrap.bat gcc
+    1. Linux and OS X: ./bootstrap.sh --with-toolset=gcc
+    2. Windows: .\bootstrap.bat gcc
 6. If successful, run bjam2:
-    1. ./b2 toolset=gcc link=static threading=multi --build-dir=Build stage variant=release --layout=tagged cxxflags=-std=c++11 --with-filesystem --with-system --with-thread --with-regex --with-date_time --with-test
-    2. .\b2.exe toolset=gcc link=static threading=multi --build-dir=Build stage variant=release --layout=tagged cxxflags=-std=c++11 --with-filesystem --with-system --with-thread --with-regex --with-date_time --with-test
+    1. Linux and OS X: ./b2 toolset=gcc link=static threading=multi --build-dir=Build stage variant=release --layout=tagged cxxflags=-std=c++11 --with-filesystem --with-system --with-thread --with-regex --with-date_time --with-test
+    2. Windows: .\b2.exe toolset=gcc link=static threading=multi --build-dir=Build stage variant=release --layout=tagged cxxflags=-std=c++11 --with-filesystem --with-system --with-thread --with-regex --with-date_time --with-test
 7. In case of errors try, to identify if bjam fails for each module or only for select modules.
 8. Re-run the b2 command several times, each time with only one thread and a different --with-[module] argument.
 

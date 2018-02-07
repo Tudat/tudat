@@ -20,13 +20,17 @@ The different types of :class:`PropagationTerminationSettings` are implemented b
 
    .. code-block:: cpp
 
-      PropagationTerminationSettings( terminationTime )
+      PropagationTerminationSettings( terminationTime,  terminateExactlyOnFinalCondition)
 
    where:
 
    - :literal:`terminationTime`
 
       :literal:`double` that dictates the time that must pass before the simulation is terminated.
+
+   - :literal:`terminateExactlyOnFinalCondition`
+
+      :literal:`bool` that determines if the integrator will either stop exactly on the final condition (true), or if the integrator will terminate on the first step where it is violated (false), which is the default value.
 
 .. class:: PropagationDependentVariableTerminationSettings
 
@@ -48,7 +52,8 @@ The different types of :class:`PropagationTerminationSettings` are implemented b
 
        PropagationDependentVariableTerminationSettings( terminationDependentVariable,
       							limitValue,
-      							useAsLowerLimit )
+      							useAsLowerLimit,
+                                                        terminateExactlyOnFinalCondition )
 
    where:
 
@@ -64,6 +69,10 @@ The different types of :class:`PropagationTerminationSettings` are implemented b
 
       :literal:`bool` that dictates whether the :literal:`limitValue` is used as a lower-limit (true) or as a higher-limit (false).
 
+   - :literal:`terminateExactlyOnFinalCondition`
+
+      :literal:`bool` that determines if the integrator will either stop exactly on the final condition (true), or if the integrator will terminate on the first step where it is violated (false), which is the default value.  
+
 .. class:: PropagationHybridTerminationSettings
 
    It may be possible that the user desires to terminate a propagation according several criteria, where such criteria may or may not be fulfilled simulataneously. The constructor for this derived class is:
@@ -71,7 +80,8 @@ The different types of :class:`PropagationTerminationSettings` are implemented b
    .. code-block:: cpp
 
       PropagationHybridTerminationSettings( terminationSettingsList, 
-      					    fulFillSingleCondition )
+      					    fulFillSingleCondition,
+                                            terminateExactlyOnFinalCondition )
 
    where:
 
@@ -83,5 +93,8 @@ The different types of :class:`PropagationTerminationSettings` are implemented b
 
       :literal:`bool` that determines whether the propagation terminates once a single condition is met (true) or whether all conditions must be met (false).
 
+   - :literal:`terminateExactlyOnFinalCondition`
+
+      :literal:`bool` that determines if the integrator will either stop exactly on the final condition (true), or if the integrator will terminate on the first step where it is violated (false), which is the default value.
 
    .. tip::  It is possible to combine both :class:`PropagationTimeTerminationSettings` and :class:`PropagationDependentVariableTerminationSettings`. 
