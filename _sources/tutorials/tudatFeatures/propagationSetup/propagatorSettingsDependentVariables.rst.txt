@@ -117,6 +117,8 @@ Below, we provide a list of all dependent variables that can be saved using Tuda
 
     - **Keplerian state** of body. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`keplerian_state_dependent_variable` as :literal:`variableType`. 
 
+    - **Modified equinoctial state** of body. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`modified_equinocial_state_dependent_variable` as :literal:`variableType`. The value of the parameter I is automatically chosen as +1 or -1, depending on whether the inclination is smaller or larger than 90 degrees.
+
     - **Rotation of LVLH to inertial frame**, Rotation matrix from Local Vertical, Local Horizontal (LVLH) frame of body to inertial frame**. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`lvlh_to_inertial_frame_rotation_dependent_variable` as :literal:`variableType`. 
     
     - **Periapsis altitude**, based on current osculating elements. NOTE: THIS COMPUTATON USES THE AVERAGE RADIUS OF THE CENTRAL BODY, NOT THE LOCAL RADIUS. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`periapsis_altitude_dependent_variable` as :literal:`variableType`.
@@ -174,6 +176,7 @@ The framework discussed in the previous section explains how the :literal:`depen
       - :literal:`single_torque_norm_dependent_variable`
       - :literal:`body_fixed_groundspeed_based_velocity_variable`
       - :literal:`keplerian_state_dependent_variable` (Secondary body defines body w.r.t. which the keplerian state is computed).
+      - :literal:`modified_equinocial_state_dependent_variable` (Secondary body defines body w.r.t. which the keplerian state is computed).
 
 - :literal:`associatedBody`
 

@@ -20,7 +20,7 @@ The different types of :class:`PropagationTerminationSettings` are implemented b
 
    .. code-block:: cpp
 
-      PropagationTerminationSettings( terminationTime,  terminateExactlyOnFinalCondition)
+      PropagationTimeTerminationSettings( terminationTime,  terminateExactlyOnFinalCondition)
 
    where:
 
