@@ -20,7 +20,7 @@ If encountering any problems please visit the :ref:`troubleshootingTutorial` pag
 .. toctree::
    :hidden:
 
-   gettingStarted/index
+   basics/index
    applicationWalkthroughs/index
    tudatFeatures/index
    jsonInterface/index
