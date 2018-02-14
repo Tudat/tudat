@@ -44,6 +44,7 @@ Tudat has also been used extensively in research projects, a few of them are lis
    :caption: Contents
 
    self
+   started/index
    installation/index
    tutorials/index
    developerGuide/index
