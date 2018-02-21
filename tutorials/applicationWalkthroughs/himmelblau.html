@@ -1,0 +1,426 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. Himmelblau Optimization &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
+        <link rel="up" title="Application Walkthroughs" href="index.html"/>
+        <link rel="next" title="2. CEC 2013 Optimizer Comparison" href="cecOptimization.html"/>
+        <link rel="prev" title="9. Orbit Determination and Parameter Estimation" href="earthOrbiterStateEstimation.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorials and Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../basics/index.html">Tudat Basics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Walkthroughs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#example-tutorials">Example tutorials</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html#optimization-tutorials">Optimization tutorials</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">1. Himmelblau Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cecOptimization.html">2. CEC 2013 Optimizer Comparison</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tudatFeatures/index.html">Tudat Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jsonInterface/index.html">JSON Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference external" href="http://doxygen.tudat.tudelft.nl">Doxygen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tutorials and Documentation</a> &raquo;</li>
+        
+          <li><a href="index.html">Application Walkthroughs</a> &raquo;</li>
+        
+      <li>1. Himmelblau Optimization</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tutorials/applicationWalkthroughs/himmelblau.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="himmelblau-optimization">
+<span id="walkthroughshimmelblau"></span><h1>1. Himmelblau Optimization<a class="headerlink" href="#himmelblau-optimization" title="Permalink to this headline">¶</a></h1>
+<p>The example described on this page is that of finding a minimum of the Himmelblau function. The Himmelblau function is often used to test optimization algorithms, thus it is a good start to understand the Pagmo 2 optimization library. The code for this tutorial is given here on Github, and is also located in your tudat bundle at:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">libraryExamples</span><span class="o">/</span><span class="n">PaGMOEx</span><span class="o">/</span><span class="n">himmelblauOptimization</span><span class="o">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
+<p>The Himmelblau function is given by the following equation:</p>
+<div class="math">
+\[f(x,y) = (x^2 + y - 11)^2 + (x - y^2 - 7)^2\]</div>
+<p>and it has four local minima, all with the same functional value of 0.</p>
+<p>The following concepts will be discussed in this tutorial:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Setting up a problem.</li>
+<li>Choosing an optimization algorithm and its parameters.</li>
+<li>Building an island for the population.</li>
+</ul>
+</div></blockquote>
+<p>The Pagmo 2 library has several options that are not covered in this tutorial (and the upcoming tutorials). For more in depth information on the Pagmo 2 library, users are referred to the <a class="reference external" href="https://esa.github.io/pagmo2/">documentation</a> of this library. This tutorial, and the following tutorials, will also not go in depth of the theory behind the optimization algorithms. These tutorials will only contain information on how to implement optimization algorithms into your code.</p>
+<div class="section" id="set-up-the-problem">
+<h2>1.1. Set up the problem<a class="headerlink" href="#set-up-the-problem" title="Permalink to this headline">¶</a></h2>
+<p>In the Himmelblau optimization code, the set up of the problem is a very short piece of code:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//Set seed for reproducible results</span>
+<span class="n">pagmo</span><span class="o">::</span><span class="n">random_device</span><span class="o">::</span><span class="n">set_seed</span><span class="p">(</span> <span class="mi">12345</span> <span class="p">);</span>
+
+<span class="c1">// Define Himmelblau function (range [-5,5]x[-5,5])</span>
+<span class="n">pagmo</span><span class="o">::</span><span class="n">problem</span> <span class="n">prob</span><span class="p">{</span> <span class="n">HimmelblauFunction</span><span class="p">(</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>The first line sets the seed for the problem. As most algorithms need random number generators, a seed can be set explicitly to be able to produce the same set of random numbers. The second line is the most important part of setting up a problem. The <code class="docutils literal"><span class="pre">pagmo::problem</span></code> class represents a generic evolutionary problem that tries to find a decision vector, <span class="math">\(\vec{x}\)</span>, bounded by an upper and lower boundary, to minimize the problem: <span class="math">\(f(\vec{x})\)</span>, subject to several (in-)equality constraints. In this case, a user defined problem (UDP) is set-up: the <code class="docutils literal"><span class="pre">HimmelblauFunction</span></code>. The header file of this UDP is found in the problems folder, located in the same directory as the <code class="docutils literal"><span class="pre">himmelblauOptimization.cpp</span></code> file. In this header file the following can be seen:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Empty constructor</span>
+<span class="c1">// Without an empty constructor the problem is not accepted</span>
+<span class="c1">// as a multithreading type</span>
+<span class="n">HimmelblauFunction</span><span class="p">(</span> <span class="p">){</span> <span class="p">}</span>
+
+<span class="c1">//Actual constructor allowing the user to define the boundaries</span>
+<span class="n">HimmelblauFunction</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">x_min</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">x_max</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">y_min</span><span class="p">,</span>
+        <span class="k">const</span> <span class="kt">double</span> <span class="n">y_max</span> <span class="p">)</span> <span class="o">:</span>
+    <span class="n">x_min_</span><span class="p">(</span> <span class="n">x_min</span> <span class="p">),</span> <span class="n">x_max_</span><span class="p">(</span> <span class="n">x_max</span> <span class="p">),</span> <span class="n">y_min_</span><span class="p">(</span> <span class="n">y_min</span> <span class="p">),</span> <span class="n">y_max_</span><span class="p">(</span> <span class="n">y_max</span> <span class="p">)</span>
+<span class="p">{</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>The <strong>empty constructor</strong> used in the example above will avoid multi-threading identity related problems associated with the <code class="docutils literal"><span class="pre">pthread</span></code> library. The actual constructor below the empty constructor allows the user to define the bounds of the problem. For the Himmelblau function the decision vector has a size of two, thus there are four entries in the constructor (upper and lower bounds for each decision variable). A <code class="docutils literal"><span class="pre">pagmo::problem</span></code> class has two mandatory methods:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">double</span> <span class="pre">&gt;</span> <span class="pre">fitness(</span> <span class="pre">const</span> <span class="pre">std::vector&lt;</span> <span class="pre">double</span> <span class="pre">&gt;</span> <span class="pre">&amp;x</span> <span class="pre">)</span> <span class="pre">const</span></code></li>
+<li><code class="docutils literal"><span class="pre">std::pair&lt;</span> <span class="pre">std::vector&lt;</span> <span class="pre">double</span> <span class="pre">&gt;,</span> <span class="pre">std::vector&lt;</span> <span class="pre">double</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span> <span class="pre">get_bounds(</span> <span class="pre">)</span> <span class="pre">const</span></code></li>
+</ul>
+</div></blockquote>
+<p>Which can be seen in the following code:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Mandatory, computes the fitness, i.e. the Himmelblau&#39;s function</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">fitness</span><span class="p">(</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">x</span> <span class="p">)</span> <span class="k">const</span>
+<span class="p">{</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">return_value</span><span class="p">;</span>
+
+    <span class="n">return_value</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">pow</span><span class="p">(</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">11.0</span><span class="p">,</span> <span class="mf">2.0</span> <span class="p">)</span>
+            <span class="o">+</span> <span class="n">pow</span><span class="p">(</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">2.0</span> <span class="p">)</span> <span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">return_value</span><span class="p">;</span>
+
+<span class="p">}</span>
+
+<span class="c1">// Mandatory, returns the box-bounds</span>
+<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">get_bounds</span><span class="p">(</span> <span class="p">)</span> <span class="k">const</span>
+<span class="p">{</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">box_bounds</span><span class="p">;</span>
+
+    <span class="n">box_bounds</span><span class="p">.</span><span class="n">first</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">x_min_</span> <span class="p">);</span>
+    <span class="n">box_bounds</span><span class="p">.</span><span class="n">first</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">y_min_</span> <span class="p">);</span>
+
+    <span class="n">box_bounds</span><span class="p">.</span><span class="n">second</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">x_max_</span> <span class="p">);</span>
+    <span class="n">box_bounds</span><span class="p">.</span><span class="n">second</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">y_max_</span> <span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">box_bounds</span><span class="p">;</span>
+
+ <span class="p">}</span>
+</pre></div>
+</div>
+<p>The first method defines the function that will be minimized (the fitness function), which in this case is the Himmelblau function. Its input is the decision vector and its output is the value of the fitness function. The second function is the other mandatory method that returns the bounds of the decision vector. The <code class="docutils literal"><span class="pre">std::pair</span></code> type has a <code class="docutils literal"><span class="pre">std::pair.first</span></code> and <code class="docutils literal"><span class="pre">std::pair.second</span></code> option which define the lower and upper bounds respectively.</p>
+<p>This header file is sufficient for the definition of this problem. In future tutorials, other options will be explored.</p>
+</div>
+<div class="section" id="selecting-the-algorithm">
+<h2>1.2. Selecting the Algorithm<a class="headerlink" href="#selecting-the-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">pagmo::algorithm</span></code> class is used to select an algorithm that solves the optimization problem. In the Himmelblau example it is used as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Solve using DE algorithm</span>
+<span class="n">pagmo</span><span class="o">::</span><span class="n">algorithm</span> <span class="n">algo</span><span class="p">{</span> <span class="n">pagmo</span><span class="o">::</span><span class="n">de</span><span class="p">(</span> <span class="p">)</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>This creates an object, <code class="docutils literal"><span class="pre">algo</span></code>, that contains the <code class="docutils literal"><span class="pre">pagmo::de(</span> <span class="pre">)</span></code> algorithm. The algorithm can either be a pre-defined algorithm, that can be found in this <a class="reference external" href="https://esa.github.io/pagmo2/docs/algorithm_list.html">list</a>, or it can be defined using an user defined algorithm (UDA). The second option will not be discussed in this tutorial. In this example, a differential evolutionary algorithm is chosen to solve the problem.</p>
+</div>
+<div class="section" id="building-the-island">
+<h2>1.3. Building the Island<a class="headerlink" href="#building-the-island" title="Permalink to this headline">¶</a></h2>
+<p>The next part concerns the <code class="docutils literal"><span class="pre">pagmo::island</span></code> class, and it looks as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create island with 1000 individuals</span>
+<span class="n">pagmo</span><span class="o">::</span><span class="n">island</span> <span class="n">isl</span> <span class="o">=</span> <span class="n">pagmo</span><span class="o">::</span><span class="n">island</span><span class="p">{</span> <span class="n">algo</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="mi">1000</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>This piece of code creates and object <code class="docutils literal"><span class="pre">isl</span></code> of type <code class="docutils literal"><span class="pre">pagmo::island</span></code>, which manages the evolution of the population, here defined to be 1000 random samples, using the <code class="docutils literal"><span class="pre">algo</span></code> object to solve the problem defined by the <code class="docutils literal"><span class="pre">prob</span></code> object.</p>
+</div>
+<div class="section" id="perform-the-optimization">
+<h2>1.4. Perform the Optimization<a class="headerlink" href="#perform-the-optimization" title="Permalink to this headline">¶</a></h2>
+<p>The final part of the code is the actual optimization. This process is shown below:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Evolve for 1000 generations</span>
+<span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">isl</span><span class="p">.</span><span class="n">evolve</span><span class="p">(</span> <span class="p">);</span>
+    <span class="k">while</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">status</span><span class="p">()</span><span class="o">!=</span><span class="n">pagmo</span><span class="o">::</span><span class="n">evolve_status</span><span class="o">::</span><span class="n">idle</span> <span class="p">)</span>
+        <span class="n">isl</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span>
+
+    <span class="n">printPopulationToFile</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span> <span class="p">).</span><span class="n">get_x</span><span class="p">(</span> <span class="p">),</span> <span class="s">&quot;himmelblau_&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
+    <span class="n">printPopulationToFile</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span> <span class="p">).</span><span class="n">get_f</span><span class="p">(</span> <span class="p">),</span> <span class="s">&quot;himmelblau_&quot;</span> <span class="o">+</span>  <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="p">,</span> <span class="nb">true</span> <span class="p">);</span>
+
+    <span class="c1">// Print current optimum to console</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Minimum: &quot;</span> <span class="o">&lt;&lt;</span><span class="n">i</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span> <span class="mi">16</span> <span class="p">)</span> <span class="o">&lt;&lt;</span><span class="s">&quot;f= &quot;</span><span class="o">&lt;&lt;</span> <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">().</span><span class="n">champion_f</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span><span class="s">&quot;, x=&quot;</span><span class="o">&lt;&lt;</span>
+                 <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">().</span><span class="n">champion_x</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span><span class="s">&quot; y=&quot;</span><span class="o">&lt;&lt;</span><span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">().</span><span class="n">champion_x</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The optimization is done using methods from the <code class="docutils literal"><span class="pre">pagmo::island</span></code> class. In a for-loop that runs for the desired amount of generations (here 1000), the population on the island is first evolved using the <code class="docutils literal"><span class="pre">evolve()</span></code> method. The evolve method will generate a new population on the island using the algorithm specified in <code class="docutils literal"><span class="pre">algo</span></code>. After this, the status of the island is checked before iterating. Finally, the decision vectors and the fitness values are then written to a file and the best member of the population (the champion) is also displayed.</p>
+</div>
+<div class="section" id="results">
+<h2>1.5. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>The output of the program should look similar to the output below:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span>Starting ...\tudatBundle\tudatExampleApplications\libraryExamples\bin\applications\application_PagmoHimmelblauOptimization.exe...
+Minimum: 1 f= 0.0399354434859056, x=-2.786081426696553 y=3.10439194057476
+Minimum: 2 f= 0.0399354434859056, x=-2.786081426696553 y=3.10439194057476
+Minimum: 3 f= 0.0290540463514649, x=3.029539573873633 y=1.972445487248521
+Minimum: 4 f= 0.0290540463514649, x=3.029539573873633 y=1.972445487248521
+Minimum: 5 f= 0.0290540463514649, x=3.029539573873633 y=1.972445487248521
+...
+...
+...
+Minimum: 95 f= 4.282411893194119e-010, x=3.0000021972896 y=1.999994663573049
+Minimum: 96 f= 4.282411893194119e-010, x=3.0000021972896 y=1.999994663573049
+Minimum: 97 f= 4.282411893194119e-010, x=3.0000021972896 y=1.999994663573049
+Minimum: 98 f= 4.282411893194119e-010, x=3.0000021972896 y=1.999994663573049
+Minimum: 99 f= 4.282411893194119e-010, x=3.0000021972896 y=1.999994663573049
+Minimum: 100 f= 4.282411893194119e-010, x=3.0000021972896 y=1.999994663573049
+.../tudatBundle/tudatExampleApplications/libraryExamples/bin/applications/application_PagmoHimmelblauOptimization.exe exited with code 0
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="cecOptimization.html" class="btn btn-neutral float-right" title="2. CEC 2013 Optimizer Comparison" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="earthOrbiterStateEstimation.html" class="btn btn-neutral" title="9. Orbit Determination and Parameter Estimation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>
