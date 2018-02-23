@@ -40,3 +40,4 @@ In the same tudatExampleApplications library on your computer, you can find the 
 
    himmelblau
    cecOptimization
+   earthMarsTrans

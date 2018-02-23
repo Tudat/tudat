@@ -2,11 +2,11 @@
 
 CEC 2013 Optimizer Comparison
 ====================================
-The example described in this tutorial will cover the CEC 2013 optimizer comparison code. This example contains 28 benchmark functions that were optimized using different algorithms during the Special Session and Competition on Real-Parameter Single Objective Optimization at CEC 2013. The code for this tutorial is given here on Github, and is also located in your tudat bundle at::
+The example described in this tutorial will cover the CEC 2013 optimizer comparison code. This example contains 28 benchmark functions that were optimized using different algorithms during the Special Session and Competition on Real-Parameter Single Objective Optimization at CEC 2013. The code for this tutorial is given here on Github, and is also located in your tudat bundle at:
 
    tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/cec2013OptimizerComparison.cpp
 
-This tutorial will largely cover the same material as :ref:`tutorialsIndex`, but it will show how you can use different algorithms to solve the same problems. It is necessary that the previous example, the :ref:`tutorialsIndex`, is understood to be able to go through this example.  
+This tutorial will largely cover the same material as :ref:`walkthroughsHimmelblau`, but it will show how you can use different algorithms to solve the same problems. It is necessary that the previous example, the :ref:`walkthroughsHimmelblau`, is understood to be able to go through this example.  
 
 Set up the problem
 ~~~~~~~~~~~~~~~~~~~~~~
