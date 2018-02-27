@@ -1,0 +1,534 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. Propagation Targeting &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
+        <link rel="up" title="Application Walkthroughs" href="index.html"/>
+        <link rel="next" title="Tudat Libraries" href="../tudatFeatures/index.html"/>
+        <link rel="prev" title="4. Multiple Gravity Assist Transfer" href="mgaTrans.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorials and Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../basics/index.html">Tudat Basics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Walkthroughs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#example-tutorials">Example tutorials</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html#optimization-tutorials">Optimization tutorials</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="himmelblau.html">1. Himmelblau Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cecOptimization.html">2. CEC 2013 Optimizer Comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthMarsTrans.html">3. (multi-objective) Earth Mars Transfer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mgaTrans.html">4. Multiple Gravity Assist Transfer</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">5. Propagation Targeting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tudatFeatures/index.html">Tudat Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jsonInterface/index.html">JSON Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference external" href="http://doxygen.tudat.tudelft.nl">Doxygen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tutorials and Documentation</a> &raquo;</li>
+        
+          <li><a href="index.html">Application Walkthroughs</a> &raquo;</li>
+        
+      <li>5. Propagation Targeting</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tutorials/applicationWalkthroughs/propTargeting.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="propagation-targeting">
+<span id="walkthroughsproptargeting"></span><h1>5. Propagation Targeting<a class="headerlink" href="#propagation-targeting" title="Permalink to this headline">¶</a></h1>
+<p>The example described in this tutorial will cover the following problem statement:</p>
+<blockquote>
+<div>A satellite is going to be launched on an elliptical orbit with min and max altitudes respectively 180 km and 40000 km with inclination i=0 (and argument of perigee omega = 0). A fixed target is set on the same plane at an altitude of 35000 km, fixed latitude of 30 deg. What is the value of the RAAN for which the satellite achieves a minimum approach distance from the target?</div></blockquote>
+<p>The code for this tutorial is given here on Github, and is also located in your tudat bundle at:</p>
+<blockquote>
+<div>tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/propagationTargetingExample.cpp</div></blockquote>
+<p>This tutorial will use the same concepts described in previous examples, however for this example, the Tudat propagation is implemented in the problem. Thus this example will show how the PAGMO library and Tudat can work together. It is necessary that the previous examples are understood to be able to go through this example.</p>
+<div class="section" id="set-up-the-problem">
+<h2>5.1. Set up the problem<a class="headerlink" href="#set-up-the-problem" title="Permalink to this headline">¶</a></h2>
+<p>The problem is set-up as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//Load spice kernels</span>
+<span class="n">tudat</span><span class="o">::</span><span class="n">spice_interface</span><span class="o">::</span><span class="n">loadStandardSpiceKernels</span><span class="p">(</span> <span class="p">);</span>
+
+<span class="c1">// Create object to compute the problem fitness; no perturbations</span>
+<span class="kt">double</span> <span class="n">altitudeOfPerigee</span> <span class="o">=</span> <span class="mf">180000.0</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">altitudeOfApogee</span> <span class="o">=</span> <span class="mf">40000000.0</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">altitudeOfTarget</span> <span class="o">=</span> <span class="mf">35000000.0</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">longitudeOfTarget</span> <span class="o">=</span> <span class="mf">30.0</span><span class="p">;</span> <span class="c1">// In degrees</span>
+<span class="n">problem</span> <span class="n">prob</span><span class="p">{</span><span class="n">PropagationTargetingProblem</span><span class="p">(</span> <span class="n">altitudeOfPerigee</span><span class="p">,</span> <span class="n">altitudeOfApogee</span><span class="p">,</span> <span class="n">altitudeOfTarget</span><span class="p">,</span>
+              <span class="n">longitudeOfTarget</span><span class="p">,</span> <span class="nb">false</span> <span class="p">)</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>First, the Spice (ephemeris) kernels are loaded in to get an accurate ephemeris of all the bodies included in this example. Then the input to the problem is defined: the perigee and apogee of the targeter, and the altitude and longitude of the target. Then the problem is object is made in the same manner as was done in previous examples, using the <code class="docutils literal"><span class="pre">PropagationTargetingProblem(...)</span></code> as the UDP.</p>
+<p>The UDP contains an empty constructor and a normal constructor. In the normal constructor, the final argument, <code class="docutils literal"><span class="pre">useExtendedDynamics</span></code>, is a boolean variable that determines if either only the Earth gravitational influence is used (<code class="docutils literal"><span class="pre">false</span></code>, default) or if also the lunar and solar gravitational influence are implememted. The <code class="docutils literal"><span class="pre">get_bounds()</span></code> is implemented in the same way as before, but the fitness function is implemented differently, which will be discussed here.</p>
+<p>First, the orbit of the targeter is defined:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Definition of the orbit</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="n">earthRotationRate</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span> <span class="o">/</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">SIDEREAL_DAY</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="n">earthRadius</span> <span class="o">=</span> <span class="n">spice_interface</span><span class="o">::</span><span class="n">getAverageRadius</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="n">radiusOfPerigee</span> <span class="o">=</span>  <span class="n">earthRadius</span> <span class="o">+</span> <span class="n">altitudeOfPerigee_</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="n">radiusOfApogee</span> <span class="o">=</span> <span class="n">earthRadius</span> <span class="o">+</span> <span class="n">altitudeOfApogee_</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="n">earthGravitationalParameter</span> <span class="o">=</span> <span class="n">spice_interface</span><span class="o">::</span><span class="n">getBodyGravitationalParameter</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="n">semiMajorAxis</span> <span class="o">=</span> <span class="p">(</span><span class="n">radiusOfApogee</span> <span class="o">+</span> <span class="n">radiusOfPerigee</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The next part of the fitness function is the set up of the integration, the bodies, and the environment. This is done in a similar manner as in the <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a>. Thus if a part of this tutorial is not clear, the reader is referred to this example (and the following examples on that page).</p>
+<p>The following code shows the initialization of the integration, the bodies, and the environment:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//Integration time: half a orbit</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="n">simulationStartEpoch</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="n">simulationEndEpoch</span> <span class="o">=</span> <span class="mf">1.2</span> <span class="o">*</span> <span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span> <span class="o">*</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">pow</span><span class="p">(</span><span class="n">semiMajorAxis</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="n">earthGravitationalParameter</span><span class="p">);</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="n">fixedStepSize</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span>
+
+<span class="c1">// Create the body Earth from Spice interface</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodySettings</span><span class="p">;</span>
+<span class="k">if</span><span class="p">(</span> <span class="n">useExtendedDynamics_</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">bodySettings</span> <span class="o">=</span>
+            <span class="n">getDefaultBodySettings</span><span class="p">(</span> <span class="p">{</span><span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;Moon&quot;</span><span class="p">,</span> <span class="s">&quot;Sun&quot;</span><span class="p">},</span> <span class="n">simulationStartEpoch</span> <span class="o">-</span> <span class="mf">3600.0</span><span class="p">,</span> <span class="n">simulationEndEpoch</span> <span class="o">+</span> <span class="mf">3600.0</span> <span class="p">);</span>
+    <span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Moon&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span><span class="o">-&gt;</span><span class="n">resetOriginalFrame</span><span class="p">(</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
+    <span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Moon&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span><span class="o">-&gt;</span><span class="n">resetFrameOrientation</span><span class="p">(</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
+    <span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span><span class="o">-&gt;</span><span class="n">resetOriginalFrame</span><span class="p">(</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
+    <span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span><span class="o">-&gt;</span><span class="n">resetFrameOrientation</span><span class="p">(</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
+<span class="p">}</span>
+<span class="k">else</span>
+<span class="p">{</span>
+    <span class="n">bodySettings</span> <span class="o">=</span>
+            <span class="n">getDefaultBodySettings</span><span class="p">(</span> <span class="p">{</span><span class="s">&quot;Earth&quot;</span><span class="p">}</span> <span class="p">);</span>
+<span class="p">}</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">ConstantEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+            <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">::</span><span class="n">Zero</span><span class="p">(</span> <span class="p">),</span> <span class="s">&quot;SSB&quot;</span><span class="p">,</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span><span class="o">-&gt;</span><span class="n">resetOriginalFrame</span><span class="p">(</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span><span class="o">-&gt;</span><span class="n">resetFrameOrientation</span><span class="p">(</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
+
+
+<span class="c1">//Create bodyMap and add the satellite as an empty body</span>
+<span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
+<span class="n">bodyMap</span><span class="p">[</span><span class="s">&quot;Satellite&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Body</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="n">setGlobalFrameBodyEphemerides</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>The next step is to define the target orbit using the input values of the UDP, and set-up the initial conditions for the satellite:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//Define position of the target at 35000 km from Earth at 30 deg latitude</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">target</span><span class="p">;</span>
+<span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">earthRadius</span> <span class="o">+</span> <span class="n">altitudeOfTarget_</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">longitudeOfTarget_</span><span class="o">*</span><span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span><span class="o">/</span><span class="mi">180</span><span class="p">);</span>
+<span class="n">target</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">earthRadius</span> <span class="o">+</span> <span class="n">altitudeOfTarget_</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">longitudeOfTarget_</span><span class="o">*</span><span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span><span class="o">/</span><span class="mi">180</span><span class="p">);</span>
+<span class="n">target</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+
+<span class="c1">//Define initial position of satellite at the perigee</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">initialKeplerElements</span><span class="p">;</span>
+<span class="n">initialKeplerElements</span><span class="p">[</span> <span class="n">semiMajorAxisIndex</span> <span class="p">]</span> <span class="o">=</span> <span class="n">semiMajorAxis</span><span class="p">;</span>
+<span class="n">initialKeplerElements</span><span class="p">[</span> <span class="n">eccentricityIndex</span> <span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">radiusOfApogee</span> <span class="o">-</span> <span class="n">radiusOfPerigee</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">radiusOfApogee</span> <span class="o">+</span> <span class="n">radiusOfPerigee</span><span class="p">);</span>
+<span class="n">initialKeplerElements</span><span class="p">[</span> <span class="n">inclinationIndex</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">35.0</span> <span class="o">*</span> <span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span><span class="o">/</span><span class="mf">180.0</span><span class="p">;</span>
+<span class="n">initialKeplerElements</span><span class="p">[</span> <span class="n">argumentOfPeriapsisIndex</span> <span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span><span class="o">/</span><span class="mf">180.0</span><span class="p">;</span>
+<span class="n">initialKeplerElements</span><span class="p">[</span> <span class="n">longitudeOfAscendingNodeIndex</span> <span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span><span class="o">/</span><span class="mf">180.0</span><span class="p">;</span>
+<span class="n">initialKeplerElements</span><span class="p">[</span> <span class="n">trueAnomalyIndex</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+
+<span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">systemInitialState</span> <span class="o">=</span> <span class="n">convertKeplerianToCartesianElements</span><span class="p">(</span>
+                                              <span class="n">initialKeplerElements</span><span class="p">,</span> <span class="n">earthGravitationalParameter</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>The only acceleration models that are implemented are gravitational of nature. The propagator setting use the Cowell method and a RK4 integrator:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//Setup simulation. Simple Keplerian orbit (only central-gravity of Earth)</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToPropagate</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;Satellite&quot;</span> <span class="p">};</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodies</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;Earth&quot;</span> <span class="p">};</span>
+<span class="n">SelectedAccelerationMap</span> <span class="n">accelerationMap</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">accelerationsOfSatellite</span><span class="p">;</span>
+<span class="k">if</span><span class="p">(</span> <span class="n">useExtendedDynamics_</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">accelerationsOfSatellite</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                                       <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">accelerationsOfSatellite</span><span class="p">[</span> <span class="s">&quot;Moon&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                                      <span class="n">point_mass_gravity</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">accelerationsOfSatellite</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                                     <span class="n">point_mass_gravity</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">accelerationMap</span><span class="p">[</span> <span class="s">&quot;Satellite&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">accelerationsOfSatellite</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">else</span>
+<span class="p">{</span>
+    <span class="n">accelerationsOfSatellite</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                                       <span class="n">point_mass_gravity</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">accelerationMap</span><span class="p">[</span> <span class="s">&quot;Satellite&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">accelerationsOfSatellite</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span> <span class="n">accelerationModelMap</span> <span class="o">=</span> <span class="n">createAccelerationModelsMap</span><span class="p">(</span>
+            <span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">centralBodies</span> <span class="p">);</span>
+
+<span class="c1">//Setup propagator (cowell) and integrator (RK4 fixed stepsize)</span>
+<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">propagatorSettings</span> <span class="o">=</span>
+        <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
+        <span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span> <span class="n">accelerationModelMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">systemInitialState</span><span class="p">,</span> <span class="n">simulationEndEpoch</span> <span class="p">);</span>
+<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">integratorSettings</span> <span class="o">=</span>
+        <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
+        <span class="p">(</span> <span class="n">rungeKutta4</span><span class="p">,</span> <span class="n">simulationStartEpoch</span><span class="p">,</span> <span class="n">fixedStepSize</span> <span class="p">);</span>
+
+<span class="c1">//Start simulation</span>
+<span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="n">dynamicsSimulator</span><span class="p">(</span>
+            <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>After the simulation is defined, it is time to actually define the optimization part of this example:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//Retrieve results</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">integrationResult</span> <span class="o">=</span>
+        <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
+
+
+<span class="c1">//Find minimum distance from target</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">separationFromTarget</span> <span class="o">=</span>
+        <span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span><span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">AngleAxisd</span><span class="p">(</span>
+                                <span class="o">-</span><span class="n">earthRotationRate</span> <span class="o">*</span> <span class="n">integrationResult</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">first</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitZ</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="o">*</span>
+        <span class="p">(</span> <span class="n">integrationResult</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span> <span class="p">)</span> <span class="p">)</span><span class="o">-</span> <span class="n">target</span><span class="p">;</span>
+
+<span class="kt">double</span> <span class="n">bestDistanceFromTarget</span> <span class="o">=</span> <span class="n">separationFromTarget</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span> <span class="p">);</span>
+<span class="kt">double</span> <span class="n">timeForBestDistanceFromTarget</span> <span class="o">=</span> <span class="n">integrationResult</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">first</span><span class="p">;</span>
+
+<span class="k">for</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;::</span><span class="n">const_iterator</span> <span class="n">stateIterator</span> <span class="o">=</span> <span class="n">integrationResult</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span> <span class="p">);</span>
+     <span class="n">stateIterator</span> <span class="o">!=</span> <span class="n">integrationResult</span><span class="p">.</span><span class="n">end</span><span class="p">(</span> <span class="p">);</span> <span class="n">stateIterator</span><span class="o">++</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">separationFromTarget</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span><span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">AngleAxisd</span><span class="p">(</span>
+                                                   <span class="o">-</span><span class="n">earthRotationRate</span> <span class="o">*</span> <span class="n">stateIterator</span><span class="o">-&gt;</span><span class="n">first</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitZ</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="o">*</span>
+            <span class="n">stateIterator</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span> <span class="p">)</span> <span class="o">-</span> <span class="n">target</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">double</span> <span class="n">distanceFromTarget</span> <span class="o">=</span> <span class="n">separationFromTarget</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span> <span class="p">);</span>
+
+    <span class="k">if</span><span class="p">(</span> <span class="n">distanceFromTarget</span> <span class="o">&lt;</span> <span class="n">bestDistanceFromTarget</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">bestDistanceFromTarget</span> <span class="o">=</span> <span class="n">distanceFromTarget</span><span class="p">;</span>
+        <span class="n">timeForBestDistanceFromTarget</span> <span class="o">=</span> <span class="n">stateIterator</span><span class="o">-&gt;</span><span class="n">first</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">output</span> <span class="o">=</span> <span class="p">{</span><span class="n">bestDistanceFromTarget</span><span class="p">}</span> <span class="p">;</span>
+
+<span class="k">return</span> <span class="n">output</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>First, the results of the simulation are stored in a variable: <code class="docutils literal"><span class="pre">integrationResult</span></code>. Then the smalles distance and time of the smallest distance between the targeter and the target are intialized. These variables are needed in the for-loop that follows to determine the best results of the simulation. This result is then stored and used as the fitness value.</p>
+</div>
+<div class="section" id="selecting-the-algorithm">
+<h2>5.2. Selecting the Algorithm<a class="headerlink" href="#selecting-the-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>In this example, the de1220 algorithm is selected to optimize the trajectory:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Instantiate a pagmo algorithm</span>
+<span class="n">algorithm</span> <span class="n">algo</span><span class="p">{</span><span class="n">de1220</span><span class="p">(</span> <span class="p">)};</span>
+</pre></div>
+</div>
+<p>A grid-search is also performed, however, this is only done to compare the resuolts and it shall thus not be discussed here.</p>
+</div>
+<div class="section" id="building-the-island">
+<h2>5.3. Building the Island<a class="headerlink" href="#building-the-island" title="Permalink to this headline">¶</a></h2>
+<p>The island is built in the same way as in <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create an island with 128 individuals</span>
+<span class="n">pagmo</span><span class="o">::</span><span class="n">population</span><span class="o">::</span><span class="n">size_type</span> <span class="n">populationSize</span> <span class="o">=</span> <span class="mi">128</span><span class="p">;</span>
+<span class="n">island</span> <span class="n">isl</span><span class="p">{</span><span class="n">algo</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">populationSize</span><span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="perform-the-optimization">
+<h2>5.4. Perform the Optimization<a class="headerlink" href="#perform-the-optimization" title="Permalink to this headline">¶</a></h2>
+<p>Finally, the optimization is performed in the same manner as in <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Evolve for 25 generations</span>
+<span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">isl</span><span class="p">.</span><span class="n">evolve</span><span class="p">();</span>
+    <span class="k">while</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">status</span><span class="p">()</span><span class="o">!=</span><span class="n">pagmo</span><span class="o">::</span><span class="n">evolve_status</span><span class="o">::</span><span class="n">idle</span> <span class="p">)</span>
+        <span class="n">isl</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span>
+
+    <span class="c1">// Write current iteration results to file</span>
+    <span class="n">printPopulationToFile</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span> <span class="p">).</span><span class="n">get_x</span><span class="p">(</span> <span class="p">),</span> <span class="s">&quot;targetingPropagation_&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;_&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
+    <span class="n">printPopulationToFile</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span> <span class="p">).</span><span class="n">get_f</span><span class="p">(</span> <span class="p">),</span> <span class="s">&quot;targetingPropagation_&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;_&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="p">,</span> <span class="nb">true</span> <span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In the example code, the problem is repeated, but then with the lunar and solar gravity included. This is done in the same way as was discussed here, but with <code class="docutils literal"><span class="pre">useExtendedDynamics</span></code> set to <code class="docutils literal"><span class="pre">true</span></code>.</p>
+</div>
+<div class="section" id="results">
+<h2>5.5. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>The output of the application should look as follows (specific numbers could be different):</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span>Starting ...\tudatBundle.git\tudatExampleApplications\libraryExamples\bin\applications\application_PagmoPropagationTargetingExample.exe...
+
+Grid search 0
+Grid search 1
+Grid search 2
+...
+...
+...
+Grid search 97
+Grid search 98
+Grid search 99
+0
+1
+2
+...
+...
+...
+22
+23
+24
+Grid search 0
+Grid search 1
+Grid search 2
+...
+...
+...
+Grid search 97
+Grid search 98
+Grid search 99
+0
+1
+2
+3
+.../tudatBundle.git/tudatExampleApplications/libraryExamples/bin/applications/application_PagmoPropagationTargetingExample.exe exited with code 0
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../tudatFeatures/index.html" class="btn btn-neutral float-right" title="Tudat Libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mgaTrans.html" class="btn btn-neutral" title="4. Multiple Gravity Assist Transfer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>

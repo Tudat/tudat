@@ -1,0 +1,416 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. CEC 2013 Optimizer Comparison &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
+        <link rel="up" title="Application Walkthroughs" href="index.html"/>
+        <link rel="next" title="3. (multi-objective) Earth Mars Transfer" href="earthMarsTrans.html"/>
+        <link rel="prev" title="1. Himmelblau Optimization" href="himmelblau.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorials and Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../basics/index.html">Tudat Basics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Walkthroughs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#example-tutorials">Example tutorials</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html#optimization-tutorials">Optimization tutorials</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="himmelblau.html">1. Himmelblau Optimization</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">2. CEC 2013 Optimizer Comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthMarsTrans.html">3. (multi-objective) Earth Mars Transfer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mgaTrans.html">4. Multiple Gravity Assist Transfer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="propTargeting.html">5. Propagation Targeting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tudatFeatures/index.html">Tudat Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jsonInterface/index.html">JSON Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference external" href="http://doxygen.tudat.tudelft.nl">Doxygen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tutorials and Documentation</a> &raquo;</li>
+        
+          <li><a href="index.html">Application Walkthroughs</a> &raquo;</li>
+        
+      <li>2. CEC 2013 Optimizer Comparison</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tutorials/applicationWalkthroughs/cecOptimization.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cec-2013-optimizer-comparison">
+<span id="walkthroughscec"></span><h1>2. CEC 2013 Optimizer Comparison<a class="headerlink" href="#cec-2013-optimizer-comparison" title="Permalink to this headline">¶</a></h1>
+<p>The example described in this tutorial will cover the CEC 2013 optimizer comparison code. This example contains 28 benchmark functions that were optimized using different algorithms during the Special Session and Competition on Real-Parameter Single Objective Optimization at CEC 2013. The code for this tutorial is given here on Github, and is also located in your tudat bundle at:</p>
+<blockquote>
+<div>tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/cec2013OptimizerComparison.cpp</div></blockquote>
+<p>This tutorial will largely cover the same material as <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>, but it will show how you can use different algorithms to solve the same problems. It is necessary that the previous example, the <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>, is understood to be able to go through this example.</p>
+<div class="section" id="set-up-the-problem">
+<h2>2.1. Set up the problem<a class="headerlink" href="#set-up-the-problem" title="Permalink to this headline">¶</a></h2>
+<p>As there are 28 problems and 11 algorithms contained in this example, a matrix is first made to go through all the different problems and optimizers.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define run settings</span>
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">numberOfDimensionCases</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">numberOfOptimizers</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">numberOfProblems</span> <span class="o">=</span> <span class="mi">28</span><span class="p">;</span>
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">numberOfPopulationCases</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+<span class="c1">// Create double vector of Matrices that contain optimal solutions</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">optima</span><span class="p">;</span>
+<span class="n">optima</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">numberOfDimensionCases</span> <span class="p">);</span>
+<span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfDimensionCases</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">optima</span><span class="p">[</span> <span class="n">i</span> <span class="p">].</span><span class="n">resize</span><span class="p">(</span> <span class="n">numberOfPopulationCases</span> <span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">numberOfPopulationCases</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">optima</span><span class="p">[</span> <span class="n">i</span> <span class="p">][</span> <span class="n">j</span> <span class="p">]</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="p">(</span> <span class="n">numberOfProblems</span><span class="p">,</span> <span class="n">numberOfOptimizers</span> <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The optima vector is an <code class="docutils literal"><span class="pre">std::vector</span></code> which contains <code class="docutils literal"><span class="pre">Eigen::MatrixX</span></code>. The size of the vector is 3 as that is the amount of cases with different dimensionalities. The matrices in the vector are resized to contain the problem in the row of the matrix, and the optimizer that will solve that problem in the corresponding column.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Perform optimization for each optimizer</span>
+<span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfOptimizers</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Perform optimization for each test problem</span>
+    <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">numberOfProblems</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Perform optimization for each dimensionality</span>
+        <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">numberOfDimensionCases</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">numberOfDimensions</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">numberOfDimensions</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">numberOfDimensions</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">2</span> <span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">numberOfDimensions</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="c1">// Perform optimization for each population size/number of generations</span>
+            <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">numberOfPopulationCases</span><span class="p">;</span> <span class="n">l</span><span class="o">++</span> <span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">pagmo</span><span class="o">::</span><span class="n">population</span><span class="o">::</span><span class="n">size_type</span> <span class="n">populationSize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="kt">int</span> <span class="n">numberOfGenerations</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="k">if</span><span class="p">(</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="n">populationSize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+                    <span class="n">numberOfGenerations</span> <span class="o">=</span> <span class="mi">64</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="n">populationSize</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+                    <span class="n">numberOfGenerations</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">2</span> <span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="n">populationSize</span> <span class="o">=</span> <span class="mi">64</span><span class="p">;</span>
+                    <span class="n">numberOfGenerations</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Create test problem</span>
+                <span class="n">pagmo</span><span class="o">::</span><span class="n">problem</span> <span class="n">prob</span><span class="p">{</span> <span class="n">pagmo</span><span class="o">::</span><span class="n">cec2013</span><span class="p">(</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">numberOfDimensions</span> <span class="p">)</span> <span class="p">};</span>
+                <span class="p">...</span>
+                <span class="p">...</span>
+                <span class="p">...</span>
+</pre></div>
+</div>
+<p>This for-loop shown above first assigns the number of dimensions for each case, then it assigns the population size and number of generations for each case. It is important to make the population size of type <code class="docutils literal"><span class="pre">pagmo::population::size_type</span></code> to be able to use it in the <code class="docutils literal"><span class="pre">pagmo::problem</span></code> class. Then, as was done in the previous example, the problem is set-up using the <code class="docutils literal"><span class="pre">pagmo::problem</span></code> class.</p>
+</div>
+<div class="section" id="selecting-the-algorithm">
+<h2>2.2. Selecting the Algorithm<a class="headerlink" href="#selecting-the-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>Continuing in the same for-loops as in the previous section, the following is done to get the algorithm:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create optimization algorithm</span>
+<span class="n">pagmo</span><span class="o">::</span><span class="n">algorithm</span> <span class="n">algo</span> <span class="o">=</span> <span class="n">getAlgorithm</span><span class="p">(</span> <span class="n">i</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>where the <code class="docutils literal"><span class="pre">getAlgorithm</span></code> function is a seperate function (not inherent to pagmo) that selects an algorithm to use. First, the same algorithm is used for all 28 problems, then a new algorithm will be chosen for all the 28 problems until all the optimizers have been tested on all the problems (and for each population size and number of generations cases).</p>
+</div>
+<div class="section" id="building-the-island">
+<h2>2.3. Building the Island<a class="headerlink" href="#building-the-island" title="Permalink to this headline">¶</a></h2>
+<p>The island is built as before (inside the for-loops):</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create island with given population size</span>
+<span class="n">pagmo</span><span class="o">::</span><span class="n">island</span> <span class="n">isl</span> <span class="o">=</span> <span class="n">pagmo</span><span class="o">::</span><span class="n">island</span><span class="p">{</span> <span class="n">algo</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">populationSize</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>where now the population size is an external variable of the type: <code class="docutils literal"><span class="pre">pagmo::population::size_type</span></code>.</p>
+</div>
+<div class="section" id="perform-the-optimization">
+<h2>2.4. Perform the Optimization<a class="headerlink" href="#perform-the-optimization" title="Permalink to this headline">¶</a></h2>
+<p>Finally, the optimization is performed in the same manner as the Himmelblau function:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span>                <span class="p">...</span>
+                <span class="p">...</span>
+                <span class="p">...</span>
+                <span class="c1">// Evolve for required number of generations</span>
+                <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">numberOfGenerations</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="n">isl</span><span class="p">.</span><span class="n">evolve</span><span class="p">(</span> <span class="p">);</span>
+                    <span class="k">while</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">status</span><span class="p">()</span><span class="o">!=</span><span class="n">pagmo</span><span class="o">::</span><span class="n">evolve_status</span><span class="o">::</span><span class="n">idle</span> <span class="p">)</span>
+                        <span class="n">isl</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Save optimal results for current optimization.</span>
+                <span class="n">optima</span><span class="p">[</span> <span class="n">k</span> <span class="p">][</span> <span class="n">l</span> <span class="p">](</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span> <span class="p">)</span> <span class="o">=</span> <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">().</span><span class="n">champion_f</span><span class="p">()[</span><span class="mi">0</span><span class="p">];</span>
+                <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Minimum: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">j</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">().</span><span class="n">champion_f</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="results">
+<h2>2.5. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>Below is a figure showing all the results for the different cases, optimizers, and problems.</p>
+<div class="figure">
+<img alt="../../_images/cecResults.png" src="../../_images/cecResults.png" />
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="earthMarsTrans.html" class="btn btn-neutral float-right" title="3. (multi-objective) Earth Mars Transfer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="himmelblau.html" class="btn btn-neutral" title="1. Himmelblau Optimization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>
