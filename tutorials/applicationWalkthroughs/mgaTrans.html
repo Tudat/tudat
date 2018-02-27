@@ -1,0 +1,438 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>4. Multiple Gravity Assist Transfer &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
+        <link rel="up" title="Application Walkthroughs" href="index.html"/>
+        <link rel="next" title="5. Propagation Targeting" href="propTargeting.html"/>
+        <link rel="prev" title="3. (multi-objective) Earth Mars Transfer" href="earthMarsTrans.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorials and Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../basics/index.html">Tudat Basics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Walkthroughs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#example-tutorials">Example tutorials</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html#optimization-tutorials">Optimization tutorials</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="himmelblau.html">1. Himmelblau Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cecOptimization.html">2. CEC 2013 Optimizer Comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthMarsTrans.html">3. (multi-objective) Earth Mars Transfer</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">4. Multiple Gravity Assist Transfer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="propTargeting.html">5. Propagation Targeting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tudatFeatures/index.html">Tudat Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jsonInterface/index.html">JSON Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference external" href="http://doxygen.tudat.tudelft.nl">Doxygen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tutorials and Documentation</a> &raquo;</li>
+        
+          <li><a href="index.html">Application Walkthroughs</a> &raquo;</li>
+        
+      <li>4. Multiple Gravity Assist Transfer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tutorials/applicationWalkthroughs/mgaTrans.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="multiple-gravity-assist-transfer">
+<span id="walkthroughsmga"></span><h1>4. Multiple Gravity Assist Transfer<a class="headerlink" href="#multiple-gravity-assist-transfer" title="Permalink to this headline">¶</a></h1>
+<p>The example described in this tutorial will cover a transfer using multiple gravity assists. The code for this tutorial is given here on Github, and is also located in your tudat bundle at:</p>
+<blockquote>
+<div>tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/mgaTransferExample.cpp</div></blockquote>
+<p>This tutorial will use the same concepts described in previous examples, but now applied to a complex problem that may require a high number of generations to find the optima. It is necessary that the previous examples are understood to be able to go through this example.</p>
+<div class="section" id="set-up-the-problem">
+<h2>4.1. Set up the problem<a class="headerlink" href="#set-up-the-problem" title="Permalink to this headline">¶</a></h2>
+<p>The gravity assist are done in the following order: Eart, Venus, Earth, Earth, Jupiter (EVEEJ). The decision variables in this example are the start date, and the duration of the legs. The bounds are defined as before:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// We have five decision variables each with a lower and upper</span>
+<span class="c1">// bound, create a vector of vectors that will contain these.</span>
+<span class="kt">int</span> <span class="n">numberOfParameters</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bounds</span><span class="p">(</span> <span class="mi">2</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">numberOfParameters</span><span class="p">,</span> <span class="mf">0.0</span> <span class="p">)</span> <span class="p">);</span>
+
+<span class="c1">// Define search bounds: first parameter is start date, following parameters are leg durations</span>
+<span class="n">bounds</span><span class="p">[</span> <span class="mi">0</span> <span class="p">][</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">2458849.5</span><span class="p">;</span>
+<span class="n">bounds</span><span class="p">[</span> <span class="mi">1</span> <span class="p">][</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">2458849.5</span> <span class="o">+</span> <span class="mi">20</span> <span class="o">*</span> <span class="mi">365</span><span class="p">;</span>
+<span class="n">bounds</span><span class="p">[</span> <span class="mi">0</span> <span class="p">][</span> <span class="mi">1</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+<span class="n">bounds</span><span class="p">[</span> <span class="mi">1</span> <span class="p">][</span> <span class="mi">1</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="n">bounds</span><span class="p">[</span> <span class="mi">0</span> <span class="p">][</span> <span class="mi">2</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+<span class="n">bounds</span><span class="p">[</span> <span class="mi">1</span> <span class="p">][</span> <span class="mi">2</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span>
+<span class="n">bounds</span><span class="p">[</span> <span class="mi">0</span> <span class="p">][</span> <span class="mi">3</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+<span class="n">bounds</span><span class="p">[</span> <span class="mi">1</span> <span class="p">][</span> <span class="mi">3</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span>
+<span class="n">bounds</span><span class="p">[</span> <span class="mi">0</span> <span class="p">][</span> <span class="mi">4</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="n">bounds</span><span class="p">[</span> <span class="mi">1</span> <span class="p">][</span> <span class="mi">4</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">3000</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The decision variable is set up in the same manner as the last tutorial: the first index will determine if it is the lower or upper bound, and the second index determines the decision variable. For the input of the UDP, a vector containing the planets need to be passed to the constructor, this vector is set-up as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define the problem: EVEEJ flyby sequence</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">int</span> <span class="o">&gt;</span> <span class="n">flybySequence</span><span class="p">;</span>
+<span class="n">flybySequence</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mi">3</span> <span class="p">);</span>
+<span class="n">flybySequence</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mi">2</span> <span class="p">);</span>
+<span class="n">flybySequence</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mi">3</span> <span class="p">);</span>
+<span class="n">flybySequence</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mi">3</span> <span class="p">);</span>
+<span class="n">flybySequence</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mi">5</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>The index here represents the planet where a flyby will be performed.</p>
+<p>This vector, plus the bounds, can then be passed to the UDP, as is done in the following part of the code:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create object to compute the problem fitness</span>
+<span class="n">problem</span> <span class="n">prob</span><span class="p">{</span> <span class="n">MultipleGravityAssist</span><span class="p">(</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">flybySequence</span><span class="p">,</span> <span class="nb">true</span> <span class="p">)</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal"><span class="pre">MultipleGravityAssist(</span> <span class="pre">bounds,</span> <span class="pre">flybySequence,</span> <span class="pre">true</span> <span class="pre">)</span></code> is the UDP. The true statement enables the UDP to also use the trip time as an objective for the optimalization.</p>
+<p>This UDP contains an empty constructor, and a constructor that initializes the bounds, and the problem:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span> <span class="n">MultipleGravityAssist</span><span class="o">::</span><span class="n">MultipleGravityAssist</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">bounds</span><span class="p">,</span>
+                                           <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">int</span> <span class="o">&gt;</span> <span class="n">flybySequence</span><span class="p">,</span>
+                                           <span class="k">const</span> <span class="kt">bool</span> <span class="n">useTripTime</span> <span class="p">)</span> <span class="o">:</span>
+ <span class="n">problemBounds_</span><span class="p">(</span> <span class="n">bounds</span> <span class="p">),</span> <span class="n">useTripTime_</span><span class="p">(</span> <span class="n">useTripTime</span> <span class="p">)</span> <span class="p">{</span>
+
+    <span class="n">mgaObject_</span><span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">total_DV_orbit_insertion</span><span class="p">;</span>
+    <span class="n">mgaObject_</span><span class="p">.</span><span class="n">sequence</span> <span class="o">=</span> <span class="n">flybySequence</span><span class="p">;</span>
+    <span class="n">mgaObject_</span><span class="p">.</span><span class="n">rev_flag</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">flybySequence</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
+
+    <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">flybySequence</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">mgaObject_</span><span class="p">.</span><span class="n">rev_flag</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">mgaObject_</span><span class="p">.</span><span class="n">Isp</span> <span class="o">=</span> <span class="mf">300.0</span><span class="p">;</span>
+    <span class="n">mgaObject_</span><span class="p">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">8000.0</span><span class="p">;</span>
+    <span class="n">mgaObject_</span><span class="p">.</span><span class="n">DVlaunch</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+
+    <span class="n">mgaObject_</span><span class="p">.</span><span class="n">rp</span> <span class="o">=</span> <span class="mf">76.0E3</span><span class="p">;</span>
+    <span class="n">mgaObject_</span><span class="p">.</span><span class="n">e</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal"><span class="pre">mgaObject</span></code> is an object of type <code class="docutils literal"><span class="pre">mgaproblem</span></code>, which is defined in the AstroToolbox folder.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Get bounds</span>
+<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">MultipleGravityAssist</span><span class="o">::</span><span class="n">get_bounds</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+
+    <span class="k">return</span> <span class="p">{</span> <span class="n">problemBounds_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">problemBounds_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="c1">//! Implementation of the fitness function (return delta-v)</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">MultipleGravityAssist</span><span class="o">::</span><span class="n">fitness</span><span class="p">(</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">xv</span> <span class="p">)</span> <span class="k">const</span><span class="p">{</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">rp</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">DV</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">obj_funct</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">MGA</span><span class="p">(</span> <span class="n">xv</span><span class="p">,</span> <span class="n">mgaObject_</span><span class="p">,</span> <span class="n">rp</span><span class="p">,</span> <span class="n">DV</span><span class="p">,</span> <span class="n">obj_funct</span> <span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="n">useTripTime_</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">{</span> <span class="n">obj_funct</span> <span class="p">};</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="kt">double</span> <span class="n">tof</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">problemBounds_</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="mi">0</span> <span class="p">).</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">tof</span> <span class="o">+=</span> <span class="n">xv</span><span class="p">[</span> <span class="n">i</span> <span class="p">];</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span> <span class="n">obj_funct</span><span class="p">,</span> <span class="n">tof</span> <span class="p">};</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The code above implements the two necessary methods: <code class="docutils literal"><span class="pre">get_bounds()</span></code> and <code class="docutils literal"><span class="pre">fitness(</span> <span class="pre">const</span> <span class="pre">std::vector&lt;double&gt;</span> <span class="pre">&amp;xv</span> <span class="pre">)</span></code>. The <code class="docutils literal"><span class="pre">get_bounds()</span></code> function is implemented in the same way as previous examples. The <code class="docutils literal"><span class="pre">fitness(</span> <span class="pre">const</span> <span class="pre">std::vector&lt;double&gt;</span> <span class="pre">&amp;xv</span> <span class="pre">)</span></code> method is relatively simple, however it uses an external function called <code class="docutils literal"><span class="pre">MGA</span></code>, which calculates the delta-v for the proposed gravity assist trajectory.</p>
+</div>
+<div class="section" id="selecting-the-algorithm">
+<h2>4.2. Selecting the Algorithm<a class="headerlink" href="#selecting-the-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>In this example, the nsga2 algorithm is selected to optimize the trajectory:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Select NSGA2 algorithm for problem</span>
+<span class="n">algorithm</span> <span class="n">algo</span><span class="p">{</span><span class="n">nsga2</span><span class="p">(</span> <span class="p">)};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="building-the-island">
+<h2>4.3. Building the Island<a class="headerlink" href="#building-the-island" title="Permalink to this headline">¶</a></h2>
+<p>The island is built in the same way as in <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create an island with 1000 individuals</span>
+<span class="n">island</span> <span class="n">isl</span><span class="p">{</span><span class="n">algo</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="mi">1000</span> <span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="perform-the-optimization">
+<h2>4.4. Perform the Optimization<a class="headerlink" href="#perform-the-optimization" title="Permalink to this headline">¶</a></h2>
+<p>Finally, the optimization is performed in the same manner as in <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Evolve for 512 generations</span>
+<span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">512</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">isl</span><span class="p">.</span><span class="n">evolve</span><span class="p">();</span>
+    <span class="k">while</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">status</span><span class="p">()</span><span class="o">!=</span><span class="n">pagmo</span><span class="o">::</span><span class="n">evolve_status</span><span class="o">::</span><span class="n">idle</span> <span class="p">)</span>
+        <span class="n">isl</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span>
+
+    <span class="c1">// Write current iteration results to file</span>
+    <span class="n">printPopulationToFile</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span> <span class="p">).</span><span class="n">get_x</span><span class="p">(</span> <span class="p">),</span> <span class="s">&quot;mo_mga_EVEEJ_&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">i</span> <span class="p">),</span> <span class="nb">false</span> <span class="p">);</span>
+    <span class="n">printPopulationToFile</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span> <span class="p">).</span><span class="n">get_f</span><span class="p">(</span> <span class="p">),</span> <span class="s">&quot;mo_mga_EVEEJ_&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">i</span> <span class="p">),</span> <span class="nb">true</span> <span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="results">
+<h2>4.5. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>The application output should look like this:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span>Starting ...\tudatBundle.git\tudatExampleApplications\libraryExamples\bin\applications\application_PagmoMgaTransferExample.exe...
+
+0
+1
+2
+...
+...
+...
+509
+510
+511
+
+.../tudatBundle.git/tudatExampleApplications/libraryExamples/bin/applications/application_PagmoMgaTransferExample.exe exited with code 0
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="propTargeting.html" class="btn btn-neutral float-right" title="5. Propagation Targeting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="earthMarsTrans.html" class="btn btn-neutral" title="3. (multi-objective) Earth Mars Transfer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>

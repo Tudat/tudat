@@ -1,0 +1,281 @@
+.. _walkthroughspropTargeting:
+
+Propagation Targeting
+=====================================
+The example described in this tutorial will cover the following problem statement:
+
+   A satellite is going to be launched on an elliptical orbit with min and max altitudes respectively 180 km and 40000 km with inclination i=0 (and argument of perigee omega = 0). A fixed target is set on the same plane at an altitude of 35000 km, fixed latitude of 30 deg. What is the value of the RAAN for which the satellite achieves a minimum approach distance from the target?
+
+The code for this tutorial is given here on Github, and is also located in your tudat bundle at:
+
+   tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/propagationTargetingExample.cpp
+
+This tutorial will use the same concepts described in previous examples, however for this example, the Tudat propagation is implemented in the problem. Thus this example will show how the PAGMO library and Tudat can work together. It is necessary that the previous examples are understood to be able to go through this example.
+
+Set up the problem
+~~~~~~~~~~~~~~~~~~~~~~
+The problem is set-up as follows:
+
+.. code-block:: cpp
+
+    //Load spice kernels
+    tudat::spice_interface::loadStandardSpiceKernels( );
+
+    // Create object to compute the problem fitness; no perturbations
+    double altitudeOfPerigee = 180000.0;
+    double altitudeOfApogee = 40000000.0;
+    double altitudeOfTarget = 35000000.0;
+    double longitudeOfTarget = 30.0; // In degrees
+    problem prob{PropagationTargetingProblem( altitudeOfPerigee, altitudeOfApogee, altitudeOfTarget,
+                  longitudeOfTarget, false ) };
+
+First, the Spice (ephemeris) kernels are loaded in to get an accurate ephemeris of all the bodies included in this example. Then the input to the problem is defined: the perigee and apogee of the targeter, and the altitude and longitude of the target. Then the problem is object is made in the same manner as was done in previous examples, using the :literal:`PropagationTargetingProblem(...)` as the UDP.
+
+The UDP contains an empty constructor and a normal constructor. In the normal constructor, the final argument, :literal:`useExtendedDynamics`, is a boolean variable that determines if either only the Earth gravitational influence is used (:literal:`false`, default) or if also the lunar and solar gravitational influence are implememted. The :literal:`get_bounds()` is implemented in the same way as before, but the fitness function is implemented differently, which will be discussed here.
+
+First, the orbit of the targeter is defined:
+
+.. code-block:: cpp
+
+    // Definition of the orbit
+    const double earthRotationRate = 2.0 * mathematical_constants::PI / physical_constants::SIDEREAL_DAY;
+    const double earthRadius = spice_interface::getAverageRadius( "Earth" );
+    const double radiusOfPerigee =  earthRadius + altitudeOfPerigee_;
+    const double radiusOfApogee = earthRadius + altitudeOfApogee_;
+    const double earthGravitationalParameter = spice_interface::getBodyGravitationalParameter( "Earth" );
+    const double semiMajorAxis = (radiusOfApogee + radiusOfPerigee)/2.0;
+
+The next part of the fitness function is the set up of the integration, the bodies, and the environment. This is done in a similar manner as in the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite`. Thus if a part of this tutorial is not clear, the reader is referred to this example (and the following examples on that page).
+
+The following code shows the initialization of the integration, the bodies, and the environment:
+
+.. code-block:: cpp
+
+    //Integration time: half a orbit
+    const double simulationStartEpoch = 0.0;
+    const double simulationEndEpoch = 1.2 * mathematical_constants::PI *
+            std::sqrt(pow(semiMajorAxis,3)/earthGravitationalParameter);
+    const double fixedStepSize = 2.0;
+
+    // Create the body Earth from Spice interface
+    std::map< std::string, boost::shared_ptr< BodySettings > > bodySettings;
+    if( useExtendedDynamics_ )
+    {
+        bodySettings =
+                getDefaultBodySettings( {"Earth", "Moon", "Sun"}, simulationStartEpoch - 3600.0, simulationEndEpoch + 3600.0 );
+        bodySettings[ "Moon" ]->rotationModelSettings->resetOriginalFrame( "J2000" );
+        bodySettings[ "Moon" ]->ephemerisSettings->resetFrameOrientation( "J2000" );
+        bodySettings[ "Sun" ]->rotationModelSettings->resetOriginalFrame( "J2000" );
+        bodySettings[ "Sun" ]->ephemerisSettings->resetFrameOrientation( "J2000" );
+    }
+    else
+    {
+        bodySettings =
+                getDefaultBodySettings( {"Earth"} );
+    }
+    bodySettings[ "Earth" ]->ephemerisSettings = boost::make_shared< simulation_setup::ConstantEphemerisSettings >(
+                Eigen::Vector6d::Zero( ), "SSB", "J2000" );
+    bodySettings[ "Earth" ]->atmosphereSettings = NULL;
+    bodySettings[ "Earth" ]->shapeModelSettings = NULL;
+
+    bodySettings[ "Earth" ]->rotationModelSettings->resetOriginalFrame( "J2000" );
+    bodySettings[ "Earth" ]->ephemerisSettings->resetFrameOrientation( "J2000" );
+
+
+    //Create bodyMap and add the satellite as an empty body
+    NamedBodyMap bodyMap = simulation_setup::createBodies( bodySettings );
+    bodyMap["Satellite"] = boost::make_shared<Body>();
+
+    setGlobalFrameBodyEphemerides( bodyMap, "Earth", "J2000" );
+
+The next step is to define the target orbit using the input values of the UDP, and set-up the initial conditions for the satellite:
+
+.. code-block:: cpp
+
+    //Define position of the target at 35000 km from Earth at 30 deg latitude
+    Eigen::Vector3d target;
+    target[0] = (earthRadius + altitudeOfTarget_) * cos(longitudeOfTarget_*mathematical_constants::PI/180);
+    target[1] = (earthRadius + altitudeOfTarget_) * sin(longitudeOfTarget_*mathematical_constants::PI/180);
+    target[2] = 0.0;
+
+    //Define initial position of satellite at the perigee
+    Eigen::Vector6d initialKeplerElements;
+    initialKeplerElements[ semiMajorAxisIndex ] = semiMajorAxis;
+    initialKeplerElements[ eccentricityIndex ] = (radiusOfApogee - radiusOfPerigee)/(radiusOfApogee + radiusOfPerigee);
+    initialKeplerElements[ inclinationIndex ] = 35.0 * mathematical_constants::PI/180.0;
+    initialKeplerElements[ argumentOfPeriapsisIndex ] = x[0] * mathematical_constants::PI/180.0;
+    initialKeplerElements[ longitudeOfAscendingNodeIndex ] = x[1] * mathematical_constants::PI/180.0;
+    initialKeplerElements[ trueAnomalyIndex ] = 0.0;
+
+    const Eigen::Vector6d systemInitialState = convertKeplerianToCartesianElements(
+                                                  initialKeplerElements, earthGravitationalParameter );
+
+
+The only acceleration models that are implemented are gravitational of nature. The propagator setting use the Cowell method and a RK4 integrator:
+
+.. code-block:: cpp
+
+    //Setup simulation. Simple Keplerian orbit (only central-gravity of Earth)
+    std::vector< std::string > bodiesToPropagate = { "Satellite" };
+    std::vector< std::string > centralBodies = { "Earth" };
+    SelectedAccelerationMap accelerationMap;
+    std::map< std::string, std::vector< boost::shared_ptr< AccelerationSettings > > > accelerationsOfSatellite;
+    if( useExtendedDynamics_ )
+    {
+        accelerationsOfSatellite[ "Earth" ].push_back( boost::make_shared< SphericalHarmonicAccelerationSettings >(
+                                                           2, 2 ) );
+        accelerationsOfSatellite[ "Moon" ].push_back( boost::make_shared< AccelerationSettings >(
+                                                          point_mass_gravity ) );
+        accelerationsOfSatellite[ "Sun" ].push_back( boost::make_shared< AccelerationSettings >(
+                                                         point_mass_gravity ) );
+        accelerationMap[ "Satellite" ] = accelerationsOfSatellite;
+    }
+    else
+    {
+        accelerationsOfSatellite[ "Earth" ].push_back( boost::make_shared< AccelerationSettings >(
+                                                           point_mass_gravity ) );
+        accelerationMap[ "Satellite" ] = accelerationsOfSatellite;
+    }
+    basic_astrodynamics::AccelerationMap accelerationModelMap = createAccelerationModelsMap(
+                bodyMap, accelerationMap, bodiesToPropagate, centralBodies );
+
+    //Setup propagator (cowell) and integrator (RK4 fixed stepsize)
+    boost::shared_ptr< TranslationalStatePropagatorSettings< double > > propagatorSettings =
+            boost::make_shared< TranslationalStatePropagatorSettings< double > >
+            ( centralBodies, accelerationModelMap, bodiesToPropagate, systemInitialState, simulationEndEpoch );
+    boost::shared_ptr< IntegratorSettings< > > integratorSettings =
+            boost::make_shared< IntegratorSettings< > >
+            ( rungeKutta4, simulationStartEpoch, fixedStepSize );
+
+    //Start simulation
+    SingleArcDynamicsSimulator< > dynamicsSimulator(
+                bodyMap, integratorSettings, propagatorSettings, true, false, false );
+
+
+After the simulation is defined, it is time to actually define the optimization part of this example: 
+
+.. code-block:: cpp
+
+    //Retrieve results
+    std::map< double, Eigen::VectorXd > integrationResult =
+            dynamicsSimulator.getEquationsOfMotionNumericalSolution( );
+
+
+    //Find minimum distance from target
+    Eigen::Vector3d separationFromTarget =
+            Eigen::Quaterniond( Eigen::AngleAxisd(
+                                    -earthRotationRate * integrationResult.begin( )->first, Eigen::Vector3d::UnitZ( ) ) ) *
+            ( integrationResult.begin( )->second.segment( 0, 3 ) )- target;
+
+    double bestDistanceFromTarget = separationFromTarget.norm( );
+    double timeForBestDistanceFromTarget = integrationResult.begin( )->first;
+
+    for( std::map< double, Eigen::VectorXd >::const_iterator stateIterator = integrationResult.begin( );
+         stateIterator != integrationResult.end( ); stateIterator++ )
+    {
+        separationFromTarget = Eigen::Quaterniond( Eigen::AngleAxisd(
+                                                       -earthRotationRate * stateIterator->first, Eigen::Vector3d::UnitZ( ) ) ) *
+                stateIterator->second.segment( 0, 3 ) - target;
+        const double distanceFromTarget = separationFromTarget.norm( );
+
+        if( distanceFromTarget < bestDistanceFromTarget )
+        {
+            bestDistanceFromTarget = distanceFromTarget;
+            timeForBestDistanceFromTarget = stateIterator->first;
+        }
+
+    }
+
+    std::vector< double > output = {bestDistanceFromTarget} ;
+
+    return output;
+
+First, the results of the simulation are stored in a variable: :literal:`integrationResult`. Then the smalles distance and time of the smallest distance between the targeter and the target are intialized. These variables are needed in the for-loop that follows to determine the best results of the simulation. This result is then stored and used as the fitness value. 
+
+Selecting the Algorithm
+~~~~~~~~~~~~~~~~~~~~~~~~
+In this example, the de1220 algorithm is selected to optimize the trajectory:
+
+.. code-block:: cpp
+
+    // Instantiate a pagmo algorithm
+    algorithm algo{de1220( )};
+
+A grid-search is also performed, however, this is only done to compare the resuolts and it shall thus not be discussed here. 
+
+Building the Island
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The island is built in the same way as in :ref:`walkthroughsHimmelblau`:
+
+.. code-block:: cpp
+
+        // Create an island with 128 individuals
+        pagmo::population::size_type populationSize = 128;
+        island isl{algo, prob, populationSize};
+
+
+Perform the Optimization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Finally, the optimization is performed in the same manner as in :ref:`walkthroughsHimmelblau`:
+
+.. code-block:: cpp
+
+        // Evolve for 25 generations
+        for( int i = 0; i < 25; i++ )
+        {
+            isl.evolve();
+            while( isl.status()!=pagmo::evolve_status::idle )
+                isl.wait();
+
+            // Write current iteration results to file
+            printPopulationToFile( isl.get_population( ).get_x( ), "targetingPropagation_" + std::to_string( i ) + "_" + std::to_string( i ) , false );
+            printPopulationToFile( isl.get_population( ).get_f( ), "targetingPropagation_" + std::to_string( i ) + "_" + std::to_string( i ) , true );
+
+            std::cout<<i<<std::endl;
+        }
+
+In the example code, the problem is repeated, but then with the lunar and solar gravity included. This is done in the same way as was discussed here, but with :literal:`useExtendedDynamics` set to :literal:`true`. 
+
+Results
+~~~~~~~
+The output of the application should look as follows (specific numbers could be different):
+
+.. code-block:: cpp
+
+        Starting ...\tudatBundle.git\tudatExampleApplications\libraryExamples\bin\applications\application_PagmoPropagationTargetingExample.exe...
+
+	Grid search 0
+	Grid search 1
+	Grid search 2
+	...
+	...
+	...
+	Grid search 97
+	Grid search 98
+	Grid search 99
+	0
+	1
+	2
+	...
+	...
+	...
+	22
+	23
+	24
+	Grid search 0
+	Grid search 1
+	Grid search 2
+	...
+	...
+	...
+	Grid search 97
+	Grid search 98
+	Grid search 99
+	0
+	1
+	2
+	3
+	.../tudatBundle.git/tudatExampleApplications/libraryExamples/bin/applications/application_PagmoPropagationTargetingExample.exe exited with code 0
+
+
+
