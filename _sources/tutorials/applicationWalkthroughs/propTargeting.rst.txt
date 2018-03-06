@@ -88,7 +88,7 @@ The following code shows the initialization of the integration, the bodies, and 
 
     setGlobalFrameBodyEphemerides( bodyMap, "Earth", "J2000" );
 
-The next step is to define the target orbit using the input values of the UDP, and set-up the initial conditions for the satellite:
+The next step is to define the target orbit using the input values of the  UDP, and set-up the initial conditions for the satellite:
 
 .. code-block:: cpp
 
@@ -234,7 +234,27 @@ Finally, the optimization is performed in the same manner as in :ref:`walkthroug
             std::cout<<i<<std::endl;
         }
 
-In the example code, the problem is repeated, but then with the lunar and solar gravity included. This is done in the same way as was discussed here, but with :literal:`useExtendedDynamics` set to :literal:`true`. 
+
+Perturbed Example
+~~~~~~~~~~~~~~~~~
+In the second half of the example, the code is repeated, but with extended dynamics. This optimization problem is almost the same as the previous problem, but there are some differences due to the fact that the convergence of this problem is non-trivial. 
+
+The first difference is the fact that when the UDP is initialized, a boolean variable in the constructor is set to :literal:`true`, namely: :literal:`useExtendedDynamics`. This variable will make sure that the third-body lunar and solar gravitational perturbation is included in the dynamics. The second difference is that the initial population is set to the final population of the previous problem. This will help with the convergence of this problem, and is shown below:
+
+.. code-block:: cpp
+
+        // Create an empty population for perturbed problem
+        population population_pert = population( prob_pert, 0 );
+
+        // Retrieve population of unperturbed problem, and instantiate population of perturbed problem
+        std::vector<vector_double> original_population = isl.get_population( ).get_x( );
+        for( int k = 0; k < populationSize; k++ )
+        {
+            population_pert.push_back( original_population.at( k ) );
+        }
+
+The most important thing to remember here is the fact that the population needs to be set in a for-loop, not just in one line. The rest of the example is fairly straightforward and is left to the reader to understand.
+
 
 Results
 ~~~~~~~

@@ -260,7 +260,7 @@
 <span class="n">setGlobalFrameBodyEphemerides</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The next step is to define the target orbit using the input values of the UDP, and set-up the initial conditions for the satellite:</p>
+<p>The next step is to define the target orbit using the input values of the  UDP, and set-up the initial conditions for the satellite:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//Define position of the target at 35000 km from Earth at 30 deg latitude</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">target</span><span class="p">;</span>
 <span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">earthRadius</span> <span class="o">+</span> <span class="n">altitudeOfTarget_</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">longitudeOfTarget_</span><span class="o">*</span><span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span><span class="o">/</span><span class="mi">180</span><span class="p">);</span>
@@ -392,10 +392,26 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the example code, the problem is repeated, but then with the lunar and solar gravity included. This is done in the same way as was discussed here, but with <code class="docutils literal"><span class="pre">useExtendedDynamics</span></code> set to <code class="docutils literal"><span class="pre">true</span></code>.</p>
+</div>
+<div class="section" id="perturbed-example">
+<h2>5.5. Perturbed Example<a class="headerlink" href="#perturbed-example" title="Permalink to this headline">¶</a></h2>
+<p>In the second half of the example, the code is repeated, but with extended dynamics. This optimization problem is almost the same as the previous problem, but there are some differences due to the fact that the convergence of this problem is non-trivial.</p>
+<p>The first difference is the fact that when the UDP is initialized, a boolean variable in the constructor is set to <code class="docutils literal"><span class="pre">true</span></code>, namely: <code class="docutils literal"><span class="pre">useExtendedDynamics</span></code>. This variable will make sure that the third-body lunar and solar gravitational perturbation is included in the dynamics. The second difference is that the initial population is set to the final population of the previous problem. This will help with the convergence of this problem, and is shown below:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create an empty population for perturbed problem</span>
+<span class="n">population</span> <span class="n">population_pert</span> <span class="o">=</span> <span class="n">population</span><span class="p">(</span> <span class="n">prob_pert</span><span class="p">,</span> <span class="mi">0</span> <span class="p">);</span>
+
+<span class="c1">// Retrieve population of unperturbed problem, and instantiate population of perturbed problem</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector_double</span><span class="o">&gt;</span> <span class="n">original_population</span> <span class="o">=</span> <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span> <span class="p">).</span><span class="n">get_x</span><span class="p">(</span> <span class="p">);</span>
+<span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">populationSize</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">population_pert</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">original_population</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">k</span> <span class="p">)</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The most important thing to remember here is the fact that the population needs to be set in a for-loop, not just in one line. The rest of the example is fairly straightforward and is left to the reader to understand.</p>
 </div>
 <div class="section" id="results">
-<h2>5.5. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2>5.6. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p>The output of the application should look as follows (specific numbers could be different):</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span>Starting ...\tudatBundle.git\tudatExampleApplications\libraryExamples\bin\applications\application_PagmoPropagationTargetingExample.exe...
 

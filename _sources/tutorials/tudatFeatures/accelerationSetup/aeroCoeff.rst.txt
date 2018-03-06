@@ -14,9 +14,9 @@ The aerodynamic coefficients can be implemented in several different ways that a
 
 Local Incliniation Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-One of the options to determine the aerodynamic coefficients during hypersonic flight is to use a hypersonic local inclination method. These methods calculate the aerodynamic coefficients using the orientation of the vehicle with respect to the incoming flow. A selection of these methods are implemented into Tudat and they are especially useful when using a capsule as the vehicle on which the aerodynamic acceleration is working on. 
+One of the options to determine the aerodynamic coefficients during hypersonic flight is to use a hypersonic local inclination method. These methods calculate the aerodynamic coefficients using the orientation of the vehicle with respect to the incoming flow. A selection of these methods are implemented into Tudat and are able to calculate the aerodynamic coefficients for several pre-defined geometries and user defined grids.
 
-The class which can be used is define below.
+The class which can be used is defined below.
 
 .. class:: HypersonicLocalInclinationAnalysis
 
@@ -103,7 +103,7 @@ First the capsule geometry is made using a pre-defined capsule shape:
             = boost::make_shared< geometric_shapes::Capsule >(
                4.694, 1.956, 2.662, -1.0 * 33.0 * PI / 180.0, 0.196 );
 
-The number of lines and points are easily definable:
+There is also an option to define a grid by the user, but this is not explained here. To define the panels on the vehicle, which are used for the calculation of the local inclination, the number of lines and points are easily definable:
 
 .. code-block:: cpp
     
@@ -128,7 +128,7 @@ The number of lines and points are easily definable:
     invertOrders[ 2 ] = 0;
     invertOrders[ 3 ] = 0;
 
-A moment reference point is then defined. Afterwards, the independent variable points are defined. These points can be defined by the user, but there is also an option to get default values:
+A moment reference point is then defined. Afterwards, the independent variable points are defined, which are used to calculate the coefficients in the simulation during specific flight conditions. These points can be defined by the user, but there is also an option to get default values:
 
 .. code-block:: cpp
     
