@@ -271,25 +271,6 @@ Where the three input variables represent:
     - Boolean denoting whether the term independent of the time lag is to be computed (default true)
     - Boolean denoting whether the tide raised on the planet is to be modelled (if true), or the tide raised on the satellite (if false). Default is true.
 
-.. _tudatFeaturesFrameworkTorqueModelSetup:    
-
-Rotational model setup
-~~~~~~~~~~~~~~~~~~~~~~
-The rotational model setup is similar to the translational acceleration setup described above. 
-
-.. class:: TorqueModel
-
-   Class for the torque model, set using the settings class described below.
-
-.. class:: TorqueSettings
-
-   Base class for the torque settings used for rotational dynamics as set in :class:`RotationalStatePropagatorSettings`. Type of torque is selected by passing the correct parameter to the constructor. Currently two types of torques are implemented: ``second_order_gravitational_torque`` (interaction of point-mass of body A with J\ :sub:`2` of body B) and ``aerodynamic_torque`` (settings for coefficients defined same as for aerodynamic acceleration).
-
-   .. code-block:: cpp
-
-    TorqueSettings( torqueType );
-
-
 .. _tudatFeaturesFrameworkMassRateModelSetup:
 
 Mass rate model setup
