@@ -12,6 +12,101 @@ For a body that experiences aerodynamic forces, the aerodynamic coefficients of 
 
 The aerodynamic coefficients can be implemented in several different ways that are discussed in this section.
 
+
+.. _tudatFeaturesAerodynamicGuidanceReadingAerodynamicCoefficients:
+ 
+Reading aerodynamic coefficients from Files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+For many simulations/analyses involving atmospheric flight, the aerodynamic coefficients will be provided in tabulated form. If put into the correct file format, these files can be read into Tudat used during the orbit propagation. By specifying the physical meaning of the independent variables of the aerodynamic coefficients, no action on the side of the user is required to update the aerodynamic coefficients to their correct values during propagation. Here, we give an overview and some examples on how to load aerodynamic coefficients from a file.
+
+Loading the coefficient settings
+********************************
+As a reminder, aerodynamic coefficients are created in Tudat by creating an object of type :class:`AerodynamicCoefficientSettings`:
+
+.. code-block:: cpp
+    
+    boost::shared_ptr< AerodynamicCoefficientSettings > aerodynamicCoefficientSettings = .....
+    bodyMap[ "VehicleName" ]->setAerodynamicCoefficientInterface(
+                        createAerodynamicCoefficientInterface( aerodynamicCoefficientSettings, "VehicleName" ) );
+
+To create an :class:`AerodynamicCoefficientSettings` object from data in files, we provide two functions named :literal:`readTabulatedAerodynamicCoefficientsFromFiles` (in :literal:`createFlightConditions.h`). For one of the functions, only force coefficients are loaded (with moment coefficients set to zero at all times). The other function allows both force and moment coefficients to be loaded.
+
+For the situation where only force coefficients are considered, several pieces information are needed:
+
+   - A list of files for any of the three aerodynamic coefficients (e.g. C\ :sub:`D`, C\ :sub:`S`, C\ :sub:`L` or C\ :sub:`X`, C\ :sub:`Y`, C\ :sub:`Z`). Note that the behaviour of each coefficient must be provided in a separate file. Note that not every coefficient needs to be defined. If a file is not provided for one of the coefficients, as will often be the case for C\ :sub:`S`, zeros are assumed at all points in the propagation.
+   - The physical meaning of each of the independent variables of the coefficients.
+   - The reference area for the aerodynamics. This is not read from the file and must be provided as an input to the function.
+   - Two booleans denoting the orientation and direction of the aerodynamic coefficients. For instance C\ :sub:`D`, C\ :sub:`S`, C\ :sub:`L` denote the strength of the aerodynamic force in the aerodynamic reference frame, in a direction opposite to the axes of that frame. The C\ :sub:`X`, C\ :sub:`Y`, C\ :sub:`Z` coefficients, on the other hand, are defined in the body-fixed frame.
+
+As an example, the following can be used to create :class:`AerodynamicCoefficientSettings` for force coefficients only from a file:
+
+    .. code-block:: cpp
+    
+        double referenceArea = 50.0; // Define reference area
+
+        // Define physical meaning of independent variables, in this case Mach number and angle of attack
+        std::vector< aerodynamics::AerodynamicCoefficientsIndependentVariables > independentVariableNames; 
+        independentVariableNames.push_back( aerodynamics::mach_number_dependent );
+        independentVariableNames.push_back( aerodynamics::angle_of_attack_dependent ); 
+
+        // Define list of files for force coefficients. Entry 0 denotes the x-direction (C ~D~/C ~X~), 1 the y-direction (C ~S~/C ~Y~) and 2 the z-direction (C ~L~/C ~Z~)
+        std::map< int, std::string > forceCoefficientFiles; 
+        forceCoefficientFiles[ 0 ] = tudat::input_output::getTudatRootPath( ) + "Astrodynamics/Aerodynamics/UnitTests/aurora_CD.txt"; // Set drag coefficient file
+        forceCoefficientFiles[ 2 ] = tudat::input_output::getTudatRootPath( ) + "Astrodynamics/Aerodynamics/UnitTests/aurora_CL.txt"; // Set lift coefficient file
+
+        // Define reference frame in which the loaded coefficients are defined.
+        bool areCoefficientsInAerodynamicFrame = true;
+        bool areCoefficientsInNegativeAxisDirection = true;
+
+        // Load and parse files; create coefficient settings.
+        boost::shared_ptr< AerodynamicCoefficientSettings > aerodynamicCoefficientSettings = 
+            readTabulatedAerodynamicCoefficientsFromFiles( forceCoefficientFiles, referenceArea, independentVariableNames, areCoefficientsInAerodynamicFrame,         areCoefficientsInNegativeAxisDirection );
+
+        // Create and set aerodynamic coefficients
+        bodyMap[ "VehicleName" ]->setAerodynamicCoefficientInterface(
+                            createAerodynamicCoefficientInterface( aerodynamicCoefficientSettings, "VehicleName" ) );
+
+Note that in the above, no side force coefficient file (entry 1 for forceCoefficientFiles) is given, so that C\ :sub:`S`=0 always. Two independent variables have been defines (Mach number and angle of attack). If either the lift or drag coefficient files encounter a different number of independent variables, the program will terminate with an appropriate error message. Also, if the independent variables used for the lift and drag coefficients are not identical, the program is terminated.
+
+.. tip:: Moment coefficients are added in a completely analogous manner (with separate files for the x-, y- and z-components).
+
+Adding control surface influence
+********************************
+In addition to defining aerodynamic coefficients for the vehicle itself, the influence of control surface deflections on the values of the coefficients will be needed for certain applications. In Tudat, any number of control surfaces may be defined for a vehicle, the deflection of which may be set by your particular :class:`AerodynamicGuidance` derived class. Loading the aerodynamic coefficient increments of the control surface is done in a manner similar to those of the total vehicle, but:
+
+    - Reference area and reference frame in which the coefficients are defined are not provided. These are implcitily assumed to be equal to those of the aerodynamic coefficients of the 'main body'. If your application requires these quantities to be different for the body and control surface deflections, please open an issue on Github requesting the functionality.
+    - Exactly one of the independent variables of the coefficient increments must be a control surface deflection.
+
+Below, an example is given on how to load the aerodynamic coefficient increments:
+
+.. code-block:: cpp
+    
+    // Create coefficient settings for body.
+    boost::shared_ptr< AerodynamicCoefficientSettings > aerodynamicCoefficientSettings = ...
+
+    // Define physical meaning of independent variables for control surface increments, in this case Mach number, angle of attack and control surface deflection
+    std::vector< aerodynamics::AerodynamicCoefficientsIndependentVariables > controlSurfaceIndependentVariableNames; 
+    controlSurfaceIndependentVariableNames.push_back( aerodynamics::mach_number_dependent );
+    controlSurfaceIndependentVariableNames.push_back( aerodynamics::angle_of_attack_dependent ); 
+    controlSurfaceIndependentVariableNames.push_back( aerodynamics::control_surface_deflection_dependent ); 
+
+    // Define name of control surface
+    std::string controlSurfaceName = "Elevon";
+
+    // Define list of files for force coefficients. 
+    std::map< int, std::string > controlSurfaceForceCoefficientFiles; 
+    controlSurfaceForceCoefficientFiles[ 0 ] = tudat::input_output::getTudatRootPath( ) + "Astrodynamics/Aerodynamics/UnitTests/dCDwTest.txt"; // Set drag coefficient file
+
+    // Add settings for control surface increments to main aerodynamic coefficients
+    aerodynamicCoefficientSettings->setControlSurfaceSettings( 
+        readTabulatedControlIncrementAerodynamicCoefficientsFromFiles( controlSurfaceForceCoefficientFiles, controlSurfaceIndependentVariableNames, controlSurfaceName ) );
+
+    // Create and set aerodynamic coefficients
+    bodyMap[ "VehicleName" ]->setAerodynamicCoefficientInterface(
+        createAerodynamicCoefficientInterface( aerodynamicCoefficientSettings, "VehicleName" ) );
+
+For this example, only the drag coefficient is affected by the control surface deflections.
+
 Local Incliniation Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 One of the options to determine the aerodynamic coefficients during hypersonic flight is to use a hypersonic local inclination method. These methods calculate the aerodynamic coefficients using the orientation of the vehicle with respect to the incoming flow. A selection of these methods are implemented into Tudat and are able to calculate the aerodynamic coefficients for several pre-defined geometries and user defined grids.
@@ -38,25 +133,24 @@ The settings for this class are constructed as follows:
 where:
 
 - :literal:`dataPointsOfIndependentVariables`:
-      A 2-dimensional vector of doubles that contains the data points of each independent variable. Index 0 corresponds to the Mach number, index 1 to the angle of attack, and index 2 to the
+      A 3-dimensional vector of doubles that contains the data points of each independent variable. Index 0 corresponds to the Mach number, index 1 to the angle of attack, and index 2 to the
       sideslip angle.
 
 - :literal:`inputVehicleSurface`:
       A :literal:`SurfaceGeometry` type variable that defines the geometry of the vehicle used for the determination of the aerodynamic coefficients. 
 
 - :literal:`numberOfLines`:
-      The number of discretization points in the first independent surface for each subpart of the vehicle defined in :literal:`inputVehicleSurface`. 
+      The number of discretization points in the first independent surface for each subpart of the vehicle defined in :literal:`inputVehicleSurface`. Example for the spherical cap of a capsule: the number of lines on which grid points are define, in the direction from nose to rear.
 
 - :literal:`numberOfPoints`:
-      The number of discretization points in the second independent surface for each subpart of the vehicle defined in :literal:`inputVehicleSurface`. 
+      The number of discretization points in the second independent surface for each subpart of the vehicle defined in :literal:`inputVehicleSurface`. Example for the spherical cap of a capsule: the number of points on a single line in circumferential direction, positive direction is clockwise as viewed from the vehicle front.
 
 - :literal:`invertOrders`:
       A boolean that determines the orientation of the normal vectors of the panels (the discretized units) of each subpart of the vehicle defined in :literal:`inputVehicleSurface`. This can either be
-      inward- or outward-facing.
+      inward- or outward-facing. Note that the definition of 'inward' and 'outward' depends on the direction of the 
 
 - :literal:`selectedMethods`:
-      A two dimensional vector that selects which specific method is used for the local inclination analysis. The first index determines if a compression (0) or a expansion (1) method is used, and
-      the second index determines the specific method (a list of available methods is given below).
+      A two dimensional vector that selects which specific method is to be used for the local inclination analysis. The first index determines the compression method (0), and the expansion method (1) that are used, and the second index determines the specific method (a list of available methods is given below).
 
 - :literal:`referenceArea`:
       A :literal:`double` that gives the reference area of the vehicle that is used for the analysis.
@@ -65,7 +159,7 @@ where:
       A :literal:`double` that gives the reference length of the vehicle that is used for the analysis.
 
 - :literal:`momentReferencePoint`:
-      A :literal:`Eigen::Vector3d` that gives the location of the moment reference point, which is used as a reference point to calculate the moments acting on the vehicle.
+      A :literal:`Eigen::Vector3d` that gives the location of the moment reference point, which is used as a reference point to calculate the moments acting on the vehicle. The reference frame is defined by the :literal:`inputVehicleSurface`.
 
 Available Methods
 *****************
@@ -176,97 +270,4 @@ Finally, in the return statement, the local inclination analysis is made, which 
                 invertOrders, selectedMethods, PI * pow( capsule->getMiddleRadius( ), 2.0 ),
                 3.9116, momentReference ); 
 
-.. _tudatFeaturesAerodynamicGuidanceReadingAerodynamicCoefficients:
- 
-Reading aerodynamic coefficients from Files
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-For many simulations/analyses involving atmospheric flight, the aerodynamic coefficients will be provided in tabulated form. If put into the correct file format, these files can be read into Tudat used during the orbit propagation. By specifying the physical meaning of the independent variables of the aerodynamic coefficients, no action on the side of the user is required to update the aerodynamic coefficients to their correct values during propagation. Here, we give an overview and some examples on how to load aerodynamic coefficients from a file.
-
-Loading the coefficient settings
-********************************
-As a reminder, aerodynamic coefficients are created in Tudat by creating an object of type :class:`AerodynamicCoefficientSettings`:
-
-.. code-block:: cpp
-    
-    boost::shared_ptr< AerodynamicCoefficientSettings > aerodynamicCoefficientSettings = .....
-    bodyMap[ "VehicleName" ]->setAerodynamicCoefficientInterface(
-                        createAerodynamicCoefficientInterface( aerodynamicCoefficientSettings, "VehicleName" ) );
-
-To create an :class:`AerodynamicCoefficientSettings` object from data in files, we provide two functions named :literal:`readTabulatedAerodynamicCoefficientsFromFiles` (in :literal:`createFlightConditions.h`). For one of the functions, only force coefficients are loaded (with moment coefficients set to zero at all times). The other function allows both force and moment coefficients to be loaded.
-
-For the situation where only force coefficients are considered, several pieces information are needed:
-
-   - A list of files for any of the three aerodynamic coefficients (e.g. C\ :sub:`D`, C\ :sub:`S`, C\ :sub:`L` or C\ :sub:`X`, C\ :sub:`Y`, C\ :sub:`Z`). Note that the behaviour of each coefficient must be provided in a separate file. Note that not every coefficient needs to be defined. If a file is not provided for one of the coefficients, as will often be the case for C\ :sub:`S`, zeros are assumed at all points in the propagation.
-   - The physical meaning of each of the independent variables of the coefficients.
-   - The reference area for the aerodynamics. This is not read from the file and must be provided as an input to the function.
-   - Two booleans denoting the orientation and direction of the aerodynamic coefficients. For instance C\ :sub:`D`, C\ :sub:`S`, C\ :sub:`L` denote the strength of the aerodynamic force in the aerodynamic reference frame, in a direction opposite to the axes of that frame. The C\ :sub:`X`, C\ :sub:`Y`, C\ :sub:`Z` coefficients, on the other hand, are defined in the body-fixed frame.
-
-As an example, the following can be used to create :class:`AerodynamicCoefficientSettings` for force coefficients only from a file:
-
-    .. code-block:: cpp
-    
-        double referenceArea = 50.0; // Define reference area
-
-        // Define physical meaning of independent variables, in this case Mach number and angle of attack
-        std::vector< aerodynamics::AerodynamicCoefficientsIndependentVariables > independentVariableNames; 
-        independentVariableNames.push_back( aerodynamics::mach_number_dependent );
-        independentVariableNames.push_back( aerodynamics::angle_of_attack_dependent ); 
-
-        // Define list of files for force coefficients. Entry 0 denotes the x-direction (C ~D~/C ~X~), 1 the y-direction (C ~S~/C ~Y~) and 2 the z-direction (C ~L~/C ~Z~)
-        std::map< int, std::string > forceCoefficientFiles; 
-        forceCoefficientFiles[ 0 ] = tudat::input_output::getTudatRootPath( ) + "Astrodynamics/Aerodynamics/UnitTests/aurora_CD.txt"; // Set drag coefficient file
-        forceCoefficientFiles[ 2 ] = tudat::input_output::getTudatRootPath( ) + "Astrodynamics/Aerodynamics/UnitTests/aurora_CL.txt"; // Set lift coefficient file
-
-        // Define reference frame in which the loaded coefficients are defined.
-        bool areCoefficientsInAerodynamicFrame = true;
-        bool areCoefficientsInNegativeAxisDirection = true;
-
-        // Load and parse files; create coefficient settings.
-        boost::shared_ptr< AerodynamicCoefficientSettings > aerodynamicCoefficientSettings = 
-            readTabulatedAerodynamicCoefficientsFromFiles( forceCoefficientFiles, referenceArea, independentVariableNames, areCoefficientsInAerodynamicFrame,         areCoefficientsInNegativeAxisDirection );
-
-        // Create and set aerodynamic coefficients
-        bodyMap[ "VehicleName" ]->setAerodynamicCoefficientInterface(
-                            createAerodynamicCoefficientInterface( aerodynamicCoefficientSettings, "VehicleName" ) );
-
-Note that in the above, no side force coefficient file (entry 1 for forceCoefficientFiles) is given, so that C\ :sub:`S`=0 always. Two independent variables have been defines (Mach number and angle of attack). If either the lift or drag coefficient files encounter a different number of independent variables, the program will terminate with an appropriate error message. Also, if the independent variables used for the lift and drag coefficients are not identical, the program is terminated.
-
-.. tip:: Moment coefficients are added in a completely analogous manner (with separate files for the x-, y- and z-components).
-
-Adding control surface influence
-********************************
-In addition to defining aerodynamic coefficients for the vehicle itself, the influence of control surface deflections on the values of the coefficients will be needed for certain applications. In Tudat, any number of control surfaces may be defined for a vehicle, the deflection of which may be set by your particular :class:`AerodynamicGuidance` derived class. Loading the aerodynamic coefficient increments of the control surface is done in a manner similar to those of the total vehicle, but:
-
-    - Reference area and reference frame in which the coefficients are defined are not provided. These are implcitily assumed to be equal to those of the aerodynamic coefficients of the 'main body'. If your application requires these quantities to be different for the body and control surface deflections, please open an issue on Github requesting the functionality.
-    - Exactly one of the independent variables of the coefficient increments must be a control surface deflection.
-
-Below, an example is given on how to load the aerodynamic coefficient increments:
-
-.. code-block:: cpp
-    
-    // Create coefficient settings for body.
-    boost::shared_ptr< AerodynamicCoefficientSettings > aerodynamicCoefficientSettings = ...
-
-    // Define physical meaning of independent variables for control surface increments, in this case Mach number, angle of attack and control surface deflection
-    std::vector< aerodynamics::AerodynamicCoefficientsIndependentVariables > controlSurfaceIndependentVariableNames; 
-    controlSurfaceIndependentVariableNames.push_back( aerodynamics::mach_number_dependent );
-    controlSurfaceIndependentVariableNames.push_back( aerodynamics::angle_of_attack_dependent ); 
-    controlSurfaceIndependentVariableNames.push_back( aerodynamics::control_surface_deflection_dependent ); 
-
-    // Define name of control surface
-    std::string controlSurfaceName = "Elevon";
-
-    // Define list of files for force coefficients. 
-    std::map< int, std::string > controlSurfaceForceCoefficientFiles; 
-    controlSurfaceForceCoefficientFiles[ 0 ] = tudat::input_output::getTudatRootPath( ) + "Astrodynamics/Aerodynamics/UnitTests/dCDwTest.txt"; // Set drag coefficient file
-
-    // Add settings for control surface increments to main aerodynamic coefficients
-    aerodynamicCoefficientSettings->setControlSurfaceSettings( 
-        readTabulatedControlIncrementAerodynamicCoefficientsFromFiles( controlSurfaceForceCoefficientFiles, controlSurfaceIndependentVariableNames, controlSurfaceName ) );
-
-    // Create and set aerodynamic coefficients
-    bodyMap[ "VehicleName" ]->setAerodynamicCoefficientInterface(
-        createAerodynamicCoefficientInterface( aerodynamicCoefficientSettings, "VehicleName" ) );
-
-For this example, only the drag coefficient is affected by the control surface deflections.
 
