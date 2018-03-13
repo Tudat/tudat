@@ -39,7 +39,7 @@
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
         <link rel="up" title="4. Acceleration Set-Up" href="index.html"/>
-        <link rel="next" title="4.2. Aerodynamic Guidance" href="aerodynamicGuidance.html"/>
+        <link rel="next" title="4.2. Rotational Model Set-up" href="rotModel.html"/>
         <link rel="prev" title="4. Acceleration Set-Up" href="index.html"/> 
 
   
@@ -103,10 +103,11 @@
 <li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">4. Acceleration Set-Up</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">4.1. Implementation Framework of the Acceleration Settings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="aerodynamicGuidance.html">4.2. Aerodynamic Guidance</a></li>
-<li class="toctree-l4"><a class="reference internal" href="aeroCoeff.html">4.3. Aerodynamic Coefficients</a></li>
-<li class="toctree-l4"><a class="reference internal" href="thrustModels.html">4.4. Thrust Guidance</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rotModel.html">4.5. Rotational Model Setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rotModel.html">4.2. Rotational Model Set-up</a></li>
+<li class="toctree-l4"><a class="reference internal" href="massModel.html">4.3. Mass rate model setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aerodynamicGuidance.html">4.4. Aerodynamic Guidance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aeroCoeff.html">4.5. Aerodynamic Coefficients</a></li>
+<li class="toctree-l4"><a class="reference internal" href="thrustModels.html">4.6. Thrust Guidance</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Simulator Set-Up</a></li>
@@ -468,36 +469,6 @@
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="mass-rate-model-setup">
-<span id="tudatfeaturesframeworkmassratemodelsetup"></span><h2>4.1.3. Mass rate model setup<a class="headerlink" href="#mass-rate-model-setup" title="Permalink to this headline">¶</a></h2>
-<p>Although propagating a body’s translational dynamics is the backbone of Tudat’s simulations, it is also possible to propagate a vehicle’s mass (either concurrently or separately). The manner in which the models that govern the ‘mass dynamics’, i.e. mass-rate models, are handled in the code is very similar to the acceleration models: a list of settings for the models is created by the user, which are then used to create the required objects. The list to be created by the user is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">MassRateModelSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">massRateModelSettings</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>where the map key denotes the body of which the mass-rate is to be computed.</p>
-<dl class="class">
-<dt id="MassRateModelSettings">
-<em class="property">class </em><code class="descname">MassRateModelSettings</code><a class="headerlink" href="#MassRateModelSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the mass rate model setup. Currently two mass rate models are available each with its own derived class described below.</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="CustomMassRateModelSettings">
-<em class="property">class </em><code class="descname">CustomMassRateModelSettings</code><a class="headerlink" href="#CustomMassRateModelSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Using this class, the user must provide a <code class="docutils literal"><span class="pre">boost::function&lt;</span> <span class="pre">double(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span> <span class="pre">function</span></code>, i.e. a function returning a double, representing the mass-rate, and taking another double, representing time, as an input. The internal workings of this function are completely up to the user. If any help is required in setting up such a model please contact the Tudat support team.</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="FromThrustMassModelSettings">
-<em class="property">class </em><code class="descname">FromThrustMassModelSettings</code><a class="headerlink" href="#FromThrustMassModelSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Using this mass-rate model, the change in vehicle mass due to the expulsion of propellant is taken into account when propagating a vehicle’s dynamics. It retrieves the required data from a <a class="reference internal" href="thrustModels.html#ThrustAcceleration" title="ThrustAcceleration"><code class="xref py py-class docutils literal"><span class="pre">ThrustAcceleration</span></code></a> object (set by <a class="reference internal" href="#ThrustAccelerationSettings" title="ThrustAccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustAccelerationSettings</span></code></a>), ensuring full consistency between the two. Two option are available when creating this type of mass-rate model:</p>
-<ul class="simple">
-<li>Use all thrust forces acting on a single body, combined into a single mass-rate model. This will in most cases be the model of choice, as there is often no need to distinguish between thrust sources when computing the mass rate: only the total amount of propellant usage is relevant. This option is toggled by setting the <code class="docutils literal"><span class="pre">useAllThrustModels</span></code> input argument of the <a class="reference internal" href="#FromThrustMassModelSettings" title="FromThrustMassModelSettings"><code class="xref py py-class docutils literal"><span class="pre">FromThrustMassModelSettings</span></code></a> constructor to true.</li>
-<li>Use a single thrust model, defined by a string-identifier. When creating a thrust model, a <code class="docutils literal"><span class="pre">thrustOriginId</span></code> input is provided to the <a class="reference internal" href="thrustModels.html#ThrustEngineSettings" title="ThrustEngineSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustEngineSettings</span></code></a> settings constructor. Only in the <a class="reference internal" href="thrustModels.html#FromBodyThrustEngineSettings" title="FromBodyThrustEngineSettings"><code class="xref py py-class docutils literal"><span class="pre">FromBodyThrustEngineSettings</span></code></a> derived class is this thrust origin id set to anything else than an empty string: it represents the engine name.</li>
-</ul>
-</dd></dl>
-
-</div>
 </div>
 
 
@@ -510,7 +481,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="aerodynamicGuidance.html" class="btn btn-neutral float-right" title="4.2. Aerodynamic Guidance" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="rotModel.html" class="btn btn-neutral float-right" title="4.2. Rotational Model Set-up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="4. Acceleration Set-Up" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
