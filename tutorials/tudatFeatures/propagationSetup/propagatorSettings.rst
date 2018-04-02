@@ -157,7 +157,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
             :literal:`std::map< std::string, std::vector< boost::shared_ptr< MassRateModel > > >` that associates a :class:`std::vector` of :class:`MassRateModel` to each body with mass to be propagated.
 
-.. class:: CustomPropagationSettings
+.. class:: CustomStatePropagatorSettings
 
     This class allows the user to define and propagate its own state derivative function. The constructor of this derived class is overloaded allowing the user to either use a scalar state or vector state:
 
