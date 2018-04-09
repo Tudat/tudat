@@ -31,6 +31,8 @@ The problem is set-up as follows:
 
 First, the Spice (ephemeris) kernels are loaded in to get an accurate ephemeris of all the bodies included in this example. Then the input to the problem is defined: the perigee and apogee of the targeter, and the altitude and longitude of the target. Then the problem is object is made in the same manner as was done in previous examples, using the :literal:`PropagationTargetingProblem(...)` as the UDP.
 
+.. warning:: Don't load the spice kernels inside the UDP! This will cause the kernels to be loaded each time the UDP is called, which will slow the application down, and result in an error by spice when a certain limit is reached.
+
 The UDP contains an empty constructor and a normal constructor. In the normal constructor, the final argument, :literal:`useExtendedDynamics`, is a boolean variable that determines if either only the Earth gravitational influence is used (:literal:`false`, default) or if also the lunar and solar gravitational influence are implememted. The :literal:`get_bounds()` is implemented in the same way as before, but the fitness function is implemented differently, which will be discussed here.
 
 First, the orbit of the targeter is defined:
