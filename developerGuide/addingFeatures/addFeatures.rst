@@ -350,7 +350,7 @@ Adding a New State Derivative Model
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Another type of model which allows the user to add extra features to it, is the state derivative model. These models are used by the dynamics simulator to determine how the state equations are solved. Currently there are several available, e.g. cowell state derivative model, encke state derivate model, and more, but if a special model is needed for a certain application, the user can add this to tudat by following this guide.
 
-As before, this guide will start by looking at the framework of how the state derivative model is implemented. First, the state derivative model is chosen by the user from an enum called :literal:`TranslationalPropagatorType`. The model picked from this enum is then used as an input into the constructor of the :literal:`TranslationalPropagatorSettings`, where it is assigned to a specific member variable called: :literal:`propagator_`. The :literal:`TranslationalPropagatorSettings` is used as an input to the :literal:`SingleArcDynamicsSimulator`, where it will be used further. An example of this is shown below:
+As before, this guide will start by looking at the framework of how the state derivative model is implemented. First, the state derivative model is chosen by the user from an enum called :literal:`TranslationalPropagatorType`, located in :literal:`nBodyStateDerivativeModel.h`. The model picked from this enum is then used as an input into the constructor of the :literal:`TranslationalPropagatorSettings`, where it is assigned to a specific member variable called: :literal:`propagator_`. The :literal:`TranslationalPropagatorSettings` is used as an input to the :literal:`SingleArcDynamicsSimulator`, where it will be used further. An example of this is shown below:
 
 .. code-block:: cpp
 
@@ -418,7 +418,7 @@ When a new state derivative model is implemented in tudat, two additions need to
 
 When building the new model, it is advised to use a state derivative model that is already available as an example for a place to start. The classes which contain these models are derived from the base class :literal:`NBodyStateDerivative`, and should contain a template for the :literal:`TimeType` that will be used. The :literal:`NBodyStateDerivative` class is again derived from another class called the :literal:`SingleStateTypeDerivative`. This class contains several pure virtual functions, which all should be added to the new model class in order for the new model to work. The specific names and input parameters of these functions can be found in the :literal:`SingleStateTypeDerivative` class. Once this is done, and the new model is implemented in the state derivative model framework, the new model should be available for the user. 
 
-
+.. note:: Don't forget to put the include statement in :literal:`createStateDerivativeModel.h` if the new class is made in a seperate file.
 
 
 
