@@ -29,6 +29,7 @@ Each example is discussed in detail on a separate page. Note that in the first e
    variationalEquationsPropagation
    earthOrbiterBasicStateEstimation
    earthOrbiterStateEstimation
+   interplanetaryTrajectory
    
 Optimization tutorials
 ~~~~~~~~~~~~~~~~~~~~~~

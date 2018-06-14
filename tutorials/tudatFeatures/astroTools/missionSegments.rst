@@ -1,6 +1,6 @@
-.. _tudatFeaturesMissionDesign:
+.. _tudatFeaturesMissionSegments:
 
-Mission Design
+Mission Segments
 ===========================
 
 Lambert Targeter
