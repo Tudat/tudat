@@ -1,7 +1,4 @@
-.. TUDAT_Documentation documentation master file, created by
-   sphinx-quickstart on Mon Jul  3 06:08:42 2017.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. _gettingStarted:
 
 Getting Started
 ===============
