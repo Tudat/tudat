@@ -7,18 +7,48 @@ This code allows the user to build up a trajectory for an interplanetary spacecr
 
 The user can build a trajectory by defining the departure planet, the sequence of planets visited, the leg types of the mission, the defining variables of those legs, and the final capture planet. This code works especially well with the pagmo optimization code to generate optimal trajectories. 
 
+The trajectories calculated here are based on several assumptions. They are as follows:
+
+        - Patched-conics is used in the complete calculation of the trajectory. No forces except for the gravity of the central body and the thrust applied by the vehicle are considered. 
+
+	- The planetary sequence is fixed beforehand.
+
+	- Only one revolution per transfer is considered.
+
+	- The transfer direction are all counter-clockwise.
+
+	- If a DSM is applied, it can only be done once every transfer. 
+
+If the trajectory design code is used, these assumptions need to be taken into account.
+
 
 Trajectory Models
 ~~~~~~~~~~~~~~~~~ 
-A trajectory can be of three different types: Multiple Gravity Assist (MGA) trajectory, Multiple Gravity Assist with 1 Deep Space Maneuver per leg using Velocity Formulation (MGA-1DSM-VF) trajectory, and Multiple Gravity Assist with 1 Deep Space Maneuver per leg using Position Formulation (MGA-1DSM-PF) trajectory. The differences between the VM and PM can be found `here <https://repository.tudelft.nl/islandora/object/uuid%3A02468c77-5c64-4df8-9a24-1ed7ad9d1408?collection=education>`_. Each trajectory model is build up from multiple legs, which can be selected by the user. There are three different leg types that can be selected:
+Each trajectory is built up from different legs. Each leg can be either a departure leg, swing-by leg, or a capture leg. Each trajectory has to stat with a departure leg and end with a capture leg. The departure and swing-by legscan be divided into 3 different types. These 3 different types are: Multiple Gravity Assist (MGA), Multiple Gravity Assist with 1 Deep Space Maneuver per leg using Velocity Formulation (MGA-1DSM-VF), and Multiple Gravity Assist with 1 Deep Space Maneuver per leg using Position Formulation (MGA-1DSM-PF). The differences between the VM and PM can be found `here <https://repository.tudelft.nl/islandora/object/uuid%3A02468c77-5c64-4df8-9a24-1ed7ad9d1408?collection=education>`_. Each combination of leg and type is discussed below  . 
 
-	- :literal:`Departure leg`:
+	- :literal:`Departure leg MGA`:
   
-	   This leg starts at a parking orbit around the departure planet and ends when the sphere of influence of the target planet is reached.
+	   This leg starts at a parking orbit around the departure planet and ends when the sphere of influence of the target planet is reached. No DSM is performed during the transfer.
 
-	- :literal:`Swing-by leg`:
+	- :literal:`Departure leg MGA-1DSM-PF`:
+  
+	   This leg starts at a parking orbit around the departure planet and ends when the sphere of influence of the target planet is reached. One DSM is performed, and calculated using the position formulation.
 
-	   A swing-by leg starts at the beginning of the swing-by maneuver (at the edge of the sphere of influence of the swing-by planet), and ends at the sphere of influence of the target planet.
+	- :literal:`Departure leg MGA-1DSM-VF`:
+  
+	   This leg starts at a parking orbit around the departure planet and ends when the sphere of influence of the target planet is reached. One DSM is performed, and calculated using the velocity formulation.
+
+	- :literal:`Swing-by leg MGA`:
+
+	   A swing-by leg starts at the beginning of the swing-by maneuver (at the edge of the sphere of influence of the swing-by planet), and ends at the sphere of influence of the target planet. After the GA is performed at the swing-by planet, no additional DSM is performed.
+
+	- :literal:`Swing-by leg MGA-1DSM-PF`:
+
+	   A swing-by leg starts at the beginning of the swing-by maneuver (at the edge of the sphere of influence of the swing-by planet), and ends at the sphere of influence of the target planet. After the GA is performed at the swing-by planet, an additional DSM is performed. The location, magnitude, and direction are defined using the position formulation.
+
+	- :literal:`Swing-by leg MGA-1DSM-VF`:
+
+	   A swing-by leg starts at the beginning of the swing-by maneuver (at the edge of the sphere of influence of the swing-by planet), and ends at the sphere of influence of the target planet. After the GA is performed at the swing-by planet, an additional DSM is performed. The location, magnitude, and direction are defined using the velocity formulation.
 
 	- :literal:`Capture leg`:
 
@@ -30,7 +60,7 @@ Each leg has the option to return the :math:`\Delta` V of the leg (:literal:`Cal
 	
 Trajectory Calculation
 ~~~~~~~~~~~~~~~~~~~~~~
-The interplanetary trajectory is made using the :literal:`Trajectory` class:
+The :class:`trajectory` class takes the settings for the full trajectory, and calculates the total :math:`\Delta` V, the time-of-flight, the location of the vehicle over time, and the time and location of the different maneuvers. The class is defined as follows:
 
 .. code-block:: cpp
    
@@ -58,7 +88,7 @@ where the inputs are:
 
 	- :literal:`ephemerisVector`:
 
-	   A vector containing pointers to ephemeris objects of the planets that are visited (in order).
+	   A vector containing pointers to ephemeris objects of the planets that are visited (in order). See :ref:`ephemerisModel` for more information.
 
 	- :literal:`gravitationalParameterVector`:
 
@@ -93,21 +123,45 @@ The :literal:`trajectoryVariableVector` contains the variables that define the d
 	- :literal:`MGA-1DSM-VF`:
 
 	   For the departure leg:
-	   1: the time of flight fraction at which the DSM is performed. 2: the hyperbolic excess velocity magnitude for the start. 3: the in-plane angle for the hyperbolic excess velocity. 4:
-	   the out-of-plane angle for the hyperbolic excess velocity.
-  	
+	   	- the time of flight fraction at which the DSM is performed. 
+		- the hyperbolic excess velocity magnitude for the start. 
+		- the in-plane angle for the hyperbolic excess velocity. 
+		- the out-of-plane angle for the hyperbolic excess velocity.  	
 	   For the swing-by leg:
-	   1: the time of flight fraction at which the DSM is performed. 2: the rotation angle of the GA. 3: the pericenter radius of the GA. 4: the :math:`\Delta` V added for the powered GA.
+	   	- the time of flight fraction at which the DSM is performed. 
+		- the rotation angle of the GA. 
+		- the pericenter radius of the GA. 
+		- the :math:`\Delta` V added for the powered GA.
 
 	- :literal:`MGA-1DSM-PF`:
 
 	   For the departure and swing-by legs:
-	   1: the time of flight fraction at which the DSM is performed. 2: the dimesnionless radius of the DSM (position of the DSM wrt the central body divided by the departure planets position 
-	   wrt the central body. 3: the in-plane angle for DSM. 4: the out-of-plane angle for the DSM.
+	   	- the time of flight fraction at which the DSM is performed. 
+		- the dimesnionless radius of the DSM (position of the DSM wrt the central body divided by the departure planets position wrt the central body. 
+		- the in-plane angle for DSM. 
+		- the out-of-plane angle for the DSM.
 
 The trajectory variable thus is structured as follows: (departure time, time of flights for all the legs, additional variables for each leg). 
 
-The trajectory class has functions to calculate the complete :math:`\Delta` V needed for the trajectory, called: :literal:`calculateTrajectory( double& totalDeltaV )`, a function that returns the location and :math:`\Delta` V for all the maneuvers, called: :literal:`maneuvers( positionVector, timeVector, deltaVVector)`, and a function to return intermediate points along a trajectory, called: :literal:`intermediatePoints( maxTimeStep, positionVector, timeVector )`.
+The trajectory class contains several functions that can be used to examine the complete trajectory, they are listed below:
+
+	- :literal:`void Trajectory::intermediatePoints( )`
+	  
+	  this function returns the position of the vehicle at specific times, which are defined by the maximum time step. The vectors containing the intermediate points can then be used for the :literal:`writeTrajectoryToFile` function.
+
+	- :literal:`void Trajectory::calculateTrajectory( )`
+
+	  this function returns the total :math:`\Delta` V of the trajectory.
+
+	- :literal:`void Trajectory::maneuvers( )`
+
+	  the maneuvers function returns the position and time of all the manuevers executed during the trajectory. These can be passed to the :literal:`writeManeuversToFile` function.
+
+	- :literal:`void Trajectory::planetaryOrbits( )`
+
+	  returns a single revolution of the planets that are encountered during the trajectory, to be plotted from the file generated by the :literal:`writeTrajectoryToFile` function.
+
+	
   	
 	   
 

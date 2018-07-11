@@ -161,51 +161,77 @@ The calculation of the final values of the trajectory is done in the same manner
 
 Application Output
 ~~~~~~~~~~~~~~~~~~
-
-The output of this application should look as follows:
+All the output of the trajectory is handled as follows:
 
 .. code-block:: cpp
 
-	Starting C:\tudatBundle.git\tudatExampleApplications\satellitePropagatorExamples\bin\applications\application_InterplanetaryTrajectoryDesign.exe...
+    // Define vectors to calculate intermediate points
+    std::vector < Eigen::Vector3d > interPositionVectorMessenger;
+    std::vector < double > interTimeVectorMessenger;
 
-	 Cassini Mission: 
+    // Calculate intermediate points and write to file
+    std::string outputFileTraj = tudat_applications::getOutputPath( )+"messengerTrajectory.dat";
+    Messenger.intermediatePoints( 1000.0 , interPositionVectorMessenger, interTimeVectorMessenger );
+    writeTrajectoryToFile( interPositionVectorMessenger, interTimeVectorMessenger, outputFileTraj );
 
-	 Total Delta V needed: 5635.96
+    // Define vectors to calculate intermediate points
+    std::vector < Eigen::Vector3d > manPositionVectorMessenger;
+    std::vector < double > manTimeVectorMessenger;
+    std::vector < double > manDeltaVVectorMessenger;
 
-	 Time of Earth departure: -6.82397e+007. Delta V needed at Earth: 2754.84
+    // Calculate maneuvers and write to file
+    std::string outputFileMan = tudat_applications::getOutputPath( )+"messengerManeuvers.dat";
+    Messenger.maneuvers( manPositionVectorMessenger, manTimeVectorMessenger, manDeltaVVectorMessenger );
+    writeTrajectoryToFile( manPositionVectorMessenger, manTimeVectorMessenger, outputFileMan );
 
-	 Time of Venus visit: -5.45624e+007. Delta V needed at Venus: 881.223
+    // Calculate trajectories of the planets and output to file
+    std::vector < Eigen::Vector3d > positionVectorEarth;
+    std::vector < double > timeVectorEarth;
+    std::vector < Eigen::Vector3d > positionVectorVenus;
+    std::vector < double > timeVectorVenus;
+    std::vector < Eigen::Vector3d > positionVectorMercury;
+    std::vector < double > timeVectorMercury;
 
-	 Time of second Venus visit: -1.57355e+007. Delta V needed at Venus: 1513.75
+    // Earth
+    returnSingleRevolutionPlanetTrajectory(
+                boost::make_shared< ephemerides::ApproximatePlanetPositions >(
+                                ephemerides::ApproximatePlanetPositionsBase::BodiesWithEphemerisData::earthMoonBarycenter ),
+            sunGravitationalParameter,
+            1171.64503236,
+            1000.0,
+            positionVectorEarth,
+            timeVectorEarth);
 
-	 Time of Earth visit: -1.10052e+007. Delta V needed at Earth: 2.43109
+    // Venus
+    returnSingleRevolutionPlanetTrajectory(
+                boost::make_shared< ephemerides::ApproximatePlanetPositions >(
+                                ephemerides::ApproximatePlanetPositionsBase::BodiesWithEphemerisData::venus ),
+            sunGravitationalParameter,
+            1171.64503236,
+            1000.0,
+            positionVectorVenus,
+            timeVectorVenus);
 
-	 Time of Jupiter visit: 7.74997e+007. Delta V needed at Jupiter: 10.4798
+    // Mercury
+    returnSingleRevolutionPlanetTrajectory(
+                boost::make_shared< ephemerides::ApproximatePlanetPositions >(
+                                ephemerides::ApproximatePlanetPositionsBase::BodiesWithEphemerisData::mercury ),
+            sunGravitationalParameter,
+            1171.64503236,
+            1000.0,
+            positionVectorMercury,
+            timeVectorMercury);
 
-	 Time of Saturn capture: 4.70819e+008. Delta V needed at Saturn: 473.235
+    std::string outputFilePlanetE = tudat_applications::getOutputPath(  )+"earthTrajectory.dat";
+    writeTrajectoryToFile( positionVectorEarth, timeVectorEarth, outputFilePlanetE );
 
-	 Messenger Mission: 
+    std::string outputFilePlanetV = tudat_applications::getOutputPath(  )+"venusTrajectory.dat";
+    writeTrajectoryToFile( positionVectorVenus, timeVectorVenus, outputFilePlanetV );
 
-	 Total Delta V: 8646.21
+    std::string outputFilePlanetM = tudat_applications::getOutputPath(  )+"mercuryTrajectory.dat";
+    writeTrajectoryToFile( positionVectorMercury, timeVectorMercury, outputFilePlanetM );
 
-	 Time of Earth departure: 1.0123e+008. Delta V needed at Earth: 1408.99
+These lines of code use several functions that can produce output from the calculated trajectory. First, intermediate points are calculated along the trajectory using :literal:`intermediatePoints`. The produced position and time vector are then passed to :literal:`writeTrajectoryToFile` to produce a file that can be read by an external plotting program. The same is done afterwards, but instead of producing some intermediate positions, now only the manuevers are produced. These are then also written to a file. Finally, for every planet the trajectory is outputted to a file to be able to see where the trajectory encounters the planet. The final figure is shown below.
 
-	 Time of 1st DSM: 1.09338e+008. Delta V needed for 1st DSM: 911.2
-
-	 Time of second Earth visit: 1.3579e+008. Delta V needed at Earth: 0
-
-	 Time of 2nd DSM: 1.37277e+008. Delta V needed for 2nd DSM: 1.37516
-
-	 Time of Venus visit: 1.51201e+008. Delta V needed at Venus: 0
-
-	 Time of 3d DSM: 1.72658e+008. Delta V needed for 3d DSM: 266.056
-
-	 Time of second Venus visit: 1.77054e+008. Delta V needed at Venus: 0
-
-	 Time of 4th DSM: 1.82001e+008. Delta V needed for 4th DSM: 1425.24
-
-	 Time of Mercury capture: 1.92651e+008. Delta V needed at Mercury: 4633.35
-
-	C:/tudatBundle.git/tudatExampleApplications/satellitePropagatorExamples/bin/applications/application_InterplanetaryTrajectoryDesign.exe exited with code 0
-
+.. figure:: images/interpTrajFig.png
 
