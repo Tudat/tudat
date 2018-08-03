@@ -33,38 +33,36 @@ First, the Spice (ephemeris) kernels are loaded in to get an accurate ephemeris 
 
 .. warning:: Don't load the spice kernels inside the UDP! This will cause the kernels to be loaded each time the UDP is called, which will slow the application down, and result in an error by spice when a certain limit is reached.
 
-The UDP contains an empty constructor and a normal constructor. In the normal constructor, the final argument, :literal:`useExtendedDynamics`, is a boolean variable that determines if either only the Earth gravitational influence is used (:literal:`false`, default) or if also the lunar and solar gravitational influence are implememted. The :literal:`get_bounds()` is implemented in the same way as before, but the fitness function is implemented differently, which will be discussed here.
+The UDP contains an empty constructor and a normal constructor. In the normal constructor, the final argument, :literal:`useExtendedDynamics`, is a boolean variable that determines if either only the Earth gravitational influence is used (:literal:`false`, default) or if also the lunar and solar gravitational influence are implememted. The :literal:`get_bounds()` is implemented in the same way as before, but the fitness function is implemented differently, which will be discussed later. To reduce the computation time of the optimization example, it is important that a part of the code is put in the constructor. 
 
-First, the orbit of the targeter is defined:
+First, in the constructor, the orbit of the targeter is defined:
 
 .. code-block:: cpp
 
     // Definition of the orbit
-    const double earthRotationRate = 2.0 * mathematical_constants::PI / physical_constants::SIDEREAL_DAY;
-    const double earthRadius = spice_interface::getAverageRadius( "Earth" );
-    const double radiusOfPerigee =  earthRadius + altitudeOfPerigee_;
-    const double radiusOfApogee = earthRadius + altitudeOfApogee_;
-    const double earthGravitationalParameter = spice_interface::getBodyGravitationalParameter( "Earth" );
-    const double semiMajorAxis = (radiusOfApogee + radiusOfPerigee)/2.0;
+    earthRadius_ = spice_interface::getAverageRadius( "Earth" );
+    radiusOfPerigee_ =  earthRadius_ + altitudeOfPerigee_;
+    radiusOfApogee_ = earthRadius_ + altitudeOfApogee_;
+    earthGravitationalParameter_ = spice_interface::getBodyGravitationalParameter( "Earth" );
+    semiMajorAxis_ = (radiusOfApogee_ + radiusOfPerigee_)/2.0;
 
-The next part of the fitness function is the set up of the integration, the bodies, and the environment. This is done in a similar manner as in the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite`. Thus if a part of this tutorial is not clear, the reader is referred to this example (and the following examples on that page).
+The next part of the constructor is the set up of the integration, the bodies, and the environment. This is done in a similar manner as in the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite`. Thus if a part of this tutorial is not clear, the reader is referred to this example (and the following examples on that page).
 
 The following code shows the initialization of the integration, the bodies, and the environment:
 
 .. code-block:: cpp
 
     //Integration time: half a orbit
-    const double simulationStartEpoch = 0.0;
-    const double simulationEndEpoch = 1.2 * mathematical_constants::PI *
-            std::sqrt(pow(semiMajorAxis,3)/earthGravitationalParameter);
-    const double fixedStepSize = 2.0;
+    simulationStartEpoch_ = 0.0;
+    simulationEndEpoch_ = 1.2 * mathematical_constants::PI *
+            std::sqrt(pow(semiMajorAxis_,3)/earthGravitationalParameter_);
 
     // Create the body Earth from Spice interface
     std::map< std::string, boost::shared_ptr< BodySettings > > bodySettings;
     if( useExtendedDynamics_ )
     {
         bodySettings =
-                getDefaultBodySettings( {"Earth", "Moon", "Sun"}, simulationStartEpoch - 3600.0, simulationEndEpoch + 3600.0 );
+                getDefaultBodySettings( {"Earth", "Moon", "Sun"}, simulationStartEpoch_ - 3600.0, simulationEndEpoch_ + 3600.0 );
         bodySettings[ "Moon" ]->rotationModelSettings->resetOriginalFrame( "J2000" );
         bodySettings[ "Moon" ]->ephemerisSettings->resetFrameOrientation( "J2000" );
         bodySettings[ "Sun" ]->rotationModelSettings->resetOriginalFrame( "J2000" );
@@ -85,32 +83,31 @@ The following code shows the initialization of the integration, the bodies, and 
 
 
     //Create bodyMap and add the satellite as an empty body
-    NamedBodyMap bodyMap = simulation_setup::createBodies( bodySettings );
-    bodyMap["Satellite"] = boost::make_shared<Body>();
+    bodyMap_ = simulation_setup::createBodies( bodySettings );
 
-    setGlobalFrameBodyEphemerides( bodyMap, "Earth", "J2000" );
-
-The next step is to define the target orbit using the input values of the  UDP, and set-up the initial conditions for the satellite:
+It is important to realize why this is done in the constructor and not in the fitness function of the UDP. If this was put into the fitness function, the :literal:`bodyMap` would be created each time the fitness function would be called. The :literal:`simulation_setup::createBodies()` function will store the information every time it is called, and thus the RAM usage on your computer will increase over time, until there is no more RAM left and the program is terminated, or slowed down considerably.
+ 
+After the constructor is setup, the next step is to define the target orbit using the input values of the UDP in the fitness function, and set-up the initial conditions for the satellite:
 
 .. code-block:: cpp
 
     //Define position of the target at 35000 km from Earth at 30 deg latitude
     Eigen::Vector3d target;
-    target[0] = (earthRadius + altitudeOfTarget_) * cos(longitudeOfTarget_*mathematical_constants::PI/180);
-    target[1] = (earthRadius + altitudeOfTarget_) * sin(longitudeOfTarget_*mathematical_constants::PI/180);
+    target[0] = (earthRadius_ + altitudeOfTarget_) * cos(longitudeOfTarget_*mathematical_constants::PI/180);
+    target[1] = (earthRadius_ + altitudeOfTarget_) * sin(longitudeOfTarget_*mathematical_constants::PI/180);
     target[2] = 0.0;
 
     //Define initial position of satellite at the perigee
     Eigen::Vector6d initialKeplerElements;
-    initialKeplerElements[ semiMajorAxisIndex ] = semiMajorAxis;
-    initialKeplerElements[ eccentricityIndex ] = (radiusOfApogee - radiusOfPerigee)/(radiusOfApogee + radiusOfPerigee);
+    initialKeplerElements[ semiMajorAxisIndex ] = semiMajorAxis_;
+    initialKeplerElements[ eccentricityIndex ] = (radiusOfApogee_ - radiusOfPerigee_)/(radiusOfApogee_ + radiusOfPerigee_);
     initialKeplerElements[ inclinationIndex ] = 35.0 * mathematical_constants::PI/180.0;
     initialKeplerElements[ argumentOfPeriapsisIndex ] = x[0] * mathematical_constants::PI/180.0;
     initialKeplerElements[ longitudeOfAscendingNodeIndex ] = x[1] * mathematical_constants::PI/180.0;
     initialKeplerElements[ trueAnomalyIndex ] = 0.0;
 
     const Eigen::Vector6d systemInitialState = convertKeplerianToCartesianElements(
-                                                  initialKeplerElements, earthGravitationalParameter );
+    initialKeplerElements, earthGravitationalParameter_ );
 
 
 The only acceleration models that are implemented are gravitational of nature. The propagator setting use the Cowell method and a RK4 integrator:
@@ -139,19 +136,19 @@ The only acceleration models that are implemented are gravitational of nature. T
         accelerationMap[ "Satellite" ] = accelerationsOfSatellite;
     }
     basic_astrodynamics::AccelerationMap accelerationModelMap = createAccelerationModelsMap(
-                bodyMap, accelerationMap, bodiesToPropagate, centralBodies );
+                bodyMap_, accelerationMap, bodiesToPropagate, centralBodies );
 
     //Setup propagator (cowell) and integrator (RK4 fixed stepsize)
     boost::shared_ptr< TranslationalStatePropagatorSettings< double > > propagatorSettings =
             boost::make_shared< TranslationalStatePropagatorSettings< double > >
-            ( centralBodies, accelerationModelMap, bodiesToPropagate, systemInitialState, simulationEndEpoch );
+            ( centralBodies, accelerationModelMap, bodiesToPropagate, systemInitialState, simulationEndEpoch_ );
     boost::shared_ptr< IntegratorSettings< > > integratorSettings =
             boost::make_shared< IntegratorSettings< > >
-            ( rungeKutta4, simulationStartEpoch, fixedStepSize );
+            ( rungeKutta4, simulationStartEpoch_, fixedStepSize );
 
     //Start simulation
     SingleArcDynamicsSimulator< > dynamicsSimulator(
-                bodyMap, integratorSettings, propagatorSettings, true, false, false );
+            bodyMap_, integratorSettings, propagatorSettings, true, false, false );
 
 
 After the simulation is defined, it is time to actually define the optimization part of this example: 
