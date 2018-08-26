@@ -4,6 +4,26 @@ Propagator Settings: Dependent Variables
 ========================================
 By default, the :class:`DynamicsSimulator` propagates the state of a body which uniquely defines its position and velocity. However, it is possible to define a number of dependent variables that are derived from such state. These dependent variables can be used as termination conditions as discussed in :ref:`tudatFeaturesPropagatorSettingsTermination` or saved for further post-processing. This page describes the dependent variables currently available and how these are retrieved from Tudat.
 
+The general procedure consists of defining an object of class :class:`DependentVariableSaveSettings`, and then feeding it to a derived class of :class:`PropagatorSettings`.
+
+.. class:: DependentVariableSaveSettings
+
+   .. code-block:: cpp
+
+      // Create object with list of dependent variables
+      boost::shared_ptr< DependentVariableSaveSettings > dependentVariablesToSave =
+      boost::make_shared< DependentVariableSaveSettings >( dependentVariablesList );
+
+      // Create propagation settings.
+      boost::shared_ptr< TranslationalStatePropagatorSettings< double > > propagatorSettings =
+      boost::make_shared< TranslationalStatePropagatorSettings< double > >
+      ( centralBodies, accelerationModelMap, bodiesToPropagate, systemInitialState,
+        terminationSettings, propagator, dependentVariablesToSave );
+
+   This is the general class describing the dependent variables to be saved during propagation. Its only input is a list of dependent variables, which can be of many different types. In the sections below, you will find a thorough description of what can be added to said list. 
+
+   .. note:: In the example above, the :class:`TranslationalStatePropagatorSettings` derived class is used. Please note that any of the derived classes described in :ref:`tudatFeaturesPropagatorSettings` can be used, as long as these support dependent variable saving.
+
 Saving dependent variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 The dependent variables are computed during the body propagation, thus the user must provide a list of dependent variables to save prior creating the :class:`DynamicsSimulator`:
@@ -21,22 +41,6 @@ where :literal:`dependentVariableList` is populated as follows:
                 boost::make_shared< SingleDependentVariableSaveSettings >( variableType , associatedBody , secondaryBody ) );
 
 The details of the creation of the settings :class:`SingleDependentVariableSaveSettings` object are discussed below.
-
-Once the list of dependent variables to save has been populated, a :class:`DependentVariableSaveSettings` object needs to be created and passed to :class:`PropagatorSettings`:
-
-.. code-block:: cpp
-
-      // Create object with list of dependent variables
-      boost::shared_ptr< DependentVariableSaveSettings > dependentVariablesToSave =
-            boost::make_shared< DependentVariableSaveSettings >( dependentVariablesList );
-
-      // Create propagation settings.
-      boost::shared_ptr< TranslationalStatePropagatorSettings< double > > propagatorSettings =
-            boost::make_shared< TranslationalStatePropagatorSettings< double > >
-            ( centralBodies, accelerationModelMap, bodiesToPropagate, systemInitialState,
-              terminationSettings, propagator, dependentVariablesToSave );
-
-.. note:: In the example above, the :class:`TranslationalStatePropagatorSettings` derived class is used. Please note that any of the derived classes described in :ref:`tudatFeaturesPropagatorSettings` can be used, as long as these support dependent variable saving.
 
 Available dependent variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -119,9 +123,11 @@ Below, we provide a list of all dependent variables that can be saved using Tuda
 
     - **Modified equinoctial state** of body. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`modified_equinocial_state_dependent_variable` as :literal:`variableType`. The value of the parameter I is automatically chosen as +1 or -1, depending on whether the inclination is smaller or larger than 90 degrees.
 
-    - **Rotation of LVLH to inertial frame**, Rotation matrix from Local Vertical, Local Horizontal (LVLH) frame of body to inertial frame**. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`lvlh_to_inertial_frame_rotation_dependent_variable` as :literal:`variableType`. 
+    - **Rotation of LVLH to inertial frame**, Rotation matrix from Local Vertical, Local Horizontal (LVLH) frame of body to inertial frame. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`lvlh_to_inertial_frame_rotation_dependent_variable` as :literal:`variableType`. 
     
-    - **Periapsis altitude**, based on current osculating elements. NOTE: THIS COMPUTATON USES THE AVERAGE RADIUS OF THE CENTRAL BODY, NOT THE LOCAL RADIUS. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`periapsis_altitude_dependent_variable` as :literal:`variableType`.
+    - **Periapsis altitude**, based on current osculating elements. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`periapsis_altitude_dependent_variable` as :literal:`variableType`.
+       
+       .. warning:: The computaton of the periapsis altitude uses the average radius of the central body, not the local radius.
 
 Setting up dependent variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -154,6 +160,8 @@ The framework discussed in the previous section explains how the :literal:`depen
       - :literal:`total_aerodynamic_g_load_variable` (Secondary body defines body with atmosphere that exerts the aerodynamic acceleration that induces the g-load).
       - :literal:`stagnation_point_heat_flux_dependent_variable`
       - :literal:`local_temperature_dependent_variable`
+      - :literal:`local_dynamic_pressure_dependent_variable`
+      - :literal:`local_aerodynamic_heat_rate_dependent_variable`
       - :literal:`geodetic_latitude_dependent_variable`
       - :literal:`control_surface_deflection_dependent_variable` (Secondary body defines name of control surface for which deflection is to be provided).
       - :literal:`total_mass_rate_dependent_variables`
