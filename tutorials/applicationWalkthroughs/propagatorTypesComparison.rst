@@ -13,7 +13,7 @@ As was introduced in :ref:`tudatFeaturesPropagatorSettings`, in Tudat one can ch
    - Unified state model with modifed Rodrigues parameters
    - Unified state model with exponential map
 
-With this example application, we propagate a quasi-circular orbit around Earth with each of the propagators above for 10 days, and examine their performance (in terms of RMS error w.r.t. a more accurate referece, time and function evaluations). The comparison is done for both a variable and a constant step-size integration method. 
+With this example application, we propagate a quasi-circular orbit around Earth with each of the propagators above for 10 days, and examine their performance (in terms of RMS error w.r.t. a more accurate reference, time and function evaluations). The comparison is done for both a variable and a constant step-size integration method. 
 
 Initial Conditions
 ~~~~~~~~~~~~~~~~~~
@@ -74,10 +74,12 @@ Once you run the simulation in Tudat (select executable :literal:`application_Pr
 
 The only output of the MATLAB file is a plot, where the RMS error in position is plotted for each propagator and integrator, as a function of function evaluations for the variable step-size integrator and as a function of time for the constant step-size integrator. Below you see the figures that are output for when a Keplerian orbit is used, and for when the full acceleration list introduced earlier is added. 
 
-**Un-perturbed Orbit:**
+.. method:: Un-perturbed Orbit
 
-.. figure:: images/propagatorTypesComparisonKepler.pdf
+    .. figure:: images/propagatorTypesComparisonKepler.pdf
 
-**Perturbed Orbit:**
+.. method:: Perturbed Orbit
 
-.. figure:: images/propagatorTypesComparison.pdf
+    .. figure:: images/propagatorTypesComparison.pdf
+
+By looking at the figures above, and analyzing the results in other manners, you will be able to draw a conclusion on which propagator is most suitable for your application.

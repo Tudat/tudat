@@ -4,7 +4,7 @@ Input/Output
 ============
 Handling input and output can be an important part of an application, as Tudat is built primarily for numerical orbit propagation/mission analysis, and not for visualization, which most users choose to do in e.g. Matlab. This page provides an overview of the most important Tudat methods for handling input and output, their set-up and how they can be used in an application.
 
-Available methods
+Available Methods
 ~~~~~~~~~~~~~~~~~
 All functions and classes that handle input/output can be found in the :literal:`InputOutput` directory in the Tudat libraries. These functions and classes provide a variety of handlers and can, for example, skip lines, eliminate comments from a file, or store the propagation history to a particular file. In most cases, however, these specific file readers will not need to be called directly by the user, but are instead used when retrieving a default spherical harmonic gravity field or an aerodynamic database.
 
@@ -18,55 +18,71 @@ Path-functions
 **************
 These are functions that return the root-path of the library (or a particular folder). They can be used to define a path relative to the root-path of Tudat when using a file-reader/writer. The following path functions are available:
 
-:literal:`getTudatRootPath()` (Tudat)
-    This function returns the root-path corresponding with the root-directory of the Tudat library as a string with trailing slash included.
+   - :literal:`getTudatRootPath` (Tudat)
 
-:literal:`getSpiceKernelPath()` (Tudat)
-    This function returns the path where the Spice Kernels are located as a string with trailing slash included. This is very useful when writing code that will work cross-platform. For instance, if you have a file inputData.txt that is located at::
+      This function returns the root-path corresponding with the root-directory of the Tudat library as a string with trailing slash included.
 
-        C:/Software/tudatBundle/tudat/Tudat/Astrodynamics/
+   - :literal:`getSpiceKernelPath` (Tudat)
+
+      This function returns the path where the Spice Kernels are located as a string with trailing slash included. This is very useful when writing code that will work cross-platform. For instance, if you have a file inputData.txt that is located at::
+
+         C:/Software/tudatBundle/tudat/Tudat/Astrodynamics/
     
-    you will want to avoid writing this full path in your code, as it will not run on any other system where Tudat is installed in a different directory. Instead, what you can do:
+      you will want to avoid writing this full path in your code, as it will not run on any other system where Tudat is installed in a different directory. Instead, what you can do:
 
-    .. code-block:: cpp
+      .. code-block:: cpp
 
-        std::string filePath = input_output::getTudatRootPath( ) + "Astrodynamics/";
-        std::string fileName = "inputData.txt" 
+         std::string filePath = input_output::getTudatRootPath( ) + "Astrodynamics/";
+         std::string fileName = "inputData.txt" 
 
-    .. note:: The full path/name of the input data file is now simply filePath+fileName, which will correctly identify the file location on any system.
+   - :literal:`getAtmosphereTablesPath` (Tudat)
+
+      This function returns the path where the tabulated atmosphere files are located. You can use this repository to store and easily access your custom atmosphere tables or to access the built-in atmosphere files.
+
+   .. note:: The full path/name of the input data file is now simply :literal:`filePath + fileName`, which will correctly identify the file location on any system.
 
 File-readers
 ************
+
 If needed, you can use this functionality as a starting point to create your own file-reader for your specific file type. If you run into issues when doing so, please contact the Tudat support team. However, there is a dedicated file-reader available in the Tudat library:
 
-:literal:`readMatrixFromFile` (Tudat)
-    This function can be used to read a simple text file with separated numbers. The documentation includes the options for a separator and the character used to skip a line (e.g. a comment-line). Note that the new-line character (\n) is reserved to split the lines of the matrix.
+   - :literal:`readMatrixFromFile` (Tudat)
+      
+      This function can be used to read a simple text file with separated numbers. The documentation includes the options for a separator and the character used to skip a line (e.g. a comment-line). Note that the new-line character (:literal:`\\n`) is reserved to split the lines of the matrix.
+
+   - :literal:`MultiArrayFileReader< NumberOfDimensions >::readMultiArray` (Tudat)
+
+
 
 File-writers
 ************
 The :literal:`InputOutput` directory in the Tudat library also contains functionality to write data (e.g. the propagation history of a satellite) to a file. The following function is available:
 
-:literal:`writeDataMapToTextFile` (Tudat)
-   This function writes data stored in a map to a text file. A number of overloads exists for this function based on the input given to the function. Furthermore, the data-map can store different types of data (e.g. doubles and Eigen vectors, which are typical types for the propagation history). The following overload is most relevant:
+   - :literal:`writeDataMapToTextFile` (Tudat)
+      This function writes data stored in a map to a text file. A number of overloads exists for this function based on the input given to the function. Furthermore, the data-map can store different types of data (e.g. doubles and Eigen vectors, which are typical types for the propagation history). The following overload is most relevant:
 
-   .. code-block:: cpp
+      .. code-block:: cpp
 
-      writeDataMapToTextFile(dataMap, 
-      	outputFileName,
-      	outputDirectory,
-      	fileHeader,
-      	precisionOfKeyType,
-      	precisionOfValueType,
-      	delimiter)
+         writeDataMapToTextFile( dataMap, 
+      	                         outputFileName,
+      	                         outputDirectory,
+      	                         fileHeader,
+      	                         precisionOfKeyType,
+      	                         precisionOfValueType,
+      	                         delimiter )
 
-   If only the dataMap and file-name are provided, the default KeyType-precision and ValueType-precision (digits10 from "limits" standard library), output directory (Tudat root-path), and delimiter (space) are used. If also the outputDirectory is provided an empty file header, a precision of 16 significant digits and a tab as delimiter are used, but these can be user-specified.
+      If only the :literal:`dataMap` and file-name are provided, the default :literal:`KeyType`-precision and :literal:`ValueType`-precision (:literal:`digits10` from :literal:`limits` standard library), output directory (Tudat root-path), and delimiter (space) are used. If also the :literal:`outputDirectory` is given an empty file header, a precision of 16 significant digits and a tab as delimiter are used, but these can be user-specified.
 
-:literal:`writeMatrixToTextFile` (Tudat)
-   This function writes data stored in a :literal:`Eigen::Matrix` to a text file. The input required are the Matrix itself and the file-name. Note that any scalarType and number of rows and collumns can be used.
+   - :literal:`writeMatrixToTextFile` (Tudat)
+      This function writes data stored in a :literal:`Eigen::Matrix` to a text file. The input required are the matrix itself and the file-name. Note that any :literal:`scalarType` and number of rows and collumns can be used.
+
+   - :literal:`MultiArrayFileWriter< NumberOfDimensions >::writeMultiArrayAndIndependentVariablesToFiles` (Tudat)
+
+
 
 Examples
 ~~~~~~~~
-Text file to MatrixXd
+Text File to MatrixXd
 *********************
 
 An example of reading data from a text file to a :literal:`Eigen::MatrixXd` is shown in detail in :ref:`walkthroughsUseOfThrustUserDefinedThrustVector`. A small overview is presented here:
@@ -87,12 +103,12 @@ For example a file named :literal:`.txt` contains data structured as follows::
 
 thus 4 columns spaced with tabs. This file can be read with the following code::
 
-       Eigen::MatrixXd thrustForceMatrix =
-              tudat::input_output::readMatrixFromFile( cppFolder + "nameOfFile.txt" , " \t", "#" );
+   Eigen::MatrixXd thrustForceMatrix =
+            tudat::input_output::readMatrixFromFile( cppFolder + "nameOfFile.txt" , " \t", "#" );
 
 where the first argument is the relative path to the :literal:`.txt` file, the second argument indicates the type(s) of separator(s) used (multiple seperators possible). The last argument indicates the character used for lines to be skipped. 
 
-Data-map (double,double) to text file
+Data-map (double,double) to Text File
 *************************************
 A data map is a template class that is defined by its key-type and value-type:
 
@@ -127,7 +143,7 @@ Now, this data-map can be stored to a file using:
     tudat::input_output::writeDataMapToTextFile(
                 keyDoubleValueDoubleMap, "keyDoubleValueDoubleMapDataFileWithDefaults" );
 
-Data-map (double,Vector3d) to text file
+Data-map (double,Vector3d) to Text File
 ***************************************
 An example of a data map, where the type of the key is a :literal:`double`, and the type of the value is an :literal:`Eigen::Vector3d`:
 
@@ -145,7 +161,7 @@ This data-map can be stored to a file using:
     tudat::input_output::writeDataMapToTextFile(
                 keyDoubleValueVector3dMap, "keyDoubleValueVector3dMapDataFile" );
 
-Data-map (int, Matrix3d) to text file
+Data-map (int, Matrix3d) to Text File
 ***************************************
 An example of a data map, where the type of the key is a :literal:`int`, and the type of the value is an :literal:`Eigen::Matrix3d`:
 
@@ -170,7 +186,7 @@ This results in::
 
 Note that all matrix entries are put on one line when writing a map to file. This makes the file easy to read by other programs. 
 
-Eigen::Matrix3d to text file
+Eigen::Matrix3d to Text File
 ****************************
 An example of a matrix to save:
 
@@ -194,18 +210,12 @@ This results in::
 
 Note the difference with saving matrices inside a map, which will put all matrix entries on one line.
 
-
-
-Storing propagation history
+Storing Propagation History
 ***************************
 A good example on how to store the propagation history in a data map can be found in the example applications in the Tudat Bundle. If you have downloaded the bundle, these examples can be found in::
 
     tudatBundle/tudatApplications/satellitePropagatorExamples/SatellitePropagatorExamples
 
-An example of saving the propagation history to a data file is described at the end of the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` walkthrough. 
+On the other hand, an example of saving the propagation history to a data file is described at the end of the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` walkthrough. 
 
-
-Storing dependent variable history
-**********************************
-Dependent variables can be saved to a data file similar to the propagation history. Instead of the ``getEquationOfMotionNumericalSolution()`` function the ``getDependentVariableHistory()`` function of the :class:`DynamicsSimulator` class is used to obtain the Data-map. Which can be saved as described above.
-
+.. tip:: You can also scroll to the end of :ref:`tudatFeaturesSimulatorCreation`, for an overview on how to access and save the propagation history, as well as the **dependent variables**, from a :class:`DynamicsSimulator` object.
