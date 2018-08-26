@@ -85,11 +85,11 @@ where:
 
 .. warning:: It is important to ensure that the propagator settings are compatible with the dynamics simulator type selected. Otherwise it will result in an exception being thrown during run-time.
 
-Retrieving the propagation history
+Retrieving the Propagation History
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Once the :class:`DynamicsSimulator` object has been created and the equations of motion have been integrated, the propagation history of the selected bodies is stored within the :class:`DynamicsSimulator`. To make use of it, such history needs to be retrieved and saved to a file. The :class:`DynamicsSimulator` offers a few different options to extract results, based on what you have input in the simulation. First of all, you can access the history of the propagated states for each object you have simulated:
 
-   - **Extracting the propagated states in the conventional coordinates**
+   - **Extracting the state history in the conventional coordinates**
 
       The *conventional* coordinates are those coordinates that are used to describe the acceleration model. For translational motion, these are the Cartesian coordinates, whereas for rotational motion, they are quaternions. To access and save these results you can use the function :literal:`getEquationsOfMotionNumericalSolution` of the :class:`DynamicsSimulator` object, as shown below:
 
@@ -100,7 +100,7 @@ Once the :class:`DynamicsSimulator` object has been created and the equations of
                                      "bodyPropagationHistory.dat",
                                      outputPath );
 
-   - **Extracting the propagated states in the propagation coordinates**
+   - **Extracting the state history in the propagated coordinates**
 
       The *propagation* coordinates are those coordinates that are used to describe the equations of motion and thus are the ones that are actually integrated. For translational motion, these can be Cartesian coordinates, Keplerian elements and one of the three unified state models, whereas for rotational motion, these can be quaternions, modified Rodrigues parameters or the exponential map. To access and save these results you can use the function :literal:`getEquationsOfMotionNumericalSolutionRaw` of the :class:`DynamicsSimulator` object, as shown here:
 
@@ -110,6 +110,8 @@ Once the :class:`DynamicsSimulator` object has been created and the equations of
              writeDataMapToTextFile( dynamicsSimulator.getEquationsOfMotionNumericalSolutionRaw( ),
                                      "bodyPropagationHistory.dat",
                                      outputPath );
+
+   .. tip:: You can find more information about the difference between *conventional* and *propagation* coordinates in :ref:`tudatFeaturesPropagatorSettingsCoordinates`.
 
 In case you have also decided to store some dependent variables, you can access and save their history by placing the following code after the :class:`DynamicsSimulator` object creation:
 

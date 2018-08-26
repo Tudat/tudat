@@ -157,6 +157,7 @@ The reader is referred to the following sections to examine in detail how to cre
    propagatorSettings
    propagatorSettingsTermination
    propagatorSettingsDependentVariables
+   propagatorSettingsCoordinates
    simulatorCreation
    TimeStateTemplates
    variationalSimulatorCreation

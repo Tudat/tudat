@@ -67,7 +67,9 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
                - :literal:`unified_state_model_modified_rodrigues_parameters`
                - :literal:`unified_state_model_exponential_map`
 
-            By default, the :literal:`cowell` propagator is used.
+            By default, the :literal:`cowell` propagator is used. Moreover, you should keep in mind that this option only changes the coordinates for propagation, but the acceleration model is still computed with Cartesian coordinates, i.e., the conventional coordinates.
+
+               .. tip:: You can find more information about the difference between *conventional* and *propagated* coordinates in :ref:`tudatFeaturesPropagatorSettingsCoordinates`.
 
         - :literal:`dependentVariablesToSave`
 
@@ -140,7 +142,9 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
          - :literal:`modified_rodrigues_parameters`
          - :literal:`exponential_map`
 
-      By default, the :literal:`quaternions` propagator is used.
+      By default, the :literal:`quaternions` propagator is used. Moreover, you should keep in mind that this option only changes the coordinates for propagation, but the acceleration model is still computed with quaternions, i.e., the conventional coordinates.
+
+         .. tip:: You can find more information about the difference between *conventional* and *propagated* coordinates in :ref:`tudatFeaturesPropagatorSettingsCoordinates`.
 
    - :literal:`dependentVariablesToSave`
 
