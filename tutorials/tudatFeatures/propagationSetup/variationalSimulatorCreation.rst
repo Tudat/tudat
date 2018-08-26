@@ -1,4 +1,4 @@
-.. _tudatFeaturesSimulatorCreation:
+.. _tudatFeaturesVariationalSimulatorCreation:
 
 Create a Variational Equations Solver Object
 ============================================

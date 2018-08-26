@@ -20,18 +20,16 @@ These are implemented in derived classes and are discussed below.
 
    .. code-block:: cpp
 
-      SingleArcDynamicsSimulator< StateScalarType, TimeType >( bodyMap,
-      				  integratorSettings, 
-      				  propagatorSettings );
+      SingleArcDynamicsSimulator< StateScalarType, TimeType >( bodyMap, integratorSettings, propagatorSettings );
 
    where:
 
    - :literal:`StateScalarType`
-   
-       Template argument used to set the precision of the state, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal`long double`. 
+
+      Template argument used to set the precision of the state, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal:`long double`. 
 
    - :literal:`TimeType`
-   
+
       Template argument used to set the precision of the time, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal`long double`. 
 
    - :literal:`bodyMap`
@@ -52,17 +50,13 @@ These are implemented in derived classes and are discussed below.
 
    .. code-block:: cpp
    
-    MultiArcDynamicsSimulator(
-            bodyMap,
-            integratorSettings,
-            propagatorSettings,
-            arcStartTimes )
+    MultiArcDynamicsSimulator( bodyMap, integratorSettings, propagatorSettings, arcStartTimes )
 
    where:
 
    - :literal:`arcStartTimes`
 
-      :literal:`std::vector< double >` contains the times at which the separate arcs start.
+      :literal:`std::vector< double >` containing the times at which the separate arcs start.
 
 .. class:: HybridDynamicsSimulator
 
@@ -76,50 +70,70 @@ By default, the equations of motion are integrated once the object is created. T
 .. code-block:: cpp
 
     // Create simulation object and propagate dynamics.
-    SingleArcDynamicsSimulator< > dynamicsSimulator(
-                bodyMap, integratorSettings, propagatorSettings , areEquationsOfMotionToBeIntegrated , clearNumericalSolutions , setIntegratedResult );
+    SingleArcDynamicsSimulator< > dynamicsSimulator( bodyMap, integratorSettings, propagatorSettings, areEquationsOfMotionToBeIntegrated, clearNumericalSolutions, setIntegratedResult, printNumberOfFunctionEvaluations );
 
 where:
 
 - :literal:`areEquationsOfMotionToBeIntegrated`
     Boolean to denote whether equations of motion should be integrated immediately at the end of the contructor or not (default true).
 - :literal:`clearNumericalSolutions`
-    Boolean to determine whether to clear the raw numerical solution member variables after propagation and resetting ephemerides (default true).
+    Boolean to determine whether to clear the raw numerical solution member variables after propagation and resetting ephemerides (default false).
 - :literal:`setIntegratedResult`
-    Boolean to determine whether to automatically use the integrated results to set ephemerides (default true).
+    Boolean to determine whether to automatically use the integrated results to set ephemerides (default false).
+- :literal:`printNumberOfFunctionEvaluations`
+    Boolean to toggle the printing of number of function evaluations at the end of propagation (default false).
 
 .. warning:: It is important to ensure that the propagator settings are compatible with the dynamics simulator type selected. Otherwise it will result in an exception being thrown during run-time.
 
-
-
 Retrieving the propagation history
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Once the :class:`DynamicsSimulator` object has been created and the equations of motion have been integrated, the propagation history of the selected bodies is stored within the :class:`DynamicsSimulator`. To make use of it using software, such history needs to be retrieved and saved to a file.
+Once the :class:`DynamicsSimulator` object has been created and the equations of motion have been integrated, the propagation history of the selected bodies is stored within the :class:`DynamicsSimulator`. To make use of it, such history needs to be retrieved and saved to a file. The :class:`DynamicsSimulator` offers a few different options to extract results, based on what you have input in the simulation. First of all, you can access the history of the propagated states for each object you have simulated:
 
-If the state propagation history needs to be saved, the following code needs to be placed after the :class:`DynamicsSimulator` object creation:
+   - **Extracting the propagated states in the conventional coordinates**
 
-.. code-block:: cpp
+      The *conventional* coordinates are those coordinates that are used to describe the acceleration model. For translational motion, these are the Cartesian coordinates, whereas for rotational motion, they are quaternions. To access and save these results you can use the function :literal:`getEquationsOfMotionNumericalSolution` of the :class:`DynamicsSimulator` object, as shown below:
 
-    // Write body propagation history to file.
-    writeDataMapToTextFile( dynamicsSimulator.getEquationsOfMotionNumericalSolution( ),
-                            "bodyPropagationHistory.dat",
-                            outputPath,
-                            "",
-                            std::numeric_limits< double >::digits10,
-                            std::numeric_limits< double >::digits10,
-                            "," );
+         .. code-block:: cpp
 
-If the dependent variable history needs to be saved, the following code needs to be placed after the :class:`DynamicsSimulator` object creation:
+             // Write body propagation history in conventional coordinates to file.
+             writeDataMapToTextFile( dynamicsSimulator.getEquationsOfMotionNumericalSolution( ),
+                                     "bodyPropagationHistory.dat",
+                                     outputPath );
+
+   - **Extracting the propagated states in the propagation coordinates**
+
+      The *propagation* coordinates are those coordinates that are used to describe the equations of motion and thus are the ones that are actually integrated. For translational motion, these can be Cartesian coordinates, Keplerian elements and one of the three unified state models, whereas for rotational motion, these can be quaternions, modified Rodrigues parameters or the exponential map. To access and save these results you can use the function :literal:`getEquationsOfMotionNumericalSolutionRaw` of the :class:`DynamicsSimulator` object, as shown here:
+
+         .. code-block:: cpp
+
+             // Write body propagation history in propagation coordinates to file.
+             writeDataMapToTextFile( dynamicsSimulator.getEquationsOfMotionNumericalSolutionRaw( ),
+                                     "bodyPropagationHistory.dat",
+                                     outputPath );
+
+In case you have also decided to store some dependent variables, you can access and save their history by placing the following code after the :class:`DynamicsSimulator` object creation:
 
 .. code-block:: cpp
 
     // Write body dependent variable history to file.
     writeDataMapToTextFile( dynamicsSimulator.getDependentVariableHistory( ),
                             "bodyDependentVariableHistory.dat",
-                            outputPath,
-                            "",
-                            std::numeric_limits< double >::digits10,
-                            std::numeric_limits< double >::digits10,
-                            "," );
+                            outputPath );
 
-These two code snippets will save two :literal:`.dat` files in the folder specified by the :literal:`outputPath`. You can make use of the :literal:`tudat_applications::getOutputPath( )` function to get a folder name relative to the project folder.
+Similarly to the :literal:`getEquationsOfMotionNumericalSolution` and :literal:`getEquationsOfMotionNumericalSolutionRaw` functions, the :literal:`getDependentVariableHistory` outputs a map, where the key is the time and the mapped value a vector of variable length. This length depends on a few things:
+
+   - **For extraction of numerical solutions:** how many bodies are being propagated, how many propagators are used and the length of the conventional or propagation coordinates
+
+   - **For extraction of dependent variables:** how many depenent variables are being saved and whether they are a scalar or a vector
+
+   .. note:: For the dependent variables, the simulation will automatically output the order and length of each dependent variable. This is true, however, only if you have not turned off this feature while adding the dependent variable settings to the propagator object.
+
+Finally, the :class:`DynamicsSimulator` object offers a couple more interesting member functions that can be used to access some internal variables. You can, for instance, use:
+
+   - :literal:`getCumulativeNumberOfFunctionEvaluations` to access the history of the number of function evaluations over propagation; the key is the simulation time and the mapped value gives the cumulative number of function evaluations; this can be very useful when studying the performance of the propagation coordinates and/or of a variable step size integrator.
+
+   - :literal:`getCumulativeComputationTimeHistory` to access the history of the computation time over propagation; the key is the simulation time and the mapped value gives the cumulative computation time.
+
+The code snippets used at the beginning of this section can be also used to save the cumulative variables above. The result will be a :literal:`.dat` file in the folder specified by the :literal:`outputPath` string. You can make use of the :literal:`tudat_applications::getOutputPath( )` function to get a folder name relative to the project folder.
+
+.. tip:: In case you wanted to have more control on how the data is written to the text file (e.g., setting a different number of significant digits, adding a header to the file, etc.) you can check out the Wiki page on :literal:`writeDataMapToTextFile` at :ref:`tudatFeaturesInputOutput`.
