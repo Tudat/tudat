@@ -26,7 +26,7 @@ Tudat supports a diverse set of observation types, which are defined in the :lit
       
    The two-way Doppler requires :literal:`transmitter`, :literal:`reflector1` and :literal:`receiver` link ends (:math:`A`, :math:`B` and :math:`C` in the above example).
 * :class:`one_way_differenced_range` Doppler observable as it is typically obtained in interplanetary tracking in so-called 'closed-loop' mode (in m/s) between two link ends. Observable has size 1. The value is computed from the averaged range-rate over some integration time (see below). Requires :literal:`transmitter` and :literal:`receiver` link ends.
-* :class:`n_way_range` Accumulated range (in meters) over any number of signal paths, may be used for two-way range (as in SLR or deep space tracking), as well as more exotic situations where more than 2 signal paths are used in generating the observable (as was the case for, for instance, the SELENE mission) Observable has size 1. The value is computed accumulating the light-time (multiplied by *c*) with any retranmission delays that the user defines (see below) Requires :literal:`transmitter`, :literal:`receiver`, as well as :literal:`reflector1`, :literal:`reflector2` ... :literal:`reflectorX` for X+1 signal paths (when only a :literal:`transmitter` and :literal:`receiver` are defined the observation is identical to a :literal:`one_way_range`)
+* :class:`n_way_range` Accumulated range (in meters) over any number of signal paths, may be used for two-way range (as in SLR or deep space tracking), as well as more exotic situations where more than 2 signal paths are used in generating the observable (as was the case for, for instance, the SELENE mission) Observable has size 1. The value is computed accumulating the light-time (multiplied by *c*) with any retransmission delays that the user defines (see below) Requires :literal:`transmitter`, :literal:`receiver`, as well as :literal:`reflector1`, :literal:`reflector2` ... :literal:`reflectorX` for X+1 signal paths (when only a :literal:`transmitter` and :literal:`receiver` are defined the observation is identical to a :literal:`one_way_range`)
 
 .. _observationSettings:
 
@@ -83,7 +83,7 @@ and:
             
 may be used as well to create an observation model without light-time corrections or biases (in the case of the former) and no biases (in the case of the latter).
 
-Additionally, a second constructor is provided that takes a single light-time correction setting, instead of a list, as its second argument. So, you may substitute the input of type :literal:`std::vector< boost::shared_ptr< LightTimeCorrectionSettings > >` by an input of type :literal:`boost::shared_ptr< LightTimeCorrectionSettings >`, in which case you cans set only a single light-time correction. 
+Additionally, a second constructor is provided that takes a single light-time correction setting, instead of a list, as its second argument. So, you may substitute the input of type :literal:`std::vector< boost::shared_ptr< LightTimeCorrectionSettings > >` by an input of type :literal:`boost::shared_ptr< LightTimeCorrectionSettings >`, in which case you can set only a single light-time correction. 
 
 
 .. class:: OneWayDifferencedRangeRateObservationSettings
@@ -263,21 +263,21 @@ In Tudat, the following types of biases are currently incorporated, where :math:
    .. math::
       \tilde{h}=h(1+K_{r})
       
-   For an observable with size greater than 1, :math:`K_{r}` is a vector and the multiplication is component-wise.
+      For an observable with size greater than 1, :math:`K_{r}` is a vector and the multiplication is component-wise.
 
    * Absolute bias :math:`K_{a}`, which influences the observable as: 
    
    .. math::
       \tilde{h}=h+K_{a}
       
-   For an observable with size greater than 1, :math:`K_{a}` is a vector and the multiplication is component-wise.
+      For an observable with size greater than 1, :math:`K_{a}` is a vector and the multiplication is component-wise.
 
    * A combined bias, which is computed from any number of the above bias types combined. Note that each contribution of the combined bias is computed from the unbiased observable, so when applying both a relative and absolute bias, we get:
 
    .. math::
       \tilde{h}=h+K_{a}+hK_{r}
 
-   And, crucially:
+      And, crucially:
 
    .. math::
       \tilde{h}\neq (h+K_{a})(1+K_{r})

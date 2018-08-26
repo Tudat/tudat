@@ -12,7 +12,7 @@ The tutorials on these pages focus on the elements of Tudat that you'll need fro
 
 where "pathTo" is the directory where you extracted the Tudat Bundle. When browsing the files in this directory you will see, among others, the ``singleSatellitePropagator.cpp`` and ``singlePerturbedSatellitePropagator.cpp`` files, which we will discuss here among other examples.
 
-Example tutorials
+Example Tutorials
 ~~~~~~~~~~~~~~~~~
 Each example is discussed in detail on a separate page. Note that in the first example, the entire source file is discussed in a step-by-step manner. Subsequent tutorials focus on the aspects that are different, compared to the basic Kepler orbit propagation.
 
@@ -20,8 +20,10 @@ Each example is discussed in detail on a separate page. Note that in the first e
    :numbered:
    :maxdepth: 1
 
+   tabulatedAtmosphereExamples
    unperturbedEarthOrbitingSatellite
    perturbedEarthOrbitingSatellite
+   propagatorTypesComparison
    unguidedCapsuleEntry
    innerSolarSystemPropagation
    useOfThrustThrustForceAlongVelocityVector
@@ -31,7 +33,7 @@ Each example is discussed in detail on a separate page. Note that in the first e
    earthOrbiterStateEstimation
    interplanetaryTrajectory
    
-Optimization tutorials
+Optimization Tutorials
 ~~~~~~~~~~~~~~~~~~~~~~
 In the same tudatExampleApplications library on your computer, you can find the library examples. These examples contain examples on how to use Pagmo 2, which is an external optimization library. The first tutorial, Himmelblau optimization, will show you the basics of this library, the subsequent examples go into more depth of the Pagmo 2 library.
 

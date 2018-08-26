@@ -4,7 +4,7 @@ How to Write the Wiki
 =====================
 The goal of this page is to document how this wiki is written, with the goal of helping future users document their code and maintain the current content.
 
-The documentation framework
+The Documentation Framework
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The backbone of this wiki is reStructuredText, which is simply plain text with a special markdown syntax. ReStructuredText is written to :literal:`.rst` source files, which are then compiled to produce :literal:`.html` files.
 
@@ -17,31 +17,51 @@ A top-level view of the documentation framework can be seen in the following fig
 .. figure:: images/wikiProcess.jpg   
    :align: center
 
-Installing the documentation tools
+Installing the Documentation Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The documentation using reStructuredText and Sphinx requires relatively few tools and these are very easy to install. At the moment, documentation support is only given to users with a Debian linux distribution. If you have any other OS, you can make use of a Virtual Machine which will allow you to use a different OS without partitioning your drive. Please refer to Vmware Workstation Player (https://www.vmware.com/go/downloadplayer) or Oracle VirtualBox (https://www.virtualbox.org/wiki/Downloads) for virtual machine solutions.
+The documentation using reStructuredText and Sphinx requires relatively few tools and these are very easy to install. At the moment, documentation support is only given to users with a **Debian Linux** distribution or with **macOS**. If you have any other OS, you can make use of a Virtual Machine which will allow you to use a different OS without partitioning your drive. Please refer to Vmware Workstation Player (https://www.vmware.com/go/downloadplayer) or Oracle VirtualBox (https://www.virtualbox.org/wiki/Downloads) for virtual machine solutions.
 
 **1. Install Python 2.7**
    Python 2.7 is necessary to run Sphinx. Please note that this may be already included in your system. You can install it using the following command::
 
+      // Linux
       sudo apt-get install python
+
+      // Mac
+      sudo easy_install python // although Macs usually come with python built-in
 
 **2. Install Sphinx**
    You can install the Sphinx documentation generator using the following commands::
 
+      // Linux
       sudo apt-get install python pip
       pip install sphinx sphinx-autobuild
+
+      // Mac
+      sudo easy_install pip
+      python -mpip install matplotlib --user
+      pip install sphinx sphinx-autobuild --user
 
 **3. Install Graphviz**
    The Graphviz software is used for creating the diagrams in the documentation, it is installed using::
 
+      // Linux
       sudo apt-get install graphviz
 
+      // Mac
+      sudo easy_install graphviz
+
 **4. Clone the** :literal:`source` **repository**
-   This repository contains the :literal:`.rst` source files that make up the wiki. These are stored under the :literal:`source` branch within the :literal:`tudat` repository of https://github.com/Tudat/tudat. Place the contents of this repository inside a :literal:`source` folder.
+   This repository contains the :literal:`.rst` source files that make up the wiki. These are stored under the :literal:`source` branch within the :literal:`tudat` repository of https://github.com/Tudat/tudat. Place the contents of this repository inside a :literal:`source` folder. This can be done with the command::
+
+      cd ... // path where you want the folder to be created
+      git clone -b source https://github.com/Tudat/tudat.git source
 
 **5. Clone the** :literal:`gh-pages` **repository**
-   This repository contains the :literal:`.html` files that build the wiki website. These are stored under the :literal:`gh-pages` branch within the :literal:`tudat` repository of https://github.com/Tudat/tudat. Place the contents of this repository inside a :literal:`build/html` folder, next to your :literal:`source` folder.
+   This repository contains the :literal:`.html` files that build the wiki website. These are stored under the :literal:`gh-pages` branch within the :literal:`tudat` repository of https://github.com/Tudat/tudat. Place the contents of this repository inside a :literal:`build/html` folder, next to your :literal:`source` folder. This can be done with the command::
+
+      cd ... // path where you want the folder to be created
+      git clone -b gh-pages https://github.com/Tudat/tudat.git build/html
 
 **6. Create the** :literal:`make.bat` **and the** :literal:`Makefile` **files**
    These two files should be placed next to the folders. They allow to build the wiki from the terminal with few commands.
@@ -87,10 +107,16 @@ The documentation using reStructuredText and Sphinx requires relatively few tool
       :end
       popd
 
+   .. note ::
+      Note that for macOS, the :literal:`make.bat` file is not necessary.
+
    Contents of the :literal:`Makefile`:
 
    .. literalinclude:: Makefile.txt
       :language: makefile
+
+.. tip ::
+   Make sure that :literal:`Makefile` does not have an extension. On macOS, for instance, if you use TextEdit to create the file, it is possible that the file is automatically saved as :literal:`.txt` (with hidden extension).
 
 **7. Compiling the wiki**
    To compile the wiki, navigate using the terminal to the folder containing the :literal:`make.bat` file and launch the following command::
@@ -120,7 +146,7 @@ The documentation using reStructuredText and Sphinx requires relatively few tool
       |
       | makefile
 
-Updating documentation
+Updating Documentation
 ~~~~~~~~~~~~~~~~~~~~~~
 If changes are made to the documentation (wiki and/or doxygen) . These changes need to be pushed to the correct repository. 
 
@@ -128,17 +154,15 @@ If changes are made to the documentation (wiki and/or doxygen) . These changes n
 
 For the wiki the contents of ``root/build/html/`` need to be pushed to https://github.com/Tudat/tudat/tree/gh-pages. 
 
-
 **Doxygen**
 
 For the Doxygen the contents of ``tudatBundle/tudat/Tudat/Documentation/`` need to be pushed to https://github.com/Tudat/tudatDoxygen. 
 
-
-Wiki style guide
+Wiki Style Guide
 ~~~~~~~~~~~~~~~~
 As mentioned above, the wiki is built using :literal:`.rst` files that contain a special mark-up. This files are linked together using :literal:`toctree` commands, that link the source files together.
 
-Linking :literal:`.rst` files
+Linking :literal:`.rst` Files
 *****************************
 The wiki source files are organized in different folders, where each folder contains an :literal:`index.rst` file that serves are the header of such folder. The source files should be organized in folder with meaningful names::
 
@@ -233,7 +257,7 @@ Where all text with an indentation of at least 3 whitespace belongs to the capti
 
       This text WILL NOT be recognized within code-block.
 
-Use of special commands
+Use of Special Commands
 ***********************
 One of the most powerful features of reStructuredText is the ability to use complex mark-up. It is required that you make use of it to ensure that the wiki stays pretty and clear. The best advice we can give you is to go through existing wiki pages and cross-check against the source code that generates them. You can do so by clicking on "View page source" on the top-right corner of the page.
 
@@ -272,7 +296,7 @@ The following commands are available within reStructuredText
    Introduces a box of monospaced text without mark-up. Generally used to define file locations.
 
 
-Upcoming improvements
+Upcoming Improvements
 ~~~~~~~~~~~~~~~~~~~~~
 
 The following issues on the `github project page <https://github.com/Tudat/tudat/labels/documentation>`_ need to be resolved. Other improvements to the documentation are:
