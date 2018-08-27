@@ -52,7 +52,13 @@ If needed, you can use this functionality as a starting point to create your own
 
    - :literal:`MultiArrayFileReader< NumberOfDimensions >::readMultiArray` (Tudat)
 
+      You can use this function to read and access the information stored in a file with multiple dimensional data. The output is a variable of type :literal:`boost::multi_array< double, NumberOfDimensions >`, whose number of dimensions is specified by the template parameter :literal:`NumberOfDimensions`.
 
+      .. note:: It is important to keep in mind that to use this function, you also need to use the class specifier :literal:`MultiArrayFileReader< NumberOfDimensions >`, where you replace the template argument with the actual number of dimensions yoiu expect from the file.
+
+      You can also use the function :literal:`MultiArrayFileReader< NumberOfDimensions >::readMultiArrayAndIndependentVariables` to access both the multi-array data and a set of independent variables. This is the format used, e.g., to store aerodynamic coefficients and the atmosphere tables.
+
+      .. tip:: You can find a description of how the data is expected to be stored in the file, by looking at the end of :ref:`tudatTabulatedAtmosphere`.
 
 File-writers
 ************
@@ -76,9 +82,9 @@ The :literal:`InputOutput` directory in the Tudat library also contains function
    - :literal:`writeMatrixToTextFile` (Tudat)
       This function writes data stored in a :literal:`Eigen::Matrix` to a text file. The input required are the matrix itself and the file-name. Note that any :literal:`scalarType` and number of rows and collumns can be used.
 
-   - :literal:`MultiArrayFileWriter< NumberOfDimensions >::writeMultiArrayAndIndependentVariablesToFiles` (Tudat)
+   - :literal:`MultiArrayFileWriter< NumberOfDimensions, NumberOfCoefficients >::writeMultiArrayToFile` (Tudat)
 
-
+      .. warning:: This function is not yet available, but you can use :literal:`MultiArrayFileWriter< NumberOfDimensions, NumberOfCoefficients >::writeMultiArrayAndIndependentVariablesToFiles` to write both a multi-array and a set of independent variables to a file.
 
 Examples
 ~~~~~~~~

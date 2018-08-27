@@ -49,7 +49,7 @@ Another fact to consider, is that sometimes there may be a difference between th
 Propagated Coordinates in Tudat
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For the following state types, one can choose between the listed propagated coordinates.
+For the following state types, one can choose between the listed propagated coordinates. You can also find a similar list in :ref:`tudatFeaturesPropagatorSettings`, where each propagator available is listed.
 
 .. method:: Translational Motion
 

@@ -108,7 +108,7 @@ Once the :class:`DynamicsSimulator` object has been created and the equations of
 
              // Write body propagation history in propagation coordinates to file.
              writeDataMapToTextFile( dynamicsSimulator.getEquationsOfMotionNumericalSolutionRaw( ),
-                                     "bodyPropagationHistory.dat",
+                                     "bodyPropagationRawHistory.dat",
                                      outputPath );
 
    .. tip:: You can find more information about the difference between *conventional* and *propagation* coordinates in :ref:`tudatFeaturesPropagatorSettingsCoordinates`.
