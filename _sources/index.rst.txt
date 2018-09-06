@@ -47,5 +47,6 @@ Tudat has also been used extensively in research projects, a few of them are lis
    started/index
    installation/index
    tutorials/index
+   FAQ/index
    developerGuide/index
 

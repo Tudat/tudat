@@ -294,7 +294,7 @@ Atmosphere model
    
    where ``windFunction`` is a ``boost::function`` with inputs; altitude, longitude, latitude and time (for more details about boost: :ref:`externalBoost`).
 
-
+.. _ephemerisModel:
 
 Ephemeris model
 ****************  

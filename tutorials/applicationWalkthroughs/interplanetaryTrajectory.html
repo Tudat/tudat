@@ -121,6 +121,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
 </ul>
 
@@ -326,49 +327,77 @@ The other part of the code that is different is the trajectory variables that ne
 The calculation of the final values of the trajectory is done in the same manner as before, but now the <code class="docutils literal"><span class="pre">maneuvers(positionVector,</span> <span class="pre">timeVector,</span> <span class="pre">deltaVVector)</span></code> also contains the DSMs.</p>
 <div class="section" id="application-output">
 <h2>10.1. Application Output<a class="headerlink" href="#application-output" title="Permalink to this headline">¶</a></h2>
-<p>The output of this application should look as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span>Starting C:\tudatBundle.git\tudatExampleApplications\satellitePropagatorExamples\bin\applications\application_InterplanetaryTrajectoryDesign.exe...
+<p>All the output of the trajectory is handled as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define vectors to calculate intermediate points</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">interPositionVectorMessenger</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">interTimeVectorMessenger</span><span class="p">;</span>
 
- Cassini Mission:
+<span class="c1">// Calculate intermediate points and write to file</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputFileTraj</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span> <span class="p">)</span><span class="o">+</span><span class="s">&quot;messengerTrajectory.dat&quot;</span><span class="p">;</span>
+<span class="n">Messenger</span><span class="p">.</span><span class="n">intermediatePoints</span><span class="p">(</span> <span class="mf">1000.0</span> <span class="p">,</span> <span class="n">interPositionVectorMessenger</span><span class="p">,</span> <span class="n">interTimeVectorMessenger</span> <span class="p">);</span>
+<span class="n">writeTrajectoryToFile</span><span class="p">(</span> <span class="n">interPositionVectorMessenger</span><span class="p">,</span> <span class="n">interTimeVectorMessenger</span><span class="p">,</span> <span class="n">outputFileTraj</span> <span class="p">);</span>
 
- Total Delta V needed: 5635.96
+<span class="c1">// Define vectors to calculate intermediate points</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">manPositionVectorMessenger</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">manTimeVectorMessenger</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">manDeltaVVectorMessenger</span><span class="p">;</span>
 
- Time of Earth departure: -6.82397e+007. Delta V needed at Earth: 2754.84
+<span class="c1">// Calculate maneuvers and write to file</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputFileMan</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span> <span class="p">)</span><span class="o">+</span><span class="s">&quot;messengerManeuvers.dat&quot;</span><span class="p">;</span>
+<span class="n">Messenger</span><span class="p">.</span><span class="n">maneuvers</span><span class="p">(</span> <span class="n">manPositionVectorMessenger</span><span class="p">,</span> <span class="n">manTimeVectorMessenger</span><span class="p">,</span> <span class="n">manDeltaVVectorMessenger</span> <span class="p">);</span>
+<span class="n">writeTrajectoryToFile</span><span class="p">(</span> <span class="n">manPositionVectorMessenger</span><span class="p">,</span> <span class="n">manTimeVectorMessenger</span><span class="p">,</span> <span class="n">outputFileMan</span> <span class="p">);</span>
 
- Time of Venus visit: -5.45624e+007. Delta V needed at Venus: 881.223
+<span class="c1">// Calculate trajectories of the planets and output to file</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">positionVectorEarth</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">timeVectorEarth</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">positionVectorVenus</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">timeVectorVenus</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">positionVectorMercury</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">timeVectorMercury</span><span class="p">;</span>
 
- Time of second Venus visit: -1.57355e+007. Delta V needed at Venus: 1513.75
+<span class="c1">// Earth</span>
+<span class="n">returnSingleRevolutionPlanetTrajectory</span><span class="p">(</span>
+            <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
+                            <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">earthMoonBarycenter</span> <span class="p">),</span>
+        <span class="n">sunGravitationalParameter</span><span class="p">,</span>
+        <span class="mf">1171.64503236</span><span class="p">,</span>
+        <span class="mf">1000.0</span><span class="p">,</span>
+        <span class="n">positionVectorEarth</span><span class="p">,</span>
+        <span class="n">timeVectorEarth</span><span class="p">);</span>
 
- Time of Earth visit: -1.10052e+007. Delta V needed at Earth: 2.43109
+<span class="c1">// Venus</span>
+<span class="n">returnSingleRevolutionPlanetTrajectory</span><span class="p">(</span>
+            <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
+                            <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">venus</span> <span class="p">),</span>
+        <span class="n">sunGravitationalParameter</span><span class="p">,</span>
+        <span class="mf">1171.64503236</span><span class="p">,</span>
+        <span class="mf">1000.0</span><span class="p">,</span>
+        <span class="n">positionVectorVenus</span><span class="p">,</span>
+        <span class="n">timeVectorVenus</span><span class="p">);</span>
 
- Time of Jupiter visit: 7.74997e+007. Delta V needed at Jupiter: 10.4798
+<span class="c1">// Mercury</span>
+<span class="n">returnSingleRevolutionPlanetTrajectory</span><span class="p">(</span>
+            <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
+                            <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">mercury</span> <span class="p">),</span>
+        <span class="n">sunGravitationalParameter</span><span class="p">,</span>
+        <span class="mf">1171.64503236</span><span class="p">,</span>
+        <span class="mf">1000.0</span><span class="p">,</span>
+        <span class="n">positionVectorMercury</span><span class="p">,</span>
+        <span class="n">timeVectorMercury</span><span class="p">);</span>
 
- Time of Saturn capture: 4.70819e+008. Delta V needed at Saturn: 473.235
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputFilePlanetE</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span>  <span class="p">)</span><span class="o">+</span><span class="s">&quot;earthTrajectory.dat&quot;</span><span class="p">;</span>
+<span class="n">writeTrajectoryToFile</span><span class="p">(</span> <span class="n">positionVectorEarth</span><span class="p">,</span> <span class="n">timeVectorEarth</span><span class="p">,</span> <span class="n">outputFilePlanetE</span> <span class="p">);</span>
 
- Messenger Mission:
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputFilePlanetV</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span>  <span class="p">)</span><span class="o">+</span><span class="s">&quot;venusTrajectory.dat&quot;</span><span class="p">;</span>
+<span class="n">writeTrajectoryToFile</span><span class="p">(</span> <span class="n">positionVectorVenus</span><span class="p">,</span> <span class="n">timeVectorVenus</span><span class="p">,</span> <span class="n">outputFilePlanetV</span> <span class="p">);</span>
 
- Total Delta V: 8646.21
-
- Time of Earth departure: 1.0123e+008. Delta V needed at Earth: 1408.99
-
- Time of 1st DSM: 1.09338e+008. Delta V needed for 1st DSM: 911.2
-
- Time of second Earth visit: 1.3579e+008. Delta V needed at Earth: 0
-
- Time of 2nd DSM: 1.37277e+008. Delta V needed for 2nd DSM: 1.37516
-
- Time of Venus visit: 1.51201e+008. Delta V needed at Venus: 0
-
- Time of 3d DSM: 1.72658e+008. Delta V needed for 3d DSM: 266.056
-
- Time of second Venus visit: 1.77054e+008. Delta V needed at Venus: 0
-
- Time of 4th DSM: 1.82001e+008. Delta V needed for 4th DSM: 1425.24
-
- Time of Mercury capture: 1.92651e+008. Delta V needed at Mercury: 4633.35
-
-C:/tudatBundle.git/tudatExampleApplications/satellitePropagatorExamples/bin/applications/application_InterplanetaryTrajectoryDesign.exe exited with code 0
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputFilePlanetM</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span>  <span class="p">)</span><span class="o">+</span><span class="s">&quot;mercuryTrajectory.dat&quot;</span><span class="p">;</span>
+<span class="n">writeTrajectoryToFile</span><span class="p">(</span> <span class="n">positionVectorMercury</span><span class="p">,</span> <span class="n">timeVectorMercury</span><span class="p">,</span> <span class="n">outputFilePlanetM</span> <span class="p">);</span>
 </pre></div>
+</div>
+<p>These lines of code use several functions that can produce output from the calculated trajectory. First, intermediate points are calculated along the trajectory using <code class="docutils literal"><span class="pre">intermediatePoints</span></code>. The produced position and time vector are then passed to <code class="docutils literal"><span class="pre">writeTrajectoryToFile</span></code> to produce a file that can be read by an external plotting program. The same is done afterwards, but instead of producing some intermediate positions, now only the manuevers are produced. These are then also written to a file. Finally, for every planet the trajectory is outputted to a file to be able to see where the trajectory encounters the planet. The final figure is shown below.</p>
+<div class="figure">
+<img alt="../../_images/interpTrajFig.png" src="../../_images/interpTrajFig.png" />
 </div>
 </div>
 </div>

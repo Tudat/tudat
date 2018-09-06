@@ -118,6 +118,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
 </ul>
 
@@ -192,19 +193,50 @@
 <span id="tudatfeaturestrajectorydesign"></span><h1>1.3. Trajectory Design<a class="headerlink" href="#trajectory-design" title="Permalink to this headline">¶</a></h1>
 <p>This code allows the user to build up a trajectory for an interplanetary spacecraft using gravity assists (GA) and deep space maneuvers (DSM). The code is based off the work done <a class="reference external" href="https://repository.tudelft.nl/islandora/object/uuid%3A02468c77-5c64-4df8-9a24-1ed7ad9d1408?collection=education">here</a>, users who wish to have more detail on the subject and/or would like to see several applications of this code are referred to this <a class="reference external" href="https://repository.tudelft.nl/islandora/object/uuid%3A02468c77-5c64-4df8-9a24-1ed7ad9d1408?collection=education">thesis</a>.</p>
 <p>The user can build a trajectory by defining the departure planet, the sequence of planets visited, the leg types of the mission, the defining variables of those legs, and the final capture planet. This code works especially well with the pagmo optimization code to generate optimal trajectories.</p>
+<p>The trajectories calculated here are based on several assumptions. They are as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Patched-conics is used in the complete calculation of the trajectory. No forces except for the gravity of the central body and the thrust applied by the vehicle are considered.</li>
+<li>The planetary sequence is fixed beforehand.</li>
+<li>Only one revolution per transfer is considered.</li>
+<li>The transfer direction are all counter-clockwise.</li>
+<li>If a DSM is applied, it can only be done once every transfer.</li>
+</ul>
+</div></blockquote>
+<p>If the trajectory design code is used, these assumptions need to be taken into account.</p>
 <div class="section" id="trajectory-models">
 <h2>1.3.1. Trajectory Models<a class="headerlink" href="#trajectory-models" title="Permalink to this headline">¶</a></h2>
-<p>A trajectory can be of three different types: Multiple Gravity Assist (MGA) trajectory, Multiple Gravity Assist with 1 Deep Space Maneuver per leg using Velocity Formulation (MGA-1DSM-VF) trajectory, and Multiple Gravity Assist with 1 Deep Space Maneuver per leg using Position Formulation (MGA-1DSM-PF) trajectory. The differences between the VM and PM can be found <a class="reference external" href="https://repository.tudelft.nl/islandora/object/uuid%3A02468c77-5c64-4df8-9a24-1ed7ad9d1408?collection=education">here</a>. Each trajectory model is build up from multiple legs, which can be selected by the user. There are three different leg types that can be selected:</p>
+<p>Each trajectory is built up from different legs. Each leg can be either a departure leg, swing-by leg, or a capture leg. Each trajectory has to stat with a departure leg and end with a capture leg. The departure and swing-by legscan be divided into 3 different types. These 3 different types are: Multiple Gravity Assist (MGA), Multiple Gravity Assist with 1 Deep Space Maneuver per leg using Velocity Formulation (MGA-1DSM-VF), and Multiple Gravity Assist with 1 Deep Space Maneuver per leg using Position Formulation (MGA-1DSM-PF). The differences between the VM and PM can be found <a class="reference external" href="https://repository.tudelft.nl/islandora/object/uuid%3A02468c77-5c64-4df8-9a24-1ed7ad9d1408?collection=education">here</a>. Each combination of leg and type is discussed below  .</p>
 <blockquote>
 <div><ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">Departure</span> <span class="pre">leg</span></code>:</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">Departure</span> <span class="pre">leg</span> <span class="pre">MGA</span></code>:</p>
 <blockquote>
-<div><p>This leg starts at a parking orbit around the departure planet and ends when the sphere of influence of the target planet is reached.</p>
+<div><p>This leg starts at a parking orbit around the departure planet and ends when the sphere of influence of the target planet is reached. No DSM is performed during the transfer.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">Swing-by</span> <span class="pre">leg</span></code>:</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">Departure</span> <span class="pre">leg</span> <span class="pre">MGA-1DSM-PF</span></code>:</p>
 <blockquote>
-<div><p>A swing-by leg starts at the beginning of the swing-by maneuver (at the edge of the sphere of influence of the swing-by planet), and ends at the sphere of influence of the target planet.</p>
+<div><p>This leg starts at a parking orbit around the departure planet and ends when the sphere of influence of the target planet is reached. One DSM is performed, and calculated using the position formulation.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">Departure</span> <span class="pre">leg</span> <span class="pre">MGA-1DSM-VF</span></code>:</p>
+<blockquote>
+<div><p>This leg starts at a parking orbit around the departure planet and ends when the sphere of influence of the target planet is reached. One DSM is performed, and calculated using the velocity formulation.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">Swing-by</span> <span class="pre">leg</span> <span class="pre">MGA</span></code>:</p>
+<blockquote>
+<div><p>A swing-by leg starts at the beginning of the swing-by maneuver (at the edge of the sphere of influence of the swing-by planet), and ends at the sphere of influence of the target planet. After the GA is performed at the swing-by planet, no additional DSM is performed.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">Swing-by</span> <span class="pre">leg</span> <span class="pre">MGA-1DSM-PF</span></code>:</p>
+<blockquote>
+<div><p>A swing-by leg starts at the beginning of the swing-by maneuver (at the edge of the sphere of influence of the swing-by planet), and ends at the sphere of influence of the target planet. After the GA is performed at the swing-by planet, an additional DSM is performed. The location, magnitude, and direction are defined using the position formulation.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">Swing-by</span> <span class="pre">leg</span> <span class="pre">MGA-1DSM-VF</span></code>:</p>
+<blockquote>
+<div><p>A swing-by leg starts at the beginning of the swing-by maneuver (at the edge of the sphere of influence of the swing-by planet), and ends at the sphere of influence of the target planet. After the GA is performed at the swing-by planet, an additional DSM is performed. The location, magnitude, and direction are defined using the velocity formulation.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">Capture</span> <span class="pre">leg</span></code>:</p>
@@ -219,7 +251,7 @@ left again.</p>
 </div>
 <div class="section" id="trajectory-calculation">
 <h2>1.3.2. Trajectory Calculation<a class="headerlink" href="#trajectory-calculation" title="Permalink to this headline">¶</a></h2>
-<p>The interplanetary trajectory is made using the <code class="docutils literal"><span class="pre">Trajectory</span></code> class:</p>
+<p>The <code class="xref py py-class docutils literal"><span class="pre">trajectory</span></code> class takes the settings for the full trajectory, and calculates the total <span class="math">\(\Delta\)</span> V, the time-of-flight, the location of the vehicle over time, and the time and location of the different maneuvers. The class is defined as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Trajectory</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">numberOfLegs</span><span class="p">,</span>
             <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">int</span> <span class="o">&gt;&amp;</span> <span class="n">legTypeVector</span><span class="p">,</span>
             <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">EphemerisPointer</span> <span class="o">&gt;&amp;</span>
@@ -247,7 +279,7 @@ left again.</p>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">ephemerisVector</span></code>:</p>
 <blockquote>
-<div><p>A vector containing pointers to ephemeris objects of the planets that are visited (in order).</p>
+<div><p>A vector containing pointers to ephemeris objects of the planets that are visited (in order). See <a class="reference internal" href="../environmentSetup/index.html#ephemerismodel"><span class="std std-ref">Ephemeris model</span></a> for more information.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">gravitationalParameterVector</span></code>:</p>
@@ -292,24 +324,60 @@ left again.</p>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">MGA-1DSM-VF</span></code>:</p>
 <blockquote>
-<div><p>For the departure leg:
-1: the time of flight fraction at which the DSM is performed. 2: the hyperbolic excess velocity magnitude for the start. 3: the in-plane angle for the hyperbolic excess velocity. 4:
-the out-of-plane angle for the hyperbolic excess velocity.</p>
-<p>For the swing-by leg:
-1: the time of flight fraction at which the DSM is performed. 2: the rotation angle of the GA. 3: the pericenter radius of the GA. 4: the <span class="math">\(\Delta\)</span> V added for the powered GA.</p>
+<div><dl class="docutils">
+<dt>For the departure leg:</dt>
+<dd><ul class="first last simple">
+<li>the time of flight fraction at which the DSM is performed.</li>
+<li>the hyperbolic excess velocity magnitude for the start.</li>
+<li>the in-plane angle for the hyperbolic excess velocity.</li>
+<li>the out-of-plane angle for the hyperbolic excess velocity.</li>
+</ul>
+</dd>
+<dt>For the swing-by leg:</dt>
+<dd><ul class="first last simple">
+<li>the time of flight fraction at which the DSM is performed.</li>
+<li>the rotation angle of the GA.</li>
+<li>the pericenter radius of the GA.</li>
+<li>the <span class="math">\(\Delta\)</span> V added for the powered GA.</li>
+</ul>
+</dd>
+</dl>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">MGA-1DSM-PF</span></code>:</p>
 <blockquote>
-<div><p>For the departure and swing-by legs:
-1: the time of flight fraction at which the DSM is performed. 2: the dimesnionless radius of the DSM (position of the DSM wrt the central body divided by the departure planets position
-wrt the central body. 3: the in-plane angle for DSM. 4: the out-of-plane angle for the DSM.</p>
+<div><dl class="docutils">
+<dt>For the departure and swing-by legs:</dt>
+<dd><ul class="first last simple">
+<li>the time of flight fraction at which the DSM is performed.</li>
+<li>the dimesnionless radius of the DSM (position of the DSM wrt the central body divided by the departure planets position wrt the central body.</li>
+<li>the in-plane angle for DSM.</li>
+<li>the out-of-plane angle for the DSM.</li>
+</ul>
+</dd>
+</dl>
 </div></blockquote>
 </li>
 </ul>
 </div></blockquote>
 <p>The trajectory variable thus is structured as follows: (departure time, time of flights for all the legs, additional variables for each leg).</p>
-<p>The trajectory class has functions to calculate the complete <span class="math">\(\Delta\)</span> V needed for the trajectory, called: <code class="docutils literal"><span class="pre">calculateTrajectory(</span> <span class="pre">double&amp;</span> <span class="pre">totalDeltaV</span> <span class="pre">)</span></code>, a function that returns the location and <span class="math">\(\Delta\)</span> V for all the maneuvers, called: <code class="docutils literal"><span class="pre">maneuvers(</span> <span class="pre">positionVector,</span> <span class="pre">timeVector,</span> <span class="pre">deltaVVector)</span></code>, and a function to return intermediate points along a trajectory, called: <code class="docutils literal"><span class="pre">intermediatePoints(</span> <span class="pre">maxTimeStep,</span> <span class="pre">positionVector,</span> <span class="pre">timeVector</span> <span class="pre">)</span></code>.</p>
+<p>The trajectory class contains several functions that can be used to examine the complete trajectory, they are listed below:</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">void</span> <span class="pre">Trajectory::intermediatePoints(</span> <span class="pre">)</span></code></p>
+<p>this function returns the position of the vehicle at specific times, which are defined by the maximum time step. The vectors containing the intermediate points can then be used for the <code class="docutils literal"><span class="pre">writeTrajectoryToFile</span></code> function.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">void</span> <span class="pre">Trajectory::calculateTrajectory(</span> <span class="pre">)</span></code></p>
+<p>this function returns the total <span class="math">\(\Delta\)</span> V of the trajectory.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">void</span> <span class="pre">Trajectory::maneuvers(</span> <span class="pre">)</span></code></p>
+<p>the maneuvers function returns the position and time of all the manuevers executed during the trajectory. These can be passed to the <code class="docutils literal"><span class="pre">writeManeuversToFile</span></code> function.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">void</span> <span class="pre">Trajectory::planetaryOrbits(</span> <span class="pre">)</span></code></p>
+<p>returns a single revolution of the planets that are encountered during the trajectory, to be plotted from the file generated by the <code class="docutils literal"><span class="pre">writeTrajectoryToFile</span></code> function.</p>
+</li>
+</ul>
+</div></blockquote>
 </div>
 </div>
 
