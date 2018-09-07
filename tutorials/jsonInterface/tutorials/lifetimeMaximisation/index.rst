@@ -3,7 +3,7 @@
 .. role:: jsontype
 .. role:: jsonkey
 
-Perturbed Earth-orbiting satellite lifetime maximisation
+Perturbed Earth-orbiting Satellite Lifetime Maximisation
 ========================================================
 
 This page describes how to set up a single-variable optimisation of the lifetime of an Earth-orbiting satellite using the JSON Interface.

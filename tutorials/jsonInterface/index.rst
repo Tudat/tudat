@@ -14,4 +14,3 @@ The JSON inteface makes it possible to use Tudat without knowledge of C++, the J
    customJsonApp
    modularFiles
    multicase
-

@@ -3,12 +3,12 @@
 .. role:: jsontype
 .. role:: jsonkey
 
-Unperturbed Earth-orbiting satellite
+Unperturbed Earth-orbiting Satellite
 ====================================
 
 This page describes how to set up the propagation of the unperturbed Earth-orbiting satellite described in :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` using the :literal:`json_interface`.
 
-The first step is to define the file tree. Since this is a simple example, there is no need to split the root input file into several files. Thus, we will have just a single file called :class:`main.json`. As shown at the end of this tutorial.
+The first step is to define the file tree. Since this is a simple example, there is no need to split the root input file into several files. Thus, we will have just a single file called :class:`main.json`, as shown at the end of this tutorial.
 
 We define the key :jsonkey:`initialEpoch` at root level, which will be used as initial time for the integrator and for interpolation of the Spice ephemeris. We also define the key :jsonkey:`finalEpoch`, which is used for interpolation of the Spice ephemeris and to create a time-based termination condition. In both cases, we need to specify the values in seconds since J2000. In this case, :jsonkey:`globalFrameOrigin` is not specified, so the default value of :literal:`"SSB"` (Solar system barycentre) is used. The :jsonkey:`globalFrameOrientation` is set to :literal:`J2000`.
 
@@ -21,7 +21,7 @@ Then, we request using the standard Spice kernels, namely :class:`pck00010.tpc`,
     "preloadEphemeris": false
   }
 
-We disable preloading of the ephemeris of the celestial bodies from the period :jsonkey:`initialEpoch` to :jsonkey:`finalEpoch`.
+where we disabled preloading of the ephemeris of the celestial bodies from the period :jsonkey:`initialEpoch` to :jsonkey:`finalEpoch`.
 
 The next step is to define the body settings. In this case, only Earth and the orbiting body (named :jsonkey:`Asterix`) are considered. Thus, we set the key :jsonkey:`bodies` to be:
 

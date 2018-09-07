@@ -3,7 +3,7 @@
 .. role:: jsontype
 .. role:: jsonkey
 
-Writing custom JSON-based applications
+Writing Custom JSON-based Applications
 ======================================
 
 A simple JSON-based application contains just a few lines of code:

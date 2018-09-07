@@ -3,7 +3,7 @@
 .. role:: jsontype
 .. role:: jsonkey
 
-Perturbed Earth-orbiting satellite lifetime maximisation using a custom C++ application
+Perturbed Earth-orbiting Satellite Lifetime Maximisation Using a Custom C++ Application
 =======================================================================================
 
 The example described on this page is identical to that described in :ref:`jsonInterface_tutorials_lifetimeMaximisation`. The only difference is that there, the :literal:`json_interface` application is used with many input files to run the different cases, while in this case only one input file, containing the shared settings, is used, and a custom C++ application is written to manually modify a few parameters for each case. The C++ code can be found in::
