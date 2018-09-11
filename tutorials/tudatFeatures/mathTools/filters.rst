@@ -85,7 +85,7 @@ Extended Kalman Filter
    Here, the inputs are as follows:
 
       - :literal:`filterSettings`: a pointer to a :class:`ExtendedKalmanFilterSettings` object, described at the end of this section
-      - :literal:`systemFunction`: a function returning the state as a function of time, state and control input; this can be a differential equation if the :literal:`integratorSettings` is set (i.e., if it is not a :literal:`nullptr`)
+      - :literal:`systemFunction`: a function returning the state as a function of time and state vector; this can be a differential equation if the :literal:`integratorSettings` is set (i.e., if it is not a :literal:`nullptr`)
       - :literal:`measurementFunction`: a function returning the measurement as a function of time and state
       - :literal:`stateJacobianFunction`: a function returning the Jacobian of the system w.r.t. the state; its input values can be time and state vector
       - :literal:`stateNoiseJacobianFunction`: a function returning the Jacobian of the system function w.r.t. the system noise; its input values can be time and state vector
@@ -131,7 +131,7 @@ Unscented Kalman Filter
    Here, the inputs are as follows:
 
       - :literal:`filterSettings`: a pointer to a :class:`UnscentedKalmanFilterSettings` object, described at the end of this section
-      - :literal:`systemFunction`: a function returning the state as a function of time, state and control input; this can be a differential equation if the :literal:`integratorSettings` is set (i.e., if it is not a :literal:`nullptr`)
+      - :literal:`systemFunction`: a function returning the state as a function of time and state vector; this can be a differential equation if the :literal:`integratorSettings` is set (i.e., if it is not a :literal:`nullptr`)
       - :literal:`measurementFunction`: a function returning the measurement as a function of time and state
 
    The filter settings above, can be defined for an extended Kalman filter as:
@@ -181,3 +181,28 @@ Unscented Kalman Filter
 Control System
 ~~~~~~~~~~~~~~
 
+It may be that for your application, your system needs to be controlled. This can be achieved by creating a control system (:class:`ControlSystem`, or :class:`ControlWrapper` in the unit tests), that provides the state function (and possibly the state Jacobian) with the current commanded vector. 
+
+The way this is done is by adding an extra input to the state function, i.e., 
+
+   .. code-block:: cpp
+
+      Eigen::Vector3d stateFunction( const double currentTime, const Eigen::Vector3d& currentState, const Eigen::Vector3d& currentControl )
+
+The last input of the :literal:`stateFunction` is another vector which denotes the commanded control vector. Note how this function, however is incompatible with the definition of :literal:`systemFunction`, i.e., the input to the :class:`ExtendedKalmanFilter` and :class:`UnscentedKalmanFilter` classes. In fact, this should be of type
+
+   .. code-block:: cpp
+
+      boost::function< DependentVector( const IndependentVariableType, const DependentVector& ) >
+
+which one has two inputs (a :literal:`double` and an :literal:`Eigen::Vector3d`, in our case). The extra vector can be added by using the very handy :literal:`boost::bind` command. This function allows us to bind the output of a function as an input to another function. Thus, by using the control class mentioned above, one can replace the :literal:`systemFunction` input with:
+
+   .. code-block:: cpp
+
+      boost::bind( &stateFunction, _1, _2, boost::bind( &ControlSystem::getCurrentStateVector, controlSystem ) )
+
+where the :literal:`controlSystem` object is of type :class:`ControlSystem`. Using this method, if the control system is regularly updated (possibly every time step), the control vector will be automatically retrieved and parsed by the filter.
+
+In :ref:`walkthroughsFiltering` you will find an example where a control system is added to both an EKF and a UKF, which are used to estimate the state of a simple estimation application.
+
+.. tip:: In general, you can apply the principle above to feed any other variable or object to the state and/or measurement functions. 
