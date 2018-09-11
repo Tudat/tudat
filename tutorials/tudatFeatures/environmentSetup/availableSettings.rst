@@ -42,7 +42,7 @@ Atmosphere model
       ============================  ==========  ==========  ==========
       Property                      Earth       Mars        Units
       ============================  ==========  ==========  ==========
-      Scale height                  7.2         1.11        km
+      Scale Height                  7.2         1.11        km
       Density at Zero Altitude      1.225       0.02        kg/m^3
       Constant Temperature          246.0       215.0       K
       Specific Gas Constant         287.0       197.0       J/kg/K

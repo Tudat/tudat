@@ -28,6 +28,7 @@ Each example is discussed in detail on a separate page. Note that in the first e
    innerSolarSystemPropagation
    useOfThrustThrustForceAlongVelocityVector
    useOfThrustUserDefinedThrustVector
+   filterExample
    variationalEquationsPropagation
    earthOrbiterBasicStateEstimation
    earthOrbiterStateEstimation

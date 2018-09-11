@@ -1,7 +1,7 @@
 .. _walkthroughsTabulatedAtmosphere:
 
 Tabulated Atmosphere Usage
-====================================
+==========================
 
 In the example application folder you will find an example called :literal:`tabulatedAtmosphereUsage.cpp`, which can be run by selecting the executable :literal:`application_TabulatedAtmosphereUsage`. If you run this simple script as is, its output should look something like this: ::
 
