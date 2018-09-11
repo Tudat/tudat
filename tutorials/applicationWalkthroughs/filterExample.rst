@@ -23,13 +23,13 @@ Initial Conditions
 
 The initial conditions for this problem are given in the table below. Here, you can see the real (actual) initial conditions, and the conditions that are input in the filter (i.e., the estimated initial conditions). The job of the filter is to try to match these conditions over time.
 
-   =====================  ==============  ===============  ===============
+   =====================  ==============  ===============  ==================
    State Element          Actual          Estimated        Units
-   =====================  ==============  ===============  ===============
+   =====================  ==============  ===============  ==================
    Position               200000.0        200025.0         Ft
    Velicity               -6000.0         -6150.0          Ft/s
-   Ballistic Coefficient  500.0           800.0            Lb/Ft^2
-   =====================  ==============  ===============  ===============
+   Ballistic Coefficient  500.0           800.0            Lb/Ft :math:`{}^2`
+   =====================  ==============  ===============  ==================
 
 Clearly, the intial estimate in position and velocity are quite close to the actual conditions, but the ballistic coefficient is rather different. You can try and change the estimated conditions to see how robust each filter is (although it is best to apply this technique to your own application, since each scenario can lead to different conclusions). You can also change (or tune) the system and measurement uncertainty matrices (usually referred to as :math:`Q` and :math:`R` in literature), to see how the behavior/convergence of the filter is affected. 
 
