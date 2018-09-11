@@ -4,7 +4,7 @@ Probability Distributions
 =========================
 In Tudat, we have a number of options related to the use of probability distributions, as well as the generation of random variables from these probability distributions. Many of these distributions are taken from the Boost libraries, some we have implemented ourselves.
 
-Implementation of a probability distribution
+Implementation of a Probability Distribution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 To represent a probability distribution with a given probability distribution function (PDF) and associated cumulative distribution function (CDF), we have defined the :class:`ContinuousProbabilityDistribution` base class. From this class, we have two 'branched' of derived classes:
 
@@ -56,7 +56,7 @@ For instance, we can perform the following:
 
 To compute the three quantities listed above.
 
-Creating probability distributions
+Creating Probability Distributions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 To create one of the 6 distributions listed above, for each of which the invertible CDF can be computed, call the ``createBoostRandomVariable`` with the following input:
 
@@ -97,7 +97,7 @@ A number of multivariate distributions are also available in Tudat. These are:
 
 For more information on these distributions, you are referred to the in-code Doxygen documentation. Note that only a pdf can be evaluated for these distributions. Also, a Kernel density distribution for multi-variate data is available, see the in-code Doxygen documentation. Note that only a pdf and cdf (no inverse cdf) can be evaluated for this distribution.
 
-Generation of random numbers
+Generation of Random Numbers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 For each of the invertible random variables described above, you can easily create a random number generator which generates variables according to that distribution. For the 6 boost distributions listed above, you can use the same input (type and parameters) as listed above. We provide two interfaces for random variable generation:
 

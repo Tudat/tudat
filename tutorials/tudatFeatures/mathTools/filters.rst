@@ -4,35 +4,17 @@ Filters
 =======
 Filters, in astrodynamics, are generally used to estimate the state of a system, based on a model description and measurement data. Tudat provides a few filters, based on the Kalman filter concept, that you can use for these or any other purpose you see fit. The filtering techinques currently offered in Tudat are:
 
-   - **Linear Kalman Filter**: insert basic description (LKF)
-   - **Extended Kalman Filter**: insert basic description (EKF)
-   - **Unscented Kalman Filter**: insert basic description (UKF)
+   - **Linear Kalman Filter** (LKF): an extremely effective and versatile procedure for combining noisy sensor outputs to estimate the state of a linear system with uncertain dynamics
+   - **Extended Kalman Filter** (EKF): extends the LKF to non-linear applications, by using a first-order Taylor series approximation of the system around the current estimate
+   - **Unscented Kalman Filter** (UKF): similar to the EKF, but addresses the non-linearity by using a deterministic sampling approach (instead of using system and measurement Jacobians)
 
 You can find more information on the mathematical background of these filters in virtually any guidance, navigation and control book. However, the references used to define the filters in Tudat are:
 
-   - **LKF**: E. Mooij, AE4870B - Re-entry Systems, Lecture Notes, Delft University of Technology, 2016
+   - **LKF**: E. Mooij, AE4870B - Re-entry Systems, Lecture Notes, Delft University of Technology, 2016.
    - **EKF**: Ogata, K., Discrete-Time Control Systems, 2nd ed. Pearson Education Asia, 2002.
    - **UKF**: Wan, E. and Van Der Merwe, R., “The Unscented Kalman Filter for Nonlinear Estimation,” in Adaptive Systems for Signal Processing, Communications, and Control Symposium. Institute of Electrical and Electronics Engineers, 2000, pp. 153–158.
 
 On this page, you will find a description of how to create a Kalman filter object, either based on the linear, extended, or unscented principle. In general, you will notice that the creation of a filter, requires the input of two template arguments. These are called :literal:`IndependentVariableType` and :literal:`DependentVariableType`, and they respectively denote the type (i.e., :literal:`double`, :literal:`long double`, etc.) for the independent variable (usually time) and the dependent variables. Note that the dependent variable is internally defined as an :literal:`Eigen::Matrix< DependentVariableType, Eigen::Dynamic, 1 >` object (which corresponds to a vector of unspecified length). 
-
-Usage
-~~~~~
-
-To use the filters after their creation, you will need to update the system with the data corresponding to the new time step. This can be done by using the function :literal:`updateFilter`, which takes to inputs:
-
-   - :literal:`currentTime`: a double denoting the current time
-   - :literal:`currentMeasurementVector`: a vector denoting the current external measurement which will be used to correct the estimated a-priori state (thus to obtain the a-posteriori estimate)
-
-Note that the filter object come equipped with two noise generators. These produce random Gaussian noise based on the system and measuremenet uncertainty properties input by the user. They can be retrieved with the commands :literal:`produceSystemNoise` and :literal:`produceMeasurementNoise`. You will find an example of how to use the noise and the other features mentioned on this page, in::
-
-   /Tudat/Mathematics/Filters/UnitTests
-
-where a few examples for each filtering technique is shown. One of the test cases shown for the extended (EKF) and unscented (UKF) filters is also shown in an example application. See :ref:`walkthroughsFiltering` for such example.
-
-The last element that should be discussed is the control system. It may be the case that you also need a control input together with the time and state. This can be added with the creation of a :class:`ControlWrapper` of the type explained in :ref:`tudatFeaturesFiltersControlSystem`.
-
-These are the only major steps that you will need to take to keep the filter running. At the end of the estimation process, however, you can retrieve, however, retireve the history of the estimated states and covariance matrices by using the functions :literal:`getEstimatedStateHistory` and :literal:`getEstimatedCovarianceHistory`, respectively.
 
 Linear Kalman Filter
 ~~~~~~~~~~~~~~~~~~~~
@@ -176,10 +158,28 @@ Unscented Kalman Filter
       :literal:`customConstantParameters`                   --              --
       ====================================================  ==============  ===============
 
+Using a Kalman Filter Object
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To use the filters after their creation, you will need to update the system with the data corresponding to the new time step. This can be done by using the function :literal:`updateFilter`, which takes to inputs:
+
+   - :literal:`currentTime`: a double denoting the current time
+   - :literal:`currentMeasurementVector`: a vector denoting the current external measurement which will be used to correct the estimated a-priori state (thus to obtain the a-posteriori estimate)
+
+Note that the filter object come equipped with two noise generators. These produce random Gaussian noise based on the system and measuremenet uncertainty properties input by the user. They can be retrieved with the commands :literal:`produceSystemNoise` and :literal:`produceMeasurementNoise`. You will find an example of how to use the noise and the other features mentioned on this page, in::
+
+   /Tudat/Mathematics/Filters/UnitTests
+
+where a few examples for each filtering technique is shown. One of the test cases shown for the extended (EKF) and unscented (UKF) filters is also shown in an example application, which you can find in :ref:`walkthroughsFiltering`.
+
+The last element that should be discussed is the control system. It may be the case that you also need a control input together with the time and state. This can be added with the creation of a :class:`ControlWrapper` of the type explained in the next section, :ref:`tudatFeaturesFiltersControlSystem`.
+
+These are the only major steps that you will need to take to keep the filter running. At the end of the estimation process, however, you can retrieve, however, retireve the history of the estimated states and covariance matrices by using the functions :literal:`getEstimatedStateHistory` and :literal:`getEstimatedCovarianceHistory`, respectively.
+
 .. _tudatFeaturesFiltersControlSystem:
 
-Control System
-~~~~~~~~~~~~~~
+Adding a Control Input
+~~~~~~~~~~~~~~~~~~~~~~
 
 It may be that for your application, your system needs to be controlled. This can be achieved by creating a control system (:class:`ControlSystem`, or :class:`ControlWrapper` in the unit tests), that provides the state function (and possibly the state Jacobian) with the current commanded vector. 
 

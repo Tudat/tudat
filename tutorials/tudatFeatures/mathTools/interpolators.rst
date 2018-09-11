@@ -18,7 +18,7 @@ As is the case for most other model that you create in Tudat, you provide settin
 
 Clearly, the first five options are interpolation routines with a single independent variable (i.e., they are one-dimensional), and the final one can be used for interpolation with an arbitrary number of independent variables. In this chapter, you will first introduced to how the one-dimensional interpolators are used, and then to how the multi-dimensional ones are implemented. These will be followed by a description of the various methods that can be used in case the requested independent variable for interpolation is outside the defined domain. 
 
-One-dimensional interpolator creation
+One-dimensional Interpolator Creation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Creating interpolators of a single independent variable is most easily done in Tudat by creating an :class:`InterpolatorSettings` object, and passing this to the ``createOneDimensionalInterpolator`` function.
 
@@ -96,7 +96,7 @@ The different interpolator types are handled in a similar manner:
 		// Interpolate
 		Eigen::Vector6d interpolatedResult = interpolator->interpolate( 0.0 );
 
-Lagrange interpolator
+Lagrange Interpolator
 *********************
 This interpolation routine uses an :math:`n`-th degree polynomial to approximate a function from :math:`n+1` data points. In our implementation, you can use a large data set of :math:`m` data points (with :math:`m > n`) to generate a set of interpolating polynomials. When interpolating a data point, the interpolation routine will automatically select the polynomial where the requested data point lies between the two middle points, to prevent wild oscillations (which occur at the edge of the polynomial). At the boundaries of the full interval, a cubic spline interpolator is used.
 
@@ -122,7 +122,7 @@ To create a Lagrange interpolator, the number of data points used for each inter
 	   // Interpolate
 	   Eigen::Vector6d interpolatedResult = interpolator->interpolate( 0.0 );
 
-Multi-dimensional interpolator creation
+Multi-dimensional Interpolator Creation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Currently, only one multi-dimensional interpolator is supported in Tudat. This is the multi-linear interpolator, which is created by also using the :class:`InterpolatorSettings` class, and by specifying :literal:`multi_linear_interpolator` as first input. To create the interpolator object, a different function needs to be used. This is the :literal:`createMultiDimensionalInterpolator` function, whose inputs are as follows:

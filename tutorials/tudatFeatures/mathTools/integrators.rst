@@ -9,9 +9,9 @@ Many applications require solving sets of first-order differential equations, wh
     - **Single-step methods:** These integrators use derivative information from a single step. Among these methods, Tudat includes the Euler method, the Runge-Kutta 4 method and several Runge-Kutta variable step-size methods.
     - **Multi-step methods:** These integrators use derivative information from multiple steps. Note that at the moment multi-step methods have not been implemented in Tudat.
 
-Setting up a numerical integrator
+Setting up a Numerical Integrator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Creating an integrator object
+Creating an Integrator Object
 *****************************
 All numerical integrators presented in this page follow the same framework, where the first step is to create the :literal:`integrator` object, which has the :literal:`NumericalIntegratorXdPointer` type:
 
@@ -48,7 +48,7 @@ Any user-defined state derivative function must satisfy the following requiremen
 
 The contents of the state derivative function can be freely defined according to the user's needs, but it is important to respect the function's input-output structure.
 
-Using the integrator object
+Using the Integrator Object
 ***************************
 Once the :literal:`integrator` object has been created, the multiple functions available within the :class:`NumericalIntegrator` class can be accessed. The following functions are available and they are exemplified using the :literal:`integrator` and the :literal:`stateDerivativeFunction` declared above:
 
@@ -96,10 +96,10 @@ Once the :literal:`integrator` object has been created, the multiple functions a
 
 .. tip:: It is possible to integrate backwards in time by choosing an initial time step that is smaller then zero. If time is the chosen termination condition, the time at which the integration starts should also be larger then the final time.
 
-Selecting a numerical integrator
+Selecting a Numerical Integrator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Euler integrator
+Euler Integrator
 ****************
 The Euler integrator is the simplest integrator available but is also a first-order method, meaning that the global error is proportional to the step-size. Thus, its use for high-accuracy applications is not encouraged. Creating the Euler integrator object is done as follows:
 
@@ -111,7 +111,7 @@ The Euler integrator is the simplest integrator available but is also a first-or
                         intervalStart,
                         initialState );
 
-Runge-Kutta 4 integrator
+Runge-Kutta 4 Integrator
 ************************
 The Runge-Kutta 4 (RK4) integrator is a fourth-order fixed step-size integrator, thus performing better than the Euler integrator. The RK4 integrator is created as follows:
 
@@ -123,7 +123,7 @@ The Runge-Kutta 4 (RK4) integrator is a fourth-order fixed step-size integrator,
                         intervalStart,
                         initialState );
 
-Runge-Kutta variable step-size integrator
+Runge-Kutta Variable Step-size Integrator
 *****************************************
 The Runge-Kutta variable step-size integrator involves a number of methods where the step-size is adjusted throughout the integration interval to bound the numerical error. Creating such integrators differs from the Euler integrator and the Runge-Kutta 4 fixed step-size methods:
 
@@ -170,7 +170,7 @@ where the following arguments are necessary:
 - :literal:`relativeErrorTolerance` defines the relative error tolerance.
 - :literal:`absoluteErrorTolerance` defines the absolute error tolerance.
 
-Using a numerical integrator to propagate an orbit
+Using a Numerical Integrator to Propagate an Orbit
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The numerical integrators described in this page are commonly used to propagate the orbit of spacecraft and celestial bodies. The reader is referred to :ref:`tudatFeaturesIntegratorSettings`, which discusses the how the numerical integrator fit in the simulator framework of Tudat.
 
