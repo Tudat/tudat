@@ -107,9 +107,10 @@
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettings.html">5.2. Propagator Settings: Basics</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">5.3. Propagator Settings: Termination Settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettingsDependentVariables.html">5.4. Propagator Settings: Dependent Variables</a></li>
-<li class="toctree-l4"><a class="reference internal" href="simulatorCreation.html">5.5. Create a Dynamics Simulator Object</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TimeStateTemplates.html">5.6. Time and State Templates</a></li>
-<li class="toctree-l4"><a class="reference internal" href="variationalSimulatorCreation.html">5.7. Create a Variational Equations Solver Object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="propagatorSettingsCoordinates.html">5.5. Propagator Settings: Conventional vs. Propagated Coordinates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulatorCreation.html">5.6. Create a Dynamics Simulator Object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TimeStateTemplates.html">5.7. Time and State Templates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variationalSimulatorCreation.html">5.8. Create a Variational Equations Solver Object</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">6. Estimation Set-Up</a></li>
@@ -122,6 +123,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
 </ul>
 
@@ -197,7 +199,9 @@
 <p>The <a class="reference internal" href="#PropagationTerminationSettings" title="PropagationTerminationSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagationTerminationSettings</span></code></a> are a key parameter in the propagation of a body’s orbit, since these will determine the computational time and the size of the output file. Depending on the application, the user may want to end the body propagation according to different criteria. Currently, the following <a class="reference internal" href="#PropagationTerminationSettings" title="PropagationTerminationSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagationTerminationSettings</span></code></a> are offered in Tudat:</p>
 <ul class="simple">
 <li>Termination once a certain time has passed.</li>
+<li>Termination once a certain CPU time is reached.</li>
 <li>Termination once a dependent variable meets a certain criterion.</li>
+<li>Termination once a user-defined function returns <code class="docutils literal"><span class="pre">true</span></code>.</li>
 <li>Termination once multiple criteria are met.</li>
 </ul>
 <p>The different types of <a class="reference internal" href="#PropagationTerminationSettings" title="PropagationTerminationSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagationTerminationSettings</span></code></a> are implemented by means of derived classes and custom constructors, as detailed in this page.</p>
@@ -211,7 +215,7 @@
 <dt id="PropagationTimeTerminationSettings">
 <em class="property">class </em><code class="descname">PropagationTimeTerminationSettings</code><a class="headerlink" href="#PropagationTimeTerminationSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>As the name suggests, these settings will cause the propagation to terminate after a certain time has passed. Please note that the simulator will finish the final time-step, which may cause the termination time to be slightly overpassed. The constructor is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">PropagationTimeTerminationSettings</span><span class="p">(</span> <span class="n">terminationTime</span><span class="p">,</span>  <span class="n">terminateExactlyOnFinalCondition</span><span class="p">)</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">PropagationTimeTerminationSettings</span><span class="p">(</span> <span class="n">terminationTime</span><span class="p">,</span> <span class="n">terminateExactlyOnFinalCondition</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -227,6 +231,16 @@
 </div></blockquote>
 </li>
 </ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="PropagationCPUTimeTerminationSettings">
+<em class="property">class </em><code class="descname">PropagationCPUTimeTerminationSettings</code><a class="headerlink" href="#PropagationCPUTimeTerminationSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>You may want to make sure that the propagation does not exceed a certain computation time. In this case, you can easily set the termination settings as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">PropagationCPUTimeTerminationSettings</span><span class="p">(</span> <span class="n">cpuTerminationTime</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal"><span class="pre">cpuTerminationTime</span></code> is the maximum allowed CPU time, after which propagation should be stopped.</p>
 </dd></dl>
 
 <dl class="class">
@@ -273,6 +287,28 @@
 </dd></dl>
 
 <dl class="class">
+<dt id="PropagationCustomTerminationSettings">
+<em class="property">class </em><code class="descname">PropagationCustomTerminationSettings</code><a class="headerlink" href="#PropagationCustomTerminationSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>With this class, you can set a custom function that based on some internal calculations will return whether to stop propagation. The function should take the current time as input (hence a <code class="docutils literal"><span class="pre">double</span></code>) and output a boolean (i.e., <code class="docutils literal"><span class="pre">bool</span></code>). This boolean should be <code class="docutils literal"><span class="pre">true</span></code> when the propagation has to be stopped and <code class="docutils literal"><span class="pre">false</span></code> otherwise. The constructor looks like this:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">PropagationCustomTerminationSettings</span><span class="p">(</span> <span class="n">checkStopCondition</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal"><span class="pre">checkStopCondition</span></code> is the only input and is of type <code class="docutils literal"><span class="pre">boost::function&lt;</span> <span class="pre">bool(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code>.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">In case your custom function requires more inputs (e.g., it may depend on the position of the spacecraft or other variables that are not the current time), you can use <code class="docutils literal"><span class="pre">boost::bind</span></code> to add more inputs.</p>
+</div>
+<p>As an example, the case where the state of the spacecraft is added as an input is shown below:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">spacecraftStateFunction</span> <span class="o">=</span>
+        <span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">Body</span><span class="o">::</span><span class="n">getState</span><span class="p">,</span> <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="s">&quot;Satellite&quot;</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">PropagationTerminationSettings</span> <span class="o">&gt;</span> <span class="n">terminationSettings</span> <span class="o">=</span>
+        <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">PropagationCustomTerminationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+            <span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">customTerminationFunction</span><span class="p">,</span> <span class="n">_1</span><span class="p">,</span> <span class="n">spacecraftStateFunction</span> <span class="p">)</span> <span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
 <dt id="PropagationHybridTerminationSettings">
 <em class="property">class </em><code class="descname">PropagationHybridTerminationSettings</code><a class="headerlink" href="#PropagationHybridTerminationSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>It may be possible that the user desires to terminate a propagation according several criteria, where such criteria may or may not be fulfilled simulataneously. The constructor for this derived class is:</p>
@@ -305,6 +341,10 @@
 </div>
 </dd></dl>
 
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For both <a class="reference internal" href="#PropagationCPUTimeTerminationSettings" title="PropagationCPUTimeTerminationSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagationCPUTimeTerminationSettings</span></code></a> and <a class="reference internal" href="#PropagationCustomTerminationSettings" title="PropagationCustomTerminationSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagationCustomTerminationSettings</span></code></a> the termination cannot be set to occur exactly on the final condition.</p>
+</div>
 </div>
 
 

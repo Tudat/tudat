@@ -21,13 +21,13 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         .. code-block:: cpp
 
-            TranslationalStatePropagatorSettings<StateScalarType>, ( centralBodies,
-                                                  accelerationsMap,
-                                                  bodiesToIntegrate,
-                                                  initialBodyStates,
-                                                  endTime,
-                                                  propagator,
-                                                  dependentVariablesToSave)
+            TranslationalStatePropagatorSettings<StateScalarType>( centralBodies,
+                                                                   accelerationsMap,
+                                                                   bodiesToIntegrate,
+                                                                   initialBodyStates,
+                                                                   endTime,
+                                                                   propagator,
+                                                                   dependentVariablesToSave )
 
         where:
 
@@ -57,11 +57,23 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         - :literal:`propagator`
 
-            :class:`TranslationalPropagatorType` which defines the type of propagator being used. Currently, :literal:`cowell`, :literal:`encke`, :literal:`gaus_keplerian` and :literal:`gaus_modified_equinoctial` are available. By default, the :literal:`cowell` propagator is used.
+            :class:`TranslationalPropagatorType` which defines the type of propagator to be used. Currently, the following propagators are supported: 
+
+               - :literal:`cowell`
+               - :literal:`encke`
+               - :literal:`gauss_keplerian`
+               - :literal:`gauss_modified_equinoctial`
+               - :literal:`unified_state_model_quaternions`
+               - :literal:`unified_state_model_modified_rodrigues_parameters`
+               - :literal:`unified_state_model_exponential_map`
+
+            By default, the :literal:`cowell` propagator is used. Moreover, you should keep in mind that this option only changes the coordinates for propagation, but the acceleration model is still computed with Cartesian coordinates, i.e., the conventional coordinates.
+
+               .. tip:: You can find more information about the difference between *conventional* and *propagated* coordinates in :ref:`tudatFeaturesPropagatorSettingsCoordinates`.
 
         - :literal:`dependentVariablesToSave`
 
-            :literal:`boost::shared_ptr< DependentVariableSaveSettings >` that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved.
+            :literal:`boost::shared_ptr< DependentVariableSaveSettings >` that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved. See the tutorial on :class:`DependentVariableSaveSettings` for more details on this class.
 
         .. note:: The state variables contained in :literal:`initialBodyStates` are ordered with respect to the elements of :literal:`centralBodies` and :literal:`bodiesToIntegrate`. Please take a look at the following pseudocode:
 
@@ -78,18 +90,18 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
         .. code-block:: cpp
 
             TranslationalStatePropagatorSettings<StateScalarType>( centralBodies,
-                                                  accelerationsMap,
-                                                  bodiesToIntegrate,
-                                                  initialBodyStates,
-                                                  terminationSettings,
-                                                  propagator,
-                                                  dependentVariablesToSave )
+                                                                   accelerationsMap,
+                                                                   bodiesToIntegrate,
+                                                                   initialBodyStates,
+                                                                   terminationSettings,
+                                                                   propagator,
+                                                                   dependentVariablesToSave )
 
         where:
 
         - :literal:`terminationSettings`
 
-            :literal:`boost::shared_ptr< PropagationTerminationSettings >` that defines the termination settings of the propagation. This is the fifth argument and replaces the :literal:`endTime` in the default constructor.
+            :literal:`boost::shared_ptr< PropagationTerminationSettings >` that defines the termination settings of the propagation. This is the fifth argument and replaces the :literal:`endTime` in the default constructor. See the tutorial on :class:`PropagationTerminationSettings` for more details on this class.
 
 .. class:: RotationalStatePropagatorSettings
 
@@ -97,12 +109,12 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
    .. code-block:: cpp
 
-      RotationalStatePropagatorSettings<StateScalarType>( 
-      		torqueModelMap,
-                bodiesToIntegrate,
-                initialBodyStates,
-                terminationSettings,
-                dependentVariablesToSave )
+      RotationalStatePropagatorSettings< StateScalarType >( torqueModelMap,
+                                                            bodiesToIntegrate,
+                                                            initialBodyStates,
+                                                            terminationSettings,
+                                                            propagator,
+                                                            dependentVariablesToSave )
 
    where:
 
@@ -110,6 +122,33 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
       :class:`TorqueModelMap` List of torque models that are to be used in propagation.
 
+   - :literal:`bodiesToIntegrate`
+
+      :literal:`std::vector< std::string >` that contains the names of the bodies to integrate which must match with those in the :class:`BodyMap`.
+
+   - :literal:`initialBodyStates`
+
+      :literal:`Eigen::Matrix< StateScalarType, Eigen::Dynamic, 1 >` that stores the states of the bodies to propagate with respect to their central bodies. 
+
+   - :literal:`terminationSettings`
+
+      :literal:`boost::shared_ptr< PropagationTerminationSettings >` that defines the termination settings of the propagation. See the tutorial on :class:`PropagationTerminationSettings` for more details on this class.
+
+   - :literal:`propagator`
+
+      :class:`RotationalPropagatorType` which defines the type of propagator to be used. Currently, the following propagators are supported: 
+
+         - :literal:`quaternions`
+         - :literal:`modified_rodrigues_parameters`
+         - :literal:`exponential_map`
+
+      By default, the :literal:`quaternions` propagator is used. Moreover, you should keep in mind that this option only changes the coordinates for propagation, but the acceleration model is still computed with quaternions, i.e., the conventional coordinates.
+
+         .. tip:: You can find more information about the difference between *conventional* and *propagated* coordinates in :ref:`tudatFeaturesPropagatorSettingsCoordinates`.
+
+   - :literal:`dependentVariablesToSave`
+
+      :literal:`boost::shared_ptr< DependentVariableSaveSettings >` that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved. See the tutorial on :class:`DependentVariableSaveSettings` for more details on this class.
 
 .. class:: MassPropagationSettings
 
@@ -119,12 +158,11 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         .. code-block:: cpp
 
-            MassPropagationSettings<StateScalarType>(
-                    bodiesWithMassToPropagate,
-                    massRateModels,
-                    initialBodyMasses,
-                    terminationSettings,
-                    dependentVariablesToSave )
+            MassPropagationSettings< StateScalarType >( bodiesWithMassToPropagate,
+                                                        massRateModels,
+                                                        initialBodyMasses,
+                                                        terminationSettings,
+                                                        dependentVariablesToSave )
 
         where:
 
@@ -144,12 +182,11 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         .. code-block:: cpp
 
-            MassPropagationSettings<StateScalarType>(
-                    bodiesWithMassToPropagate,
-                    massRateModels,
-                    initialBodyMasses,
-                    terminationSettings,
-                    dependentVariablesToSave )
+            MassPropagationSettings< StateScalarType >( bodiesWithMassToPropagate,
+                                                        massRateModels,
+                                                        initialBodyMasses,
+                                                        terminationSettings,
+                                                        dependentVariablesToSave )
 
         where:
 
@@ -166,11 +203,10 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
     
         .. code-block:: cpp
 
-            CustomStatePropagatorSettings<StateScalarType,TimeType>(
-                stateDerivativeFunction,
-                initialState,
-                terminationSettings,
-                dependentVariablesToSave )
+            CustomStatePropagatorSettings< StateScalarType, TimeType >( stateDerivativeFunction,
+                                                                        initialState,
+                                                                        terminationSettings,
+                                                                        dependentVariablesToSave )
 
         where:
 
@@ -190,11 +226,10 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
     
         .. code-block:: cpp
 
-            CustomStatePropagatorSettings<StateScalarType,TimeType>(
-                stateDerivativeFunction,
-                initialState,
-                terminationSettings,
-                dependentVariablesToSave )
+            CustomStatePropagatorSettings< StateScalarType, TimeType >( stateDerivativeFunction,
+                                                                        initialState,
+                                                                        terminationSettings,
+                                                                        dependentVariablesToSave )
 
         where:
 
@@ -214,10 +249,9 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         .. code-block:: cpp
 
-            MultiTypePropagatorSettings<StateScalarType>(
-                propagatorSettingsMap,
-                terminationSettings,
-                dependentVariablesToSave )
+            MultiTypePropagatorSettings< StateScalarType >( propagatorSettingsMap,
+                                                           terminationSettings,
+                                                           dependentVariablesToSave )
 
         where:
    
@@ -229,10 +263,9 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         .. code-block:: cpp
 
-            MultiTypePropagatorSettings<StateScalarType>(
-                propagatorSettingsMap,
-                terminationSettings,
-                dependentVariablesToSave )
+            MultiTypePropagatorSettings< StateScalarType >( propagatorSettingsMap,
+                                                            terminationSettings,
+                                                            dependentVariablesToSave )
 
         where:
 
@@ -249,9 +282,8 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
    .. code-block:: cpp
 
-      MultiArcPropagatorSettings<StateScalarType>(
-            singleArcSettings,
-            transferInitialStateInformationPerArc)
+      MultiArcPropagatorSettings< StateScalarType >( singleArcSettings,
+                                                     transferInitialStateInformationPerArc)
 
    where:
 

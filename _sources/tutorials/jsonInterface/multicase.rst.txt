@@ -3,7 +3,7 @@
 .. role:: jsontype
 .. role:: jsonkey
 
-Multi-case simulations
+Multi-case Simulations
 ======================
 
 The JSON Interface allows combining several input files to generate a single object that is used to set up a propagation. This is slightly different than the modular files described in the previous page. In the previous case, during the creation of the root input file, the special strings :literal:`"$(file.json)"` were replaced by the contents of the reference file. In this case, the contents of two files are combined, processing first one object and then (re-)defining the keys specified in the second object. This is done by writing, for instance:

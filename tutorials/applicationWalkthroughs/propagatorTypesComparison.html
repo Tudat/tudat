@@ -1,0 +1,439 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>4. Comparison of Propagator Types &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
+        <link rel="up" title="Application Walkthroughs" href="index.html"/>
+        <link rel="next" title="5. Un-guided Capsule Entry" href="unguidedCapsuleEntry.html"/>
+        <link rel="prev" title="3. Perturbed Earth-orbiting Satellite" href="perturbedEarthOrbitingSatellite.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorials and Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../basics/index.html">Tudat Basics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Walkthroughs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html#example-tutorials">Example Tutorials</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphereExamples.html">1. Tabulated Atmosphere Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unperturbedEarthOrbitingSatellite.html">2. Unperturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="perturbedEarthOrbitingSatellite.html">3. Perturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">4. Comparison of Propagator Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unguidedCapsuleEntry.html">5. Un-guided Capsule Entry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="innerSolarSystemPropagation.html">6. Inner Solar System Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="useOfThrustThrustForceAlongVelocityVector.html">7. Use of Thrust: Thrust Force Along Velocity Vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="useOfThrustUserDefinedThrustVector.html">8. Use of Thrust: User-defined Thrust Vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="filterExample.html">9. Kalman Filter for State Estimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variationalEquationsPropagation.html">10. Variational Equations Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">11. Orbit Determination and Parameter Estimation (Basic)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthOrbiterStateEstimation.html">12. Orbit Determination and Parameter Estimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interplanetaryTrajectory.html">13. MGA Trajectory Design</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#optimization-tutorials">Optimization Tutorials</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tudatFeatures/index.html">Tudat Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jsonInterface/index.html">JSON Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference external" href="http://doxygen.tudat.tudelft.nl">Doxygen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tutorials and Documentation</a> &raquo;</li>
+        
+          <li><a href="index.html">Application Walkthroughs</a> &raquo;</li>
+        
+      <li>4. Comparison of Propagator Types</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tutorials/applicationWalkthroughs/propagatorTypesComparison.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="comparison-of-propagator-types">
+<span id="walkthroughspropagatortypescomparison"></span><h1>4. Comparison of Propagator Types<a class="headerlink" href="#comparison-of-propagator-types" title="Permalink to this headline">¶</a></h1>
+<p>As was introduced in <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>, in Tudat one can choose from seven different propagation types, which are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Cowell (Cartesian coordinates)</li>
+<li>Encke (Cartesian coordinates)</li>
+<li>Gauss planetary equations in Keplerian elements</li>
+<li>Gauss planetary equations in modified equinoctial elements</li>
+<li>Unified state model with quaternions</li>
+<li>Unified state model with modifed Rodrigues parameters</li>
+<li>Unified state model with exponential map</li>
+</ul>
+</div></blockquote>
+<p>With this example application, we propagate a quasi-circular orbit around Earth with each of the propagators above for 10 days, and examine their performance (in terms of RMS error w.r.t. a more accurate reference, time and function evaluations). The comparison is done for both a variable and a constant step-size integration method.</p>
+<div class="section" id="initial-conditions">
+<h2>4.1. Initial Conditions<a class="headerlink" href="#initial-conditions" title="Permalink to this headline">¶</a></h2>
+<p>The initial conditions (expressed in Keplerian elements) are defined in the table below, and the accelerations are listed thereafter. Note that you can also choose to propagate a simple Keplerian orbit, i.e., an orbit with no accelerations, other than the point mass gravity of the Earth. This is done by setting the variable <code class="docutils literal"><span class="pre">keplerOrbit</span></code> to <code class="docutils literal"><span class="pre">true</span></code>.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="64%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keplerian Element</th>
+<th class="head">Value</th>
+<th class="head">Unit</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Semi-major Axis</td>
+<td>6778.136</td>
+<td>km</td>
+</tr>
+<tr class="row-odd"><td>Eccentricity</td>
+<td>0.003</td>
+<td>–</td>
+</tr>
+<tr class="row-even"><td>Inclination</td>
+<td>93.0</td>
+<td>deg</td>
+</tr>
+<tr class="row-odd"><td>Right Ascension of Ascending Node</td>
+<td>158.7</td>
+<td>deg</td>
+</tr>
+<tr class="row-even"><td>Argument of Periapsis</td>
+<td>23.4</td>
+<td>deg</td>
+</tr>
+<tr class="row-odd"><td>True Anomaly</td>
+<td>0.0</td>
+<td>deg</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>Spherical harmonics gravity of the Earth (based on model <code class="docutils literal"><span class="pre">ggm02s</span></code>) with maximum degree and order 4</li>
+<li>Third body perturbations (modelled as point mass gravity) of Sun and Moon</li>
+<li>Aerodynamic acceleration based on the standard Earth exponential atmosphere model</li>
+<li>Solar radiation pressure</li>
+</ul>
+</div></blockquote>
+<p>You can find more details on the spacecraft (such as mass and aerodynamic properties) and on the simulation in the application file itself.</p>
+</div>
+<div class="section" id="integrator-settings">
+<h2>4.2. Integrator Settings<a class="headerlink" href="#integrator-settings" title="Permalink to this headline">¶</a></h2>
+<p>In <a class="reference internal" href="../tudatFeatures/propagationSetup/integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a> you learned about the format required for setting up an integrator, via the <a class="reference internal" href="../tudatFeatures/propagationSetup/integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> class. In this application we will focus only on two of the available integrators in Tudat.</p>
+<p>The first one is a <strong>variable step-size</strong> integrator. As you may already know, these types of integrators adapt the time step-size for the next integration step, by approximating the local and total integration error. Here we will only use the Runge-Kutta integrators, but Tudat also offers more other integrators and you should always make a trade-off on itegrators based on you mission requirements (for this example, we will only set up a simulation to make a trade-off in propagator type). The coefficient sets that use are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">rungeKuttaFehlberg56</span></code>: used for the nominal orbit simulation</li>
+<li><code class="docutils literal"><span class="pre">rungeKuttaFehlberg78</span></code>: used for the computation of the reference trajectory</li>
+</ul>
+</div></blockquote>
+<p>The following settings are used as default, but you can always change them by modifiying the value of the variable (which you can find at the beginning of the file).</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="16%" />
+<col width="10%" />
+<col width="41%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Integrator Settings</th>
+<th class="head">Value</th>
+<th class="head">Unit</th>
+<th class="head">Variable Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Relative Tolerances</td>
+<td><span class="math">\(10^{-12}\)</span></td>
+<td>–</td>
+<td><code class="docutils literal"><span class="pre">integrationRelativeTolerance</span></code></td>
+</tr>
+<tr class="row-odd"><td>Absolute Tolerances</td>
+<td><span class="math">\(10^{-12}\)</span></td>
+<td>–</td>
+<td><code class="docutils literal"><span class="pre">integrationAbsoluteTolerance</span></code></td>
+</tr>
+<tr class="row-even"><td>Reference Tolerances</td>
+<td><span class="math">\(10^{-15}\)</span></td>
+<td>–</td>
+<td><code class="docutils literal"><span class="pre">integrationReferenceTolerance</span></code></td>
+</tr>
+<tr class="row-odd"><td>Constant Time Step</td>
+<td>5.0</td>
+<td>s</td>
+<td><code class="docutils literal"><span class="pre">integrationConstantTimeStepSize</span></code></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>The values above are rather arbitrary. As mentioned above for the integrator settings, the choice of tolerances and time steps highly depends on the accruacy requirements and environment of you mission.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">In Tudat you can also set a tolerance for each of the elements in the state vector. For instance, while using the USM7 method (see <a class="reference internal" href="../tudatFeatures/astroTools/framestateTransformations.html#tudatfeaturesframestatetransformations"><span class="std std-ref">Frame/State Transformations</span></a> for a brief introduction to these propagation coordinates) you may want to set a separate tolerance for the velocity and the quaternion elements of the state, since their dynamics are quite different.</p>
+</div>
+<p>For the <strong>constant step-size</strong> method, <code class="docutils literal"><span class="pre">rungeKutta4</span></code> is the selected method. In the table above, you can also see the step-size chosen for this application.</p>
+</div>
+<div class="section" id="results-and-analysis">
+<h2>4.3. Results and Analysis<a class="headerlink" href="#results-and-analysis" title="Permalink to this headline">¶</a></h2>
+<p>Once you run the simulation in Tudat (select executable <code class="docutils literal"><span class="pre">application_PropagatorTypesComparison</span></code>), you can access the results by going to the folder <code class="docutils literal"><span class="pre">SimulationOutput/PropagatorTypesComparison</span></code>, you will find a text file for each of the propagator/integrator combinations. A preliminary MATLAB file for loading and plotting the results is available in <code class="docutils literal"><span class="pre">MatlabScripts</span></code>, under the name <code class="docutils literal"><span class="pre">propagatorTypesComparison.m</span></code>. You can use this file as a basis for your more in-depth analysis.</p>
+<p>The only output of the MATLAB file is a plot, where the RMS error in position is plotted for each propagator and integrator, as a function of function evaluations for the variable step-size integrator and as a function of time for the constant step-size integrator. Below you see the figures that are output for when a Keplerian orbit is used, and for when the full acceleration list introduced earlier is added.</p>
+<dl class="method">
+<dt>
+<code class="descname">Un-perturbed Orbit</code></dt>
+<dd><div class="figure">
+<img alt="../../_images/propagatorTypesComparisonKepler.pdf" src="../../_images/propagatorTypesComparisonKepler.pdf" />
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">Perturbed Orbit</code></dt>
+<dd><div class="figure">
+<img alt="../../_images/propagatorTypesComparison.pdf" src="../../_images/propagatorTypesComparison.pdf" />
+</div>
+</dd></dl>
+
+<p>By looking at the figures above, and analyzing the results in other manners, you will be able to draw a conclusion on which propagator is most suitable for your application.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="unguidedCapsuleEntry.html" class="btn btn-neutral float-right" title="5. Un-guided Capsule Entry" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="perturbedEarthOrbitingSatellite.html" class="btn btn-neutral" title="3. Perturbed Earth-orbiting Satellite" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>

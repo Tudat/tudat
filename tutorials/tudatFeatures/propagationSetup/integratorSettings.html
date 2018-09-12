@@ -107,9 +107,10 @@
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettings.html">5.2. Propagator Settings: Basics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettingsTermination.html">5.3. Propagator Settings: Termination Settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettingsDependentVariables.html">5.4. Propagator Settings: Dependent Variables</a></li>
-<li class="toctree-l4"><a class="reference internal" href="simulatorCreation.html">5.5. Create a Dynamics Simulator Object</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TimeStateTemplates.html">5.6. Time and State Templates</a></li>
-<li class="toctree-l4"><a class="reference internal" href="variationalSimulatorCreation.html">5.7. Create a Variational Equations Solver Object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="propagatorSettingsCoordinates.html">5.5. Propagator Settings: Conventional vs. Propagated Coordinates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulatorCreation.html">5.6. Create a Dynamics Simulator Object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TimeStateTemplates.html">5.7. Time and State Templates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variationalSimulatorCreation.html">5.8. Create a Variational Equations Solver Object</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">6. Estimation Set-Up</a></li>
@@ -122,6 +123,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
 </ul>
 
@@ -199,9 +201,9 @@
 <dt id="IntegratorSettings">
 <em class="property">class </em><code class="descname">IntegratorSettings</code><a class="headerlink" href="#IntegratorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is used to define the settings for fixed step-size integration. The constructor for this base class is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">IntegratorSettings</span><span class="o">&lt;</span><span class="n">TimeType</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">integratorType</span><span class="p">,</span>
-                    <span class="n">simulationStartEpoch</span><span class="p">,</span>
-                    <span class="n">fixedStepSize</span> <span class="p">)</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">integratorType</span><span class="p">,</span>
+                                <span class="n">simulationStartEpoch</span><span class="p">,</span>
+                                <span class="n">fixedStepSize</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -233,14 +235,20 @@
 <dt id="RungeKuttaVariableStepSizeSettings">
 <em class="property">class </em><code class="descname">RungeKuttaVariableStepSizeSettings</code><a class="headerlink" href="#RungeKuttaVariableStepSizeSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is used to define the settings for variable step-size integration. The constructor for this derived class is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">RungeKuttaVariableStepSizeSettings</span><span class="o">&lt;</span><span class="n">TimeType</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">integratorType</span><span class="p">,</span>
-                                    <span class="n">simulationStartEpoch</span><span class="p">,</span>
-                                    <span class="n">initialTimeStep</span><span class="p">,</span>
-                                    <span class="n">coefficientSet</span><span class="p">,</span>
-                                    <span class="n">minimumStepSize</span><span class="p">,</span>
-                                    <span class="n">maximumStepSize</span><span class="p">,</span>
-                                    <span class="n">relativeErrorTolerence</span><span class="p">,</span>
-                                    <span class="n">absoluteErrorTolerence</span> <span class="p">)</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">RungeKuttaVariableStepSizeSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span><span class="p">,</span> <span class="n">StateType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">integratorType</span><span class="p">,</span>
+                                                            <span class="n">simulationStartEpoch</span><span class="p">,</span>
+                                                            <span class="n">initialTimeStep</span><span class="p">,</span>
+                                                            <span class="n">coefficientSet</span><span class="p">,</span>
+                                                            <span class="n">minimumStepSize</span><span class="p">,</span>
+                                                            <span class="n">maximumStepSize</span><span class="p">,</span>
+                                                            <span class="n">relativeErrorTolerence</span><span class="p">,</span>
+                                                            <span class="n">absoluteErrorTolerence</span><span class="p">,</span>
+                                                            <span class="n">saveFrequency</span><span class="p">,</span>
+                                                            <span class="n">assessPropagationTerminationConditionDuringIntegrationSubsteps</span><span class="p">,</span>
+                                                            <span class="n">safetyFactorForNextStepSize</span><span class="p">,</span>
+                                                            <span class="n">maximumFactorIncreaseForNextStepSize</span><span class="p">,</span>
+                                                            <span class="n">minimumFactorDecreaseForNextStepSize</span><span class="p">,</span>
+                                                            <span class="n">newStepSizeFunction</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -248,6 +256,9 @@
 <div><ul>
 <li><p class="first"><code class="docutils literal"><span class="pre">TimeType</span></code></p>
 <p>Template argument used to set the precision of the time, in general <code class="docutils literal"><span class="pre">double</span></code> is used. For some application where a high precision is required this can be changed to e.g. <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code>.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">StateType</span></code></p>
+<p>Template argument used to set the precision of the state, in general <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code> is used. For some application where a covariance propagation is also performed, this may be <code class="docutils literal"><span class="pre">Eigen::MatrixXd</span></code>.</p>
 </li>
 </ul>
 </div></blockquote>
@@ -284,29 +295,63 @@
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">relativeErrorTolerance</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the relative error tolerance for step size control of the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
+<div><p><code class="docutils literal"><span class="pre">StateType</span></code> or <code class="docutils literal"><span class="pre">StateType::Scalar</span></code> that defines the relative error tolerance for step size control of the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">absoluteErrorTolerance</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the absolute error tolerance for step size control of the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
+<div><p><code class="docutils literal"><span class="pre">StateType</span></code> or <code class="docutils literal"><span class="pre">StateType::Scalar</span></code> that defines the absolute error tolerance for step size control of the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">saveFrequency</span></code></p>
+<blockquote>
+<div><p>Frequency at which to save the numerical integrated states. For instance, you may want to save one every 15 time steps, to give an output that is less demanding in terms of storage (in this case 15 would be the <code class="docutils literal"><span class="pre">saveFrequency</span></code>). The default value is 1.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">assessPropagationTerminationConditionDuringIntegrationSubsteps</span></code></p>
+<blockquote>
+<div><p>Whether the propagation termination conditions should be evaluated during the intermediate sub-steps of the integrator (<code class="docutils literal"><span class="pre">true</span></code>) or only at the end of each integration step (<code class="docutils literal"><span class="pre">false</span></code>). The default value is <code class="docutils literal"><span class="pre">false</span></code>.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">safetyFactorForNextStepSize</span></code></p>
+<blockquote>
+<div><p>Safety factor for step size control. The default value is 0.8.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">maximumFactorIncreaseForNextStepSize</span></code></p>
+<blockquote>
+<div><p>Maximum increase factor in time step in subsequent iterations. The default value is 4.0.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">minimumFactorDecreaseForNextStepSize</span></code></p>
+<blockquote>
+<div><p>Minimum decrease factor in time step in subsequent iterations. The default value is 0.1.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">newStepSizeFunction</span></code></p>
+<blockquote>
+<div><p>Custom function to compute the step-size for the next time step. The default value is 0, which means that the default step-size function will be used.</p>
 </div></blockquote>
 </li>
 </ul>
 </dd></dl>
 
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">For the relative and absolute error tolerances you can define a tolerance for each element of the state vector. For instance you could set a different absolute tolerance for position and velocity, if the propagated state is expressed in Cartesian elements.</p>
+</div>
 <dl class="class">
 <dt id="BulirschStoerIntegratorSettings">
 <em class="property">class </em><code class="descname">BulirschStoerIntegratorSettings</code><a class="headerlink" href="#BulirschStoerIntegratorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is used to define the settings for variable step-size integration using the Bulirsch-Stoer method. The constructor for this derived class is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">BulirschStoerIntegratorSettings</span><span class="o">&lt;</span><span class="n">TimeType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">initialTime</span><span class="p">,</span>
-                                    <span class="n">initialTimeStep</span><span class="p">,</span>
-                                    <span class="n">extrapolationSequence</span><span class="p">,</span>
-                                    <span class="n">maximumNumberOfSteps</span><span class="p">,</span>
-                                    <span class="n">minimumStepSize</span><span class="p">,</span>
-                                    <span class="n">maximumStepSize</span><span class="p">,</span>
-                                    <span class="n">relativeErrorTolerence</span><span class="p">,</span>
-                                    <span class="n">absoluteErrorTolerence</span> <span class="p">)</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">BulirschStoerIntegratorSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">initialTime</span><span class="p">,</span>
+                                             <span class="n">initialTimeStep</span><span class="p">,</span>
+                                             <span class="n">extrapolationSequence</span><span class="p">,</span>
+                                             <span class="n">maximumNumberOfSteps</span><span class="p">,</span>
+                                             <span class="n">minimumStepSize</span><span class="p">,</span>
+                                             <span class="n">maximumStepSize</span><span class="p">,</span>
+                                             <span class="n">relativeErrorTolerence</span><span class="p">,</span>
+                                             <span class="n">absoluteErrorTolerence</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -365,14 +410,14 @@
 <dt id="AdamsBashforthMoultonSettings">
 <em class="property">class </em><code class="descname">AdamsBashforthMoultonSettings</code><a class="headerlink" href="#AdamsBashforthMoultonSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is used to define the settings for variable step-size integration using the Adams-Bashfort-Moulton method. The constructor for this derived class is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">AdamsBashforthMoultonSettings</span><span class="o">&lt;</span><span class="n">TimeType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">initialTime</span><span class="p">,</span>
-                                    <span class="n">initialTimeStep</span><span class="p">,</span>
-                                    <span class="n">minimumStepSize</span><span class="p">,</span>
-                                    <span class="n">maximumStepSize</span><span class="p">,</span>
-                                    <span class="n">relativeErrorTolerence</span><span class="p">,</span>
-                                    <span class="n">absoluteErrorTolerence</span><span class="p">,</span>
-                                    <span class="n">minimumOrder</span><span class="p">,</span>
-                                    <span class="n">maximumOrder</span> <span class="p">)</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">AdamsBashforthMoultonSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">initialTime</span><span class="p">,</span>
+                                           <span class="n">initialTimeStep</span><span class="p">,</span>
+                                           <span class="n">minimumStepSize</span><span class="p">,</span>
+                                           <span class="n">maximumStepSize</span><span class="p">,</span>
+                                           <span class="n">relativeErrorTolerence</span><span class="p">,</span>
+                                           <span class="n">absoluteErrorTolerence</span><span class="p">,</span>
+                                           <span class="n">minimumOrder</span><span class="p">,</span>
+                                           <span class="n">maximumOrder</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where:</p>

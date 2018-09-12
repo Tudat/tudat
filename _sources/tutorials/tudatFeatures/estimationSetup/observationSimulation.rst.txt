@@ -45,7 +45,7 @@ In either case, this provides you with an object of type :literal:`ObservationSi
 Observation Simulation Settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The times at which observations are simulated may be defined directly by the user, or they may depend on some scheduling algorithm, which is then used to determine the observation times. The final observation times are determined by a combination of :class:`ObservationSimulationTimeSettings` objects and :literal:`ObservationViabilitySettings` objects. The former allows you to define observation times directly, or an observation schedule algorithm. The latter defines constraints that must be met for an observation to be possible. The viability settigns are discussed on the page :ref:`observationViability`.
+The times at which observations are simulated may be defined directly by the user, or they may depend on some scheduling algorithm, which is then used to determine the observation times. The final observation times are determined by a combination of :class:`ObservationSimulationTimeSettings` objects and :literal:`ObservationViabilitySettings` objects. The former allows you to define observation times directly, or an observation schedule algorithm. The latter defines constraints that must be met for an observation to be possible. The viability settings are discussed on the page :ref:`observationViability`.
 
 Each type of observation settings is defined by a dedicated derived class of :class:`ObservationSimulationTimeSettings`. This class has a :literal:`TimeType` argument, which is discussed in more detail :ref:`tudatTemplatingStateTime`. The following classes are presently available:
 

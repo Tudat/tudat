@@ -3,9 +3,10 @@
 JSON Interface
 ==============
 
-The JSON inteface makes it possible to use Tudat without knowledge of C++, the JSON interface creates the C++ settings classes, as described in :ref:`tudatFeaturesIndex`, by itself. These pages of the wiki detail how the JSON interface can be used to run propagations by providing JSON input files and provide a few tutorials showcasing the main features.
+The JSON inteface makes it possible to use Tudat without knowledge of C++. In fact, the JSON interface creates the C++ settings classes, as described in :ref:`tudatFeaturesIndex`, by itself. These pages of the wiki detail how the JSON interface can be used to run propagations by providing JSON input files and provide a few tutorials showcasing the main features.
 
 .. toctree::
+   :numbered:
    :maxdepth: 2
 
    basicJsonInterfaces
@@ -14,4 +15,3 @@ The JSON inteface makes it possible to use Tudat without knowledge of C++, the J
    customJsonApp
    modularFiles
    multicase
-

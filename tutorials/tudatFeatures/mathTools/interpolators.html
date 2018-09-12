@@ -103,6 +103,7 @@
 <li class="toctree-l4 current"><a class="current reference internal" href="#">2.1. Interpolators</a></li>
 <li class="toctree-l4"><a class="reference internal" href="integrators.html">2.2. Integrators</a></li>
 <li class="toctree-l4"><a class="reference internal" href="probabilityDistributions.html">2.3. Probability Distributions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="filters.html">2.4. Filters</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
@@ -118,6 +119,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
 </ul>
 
@@ -194,37 +196,49 @@
 <p>As is the case for most other model that you create in Tudat, you provide settings to a create function to set up an interpolator. Before going into the details of this process, below is a list of the interpolation routines in Tudat:</p>
 <blockquote>
 <div><ul class="simple">
+<li><dl class="first docutils">
+<dt>One-dimensional:</dt>
+<dd><ul class="first last">
+<li>Linear interpolation</li>
 <li>Piece-wise constant interpolator</li>
-<li>Linear single-variable interpolation</li>
 <li>Cubic spline interpolation</li>
 <li>Lagrange interpolation</li>
 <li>Hermite interpolation</li>
-<li>N-dimensional linear interpolation</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Multi-dimensional:</dt>
+<dd><ul class="first last">
+<li>Multi-linear interpolation</li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </div></blockquote>
-<p>The first four options are interpolation routines with a single independent variable. The final one can be used for interpolation from an arbitrary number of independent variables.</p>
-<div class="section" id="single-variable-interpolator-creation">
-<h2>2.1.1. Single-variable interpolator creation<a class="headerlink" href="#single-variable-interpolator-creation" title="Permalink to this headline">¶</a></h2>
+<p>Clearly, the first five options are interpolation routines with a single independent variable (i.e., they are one-dimensional), and the final one can be used for interpolation with an arbitrary number of independent variables. In this chapter, you will first introduced to how the one-dimensional interpolators are used, and then to how the multi-dimensional ones are implemented. These will be followed by a description of the various methods that can be used in case the requested independent variable for interpolation is outside the defined domain.</p>
+<div class="section" id="one-dimensional-interpolator-creation">
+<h2>2.1.1. One-dimensional Interpolator Creation<a class="headerlink" href="#one-dimensional-interpolator-creation" title="Permalink to this headline">¶</a></h2>
 <p>Creating interpolators of a single independent variable is most easily done in Tudat by creating an <a class="reference internal" href="#InterpolatorSettings" title="InterpolatorSettings"><code class="xref py py-class docutils literal"><span class="pre">InterpolatorSettings</span></code></a> object, and passing this to the <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> function.</p>
 <dl class="class">
 <dt id="InterpolatorSettings">
 <em class="property">class </em><code class="descname">InterpolatorSettings</code><a class="headerlink" href="#InterpolatorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class containing settings to setup an interpolator.</p>
-</dd></dl>
-
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Load data.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="n">stateMap</span><span class="p">;</span>
 <span class="n">stateMap</span> <span class="o">=</span> <span class="p">....</span>
 
 <span class="c1">// Create interpolator</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span> <span class="n">interpolatorSettings</span> <span class="o">=</span>
-    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">linear_interpolator</span> <span class="p">);</span>
+   <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">linear_interpolator</span> <span class="p">);</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneDimensionalInterpolator</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">interpolator</span> <span class="o">=</span>
-        <span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span>
-            <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span> <span class="p">);</span>
+     <span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span>
+             <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span> <span class="p">);</span>
 
 <span class="c1">// Interpolate</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span> <span class="mf">0.0</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>Note that if the data you interpolate is a different type, this should be reflected in how the interpolator is created. For instance, for <code class="docutils literal"><span class="pre">std::map&lt;</span> <span class="pre">double,</span> <span class="pre">Eigen::VectorXd</span> <span class="pre">&gt;</span></code> input, use</p>
@@ -234,23 +248,24 @@
 
 <span class="c1">// Create interpolator</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span> <span class="n">interpolatorSettings</span> <span class="o">=</span>
-    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">linear_interpolator</span> <span class="p">);</span>
+   <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">linear_interpolator</span> <span class="p">);</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneDimensionalInterpolator</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">interpolator</span> <span class="o">=</span>
-        <span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span>
-            <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span> <span class="p">);</span>
+     <span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span>
+             <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span> <span class="p">);</span>
 
 <span class="c1">// Interpolate</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span> <span class="mf">0.0</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>In this example, the <code class="docutils literal"><span class="pre">stateMap</span></code> contains the data that is interpolated, using the <code class="docutils literal"><span class="pre">double</span></code> key (time) as independent variable and the <code class="docutils literal"><span class="pre">Eigen::Vector6d</span></code> value (state) as dependent variable. The interpolation type is linear, and the <code class="docutils literal"><span class="pre">interpolatorSettings</span></code> object is created by passing only the argument <code class="docutils literal"><span class="pre">linear_interpolator</span></code>.</p>
-<p>The interpolator itself is of the type <code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">OneDimensionalInterpolator&lt;</span> <span class="pre">double,</span> <span class="pre">Eigen::Vector6d</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code>, where the <code class="docutils literal"><span class="pre">double</span></code> and <code class="docutils literal"><span class="pre">Eigen::Vector6d</span></code> denote the (in)dependent variables of the interpolation. For you application they may be different (for instance double and double, or long double and Time). The interpolator is created by calling the <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> function with the map containing the data and the interpolator settings as input.</p>
+</dd></dl>
+
+<p>The interpolator itself is of the type <code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">OneDimensionalInterpolator&lt;</span> <span class="pre">double,</span> <span class="pre">Eigen::Vector6d</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code>, where the <code class="docutils literal"><span class="pre">double</span></code> and <code class="docutils literal"><span class="pre">Eigen::Vector6d</span></code> denote the (in)dependent variables of the interpolation. For you application they may be different (for instance <code class="docutils literal"><span class="pre">double</span></code> and <code class="docutils literal"><span class="pre">double</span></code>, or <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code> and <code class="xref py py-class docutils literal"><span class="pre">Time</span></code>). The interpolator is created by calling the <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> function with the map containing the data and the interpolator settings as input.</p>
 <p>The different interpolator types are handled in a similar manner:</p>
-<blockquote>
-<div><ul>
-<li><p class="first"><strong>Piece-wise constant:</strong> Requires no additional information to the <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> and is defined by using the <a class="reference internal" href="#InterpolatorSettings" title="InterpolatorSettings"><code class="xref py py-class docutils literal"><span class="pre">InterpolatorSettings</span></code></a> base class (with <code class="docutils literal"><span class="pre">piecewise_constant_interpolator</span></code> as argument).</p>
-</li>
+<ul>
 <li><p class="first"><strong>Linear:</strong> Requires no additional information to the <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> and is defined by using the <a class="reference internal" href="#InterpolatorSettings" title="InterpolatorSettings"><code class="xref py py-class docutils literal"><span class="pre">InterpolatorSettings</span></code></a> base class (with <code class="docutils literal"><span class="pre">linear_interpolator</span></code> as argument).</p>
+</li>
+<li><p class="first"><strong>Piece-wise constant:</strong> Requires no additional information to the <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> and is defined by using the <a class="reference internal" href="#InterpolatorSettings" title="InterpolatorSettings"><code class="xref py py-class docutils literal"><span class="pre">InterpolatorSettings</span></code></a> base class (with <code class="docutils literal"><span class="pre">piecewise_constant_interpolator</span></code> as argument).</p>
 </li>
 <li><p class="first"><strong>Cubic spline:</strong> Requires no additional information to the <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> and is defined by using the <a class="reference internal" href="#InterpolatorSettings" title="InterpolatorSettings"><code class="xref py py-class docutils literal"><span class="pre">InterpolatorSettings</span></code></a> base class (with <code class="docutils literal"><span class="pre">cubic_spline_interpolator</span></code> as argument).</p>
 <blockquote>
@@ -261,8 +276,6 @@
 </div></blockquote>
 </li>
 <li><p class="first"><strong>Hermite spline:</strong> This interpolation requires the definition of the values, as well as the derivatives of the curve at each of the nodes. The interpolator is defined by using the <code class="docutils literal"><span class="pre">InterpolatorSettings</span></code> base class (with <code class="docutils literal"><span class="pre">hermite_spline_interpolator</span></code>) as argument.</p>
-</li>
-</ul>
 <blockquote>
 <div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Load data for values at node points</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="n">stateMap</span><span class="p">;</span>
@@ -274,43 +287,99 @@
 
 <span class="c1">// Create interpolator</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span> <span class="n">interpolatorSettings</span> <span class="o">=</span>
-    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">hermite_spline_interpolator</span> <span class="p">)</span>
+ <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">hermite_spline_interpolator</span> <span class="p">)</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneDimensionalInterpolator</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">interpolator</span> <span class="o">=</span>
-        <span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span>
-            <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span><span class="p">,</span> <span class="n">stateDerivativeMap</span> <span class="p">);</span>
+         <span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span>
+                 <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span><span class="p">,</span> <span class="n">stateDerivativeMap</span> <span class="p">);</span>
 
 <span class="c1">// Interpolate</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span> <span class="mf">0.0</span> <span class="p">);</span>
 </pre></div>
 </div>
 </div></blockquote>
-</div></blockquote>
-</div>
+</li>
+</ul>
 <div class="section" id="lagrange-interpolator">
-<h2>2.1.2. Lagrange interpolator<a class="headerlink" href="#lagrange-interpolator" title="Permalink to this headline">¶</a></h2>
-<p>This interpolation routine uses an nth degree polynomial to approximate a function from (n+1) data points. In our implementation, you can use a large data set of m data points (with m &gt; n) to generate a set of interpolating polynomials. When interpolating a data point, the interpolation routine will automatically select the polynomial where the requested data point lies between the two middle points, to prevent wild oscillations (which occur at the edge of the polynomial). At the boundaries of the full interval, a cubic spline interpolator is used.</p>
+<h3>2.1.1.1. Lagrange Interpolator<a class="headerlink" href="#lagrange-interpolator" title="Permalink to this headline">¶</a></h3>
+<p>This interpolation routine uses an <span class="math">\(n\)</span>-th degree polynomial to approximate a function from <span class="math">\(n+1\)</span> data points. In our implementation, you can use a large data set of <span class="math">\(m\)</span> data points (with <span class="math">\(m &gt; n\)</span>) to generate a set of interpolating polynomials. When interpolating a data point, the interpolation routine will automatically select the polynomial where the requested data point lies between the two middle points, to prevent wild oscillations (which occur at the edge of the polynomial). At the boundaries of the full interval, a cubic spline interpolator is used.</p>
 <p>To create a Lagrange interpolator, the number of data points used for each interpolating polynomial should be defined, using the dedicated derived class <a class="reference internal" href="#LagrangeInterpolatorSettings" title="LagrangeInterpolatorSettings"><code class="xref py py-class docutils literal"><span class="pre">LagrangeInterpolatorSettings</span></code></a>. The input argument for this class is the amount of points per polynomial. An example, when using 8 data points per polynomial, is described below:</p>
 <dl class="class">
 <dt id="LagrangeInterpolatorSettings">
 <em class="property">class </em><code class="descname">LagrangeInterpolatorSettings</code><a class="headerlink" href="#LagrangeInterpolatorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Derived class used for the settings of a lagrange interpolator.</p>
-</dd></dl>
-
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Load data for values at node points</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="n">stateMap</span><span class="p">;</span>
 <span class="n">stateMap</span> <span class="o">=</span> <span class="p">....</span>
 
 <span class="c1">// Create interpolator</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span> <span class="n">interpolatorSettings</span> <span class="o">=</span>
-    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">LagrangeInterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mi">8</span> <span class="p">)</span>
+        <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">LagrangeInterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mi">8</span> <span class="p">)</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneDimensionalInterpolator</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">interpolator</span> <span class="o">=</span>
-        <span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span>
-            <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span> <span class="p">);</span>
+                <span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span>
+                        <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span> <span class="p">);</span>
 
 <span class="c1">// Interpolate</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span> <span class="mf">0.0</span> <span class="p">);</span>
 </pre></div>
 </div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="multi-dimensional-interpolator-creation">
+<h2>2.1.2. Multi-dimensional Interpolator Creation<a class="headerlink" href="#multi-dimensional-interpolator-creation" title="Permalink to this headline">¶</a></h2>
+<p>Currently, only one multi-dimensional interpolator is supported in Tudat. This is the multi-linear interpolator, which is created by also using the <a class="reference internal" href="#InterpolatorSettings" title="InterpolatorSettings"><code class="xref py py-class docutils literal"><span class="pre">InterpolatorSettings</span></code></a> class, and by specifying <code class="docutils literal"><span class="pre">multi_linear_interpolator</span></code> as first input. To create the interpolator object, a different function needs to be used. This is the <code class="docutils literal"><span class="pre">createMultiDimensionalInterpolator</span></code> function, whose inputs are as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">independentValues</span></code></dt>
+<dd>This is a vector of vectors, where each external vector corresponds to one independent variable, and the internal vector simply lists the independent variable points.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">dependentData</span></code></dt>
+<dd>This variable is of type <code class="docutils literal"><span class="pre">boost::multi_array</span></code>, which is very similar to a multi-dimensional matrix in MATLAB and is generally created by reading data from a file by using the <code class="xref py py-class docutils literal"><span class="pre">MultiArrayFileReader</span></code> class.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">interpolatorSettings</span></code></dt>
+<dd>This is simply a pointer to the <a class="reference internal" href="#InterpolatorSettings" title="InterpolatorSettings"><code class="xref py py-class docutils literal"><span class="pre">InterpolatorSettings</span></code></a> class described above.</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="interpolation-when-independent-variables-are-out-of-range">
+<h2>2.1.3. Interpolation When Independent Variables are Out-of-range<a class="headerlink" href="#interpolation-when-independent-variables-are-out-of-range" title="Permalink to this headline">¶</a></h2>
+<p>It may be possible that in some situation, the independent variable at which interpolation has to take place, falls outside the list of independent variables defined in the interpolator. In this case, the default behavior is extrapolation, but as you may imagine, this can lead to very wrong and strange behaviors, especially if a method like cubic spline is selected. For this reason, the user has the option of changing this, so called, boundary handling method, or <code class="docutils literal"><span class="pre">boundaryHandling</span></code>, by specifying an extra input to the <a class="reference internal" href="../propagationSetup/integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> object. The allowed methods for independent variable out-of-range are the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">throw_exception_at_boundary</span></code>: throw a runtime error</li>
+<li><code class="docutils literal"><span class="pre">use_boundary_value</span></code>: use the closest defined value for these conditions</li>
+<li><code class="docutils literal"><span class="pre">extrapolate_at_boundary</span></code>: apply extrapolation (default behavior)</li>
+<li><code class="docutils literal"><span class="pre">use_default_value</span></code>: use the value provided by <code class="docutils literal"><span class="pre">defaultExtrapolationValue</span></code> (defined as an input to the function <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> or <code class="docutils literal"><span class="pre">createMultiDimensionalInterpolator</span></code>)</li>
+</ul>
+</div></blockquote>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Each of the methods above, with the exception of the first one (i.e., the one that gives the runtime error), comes with the option of also giving a warning in case the variable goes out-of-range. You just need to add <code class="docutils literal"><span class="pre">_with_warning</span></code> at the end of the enumeration. For example, you can use <code class="docutils literal"><span class="pre">extrapolate_at_boundary_with_warning</span></code> to extrapolate and give a warning.</p>
+</div>
+<p>For a one-dimensional interpolator, the input should be a single <code class="docutils literal"><span class="pre">DependentVariableType</span></code> value, whereas for a multi-dimensional one, you can also specify one method per each independent variable (i.e., for each dimension). Unfortunately, it is not yet possible to define a <code class="docutils literal"><span class="pre">boundaryHandling</span></code> method for each extremity of the independent variable range (e.g., give an error in case an independent variable is requested below lowest value and extrapolate if beyond the highest value).</p>
+<p>In case you have specified <code class="docutils literal"><span class="pre">use_default_value</span></code>: or <code class="docutils literal"><span class="pre">use_default_value_with_warning</span></code>: as the boundary handling method, you should also specify the default value that the extrapolator has to output. As previously mentioned, this is done by adding an extra input to the <code class="docutils literal"><span class="pre">createOneDimensionalInterpolator</span></code> or <code class="docutils literal"><span class="pre">createMultiDimensionalInterpolator</span></code> functions. The format of this input, which is named <code class="docutils literal"><span class="pre">defaultExtrapolationValue</span></code>, depends on the dimensionality, and is as follows:</p>
+<blockquote>
+<div><dl class="method">
+<dt>
+<code class="descname">std::pair&lt; DependentVariableType, DependentVariableType &gt;</code></dt>
+<dd><p>For <strong>one-dimenisonal</strong> interpolators, this variable is defined as a pair. The first value of the pair (accessed with the method <code class="docutils literal"><span class="pre">.first</span></code>) denotes the default extrapolation value in case the independent variable is requested below the lower domain boundary. The second value (<code class="docutils literal"><span class="pre">.second</span></code>), on the other hand, is output in case the independent variable is asked above the higher domain boundary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">std::vector&lt; std::pair&lt; DependentVariableType, DependentVariableType &gt; &gt;</code></dt>
+<dd><p>For <strong>multi-dimensional</strong> interpolators, it is defined as a vector of pairs. In this case, the pairs are used in the same manner as above, but a pair is defined for each independent variable.</p>
+</dd></dl>
+
+</div></blockquote>
 </div>
 </div>
 

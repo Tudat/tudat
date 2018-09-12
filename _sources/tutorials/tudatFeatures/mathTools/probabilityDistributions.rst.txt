@@ -4,7 +4,7 @@ Probability Distributions
 =========================
 In Tudat, we have a number of options related to the use of probability distributions, as well as the generation of random variables from these probability distributions. Many of these distributions are taken from the Boost libraries, some we have implemented ourselves.
 
-Implementation of a probability distribution
+Implementation of a Probability Distribution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 To represent a probability distribution with a given probability distribution function (PDF) and associated cumulative distribution function (CDF), we have defined the :class:`ContinuousProbabilityDistribution` base class. From this class, we have two 'branched' of derived classes:
 
@@ -37,14 +37,14 @@ Each of these distributions can be create through the same Tudat interface. Belo
 
 where the ``probabilityDistribution`` object is created by the ``createBoostRandomVariable`` function, which takes two inputs:
 
-    - The type of probability distribution variable, defined by a Tudat-defined enum (we list all options below)
-    - A list of parameters that define the properties of the distribution
+    - The type of probability distribution variable, defined by a Tudat-defined enumeration (all the options are listed below).
+    - A list of parameters that define the properties of the distribution.
 
 The :class:`InvertibleContinuousProbabilityDistribution` probability distribution comes with three functions that you can used:
 
-    - The evaluatePdf function, giving the PDF at a given point in sample space
-    - The evaluateCdf function, giving the CDF at a given point in sample space
-    - The evaluateInverseCdf function, giving the point in sample space for a given CDF values (which must be between 0 and 1). Note that this is also referred to as a quantile function.
+    - The :literal:`evaluatePdf` function, giving the PDF at a given point in sample space.
+    - The :literal:`evaluateCdf` function, giving the CDF at a given point in sample space.
+    - The :literal:`evaluateInverseCdf` function, giving the point in sample space for a given CDF values (which must be between 0 and 1). Note that this is also referred to as a quantile function.
 
 For instance, we can perform the following:
 
@@ -56,49 +56,68 @@ For instance, we can perform the following:
 
 To compute the three quantities listed above.
 
-Creating probability distributions
+Creating Probability Distributions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 To create one of the 6 distributions listed above, for each of which the invertible CDF can be computed, call the ``createBoostRandomVariable`` with the following input:
 
-**Uniform distribution:**
+   - **Uniform distribution**
 
-    - First argument: ``uniform_boost_distribution``.
-    - Second argument: vector containing (in order) 1) Lower bound of interval for distribution 2) Upper bound of interval for distribution.
+      - First argument: ``uniform_boost_distribution``
+      - Second argument: vector containing (in order):
 
-**Normal distribution:**
+         1) Lower bound of interval for distribution 
+         2) Upper bound of interval for distribution
 
-    - First argument: ``normal_boost_distribution``.
-    - Second argument: vector containing (in order) 1) Mean (mu) of distribution 2) Standard (sigma) deviation distribution.
+   - **Normal distribution**
 
-**Exponential distribution**
+      - First argument: ``normal_boost_distribution``
+      - Second argument: vector containing (in order):
 
-    - First argument: ``exponential_boost_distribution``.
-    - Second argument: vector containing (in order) 1) Lambda parameter of exponential distribution.
+         1) Mean (:math:`\mu`) of distribution 
+         2) Standard deviation (:math:`\sigma`) of distribution
 
-**Gamma distribution**
+   - **Exponential distribution**
 
-    - First argument: ``gamma_boost_distribution``.
-    - Second argument: vector containing (in order) 1) shape (k) parameter of distribution 2) scale (theta) parameter of distribution.
+      - First argument: ``exponential_boost_distribution``
+      - Second argument: vector containing (in order):
 
-**Lognormal distribution**
+         1) :math:`\lambda` parameter of exponential distribution
 
-    - First argument: ``lognormal_boost_distribution``.
-    - Second argument: vector containing (in order) 1) location (mu) parameter of distribution 2) scale (sigma) parameter of distribution.
+   - **Gamma distribution**
 
-Beta distribution**
+      - First argument: ``gamma_boost_distribution``
+      - Second argument: vector containing (in order):
 
-    - First argument: ``beta_boost_distribution``.
-    - Second argument: vector containing (in order) 1) alpha parameter of distribution 2) beta parameter of distribution.
+         1) shape (:math:`k`) parameter of distribution 
+         2) scale (:math:`\theta`) parameter of distribution
+
+   - **Lognormal distribution**
+
+      - First argument: ``lognormal_boost_distribution``
+      - Second argument: vector containing (in order):
+
+         1) location (:math:`\mu`) parameter of distribution 
+         2) scale (:math:`\sigma`) parameter of distribution
+
+   - **Beta distribution**
+
+      - First argument: ``beta_boost_distribution``
+      - Second argument: vector containing (in order):
+
+         1) :math:`\alpha` parameter of distribution 
+         2) :math:`\beta` parameter of distribution
 
 A number of multivariate distributions are also available in Tudat. These are:
 
-    - Multivariate Gaussian distribution.
-    - Gaussian Cupola distrbution.
+   - Multivariate Gaussian distribution.
+   - Gaussian Cupola distrbution.
 
 For more information on these distributions, you are referred to the in-code Doxygen documentation. Note that only a pdf can be evaluated for these distributions. Also, a Kernel density distribution for multi-variate data is available, see the in-code Doxygen documentation. Note that only a pdf and cdf (no inverse cdf) can be evaluated for this distribution.
 
-Generation of random numbers
+Generation of Random Numbers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 For each of the invertible random variables described above, you can easily create a random number generator which generates variables according to that distribution. For the 6 boost distributions listed above, you can use the same input (type and parameters) as listed above. We provide two interfaces for random variable generation:
 
     - A class :class:`ContinuousRandomVariableGenerator`, with a ``getRandomVariableValue`` that produces random numbers. 

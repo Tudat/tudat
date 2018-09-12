@@ -110,6 +110,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
 </ul>
 
@@ -181,23 +182,25 @@
   <div class="section" id="frequently-made-coding-mistakes-c">
 <span id="troubleshootingfrequentmistakes"></span><h1>3. Frequently made  coding mistakes - C++<a class="headerlink" href="#frequently-made-coding-mistakes-c" title="Permalink to this headline">¶</a></h1>
 <p>This section sums op some of the most made mistakes leading to failures either in runtime or during compilation. This page is under construction and will be elaborated in the future.</p>
-<ul>
-<li><p class="first">Accessing vector elements out of vector bounds:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="p">::</span><span class="n">Vector2d</span> <span class="n">vectorOfLengthTwo</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">);</span>
-<span class="n">double</span> <span class="n">intermediateResult</span> <span class="o">=</span> <span class="n">vectorOfLengthTwo</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<blockquote>
+<div><ul>
+<li><p class="first">Accessing vector elements out of vector bounds</p>
+<blockquote>
+<div><p>For instance, in</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">vectorOfLengthTwo</span><span class="p">(</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span> <span class="p">);</span>
+<span class="kt">double</span> <span class="n">intermediateResult</span> <span class="o">=</span> <span class="n">vectorOfLengthTwo</span><span class="p">(</span> <span class="mi">2</span> <span class="p">);</span>
 </pre></div>
 </div>
+<p>the code will compile, but the value obtained in <code class="docutils literal"><span class="pre">intermediateResult</span></code> is the value located just next to the <code class="docutils literal"><span class="pre">vectorOfLengthTwo</span></code> in your memory and could be anything.</p>
+</div></blockquote>
 </li>
-</ul>
-<blockquote>
-<div>This will actually work, but the value obtained <code class="docutils literal"><span class="pre">intermediateResult</span></code> is the value located just next to the <code class="docutils literal"><span class="pre">vectorOfLengthTwo</span></code> in your memory and could be anything.</div></blockquote>
-<ul>
-<li><p class="first">SPICE: Negative value for BEGIN address: …</p>
+<li><p class="first">SPICE: Negative value for BEGIN address</p>
 <blockquote>
 <div><p>This occurs when inputting <code class="docutils literal"><span class="pre">NaN</span></code>’s into Spice as discussed <a class="reference external" href="https://github.com/Tudat/tudat/issues/263">here</a>. Take a look at where you call Spice inside your application.</p>
 </div></blockquote>
 </li>
 </ul>
+</div></blockquote>
 </div>
 
 

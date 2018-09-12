@@ -1,0 +1,351 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>9. Kalman Filter for State Estimation &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
+        <link rel="up" title="Application Walkthroughs" href="index.html"/>
+        <link rel="next" title="10. Variational Equations Propagation" href="variationalEquationsPropagation.html"/>
+        <link rel="prev" title="8. Use of Thrust: User-defined Thrust Vector" href="useOfThrustUserDefinedThrustVector.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorials and Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../basics/index.html">Tudat Basics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Walkthroughs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html#example-tutorials">Example Tutorials</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphereExamples.html">1. Tabulated Atmosphere Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unperturbedEarthOrbitingSatellite.html">2. Unperturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="perturbedEarthOrbitingSatellite.html">3. Perturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="propagatorTypesComparison.html">4. Comparison of Propagator Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unguidedCapsuleEntry.html">5. Un-guided Capsule Entry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="innerSolarSystemPropagation.html">6. Inner Solar System Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="useOfThrustThrustForceAlongVelocityVector.html">7. Use of Thrust: Thrust Force Along Velocity Vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="useOfThrustUserDefinedThrustVector.html">8. Use of Thrust: User-defined Thrust Vector</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">9. Kalman Filter for State Estimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variationalEquationsPropagation.html">10. Variational Equations Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">11. Orbit Determination and Parameter Estimation (Basic)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthOrbiterStateEstimation.html">12. Orbit Determination and Parameter Estimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interplanetaryTrajectory.html">13. MGA Trajectory Design</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#optimization-tutorials">Optimization Tutorials</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tudatFeatures/index.html">Tudat Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jsonInterface/index.html">JSON Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference external" href="http://doxygen.tudat.tudelft.nl">Doxygen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tutorials and Documentation</a> &raquo;</li>
+        
+          <li><a href="index.html">Application Walkthroughs</a> &raquo;</li>
+        
+      <li>9. Kalman Filter for State Estimation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tutorials/applicationWalkthroughs/filterExample.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kalman-filter-for-state-estimation">
+<span id="walkthroughsfiltering"></span><h1>9. Kalman Filter for State Estimation<a class="headerlink" href="#kalman-filter-for-state-estimation" title="Permalink to this headline">¶</a></h1>
+<p>In this example application, you will learn how to set up and use a Kalman filter object. In particular, this tutorial focuses only on the extended (EKF) and unscented (UKF) Kalman filters.</p>
+<div class="section" id="problem-description">
+<h2>9.1. Problem Description<a class="headerlink" href="#problem-description" title="Permalink to this headline">¶</a></h2>
+<p>The system we are trying to model is one of the examples given in:</p>
+<blockquote>
+<div>Zarchan, P. and Musoff, H., Fundamentals of Kalman Filtering: A Practical Approach, 3rd ed. American Institute of Aeronautics and Astronautics, 2013, vol. 232.</div></blockquote>
+<p>and it represents a very simple case of a falling object, with the additional challenge of unknown ballistic coefficient. The job of the Kalman filter is then that of estimating the current position and velocity of the object, solely based on the measurement of position. Note that both position and velocity are expressed as scalars, and represent the first two entries of the state vector. The thrid and final entry is, as already mentioned, the ballistic coefficient.</p>
+<p>Clearly, this is an uncontrolled problem. However, for sake of completeness and to show its use, a control system object is added nonetheless. As you will notice by going through the code, this object always provides a control vector of zeros (and the control vector is not used in any of the equations).</p>
+<p>By looking at the code, you will also see that the filter settings and objects are created consecutively. This is a step that could, instead, have been done by directly creating a <code class="docutils literal"><span class="pre">UnscentedKalmanFilter</span></code> object directly. However, it is customary (in Tudat) for the user to input a set of settings, which are then used as input to another object (could be e.g., a navigation system), where the settings are converted to the filter itself. Thus, these two steps are taken just to show how it would be done in such a situation.</p>
+</div>
+<div class="section" id="initial-conditions">
+<h2>9.2. Initial Conditions<a class="headerlink" href="#initial-conditions" title="Permalink to this headline">¶</a></h2>
+<p>The initial conditions for this problem are given in the table below. Here, you can see the real (actual) initial conditions, and the conditions that are input in the filter (i.e., the estimated initial conditions). The job of the filter is to try to match these conditions over time.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="21%" />
+<col width="22%" />
+<col width="26%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">State Element</th>
+<th class="head">Actual</th>
+<th class="head">Estimated</th>
+<th class="head">Units</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Position</td>
+<td>200000.0</td>
+<td>200025.0</td>
+<td>Ft</td>
+</tr>
+<tr class="row-odd"><td>Velicity</td>
+<td>-6000.0</td>
+<td>-6150.0</td>
+<td>Ft/s</td>
+</tr>
+<tr class="row-even"><td>Ballistic Coefficient</td>
+<td>500.0</td>
+<td>800.0</td>
+<td>Lb/Ft <span class="math">\({}^2\)</span></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>Clearly, the intial estimate in position and velocity are quite close to the actual conditions, but the ballistic coefficient is rather different. You can try and change the estimated conditions to see how robust each filter is (although it is best to apply this technique to your own application, since each scenario can lead to different conclusions). You can also change (or tune) the system and measurement uncertainty matrices (usually referred to as <span class="math">\(Q\)</span> and <span class="math">\(R\)</span> in literature), to see how the behavior/convergence of the filter is affected.</p>
+</div>
+<div class="section" id="results">
+<h2>9.3. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>If you run the application as is, the result should be similar to the ones shown below. Over 300 steps, the filter manages to converge very closely to the actual values of position, velocity and ballistic coefficient. Note, however, how the convergence in position is much quicker than the one in ballistic coefficient and much more stable than the one in velocity. This is simply related to the fact that position is the only state that is directly measured (and consequently, much less uncertain).</p>
+<div class="figure">
+<img alt="../../_images/filterExample.pdf" src="../../_images/filterExample.pdf" />
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="variationalEquationsPropagation.html" class="btn btn-neutral float-right" title="10. Variational Equations Propagation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="useOfThrustUserDefinedThrustVector.html" class="btn btn-neutral" title="8. Use of Thrust: User-defined Thrust Vector" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>

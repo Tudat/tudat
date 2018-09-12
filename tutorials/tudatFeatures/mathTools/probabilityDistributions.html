@@ -39,7 +39,7 @@
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
         <link rel="up" title="2. Basic Mathematics Tools" href="index.html"/>
-        <link rel="next" title="3. Environment Set-up" href="../environmentSetup/index.html"/>
+        <link rel="next" title="2.4. Filters" href="filters.html"/>
         <link rel="prev" title="2.2. Integrators" href="integrators.html"/> 
 
   
@@ -103,6 +103,7 @@
 <li class="toctree-l4"><a class="reference internal" href="interpolators.html">2.1. Interpolators</a></li>
 <li class="toctree-l4"><a class="reference internal" href="integrators.html">2.2. Integrators</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">2.3. Probability Distributions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="filters.html">2.4. Filters</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
@@ -118,6 +119,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
 </ul>
 
@@ -192,7 +194,7 @@
 <span id="tudatfeaturesprobabilitydistributions"></span><h1>2.3. Probability Distributions<a class="headerlink" href="#probability-distributions" title="Permalink to this headline">¶</a></h1>
 <p>In Tudat, we have a number of options related to the use of probability distributions, as well as the generation of random variables from these probability distributions. Many of these distributions are taken from the Boost libraries, some we have implemented ourselves.</p>
 <div class="section" id="implementation-of-a-probability-distribution">
-<h2>2.3.1. Implementation of a probability distribution<a class="headerlink" href="#implementation-of-a-probability-distribution" title="Permalink to this headline">¶</a></h2>
+<h2>2.3.1. Implementation of a Probability Distribution<a class="headerlink" href="#implementation-of-a-probability-distribution" title="Permalink to this headline">¶</a></h2>
 <p>To represent a probability distribution with a given probability distribution function (PDF) and associated cumulative distribution function (CDF), we have defined the <code class="xref py py-class docutils literal"><span class="pre">ContinuousProbabilityDistribution</span></code> base class. From this class, we have two ‘branched’ of derived classes:</p>
 <blockquote>
 <div><ul class="simple">
@@ -227,16 +229,16 @@
 <p>where the <code class="docutils literal"><span class="pre">probabilityDistribution</span></code> object is created by the <code class="docutils literal"><span class="pre">createBoostRandomVariable</span></code> function, which takes two inputs:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The type of probability distribution variable, defined by a Tudat-defined enum (we list all options below)</li>
-<li>A list of parameters that define the properties of the distribution</li>
+<li>The type of probability distribution variable, defined by a Tudat-defined enumeration (all the options are listed below).</li>
+<li>A list of parameters that define the properties of the distribution.</li>
 </ul>
 </div></blockquote>
 <p>The <code class="xref py py-class docutils literal"><span class="pre">InvertibleContinuousProbabilityDistribution</span></code> probability distribution comes with three functions that you can used:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The evaluatePdf function, giving the PDF at a given point in sample space</li>
-<li>The evaluateCdf function, giving the CDF at a given point in sample space</li>
-<li>The evaluateInverseCdf function, giving the point in sample space for a given CDF values (which must be between 0 and 1). Note that this is also referred to as a quantile function.</li>
+<li>The <code class="docutils literal"><span class="pre">evaluatePdf</span></code> function, giving the PDF at a given point in sample space.</li>
+<li>The <code class="docutils literal"><span class="pre">evaluateCdf</span></code> function, giving the CDF at a given point in sample space.</li>
+<li>The <code class="docutils literal"><span class="pre">evaluateInverseCdf</span></code> function, giving the point in sample space for a given CDF values (which must be between 0 and 1). Note that this is also referred to as a quantile function.</li>
 </ul>
 </div></blockquote>
 <p>For instance, we can perform the following:</p>
@@ -248,48 +250,105 @@
 <p>To compute the three quantities listed above.</p>
 </div>
 <div class="section" id="creating-probability-distributions">
-<h2>2.3.2. Creating probability distributions<a class="headerlink" href="#creating-probability-distributions" title="Permalink to this headline">¶</a></h2>
+<h2>2.3.2. Creating Probability Distributions<a class="headerlink" href="#creating-probability-distributions" title="Permalink to this headline">¶</a></h2>
 <p>To create one of the 6 distributions listed above, for each of which the invertible CDF can be computed, call the <code class="docutils literal"><span class="pre">createBoostRandomVariable</span></code> with the following input:</p>
-<p><strong>Uniform distribution:</strong></p>
 <blockquote>
-<div><ul class="simple">
-<li>First argument: <code class="docutils literal"><span class="pre">uniform_boost_distribution</span></code>.</li>
-<li>Second argument: vector containing (in order) 1) Lower bound of interval for distribution 2) Upper bound of interval for distribution.</li>
+<div><ul>
+<li><p class="first"><strong>Uniform distribution</strong></p>
+<blockquote>
+<div><ul>
+<li><p class="first">First argument: <code class="docutils literal"><span class="pre">uniform_boost_distribution</span></code></p>
+</li>
+<li><p class="first">Second argument: vector containing (in order):</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Lower bound of interval for distribution</li>
+<li>Upper bound of interval for distribution</li>
+</ol>
+</div></blockquote>
+</li>
 </ul>
 </div></blockquote>
-<p><strong>Normal distribution:</strong></p>
+</li>
+<li><p class="first"><strong>Normal distribution</strong></p>
 <blockquote>
-<div><ul class="simple">
-<li>First argument: <code class="docutils literal"><span class="pre">normal_boost_distribution</span></code>.</li>
-<li>Second argument: vector containing (in order) 1) Mean (mu) of distribution 2) Standard (sigma) deviation distribution.</li>
+<div><ul>
+<li><p class="first">First argument: <code class="docutils literal"><span class="pre">normal_boost_distribution</span></code></p>
+</li>
+<li><p class="first">Second argument: vector containing (in order):</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Mean (<span class="math">\(\mu\)</span>) of distribution</li>
+<li>Standard deviation (<span class="math">\(\sigma\)</span>) of distribution</li>
+</ol>
+</div></blockquote>
+</li>
 </ul>
 </div></blockquote>
-<p><strong>Exponential distribution</strong></p>
+</li>
+<li><p class="first"><strong>Exponential distribution</strong></p>
 <blockquote>
-<div><ul class="simple">
-<li>First argument: <code class="docutils literal"><span class="pre">exponential_boost_distribution</span></code>.</li>
-<li>Second argument: vector containing (in order) 1) Lambda parameter of exponential distribution.</li>
+<div><ul>
+<li><p class="first">First argument: <code class="docutils literal"><span class="pre">exponential_boost_distribution</span></code></p>
+</li>
+<li><p class="first">Second argument: vector containing (in order):</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><span class="math">\(\lambda\)</span> parameter of exponential distribution</li>
+</ol>
+</div></blockquote>
+</li>
 </ul>
 </div></blockquote>
-<p><strong>Gamma distribution</strong></p>
+</li>
+<li><p class="first"><strong>Gamma distribution</strong></p>
 <blockquote>
-<div><ul class="simple">
-<li>First argument: <code class="docutils literal"><span class="pre">gamma_boost_distribution</span></code>.</li>
-<li>Second argument: vector containing (in order) 1) shape (k) parameter of distribution 2) scale (theta) parameter of distribution.</li>
+<div><ul>
+<li><p class="first">First argument: <code class="docutils literal"><span class="pre">gamma_boost_distribution</span></code></p>
+</li>
+<li><p class="first">Second argument: vector containing (in order):</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>shape (<span class="math">\(k\)</span>) parameter of distribution</li>
+<li>scale (<span class="math">\(\theta\)</span>) parameter of distribution</li>
+</ol>
+</div></blockquote>
+</li>
 </ul>
 </div></blockquote>
-<p><strong>Lognormal distribution</strong></p>
+</li>
+<li><p class="first"><strong>Lognormal distribution</strong></p>
 <blockquote>
-<div><ul class="simple">
-<li>First argument: <code class="docutils literal"><span class="pre">lognormal_boost_distribution</span></code>.</li>
-<li>Second argument: vector containing (in order) 1) location (mu) parameter of distribution 2) scale (sigma) parameter of distribution.</li>
+<div><ul>
+<li><p class="first">First argument: <code class="docutils literal"><span class="pre">lognormal_boost_distribution</span></code></p>
+</li>
+<li><p class="first">Second argument: vector containing (in order):</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>location (<span class="math">\(\mu\)</span>) parameter of distribution</li>
+<li>scale (<span class="math">\(\sigma\)</span>) parameter of distribution</li>
+</ol>
+</div></blockquote>
+</li>
 </ul>
 </div></blockquote>
-<p>Beta distribution**</p>
+</li>
+<li><p class="first"><strong>Beta distribution</strong></p>
 <blockquote>
-<div><ul class="simple">
-<li>First argument: <code class="docutils literal"><span class="pre">beta_boost_distribution</span></code>.</li>
-<li>Second argument: vector containing (in order) 1) alpha parameter of distribution 2) beta parameter of distribution.</li>
+<div><ul>
+<li><p class="first">First argument: <code class="docutils literal"><span class="pre">beta_boost_distribution</span></code></p>
+</li>
+<li><p class="first">Second argument: vector containing (in order):</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><span class="math">\(\alpha\)</span> parameter of distribution</li>
+<li><span class="math">\(\beta\)</span> parameter of distribution</li>
+</ol>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
 </ul>
 </div></blockquote>
 <p>A number of multivariate distributions are also available in Tudat. These are:</p>
@@ -302,7 +361,7 @@
 <p>For more information on these distributions, you are referred to the&nbsp;in-code Doxygen documentation. Note that only a pdf can be evaluated for these distributions. Also, a Kernel density distribution for multi-variate data is available, see the&nbsp;in-code Doxygen documentation. Note that only a pdf and cdf (no inverse cdf) can be evaluated for this distribution.</p>
 </div>
 <div class="section" id="generation-of-random-numbers">
-<h2>2.3.3. Generation of random numbers<a class="headerlink" href="#generation-of-random-numbers" title="Permalink to this headline">¶</a></h2>
+<h2>2.3.3. Generation of Random Numbers<a class="headerlink" href="#generation-of-random-numbers" title="Permalink to this headline">¶</a></h2>
 <p>For each of the invertible random variables described above, you can easily create a random number generator which generates variables according to that distribution. For the 6 boost distributions listed above, you can use the same input (type and parameters) as listed above. We provide two interfaces for random variable generation:</p>
 <blockquote>
 <div><ul class="simple">
@@ -356,7 +415,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../environmentSetup/index.html" class="btn btn-neutral float-right" title="3. Environment Set-up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="filters.html" class="btn btn-neutral float-right" title="2.4. Filters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="integrators.html" class="btn btn-neutral" title="2.2. Integrators" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

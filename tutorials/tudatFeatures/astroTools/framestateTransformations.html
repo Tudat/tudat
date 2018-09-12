@@ -118,6 +118,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
 </ul>
 
@@ -191,8 +192,8 @@
   <div class="section" id="frame-state-transformations">
 <span id="tudatfeaturesframestatetransformations"></span><h1>1.1. Frame/State Transformations<a class="headerlink" href="#frame-state-transformations" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="state-type-conversions">
-<h2>1.1.1. State type conversions<a class="headerlink" href="#state-type-conversions" title="Permalink to this headline">¶</a></h2>
-<p>Depending on your application, you will be using any of a number of state (position and velocity) representations. In Tudat, conversions involving the following state representations are available:</p>
+<h2>1.1.1. State Type Conversions<a class="headerlink" href="#state-type-conversions" title="Permalink to this headline">¶</a></h2>
+<p>Depending on your application, you will be using any of a number of translational state (position and velocity) representations. In Tudat, conversions involving the following state representations are available:</p>
 <ul class="simple">
 <li>Cartesian elements.</li>
 <li>Keplerian elements.</li>
@@ -200,7 +201,15 @@
 <li>Modified Equinoctial elements.</li>
 <li>Unified State Model elements.</li>
 </ul>
-<p>For each of these element types, conversions to/from Cartesian elements are available. Converting between two element types, where neither is Cartesian, will typically involve first transforming to Cartesian elements, and then transforming to your output state type. For each state type, the physical meaning of each of the elements is defined in the&nbsp;<code class="docutils literal"><span class="pre">statevectorIndices.h</span></code>&nbsp;file. In this file, you see for instance:</p>
+<p>For each of these element types, conversions to/from Cartesian elements are available. Converting between two element types, where neither is Cartesian, will typically involve first transforming to Cartesian elements, and then transforming to your output state type.</p>
+<p>In case you are also working with rotational motion, in Tudat the following representations for attitude are available:</p>
+<ul class="simple">
+<li>Quaternions.</li>
+<li>Modified Rodrigues parameters.</li>
+<li>Exponential map.</li>
+</ul>
+<p>Transformation between these elements is done by passing through quaternions first. In fact, this is the default attitude representation in Tudat.</p>
+<p>For each state type, the physical meaning of each of the elements is defined in the&nbsp;<code class="docutils literal"><span class="pre">statevectorIndices.h</span></code>&nbsp;file. In this file, you will see for instance:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Keplerian elements indices.</span>
 <span class="k">enum</span> <span class="n">KeplerianElementIndices</span>
 <span class="p">{</span>
@@ -227,9 +236,9 @@
 </pre></div>
 </div>
 <p>which yields the exact same result.</p>
-<p>In the definition of the <code class="docutils literal"><span class="pre">KeplerianElementIndices</span></code> enum, you can see something peculiar: both <code class="docutils literal"><span class="pre">semiMajorAxisIndex</span></code> and <code class="docutils literal"><span class="pre">semiLatusRectumIndex</span></code> are defined as index 0. The latter option is only applicable when the orbit is parabolic (when the eccentricity is 1.0). That is, if the orbit is parabolic, element 0 does not represent the semi-major axis (as it is not defined) but the semi-latus rectum. Below, we list the details of the implementation of each of these state types in Tudat:</p>
+<p>In the definition of the <code class="docutils literal"><span class="pre">KeplerianElementIndices</span></code> enumeration, you can see something peculiar: both <code class="docutils literal"><span class="pre">semiMajorAxisIndex</span></code> and <code class="docutils literal"><span class="pre">semiLatusRectumIndex</span></code> are defined as index 0. The latter option is only applicable when the orbit is parabolic (when the eccentricity is 1.0). That is, if the orbit is parabolic, element 0 does not represent the semi-major axis (as it is not defined) but the semi-latus rectum. Below, we list the details of the implementation of each of these state types in Tudat:</p>
 <div class="section" id="kepler-elements">
-<h3>1.1.1.1. Kepler elements<a class="headerlink" href="#kepler-elements" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.1.1. Kepler Elements<a class="headerlink" href="#kepler-elements" title="Permalink to this headline">¶</a></h3>
 <p>The Kepler elements are the standard orbital elements used in classical celestial mechanics, with the element indices shown above.
 Converting to/from Cartesian state requires an additional piece of information in addition to the state itself: the gravitational parameter of the body w.r.t. the Keplerian elements are defined. Conversion to/from Cartesian elements is done as</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">cartesianState</span> <span class="o">=</span> <span class="p">....</span>
@@ -284,7 +293,7 @@ Converting to/from Cartesian state requires an additional piece of information i
 </div>
 </div>
 <div class="section" id="spherical-orbital-elements">
-<h3>1.1.1.2. Spherical-orbital elements<a class="headerlink" href="#spherical-orbital-elements" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.1.2. Spherical-orbital Elements<a class="headerlink" href="#spherical-orbital-elements" title="Permalink to this headline">¶</a></h3>
 <p>The spherical elements are typically used to denote the conditions in atmospheric flight. In most applications, they will be used to denote the state in a body-fixed frame. The details of the physical meaning of the elements is discussed&nbsp;here. The element indices in Tudat are the following:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Spherical orbital state element indices</span>
 <span class="k">enum</span> <span class="n">SphericalOrbitalStateElementIndices</span>
@@ -310,7 +319,7 @@ Converting to/from Cartesian state requires an additional piece of information i
 </div>
 </div>
 <div class="section" id="modified-equinoctial-elements">
-<h3>1.1.1.3. Modified Equinoctial elements<a class="headerlink" href="#modified-equinoctial-elements" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.1.3. Modified Equinoctial Elements<a class="headerlink" href="#modified-equinoctial-elements" title="Permalink to this headline">¶</a></h3>
 <p>The modified equinoctial elements are typically used for orbits with eccentricities near 0 or 1 and/or inclinations near 0 or <span class="math">\(\pi\)</span>. The element indices in Tudat are the following:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Modified equinoctial element vector indices.</span>
 <span class="k">enum</span> <span class="n">ModifiedEquinoctialElementVectorIndices</span>
@@ -332,7 +341,7 @@ Converting to/from Cartesian state requires an additional piece of information i
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last"><code class="docutils literal"><span class="pre">flipSingularityToZeroInlination</span></code> is optional for this conversion. If left empty, an overloaded function will determine whether this value is true or false based on the inclination of the orbit.</p>
+<p class="last">The input <code class="docutils literal"><span class="pre">flipSingularityToZeroInlination</span></code> is optional for this conversion. If left empty, an overloaded function will determine whether this value is true or false based on the inclination of the orbit.</p>
 </div>
 <p>Similarly, the inverse operation is done as:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">modifiedEquinoctialElements</span> <span class="o">=</span> <span class="p">....</span>
@@ -342,22 +351,50 @@ Converting to/from Cartesian state requires an additional piece of information i
 </div>
 </div>
 <div class="section" id="unified-state-model-elements">
-<h3>1.1.1.4. Unified State Model elements<a class="headerlink" href="#unified-state-model-elements" title="Permalink to this headline">¶</a></h3>
-<p>The element indices for the Unified State Model elements in Tudat are the following:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Unified State Model indices.</span>
-<span class="k">enum</span> <span class="n">UnifiedStateModelElementIndices</span>
+<h3>1.1.1.4. Unified State Model Elements<a class="headerlink" href="#unified-state-model-elements" title="Permalink to this headline">¶</a></h3>
+<p>Three different versions of the Unified State Model are present in Tudat. They differ based on the coordinates chosen to represent the rotation from local orbital to inertial frame, which can be expressed in quaternions, modified Rodrigues parameters or exponantial map. The element indices for the Unified State Model elements with quaternions (or USM7) are the following:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Unified state model with quaternions indices.</span>
+<span class="k">enum</span> <span class="n">UnifiedStateModelQuaternionsElementIndices</span>
 <span class="p">{</span>
-    <span class="n">CHodographIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="n">Rf1HodographIndex</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="n">Rf2HodographIndex</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
-    <span class="n">epsilon1QuaternionIndex</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
-    <span class="n">epsilon2QuaternionIndex</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
-    <span class="n">epsilon3QuaternionIndex</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-    <span class="n">etaQuaternionIndex</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">CHodographUSM7Index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">Rf1HodographUSM7Index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">Rf2HodographUSM7Index</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">etaUSM7Index</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">epsilon1USM7Index</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">epsilon2USM7Index</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">epsilon3USM7Index</span> <span class="o">=</span> <span class="mi">6</span>
 <span class="p">};</span>
 </pre></div>
 </div>
-<p>The unified state model elements consists of 7 elements. Only the conversion to/from Keplerian elements is implemented. The conversion requires the gravitation parameter of the body w.r.t. which the Unified State Model elements are defined. The conversion from Keplerian elements is done as:</p>
+<p>For the Unified State Model elements with modified Rodrigues parameters (or USM6) the indeces are:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Unified state model with modified Rodrigues parameters indices.</span>
+<span class="k">enum</span> <span class="n">UnifiedStateModelModifiedRodriguesParametersElementIndices</span>
+<span class="p">{</span>
+    <span class="n">CHodographUSM6Index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">Rf1HodographUSM6Index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">Rf2HodographUSM6Index</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">sigma1USM6Index</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">sigma2USM6Index</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">sigma3USM6Index</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">shadowFlagUSM6Index</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>And finally, for the Unified State Model elements with exponential map (or USMEM) they are:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Unified state model with exponential map indices.</span>
+<span class="k">enum</span> <span class="n">UnifiedStateModelExponentialMapElementIndices</span>
+<span class="p">{</span>
+    <span class="n">CHodographUSMEMIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">Rf1HodographUSMEMIndex</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">Rf2HodographUSMEMIndex</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">e1USMEMIndex</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">e2USMEMIndex</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">e3USMEMIndex</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">shadowFlagUSMEMIndex</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Regardless of the rotational coordinates chosen, the Unified State Model elements consists of 7 elements. For each Unified State Model representation, conversion to and from Keplerian and Cartesian coordinates is implemented. As an example, the conversion from Keplerian elements for the USM7 elements is shown here:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">keplerianElements</span> <span class="o">=</span> <span class="p">....</span>
 <span class="kt">double</span> <span class="n">centralBodyGravitationalParameter</span> <span class="o">=</span> <span class="p">...</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">cartesianState</span> <span class="o">=</span> <span class="n">convertKeplerianToUnifiedStateModelElements</span><span class="p">(</span> <span class="n">keplerianElements</span><span class="p">,</span> <span class="n">centralBodyGravitationalParameter</span> <span class="p">);</span>
@@ -370,16 +407,94 @@ Converting to/from Cartesian state requires an additional piece of information i
 </pre></div>
 </div>
 </div>
+<div class="section" id="quaternions">
+<h3>1.1.1.5. Quaternions<a class="headerlink" href="#quaternions" title="Permalink to this headline">¶</a></h3>
+<p>As mentioned at the beginning of this chapter, quaternions are the default attitude representation in Tudat. Depending on the location in the Tudat framework, you will find a quaternion element expressed as either of the two types below:</p>
+<dl class="method">
+<dt>
+<code class="descname">As an Eigen::Quaterniond</code></dt>
+<dd><p>This method is used mainly in the <a class="reference internal" href="../environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> class, to express various rotations, such as the rotation to base frame. The advantage of this class, is that it comes with some very useful member functions. For instance, if you have a <code class="docutils literal"><span class="pre">Quaterniond</span></code> object, you can directly transform it to a direction cosine matrix (or transformation matrix) by using the method <code class="docutils literal"><span class="pre">.toRotationMatrix(</span> <span class="pre">)</span></code>. You can find more details on the definition and use of the <code class="docutils literal"><span class="pre">Quaterniond</span></code> in the Eigen website.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The definition of rotations in Eigen is slightly different than in Tudat. This means that when using Eigen functions such as <code class="docutils literal"><span class="pre">.toRotationMatrix(</span> <span class="pre">)</span></code> to quaternions defined within Tudat, the result will be the inverse of what is desired. Thus, the tranformation to matrix should always be followed by <code class="docutils literal"><span class="pre">.transpose(</span> <span class="pre">)</span></code>, to give the correct rotation matrix.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">As an Eigen::Vector4d</code></dt>
+<dd><p>This method is mainly used, on the other hand, in propagation. By defining the quaternion as a simple four-dimensional vector, its element can be easily extracted and replaced from the rotational state vector (which also includes rotational velocity).</p>
+</dd></dl>
+
+<p>Transformation between the two methods is defined in the linear algebra module of Tudat (see <code class="docutils literal"><span class="pre">linearAlgebra.h</span></code>). To transform a quaternion to vector format, one can use:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span> <span class="n">quaternionAsQuaternion</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector4d</span> <span class="n">quaternionAsVector</span> <span class="o">=</span> <span class="n">linear_algebra</span><span class="o">::</span><span class="n">convertQuaternionToVectorFormat</span><span class="p">(</span> <span class="n">quaternionAsQuaternion</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>and vice-versa as:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector4d</span> <span class="n">quaternionAsVector</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span> <span class="n">quaternionAsQuaternion</span> <span class="o">=</span> <span class="n">linear_algebra</span><span class="o">::</span><span class="n">convertVectorToQuaternionFormat</span><span class="p">(</span> <span class="n">quaternionAsVector</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Finally, the quaternion indices are defined as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Quaternions indices.</span>
+<span class="k">enum</span> <span class="n">QuaternionsElementIndices</span>
+<span class="p">{</span>
+    <span class="n">etaQuaternionIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">epsilon1QuaternionIndex</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">epsilon2QuaternionIndex</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">epsilon3QuaternionIndex</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Before continuing to the next rotational coordinates, there is one last fact about quaternions that needs to be discussed. This relates to the property that the sum of the square of the quaternion vector equals one, i.e., <span class="math">\(\sum_{i=0}^3 q_i^2 = 1\)</span>. In fact, during numerical propagation it is possible that this property is violated, due to various sources of differs from one by more than about <span class="math">\(5 \times 10^{-15}\)</span>. Note that this also applies to the quaternion vector present in the Unified State Model with quaternions, or USM7, state.</p>
+</div>
+<div class="section" id="modified-rodrigues-parameters">
+<h3>1.1.1.6. Modified Rodrigues Parameters<a class="headerlink" href="#modified-rodrigues-parameters" title="Permalink to this headline">¶</a></h3>
+<p>One of the other two supported attitude representations is the modified Rodrigues parameters (MRPs). The indeces for MRPs are defined as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Modified Rodrigues parameters indices.</span>
+<span class="k">enum</span> <span class="n">ModifiedRodriguesParametersElementIndices</span>
+<span class="p">{</span>
+    <span class="n">sigma1ModifiedRodriguesParametersIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">sigma2ModifiedRodriguesParametersIndex</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">sigma3ModifiedRodriguesParametersIndex</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">shadowFlagModifiedRodriguesParametersIndex</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Transformation to and from quaternions is achieved with the functions <code class="docutils literal"><span class="pre">convertModifiedRodriguesParametersToQuaternionElements</span></code> and <code class="docutils literal"><span class="pre">convertQuaternionsToModifiedRodriguesParameterElements</span></code>, respectively, where the only input is the attitude element (in vector format).</p>
+<p>The last element shown in the <code class="docutils literal"><span class="pre">ModifiedRodriguesParametersElementIndices</span></code> enumeration is the flag that triggers the shadow modifed Rodrigues parameters (SMRPs). Its use is introduced to avoid the singularity at <span class="math">\(\pm 2\pi\)</span> radians. If its value is 0, then the elements are MRPs, whereas if it is 1, then they are SMRPs. The use of SMRPs results in slightly different equations of motion and transformations. The switch between MRPs and SMRPs occurs whenever the magnitude of the rotation represented by the MRP vector is larger than <span class="math">\(\pi\)</span>.</p>
+</div>
+<div class="section" id="exponential-map">
+<h3>1.1.1.7. Exponential Map<a class="headerlink" href="#exponential-map" title="Permalink to this headline">¶</a></h3>
+<p>The final attitude representations is the exponential map (EM). The indeces for EM are defined as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Exponential map indices.</span>
+<span class="k">enum</span> <span class="n">ExponentialMapElementIndices</span>
+<span class="p">{</span>
+    <span class="n">e1ExponentialMapIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">e2ExponentialMapIndex</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">e3ExponentialMapIndex</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">shadowFlagExponentialMapIndex</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>and transformation to and from quaternions is achieved with the aid of the functions <code class="docutils literal"><span class="pre">convertExponentialMapToQuaternionElements</span></code> and <code class="docutils literal"><span class="pre">convertQuaternionsToExponentialMapElements</span></code>, respectively. Also for these equations the only input is the attitude element (in vector format).</p>
+<p>Similarly to MRPs, the exponential map elements also make use of the shadow flag. In this case, this flag signals whether the shadow exponential map (SEM) is in use. This flag is also introduces to avoid the singularity at <span class="math">\(\pm 2\pi\)</span> radians, but interestingly, there is no difference between the equations of motion and transformations in terms of EM or SEM. In fact, they are only introduced to make sure that when converting from EM to quaternions, the resulting quaternion sign history is continuous. The switch between EM and SEM occurs whenever the magnitude of the rotation represented by the EM vector is larger than <span class="math">\(\pi\)</span>.</p>
+</div>
 </div>
 <div class="section" id="frame-transformations">
-<h2>1.1.2. Frame transformations<a class="headerlink" href="#frame-transformations" title="Permalink to this headline">¶</a></h2>
+<h2>1.1.2. Frame Transformations<a class="headerlink" href="#frame-transformations" title="Permalink to this headline">¶</a></h2>
 <p>Every state, regardless of its representation is expressed with a particular origin and orientation. This is most easy to understand for Cartesian elements, where the origin represents the (0,0,0) position, and the orientation defines the direction of the x-, y- and z-axes. Below, we discuss how to perform these operations in Tudat.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">Do not use the getCurrentState or getCurrentRotation functions in the body objects! These functions are used during numerical propagation, and calling them outside of the numerical propagation will generally not lead to meaningful results.</p>
+<p class="last">Do not use the <code class="docutils literal"><span class="pre">getCurrentState</span></code> or <code class="docutils literal"><span class="pre">getCurrentRotation</span></code> functions in the body objects! These functions are used during numerical propagation, and calling them outside of the numerical propagation will generally not lead to meaningful results.</p>
 </div>
 <div class="section" id="frame-translations">
-<h3>1.1.2.1. Frame translations<a class="headerlink" href="#frame-translations" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.2.1. Frame Translations<a class="headerlink" href="#frame-translations" title="Permalink to this headline">¶</a></h3>
 <p>To change the origin of a Cartesian, one can simply add a Cartesian state that represents the difference between the original and the new origin. For instance, when transforming a vector (state of a vehicle) from Earth-centered to Moon-centered (keeping the orientation constant):</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">vehicleCartesianStateInEarthCenteredFrame</span> <span class="o">=</span> <span class="p">....</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">moonCartesianStateInEarthCenteredFrame</span> <span class="o">=</span> <span class="p">....</span>
@@ -403,7 +518,7 @@ Converting to/from Cartesian state requires an additional piece of information i
 <p>where the <code class="docutils literal"><span class="pre">NONE</span></code> arguments indicates that no light-time corrections are used, and the frame orientation denotes the orientation of the frame in which the relative state is returned.</p>
 </div>
 <div class="section" id="frame-rotations">
-<h3>1.1.2.2. Frame rotations<a class="headerlink" href="#frame-rotations" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.2.2. Frame Rotations<a class="headerlink" href="#frame-rotations" title="Permalink to this headline">¶</a></h3>
 <p>Rotating the frame in which a Cartesian state is expressed requires two pieces of information:</p>
 <blockquote>
 <div><ol class="arabic simple">

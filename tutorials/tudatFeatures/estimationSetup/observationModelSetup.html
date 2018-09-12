@@ -120,6 +120,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
 </ul>
 
@@ -218,7 +219,7 @@
 </li>
 <li><p class="first"><code class="xref py py-class docutils literal"><span class="pre">one_way_differenced_range</span></code> Doppler observable as it is typically obtained in interplanetary tracking in so-called ‘closed-loop’ mode (in m/s) between two link ends. Observable has size 1. The value is computed from the averaged range-rate over some integration time (see below). Requires <code class="docutils literal"><span class="pre">transmitter</span></code> and <code class="docutils literal"><span class="pre">receiver</span></code> link ends.</p>
 </li>
-<li><p class="first"><code class="xref py py-class docutils literal"><span class="pre">n_way_range</span></code> Accumulated range (in meters) over any number of signal paths, may be used for two-way range (as in SLR or deep space tracking), as well as more exotic situations where more than 2 signal paths are used in generating the observable (as was the case for, for instance, the SELENE mission) Observable has size 1. The value is computed accumulating the light-time (multiplied by <em>c</em>) with any retranmission delays that the user defines (see below) Requires <code class="docutils literal"><span class="pre">transmitter</span></code>, <code class="docutils literal"><span class="pre">receiver</span></code>, as well as <code class="docutils literal"><span class="pre">reflector1</span></code>, <code class="docutils literal"><span class="pre">reflector2</span></code> … <code class="docutils literal"><span class="pre">reflectorX</span></code> for X+1 signal paths (when only a <code class="docutils literal"><span class="pre">transmitter</span></code> and <code class="docutils literal"><span class="pre">receiver</span></code> are defined the observation is identical to a <code class="docutils literal"><span class="pre">one_way_range</span></code>)</p>
+<li><p class="first"><code class="xref py py-class docutils literal"><span class="pre">n_way_range</span></code> Accumulated range (in meters) over any number of signal paths, may be used for two-way range (as in SLR or deep space tracking), as well as more exotic situations where more than 2 signal paths are used in generating the observable (as was the case for, for instance, the SELENE mission) Observable has size 1. The value is computed accumulating the light-time (multiplied by <em>c</em>) with any retransmission delays that the user defines (see below) Requires <code class="docutils literal"><span class="pre">transmitter</span></code>, <code class="docutils literal"><span class="pre">receiver</span></code>, as well as <code class="docutils literal"><span class="pre">reflector1</span></code>, <code class="docutils literal"><span class="pre">reflector2</span></code> … <code class="docutils literal"><span class="pre">reflectorX</span></code> for X+1 signal paths (when only a <code class="docutils literal"><span class="pre">transmitter</span></code> and <code class="docutils literal"><span class="pre">receiver</span></code> are defined the observation is identical to a <code class="docutils literal"><span class="pre">one_way_range</span></code>)</p>
 </li>
 </ul>
 </div>
@@ -283,7 +284,7 @@
 </div>
 </div></blockquote>
 <p>may be used as well to create an observation model without light-time corrections or biases (in the case of the former) and no biases (in the case of the latter).</p>
-<p>Additionally, a second constructor is provided that takes a single light-time correction setting, instead of a list, as its second argument. So, you may substitute the input of type <code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">boost::shared_ptr&lt;</span> <span class="pre">LightTimeCorrectionSettings</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> by an input of type <code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">LightTimeCorrectionSettings</span> <span class="pre">&gt;</span></code>, in which case you cans set only a single light-time correction.</p>
+<p>Additionally, a second constructor is provided that takes a single light-time correction setting, instead of a list, as its second argument. So, you may substitute the input of type <code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">boost::shared_ptr&lt;</span> <span class="pre">LightTimeCorrectionSettings</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> by an input of type <code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">LightTimeCorrectionSettings</span> <span class="pre">&gt;</span></code>, in which case you can set only a single light-time correction.</p>
 <dl class="class">
 <dt id="OneWayDifferencedRangeRateObservationSettings">
 <em class="property">class </em><code class="descname">OneWayDifferencedRangeRateObservationSettings</code><a class="headerlink" href="#OneWayDifferencedRangeRateObservationSettings" title="Permalink to this definition">¶</a></dt>
@@ -498,20 +499,17 @@
 <li>Relative bias <span class="math">\(K_{r}\)</span>, which influences the observable as:</li>
 </ul>
 <div class="math">
-\[\tilde{h}=h(1+K_{r})\]</div>
-<p>For an observable with size greater than 1, <span class="math">\(K_{r}\)</span> is a vector and the multiplication is component-wise.</p>
+\[ \begin{align}\begin{aligned}\tilde{h}=h(1+K_{r})\\For an observable with size greater than 1, :math:`K_{r}` is a vector and the multiplication is component-wise.\end{aligned}\end{align} \]</div>
 <ul class="simple">
 <li>Absolute bias <span class="math">\(K_{a}\)</span>, which influences the observable as:</li>
 </ul>
 <div class="math">
-\[\tilde{h}=h+K_{a}\]</div>
-<p>For an observable with size greater than 1, <span class="math">\(K_{a}\)</span> is a vector and the multiplication is component-wise.</p>
+\[ \begin{align}\begin{aligned}\tilde{h}=h+K_{a}\\For an observable with size greater than 1, :math:`K_{a}` is a vector and the multiplication is component-wise.\end{aligned}\end{align} \]</div>
 <ul class="simple">
 <li>A combined bias, which is computed from any number of the above bias types combined. Note that each contribution of the combined bias is computed from the unbiased observable, so when applying both a relative and absolute bias, we get:</li>
 </ul>
 <div class="math">
-\[\tilde{h}=h+K_{a}+hK_{r}\]</div>
-<p>And, crucially:</p>
+\[ \begin{align}\begin{aligned}\tilde{h}=h+K_{a}+hK_{r}\\And, crucially:\end{aligned}\end{align} \]</div>
 <div class="math">
 \[\tilde{h}\neq (h+K_{a})(1+K_{r})\]</div>
 </div></blockquote>

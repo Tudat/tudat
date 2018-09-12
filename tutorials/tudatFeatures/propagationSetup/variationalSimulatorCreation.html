@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>5.7. Create a Variational Equations Solver Object &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>5.8. Create a Variational Equations Solver Object &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -40,7 +40,7 @@
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
         <link rel="up" title="5. Simulator Set-Up" href="index.html"/>
         <link rel="next" title="6. Estimation Set-Up" href="../estimationSetup/index.html"/>
-        <link rel="prev" title="5.6. Time and State Templates" href="TimeStateTemplates.html"/> 
+        <link rel="prev" title="5.7. Time and State Templates" href="TimeStateTemplates.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -107,9 +107,10 @@
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettings.html">5.2. Propagator Settings: Basics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettingsTermination.html">5.3. Propagator Settings: Termination Settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettingsDependentVariables.html">5.4. Propagator Settings: Dependent Variables</a></li>
-<li class="toctree-l4"><a class="reference internal" href="simulatorCreation.html">5.5. Create a Dynamics Simulator Object</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TimeStateTemplates.html">5.6. Time and State Templates</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">5.7. Create a Variational Equations Solver Object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="propagatorSettingsCoordinates.html">5.5. Propagator Settings: Conventional vs. Propagated Coordinates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulatorCreation.html">5.6. Create a Dynamics Simulator Object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TimeStateTemplates.html">5.7. Time and State Templates</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">5.8. Create a Variational Equations Solver Object</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">6. Estimation Set-Up</a></li>
@@ -122,6 +123,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
 </ul>
 
@@ -173,7 +175,7 @@
         
           <li><a href="index.html">5. Simulator Set-Up</a> &raquo;</li>
         
-      <li>5.7. Create a Variational Equations Solver Object</li>
+      <li>5.8. Create a Variational Equations Solver Object</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -193,7 +195,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="create-a-variational-equations-solver-object">
-<span id="tudatfeaturessimulatorcreation"></span><h1>5.7. Create a Variational Equations Solver Object<a class="headerlink" href="#create-a-variational-equations-solver-object" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturesvariationalsimulatorcreation"></span><h1>5.8. Create a Variational Equations Solver Object<a class="headerlink" href="#create-a-variational-equations-solver-object" title="Permalink to this headline">¶</a></h1>
 <p>Up to this point, we have been concerned with propagating states of bodies only. Tudat is also capable of propagating the variational equations associated with the dynamics to produce the state transition matrix <span class="math">\(\Phi(t,t_{0})\)</span> and sensitivity matrix <span class="math">\(S(t)\)</span>, which we define here as:</p>
 <div class="math">
 \[\begin{split}\Phi(t,t_{0}) &amp;= \frac{\partial \mathbf{x}(t)}{\partial\mathbf{x}(t_{0})}\\
@@ -235,7 +237,7 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
 <ul>
 <li><p class="first"><code class="docutils literal"><span class="pre">bodyMap</span></code></p>
 <blockquote>
-<div><p><a class="reference internal" href="../environmentSetup/index.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a> the map containing all the objects of type <a class="reference internal" href="../environmentSetup/index.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> used in the simulation.</p>
+<div><p><a class="reference internal" href="../environmentSetup/setup.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a> the map containing all the objects of type <a class="reference internal" href="../environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> used in the simulation.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">integratorSettings</span></code></p>
@@ -310,7 +312,7 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
 </dd></dl>
 
 <div class="section" id="retrieving-the-variational-equation-history">
-<h2>5.7.1. Retrieving the variational equation history<a class="headerlink" href="#retrieving-the-variational-equation-history" title="Permalink to this headline">¶</a></h2>
+<h2>5.8.1. Retrieving the variational equation history<a class="headerlink" href="#retrieving-the-variational-equation-history" title="Permalink to this headline">¶</a></h2>
 <p>Once the <a class="reference internal" href="#VariationalEquationsSolver" title="VariationalEquationsSolver"><code class="xref py py-class docutils literal"><span class="pre">VariationalEquationsSolver</span></code></a> object has been created and the equations of motion have been integrated, the propagation history of the selected bodies is stored within the <a class="reference internal" href="#VariationalEquationsSolver" title="VariationalEquationsSolver"><code class="xref py py-class docutils literal"><span class="pre">VariationalEquationsSolver</span></code></a>. To make use of it manually after propagation, such history can to be retrieved and saved to a file.</p>
 <p>If the variational equations propagation history needs to be saved, the following code can be used (assuming an object of type <a class="reference internal" href="#SingleArcVariationalEquationsSolver" title="SingleArcVariationalEquationsSolver"><code class="xref py py-class docutils literal"><span class="pre">SingleArcVariationalEquationsSolver</span></code></a> called variationalEquationsSimulator has been created):</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="o">&gt;</span> <span class="n">stateTransitionResult</span> <span class="o">=</span>
@@ -341,7 +343,7 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
         <a href="../estimationSetup/index.html" class="btn btn-neutral float-right" title="6. Estimation Set-Up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="TimeStateTemplates.html" class="btn btn-neutral" title="5.6. Time and State Templates" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="TimeStateTemplates.html" class="btn btn-neutral" title="5.7. Time and State Templates" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
