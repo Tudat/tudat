@@ -7,7 +7,7 @@
 .. role:: hideall
 .. role:: arrow
 
-List of keys
+List of Keys
 ============
 
 In this page, an exhaustive list with the possible keys that can be defined in input JSON files for the :literal:`json_interface` application is provided. These are used to create the settings as discussed in :ref:`tudatFeaturesIndex`. 
@@ -23,4 +23,3 @@ In some parts, key paths are used to refer to the key of a given object in the J
 :showall:`Unfold All` :hideall:`Fold All`
 
 .. include:: root.rst
-

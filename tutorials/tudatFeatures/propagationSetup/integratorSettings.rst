@@ -11,9 +11,9 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
    .. code-block:: cpp
 
-      IntegratorSettings<TimeType>( integratorType,
-      			  simulationStartEpoch,
-      			  fixedStepSize )
+      IntegratorSettings< TimeType >( integratorType,
+      			              simulationStartEpoch,
+      			              fixedStepSize )
 
    where:
 
@@ -39,20 +39,30 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
    .. code-block:: cpp
    
-      RungeKuttaVariableStepSizeSettings<TimeType>( integratorType,
-                            		  simulationStartEpoch,
-                            		  initialTimeStep,
-                            		  coefficientSet,
-                            		  minimumStepSize,
-                            		  maximumStepSize,
-                            		  relativeErrorTolerence,
-                            		  absoluteErrorTolerence )
+      RungeKuttaVariableStepSizeSettings< TimeType, StateType >( integratorType,
+                            		                          simulationStartEpoch,
+                            		                          initialTimeStep,
+                            		                          coefficientSet,
+                            		                          minimumStepSize,
+                            		                          maximumStepSize,
+                            		                          relativeErrorTolerence,
+                            		                          absoluteErrorTolerence,
+                                                                  saveFrequency,
+                                                                  assessPropagationTerminationConditionDuringIntegrationSubsteps,
+                                                                  safetyFactorForNextStepSize,
+                                                                  maximumFactorIncreaseForNextStepSize,
+                                                                  minimumFactorDecreaseForNextStepSize,
+                                                                  newStepSizeFunction )
 
    where:
 
     - :literal:`TimeType`
    
       Template argument used to set the precision of the time, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal:`long double`. 
+
+    - :literal:`StateType`
+   
+      Template argument used to set the precision of the state, in general :literal:`Eigen::VectorXd` is used. For some application where a covariance propagation is also performed, this may be :literal:`Eigen::MatrixXd`. 
 
    - :literal:`integratorType`
 
@@ -80,11 +90,38 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
    - :literal:`relativeErrorTolerance`
 
-      :literal:`TimeType` that defines the relative error tolerance for step size control of the :literal:`rungeKuttaVariableStepSize` numerical integrator.
+      :literal:`StateType` or :literal:`StateType::Scalar` that defines the relative error tolerance for step size control of the :literal:`rungeKuttaVariableStepSize` numerical integrator.
 
    - :literal:`absoluteErrorTolerance`
 
-      :literal:`TimeType` that defines the absolute error tolerance for step size control of the :literal:`rungeKuttaVariableStepSize` numerical integrator.
+      :literal:`StateType` or :literal:`StateType::Scalar` that defines the absolute error tolerance for step size control of the :literal:`rungeKuttaVariableStepSize` numerical integrator.
+
+   - :literal:`saveFrequency`
+
+      Frequency at which to save the numerical integrated states. For instance, you may want to save one every 15 time steps, to give an output that is less demanding in terms of storage (in this case 15 would be the :literal:`saveFrequency`). The default value is 1.
+
+   - :literal:`assessPropagationTerminationConditionDuringIntegrationSubsteps`
+
+      Whether the propagation termination conditions should be evaluated during the intermediate sub-steps of the integrator (``true``) or only at the end of each integration step (``false``). The default value is ``false``.
+
+   - :literal:`safetyFactorForNextStepSize`
+
+      Safety factor for step size control. The default value is 0.8.
+
+   - :literal:`maximumFactorIncreaseForNextStepSize`
+
+      Maximum increase factor in time step in subsequent iterations. The default value is 4.0.
+
+   - :literal:`minimumFactorDecreaseForNextStepSize`
+
+      Minimum decrease factor in time step in subsequent iterations. The default value is 0.1.
+
+   - :literal:`newStepSizeFunction`
+
+      Custom function to compute the step-size for the next time step. The default value is 0, which means that the default step-size function will be used.
+
+.. tip:: 
+   For the relative and absolute error tolerances you can define a tolerance for each element of the state vector. For instance you could set a different absolute tolerance for position and velocity, if the propagated state is expressed in Cartesian elements. 
 
 .. class:: BulirschStoerIntegratorSettings
    
@@ -92,14 +129,14 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
    .. code-block:: cpp
    
-      BulirschStoerIntegratorSettings<TimeType>(initialTime,
-                            		  initialTimeStep,
-                            		  extrapolationSequence,
-                            		  maximumNumberOfSteps,
-                            		  minimumStepSize,
-					  maximumStepSize,
-                            		  relativeErrorTolerence,
-                            		  absoluteErrorTolerence )
+      BulirschStoerIntegratorSettings< TimeType >( initialTime,
+                            		           initialTimeStep,
+                            		           extrapolationSequence,
+                            		           maximumNumberOfSteps,
+                            		           minimumStepSize,
+					           maximumStepSize,
+                            		           relativeErrorTolerence,
+                            		           absoluteErrorTolerence )
 
    where:
 
@@ -146,14 +183,14 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
    .. code-block:: cpp
    
-      AdamsBashforthMoultonSettings<TimeType>(initialTime,
-                            		  initialTimeStep,
-                            		  minimumStepSize,
-					  maximumStepSize,
-                            		  relativeErrorTolerence,
-                            		  absoluteErrorTolerence,
-					  minimumOrder,
-					  maximumOrder )
+      AdamsBashforthMoultonSettings< TimeType >( initialTime,
+                            		         initialTimeStep,
+                            		         minimumStepSize,
+					         maximumStepSize,
+                            		         relativeErrorTolerence,
+                            		         absoluteErrorTolerence,
+					         minimumOrder,
+					         maximumOrder )
 
    where:
 

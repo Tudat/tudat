@@ -5,7 +5,9 @@ Propagator Settings: Termination Settings
 The :class:`PropagationTerminationSettings` are a key parameter in the propagation of a body's orbit, since these will determine the computational time and the size of the output file. Depending on the application, the user may want to end the body propagation according to different criteria. Currently, the following :class:`PropagationTerminationSettings` are offered in Tudat:
 
 - Termination once a certain time has passed.
+- Termination once a certain CPU time is reached.
 - Termination once a dependent variable meets a certain criterion.
+- Termination once a user-defined function returns ``true``. 
 - Termination once multiple criteria are met.
 
 The different types of :class:`PropagationTerminationSettings` are implemented by means of derived classes and custom constructors, as detailed in this page. 
@@ -20,7 +22,7 @@ The different types of :class:`PropagationTerminationSettings` are implemented b
 
    .. code-block:: cpp
 
-      PropagationTimeTerminationSettings( terminationTime,  terminateExactlyOnFinalCondition)
+      PropagationTimeTerminationSettings( terminationTime, terminateExactlyOnFinalCondition )
 
    where:
 
@@ -31,6 +33,16 @@ The different types of :class:`PropagationTerminationSettings` are implemented b
    - :literal:`terminateExactlyOnFinalCondition`
 
       :literal:`bool` that determines if the integrator will either stop exactly on the final condition (true), or if the integrator will terminate on the first step where it is violated (false), which is the default value.
+
+.. class:: PropagationCPUTimeTerminationSettings
+
+   You may want to make sure that the propagation does not exceed a certain computation time. In this case, you can easily set the termination settings as follows:
+
+   .. code-block:: cpp
+
+      PropagationCPUTimeTerminationSettings( cpuTerminationTime )
+
+   where :literal:`cpuTerminationTime` is the maximum allowed CPU time, after which propagation should be stopped.
 
 .. class:: PropagationDependentVariableTerminationSettings
 
@@ -71,7 +83,30 @@ The different types of :class:`PropagationTerminationSettings` are implemented b
 
    - :literal:`terminateExactlyOnFinalCondition`
 
-      :literal:`bool` that determines if the integrator will either stop exactly on the final condition (true), or if the integrator will terminate on the first step where it is violated (false), which is the default value.  
+      :literal:`bool` that determines if the integrator will either stop exactly on the final condition (true), or if the integrator will terminate on the first step where it is violated (false), which is the default value.
+
+.. class:: PropagationCustomTerminationSettings
+
+   With this class, you can set a custom function that based on some internal calculations will return whether to stop propagation. The function should take the current time as input (hence a :literal:`double`) and output a boolean (i.e., :literal:`bool`). This boolean should be :literal:`true` when the propagation has to be stopped and :literal:`false` otherwise. The constructor looks like this:
+
+   .. code-block:: cpp
+
+      PropagationCustomTerminationSettings( checkStopCondition )
+
+   where :literal:`checkStopCondition` is the only input and is of type :literal:`boost::function< bool( const double ) >`. 
+
+   .. tip::
+      In case your custom function requires more inputs (e.g., it may depend on the position of the spacecraft or other variables that are not the current time), you can use :literal:`boost::bind` to add more inputs.
+
+   As an example, the case where the state of the spacecraft is added as an input is shown below: 
+
+   .. code-block:: cpp
+
+      boost::function< Eigen::Vector6d( ) > spacecraftStateFunction =
+              boost::bind( &Body::getState, bodyMap.at( "Satellite" ) );
+      boost::shared_ptr< PropagationTerminationSettings > terminationSettings =
+              boost::make_shared< PropagationCustomTerminationSettings >(
+                  boost::bind( &customTerminationFunction, _1, spacecraftStateFunction ) );
 
 .. class:: PropagationHybridTerminationSettings
 
@@ -98,3 +133,7 @@ The different types of :class:`PropagationTerminationSettings` are implemented b
       :literal:`bool` that determines if the integrator will either stop exactly on the final condition (true), or if the integrator will terminate on the first step where it is violated (false), which is the default value.
 
    .. tip::  It is possible to combine both :class:`PropagationTimeTerminationSettings` and :class:`PropagationDependentVariableTerminationSettings`. 
+
+.. note:: 
+   
+   For both :class:`PropagationCPUTimeTerminationSettings` and :class:`PropagationCustomTerminationSettings` the termination cannot be set to occur exactly on the final condition.

@@ -3,7 +3,7 @@
 .. role:: jsontype
 .. role:: jsonkey
 
-Modular files
+Modular Files
 =============
 
 The JSON Interface allows the use of modular JSON input files. This means that a simulation can be set up by using different files. Since the list of settings to be provided can be very long, in some cases it is convenient to specify those settings in different files. Additionally, modularity allows re-using parts from other projects, and a set of files containing settings for e.g. several integrators can be provided and then only one of them be used by referencing it from the root input file (i.e. the file provided as command-line argument to the :literal:`json_interface` application).

@@ -39,5 +39,7 @@ When applied to the same example as for the Qt build-in debugger, gdb provide th
 
 .. literalinclude:: DebuggingOutput.txt
 
+Debugging with Git
+~~~~~~~~~~~~~~~~~~
 
-
+You can also use Git to debug your code. In this case, rather than looking for a bug you have just introduced, you can use Git to pinpoint which commit introduced an error. The function you may want to you use, then is :literal:`git bisect`, which is very well explained `here <https://git-scm.com/book/en/v2/Git-Tools-Debugging-with-Git#Binary-Search>`_.
