@@ -123,7 +123,7 @@ The documentation using reStructuredText and Sphinx requires relatively few tool
 
       make html
 
-  This will compile the :literal:`.html` files which you can view using your favorite web browser.
+   This will compile the :literal:`.html` files which you can view using your favorite web browser.
 
    The overall files structure should look as follows::
 
@@ -295,6 +295,10 @@ The following commands are available within reStructuredText
 - :literal:`use of semi-colon after a paragraph::`
    Introduces a box of monospaced text without mark-up. Generally used to define file locations.
 
+- :literal:`.. figure:: path/to/image.png`
+   Adds a figure at the same location in the text.
+
+.. note:: PDF figures are not supported by all web browsers. The standard figure format on the Tudat wiki is PNG.
 
 Upcoming Improvements
 ~~~~~~~~~~~~~~~~~~~~~
