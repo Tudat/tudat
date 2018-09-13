@@ -38,4 +38,4 @@ Results
 
 If you run the application as is, the result should be similar to the ones shown below. Over 300 steps, the filter manages to converge very closely to the actual values of position, velocity and ballistic coefficient. Note, however, how the convergence in position is much quicker than the one in ballistic coefficient and much more stable than the one in velocity. This is simply related to the fact that position is the only state that is directly measured (and consequently, much less uncertain).
 
-.. figure:: images/filterExample.pdf
+.. figure:: images/filterExample.png
