@@ -16,7 +16,7 @@ and it represents a very simple case of a falling object, with the additional ch
 
 Clearly, this is an uncontrolled problem. However, for sake of completeness and to show its use, a control system object is added nonetheless. As you will notice by going through the code, this object always provides a control vector of zeros (and the control vector is not used in any of the equations).
 
-By looking at the code, you will also see that the filter settings and objects are created consecutively. This is a step that could, instead, have been done by directly creating a :literal:`UnscentedKalmanFilter` object directly. However, it is customary (in Tudat) for the user to input a set of settings, which are then used as input to another object (could be e.g., a navigation system), where the settings are converted to the filter itself. Thus, these two steps are taken just to show how it would be done in such a situation. 
+By looking at the code, you will also see that the filter settings and objects are created consecutively. This is a step that could, instead, have been done by directly creating a :class:`UnscentedKalmanFilter` object. However, it is customary (in Tudat) for the user to input a set of settings, which are then used as input to another object (could be e.g., a navigation system), where the settings are converted to the filter itself. Thus, these two steps are taken just to show how it would be done in such a situation. 
 
 Initial Conditions
 ~~~~~~~~~~~~~~~~~~
