@@ -30,6 +30,7 @@ Linear Kalman Filter
                      measurementMatrix,
                      systemUncertainty, 
                      measurementUncertainty,
+                     filteringTimeStep,
                      initialTime, 
                      initialEstimatedStateVector, 
                      initialEstimatedStateCovarianceMatrix );
@@ -41,6 +42,7 @@ Linear Kalman Filter
       - :literal:`measurementMatrixFunction`: a function returning the measurement matrix as a function of time, state and control input
       - :literal:`systemUncertainty`: a matrix defining the uncertainty in modeling of the system
       - :literal:`measurementUncertainty`: a matrix defining the uncertainty in modeling of the measurements
+      - :literal:`filteringTimeStep`: a scalar representing the value of the constant filtering time step
       - :literal:`initialTime`: a scalar representing the value of the initial time
       - :literal:`initialStateVector`: a vector representing the initial (estimated) state of the system; it is used as first a-priori estimate of the state vector
       - :literal:`initialCovarianceMatrix`: a matrix representing the initial (estimated) covariance of the system; it is used as first a-priori estimate of the covariance matrix
@@ -84,6 +86,7 @@ Extended Kalman Filter
             boost::make_shared< ExtendedKalmanFilterSettings< IndependentVariableType, DependentVariableType > >( 
                         systemUncertainty,
                         measurementUncertainty,
+                        filteringTimeStep,
                         initialTime,
                         initialStateVector,
                         initialCovarianceMatrix,
@@ -93,6 +96,7 @@ Extended Kalman Filter
 
          - :literal:`systemUncertainty`: a matrix defining the uncertainty in modeling of the system
          - :literal:`measurementUncertainty`: a matrix defining the uncertainty in modeling of the measurements
+         - :literal:`filteringTimeStep`: a scalar representing the value of the constant filtering time step
          - :literal:`initialTime`: a scalar representing the value of the initial time
          - :literal:`initialStateVector`: a vector representing the initial (estimated) state of the system; it is used as first a-priori estimate of the state vector
          - :literal:`initialCovarianceMatrix`: a matrix representing the initial (estimated) covariance of the system; it is used as first a-priori estimate of the covariance matrix
@@ -126,6 +130,7 @@ Unscented Kalman Filter
             boost::make_shared< UnscentedKalmanFilterSettings< IndependentVariableType, DependentVariableType > >( 
                         systemUncertainty,
                         measurementUncertainty,
+                        filteringTimeStep,
                         initialTime,
                         initialStateVector,
                         initialCovarianceMatrix,
@@ -137,6 +142,7 @@ Unscented Kalman Filter
 
          - :literal:`systemUncertainty`: a matrix defining the uncertainty in modeling of the system
          - :literal:`measurementUncertainty`: a matrix defining the uncertainty in modeling of the measurements
+         - :literal:`filteringTimeStep`: a scalar representing the value of the constant filtering time step
          - :literal:`initialTime`: a scalar representing the value of the initial time
          - :literal:`initialStateVector`: a vector representing the initial (estimated) state of the system; it is used as first a-priori estimate of the state vector
          - :literal:`initialCovarianceMatrix`: a matrix representing the initial (estimated) covariance of the system; it is used as first a-priori estimate of the covariance matrix
@@ -161,16 +167,15 @@ Unscented Kalman Filter
 Using a Kalman Filter Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To use the filters after their creation, you will need to update the system with the data corresponding to the new time step. This can be done by using the function :literal:`updateFilter`, which takes to inputs:
+To use the filters after their creation, you will need to update the system with the data corresponding to the new time step. This can be done by using the function :literal:`updateFilter`, which takes one inputs:
 
-   - :literal:`currentTime`: a double denoting the current time
    - :literal:`currentMeasurementVector`: a vector denoting the current external measurement which will be used to correct the estimated a-priori state (thus to obtain the a-posteriori estimate)
 
-Note that the filter object come equipped with two noise generators. These produce random Gaussian noise based on the system and measuremenet uncertainty properties input by the user. They can be retrieved with the commands :literal:`produceSystemNoise` and :literal:`produceMeasurementNoise`. You will find an example of how to use the noise and the other features mentioned on this page, in::
+Note that the filter object comes equipped with two noise generators. These produce random Gaussian noise based on the system and measuremenet uncertainty properties input by you. They can be retrieved with the commands :literal:`produceSystemNoise` and :literal:`produceMeasurementNoise`. You will find cases of how to use the noise and the other features mentioned on this page, in::
 
    /Tudat/Mathematics/Filters/UnitTests
 
-where a few examples for each filtering technique is shown. One of the test cases shown for the extended (EKF) and unscented (UKF) filters is also shown in an example application, which you can find in :ref:`walkthroughsFiltering`.
+where a few examples for each filtering technique are shown. One of the test cases shown for the extended (EKF) and unscented (UKF) filters is also shown in an example application, which you can find in :ref:`walkthroughsFiltering`.
 
 The last element that should be discussed is the control system. It may be the case that you also need a control input together with the time and state. This can be added with the creation of a :class:`ControlWrapper` of the type explained in the next section, :ref:`tudatFeaturesFiltersControlSystem`.
 

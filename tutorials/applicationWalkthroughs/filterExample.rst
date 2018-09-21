@@ -3,7 +3,7 @@
 Kalman Filter for State Estimation
 ==================================
 
-In this example application, you will learn how to set up and use a Kalman filter object. In particular, this tutorial focuses only on the extended (EKF) and unscented (UKF) Kalman filters. 
+In this example application, you will learn how to set up and use a Kalman filter object. In particular, this tutorial focuses only on the extended (EKF) and unscented (UKF) Kalman filters.
 
 Problem Description
 ~~~~~~~~~~~~~~~~~~~
