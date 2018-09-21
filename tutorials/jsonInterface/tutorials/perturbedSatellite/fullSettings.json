@@ -1,0 +1,261 @@
+{
+  "bodies": {
+    "Asterix": {
+      "aerodynamics": {
+        "areCoefficientsInAerodynamicFrame": true,
+        "areCoefficientsInNegativeAxisDirection": true,
+        "coefficientsType": "constant",
+        "forceCoefficients": [
+          [
+            2.2
+          ],
+          [
+            0.0
+          ],
+          [
+            0.0
+          ]
+        ],
+        "referenceArea": 10.0
+      },
+      "mass": 400.0,
+      "radiationPressure": {
+        "Sun": {
+          "occultingBodies": [
+            "Earth"
+          ],
+          "radiationPressureCoefficient": 1.5,
+          "referenceArea": 10.0,
+          "type": "cannonBall"
+        }
+      }
+    },
+    "Earth": {
+      "atmosphere": {
+        "file": "${ATMOSPHERE_TABLES_PATH}/USSA1976Until100kmPer100mUntil1000kmPer1000m.dat",
+        "type": "tabulated"
+      },
+      "ephemeris": {
+        "convergeLighTimeAberration": false,
+        "correctForLightTimeAberration": false,
+        "correctForStellarAberration": false,
+        "frameOrientation": "J2000",
+        "frameOrigin": "SSB",
+        "type": "directSpice"
+      },
+      "gravityField": {
+        "model": "ggm02c",
+        "type": "sphericalHarmonic"
+      },
+      "rotationModel": {
+        "originalFrame": "J2000",
+        "targetFrame": "IAU_Earth",
+        "type": "spice"
+      },
+      "shapeModel": {
+        "radius": 6371008.36666667,
+        "type": "spherical"
+      }
+    },
+    "Mars": {
+      "ephemeris": {
+        "convergeLighTimeAberration": false,
+        "correctForLightTimeAberration": false,
+        "correctForStellarAberration": false,
+        "frameOrientation": "J2000",
+        "frameOrigin": "SSB",
+        "type": "directSpice"
+      },
+      "gravityField": {
+        "model": "jgmro120d",
+        "type": "sphericalHarmonic"
+      },
+      "rotationModel": {
+        "originalFrame": "J2000",
+        "targetFrame": "IAU_Mars",
+        "type": "spice"
+      },
+      "shapeModel": {
+        "radius": 3389526.66666667,
+        "type": "spherical"
+      }
+    },
+    "Moon": {
+      "ephemeris": {
+        "convergeLighTimeAberration": false,
+        "correctForLightTimeAberration": false,
+        "correctForStellarAberration": false,
+        "frameOrientation": "J2000",
+        "frameOrigin": "SSB",
+        "type": "directSpice"
+      },
+      "gravityField": {
+        "model": "lpe200",
+        "type": "sphericalHarmonic"
+      },
+      "rotationModel": {
+        "originalFrame": "J2000",
+        "targetFrame": "IAU_Moon",
+        "type": "spice"
+      },
+      "shapeModel": {
+        "radius": 1737400.0,
+        "type": "spherical"
+      }
+    },
+    "Sun": {
+      "ephemeris": {
+        "convergeLighTimeAberration": false,
+        "correctForLightTimeAberration": false,
+        "correctForStellarAberration": false,
+        "frameOrientation": "J2000",
+        "frameOrigin": "SSB",
+        "type": "directSpice"
+      },
+      "gravityField": {
+        "type": "pointMassSpice"
+      },
+      "rotationModel": {
+        "originalFrame": "J2000",
+        "targetFrame": "IAU_Sun",
+        "type": "spice"
+      },
+      "shapeModel": {
+        "radius": 696000000.0,
+        "type": "spherical"
+      }
+    },
+    "Venus": {
+      "ephemeris": {
+        "convergeLighTimeAberration": false,
+        "correctForLightTimeAberration": false,
+        "correctForStellarAberration": false,
+        "frameOrientation": "J2000",
+        "frameOrigin": "SSB",
+        "type": "directSpice"
+      },
+      "gravityField": {
+        "type": "pointMassSpice"
+      },
+      "rotationModel": {
+        "originalFrame": "J2000",
+        "targetFrame": "IAU_Venus",
+        "type": "spice"
+      },
+      "shapeModel": {
+        "radius": 6051800.0,
+        "type": "spherical"
+      }
+    }
+  },
+  "export": [
+    {
+      "epochsInFirstColumn": true,
+      "file": "stateHistory.txt",
+      "numericalPrecision": 15,
+      "onlyFinalStep": false,
+      "onlyInitialStep": false,
+      "variables": [
+        {
+          "type": "state"
+        }
+      ]
+    }
+  ],
+  "globalFrameOrientation": "J2000",
+  "globalFrameOrigin": "SSB",
+  "integrator": {
+    "assessPropagationTerminationConditionDuringIntegrationSubsteps": false,
+    "initialTime": 0.0,
+    "saveFrequency": 1,
+    "stepSize": 10.0,
+    "type": "rungeKutta4"
+  },
+  "options": {
+    "defaultValueUsedForMissingKey": "continueSilently",
+    "fullSettingsFile": "fullSettings.json",
+    "notifyOnPropagationStart": false,
+    "notifyOnPropagationTermination": false,
+    "tagOutputFilesIfPropagationFails": true,
+    "unusedKey": "printWarning"
+  },
+  "propagators": [
+    {
+      "accelerations": {
+        "Asterix": {
+          "Earth": [
+            {
+              "maximumDegree": 5,
+              "maximumOrder": 5,
+              "type": "sphericalHarmonicGravity"
+            },
+            {
+              "type": "aerodynamic"
+            }
+          ],
+          "Mars": [
+            {
+              "type": "pointMassGravity"
+            }
+          ],
+          "Moon": [
+            {
+              "type": "pointMassGravity"
+            }
+          ],
+          "Sun": [
+            {
+              "type": "pointMassGravity"
+            },
+            {
+              "type": "cannonBallRadiationPressure"
+            }
+          ],
+          "Venus": [
+            {
+              "type": "pointMassGravity"
+            }
+          ]
+        }
+      },
+      "bodiesToPropagate": [
+        "Asterix"
+      ],
+      "centralBodies": [
+        "Earth"
+      ],
+      "initialStates": [
+        [
+          7037613.72352386
+        ],
+        [
+          3237952.92678759
+        ],
+        [
+          2150476.15106024
+        ],
+        [
+          -1465.37073612344
+        ],
+        [
+          -41.0666336825414
+        ],
+        [
+          6622.85625387858
+        ]
+      ],
+      "integratedStateType": "translational",
+      "type": "cowell"
+    }
+  ],
+  "spice": {
+    "preloadEphemeris": false,
+    "useStandardKernels": true
+  },
+  "termination": {
+    "upperLimit": 86400.0,
+    "variable": {
+      "type": "independent"
+    }
+  }
+}

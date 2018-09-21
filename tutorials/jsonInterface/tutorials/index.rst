@@ -23,6 +23,7 @@ custom C++ applications, which use the JSON Interface, will be written. Some add
    :maxdepth: 1
 
    unperturbedSatellite/index
+   perturbedSatellite/index
    lifetimeMaximisation/index
    apolloCapsuleEntry/index
    lifetimeMaximisationCPP/index
