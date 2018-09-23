@@ -1,0 +1,693 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2.2. Perturbed Earth-orbiting Satellite &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../../index.html"/>
+        <link rel="up" title="2. Tutorials" href="../index.html"/>
+        <link rel="next" title="2.3. Perturbed Earth-orbiting Satellite Lifetime Maximisation" href="../lifetimeMaximisation/index.html"/>
+        <link rel="prev" title="2.1. Unperturbed Earth-orbiting Satellite" href="../unperturbedSatellite/index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">Tutorials and Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/index.html">Tudat Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tudatFeatures/index.html">Tudat Libraries</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">JSON Interface</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../basicJsonInterfaces.html">1. Basic JSON Interfaces</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">2. Tutorials</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../unperturbedSatellite/index.html">2.1. Unperturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">2.2. Perturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lifetimeMaximisation/index.html">2.3. Perturbed Earth-orbiting Satellite Lifetime Maximisation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../apolloCapsuleEntry/index.html">2.4. Apollo Capsule Entry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lifetimeMaximisationCPP/index.html">2.5. Perturbed Earth-orbiting Satellite Lifetime Maximisation Using a Custom C++ Application</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../keys/rst/index.html">3. List of Keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../customJsonApp.html">4. Writing Custom JSON-based Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../modularFiles.html">5. Modular Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../multicase.html">6. Multi-case Simulations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference external" href="http://doxygen.tudat.tudelft.nl">Doxygen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../FAQ/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developerGuide/index.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Tutorials and Documentation</a> &raquo;</li>
+        
+          <li><a href="../../index.html">JSON Interface</a> &raquo;</li>
+        
+          <li><a href="../index.html">2. Tutorials</a> &raquo;</li>
+        
+      <li>2.2. Perturbed Earth-orbiting Satellite</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/tutorials/jsonInterface/tutorials/perturbedSatellite/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="perturbed-earth-orbiting-satellite">
+<span id="jsoninterface-tutorials-perturbedorbitpropagation"></span><h1>2.2. Perturbed Earth-orbiting Satellite<a class="headerlink" href="#perturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
+<p>This page describes how to set up the propagation of a perturbed Earth-orbiting satellite can be set up using the <code class="docutils literal"><span class="pre">json_interface</span></code>.</p>
+<p>This example takes the code from <a class="reference internal" href="../unperturbedSatellite/index.html#jsoninterface-tutorials-basicpropagation"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> as a starting point, upon which we can start to build our new application.</p>
+<p>The initial conditions and general simulation settings are thus the same as for the previous example. The only difference will be in the addition of perturbing accelerations.</p>
+<div class="section" id="adding-perturbations">
+<h2>2.2.1. Adding Perturbations<a class="headerlink" href="#adding-perturbations" title="Permalink to this headline">¶</a></h2>
+<p>The addition of perturbations requires the specifications of a few more characteristics, both for the environment and the spacecraft.</p>
+<p>In this simple application, we would like to reproduce the results of the example in <a class="reference internal" href="../../../applicationWalkthroughs/perturbedEarthOrbitingSatellite.html#walkthroughsperturbedearthorbitingsatellite"><span class="std std-ref">Perturbed Earth-orbiting Satellite</span></a>. Hence, we would like to model the following accelerations:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Spherical harmonics gravity</strong> of the Earth up to degree and order 5.</li>
+<li><strong>Third body perturbations</strong> due to Sun, Moon, Mars and Venus.</li>
+<li><strong>Solar radiation pressure</strong></li>
+<li><strong>Aerodynamics</strong> due to Earth’s atmosphere</li>
+</ul>
+</div></blockquote>
+<p>Each of these accelerations require some small modifications to the previous code. In the text below, we will analyze what are the missing elements, and how they can be added to the JSON file.</p>
+<div class="section" id="spherical-harmonics">
+<h3>2.2.1.1. Spherical Harmonics<a class="headerlink" href="#spherical-harmonics" title="Permalink to this headline">¶</a></h3>
+<p>To model spherical harmonics (SH), two steps are necessary. The first is the addition of the SH model to the body. This is done by specifying a new key for the object for which the SH model needs to be added. In case you want to add SH to the Earth, as we want to do for this example, you should add the following specification to the <span class="jsonkey">Earth</span> key:</p>
+<blockquote>
+<div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;gravityField&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sphericalHarmonic&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;ggm02c&quot;</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Here, we have specified the <code class="docutils literal"><span class="pre">ggm02c</span></code> model, which will be used to load the SH coefficients <span class="math">\(C\)</span> and <span class="math">\(S\)</span>. Note that you can find a list of the available spherical harmonics models at <a class="reference internal" href="../../keys/rst/index.html#jsoninterface-keys"><span class="std std-ref">List of Keys</span></a>, under Body, Gravity Field, Spherical Harmonic Gravity Field from built-in model.</p>
+<p>Now, we also need to tell the simulation to model the gravitational acceleration. This is done by replacing the <code class="docutils literal"><span class="pre">&quot;pointMassGravity&quot;</span></code> value of the <span class="jsonkey">type</span> key under the accelerations of Asterix. In this case, we want to add <code class="docutils literal"><span class="pre">&quot;sphericalHarmonicGravity&quot;</span></code>. For this type of acceleration, we also need to specify the maximum degree and order to use. This is done by adding two extra keys, namely <span class="jsonkey">degree</span> and <span class="jsonkey">order</span>, after <span class="jsonkey">type</span>. Thus, for now, the JSON code specifying the accelerations acting on the body Asterix will look like this:</p>
+<blockquote>
+<div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sphericalHarmonicGravity&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;maximumDegree&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+         <span class="nt">&quot;maximumOrder&quot;</span><span class="p">:</span> <span class="mi">5</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="third-bodies">
+<h3>2.2.1.2. Third Bodies<a class="headerlink" href="#third-bodies" title="Permalink to this headline">¶</a></h3>
+<p>The addition of third bodies is very straight-forward. Firstly, we need to add these extra bodies to the simulation. Since we do not have any specific request for these bodies, we can simply load the default settings for each of the extra bodies we need, i.e., Sun, Moon, Mars and Venus. Therefore, under the key <span class="jsonkey">bodies</span> we can add, taking the Sun as example:</p>
+<blockquote>
+<div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Very simple! Then, we just need to specify the extra accelerations due to central gravitational field of each body. We can do this by adding to the list of accelerations of Asterix, the following:</p>
+<blockquote>
+<div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">[</span>
+         <span class="p">{</span>
+           <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;pointMassGravity&quot;</span>
+         <span class="p">}</span>
+      <span class="p">]</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>where the Sun is taken as example, once more.</p>
+</div>
+<div class="section" id="solar-radiation-pressure">
+<h3>2.2.1.3. Solar Radiation Pressure<a class="headerlink" href="#solar-radiation-pressure" title="Permalink to this headline">¶</a></h3>
+<p>Inclusion of solar radiation pressure to the simulation requires three steps:</p>
+<blockquote>
+<div><ul class="simple">
+<li>adding the Sun to the simulation (done in the previous subsection)</li>
+<li>adding radiation pressure characteristics to Asterix</li>
+<li>adding the acceleration to the list</li>
+</ul>
+</div></blockquote>
+<p>The first step has already been done to model the third body gravity, thus we can directly focus on the last two. The radiation pressure interface must be inserted under the body settings of Asterix. We will need to specify three things: mass, reference area and the radiation parameters. Hence, under the key <span class="jsonkey">bodies</span>, we can include the following to the specifications of the spacecraft:</p>
+<blockquote>
+<div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;mass&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+      <span class="nt">&quot;referenceArea&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+      <span class="nt">&quot;radiationPressure&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;radiationPressureCoefficient&quot;</span><span class="p">:</span> <span class="mf">1.2</span><span class="p">,</span>
+            <span class="nt">&quot;occultingBodies&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;Earth&quot;</span> <span class="p">]</span>
+         <span class="p">}</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>For the radiation parameters, one element is compulsory: the radiation pressure coefficient (which in the example at hand is 1.2). The second element shown above, i.e., <span class="jsonkey">occultingBodies</span> can be added if you want to also model the shadow cone due to some other bodies. In this case, we are modeling the shadow due to the Earth, which for a LEO spacecraft, accounts for a large part of the orbit.</p>
+<p>The next step is to add the acceleration. This is very similar to what we have done for the previous accelerations. Thus, we will add to the list of accelerations of Asterix, due to the Sun, the following key and value pair:</p>
+<blockquote>
+<div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">[</span>
+         <span class="p">{</span>
+           <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;cannonBallRadiationPressure&quot;</span>
+         <span class="p">}</span>
+      <span class="p">]</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="aerodynamics">
+<h3>2.2.1.4. Aerodynamics<a class="headerlink" href="#aerodynamics" title="Permalink to this headline">¶</a></h3>
+<p>Modeling of the aerodynamic acceleration is somewhat similar to the modeling of the solar radiation. Firstly, we need to specify the atmosphere of the planet we are orbiting. However, since we want to keep the default atmosphere of the Earth (the tabulated 1976 Standard Atmosphere Model), we do not need to specify this.</p>
+<p>The second step is the addition of the aerodynamic properties of the spacecraft. In this case, we want to model only a constant drag coefficient, equal to 1.2. We can do this by adding a new key to <span class="jsonkey">Asterix</span>, under <span class="jsonkey">bodies</span>:</p>
+<blockquote>
+<div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;aerodynamics&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;forceCoefficients&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">]</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Note that to properly model the aerodynamic acceleration, the value of mass and reference area also need to be specified, but these were already added in the previous subsection.</p>
+<p>Finally, we need to include the acceleration in the <span class="jsonkey">propagators</span> settings. This is another simple task, and can be done by adding the following to the <span class="jsonkey">accelerations</span> of Asterix:</p>
+<blockquote>
+<div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">[</span>
+         <span class="p">{</span>
+           <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;aerodynamic&quot;</span>
+         <span class="p">}</span>
+      <span class="p">]</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="running-the-simulation">
+<h2>2.2.2. Running the Simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">¶</a></h2>
+<p>The resulting input file, where all the settings have been combined, should look something like this:</p>
+<div class="literal-block-wrapper docutils container" id="main-json-perturbed">
+<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">main.json</span></code></span><a class="headerlink" href="#main-json-perturbed" title="Permalink to this code">¶</a></div>
+<div class="highlight-json"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;initialEpoch&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nt">&quot;finalEpoch&quot;</span><span class="p">:</span> <span class="mi">86400</span><span class="p">,</span>
+  <span class="nt">&quot;globalFrameOrientation&quot;</span><span class="p">:</span> <span class="s2">&quot;J2000&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;spice&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;useStandardKernels&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">&quot;preloadEphemeris&quot;</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;bodies&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nt">&quot;gravityField&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sphericalHarmonic&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;ggm02c&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;Moon&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;Mars&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;Venus&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;initialState&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;keplerian&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;semiMajorAxis&quot;</span><span class="p">:</span> <span class="mf">7.5E+6</span><span class="p">,</span>
+        <span class="nt">&quot;eccentricity&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+        <span class="nt">&quot;inclination&quot;</span><span class="p">:</span> <span class="mf">1.4888</span><span class="p">,</span>
+        <span class="nt">&quot;argumentOfPeriapsis&quot;</span><span class="p">:</span> <span class="mf">4.1137</span><span class="p">,</span>
+        <span class="nt">&quot;longitudeOfAscendingNode&quot;</span><span class="p">:</span> <span class="mf">0.4084</span><span class="p">,</span>
+        <span class="nt">&quot;trueAnomaly&quot;</span><span class="p">:</span> <span class="mf">2.4412</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;mass&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+      <span class="nt">&quot;referenceArea&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+      <span class="nt">&quot;aerodynamics&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;forceCoefficients&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">]</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;radiationPressure&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;radiationPressureCoefficient&quot;</span><span class="p">:</span> <span class="mf">1.2</span><span class="p">,</span>
+          <span class="nt">&quot;occultingBodies&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;Earth&quot;</span> <span class="p">]</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;propagators&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;integratedStateType&quot;</span><span class="p">:</span> <span class="s2">&quot;translational&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;centralBodies&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Earth&quot;</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;bodiesToPropagate&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Asterix&quot;</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;accelerations&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sphericalHarmonicGravity&quot;</span><span class="p">,</span>
+              <span class="nt">&quot;maximumDegree&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+              <span class="nt">&quot;maximumOrder&quot;</span><span class="p">:</span> <span class="mi">5</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;aerodynamic&quot;</span>
+            <span class="p">}</span>
+          <span class="p">],</span>
+          <span class="nt">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;pointMassGravity&quot;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;cannonBallRadiationPressure&quot;</span>
+            <span class="p">}</span>
+          <span class="p">],</span>
+          <span class="nt">&quot;Moon&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;pointMassGravity&quot;</span>
+            <span class="p">}</span>
+          <span class="p">],</span>
+          <span class="nt">&quot;Mars&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;pointMassGravity&quot;</span>
+            <span class="p">}</span>
+          <span class="p">],</span>
+          <span class="nt">&quot;Venus&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;pointMassGravity&quot;</span>
+            <span class="p">}</span>
+          <span class="p">]</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;integrator&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;rungeKutta4&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;stepSize&quot;</span><span class="p">:</span> <span class="mi">10</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;export&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;@path(stateHistory.txt)&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;variables&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;state&quot;</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;fullSettingsFile&quot;</span><span class="p">:</span> <span class="s2">&quot;@path(fullSettings.json)&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>After running in Terminal the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">json_inteface</span> <span class="n">main</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>we will get a <code class="xref py py-class docutils literal"><span class="pre">stateHistory.txt</span></code> file containing the results, and a <code class="xref py py-class docutils literal"><span class="pre">fullSettings.json</span></code> file containing the list of the full settings, including the default ones.</p>
+</div>
+<div class="section" id="results">
+<h2>2.2.3. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>Finally, we can load the results and plot the difference between perturbed and unperturbed state, which is shown below.</p>
+<img alt="../../../../_images/perturbedSatellite.png" src="../../../../_images/perturbedSatellite.png" />
+<p>Clearly, the addition of the perturbations causes quite a difference in the position of the spacecraft over one Julian day.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../lifetimeMaximisation/index.html" class="btn btn-neutral float-right" title="2.3. Perturbed Earth-orbiting Satellite Lifetime Maximisation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../unperturbedSatellite/index.html" class="btn btn-neutral" title="2.1. Unperturbed Earth-orbiting Satellite" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>

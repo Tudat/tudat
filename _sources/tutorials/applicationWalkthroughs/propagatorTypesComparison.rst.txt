@@ -76,10 +76,10 @@ The only output of the MATLAB file is a plot, where the RMS error in position is
 
 .. method:: Un-perturbed Orbit
 
-    .. figure:: images/propagatorTypesComparisonKepler.pdf
+    .. figure:: images/propagatorTypesComparisonKepler.png
 
 .. method:: Perturbed Orbit
 
-    .. figure:: images/propagatorTypesComparison.pdf
+    .. figure:: images/propagatorTypesComparison.png
 
 By looking at the figures above, and analyzing the results in other manners, you will be able to draw a conclusion on which propagator is most suitable for your application.

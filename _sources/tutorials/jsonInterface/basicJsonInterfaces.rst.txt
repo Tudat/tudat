@@ -78,7 +78,7 @@ There are two ways of using the JSON interface with Tudat. In the first case, yo
 
 The :literal:`json_interface` application can be used to run Tudat propagations by providing the path to a JSON input file as command-line argument in Terminal::
 
-	cd // insert the path to the tudatBundle directory
+	cd // insert the path to the JSON application file
 	tudatBundle/tudat/bin/json_interface main.json
 
 .. note:: The extension can be omitted, in which case :literal:`.json` will be assumed. The argument can also be the path to a directory containing a :literal:`main.json` file, and it can be omitted if a :literal:`main.json` file exists in the current directory.

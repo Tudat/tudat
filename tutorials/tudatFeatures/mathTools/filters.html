@@ -221,6 +221,7 @@
                <span class="n">measurementMatrix</span><span class="p">,</span>
                <span class="n">systemUncertainty</span><span class="p">,</span>
                <span class="n">measurementUncertainty</span><span class="p">,</span>
+               <span class="n">filteringTimeStep</span><span class="p">,</span>
                <span class="n">initialTime</span><span class="p">,</span>
                <span class="n">initialEstimatedStateVector</span><span class="p">,</span>
                <span class="n">initialEstimatedStateCovarianceMatrix</span> <span class="p">);</span>
@@ -234,6 +235,7 @@
 <li><code class="docutils literal"><span class="pre">measurementMatrixFunction</span></code>: a function returning the measurement matrix as a function of time, state and control input</li>
 <li><code class="docutils literal"><span class="pre">systemUncertainty</span></code>: a matrix defining the uncertainty in modeling of the system</li>
 <li><code class="docutils literal"><span class="pre">measurementUncertainty</span></code>: a matrix defining the uncertainty in modeling of the measurements</li>
+<li><code class="docutils literal"><span class="pre">filteringTimeStep</span></code>: a scalar representing the value of the constant filtering time step</li>
 <li><code class="docutils literal"><span class="pre">initialTime</span></code>: a scalar representing the value of the initial time</li>
 <li><code class="docutils literal"><span class="pre">initialStateVector</span></code>: a vector representing the initial (estimated) state of the system; it is used as first a-priori estimate of the state vector</li>
 <li><code class="docutils literal"><span class="pre">initialCovarianceMatrix</span></code>: a matrix representing the initial (estimated) covariance of the system; it is used as first a-priori estimate of the covariance matrix</li>
@@ -282,6 +284,7 @@
    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ExtendedKalmanFilterSettings</span><span class="o">&lt;</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span>
                <span class="n">systemUncertainty</span><span class="p">,</span>
                <span class="n">measurementUncertainty</span><span class="p">,</span>
+               <span class="n">filteringTimeStep</span><span class="p">,</span>
                <span class="n">initialTime</span><span class="p">,</span>
                <span class="n">initialStateVector</span><span class="p">,</span>
                <span class="n">initialCovarianceMatrix</span><span class="p">,</span>
@@ -293,6 +296,7 @@
 <div><ul class="simple">
 <li><code class="docutils literal"><span class="pre">systemUncertainty</span></code>: a matrix defining the uncertainty in modeling of the system</li>
 <li><code class="docutils literal"><span class="pre">measurementUncertainty</span></code>: a matrix defining the uncertainty in modeling of the measurements</li>
+<li><code class="docutils literal"><span class="pre">filteringTimeStep</span></code>: a scalar representing the value of the constant filtering time step</li>
 <li><code class="docutils literal"><span class="pre">initialTime</span></code>: a scalar representing the value of the initial time</li>
 <li><code class="docutils literal"><span class="pre">initialStateVector</span></code>: a vector representing the initial (estimated) state of the system; it is used as first a-priori estimate of the state vector</li>
 <li><code class="docutils literal"><span class="pre">initialCovarianceMatrix</span></code>: a matrix representing the initial (estimated) covariance of the system; it is used as first a-priori estimate of the covariance matrix</li>
@@ -331,6 +335,7 @@
    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">UnscentedKalmanFilterSettings</span><span class="o">&lt;</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span>
                <span class="n">systemUncertainty</span><span class="p">,</span>
                <span class="n">measurementUncertainty</span><span class="p">,</span>
+               <span class="n">filteringTimeStep</span><span class="p">,</span>
                <span class="n">initialTime</span><span class="p">,</span>
                <span class="n">initialStateVector</span><span class="p">,</span>
                <span class="n">initialCovarianceMatrix</span><span class="p">,</span>
@@ -344,6 +349,7 @@
 <div><ul class="simple">
 <li><code class="docutils literal"><span class="pre">systemUncertainty</span></code>: a matrix defining the uncertainty in modeling of the system</li>
 <li><code class="docutils literal"><span class="pre">measurementUncertainty</span></code>: a matrix defining the uncertainty in modeling of the measurements</li>
+<li><code class="docutils literal"><span class="pre">filteringTimeStep</span></code>: a scalar representing the value of the constant filtering time step</li>
 <li><code class="docutils literal"><span class="pre">initialTime</span></code>: a scalar representing the value of the initial time</li>
 <li><code class="docutils literal"><span class="pre">initialStateVector</span></code>: a vector representing the initial (estimated) state of the system; it is used as first a-priori estimate of the state vector</li>
 <li><code class="docutils literal"><span class="pre">initialCovarianceMatrix</span></code>: a matrix representing the initial (estimated) covariance of the system; it is used as first a-priori estimate of the covariance matrix</li>
@@ -397,18 +403,17 @@
 </div>
 <div class="section" id="using-a-kalman-filter-object">
 <h2>2.4.4. Using a Kalman Filter Object<a class="headerlink" href="#using-a-kalman-filter-object" title="Permalink to this headline">¶</a></h2>
-<p>To use the filters after their creation, you will need to update the system with the data corresponding to the new time step. This can be done by using the function <code class="docutils literal"><span class="pre">updateFilter</span></code>, which takes to inputs:</p>
+<p>To use the filters after their creation, you will need to update the system with the data corresponding to the new time step. This can be done by using the function <code class="docutils literal"><span class="pre">updateFilter</span></code>, which takes one inputs:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">currentTime</span></code>: a double denoting the current time</li>
 <li><code class="docutils literal"><span class="pre">currentMeasurementVector</span></code>: a vector denoting the current external measurement which will be used to correct the estimated a-priori state (thus to obtain the a-posteriori estimate)</li>
 </ul>
 </div></blockquote>
-<p>Note that the filter object come equipped with two noise generators. These produce random Gaussian noise based on the system and measuremenet uncertainty properties input by the user. They can be retrieved with the commands <code class="docutils literal"><span class="pre">produceSystemNoise</span></code> and <code class="docutils literal"><span class="pre">produceMeasurementNoise</span></code>. You will find an example of how to use the noise and the other features mentioned on this page, in:</p>
+<p>Note that the filter object comes equipped with two noise generators. These produce random Gaussian noise based on the system and measuremenet uncertainty properties input by you. They can be retrieved with the commands <code class="docutils literal"><span class="pre">produceSystemNoise</span></code> and <code class="docutils literal"><span class="pre">produceMeasurementNoise</span></code>. You will find cases of how to use the noise and the other features mentioned on this page, in:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">Tudat</span><span class="o">/</span><span class="n">Mathematics</span><span class="o">/</span><span class="n">Filters</span><span class="o">/</span><span class="n">UnitTests</span>
 </pre></div>
 </div>
-<p>where a few examples for each filtering technique is shown. One of the test cases shown for the extended (EKF) and unscented (UKF) filters is also shown in an example application, which you can find in <a class="reference internal" href="../../applicationWalkthroughs/filterExample.html#walkthroughsfiltering"><span class="std std-ref">Kalman Filter for State Estimation</span></a>.</p>
+<p>where a few examples for each filtering technique are shown. One of the test cases shown for the extended (EKF) and unscented (UKF) filters is also shown in an example application, which you can find in <a class="reference internal" href="../../applicationWalkthroughs/filterExample.html#walkthroughsfiltering"><span class="std std-ref">Kalman Filter for State Estimation</span></a>.</p>
 <p>The last element that should be discussed is the control system. It may be the case that you also need a control input together with the time and state. This can be added with the creation of a <code class="xref py py-class docutils literal"><span class="pre">ControlWrapper</span></code> of the type explained in the next section, <a class="reference internal" href="#tudatfeaturesfilterscontrolsystem"><span class="std std-ref">Adding a Control Input</span></a>.</p>
 <p>These are the only major steps that you will need to take to keep the filter running. At the end of the estimation process, however, you can retrieve, however, retireve the history of the estimated states and covariance matrices by using the functions <code class="docutils literal"><span class="pre">getEstimatedStateHistory</span></code> and <code class="docutils literal"><span class="pre">getEstimatedCovarianceHistory</span></code>, respectively.</p>
 </div>

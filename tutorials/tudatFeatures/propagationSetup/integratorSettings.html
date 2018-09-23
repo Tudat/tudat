@@ -232,23 +232,22 @@
 </dd></dl>
 
 <dl class="class">
-<dt id="RungeKuttaVariableStepSizeSettings">
-<em class="property">class </em><code class="descname">RungeKuttaVariableStepSizeSettings</code><a class="headerlink" href="#RungeKuttaVariableStepSizeSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class is used to define the settings for variable step-size integration. The constructor for this derived class is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">RungeKuttaVariableStepSizeSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span><span class="p">,</span> <span class="n">StateType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">integratorType</span><span class="p">,</span>
-                                                            <span class="n">simulationStartEpoch</span><span class="p">,</span>
-                                                            <span class="n">initialTimeStep</span><span class="p">,</span>
-                                                            <span class="n">coefficientSet</span><span class="p">,</span>
-                                                            <span class="n">minimumStepSize</span><span class="p">,</span>
-                                                            <span class="n">maximumStepSize</span><span class="p">,</span>
-                                                            <span class="n">relativeErrorTolerence</span><span class="p">,</span>
-                                                            <span class="n">absoluteErrorTolerence</span><span class="p">,</span>
-                                                            <span class="n">saveFrequency</span><span class="p">,</span>
-                                                            <span class="n">assessPropagationTerminationConditionDuringIntegrationSubsteps</span><span class="p">,</span>
-                                                            <span class="n">safetyFactorForNextStepSize</span><span class="p">,</span>
-                                                            <span class="n">maximumFactorIncreaseForNextStepSize</span><span class="p">,</span>
-                                                            <span class="n">minimumFactorDecreaseForNextStepSize</span><span class="p">,</span>
-                                                            <span class="n">newStepSizeFunction</span> <span class="p">)</span>
+<dt id="RungeKuttaVariableStepSizeSettingsScalarTolerances">
+<em class="property">class </em><code class="descname">RungeKuttaVariableStepSizeSettingsScalarTolerances</code><a class="headerlink" href="#RungeKuttaVariableStepSizeSettingsScalarTolerances" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is used to define the settings for the Runge-Kutta variable step-size integration methods, where the error tolerances are defined as a scalar (i.e., each state element has the same tolerance). The constructor for this derived class is:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">RungeKuttaVariableStepSizeSettingsScalarTolerances</span><span class="o">&lt;</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span>
+      <span class="n">simulationStartEpoch</span><span class="p">,</span>
+      <span class="n">initialTimeStep</span><span class="p">,</span>
+      <span class="n">coefficientSet</span><span class="p">,</span>
+      <span class="n">minimumStepSize</span><span class="p">,</span>
+      <span class="n">maximumStepSize</span><span class="p">,</span>
+      <span class="n">relativeErrorTolerance</span><span class="p">,</span>
+      <span class="n">absoluteErrorTolerance</span><span class="p">,</span>
+      <span class="n">saveFrequency</span><span class="p">,</span>
+      <span class="n">assessPropagationTerminationConditionDuringIntegrationSubsteps</span><span class="p">,</span>
+      <span class="n">safetyFactorForNextStepSize</span><span class="p">,</span>
+      <span class="n">maximumFactorIncreaseForNextStepSize</span><span class="p">,</span>
+      <span class="n">minimumFactorDecreaseForNextStepSize</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -257,17 +256,9 @@
 <li><p class="first"><code class="docutils literal"><span class="pre">TimeType</span></code></p>
 <p>Template argument used to set the precision of the time, in general <code class="docutils literal"><span class="pre">double</span></code> is used. For some application where a high precision is required this can be changed to e.g. <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code>.</p>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">StateType</span></code></p>
-<p>Template argument used to set the precision of the state, in general <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code> is used. For some application where a covariance propagation is also performed, this may be <code class="docutils literal"><span class="pre">Eigen::MatrixXd</span></code>.</p>
-</li>
 </ul>
 </div></blockquote>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">integratorType</span></code></p>
-<blockquote>
-<div><p><code class="xref py py-class docutils literal"><span class="pre">AvailableIntegrators</span></code> which defines the fixed step-size integrator type to be used. The only option available is <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code>.</p>
-</div></blockquote>
-</li>
 <li><p class="first"><code class="docutils literal"><span class="pre">simulationStartEpoch</span></code></p>
 <blockquote>
 <div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the simulation’s initial time. It must be a <code class="docutils literal"><span class="pre">double</span></code> variable-type.</p>
@@ -295,12 +286,12 @@
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">relativeErrorTolerance</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">StateType</span></code> or <code class="docutils literal"><span class="pre">StateType::Scalar</span></code> that defines the relative error tolerance for step size control of the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
+<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the relative error tolerance for step size control of the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">absoluteErrorTolerance</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">StateType</span></code> or <code class="docutils literal"><span class="pre">StateType::Scalar</span></code> that defines the absolute error tolerance for step size control of the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
+<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the absolute error tolerance for step size control of the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">saveFrequency</span></code></p>
@@ -328,18 +319,54 @@
 <div><p>Minimum decrease factor in time step in subsequent iterations. The default value is 0.1.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">newStepSizeFunction</span></code></p>
+</ul>
+</dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can also access the <a class="reference internal" href="#RungeKuttaVariableStepSizeSettingsScalarTolerances" title="RungeKuttaVariableStepSizeSettingsScalarTolerances"><code class="xref py py-class docutils literal"><span class="pre">RungeKuttaVariableStepSizeSettingsScalarTolerances</span></code></a> class by using the alias <code class="xref py py-class docutils literal"><span class="pre">RungeKuttaVariableStepSizeSettings</span></code>, which is compatible with the previous definition of the Runge-Kutta variable step-size integrator.</p>
+</div>
+<dl class="class">
+<dt id="RungeKuttaVariableStepSizeSettingsVectorTolerances">
+<em class="property">class </em><code class="descname">RungeKuttaVariableStepSizeSettingsVectorTolerances</code><a class="headerlink" href="#RungeKuttaVariableStepSizeSettingsVectorTolerances" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is used to define the settings for the Runge-Kutta variable step-size integration methods, where the error tolerances are defined as a vector (i.e., you could set a different absolute tolerance for position and velocity, if the propagated state is expressed in Cartesian elements). The constructor for this derived class is:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">RungeKuttaVariableStepSizeSettingsVectorTolerances</span><span class="o">&lt;</span> <span class="n">TimeType</span><span class="p">,</span> <span class="n">StateType</span> <span class="o">&gt;</span><span class="p">(</span>
+      <span class="n">simulationStartEpoch</span><span class="p">,</span>
+      <span class="n">initialTimeStep</span><span class="p">,</span>
+      <span class="n">coefficientSet</span><span class="p">,</span>
+      <span class="n">minimumStepSize</span><span class="p">,</span>
+      <span class="n">maximumStepSize</span><span class="p">,</span>
+      <span class="n">relativeErrorTolerance</span><span class="p">,</span>
+      <span class="n">absoluteErrorTolerance</span><span class="p">,</span>
+      <span class="n">saveFrequency</span><span class="p">,</span>
+      <span class="n">assessPropagationTerminationConditionDuringIntegrationSubsteps</span><span class="p">,</span>
+      <span class="n">safetyFactorForNextStepSize</span><span class="p">,</span>
+      <span class="n">maximumFactorIncreaseForNextStepSize</span><span class="p">,</span>
+      <span class="n">minimumFactorDecreaseForNextStepSize</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>where most of the input variables are the same as for the previous constructor, except for the following:</p>
 <blockquote>
-<div><p>Custom function to compute the step-size for the next time step. The default value is 0, which means that the default step-size function will be used.</p>
+<div><ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">StateType</span></code></p>
+<p>Template argument used to set the format of the state, in general <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code> is used. For applications where covariance propagation is also performed, this may be <code class="docutils literal"><span class="pre">Eigen::MatrixXd</span></code>. One can also change the precision of the state scalar, such as in <code class="docutils literal"><span class="pre">Eigen::VectorXld</span></code>, where <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code> is used instead of <code class="docutils literal"><span class="pre">double</span></code>.</p>
+</li>
+</ul>
+</div></blockquote>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">relativeErrorTolerance</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">StateType</span></code> that defines the relative error tolerance for each state entry, for step size control of the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">absoluteErrorTolerance</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">StateType</span></code> that defines the absolute error tolerance for each state entry, for step size control of the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
 </div></blockquote>
 </li>
 </ul>
 </dd></dl>
 
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">For the relative and absolute error tolerances you can define a tolerance for each element of the state vector. For instance you could set a different absolute tolerance for position and velocity, if the propagated state is expressed in Cartesian elements.</p>
-</div>
 <dl class="class">
 <dt id="BulirschStoerIntegratorSettings">
 <em class="property">class </em><code class="descname">BulirschStoerIntegratorSettings</code><a class="headerlink" href="#BulirschStoerIntegratorSettings" title="Permalink to this definition">¶</a></dt>

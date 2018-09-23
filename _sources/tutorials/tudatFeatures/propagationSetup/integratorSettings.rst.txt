@@ -33,40 +33,31 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
       :literal:`TimeType` that defines the fixed step-size to be used either by the :literal:`euler` or the :literal:`rungeKutta4` numerical integrator. 
 
-.. class:: RungeKuttaVariableStepSizeSettings
+.. class:: RungeKuttaVariableStepSizeSettingsScalarTolerances
    
-   This class is used to define the settings for variable step-size integration. The constructor for this derived class is:
+   This class is used to define the settings for the Runge-Kutta variable step-size integration methods, where the error tolerances are defined as a scalar (i.e., each state element has the same tolerance). The constructor for this derived class is:
 
    .. code-block:: cpp
    
-      RungeKuttaVariableStepSizeSettings< TimeType, StateType >( integratorType,
-                            		                          simulationStartEpoch,
-                            		                          initialTimeStep,
-                            		                          coefficientSet,
-                            		                          minimumStepSize,
-                            		                          maximumStepSize,
-                            		                          relativeErrorTolerence,
-                            		                          absoluteErrorTolerence,
-                                                                  saveFrequency,
-                                                                  assessPropagationTerminationConditionDuringIntegrationSubsteps,
-                                                                  safetyFactorForNextStepSize,
-                                                                  maximumFactorIncreaseForNextStepSize,
-                                                                  minimumFactorDecreaseForNextStepSize,
-                                                                  newStepSizeFunction )
+      RungeKuttaVariableStepSizeSettingsScalarTolerances< TimeType >(
+            simulationStartEpoch,
+            initialTimeStep,
+            coefficientSet,
+            minimumStepSize,
+            maximumStepSize,
+            relativeErrorTolerance,
+            absoluteErrorTolerance,
+            saveFrequency,
+            assessPropagationTerminationConditionDuringIntegrationSubsteps,
+            safetyFactorForNextStepSize,
+            maximumFactorIncreaseForNextStepSize,
+            minimumFactorDecreaseForNextStepSize )
 
    where:
 
     - :literal:`TimeType`
    
-      Template argument used to set the precision of the time, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal:`long double`. 
-
-    - :literal:`StateType`
-   
-      Template argument used to set the precision of the state, in general :literal:`Eigen::VectorXd` is used. For some application where a covariance propagation is also performed, this may be :literal:`Eigen::MatrixXd`. 
-
-   - :literal:`integratorType`
-
-      :class:`AvailableIntegrators` which defines the fixed step-size integrator type to be used. The only option available is :literal:`rungeKuttaVariableStepSize`.
+      Template argument used to set the precision of the time, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal:`long double`.
 
    - :literal:`simulationStartEpoch`
 
@@ -90,11 +81,11 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
    - :literal:`relativeErrorTolerance`
 
-      :literal:`StateType` or :literal:`StateType::Scalar` that defines the relative error tolerance for step size control of the :literal:`rungeKuttaVariableStepSize` numerical integrator.
+      :literal:`TimeType` that defines the relative error tolerance for step size control of the :literal:`rungeKuttaVariableStepSize` numerical integrator.
 
    - :literal:`absoluteErrorTolerance`
 
-      :literal:`StateType` or :literal:`StateType::Scalar` that defines the absolute error tolerance for step size control of the :literal:`rungeKuttaVariableStepSize` numerical integrator.
+      :literal:`TimeType` that defines the absolute error tolerance for step size control of the :literal:`rungeKuttaVariableStepSize` numerical integrator.
 
    - :literal:`saveFrequency`
 
@@ -116,12 +107,41 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
       Minimum decrease factor in time step in subsequent iterations. The default value is 0.1.
 
-   - :literal:`newStepSizeFunction`
+.. note:: You can also access the :class:`RungeKuttaVariableStepSizeSettingsScalarTolerances` class by using the alias :class:`RungeKuttaVariableStepSizeSettings`, which is compatible with the previous definition of the Runge-Kutta variable step-size integrator.
 
-      Custom function to compute the step-size for the next time step. The default value is 0, which means that the default step-size function will be used.
+.. class:: RungeKuttaVariableStepSizeSettingsVectorTolerances
+   
+   This class is used to define the settings for the Runge-Kutta variable step-size integration methods, where the error tolerances are defined as a vector (i.e., you could set a different absolute tolerance for position and velocity, if the propagated state is expressed in Cartesian elements). The constructor for this derived class is:
 
-.. tip:: 
-   For the relative and absolute error tolerances you can define a tolerance for each element of the state vector. For instance you could set a different absolute tolerance for position and velocity, if the propagated state is expressed in Cartesian elements. 
+   .. code-block:: cpp
+   
+      RungeKuttaVariableStepSizeSettingsVectorTolerances< TimeType, StateType >(
+            simulationStartEpoch,
+            initialTimeStep,
+            coefficientSet,
+            minimumStepSize,
+            maximumStepSize,
+            relativeErrorTolerance,
+            absoluteErrorTolerance,
+            saveFrequency,
+            assessPropagationTerminationConditionDuringIntegrationSubsteps,
+            safetyFactorForNextStepSize,
+            maximumFactorIncreaseForNextStepSize,
+            minimumFactorDecreaseForNextStepSize )
+
+   where most of the input variables are the same as for the previous constructor, except for the following:
+
+    - :literal:`StateType`
+   
+      Template argument used to set the format of the state, in general :literal:`Eigen::VectorXd` is used. For applications where covariance propagation is also performed, this may be :literal:`Eigen::MatrixXd`. One can also change the precision of the state scalar, such as in :literal:`Eigen::VectorXld`, where :literal:`long double` is used instead of :literal:`double`.
+
+   - :literal:`relativeErrorTolerance`
+
+      :literal:`StateType` that defines the relative error tolerance for each state entry, for step size control of the :literal:`rungeKuttaVariableStepSize` numerical integrator.
+
+   - :literal:`absoluteErrorTolerance`
+
+      :literal:`StateType` that defines the absolute error tolerance for each state entry, for step size control of the :literal:`rungeKuttaVariableStepSize` numerical integrator.
 
 .. class:: BulirschStoerIntegratorSettings
    
