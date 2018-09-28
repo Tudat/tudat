@@ -13,11 +13,11 @@ In fact, when creating settings for a thrust force, the user needs to provide se
 
 .. code-block:: cpp
     
-        boost::shared_ptr< ThrustDirectionGuidanceSettings > thrustDirectionSettings;
-        boost::shared_ptr< ThrustEngineSettings > thrustMagnitudeSettings;
+        std::shared_ptr< ThrustDirectionGuidanceSettings > thrustDirectionSettings;
+        std::shared_ptr< ThrustEngineSettings > thrustMagnitudeSettings;
 
         SelectedAccelerationMap accelerationSettingsMap;
-        accelerationSettingsMap[ "Vehicle" ][ "Vehicle" ].push_back( boost::make_shared< ThrustAccelerationSettings >( thrustDirectionSettings, thrustMagnitudeSettings ) ); 
+        accelerationSettingsMap[ "Vehicle" ][ "Vehicle" ].push_back( std::make_shared< ThrustAccelerationSettings >( thrustDirectionSettings, thrustMagnitudeSettings ) ); 
 
 In the above code snippet, two things may stand out. First of all, we define the thrust force as one that the vehicle exerts on itself. Secondly, to define the thrust force, the user must provide two objects: one of type (derived from) :class:`ThrustDirectionGuidanceSettings` and :class:`ThrustEngineSettings`. The settings are used to create a :class:`ThrustAcceleration` acceleration object. 
 

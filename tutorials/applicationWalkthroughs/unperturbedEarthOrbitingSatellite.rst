@@ -45,16 +45,16 @@ The block of code used to generate the environment that we require is:
    // Create body objects.
    std::vector< std::string > bodiesToCreate;
    bodiesToCreate.push_back( "Earth" );
-   std::map< std::string, boost::shared_ptr< BodySettings > > bodySettings =
+   std::map< std::string, std::shared_ptr< BodySettings > > bodySettings =
            getDefaultBodySettings( bodiesToCreate );    
-   bodySettings[ "Earth" ]->ephemerisSettings = boost::make_shared< ConstantEphemerisSettings >(
+   bodySettings[ "Earth" ]->ephemerisSettings = std::make_shared< ConstantEphemerisSettings >(
                Eigen::Vector6d::Zero( ) );
 
    // Create Earth object
    NamedBodyMap bodyMap = createBodies( bodySettings );
  
    // Create spacecraft object.
-   bodyMap[ "Asterix" ] = boost::make_shared< simulation_setup::Body >( );
+   bodyMap[ "Asterix" ] = std::make_shared< simulation_setup::Body >( );
 
    // Finalize body creation.
    setGlobalFrameBodyEphemerides( bodyMap, "SSB", "J2000" );
@@ -65,14 +65,14 @@ Creating an environment starts by creating the settings for all required environ
 
      std::vector< std::string > bodiesToCreate;
      bodiesToCreate.push_back( "Earth" );
-     std::map< std::string, boost::shared_ptr< BodySettings > > bodySettings =
+     std::map< std::string, std::shared_ptr< BodySettings > > bodySettings =
              getDefaultBodySettings( bodiesToCreate );    
 
 With the settings that are now stored in the :literal:`bodySettings` map, we could generate our environment and move on to the next step of the simulation. However, both to showcase one of the options of setting up the environment, and for numerical accuracy, we make one modification to the default ephemeris settings, defining the Earth to be fixed at the center of the Solar system:
 
 .. code-block:: cpp
 
-   bodySettings[ "Earth" ]->ephemerisSettings = boost::make_shared< ConstantEphemerisSettings >(
+   bodySettings[ "Earth" ]->ephemerisSettings = std::make_shared< ConstantEphemerisSettings >(
            Eigen::Vector6d::Zero( ), "SSB", "J2000" );
 
 .. warning:: By using this code, we 'cheat' a little bit, since we put the Earth in the main inertial frame for Tudat: the Solar System Barycenter. This approach should **only** be used when considering no third-body perturbations. Note that we could have used any ephemeris setting for the Earth (since we propagate our satellite w.r.t. the Earth origin) without changing anything in our dynamical model, but at a slight loss of numerical precision.
@@ -81,9 +81,9 @@ Now, we have created the settings we need for the environment, and we can move o
 
 .. code-block:: cpp
 
-   std::unordered_map< std::string, boost::shared_ptr< simulation_setup::Body > >
+   std::unordered_map< std::string, std::shared_ptr< simulation_setup::Body > >
 
-This :literal:`unordered_map` may be accessed as a regular map. The :literal:`std::string` keys represent the names of the bodies in the list, and the value :literal:`boost::shared_ptr` the corresponding :class:`Body` object containing all the environment models.
+This :literal:`unordered_map` may be accessed as a regular map. The :literal:`std::string` keys represent the names of the bodies in the list, and the value :literal:`std::shared_ptr` the corresponding :class:`Body` object containing all the environment models.
 With the settings of our ephemeris and gravity field, we now create the :literal:`bodyMap` by:
 
 .. code-block:: cpp
@@ -96,7 +96,7 @@ Our environment is now missing only one aspect: the spacecraft. Our spacecraft (
 
 .. code-block:: cpp
 
-   bodyMap[ "Asterix" ] = boost::make_shared< simulation_setup::Body >( );
+   bodyMap[ "Asterix" ] = std::make_shared< simulation_setup::Body >( );
 
 Although not required in this simulation, it is good practice to call the following function following the complete setup of the bodyMap:
 
@@ -121,8 +121,8 @@ To define the settings of the propagation of the orbit, we start by defining the
    centralBodies.push_back( "Earth" );
 
    // Define propagation settings.
-   std::map< std::string, std::vector< boost::shared_ptr< AccelerationSettings > > > accelerationsOfAsterix;
-   accelerationsOfAsterix[ "Earth" ].push_back( boost::make_shared< AccelerationSettings >(
+   std::map< std::string, std::vector< std::shared_ptr< AccelerationSettings > > > accelerationsOfAsterix;
+   accelerationsOfAsterix[ "Earth" ].push_back( std::make_shared< AccelerationSettings >(
                                                     basic_astrodynamics::central_gravity ) );
    accelerationMap[  "Asterix" ] = accelerationsOfAsterix;
 
@@ -156,7 +156,7 @@ These settings for the accelerations require some more structure, though, and ar
 
 .. code-block:: cpp
 
-   std::map< std::string, std::map< std::string, std::vector< boost::shared_ptr< AccelerationSettings > > > >
+   std::map< std::string, std::map< std::string, std::vector< std::shared_ptr< AccelerationSettings > > > >
 
 This is a double map (with twice a string as a key). The two levels correspond to the names of bodies undergoing an acceleration (first key), and those for bodies exerting an acceleration (second key). This allows any number of bodies to be propagated, undergoing any number (and type) of accelerations. Mutual acceleration between bodies being propagated, as is the case for Solar system dynamics for instance, is automatically handled by the code and requires no specific consideration.
 
@@ -164,8 +164,8 @@ In our example, we have only a single point-mass acceleration due to Earth, acti
 
 .. code-block:: cpp
 
-   std::map< std::string, std::vector< boost::shared_ptr< AccelerationSettings > > > accelerationsOfAsterix;
-   accelerationsOfAsterix[ "Earth" ].push_back( boost::make_shared< AccelerationSettings >(
+   std::map< std::string, std::vector< std::shared_ptr< AccelerationSettings > > > accelerationsOfAsterix;
+   accelerationsOfAsterix[ "Earth" ].push_back( std::make_shared< AccelerationSettings >(
                                                     basic_astrodynamics::central_gravity ) );
    accelerationMap[  "Asterix" ] = accelerationsOfAsterix;
 
@@ -209,8 +209,8 @@ The above settings are provided in the following block of code:
                asterixInitialStateInKeplerianElements,
                earthGravitationalParameter );
 
-   boost::shared_ptr< TranslationalStatePropagatorSettings< double > > propagatorSettings =
-           boost::make_shared< TranslationalStatePropagatorSettings< double > >
+   std::shared_ptr< TranslationalStatePropagatorSettings< double > > propagatorSettings =
+           std::make_shared< TranslationalStatePropagatorSettings< double > >
            ( centralBodies, accelerationModelMap, bodiesToPropagate, systemInitialState, simulationEndEpoch );
 
 If the body that is being propagated has a pre-existing ephemeris, the initial state may be retrieved automatically. In this example, however, we manually define our initial state from the Keplerian state:
@@ -239,8 +239,8 @@ Now, we can create our propagator settings by:
 
 .. code-block:: cpp
 
-   boost::shared_ptr< TranslationalStatePropagatorSettings< > > propagatorSettings =
-       boost::make_shared< TranslationalStatePropagatorSettings< > >
+   std::shared_ptr< TranslationalStatePropagatorSettings< > > propagatorSettings =
+       std::make_shared< TranslationalStatePropagatorSettings< > >
            ( centralBodies, accelerationModelMap, bodiesToPropagate, systemInitialState, simulationEndEpoch);
 
 Where we have passed exactly the five aspects listed above as input to the :class:`TranslationalStatePropagatorSettings`. If you have a look at the code for the :class:`TranslationalStatePropagatorSettings`, you will notice that there are multiple constructors for the class, each with a number of additional input arguments (for which we use the default values). These more advanced options are discussed in the following tutorials.
@@ -252,8 +252,8 @@ A final piece of information needed to propagate the orbit is the settings objec
    // Create numerical integrator.
    double simulationStartEpoch = 0.0;    
    const double fixedStepSize = 10.0;
-   boost::shared_ptr< IntegratorSettings< > > integratorSettings =
-       boost::make_shared< IntegratorSettings< > >
+   std::shared_ptr< IntegratorSettings< > > integratorSettings =
+       std::make_shared< IntegratorSettings< > >
            ( rungeKutta4, simulationStartEpoch, fixedStepSize );
 
 Perform the orbit propagation

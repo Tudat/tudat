@@ -26,7 +26,7 @@ For aerodynamics, the vehicle orientation is typically described by the angle of
    .. code-block:: cpp
 
       bodyMap.at( "Apollo" )->getFlightConditions( )->getAerodynamicAngleCalculator( )->setOrientationAngleFunctions(
-                  boost::lambda::constant( 30.0 * mathematical_constants::PI / 180.0 ) );
+                  [ = ]( ){ return 30.0 * mathematical_constants::PI / 180.0; } );
 
    .. Warning:: We stress that any definition of the aerodynamic guidance must be done after the acceleration models have been created (by :class:`AccelerationSettings`)(but before the trajectory is propagated).
 
@@ -41,7 +41,7 @@ To manually set the body orientation as constant angles, the :literal:`setOrien
    double constantBankAngle = -70.0 * mathematical_constants::PI / 180.0;
 
    bodyMap.at( "Apollo" )->getFlightConditions( )->getAerodynamicAngleCalculator( )->setOrientationAngleFunctions(
-               boost::lambda::constant( constantAngleOfAttack ), boost::lambda::constant( constantSideslipAngle ), boost::lambda::constant( constantBankAngle ) );
+               [ = ]( ){ return constantAngleOfAttack; }, [ = ]( ){ return constantSideslipAngle; }, [ = ]( ){ return constantBankAngle; } );
 
 By using this code, the vehicle will fly at 30 degree angle of attack, 2 degree sideslip angle and -70 degree bank angle during the full propagation.
 
@@ -51,7 +51,7 @@ Presently, only a single predefined guidance law is implemented in Tudat: imposi
 
 .. code-block:: cpp
 
-    boost::shared_ptr< aerodynamics::TrimOrientationCalculator > trimCalculator = setTrimmedConditions( bodyMap.at( "Apollo" ) );
+    std::shared_ptr< aerodynamics::TrimOrientationCalculator > trimCalculator = setTrimmedConditions( bodyMap.at( "Apollo" ) );
 
 After calling this function, no additional action is needed from the user. In fact, using the following:
 
@@ -74,7 +74,7 @@ A user-defined derived class must be defined, through which the orientation is c
 
 .. code-block:: cpp
 
-    boost::shared_ptr< aerodynamics::AerodynamicGuidance > aerodynamicGuidance =  // Create user-defined guidance object here
+    std::shared_ptr< aerodynamics::AerodynamicGuidance > aerodynamicGuidance =  // Create user-defined guidance object here
     setGuidanceAnglesFunctions( aerodynamicGuidance, bodyMap.at( "Apollo" ) );
 
 An example of the computation of the three aerodynamic angles as a function of time alone can be done by using the following :class:`AerodynamicGuidance` derived class:
@@ -111,7 +111,7 @@ Then, the guidance law can be created and set by:
 
 .. code-block:: cpp
 
-    boost::shared_ptr< aerodynamics::AerodynamicGuidance > aerodynamicGuidance = boost::make_shared< LinearTimeAerodynamicGuidance >( 
+    std::shared_ptr< aerodynamics::AerodynamicGuidance > aerodynamicGuidance = std::make_shared< LinearTimeAerodynamicGuidance >( 
         1.0E-4, -2.0E-6, 1.0E-3, 500.0 );
     setGuidanceAnglesFunctions( aerodynamicGuidance, bodyMap.at( "Apollo" ) );
 
@@ -143,7 +143,7 @@ To compute orientation angles from these flight conditions:
 
     private:
 
-        boost::shared_ptr< FlightConditions > vehicleFlightConditions_;
+        std::shared_ptr< FlightConditions > vehicleFlightConditions_;
     };
 
 where the :literal:`updateGuidance` function is not defined directly in the :literal:`.h` file, but instead in the :literal:`.cpp` file. As an example, let's consider the simplified (and still not particularly realistic) aerodynamic guidance where:
@@ -197,8 +197,8 @@ In computing your aerodynamic guidance commands, you will likely need to use a n
    .. code-block:: cpp
 
         // Define aerodynamic coefficient interface/flight conditions (typically retrieved from body map; may also be a member variable)
-        boost::shared_ptr< aerodynamics::AerodynamicCoefficientInterface > coefficientInterface_ = ...
-        boost::shared_ptr< aerodynamics::FlightConditions > flightConditions_ = ...
+        std::shared_ptr< aerodynamics::AerodynamicCoefficientInterface > coefficientInterface_ = ...
+        std::shared_ptr< aerodynamics::FlightConditions > flightConditions_ = ...
 
         // Compute angles of attack and sideslip
         currentAngleOfAttack_ = ...
@@ -224,7 +224,7 @@ In computing your aerodynamic guidance commands, you will likely need to use a n
    .. code-block:: cpp
         
       // Define aerodynamic coefficient interface/flight conditions (typically retrieved from body map; may also be a member variable)
-      boost::shared_ptr< aerodynamics::FlightConditions > flightConditions_ = ...
+      std::shared_ptr< aerodynamics::FlightConditions > flightConditions_ = ...
       double currentFlightPathAngle = flightConditions_->getAerodynamicAngleCalculator( )->getAerodynamicAngle( reference_frames::flight_path_angle );
 
    - **Body mass:** The mass of the body at the current time is retrieved directly from the :class:`Body` object using the :literal:`getBodyMass( )` function.
@@ -241,7 +241,7 @@ In either case, a :class:`VehicleSystems` object must be created and stored in
 
 .. code-block:: cpp
 
-    boost::shared_ptr< system_models::VehicleSystems > systemsModels = boost::make_shared< system_models::VehicleSystems >( );
+    std::shared_ptr< system_models::VehicleSystems > systemsModels = std::make_shared< system_models::VehicleSystems >( );
     bodyMap[ "Vehicle" ]->setVehicleSystems( systemsModels );
 
 The control surface deflections are then set by:
@@ -280,9 +280,9 @@ In general, however, you will want to determine the control surface deflections 
 
     private:
 
-        boost::shared_ptr< FlightConditions > vehicleFlightConditions_;
+        std::shared_ptr< FlightConditions > vehicleFlightConditions_;
 
-        boost::shared_ptr< system_models::VehicleSystems > vehicleSystems_;
+        std::shared_ptr< system_models::VehicleSystems > vehicleSystems_;
 
     };
 

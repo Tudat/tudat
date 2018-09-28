@@ -27,7 +27,7 @@ In case a sophisticated tabulated atmosphere model is needed, one can use these 
    std::vector< interpolators::BoundaryInterpolationType > boundaryHandling = ...
    std::vector< std::vector< std::pair< double, double > > > defaultExtrapolationValue = ...
 
-   bodySettings[ "Earth" ]->atmosphereSettings = boost::make_shared< TabulatedAtmosphereSettings >( atmosphereTableFile, 
+   bodySettings[ "Earth" ]->atmosphereSettings = std::make_shared< TabulatedAtmosphereSettings >( atmosphereTableFile, 
                                                                                                      independentVariablesNames, 
                                                                                                      dependentVariablesNames, 
                                                                                                      specificGasConstant, 
@@ -111,7 +111,7 @@ Atmosphere model with properties (pressure, density, temperature) read in from a
 .. code-block:: cpp
 
   std::string atmosphereFile = ...
-  bodySettings[ "Earth" ]->atmosphereSettings = boost::make_shared< TabulatedAtmosphereSettings >( atmosphereFile ); 
+  bodySettings[ "Earth" ]->atmosphereSettings = std::make_shared< TabulatedAtmosphereSettings >( atmosphereFile ); 
 
 which will read the atmospheric properties from the file ``atmosphereFile`` (with as many columns as dependent variables).
 
@@ -144,7 +144,7 @@ Similarly to the multi-dimensional tabulated atmosphere, you can also specify mo
       double defaultExtrapolationValue = TUDAT_NAN;
 
       // Set tabulated atmosphere
-      bodySettings[ "Earth" ]->atmosphereSettings = boost::make_shared< TabulatedAtmosphereSettings >( atmosphereFile, dependentVariables, specificGasConstant, ratioOfSpecificHeats, boundaryHandling, defaultExtrapolationValue );
+      bodySettings[ "Earth" ]->atmosphereSettings = std::make_shared< TabulatedAtmosphereSettings >( atmosphereFile, dependentVariables, specificGasConstant, ratioOfSpecificHeats, boundaryHandling, defaultExtrapolationValue );
 
 For starters, you can choose from any of the dependent variables listed in the section above (note that even here, density, pressure and temperature need to be present). Moreover, you can specify custom values for the gas constant and ratio of specific heats (in the example above, values for Mars have been used). Then, the settings for interpolation can be defined. Their meaning is the same as for the multi-dimensional atmosphere, but only a single value can be input for both variables.
 

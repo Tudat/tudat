@@ -52,7 +52,7 @@ The third addition needs to be made in :literal:`propagationOutput.cpp`. Here a 
             variableSize = 1;
             break;
 
-The final change should then be made to the :literal:`propagationOutput.h` file. In a method called :literal:`getDoubleDependentVariableFunction`, the actual calculation of the variable is done. Again, a switch stamentent in the same manner as before is made, with in every case the calculation of the variable. This method gets the :literal:`bodyMap` as input, thus methods available inside the :literal:`FlightConditions` could, for example, be used to calculate the dependent variable. For the new variable, a new case needs to be made in which a :literal:`boost::function< double( )>` is returned. This function can take several variables as input and should return the dependent variable. The implementation for the mach number is given here:
+The final change should then be made to the :literal:`propagationOutput.h` file. In a method called :literal:`getDoubleDependentVariableFunction`, the actual calculation of the variable is done. Again, a switch stamentent in the same manner as before is made, with in every case the calculation of the variable. This method gets the :literal:`bodyMap` as input, thus methods available inside the :literal:`FlightConditions` could, for example, be used to calculate the dependent variable. For the new variable, a new case needs to be made in which a :literal:`std::function< double( )>` is returned. This function can take several variables as input and should return the dependent variable. The implementation for the mach number is given here:
 
 .. code-block:: cpp
    
@@ -65,19 +65,19 @@ The final change should then be made to the :literal:`propagationOutput.h` file.
                 throw std::runtime_error( errorMessage );
             }
 
-            boost::function< double( const double, const double ) > functionToEvaluate =
-                    boost::bind( &aerodynamics::computeMachNumber, _1, _2 );
+            std::function< double( const double, const double ) > functionToEvaluate =
+                    std::bind( &aerodynamics::computeMachNumber, std::placeholders::_1, std::placeholders::_2 );
 
             // Retrieve functions for airspeed and speed of sound.
-            boost::function< double( ) > firstInput =
-                    boost::bind( &aerodynamics::FlightConditions::getCurrentAirspeed,
+            std::function< double( ) > firstInput =
+                    std::bind( &aerodynamics::FlightConditions::getCurrentAirspeed,
                                  bodyMap.at( bodyWithProperty )->getFlightConditions( ) );
-            boost::function< double( ) > secondInput =
-                    boost::bind( &aerodynamics::FlightConditions::getCurrentSpeedOfSound,
+            std::function< double( ) > secondInput =
+                    std::bind( &aerodynamics::FlightConditions::getCurrentSpeedOfSound,
                                  bodyMap.at( bodyWithProperty )->getFlightConditions( ) );
 
 
-            variableFunction = boost::bind( &evaluateBivariateFunction< double, double >,
+            variableFunction = std::bind( &evaluateBivariateFunction< double, double >,
                                             functionToEvaluate, firstInput, secondInput );
             break;
       }
@@ -98,14 +98,14 @@ A user will define a list of bodies to be used in the simulation, an example is 
 .. code-block:: cpp
 
     // Define simulation body settings.
-    std::map< std::string, boost::shared_ptr< BodySettings > > bodySettings =
+    std::map< std::string, std::shared_ptr< BodySettings > > bodySettings =
             getDefaultBodySettings( { "Mars" }, simulationStartEpoch - 10.0 * fixedStepSize,
                                     simulationEndEpoch + 10.0 * fixedStepSize );
-    bodySettings[ "Mars" ]->ephemerisSettings = boost::make_shared< simulation_setup::ConstantEphemerisSettings >(
+    bodySettings[ "Mars" ]->ephemerisSettings = std::make_shared< simulation_setup::ConstantEphemerisSettings >(
                 Eigen::Vector6d::Zero( ), "SSB", "J2000" );
     bodySettings[ "Mars" ]->rotationModelSettings->resetOriginalFrame( "J2000" );
     std::string atmosphereFile = ... ;
-    bodySettings[ "Mars" ]->atmosphereSettings = boost::make_shared< TabulatedAtmosphereSettings >( atmosphereFile );
+    bodySettings[ "Mars" ]->atmosphereSettings = std::make_shared< TabulatedAtmosphereSettings >( atmosphereFile );
 
 
 The :literal:`BodySettings` class contains a member variable called :literal:`atmosphereSettings` of type :literal:`AtmosphereSettings`. As can be seen in the last line of the example code above, this member variable is set to a :literal:`TabulatedAtmosphereSettings` by the user. This is a valid statement (eventhough :literal:`atmosphereSettings` is not of type :literal:`TabulatedAtmosphereSettings`) because :literal:`TabulatedAtmosphereSettings` is derived from the base class :literal:`AtmosphereSettings`. These concepts are called polymorphism and inheritance, and should be understood by the reader before continuing. 
@@ -135,14 +135,14 @@ Where :literal:`orderedBodySettings` is an ordered map of all the bodies. This c
 
 .. code-block:: cpp
 
-        boost::shared_ptr< aerodynamics::AtmosphereModel > createAtmosphereModel(
-           const boost::shared_ptr< AtmosphereSettings > atmosphereSettings,
+        std::shared_ptr< aerodynamics::AtmosphereModel > createAtmosphereModel(
+           const std::shared_ptr< AtmosphereSettings > atmosphereSettings,
            const std::string& body )
 	{
 	    using namespace tudat::aerodynamics;
 
 	    // Declare return object.
-	    boost::shared_ptr< AtmosphereModel > atmosphereModel;
+	    std::shared_ptr< AtmosphereModel > atmosphereModel;
 
 	    // Check which type of atmosphere model is to be created.
 	    switch( atmosphereSettings->getAtmosphereType( ) )
@@ -156,7 +156,7 @@ Where :literal:`orderedBodySettings` is an ordered map of all the bodies. This c
 	    case tabulated_atmosphere:
 	    {
 		// Check whether settings for atmosphere are consistent with its type
-		boost::shared_ptr< TabulatedAtmosphereSettings > tabulatedAtmosphereSettings =
+		std::shared_ptr< TabulatedAtmosphereSettings > tabulatedAtmosphereSettings =
 		        boost::dynamic_pointer_cast< TabulatedAtmosphereSettings >( atmosphereSettings );
 		if( tabulatedAtmosphereSettings == NULL )
 		{
@@ -166,7 +166,7 @@ Where :literal:`orderedBodySettings` is an ordered map of all the bodies. This c
 		else
 		{
 		    // Create and initialize tabulatedl atmosphere model.
-		    atmosphereModel = boost::make_shared< TabulatedAtmosphere >(
+		    atmosphereModel = std::make_shared< TabulatedAtmosphere >(
 		                tabulatedAtmosphereSettings->getAtmosphereFile( ) );
 		}
 		break;
@@ -210,8 +210,8 @@ Just as before, it is important to understand the framework of the acceleration 
     std::vector< std::string > centralBodies;
 
     // Define acceleration model settings.
-    std::map< std::string, std::vector< boost::shared_ptr< AccelerationSettings > > > accelerationsOfWaverider;
-    accelerationsOfWaverider[ "Mars" ].push_back( boost::make_shared< AccelerationSettings >( aerodynamic ) );
+    std::map< std::string, std::vector< std::shared_ptr< AccelerationSettings > > > accelerationsOfWaverider;
+    accelerationsOfWaverider[ "Mars" ].push_back( std::make_shared< AccelerationSettings >( aerodynamic ) );
     accelerationMap[  "Vehicle" ] = accelerationsOfWaverider;
 
     bodiesToPropagate.push_back( "Vehicle" );
@@ -264,18 +264,18 @@ This function does several checks if the right models are present, and then call
 .. code-block:: cpp
 
     //! Function to create acceleration model object.
-    boost::shared_ptr< AccelerationModel< Eigen::Vector3d > > createAccelerationModel(
-            const boost::shared_ptr< Body > bodyUndergoingAcceleration,
-            const boost::shared_ptr< Body > bodyExertingAcceleration,
-            const boost::shared_ptr< AccelerationSettings > accelerationSettings,
+    std::shared_ptr< AccelerationModel< Eigen::Vector3d > > createAccelerationModel(
+            const std::shared_ptr< Body > bodyUndergoingAcceleration,
+            const std::shared_ptr< Body > bodyExertingAcceleration,
+            const std::shared_ptr< AccelerationSettings > accelerationSettings,
             const std::string& nameOfBodyUndergoingAcceleration,
             const std::string& nameOfBodyExertingAcceleration,
-            const boost::shared_ptr< Body > centralBody,
+            const std::shared_ptr< Body > centralBody,
             const std::string& nameOfCentralBody,
             const NamedBodyMap& bodyMap )
     {
         // Declare pointer to return object.
-        boost::shared_ptr< AccelerationModel< Eigen::Vector3d > > accelerationModelPointer;
+        std::shared_ptr< AccelerationModel< Eigen::Vector3d > > accelerationModelPointer;
 
         // Switch to call correct acceleration model type factory function.
         switch( accelerationSettings->accelerationType_ )
@@ -356,8 +356,8 @@ As before, this guide will start by looking at the framework of how the state de
 
 
      // Create propagation settings.
-     boost::shared_ptr< TranslationalStatePropagatorSettings< double > > propagatorSettings =
-             boost::make_shared< TranslationalStatePropagatorSettings< double > >
+     std::shared_ptr< TranslationalStatePropagatorSettings< double > > propagatorSettings =
+             std::make_shared< TranslationalStatePropagatorSettings< double > >
              ( centralBodies, accelerationModelMap, bodiesToPropagate, systemInitialState,
                terminationSettings, cowell, dependentVariablesToSave );
 
@@ -372,29 +372,29 @@ Inside :literal:`SingleArcDynamicsSimulator`, the propagator settings are passed
 
 
      template< typename StateScalarType = double, typename TimeType = double >
-     boost::shared_ptr< SingleStateTypeDerivative< StateScalarType, TimeType > >
+     std::shared_ptr< SingleStateTypeDerivative< StateScalarType, TimeType > >
      createTranslationalStateDerivativeModel(
-            const boost::shared_ptr< TranslationalStatePropagatorSettings< StateScalarType > >
+            const std::shared_ptr< TranslationalStatePropagatorSettings< StateScalarType > >
             translationPropagatorSettings,
             const simulation_setup::NamedBodyMap& bodyMap,
             const TimeType propagationStartTime )
     {
 
         // Create object for frame origin transformations.
-        boost::shared_ptr< CentralBodyData< StateScalarType, TimeType > > centralBodyData =
+        std::shared_ptr< CentralBodyData< StateScalarType, TimeType > > centralBodyData =
                 createCentralBodyData< StateScalarType, TimeType >(
                     translationPropagatorSettings->centralBodies_,
                     translationPropagatorSettings->bodiesToIntegrate_,
                     bodyMap );
 
-        boost::shared_ptr< SingleStateTypeDerivative< StateScalarType, TimeType > > stateDerivativeModel;
+        std::shared_ptr< SingleStateTypeDerivative< StateScalarType, TimeType > > stateDerivativeModel;
 
         // Check propagator type and create corresponding state derivative object.
         switch( translationPropagatorSettings->propagator_ )
         {
         case cowell:
         {
-            stateDerivativeModel = boost::make_shared<
+            stateDerivativeModel = std::make_shared<
                     NBodyCowellStateDerivative< StateScalarType, TimeType > >
                     ( translationPropagatorSettings->getAccelerationsMap( ), centralBodyData,
                       translationPropagatorSettings->bodiesToIntegrate_ );

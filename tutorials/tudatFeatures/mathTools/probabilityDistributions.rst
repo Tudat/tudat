@@ -32,7 +32,7 @@ Each of these distributions can be create through the same Tudat interface. Belo
     parameters.push_back( 2.5 );
 
     // Create distribution
-    boost::shared_ptr< InvertibleContinuousProbabilityDistribution< double > > probabilityDistribution =
+    std::shared_ptr< InvertibleContinuousProbabilityDistribution< double > > probabilityDistribution =
             createBoostRandomVariable( uniform_boost_distribution, parameters );
 
 where the ``probabilityDistribution`` object is created by the ``createBoostRandomVariable`` function, which takes two inputs:
@@ -121,7 +121,7 @@ Generation of Random Numbers
 For each of the invertible random variables described above, you can easily create a random number generator which generates variables according to that distribution. For the 6 boost distributions listed above, you can use the same input (type and parameters) as listed above. We provide two interfaces for random variable generation:
 
     - A class :class:`ContinuousRandomVariableGenerator`, with a ``getRandomVariableValue`` that produces random numbers. 
-    - A boost function ``boost::function< double( ) >`` which produces random numbers every time it is called.
+    - A boost function ``std::function< double( ) >`` which produces random numbers every time it is called.
 
 We illustrate these two options with some examples below.
 
@@ -136,12 +136,12 @@ We illustrate these two options with some examples below.
 
     // Create distribution object
     double distributionSeed = 42.0;
-    boost::shared_ptr< RandomVariableGenerator< double > > randomNumberGenerator = createBoostContinuousRandomVariableGenerator(
+    std::shared_ptr< RandomVariableGenerator< double > > randomNumberGenerator = createBoostContinuousRandomVariableGenerator(
             uniform_boost_distribution, parameters, distributionSeed );
 
     // Create distrubution function
     distributionSeed = 43.0;
-    boost::function< double( ) > randomNumberFunction = createBoostContinuousRandomVariableGeneratorFunction(
+    std::function< double( ) > randomNumberFunction = createBoostContinuousRandomVariableGeneratorFunction(
             uniform_boost_distribution, parameters, distributionSeed );
 
     // Generate random variables

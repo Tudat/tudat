@@ -106,7 +106,7 @@ Finally, we also override the method :literal:`resetPropagatorSettings`:
       // Define constant 30 degree angle of attack
       double constantAngleOfAttack = 30.0 * tudat::mathematical_constants::PI / 180.0;
       getBody( "Apollo" )->getFlightConditions( )->getAerodynamicAngleCalculator( )->
-              setOrientationAngleFunctions( boost::lambda::constant( constantAngleOfAttack ) );
+              setOrientationAngleFunctions( [ = ]( ){ return constantAngleOfAttack; } );
   }
 
 After calling the original implementation in line 4, we define an angle of attack for Apollo. This is done by modifying Apollo's flight conditions. This can only be done once the flight conditions have been created, i.e. after :literal:`JsonSimulationManager::resetPropagatorSettings( )` has been called, since this method will create the acceleration aerodynamic models based on the body map created previously.

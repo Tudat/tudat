@@ -94,11 +94,11 @@ We now have a :literal:`std::map` with time vs. thrust force. To pass this infor
    std::map< double, Eigen::Vector3d > thrustData = getThrustData( );
 
    // Make interpolator
-   boost::shared_ptr< InterpolatorSettings >
-           thrustInterpolatorSettingsPointer = boost::make_shared< InterpolatorSettings >( linear_interpolator );
+   std::shared_ptr< InterpolatorSettings >
+           thrustInterpolatorSettingsPointer = std::make_shared< InterpolatorSettings >( linear_interpolator );
 
    // Creating settings for thrust force
-   boost::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector3d > >
+   std::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector3d > >
            thrustInterpolatorPointer = createOneDimensionalInterpolator< double, Eigen::Vector3d >(
               thrustData, thrustInterpolatorSettingsPointer );
 
@@ -107,8 +107,8 @@ The first line reads the :literal:`std::map` from the file we have specified. Th
 .. code-block:: cpp
 
    // Make interpolator
-   boost::shared_ptr< InterpolatorSettings >
-           thrustInterpolatorSettingsPointer = boost::make_shared< InterpolatorSettings >( linear_interpolator );
+   std::shared_ptr< InterpolatorSettings >
+           thrustInterpolatorSettingsPointer = std::make_shared< InterpolatorSettings >( linear_interpolator );
 
 creates an object :class:`InterpolatorSettings` that contains the settings for how to create the interpolator. For this application, this means specifying that the interpolator should be of the type :literal:`linear_interpolator`. Note that this setup is very similar to how an environment/acceleration/etc. model is set up.
 The interpolator is then created by calling:
@@ -116,7 +116,7 @@ The interpolator is then created by calling:
 .. code-block:: cpp
 
    // Creating settings for thrust force
-   boost::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector3d > >
+   std::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector3d > >
           thrustInterpolatorPointer = createOneDimensionalInterpolator< double, Eigen::Vector3d >(
                thrustData, thrustInterpolatorSettingsPointer );
 
@@ -131,14 +131,14 @@ The creation of the thrust acceleration is done similarly as in the previous exa
    double constantSpecificImpulse = 3000.0;
 
    accelerationsOfVehicle[ "Vehicle" ].push_back(
-               boost::make_shared< ThrustAccelerationSettings >(
+               std::make_shared< ThrustAccelerationSettings >(
                    thrustInterpolatorPointer,
-                   boost::lambda::constant( constantSpecificImpulse ), lvlh_thrust_frame, "Earth" ) );
+                   [ = ]( ){ return constantSpecificImpulse; }, lvlh_thrust_frame, "Earth" ) );
 
 The input to the :class:`ThrustAccelerationSettings`, however, is different from that used in the previous example. In fact, we use a different constructor here, an example of constructor overloading. The input required to the constructor we use here is:
 
     - The interpolator used to compute the thrust force vector as a function of time.
-    - Function returning the specific impulse as a function of time (here constant at the 3000 s). If you are not familiar with :literal:`boost::lambda::constant`, have a look :ref:`here <externalBoostExamplesFunction>`.
+    - Function returning the specific impulse as a function of time (here constant at the 3000 s). If you are not familiar with lambda expressions, have a look :ref:`here <externalBoostExamplesFunction>`.
     - The frame type in which the thrust vector is expressed.
     - The reference body for any frame transformation that may be required.
 

@@ -6,7 +6,7 @@ For a body that experiences aerodynamic forces, the aerodynamic coefficients of 
 
 .. code-block:: cpp
     
-    boost::shared_ptr< AerodynamicCoefficientSettings > aerodynamicCoefficientSettings = .....
+    std::shared_ptr< AerodynamicCoefficientSettings > aerodynamicCoefficientSettings = .....
     bodyMap[ "VehicleName" ]->setAerodynamicCoefficientInterface(
                         createAerodynamicCoefficientInterface( aerodynamicCoefficientSettings, "VehicleName" ) );
 
@@ -26,7 +26,7 @@ The settings for this class are constructed as follows:
     
     HypersonicLocalInclinationAnalysis(
             const std::vector< std::vector< double > >& dataPointsOfIndependentVariables,
-            const boost::shared_ptr< SurfaceGeometry > inputVehicleSurface,
+            const std::shared_ptr< SurfaceGeometry > inputVehicleSurface,
             const std::vector< int >& numberOfLines,
             const std::vector< int >& numberOfPoints,
             const std::vector< bool >& invertOrders,
@@ -96,8 +96,8 @@ First the capsule geometry is made using a pre-defined capsule shape:
 
 .. code-block:: cpp
     
-    boost::shared_ptr< geometric_shapes::Capsule > capsule
-            = boost::make_shared< geometric_shapes::Capsule >(
+    std::shared_ptr< geometric_shapes::Capsule > capsule
+            = std::make_shared< geometric_shapes::Capsule >(
                4.694, 1.956, 2.662, -1.0 * 33.0 * PI / 180.0, 0.196 );
 
 There is also an option to define a grid by the user, but this is not explained here. To define the panels on the vehicle, which are used for the calculation of the local inclination, the number of lines and points are easily definable:
@@ -168,7 +168,7 @@ Finally, in the return statement, the local inclination analysis is made, which 
 .. code-block:: cpp
     
     // Create analysis object and capsule database.
-    return boost::make_shared< HypersonicLocalInclinationAnalysis >(
+    return std::make_shared< HypersonicLocalInclinationAnalysis >(
                 independentVariableDataPoints, capsule, numberOfLines, numberOfPoints,
                 invertOrders, selectedMethods, PI * pow( capsule->getMiddleRadius( ), 2.0 ),
                 3.9116, momentReference ); 
@@ -183,7 +183,7 @@ As a reminder, aerodynamic coefficients are created in Tudat by creating an obje
 
 .. code-block:: cpp
     
-    boost::shared_ptr< AerodynamicCoefficientSettings > aerodynamicCoefficientSettings = .....
+    std::shared_ptr< AerodynamicCoefficientSettings > aerodynamicCoefficientSettings = .....
     bodyMap[ "VehicleName" ]->setAerodynamicCoefficientInterface(
                         createAerodynamicCoefficientInterface( aerodynamicCoefficientSettings, "VehicleName" ) );
 
@@ -217,7 +217,7 @@ As an example, the following can be used to create :class:`AerodynamicCoefficie
         bool areCoefficientsInNegativeAxisDirection = true;
 
         // Load and parse files; create coefficient settings.
-        boost::shared_ptr< AerodynamicCoefficientSettings > aerodynamicCoefficientSettings = 
+        std::shared_ptr< AerodynamicCoefficientSettings > aerodynamicCoefficientSettings = 
             readTabulatedAerodynamicCoefficientsFromFiles( forceCoefficientFiles, referenceArea, independentVariableNames, areCoefficientsInAerodynamicFrame,         areCoefficientsInNegativeAxisDirection );
 
         // Create and set aerodynamic coefficients
@@ -238,7 +238,7 @@ Below, an example is given on how to load the aerodynamic coefficient increments
 .. code-block:: cpp
     
     // Create coefficient settings for body.
-    boost::shared_ptr< AerodynamicCoefficientSettings > aerodynamicCoefficientSettings = ...
+    std::shared_ptr< AerodynamicCoefficientSettings > aerodynamicCoefficientSettings = ...
 
     // Define physical meaning of independent variables for control surface increments, in this case Mach number, angle of attack and control surface deflection
     std::vector< aerodynamics::AerodynamicCoefficientsIndependentVariables > controlSurfaceIndependentVariableNames; 
@@ -276,9 +276,9 @@ The constructor for this class looks as follows:
 .. code-block:: cpp
     
     CustomAerodynamicCoefficientInterface(
-            const boost::function< Eigen::Vector3d( const std::vector< double >& ) >
+            const std::function< Eigen::Vector3d( const std::vector< double >& ) >
             forceCoefficientFunction,
-            const boost::function< Eigen::Vector3d( const std::vector< double >& ) >
+            const std::function< Eigen::Vector3d( const std::vector< double >& ) >
             momentCoefficientFunction,
             const double referenceLength,
             const double referenceArea,
@@ -292,12 +292,12 @@ The constructor for this class looks as follows:
 where:
 
 - :literal:`forceCoefficientFunction`:
-      A function outputting the aerodynamic force coefficients as a function of the independent variables, listed in :literal:`independentVariableNames`. This requires a :literal:`boost::function
-      and :literal:`boost::bind`, which is explained in: :ref:`externalBoost`.
+      A function outputting the aerodynamic force coefficients as a function of the independent variables, listed in :literal:`independentVariableNames`. This requires a :literal:`std::function
+      and :literal:`std::bind`, which is explained in: :ref:`externalBoost`.
 
 - :literal:`momentCoefficientFunction`:
-      A function outputting the aerodynamic moment coefficients as a function of the independent variables, listed in :literal:`independentVariableNames`. This requires a :literal:`boost::function
-      and :literal:`boost::bind`, which is explained in: :ref:`externalBoost`. 
+      A function outputting the aerodynamic moment coefficients as a function of the independent variables, listed in :literal:`independentVariableNames`. This requires a :literal:`std::function
+      and :literal:`std::bind`, which is explained in: :ref:`externalBoost`. 
 
 - :literal:`referenceLength`:
       The length with which the coefficients are non-dimensionalized (about the z- and x-axis). 

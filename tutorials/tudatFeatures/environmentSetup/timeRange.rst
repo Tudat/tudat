@@ -4,5 +4,5 @@ Most of the environment models are valid for any time, but there is a key except
 
 .. code-block:: cpp
 
-    std::map< std::string, boost::shared_ptr< BodySettings > > bodySettings = getDefaultBodySettings( bodiesToCreate )
+    std::map< std::string, std::shared_ptr< BodySettings > > bodySettings = getDefaultBodySettings( bodiesToCreate )
     NamedBodyMap bodyMap = createBodies( bodySettings );

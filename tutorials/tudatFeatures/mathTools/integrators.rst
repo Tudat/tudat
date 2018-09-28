@@ -18,7 +18,7 @@ All numerical integrators presented in this page follow the same framework, wher
 .. code-block:: cpp
 
     NumericalIntegratorXdPointer integrator
-                    = boost::make_shared< EulerIntegratorXd >(
+                    = std::make_shared< EulerIntegratorXd >(
                         stateDerivativeFunction,
                         intervalStart,
                         initialState );
@@ -106,7 +106,7 @@ The Euler integrator is the simplest integrator available but is also a first-or
 .. code-block:: cpp
 
     NumericalIntegratorXdPointer integrator
-                    = boost::make_shared< EulerIntegratorXd >(
+                    = std::make_shared< EulerIntegratorXd >(
                         stateDerivativeFunction,
                         intervalStart,
                         initialState );
@@ -118,7 +118,7 @@ The Runge-Kutta 4 (RK4) integrator is a fourth-order fixed step-size integrator,
 .. code-block:: cpp
 
     NumericalIntegratorXdPointer integrator
-                    = boost::make_shared< RungeKutta4IntegratorXd >(
+                    = std::make_shared< RungeKutta4IntegratorXd >(
                         stateDerivativeFunction,
                         intervalStart,
                         initialState );

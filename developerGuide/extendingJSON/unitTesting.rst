@@ -20,7 +20,7 @@ Component tests
 
 Each component test is designed to exhaustively test all the features of a given settings-container class (and its derived classes). In these tests, it is checked that objects created by reading a JSON file are identical to the objects created manually by writing C++ code. In order to compare the created objects, it will be necessary to define a comparison operator for each settings class in Tudat. Fortunately, this has been done indirectly by writing :literal:`to_json` methods, so we can compare the JSON representation of the created objects rather than the objects themselves. The only drawbacks of this approach are:
 
-  - It cannot be followed for classes storing information that is not convertible to JSON (such as :class:`boost::function`).
+  - It cannot be followed for classes storing information that is not convertible to JSON (such as :class:`std::function`).
   - An error in the :literal:`to_json` function can lead to overlooking of errors in the :literal:`from_json` functions.
 
 The first point has little relevance, since classes that cannot be represented as JSON are not supported by the JSON Interface. The second point is more important. Consider these :literal:`to_json` and :literal:`from_jsom` functions:
@@ -28,10 +28,10 @@ The first point has little relevance, since classes that cannot be represented a
 .. code-block:: cpp
   :linenos:
 
-  void to_json( nlohmann::json& jsonObject, const boost::shared_ptr< BodyShapeSettings >& bodyShapeSettings )
+  void to_json( nlohmann::json& jsonObject, const std::shared_ptr< BodyShapeSettings >& bodyShapeSettings )
   {
       ...
-      boost::shared_ptr< OblateSphericalBodyShapeSettings > oblateSphericalBodyShapeSettings =
+      std::shared_ptr< OblateSphericalBodyShapeSettings > oblateSphericalBodyShapeSettings =
         boost::dynamic_pointer_cast< OblateSphericalBodyShapeSettings >( bodyShapeSettings );
       assertNonNullPointer( oblateSphericalBodyShapeSettings );
       
@@ -40,10 +40,10 @@ The first point has little relevance, since classes that cannot be represented a
       ...
   }
 
-  void from_json( const nlohmann::json& jsonObject, boost::shared_ptr< BodyShapeSettings >& bodyShapeSettings )
+  void from_json( const nlohmann::json& jsonObject, std::shared_ptr< BodyShapeSettings >& bodyShapeSettings )
   {
       ...
-      bodyShapeSettings = boost::make_shared< OblateSphericalBodyShapeSettings >(
+      bodyShapeSettings = std::make_shared< OblateSphericalBodyShapeSettings >(
         getValue< double >( jsonObject, K::equatorialRadius ),
         getValue< double >( jsonObject, K::flattening ) );
       ...
@@ -53,7 +53,7 @@ Now, imagine that we forget line 9 and additionally we have:
 
 .. code-block:: cpp
 
-  bodyShapeSettings = boost::make_shared< OblateSphericalBodyShapeSettings >(
+  bodyShapeSettings = std::make_shared< OblateSphericalBodyShapeSettings >(
     getValue< double >( jsonObject, K::equatorialRadius ),
     getValue< double >( jsonObject, K::equatorialRadius ) );
 
@@ -102,8 +102,8 @@ Although component tests cannot identify errors under certain circumstances, in 
       loadSpiceKernelInTudat( kernelsPath + "de421.bsp");
 
       // Create RotationModelSettings from JSON file
-      const boost::shared_ptr< RotationModelSettings > fromFileSettings =
-              parseJSONFile< boost::shared_ptr< RotationModelSettings > >( INPUT( "simple" ) );
+      const std::shared_ptr< RotationModelSettings > fromFileSettings =
+              parseJSONFile< std::shared_ptr< RotationModelSettings > >( INPUT( "simple" ) );
 
       // Create RotationModelSettings manually
       const std::string originalFrame = "ECLIPJ2000";
@@ -112,8 +112,8 @@ Although component tests cannot identify errors under certain circumstances, in 
       const Eigen::Quaterniond initialOrientation =
               spice_interface::computeRotationQuaternionBetweenFrames( originalFrame, targetFrame, initialTime );
       const double rotationRate = 2.0e-5;
-      const boost::shared_ptr< RotationModelSettings > manualSettings =
-              boost::make_shared< SimpleRotationModelSettings >( originalFrame,
+      const std::shared_ptr< RotationModelSettings > manualSettings =
+              std::make_shared< SimpleRotationModelSettings >( originalFrame,
                                                                  targetFrame,
                                                                  initialOrientation,
                                                                  initialTime,
@@ -130,14 +130,14 @@ Although component tests cannot identify errors under certain circumstances, in 
       using namespace json_interface;
 
       // Create RotationModelSettings from JSON file
-      const boost::shared_ptr< RotationModelSettings > fromFileSettings =
-              parseJSONFile< boost::shared_ptr< RotationModelSettings > >( INPUT( "spice" ) );
+      const std::shared_ptr< RotationModelSettings > fromFileSettings =
+              parseJSONFile< std::shared_ptr< RotationModelSettings > >( INPUT( "spice" ) );
 
       // Create RotationModelSettings manually
       const std::string originalFrame = "foo";
       const std::string targetFrame = "oof";
-      const boost::shared_ptr< RotationModelSettings > manualSettings =
-              boost::make_shared< RotationModelSettings >( spice_rotation_model,
+      const std::shared_ptr< RotationModelSettings > manualSettings =
+              std::make_shared< RotationModelSettings >( spice_rotation_model,
                                                            originalFrame,
                                                            targetFrame );
 
@@ -184,8 +184,8 @@ Since the :literal:`to_json` and :literal:`from_json` functions are only defined
 
 .. code-block:: json
   
-  const boost::shared_ptr< RotationModelSettings > manualSettings =
-            boost::make_shared< SimpleRotationModelSettings >( ...
+  const std::shared_ptr< RotationModelSettings > manualSettings =
+            std::make_shared< SimpleRotationModelSettings >( ...
 
 The final step is to check that the JSON representation of the two objects is identical. This is done by using the macro :literal:`BOOST_CHECK_EQUAL_JSON` defined in :class:`Tudat/JsonInterface/UnitTests/unitTestSupport.h`.
 
@@ -217,8 +217,8 @@ The next step is to manually set-up and run the same simulation by writing C++ c
 
 .. code-block:: cpp
 
-  const boost::shared_ptr< SingleArcDynamicsSimulator< > > dynamicsSimulator =
-          boost::make_shared< SingleArcDynamicsSimulator< > >( bodyMap, integratorSettings, propagatorSettings );
+  const std::shared_ptr< SingleArcDynamicsSimulator< > > dynamicsSimulator =
+          std::make_shared< SingleArcDynamicsSimulator< > >( bodyMap, integratorSettings, propagatorSettings );
   const std::map< double, Eigen::VectorXd > results = dynamicsSimulator->getEquationsOfMotionNumericalSolution( );
 
 Now, we can compare the numerical solution of the simulation run using the settings from the JSON file and that in which the settings were created manually. We do this by writing:

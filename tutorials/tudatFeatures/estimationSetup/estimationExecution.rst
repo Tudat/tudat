@@ -19,7 +19,7 @@ An object is created as follows:
    .. code-block:: cpp
 
       OrbitDeterminationManager orbitDeterminationManager =
-            boost::make_shared< ObservationViabilitySettings >( 
+            std::make_shared< ObservationViabilitySettings >( 
                 OrbitDeterminationManager( bodyMap, parametersToEstimate, observationSettingsMap, integratorSettings, propagatorSettings );
                 
    The input is:
@@ -30,19 +30,19 @@ An object is created as follows:
       
    - :literal:`parametersToEstimate`
 
-      A :literal:`boost::shared_ptr< EstimatableParameterSet< ObservationScalarType > >` variable which contains the full list of parameters that are to be estimated.
+      A :literal:`std::shared_ptr< EstimatableParameterSet< ObservationScalarType > >` variable which contains the full list of parameters that are to be estimated.
       
    - :literal:`observationSettingsMap`
 
-      A list of :class:`ObservationSettings` that may be provided as either :literal:`std::multimap< LinkEnds, boost::shared_ptr< ObservationSettings > >` or a :literal:`std::map< ObservableType, std::map< LinkEnds, boost::shared_ptr< ObservationSettings > >`. In the former case, the list is sorter by :literal:`LinkEnds` only, in the latter by both :literal:`ObservableType` and :literal:`LinkEnds`
+      A list of :class:`ObservationSettings` that may be provided as either :literal:`std::multimap< LinkEnds, std::shared_ptr< ObservationSettings > >` or a :literal:`std::map< ObservableType, std::map< LinkEnds, std::shared_ptr< ObservationSettings > >`. In the former case, the list is sorter by :literal:`LinkEnds` only, in the latter by both :literal:`ObservableType` and :literal:`LinkEnds`
       
    - :literal:`integratorSettings`
 
-      A :literal:`boost::shared_ptr< IntegratorSettings< TimeType > >` object which contains all settings for the numerical integrator, used to numerically calcualte the dynamics and variational equations. 
+      A :literal:`std::shared_ptr< IntegratorSettings< TimeType > >` object which contains all settings for the numerical integrator, used to numerically calcualte the dynamics and variational equations. 
 
    - :literal:`propagatorSettings`
 
-      A :literal:`boost::shared_ptr< PropagatorSettings< ObservationScalarType > >` object which contains all propagation settings. 
+      A :literal:`std::shared_ptr< PropagatorSettings< ObservationScalarType > >` object which contains all propagation settings. 
       
       .. warning::
       
@@ -67,8 +67,8 @@ The input to the estimation consists of several parts. Firstly, the input data, 
    
    .. code-block:: cpp
 
-      boost::shared_ptr< PodInput< ObservationScalarType, TimeType > > podInput =
-            boost::make_shared< PodInput< ObservationScalarType, TimeType >  >( 
+      std::shared_ptr< PodInput< ObservationScalarType, TimeType > > podInput =
+            std::make_shared< PodInput< ObservationScalarType, TimeType >  >( 
                 observationsAndTimes, numberOfEstimatedParameters, inverseOfAprioriCovariance );
      
    The input is:

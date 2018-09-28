@@ -11,12 +11,12 @@ The general procedure consists of defining an object of class :class:`DependentV
    .. code-block:: cpp
 
       // Create object with list of dependent variables
-      boost::shared_ptr< DependentVariableSaveSettings > dependentVariablesToSave =
-      boost::make_shared< DependentVariableSaveSettings >( dependentVariablesList );
+      std::shared_ptr< DependentVariableSaveSettings > dependentVariablesToSave =
+      std::make_shared< DependentVariableSaveSettings >( dependentVariablesList );
 
       // Create propagation settings.
-      boost::shared_ptr< TranslationalStatePropagatorSettings< double > > propagatorSettings =
-      boost::make_shared< TranslationalStatePropagatorSettings< double > >
+      std::shared_ptr< TranslationalStatePropagatorSettings< double > > propagatorSettings =
+      std::make_shared< TranslationalStatePropagatorSettings< double > >
       ( centralBodies, accelerationModelMap, bodiesToPropagate, systemInitialState,
         terminationSettings, propagator, dependentVariablesToSave );
 
@@ -31,14 +31,14 @@ The dependent variables are computed during the body propagation, thus the user 
 .. code-block:: cpp
 
       // Define list of dependent variables to save.
-      std::vector< boost::shared_ptr< SingleDependentVariableSaveSettings > > dependentVariablesList;
+      std::vector< std::shared_ptr< SingleDependentVariableSaveSettings > > dependentVariablesList;
 
 where :literal:`dependentVariableList` is populated as follows:
 
 .. code-block:: cpp
 
       dependentVariablesList.push_back(
-                boost::make_shared< SingleDependentVariableSaveSettings >( variableType , associatedBody , secondaryBody ) );
+                std::make_shared< SingleDependentVariableSaveSettings >( variableType , associatedBody , secondaryBody ) );
 
 The details of the creation of the settings :class:`SingleDependentVariableSaveSettings` object are discussed below.
 
@@ -157,7 +157,7 @@ The framework discussed in the previous section explains how the :literal:`depen
    .. code-block:: cpp
 
       dependentVariablesList.push_back(
-                boost::make_shared< SingleDependentVariableSaveSettings >( variableType , associatedBody , secondaryBody, componentIndex ) );
+                std::make_shared< SingleDependentVariableSaveSettings >( variableType , associatedBody , secondaryBody, componentIndex ) );
 
    where:
 
@@ -222,7 +222,7 @@ The framework discussed in the previous section explains how the :literal:`depen
    .. code-block:: cpp
 
             dependentVariablesList.push_back(
-                boost::make_shared< SingleAccelerationDependentVariableSaveSettings >(
+                std::make_shared< SingleAccelerationDependentVariableSaveSettings >(
                 accelerationModelType, bodyUndergoingAcceleration, bodyExertingAcceleration, useNorm, componentIndex );
 
    where:
@@ -267,7 +267,7 @@ The framework discussed in the previous section explains how the :literal:`depen
    .. code-block:: cpp
 
             dependentVariablesList.push_back(
-                boost::make_shared< SphericalHarmonicAccelerationTermsDependentVariableSaveSettings >(
+                std::make_shared< SphericalHarmonicAccelerationTermsDependentVariableSaveSettings >(
                 bodyUndergoingAcceleration, bodyExertingAcceleration, maximumDegree, maximumOrder, componentIndex );
 
    - :literal:`bodyUndergoingAcceleration`
@@ -297,7 +297,7 @@ The framework discussed in the previous section explains how the :literal:`depen
    .. code-block:: cpp
 
             dependentVariablesList.push_back(
-                boost::make_shared< SingleVariationSphericalHarmonicAccelerationSaveSettings >(
+                std::make_shared< SingleVariationSphericalHarmonicAccelerationSaveSettings >(
                 bodyUndergoingAcceleration, bodyExertingAcceleration, deformationType, identifier );
 
    - :literal:`bodyUndergoingAcceleration`
@@ -326,7 +326,7 @@ The framework discussed in the previous section explains how the :literal:`depen
    .. code-block:: cpp
 
             dependentVariablesList.push_back(
-                boost::make_shared< SingleVariationSingleTermSphericalHarmonicAccelerationSaveSettings >(
+                std::make_shared< SingleVariationSingleTermSphericalHarmonicAccelerationSaveSettings >(
                 bodyUndergoingAcceleration, bodyExertingAcceleration, maximumDegree, maximumOrder, deformationType, identifier );
 
    - :literal:`bodyUndergoingAcceleration`
@@ -363,7 +363,7 @@ The framework discussed in the previous section explains how the :literal:`depen
    .. code-block:: cpp
 
             dependentVariablesList.push_back(
-                boost::make_shared< SingleTorqueDependentVariableSaveSettings >(
+                std::make_shared< SingleTorqueDependentVariableSaveSettings >(
                 torqueModelType, bodyUndergoingTorque, bodyExertingTorque, useNorm, componentIndex );
 
    where:
@@ -401,7 +401,7 @@ The framework discussed in the previous section explains how the :literal:`depen
    .. code-block:: cpp
       
             dependentVariablesList.push_back(
-                boost::make_shared< IntermediateAerodynamicRotationVariableSaveSettings >(
+                std::make_shared< IntermediateAerodynamicRotationVariableSaveSettings >(
                     associatedBody, baseFrame, targetFrame )
 
    where:
@@ -433,7 +433,7 @@ The framework discussed in the previous section explains how the :literal:`depen
 
       
             dependentVariablesList.push_back(
-                boost::make_shared< BodyAerodynamicAngleVariableSaveSettings >(
+                std::make_shared< BodyAerodynamicAngleVariableSaveSettings >(
                     associatedBody, angle )
 
    where:

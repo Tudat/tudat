@@ -31,7 +31,7 @@ Next, the :literal:`bodySettings` are created with a limitation on the time for 
 .. code-block:: cpp
 
     // Create body objects.
-    std::map< std::string, boost::shared_ptr< BodySettings > > bodySettings =
+    std::map< std::string, std::shared_ptr< BodySettings > > bodySettings =
             getDefaultBodySettings( bodiesToCreate, simulationStartEpoch - 300.0, simulationEndEpoch + 300.0 );
 
 In the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` example, a :class:`ConstantEphemerisSettings` is used. Thus, no limitation on the ephemeris is necessary. However, in this example additional celestial bodies are taken into account and therefore we need to provide settings for the ephemeris and rotation. The :literal:`frameOrientation` within :class:`EphemerisSettings` and the base frame orientation within :class:`RotationModelSettings` are set to the :literal:`"J2000"` frame for all bodies:
@@ -53,7 +53,7 @@ A number of additional settings need to be linked to the vehicle when using addi
 .. code-block:: cpp
 
     // Create spacecraft object.
-    bodyMap[ "Asterix" ] = boost::make_shared< simulation_setup::Body >( );
+    bodyMap[ "Asterix" ] = std::make_shared< simulation_setup::Body >( );
     bodyMap[ "Asterix" ]->setConstantBodyMass( 400.0 );
 
 We also need to set the aerodynamic coefficients of the spacecraft. These setting are stored in the :class:`AerodynamicCoefficientSettings` object. For this example, we will consider constant aerodynamic coefficients. This option is set by using the derived-class :class:`ConstantAerodynamicCoefficientSettings`. The settings for the aerodynamic coefficients are the following:
@@ -70,8 +70,8 @@ These settings are provided in the following block of code:
     // Create aerodynamic coefficient interface settings.
     double referenceArea = 4.0;
     double aerodynamicCoefficient = 1.2;
-    boost::shared_ptr< AerodynamicCoefficientSettings > aerodynamicCoefficientSettings =
-            boost::make_shared< ConstantAerodynamicCoefficientSettings >(
+    std::shared_ptr< AerodynamicCoefficientSettings > aerodynamicCoefficientSettings =
+            std::make_shared< ConstantAerodynamicCoefficientSettings >(
                 referenceArea, aerodynamicCoefficient * Eigen::Vector3d::UnitX( ), 1, 1 );
 
     // Create and set aerodynamic coefficients object
@@ -90,8 +90,8 @@ Next, a number of parameters necessary for the cannonball radiation pressure mod
 
     std::vector< std::string > occultingBodies;
     occultingBodies.push_back( "Earth" );
-    boost::shared_ptr< RadiationPressureInterfaceSettings > asterixRadiationPressureSettings =
-            boost::make_shared< CannonBallRadiationPressureInterfaceSettings >(
+    std::shared_ptr< RadiationPressureInterfaceSettings > asterixRadiationPressureSettings =
+            std::make_shared< CannonBallRadiationPressureInterfaceSettings >(
                 "Sun", referenceAreaRadiation, radiationPressureCoefficient, occultingBodies );
 
     // Create and set radiation pressure settings
@@ -115,21 +115,21 @@ These needs to be binded to the Asterix :class:`Body` object:
 .. code-block:: cpp
 
     // Define propagation settings.
-    std::map< std::string, std::vector< boost::shared_ptr< AccelerationSettings > > > accelerationsOfAsterix;
+    std::map< std::string, std::vector< std::shared_ptr< AccelerationSettings > > > accelerationsOfAsterix;
 
-    accelerationsOfAsterix[ "Earth" ].push_back( boost::make_shared< SphericalHarmonicAccelerationSettings >( 5, 5 ) );
+    accelerationsOfAsterix[ "Earth" ].push_back( std::make_shared< SphericalHarmonicAccelerationSettings >( 5, 5 ) );
 
-    accelerationsOfAsterix[ "Sun" ].push_back( boost::make_shared< AccelerationSettings >( 
+    accelerationsOfAsterix[ "Sun" ].push_back( std::make_shared< AccelerationSettings >( 
                                                    basic_astrodynamics::central_gravity ) );
-    accelerationsOfAsterix[ "Moon" ].push_back( boost::make_shared< AccelerationSettings >(
+    accelerationsOfAsterix[ "Moon" ].push_back( std::make_shared< AccelerationSettings >(
                                                      basic_astrodynamics::central_gravity ) );
-    accelerationsOfAsterix[ "Mars" ].push_back( boost::make_shared< AccelerationSettings >(
+    accelerationsOfAsterix[ "Mars" ].push_back( std::make_shared< AccelerationSettings >(
                                                      basic_astrodynamics::central_gravity ) );
-    accelerationsOfAsterix[ "Venus" ].push_back( boost::make_shared< AccelerationSettings >(
+    accelerationsOfAsterix[ "Venus" ].push_back( std::make_shared< AccelerationSettings >(
                                                      basic_astrodynamics::central_gravity ) );
-    accelerationsOfAsterix[ "Sun" ].push_back( boost::make_shared< AccelerationSettings >(
+    accelerationsOfAsterix[ "Sun" ].push_back( std::make_shared< AccelerationSettings >(
                                                      basic_astrodynamics::cannon_ball_radiation_pressure ) );
-    accelerationsOfAsterix[ "Earth" ].push_back( boost::make_shared< AccelerationSettings >(
+    accelerationsOfAsterix[ "Earth" ].push_back( std::make_shared< AccelerationSettings >(
                                                      basic_astrodynamics::aerodynamic ) );
 
     accelerationMap[  "Asterix" ] = accelerationsOfAsterix;

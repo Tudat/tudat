@@ -25,19 +25,19 @@ To propagate the variational equations, additional information needs to be provi
 .. code-block:: cpp
 
     // Define list of parameters to estimate.
-    std::vector< boost::shared_ptr< EstimatableParameterSettings > > parameterNames;
+    std::vector< std::shared_ptr< EstimatableParameterSettings > > parameterNames;
     parameterNames.push_back(
-                boost::make_shared< InitialTranslationalStateEstimatableParameterSettings< double > >(
+                std::make_shared< InitialTranslationalStateEstimatableParameterSettings< double > >(
                     "Asterix", asterixInitialState, "Earth" ) );
-    parameterNames.push_back( boost::make_shared< EstimatableParameterSettings >( "Asterix", radiation_pressure_coefficient ) );
-    parameterNames.push_back( boost::make_shared< EstimatableParameterSettings >( "Asterix", constant_drag_coefficient ) );
-    parameterNames.push_back( boost::make_shared< SphericalHarmonicEstimatableParameterSettings >(
+    parameterNames.push_back( std::make_shared< EstimatableParameterSettings >( "Asterix", radiation_pressure_coefficient ) );
+    parameterNames.push_back( std::make_shared< EstimatableParameterSettings >( "Asterix", constant_drag_coefficient ) );
+    parameterNames.push_back( std::make_shared< SphericalHarmonicEstimatableParameterSettings >(
                                   2, 0, 2, 2, "Earth", spherical_harmonics_cosine_coefficient_block ) );
-    parameterNames.push_back( boost::make_shared< SphericalHarmonicEstimatableParameterSettings >(
+    parameterNames.push_back( std::make_shared< SphericalHarmonicEstimatableParameterSettings >(
                                   2, 1, 2, 2, "Earth", spherical_harmonics_sine_coefficient_block ) );
 
     // Create parameters
-    boost::shared_ptr< estimatable_parameters::EstimatableParameterSet< double > > parametersToEstimate =
+    std::shared_ptr< estimatable_parameters::EstimatableParameterSet< double > > parametersToEstimate =
             createParametersToEstimate( parameterNames, bodyMap );
 
     // Print identifiers and indices of parameters to terminal.
@@ -59,7 +59,7 @@ The propagation of the variational equations solver is done by a dedicated objec
  // Create simulation object and propagate dynamics.
     SingleArcVariationalEquationsSolver< > variationalEquationsSimulator(
                 bodyMap, integratorSettings, propagatorSettings, parametersToEstimate, true,
-                boost::shared_ptr< numerical_integrators::IntegratorSettings< double > >( ), false, true );
+                std::shared_ptr< numerical_integrators::IntegratorSettings< double > >( ), false, true );
                
 So, instead of using a :class:`SingleArcDynamicsSimulator` object (which propagates only the state), we use :class:`SingleArcVariationalEquationsSolver` object (which propagates both the state and the variational equations). Details on the input to the object are discussed on the page :ref:`variationalEquationsSolver`. Using the above, the equations are immediately propagated upon creation of the object. Retrieving the output is done as:
 

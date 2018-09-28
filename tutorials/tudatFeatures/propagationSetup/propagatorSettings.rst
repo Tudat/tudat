@@ -73,7 +73,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         - :literal:`dependentVariablesToSave`
 
-            :literal:`boost::shared_ptr< DependentVariableSaveSettings >` that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved. See the tutorial on :class:`DependentVariableSaveSettings` for more details on this class.
+            :literal:`std::shared_ptr< DependentVariableSaveSettings >` that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved. See the tutorial on :class:`DependentVariableSaveSettings` for more details on this class.
 
         .. note:: The state variables contained in :literal:`initialBodyStates` are ordered with respect to the elements of :literal:`centralBodies` and :literal:`bodiesToIntegrate`. Please take a look at the following pseudocode:
 
@@ -101,7 +101,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         - :literal:`terminationSettings`
 
-            :literal:`boost::shared_ptr< PropagationTerminationSettings >` that defines the termination settings of the propagation. This is the fifth argument and replaces the :literal:`endTime` in the default constructor. See the tutorial on :class:`PropagationTerminationSettings` for more details on this class.
+            :literal:`std::shared_ptr< PropagationTerminationSettings >` that defines the termination settings of the propagation. This is the fifth argument and replaces the :literal:`endTime` in the default constructor. See the tutorial on :class:`PropagationTerminationSettings` for more details on this class.
 
 .. class:: RotationalStatePropagatorSettings
 
@@ -132,7 +132,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
    - :literal:`terminationSettings`
 
-      :literal:`boost::shared_ptr< PropagationTerminationSettings >` that defines the termination settings of the propagation. See the tutorial on :class:`PropagationTerminationSettings` for more details on this class.
+      :literal:`std::shared_ptr< PropagationTerminationSettings >` that defines the termination settings of the propagation. See the tutorial on :class:`PropagationTerminationSettings` for more details on this class.
 
    - :literal:`propagator`
 
@@ -148,7 +148,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
    - :literal:`dependentVariablesToSave`
 
-      :literal:`boost::shared_ptr< DependentVariableSaveSettings >` that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved. See the tutorial on :class:`DependentVariableSaveSettings` for more details on this class.
+      :literal:`std::shared_ptr< DependentVariableSaveSettings >` that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved. See the tutorial on :class:`DependentVariableSaveSettings` for more details on this class.
 
 .. class:: MassPropagationSettings
 
@@ -172,7 +172,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         - :literal:`massRateModels`
 
-            :literal:`std::map< std::string, boost::shared_ptr< MassRateModel > >` that associates a :class:`MassRateModel` to every body with mass that needs to be propagated.
+            :literal:`std::map< std::string, std::shared_ptr< MassRateModel > >` that associates a :class:`MassRateModel` to every body with mass that needs to be propagated.
 
         - :literal:`initialBodyMasses`
 
@@ -192,7 +192,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         - :literal:`massRateModels`
 
-            :literal:`std::map< std::string, std::vector< boost::shared_ptr< MassRateModel > > >` that associates a :class:`std::vector` of :class:`MassRateModel` to each body with mass to be propagated.
+            :literal:`std::map< std::string, std::vector< std::shared_ptr< MassRateModel > > >` that associates a :class:`std::vector` of :class:`MassRateModel` to each body with mass to be propagated.
 
 .. class:: CustomStatePropagatorSettings
 
@@ -216,7 +216,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         - :literal:`stateDerivativeFunction`
 
-            :literal:`boost::function< StateScalarType( const TimeType , const StateScalarType ) >` that must comply with the requirements discussed in :ref:`tudatFeaturesIntegrators`.
+            :literal:`std::function< StateScalarType( const TimeType , const StateScalarType ) >` that must comply with the requirements discussed in :ref:`tudatFeaturesIntegrators`.
 
         - :literal:`initialState`
 
@@ -235,7 +235,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         - :literal:`stateDerivativeFunction`
 
-            :literal:`boost::function< Eigen::VectorXd( const double , const Eigen::VectorXd ) >` that must comply with the requirements discussed in :ref:`tudatFeaturesIntegrators`.
+            :literal:`std::function< Eigen::VectorXd( const double , const Eigen::VectorXd ) >` that must comply with the requirements discussed in :ref:`tudatFeaturesIntegrators`.
 
         - :literal:`initialState`
 
@@ -257,7 +257,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
    
         - :literal:`propagatorSettingsMap`
 
-            :literal:`std::vector< boost::shared_ptr< PropagatorSettings< StateScalarType > > >` where each element contains a pointer to a :class:`PropagatorSettings` class. This class is the simplest to use, since it allows to pass a set of unsorted :class:`PropagatorSettings` derived classes by means of the :literal:`push_back` method of :literal:`std::vector`.
+            :literal:`std::vector< std::shared_ptr< PropagatorSettings< StateScalarType > > >` where each element contains a pointer to a :class:`PropagatorSettings` class. This class is the simplest to use, since it allows to pass a set of unsorted :class:`PropagatorSettings` derived classes by means of the :literal:`push_back` method of :literal:`std::vector`.
 
     .. method:: Using an std::map
 
@@ -271,7 +271,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         - :literal:`propagatorSettingsMap`
 
-            :literal:`std::map< IntegratedStateType, std::vector< boost::shared_ptr< PropagatorSettings< StateScalarType > > > >` where each element contains a pointer to a :class:`PropagatorSettings` class. This class requires a sorted list :class:`PropagatorSettings` derived classes.
+            :literal:`std::map< IntegratedStateType, std::vector< std::shared_ptr< PropagatorSettings< StateScalarType > > > >` where each element contains a pointer to a :class:`PropagatorSettings` class. This class requires a sorted list :class:`PropagatorSettings` derived classes.
 
    
    .. Warning:: When using the :class:`MultiTypePropagatorSettings` derived class note that the :literal:`dependentVariablesToSave` need to be passed in this constructor and not inside the :literal:`propagatorSettingsMap` since these will be ignored. 
@@ -289,7 +289,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
    - ``singleArcSettings``
 
-      ``std::vector< boost::shared_ptr< SingleArcPropagatorSettings< StateScalarType > > >`` defines the settings for the constituent arcs. The switch times for the arcs are defined by the initial times for each of the arcs. 
+      ``std::vector< std::shared_ptr< SingleArcPropagatorSettings< StateScalarType > > >`` defines the settings for the constituent arcs. The switch times for the arcs are defined by the initial times for each of the arcs. 
 
    - ``transferInitialStateInformationPerArc``
 

@@ -15,7 +15,7 @@ The first modification is that we change the Earth rotation model
 
 .. code-block:: cpp
 
-   bodySettings[ "Earth" ]->rotationModelSettings = boost::make_shared< SimpleRotationModelSettings >(
+   bodySettings[ "Earth" ]->rotationModelSettings = std::make_shared< SimpleRotationModelSettings >(
                     "ECLIPJ2000", "IAU_Earth",
                     spice_interface::computeRotationQuaternionBetweenFrames(
                         "ECLIPJ2000", "IAU_Earth", initialEphemerisTime ),
@@ -106,12 +106,12 @@ The resulting code to create settings for the observation models then becomes:
             // Define settings for observable, no light-time corrections, and biases for selected 1-way range links
             observationSettingsMap.insert(
                         std::make_pair( currentLinkEndsList.at( i ),
-                                        boost::make_shared< ObservationSettings >(
+                                        std::make_shared< ObservationSettings >(
                                             currentObservable ) ) );
         }
     }
     
-Where we have defined a map :class:`ObservationSettingsMap` (a typedef for :literal:`std::multimap< LinkEnds, boost::shared_ptr< ObservationSettings > >`) that contains all the settings necessary to create the observation models.
+Where we have defined a map :class:`ObservationSettingsMap` (a typedef for :literal:`std::multimap< LinkEnds, std::shared_ptr< ObservationSettings > >`) that contains all the settings necessary to create the observation models.
 
 Defining Estimation Settings 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -128,15 +128,15 @@ Defining the settings for these parameters is done by:
 
 .. code-block:: cpp
 
-    std::vector< boost::shared_ptr< EstimatableParameterSettings > > parameterNames;
+    std::vector< std::shared_ptr< EstimatableParameterSettings > > parameterNames;
     parameterNames.push_back(
-                boost::make_shared< InitialTranslationalStateEstimatableParameterSettings< double > >(
+                std::make_shared< InitialTranslationalStateEstimatableParameterSettings< double > >(
                     "Vehicle", systemInitialState, "Earth" ) );
-    parameterNames.push_back( boost::make_shared< EstimatableParameterSettings >( "Vehicle", radiation_pressure_coefficient ) );
-    parameterNames.push_back( boost::make_shared< EstimatableParameterSettings >( "Vehicle", constant_drag_coefficient ) );
-    parameterNames.push_back( boost::make_shared< SphericalHarmonicEstimatableParameterSettings >(
+    parameterNames.push_back( std::make_shared< EstimatableParameterSettings >( "Vehicle", radiation_pressure_coefficient ) );
+    parameterNames.push_back( std::make_shared< EstimatableParameterSettings >( "Vehicle", constant_drag_coefficient ) );
+    parameterNames.push_back( std::make_shared< SphericalHarmonicEstimatableParameterSettings >(
                                   2, 0, 2, 2, "Earth", spherical_harmonics_cosine_coefficient_block ) );
-    parameterNames.push_back( boost::make_shared< SphericalHarmonicEstimatableParameterSettings >(
+    parameterNames.push_back( std::make_shared< SphericalHarmonicEstimatableParameterSettings >(
                                   2, 1, 2, 2, "Earth", spherical_harmonics_sine_coefficient_block ) );
                                   
 details on the set up of the parameters can be found on the page :ref:`parameterSettingCreation`. The general idea behind the settings may be familiar: they are similar to the acceleration settings. Some parameters (:math:`C_{r}` and :math:`C_{D}`) require no information in addition to the type of parameter and associated bodies and are created using the :class:`EstimatableParameterSettings` base class. The other parameters require                               additional information, and have a dedicated derived class.
@@ -146,7 +146,7 @@ Now, the actual objects that are used in the simulation are created by:
 .. code-block:: cpp
 
     // Create parameters
-    boost::shared_ptr< estimatable_parameters::EstimatableParameterSet< double > > parametersToEstimate =
+    std::shared_ptr< estimatable_parameters::EstimatableParameterSet< double > > parametersToEstimate =
             createParametersToEstimate( parameterNames, bodyMap );
 
     // Print identifiers and indices of parameters to terminal.
@@ -273,8 +273,8 @@ We define the input to the estimation with the :class:`PodInput` class:
 .. code-block:: cpp
 
     // Define estimation input
-    boost::shared_ptr< PodInput< double, double > > podInput =
-            boost::make_shared< PodInput< double, double > >(
+    std::shared_ptr< PodInput< double, double > > podInput =
+            std::make_shared< PodInput< double, double > >(
                 observationsAndTimes, initialParameterEstimate.rows( ),
                 Eigen::MatrixXd::Zero( truthParameters.rows( ), truthParameters.rows( ) ),
                 initialParameterEstimate - truthParameters );
@@ -298,8 +298,8 @@ The estimation is then performed by:
 .. code-block:: cpp
 
     // Perform estimation
-    boost::shared_ptr< PodOutput< double > > podOutput = orbitDeterminationManager.estimateParameters(
-                podInput, boost::make_shared< EstimationConvergenceChecker >( 4 ) );
+    std::shared_ptr< PodOutput< double > > podOutput = orbitDeterminationManager.estimateParameters(
+                podInput, std::make_shared< EstimationConvergenceChecker >( 4 ) );
                 
 Where the 4 index indicates that the estimation will perform 4 iterations. The estimation should produce output similar to the following:
 

@@ -12,7 +12,7 @@ The user can define the settings for the torque acting on a vehicle in the follo
 
    .. code-block:: cpp
 
-         std::map< std::string, std::map< std::string, std::vector< boost::shared_ptr< torqueSettings > > > >
+         std::map< std::string, std::map< std::string, std::vector< std::shared_ptr< torqueSettings > > > >
    
    Just as in the translational acceleration setup, the first key is the body undergoing the torque, the second key is the body exerting the torque, and the third entry is a vector
    of :literal:`torqueSettings`. The available torque models are given in an :literal:`enum` called :literal:`AvailableTorque`. An example can be given using the Apollo capsule 
@@ -21,7 +21,7 @@ The user can define the settings for the torque acting on a vehicle in the follo
    .. code-block:: cpp
 
          SelectedTorqueMap selectedTorqueModelMap;
-         selectedTorqueModelMap[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< TorqueSettings >( aerodynamic_torque ) );
+         selectedTorqueModelMap[ "Apollo" ][ "Earth" ].push_back( std::make_shared< TorqueSettings >( aerodynamic_torque ) );
 
    Currently, there are only two options for the torque settings, both which are not derived classes of the :literal:`TorqueSettings` class, and do not need extra information. Thus both can be defined
    in a similar way.

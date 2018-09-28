@@ -6,7 +6,7 @@
 Settings classes
 ================
 
-Almost all classes containing settings for Tudat simulations are used in the form of shared pointers. Currently, :class:`boost::shared_ptr` is being used. Support for converting shared pointers to and from :class:`nlohmann::json` could be added just by writing:
+Almost all classes containing settings for Tudat simulations are used in the form of shared pointers. Currently, :class:`std::shared_ptr` is being used. Support for converting shared pointers to and from :class:`nlohmann::json` could be added just by writing:
 
 .. code-block:: cpp
   
@@ -34,7 +34,7 @@ Almost all classes containing settings for Tudat simulations are used in the for
   
   }
 
-Then, if class :class:`T` is convertible to/from :class:`nlohmann::json`, :literal:`boost::shared_ptr< T >` would also be. However, this approach has some drawbacks, namely:
+Then, if class :class:`T` is convertible to/from :class:`nlohmann::json`, :literal:`std::shared_ptr< T >` would also be. However, this approach has some drawbacks, namely:
 
   - :class:`T` must be default-constructible for the code to compile.
   - Separate :literal:`to_json` and :literal:`from_json` functions have to be written for each derived class of :class:`T`, potentially leading to the duplication of code.
@@ -209,10 +209,10 @@ To illustrate the structure of a :literal:`from_json` function for a shared poin
   }
 
   //! Create a `nlohmann::json` object from a shared pointer to a `RotationModelSettings` object.
-  void to_json( nlohmann::json& jsonObject, const boost::shared_ptr< RotationModelSettings >& rotationModelSettings );
+  void to_json( nlohmann::json& jsonObject, const std::shared_ptr< RotationModelSettings >& rotationModelSettings );
 
   //! Create a shared pointer to a `RotationModelSettings` object from a `nlohmann::json` object.
-  void from_json( const nlohmann::json& jsonObject, boost::shared_ptr< RotationModelSettings >& rotationModelSettings );
+  void from_json( const nlohmann::json& jsonObject, std::shared_ptr< RotationModelSettings >& rotationModelSettings );
 
   } // namespace simulation_setup
 
@@ -232,7 +232,7 @@ To illustrate the structure of a :literal:`from_json` function for a shared poin
   ...
 
   //! Create a shared pointer to a `RotationModelSettings` object from a `nlohmann::json` object.
-  void from_json( const nlohmann::json& jsonObject, boost::shared_ptr< RotationModelSettings >& rotationModelSettings )
+  void from_json( const nlohmann::json& jsonObject, std::shared_ptr< RotationModelSettings >& rotationModelSettings )
   {
       using namespace json_interface;
       using K = Keys::Body::RotationModel;
@@ -260,7 +260,7 @@ To illustrate the structure of a :literal:`from_json` function for a shared poin
               jsonInitialOrientation[ K::initialTime ] = initialTime;
           }
 
-          rotationModelSettings = boost::make_shared< SimpleRotationModelSettings >(
+          rotationModelSettings = std::make_shared< SimpleRotationModelSettings >(
                       originalFrame,
                       targetFrame,
                       getAs< Eigen::Quaterniond >( jsonInitialOrientation ),
@@ -270,7 +270,7 @@ To illustrate the structure of a :literal:`from_json` function for a shared poin
       }
       case spice_rotation_model:
       {
-          rotationModelSettings = boost::make_shared< RotationModelSettings >(
+          rotationModelSettings = std::make_shared< RotationModelSettings >(
                       rotationModelType, originalFrame, targetFrame );
           return;
       }
@@ -308,14 +308,14 @@ In most cases, the defaultable properties use the default value defined in the s
           const std::vector< std::string > deformingBodies,
           const std::vector< std::vector< std::complex< double > > > loveNumbers,
           const double bodyReferenceRadius,
-          const boost::shared_ptr< InterpolatorSettings > interpolatorSettings = NULL ):
+          const std::shared_ptr< InterpolatorSettings > interpolatorSettings = NULL ):
 
-If the user does not provide the key :jsonkey:`interpolator`, the same default value defined in the constructor (:literal:`NULL`) should be used to create the settings object from the :class:`nlohmann::json` object. To keep the behaviour of C++ Tudat applications and JSON-based Tudat applications consistent, if in the future the default interpolator settings are changed from :literal:`NULL` to e.g. :literal:`boost::make_shared< LagrangeInterpolatorSettings >( 6 )` in the constructor, this change should also be reflected in the JSON Interface. To make this happen automatically, the default values are not hard-coded in the :literal:`from_json` functions. Instead, an instance constructed only with the mandatory properties is used to create the actual shared pointer:
+If the user does not provide the key :jsonkey:`interpolator`, the same default value defined in the constructor (:literal:`NULL`) should be used to create the settings object from the :class:`nlohmann::json` object. To keep the behaviour of C++ Tudat applications and JSON-based Tudat applications consistent, if in the future the default interpolator settings are changed from :literal:`NULL` to e.g. :literal:`std::make_shared< LagrangeInterpolatorSettings >( 6 )` in the constructor, this change should also be reflected in the JSON Interface. To make this happen automatically, the default values are not hard-coded in the :literal:`from_json` functions. Instead, an instance constructed only with the mandatory properties is used to create the actual shared pointer:
 
 .. code-block:: cpp
 
   BasicSolidBodyGravityFieldVariationSettings defaults( { }, { }, TUDAT_NAN );
-  gravityFieldVariationSettings = boost::make_shared< BasicSolidBodyGravityFieldVariationSettings >(
+  gravityFieldVariationSettings = std::make_shared< BasicSolidBodyGravityFieldVariationSettings >(
               getValue< std::vector< std::string > >( jsonObject, K::deformingBodies ),
               getValue< std::vector< std::vector< std::complex< double > > > >( jsonObject, K::loveNumbers ),
               getValue< double >( jsonObject, K::referenceRadius ),
@@ -342,7 +342,7 @@ An example of a :literal:`to_json` function is provided below:
   {
 
   //! Create a `nlohmann::json` object from a shared pointer to a `RotationModelSettings` object.
-  void to_json( nlohmann::json& jsonObject, const boost::shared_ptr< RotationModelSettings >& rotationModelSettings )
+  void to_json( nlohmann::json& jsonObject, const std::shared_ptr< RotationModelSettings >& rotationModelSettings )
   {
       if ( ! rotationModelSettings )
       {
@@ -360,7 +360,7 @@ An example of a :literal:`to_json` function is provided below:
       {
       case simple_rotation_model:
       {
-          boost::shared_ptr< SimpleRotationModelSettings > simpleRotationModelSettings =
+          std::shared_ptr< SimpleRotationModelSettings > simpleRotationModelSettings =
                   boost::dynamic_pointer_cast< SimpleRotationModelSettings >( rotationModelSettings );
           assertNonNullPointer( simpleRotationModelSettings );
           jsonObject[ K::initialOrientation ] = simpleRotationModelSettings->getInitialOrientation( );

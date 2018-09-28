@@ -18,7 +18,7 @@ There are two ways in which to obtain :class:`ObservationSimulatorBase` objects:
 
       OrbitDeterminationManager< ObservationScalarType, TimeType > orbitDeterminationManager = ..... //OrbitDeterminationManager object created here.
       
-      std::map< ObservableType, boost::shared_ptr< ObservationSimulatorBase< ObservationScalarType, TimeType > > > observationSimulators =
+      std::map< ObservableType, std::shared_ptr< ObservationSimulatorBase< ObservationScalarType, TimeType > > > observationSimulators =
          orbitDeterminationManager.getObservationSimulators( );
          
    This returns the :literal:`observationSimulators` list, which contains an observation simulator for each :literal:`ObservableType` defined in your orbit determination manager.
@@ -31,13 +31,13 @@ There are two ways in which to obtain :class:`ObservationSimulatorBase` objects:
       ObservableType observableType = .... 
        
       // Define observation settings for each require LinkEnds 
-      std::map< LinkEnds, boost::shared_ptr< ObservationSettings  > > settingsPerLinkEnds = .... 
+      std::map< LinkEnds, std::shared_ptr< ObservationSettings  > > settingsPerLinkEnds = .... 
       
       // Define environment
       NamedBodyMap bodyMap = ....
       
       // Create observation simulator      
-      boost::shared_ptr< ObservationSimulatorBase< ObservationScalarType, TimeType > > observationSimulator = 
+      std::shared_ptr< ObservationSimulatorBase< ObservationScalarType, TimeType > > observationSimulator = 
          createObservationSimulator( observableType, settingsPerLinkEnds, bodyMap );
 
 In either case, this provides you with an object of type :literal:`ObservationSimulatorBase`.  
@@ -55,8 +55,8 @@ Each type of observation settings is defined by a dedicated derived class of :cl
 
    .. code-block:: cpp
 
-      boost::shared_ptr< TabulatedObservationSimulationTimeSettings< TimeType > > observationSettings =
-            boost::make_shared< TabulatedObservationSimulationTimeSettings< TimeType > >( 
+      std::shared_ptr< TabulatedObservationSimulationTimeSettings< TimeType > > observationSettings =
+            std::make_shared< TabulatedObservationSimulationTimeSettings< TimeType > >( 
                 linkEndType, simulationTimes );
 
    The input is:
@@ -89,8 +89,8 @@ In Tudat, such constraints are defined by objects of the :literal:`ObservationVi
 
    .. code-block:: cpp
 
-      boost::shared_ptr< ObservationViabilitySettings > observationViabilitySettings =
-            boost::make_shared< ObservationViabilitySettings >( 
+      std::shared_ptr< ObservationViabilitySettings > observationViabilitySettings =
+            std::make_shared< ObservationViabilitySettings >( 
                 observationViabilityType, associatedLinkEnd, stringParameter, doubleParameter );
 
    The input is:
@@ -135,14 +135,14 @@ As is the case for many other Tudat functionalities, the actual objects that per
       std::map< ObservableType, std::vector< LinkEnds > > linkEndsList = .... ;
       
       // Define observation viability settings
-      std::vector< boost::shared_ptr< ObservationViabilitySettings > > observationViabilitySettings = .... ;
+      std::vector< std::shared_ptr< ObservationViabilitySettings > > observationViabilitySettings = .... ;
       
       //  Create viability calculators
       PerObservableObservationViabilityCalculatorList viabilityCalculators = createObservationViabilityCalculators(
                 bodyMap, testLinkEndsList, observationViabilitySettings );
       
 
-Where :literal:`PerObservableObservationViabilityCalculatorList` is a typedef for :literal:`std::map< ObservableType, std::map< LinkEnds, std::vector< boost::shared_ptr< ObservationViabilityCalculator > > > >`, which is a list of viability calculators for each set of link ends and observable type.      
+Where :literal:`PerObservableObservationViabilityCalculatorList` is a typedef for :literal:`std::map< ObservableType, std::map< LinkEnds, std::vector< std::shared_ptr< ObservationViabilityCalculator > > > >`, which is a list of viability calculators for each set of link ends and observable type.      
 
 .. _observationNoise:
 
@@ -151,7 +151,7 @@ Observation Noise
 
 In addition to the observation biases (see :ref:`observationBiases`), which are part of the observation model and typically deterministic, stochastic noise may be added to the observations when simulating them. 
 
-The interface for observation noise is made general, allowing both time-correlated and time-uncorrelated noise to be added: a function of type :literal:`boost::function< double( const double ) >` must be created. Here, the function input is the current time, and the output the noise value. You are free to define this function in any way you like. Refer to the documentation of :literal:`boost::function` and :literal:`boost::bind` (see :ref:`externalBoost`).
+The interface for observation noise is made general, allowing both time-correlated and time-uncorrelated noise to be added: a function of type :literal:`std::function< double( const double ) >` must be created. Here, the function input is the current time, and the output the noise value. You are free to define this function in any way you like. Refer to the documentation of :literal:`std::function` and :literal:`std::bind` (see :ref:`externalBoost`).
 
 In typical basic simulation studies, time-uncorrelated white noise is used. To easily add this type of noise, you can make use of the Tudat interface to boost probability distributions/random number generation (see :ref:`tudatFeaturesProbabilityDistributions`). As an example, the following will generate a function which generates which noise with a mean of 0.005 and a standard deviationof 0.003.
 
@@ -162,11 +162,11 @@ In typical basic simulation studies, time-uncorrelated white noise is used. To e
    double standardDeviation = 3.0E-3;
 
    // Create noise function
-   boost::function< double( ) > inputFreeNoiseFunction = createBoostContinuousRandomVariableGeneratorFunction(
+   std::function< double( ) > inputFreeNoiseFunction = createBoostContinuousRandomVariableGeneratorFunction(
        normal_boost_distribution, boost::assign::list_of( meanValue )( standardDeviation ), 0.0 );
-   boost::function< double( const double ) > noiseFunction =
-       boost::bind( &utilities::evaluateFunctionWithoutInputArgumentDependency< double, const double >,
-          inputFreeNoiseFunction, _1 );
+   std::function< double( const double ) > noiseFunction =
+       std::bind( &utilities::evaluateFunctionWithoutInputArgumentDependency< double, const double >,
+          inputFreeNoiseFunction, std::placeholders::_1 );
           
 You may use a similar approach to use any of the boost distrbutions for noise. Note that the second step, in which the :literal:`evaluateFunctionWithoutInputArgumentDependency` is called, is needed for consistency with the observation noise interface.
 
@@ -195,10 +195,10 @@ Using the above, you can create all the required input to generate observations.
 .. code-block:: cpp
 
    // Define times at which to simulate the observations
-   std::map< ObservableType, std::map< LinkEnds, boost::shared_ptr< ObservationSimulationTimeSettings< TimeType > > > > observationTimeSettings = .... ;
+   std::map< ObservableType, std::map< LinkEnds, std::shared_ptr< ObservationSimulationTimeSettings< TimeType > > > > observationTimeSettings = .... ;
    
    // Define observation simulator objects
-   std::map< ObservableType, boost::shared_ptr< ObservationSimulatorBase< ObservationScalarType, TimeType > > > observationSimulators = .... ;
+   std::map< ObservableType, std::shared_ptr< ObservationSimulatorBase< ObservationScalarType, TimeType > > > observationSimulators = .... ;
    
    // Define (arbitrary) noise properties
    FullSimulatedObservationSet = simulateObservations( observationsToSimulate, observationSimulators );
@@ -208,10 +208,10 @@ When including checks on the viability of the observations, this must be extende
 .. code-block:: cpp
 
    // Define times at which to simulate the observations
-   std::map< ObservableType, std::map< LinkEnds, boost::shared_ptr< ObservationSimulationTimeSettings< TimeType > > > > observationTimeSettings = .... ;
+   std::map< ObservableType, std::map< LinkEnds, std::shared_ptr< ObservationSimulationTimeSettings< TimeType > > > > observationTimeSettings = .... ;
    
    // Define observation simulator objects
-   std::map< ObservableType, boost::shared_ptr< ObservationSimulatorBase< ObservationScalarType, TimeType > > > observationSimulators = .... ;
+   std::map< ObservableType, std::shared_ptr< ObservationSimulatorBase< ObservationScalarType, TimeType > > > observationSimulators = .... ;
    
    // Define viability calculators for observations
    PerObservableObservationViabilityCalculatorList viabilityCalculatorList = .... ; 
@@ -226,23 +226,23 @@ Finally, when including noise on the simulated observations, we provide a number
 .. code-block:: cpp
 
    // Define times at which to simulate the observations
-   std::map< ObservableType, std::map< LinkEnds, boost::shared_ptr< ObservationSimulationTimeSettings< TimeType > > > > observationTimeSettings = .... ;
+   std::map< ObservableType, std::map< LinkEnds, std::shared_ptr< ObservationSimulationTimeSettings< TimeType > > > > observationTimeSettings = .... ;
    
    // Define observation simulator objects
-   std::map< ObservableType, boost::shared_ptr< ObservationSimulatorBase< ObservationScalarType, TimeType > > > observationSimulators = .... ;
+   std::map< ObservableType, std::shared_ptr< ObservationSimulatorBase< ObservationScalarType, TimeType > > > observationSimulators = .... ;
    
    // Define viability calculators for observations
    PerObservableObservationViabilityCalculatorList viabilityCalculatorList = .... ; 
    
    // Define observation noise functions
-   std::map< ObservableType, std::map< LinkEnds, boost::function< Eigen::VectorXd( const double ) > > > noiseFunctions = .... ;
+   std::map< ObservableType, std::map< LinkEnds, std::function< Eigen::VectorXd( const double ) > > > noiseFunctions = .... ;
    
    // Define (arbitrary) noise properties
    FullSimulatedObservationSet = simulateObservationsWithNoise( observationsToSimulate, observationSimulators, noiseFunctions, viabilityCalculatorList );
 
 Which requires a noise function defined as a :literal:`Eigen::VectorXd` as a function of time (:literal:`const double`), where we use a vector representation of the observation noise to allow noise models to be applied to multi-valued observables (e.g. angular position). However, The :literal:`noiseFunctions` may also be of one of the following:
 
-* :literal:`std::map< ObservableType, std::map< LinkEnds, boost::function< double( const double ) > > >` Here the noise is defined as a single output. If the observable is multi-valued, the same function is called to generate the noise for each of the entries of the observable. Note that the function is called separately for each entry.
-* :literal:`std::map< ObservableType, boost::function< Eigen::VectorXd( const double ) > >` Here, the noise is not defineed separately for each set of :literal:`LinkEnds`, only per :literal:`ObservableType`, the same function is used for each set link ends of a given type of observable.
-* :literal:`std::map< ObservableType, boost::function< double( const double ) > >` A combination of the previous two input types.
-* :literal:`boost::function< double( const double ) >` The same noise function is used for each observable, link ends, and observable entry (for multi-valued observables)
+* :literal:`std::map< ObservableType, std::map< LinkEnds, std::function< double( const double ) > > >` Here the noise is defined as a single output. If the observable is multi-valued, the same function is called to generate the noise for each of the entries of the observable. Note that the function is called separately for each entry.
+* :literal:`std::map< ObservableType, std::function< Eigen::VectorXd( const double ) > >` Here, the noise is not defineed separately for each set of :literal:`LinkEnds`, only per :literal:`ObservableType`, the same function is used for each set link ends of a given type of observable.
+* :literal:`std::map< ObservableType, std::function< double( const double ) > >` A combination of the previous two input types.
+* :literal:`std::function< double( const double ) >` The same noise function is used for each observable, link ends, and observable entry (for multi-valued observables)

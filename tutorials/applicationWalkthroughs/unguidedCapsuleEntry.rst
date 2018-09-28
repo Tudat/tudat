@@ -19,7 +19,7 @@ First, the vehicle is created by placing an :literal:`"Apollo"` entry vehicle in
 .. code-block:: cpp
 
     // Create vehicle objects.
-    bodyMap[ "Apollo" ] = boost::make_shared< simulation_setup::Body >( );
+    bodyMap[ "Apollo" ] = std::make_shared< simulation_setup::Body >( );
 
 Once that is done, an :class:`AerodynamicCoefficientInterface` is linked to the vehicle by means of the following command:
 
@@ -47,19 +47,19 @@ A major difference with respect to the :ref:`walkthroughsUnperturbedEarthOrbitin
 .. code-block:: cpp
 
     // Define acceleration model settings.
-    std::map< std::string, std::vector< boost::shared_ptr< AccelerationSettings > > > accelerationsOfApollo;
-    accelerationsOfApollo[ "Earth" ].push_back( boost::make_shared< SphericalHarmonicAccelerationSettings >( 4, 0 ) );
-    accelerationsOfApollo[ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( aerodynamic ) );
+    std::map< std::string, std::vector< std::shared_ptr< AccelerationSettings > > > accelerationsOfApollo;
+    accelerationsOfApollo[ "Earth" ].push_back( std::make_shared< SphericalHarmonicAccelerationSettings >( 4, 0 ) );
+    accelerationsOfApollo[ "Earth" ].push_back( std::make_shared< AccelerationSettings >( aerodynamic ) );
     accelerationMap[  "Apollo" ] = accelerationsOfApollo;
 
-A crucial step in re-entry modelling is the definition of a :class:`AerodynamicGuidance` model. Controlling the orientation of the vehicle during atmospheric flight plays an important role in the shape of the trajectory as well as on the magnitude of the aerodynamic and thermal loads. In this example, a simple fixed-angle aerodynamic guidance model is used. This is implemented using a :literal:`boost::lambda::constant` function (explained in detail :ref:`here <externalBoostExamplesFunction>`). In short this function always outputs the value of :literal:`constantAngleOfAttack` which in turn sets the orientation angles of the :literal:`"Apollo"` body:
+A crucial step in re-entry modelling is the definition of a :class:`AerodynamicGuidance` model. Controlling the orientation of the vehicle during atmospheric flight plays an important role in the shape of the trajectory as well as on the magnitude of the aerodynamic and thermal loads. In this example, a simple fixed-angle aerodynamic guidance model is used. This is implemented using a lambda expression (explained in detail :ref:`here <externalBoostExamplesFunction>`). In short this function always outputs the value of :literal:`constantAngleOfAttack` which in turn sets the orientation angles of the :literal:`"Apollo"` body:
 
 .. code-block:: cpp
 
     // Define constant 30 degree angle of attack
     double constantAngleOfAttack = unit_conversions::convertDegreesToRadians(30.0);
     bodyMap.at( "Apollo" )->getFlightConditions( )->getAerodynamicAngleCalculator( )->setOrientationAngleFunctions(
-                boost::lambda::constant( constantAngleOfAttack ) ); 
+                [ = ]( ){ return constantAngleOfAttack; } );
 
 .. tip:: To view the available options for aerodynamic guidance check out the :ref:`tudatFeaturesAerodynamicGuidance` section. 
 
@@ -112,27 +112,27 @@ First, a :literal:`dependentVariablesList` needs to be created, which will list 
 .. code-block:: cpp
 
     // Define list of dependent variables to save.
-    std::vector< boost::shared_ptr< SingleDependentVariableSaveSettings > > dependentVariablesList;
+    std::vector< std::shared_ptr< SingleDependentVariableSaveSettings > > dependentVariablesList;
 
 Next, the list is populated with the desired dependent variables. Please go to :ref:`tudatFeaturesPropagatorSettingsDependentVariables` for further details on the various dependent variables that can be stored:
 
 .. code-block:: cpp
 
     dependentVariablesList.push_back(
-                boost::make_shared< SingleDependentVariableSaveSettings >( mach_number_dependent_variable, "Apollo" ) );
+                std::make_shared< SingleDependentVariableSaveSettings >( mach_number_dependent_variable, "Apollo" ) );
     dependentVariablesList.push_back(
-                boost::make_shared< SingleDependentVariableSaveSettings >(
+                std::make_shared< SingleDependentVariableSaveSettings >(
                     altitude_dependent_variable, "Apollo", "Earth" ) );
     dependentVariablesList.push_back(
-                boost::make_shared< SingleAccelerationDependentVariableSaveSettings >(
+                std::make_shared< SingleAccelerationDependentVariableSaveSettings >(
                     aerodynamic, "Apollo", "Earth", 1 ) );
     dependentVariablesList.push_back(
-                boost::make_shared< SingleDependentVariableSaveSettings >(
+                std::make_shared< SingleDependentVariableSaveSettings >(
                     aerodynamic_force_coefficients_dependent_variable, "Apollo" ) );
 
     // Create object with list of dependent variables
-    boost::shared_ptr< DependentVariableSaveSettings > dependentVariablesToSave =
-            boost::make_shared< DependentVariableSaveSettings >( dependentVariablesList );
+    std::shared_ptr< DependentVariableSaveSettings > dependentVariablesToSave =
+            std::make_shared< DependentVariableSaveSettings >( dependentVariablesList );
 
 Define the termination conditions
 *********************************
@@ -141,11 +141,11 @@ Finally, the termination conditions are established. The termination settings ar
 .. code-block:: cpp
 
     // Define termination conditions
-    boost::shared_ptr< SingleDependentVariableSaveSettings > terminationDependentVariable =
-            boost::make_shared< SingleDependentVariableSaveSettings >(
+    std::shared_ptr< SingleDependentVariableSaveSettings > terminationDependentVariable =
+            std::make_shared< SingleDependentVariableSaveSettings >(
                 altitude_dependent_variable, "Apollo", "Earth" );
-    boost::shared_ptr< PropagationTerminationSettings > terminationSettings =
-            boost::make_shared< PropagationDependentVariableTerminationSettings >(
+    std::shared_ptr< PropagationTerminationSettings > terminationSettings =
+            std::make_shared< PropagationDependentVariableTerminationSettings >(
                 terminationDependentVariable, 25.0E3, true );
 
 .. tip:: Please go to :ref:`tudatFeaturesPropagatorSettingsTermination` for a detailed description of the available termination conditions.

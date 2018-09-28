@@ -33,9 +33,9 @@ Creating interpolators of a single independent variable is most easily done in T
       stateMap = ....
       
       // Create interpolator
-      boost::shared_ptr< interpolators::InterpolatorSettings > interpolatorSettings =
-         boost::make_shared< interpolators::InterpolatorSettings >( linear_interpolator ); 
-      boost::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector6d > > interpolator =
+      std::shared_ptr< interpolators::InterpolatorSettings > interpolatorSettings =
+         std::make_shared< interpolators::InterpolatorSettings >( linear_interpolator ); 
+      std::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector6d > > interpolator =
       	   interpolators::createOneDimensionalInterpolator(
       		   stateMap, interpolatorSettings );
 
@@ -51,9 +51,9 @@ Creating interpolators of a single independent variable is most easily done in T
       stateMap = ....
 
       // Create interpolator
-      boost::shared_ptr< interpolators::InterpolatorSettings > interpolatorSettings =
-         boost::make_shared< interpolators::InterpolatorSettings >( linear_interpolator ); 
-      boost::shared_ptr< OneDimensionalInterpolator< double, Eigen::VectorXd > > interpolator =
+      std::shared_ptr< interpolators::InterpolatorSettings > interpolatorSettings =
+         std::make_shared< interpolators::InterpolatorSettings >( linear_interpolator ); 
+      std::shared_ptr< OneDimensionalInterpolator< double, Eigen::VectorXd > > interpolator =
       	   interpolators::createOneDimensionalInterpolator(
       		   stateMap, interpolatorSettings );
 
@@ -62,7 +62,7 @@ Creating interpolators of a single independent variable is most easily done in T
 
    In this example, the ``stateMap`` contains the data that is interpolated, using the ``double`` key (time) as independent variable and the ``Eigen::Vector6d`` value (state) as dependent variable. The interpolation type is linear, and the ``interpolatorSettings`` object is created by passing only the argument ``linear_interpolator``.
 
-The interpolator itself is of the type ``boost::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector6d > >``, where the ``double`` and ``Eigen::Vector6d`` denote the (in)dependent variables of the interpolation. For you application they may be different (for instance :literal:`double` and :literal:`double`, or :literal:`long double` and :class:`Time`). The interpolator is created by calling the ``createOneDimensionalInterpolator`` function with the map containing the data and the interpolator settings as input.
+The interpolator itself is of the type ``std::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector6d > >``, where the ``double`` and ``Eigen::Vector6d`` denote the (in)dependent variables of the interpolation. For you application they may be different (for instance :literal:`double` and :literal:`double`, or :literal:`long double` and :class:`Time`). The interpolator is created by calling the ``createOneDimensionalInterpolator`` function with the map containing the data and the interpolator settings as input.
 
 The different interpolator types are handled in a similar manner:
 
@@ -87,9 +87,9 @@ The different interpolator types are handled in a similar manner:
 		stateDerivativeMap = ....
 
 		// Create interpolator
-		boost::shared_ptr< interpolators::InterpolatorSettings > interpolatorSettings =
-		 boost::make_shared< interpolators::InterpolatorSettings >( hermite_spline_interpolator ) 
-		boost::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector6d > > interpolator =
+		std::shared_ptr< interpolators::InterpolatorSettings > interpolatorSettings =
+		 std::make_shared< interpolators::InterpolatorSettings >( hermite_spline_interpolator ) 
+		std::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector6d > > interpolator =
 			 interpolators::createOneDimensionalInterpolator(
 				 stateMap, interpolatorSettings, stateDerivativeMap );
 
@@ -113,9 +113,9 @@ To create a Lagrange interpolator, the number of data points used for each inter
 	   stateMap = ....
 
 	   // Create interpolator
-	   boost::shared_ptr< interpolators::InterpolatorSettings > interpolatorSettings =
-		   boost::make_shared< interpolators::LagrangeInterpolatorSettings >( 8 ) 
-	   boost::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector6d > > interpolator =
+	   std::shared_ptr< interpolators::InterpolatorSettings > interpolatorSettings =
+		   std::make_shared< interpolators::LagrangeInterpolatorSettings >( 8 ) 
+	   std::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector6d > > interpolator =
 			   interpolators::createOneDimensionalInterpolator(
 				   stateMap, interpolatorSettings );
 

@@ -6,7 +6,7 @@ Although propagating a body's translational dynamics is the backbone of Tudat's 
 
 .. code-block:: cpp
 
-    std::map< std::string, std::vector< boost::shared_ptr< MassRateModelSettings > > > massRateModelSettings;
+    std::map< std::string, std::vector< std::shared_ptr< MassRateModelSettings > > > massRateModelSettings;
 
 where the map key denotes the body of which the mass-rate is to be computed.
 
@@ -16,7 +16,7 @@ where the map key denotes the body of which the mass-rate is to be computed.
 
 .. class:: CustomMassRateModelSettings
 
-   Using this class, the user must provide a :literal:`boost::function< double( const double ) > function`, i.e. a function returning a double, representing the mass-rate, and taking another double, representing time, as an input. The internal workings of this function are completely up to the user. If any help is required in setting up such a model please contact the Tudat support team.
+   Using this class, the user must provide a :literal:`std::function< double( const double ) > function`, i.e. a function returning a double, representing the mass-rate, and taking another double, representing time, as an input. The internal workings of this function are completely up to the user. If any help is required in setting up such a model please contact the Tudat support team.
 
 .. class:: FromThrustMassModelSettings
 

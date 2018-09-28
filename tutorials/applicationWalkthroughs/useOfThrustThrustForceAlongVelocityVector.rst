@@ -28,17 +28,17 @@ The first main difference w.r.t. the other examples is the use of a thrust accel
         // Define thrust settings
         double thrustMagnitude = 25.0;
         double specificImpulse = 5000.0;
-        boost::shared_ptr< ThrustDirectionGuidanceSettings > thrustDirectionGuidanceSettings =
-                boost::make_shared< ThrustDirectionFromStateGuidanceSettings >(
+        std::shared_ptr< ThrustDirectionGuidanceSettings > thrustDirectionGuidanceSettings =
+                std::make_shared< ThrustDirectionFromStateGuidanceSettings >(
                     "Earth", true, false );
-        boost::shared_ptr< ThrustEngineSettings > thrustMagnitudeSettings =
-                boost::make_shared< ConstantThrustEngineSettings >(
+        std::shared_ptr< ThrustEngineSettings > thrustMagnitudeSettings =
+                std::make_shared< ConstantThrustEngineSettings >(
                     thrustMagnitude, specificImpulse );
 
         // Define acceleration model settings.
-        std::map< std::string, std::vector< boost::shared_ptr< AccelerationSettings > > > accelerationsOfVehicle;
+        std::map< std::string, std::vector< std::shared_ptr< AccelerationSettings > > > accelerationsOfVehicle;
         accelerationsOfVehicle[ "Vehicle" ].push_back(
-                    boost::make_shared< ThrustAccelerationSettings >( thrustDirectionGuidanceSettings, thrustMagnitudeSettings) );
+                    std::make_shared< ThrustAccelerationSettings >( thrustDirectionGuidanceSettings, thrustMagnitudeSettings) );
 
 First, we define a constant thrust force of 25 N and specific impulse of 5000 s. For the interface of the thrust we use here, two blocks need to be defined before creating the :class:`AccelerationSettings`, one providing settings for the direction, and one for the magnitude of the thrust force.
 
@@ -46,8 +46,8 @@ The direction settings are defined by an object of type (derived from) :class:`T
     
     .. code-block:: cpp
 
-        boost::shared_ptr< ThrustDirectionGuidanceSettings > thrustDirectionGuidanceSettings =
-                boost::make_shared< ThrustDirectionFromStateGuidanceSettings >(
+        std::shared_ptr< ThrustDirectionGuidanceSettings > thrustDirectionGuidanceSettings =
+                std::make_shared< ThrustDirectionFromStateGuidanceSettings >(
                     "Earth", true, false );
 
 The three input arguments to the constructor of the :class:`ThrustDirectionFromStateGuidanceSettings` represent:
@@ -60,8 +60,8 @@ We have set the thrust force to be in line and in the same direction as the velo
     
     .. code-block:: cpp
 
-        boost::shared_ptr< ThrustEngineSettings > thrustMagnitudeSettings =
-                boost::make_shared< ConstantThrustEngineSettings >(
+        std::shared_ptr< ThrustEngineSettings > thrustMagnitudeSettings =
+                std::make_shared< ConstantThrustEngineSettings >(
                     thrustMagnitude, specificImpulse );
 
 with the first and second arguments of the :class:`ConstantThrustEngineSettings` representing the constant thrust force and specific impulse. Now, the thrust acceleration settings are added to the :literal:`accelerationsOfVehicle` list as follows:
@@ -69,7 +69,7 @@ with the first and second arguments of the :class:`ConstantThrustEngineSettings`
     .. code-block:: cpp
 
         accelerationsOfVehicle[ "Vehicle" ].push_back(
-                    boost::make_shared< ThrustAccelerationSettings >( thrustDirectionGuidanceSettings, thrustMagnitudeSettings) );
+                    std::make_shared< ThrustAccelerationSettings >( thrustDirectionGuidanceSettings, thrustMagnitudeSettings) );
 
 where you can see that defining a thrust acceleration requires a dedicated derived class of :class:`AccelerationSettings`. This derived class :class:`ThrustAccelerationSettings` takes the settings for the magnitude and direction of the thrust force, which we just created, as input. A final point to remember when defining the :class:`ThrustAccelerationSettings` is that thrust is a force that the vehicle exerts on itself.
 
@@ -80,19 +80,19 @@ For consistent simulation results, the mass decrease as a result of the expelled
     .. code-block:: cpp
 
         // Define propagation termination conditions (stop after 2 weeks).
-        boost::shared_ptr< PropagationTimeTerminationSettings > terminationSettings =
-                boost::make_shared< propagators::PropagationTimeTerminationSettings >( 14.0 * physical_constants::JULIAN_DAY );
+        std::shared_ptr< PropagationTimeTerminationSettings > terminationSettings =
+                std::make_shared< propagators::PropagationTimeTerminationSettings >( 14.0 * physical_constants::JULIAN_DAY );
 
         // Define settings for propagation of translational dynamics.
-        boost::shared_ptr< TranslationalStatePropagatorSettings< double > > translationalPropagatorSettings =
-                boost::make_shared< TranslationalStatePropagatorSettings< double > >
+        std::shared_ptr< TranslationalStatePropagatorSettings< double > > translationalPropagatorSettings =
+                std::make_shared< TranslationalStatePropagatorSettings< double > >
                 ( centralBodies, accelerationModelMap, bodiesToPropagate, systemInitialState, terminationSettings,
                   cowell );
 
         // Create mass rate models
-        boost::shared_ptr< MassRateModelSettings > massRateModelSettings = 
-                boost::make_shared< FromThrustMassModelSettings >( 1 );
-        std::map< std::string, boost::shared_ptr< basic_astrodynamics::MassRateModel > > massRateModels;
+        std::shared_ptr< MassRateModelSettings > massRateModelSettings = 
+                std::make_shared< FromThrustMassModelSettings >( 1 );
+        std::map< std::string, std::shared_ptr< basic_astrodynamics::MassRateModel > > massRateModels;
         massRateModels[ "Vehicle" ] = createMassRateModel( 
                     "Vehicle", massRateModelSettings, bodyMap, accelerationModelMap );
 
@@ -103,26 +103,26 @@ For consistent simulation results, the mass decrease as a result of the expelled
         Eigen::VectorXd initialBodyMasses = Eigen::VectorXd( 1 );
         initialBodyMasses( 0 ) = vehicleMass;
 
-        boost::shared_ptr< PropagatorSettings< double > > massPropagatorSettings =
-            boost::make_shared< MassPropagatorSettings< double > >(
+        std::shared_ptr< PropagatorSettings< double > > massPropagatorSettings =
+            std::make_shared< MassPropagatorSettings< double > >(
                 bodiesWithMassToPropagate, massRateModels, initialBodyMasses, terminationSettings );
 
         // Create list of propagation settings.
-        std::vector< boost::shared_ptr< PropagatorSettings< double > > > propagatorSettingsVector;
+        std::vector< std::shared_ptr< PropagatorSettings< double > > > propagatorSettingsVector;
         propagatorSettingsVector.push_back( translationalPropagatorSettings );
         propagatorSettingsVector.push_back( massPropagatorSettings );
 
         // Create propagation settings for mass and translational dynamics concurrently
-        boost::shared_ptr< PropagatorSettings< double > > propagatorSettings =
-                boost::make_shared< MultiTypePropagatorSettings< double > >(
+        std::shared_ptr< PropagatorSettings< double > > propagatorSettings =
+                std::make_shared< MultiTypePropagatorSettings< double > >(
                     propagatorSettingsVector, terminationSettings );
 
 The first line explicitly creates the object defining the termination conditions of the propagation.
     
     .. code-block:: cpp
 
-        boost::shared_ptr< PropagationTimeTerminationSettings > terminationSettings =
-                boost::make_shared< propagators::PropagationTimeTerminationSettings >( 14.0 * physical_constants::JULIAN_DAY );
+        std::shared_ptr< PropagationTimeTerminationSettings > terminationSettings =
+                std::make_shared< propagators::PropagationTimeTerminationSettings >( 14.0 * physical_constants::JULIAN_DAY );
 
 This is similar to the step we took in a previous example, but distinct from the first two examples, where we simply passed the final time variable as a double to the constructor of our propagation settings. Please go to :ref:`tudatFeaturesPropagatorSettingsTermination` for further details on termination settings.
 
@@ -131,9 +131,9 @@ In the next step, we create the propagation settings for the translational dynam
     .. code-block:: cpp
 
         // Create mass rate models
-        boost::shared_ptr< MassRateModelSettings > massRateModelSettings = 
-                boost::make_shared< FromThrustMassModelSettings >( true );
-        std::map< std::string, boost::shared_ptr< basic_astrodynamics::MassRateModel > > massRateModels;
+        std::shared_ptr< MassRateModelSettings > massRateModelSettings = 
+                std::make_shared< FromThrustMassModelSettings >( true );
+        std::map< std::string, std::shared_ptr< basic_astrodynamics::MassRateModel > > massRateModels;
         massRateModels[ "Vehicle" ] = createMassRateModel( 
                     "Vehicle", massRateModelSettings, bodyMap, accelerationModelMap );
 
@@ -157,8 +157,8 @@ Below, you can see how these settigns are passed to the :class:`MassPropagatorSe
         Eigen::VectorXd initialBodyMasses = Eigen::VectorXd( 1 );
         initialBodyMasses( 0 ) = vehicleMass;
 
-        boost::shared_ptr< PropagatorSettings< double > > massPropagatorSettings =
-                boost::make_shared< MassPropagatorSettings< double > >(
+        std::shared_ptr< PropagatorSettings< double > > massPropagatorSettings =
+                std::make_shared< MassPropagatorSettings< double > >(
                    bodiesWithMassToPropagate, massRateModels, initialBodyMasses, terminationSettings );
 
 Our final step is to tell the software to propagate both the translational dynamics and body mass, which is achieved as follows:
@@ -166,13 +166,13 @@ Our final step is to tell the software to propagate both the translational dynam
     .. code-block:: cpp
 
         // Create list of propagation settings.
-        std::vector< boost::shared_ptr< PropagatorSettings< double > > > propagatorSettingsVector;
+        std::vector< std::shared_ptr< PropagatorSettings< double > > > propagatorSettingsVector;
         propagatorSettingsVector.push_back( translationalPropagatorSettings );
         propagatorSettingsVector.push_back( massPropagatorSettings );
 
         // Create propagation settings for mass and translational dynamics concurrently
-        boost::shared_ptr< PropagatorSettings< double > > propagatorSettings =
-                boost::make_shared< MultiTypePropagatorSettings< double > >(
+        std::shared_ptr< PropagatorSettings< double > > propagatorSettings =
+                std::make_shared< MultiTypePropagatorSettings< double > >(
                     propagatorSettingsVector, terminationSettings );
 
 As is discussed in more detail in :ref:`tudatFeaturesSimulatorCreation`. This :class:`PropagatorSettings` object, which contains settings for both translational dynamics and mass rate, can be passed to the :class:`SingleArcDynamicsSimulator` in the exact same manner as was done in the previous examples.
