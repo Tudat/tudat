@@ -6,9 +6,9 @@
 Perturbed Earth-orbiting Satellite
 ==================================
 
-This page describes how to set up the propagation of a perturbed Earth-orbiting satellite can be set up using the :literal:`json_interface`.
+This page describes how to set up the propagation of a perturbed Earth-orbiting satellite using the :literal:`json_interface`.
 
-This example takes the code from :ref:`jsonInterface_tutorials_basicPropagation` as a starting point, upon which we can start to build our new application.
+This example takes the code from :ref:`jsonInterface_tutorials_basicPropagation` as a base upon which we can start to build our new application.
 
 The initial conditions and general simulation settings are thus the same as for the previous example. The only difference will be in the addition of perturbing accelerations. 
 
@@ -20,9 +20,9 @@ The addition of perturbations requires the specifications of a few more characte
 In this simple application, we would like to reproduce the results of the example in :ref:`walkthroughsPerturbedEarthOrbitingSatellite`. Hence, we would like to model the following accelerations:
 
    - **Spherical harmonics gravity** of the Earth up to degree and order 5.
-   - **Third body perturbations** due to Sun, Moon, Mars and Venus.
-   - **Solar radiation pressure**
-   - **Aerodynamics** due to Earth's atmosphere
+   - **Third body perturbations** due to Sun, Moon, Mars and Venus gravity.
+   - **Solar radiation pressure** (with occultations by the Earth).
+   - **Aerodynamic drag** due to Earth's atmosphere.
 
 Each of these accelerations require some small modifications to the previous code. In the text below, we will analyze what are the missing elements, and how they can be added to the JSON file.
 
@@ -34,9 +34,11 @@ To model spherical harmonics (SH), two steps are necessary. The first is the add
    .. code-block:: json
 
       {
-         "gravityField": {
-            "type": "sphericalHarmonic",
-            "model": "ggm02c"
+         "Earth": {
+            "gravityField": {
+               "type": "sphericalHarmonic",
+               "model": "ggm02c"
+            }
          }
       }
 
@@ -59,7 +61,7 @@ Now, we also need to tell the simulation to model the gravitational acceleration
 Third Bodies
 ************
 
-The addition of third bodies is very straight-forward. Firstly, we need to add these extra bodies to the simulation. Since we do not have any specific request for these bodies, we can simply load the default settings for each of the extra bodies we need, i.e., Sun, Moon, Mars and Venus. Therefore, under the key :jsonkey:`bodies` we can add, taking the Sun as example:
+The addition of third bodies is very straight-forward. Firstly, we need to add these extra bodies to the simulation. Since we do not have any specific request for these bodies, we can simply load the default settings for each of the bodies we need, i.e., for Sun, Moon, Mars and Venus. Therefore, under the key :jsonkey:`bodies` we can add, taking the Sun as example:
 
    .. code-block:: json
 
@@ -111,7 +113,7 @@ The first step has already been done to model the third body gravity, thus we ca
          }
       }
 
-For the radiation parameters, one element is compulsory: the radiation pressure coefficient (which in the example at hand is 1.2). The second element shown above, i.e., :jsonkey:`occultingBodies` can be added if you want to also model the shadow cone due to some other bodies. In this case, we are modeling the shadow due to the Earth, which for a LEO spacecraft, accounts for a large part of the orbit. 
+For the radiation parameters, one element is compulsory: the radiation pressure coefficient (which in the example at hand is 1.2). The second element shown above, i.e., :jsonkey:`occultingBodies`, can be added if you want to also model the shadow cone due to some other bodies. In this case, we are modeling the shadow due to the Earth, which for a LEO spacecraft, can account for a large part of the orbit. 
 
 The next step is to add the acceleration. This is very similar to what we have done for the previous accelerations. Thus, we will add to the list of accelerations of Asterix, due to the Sun, the following key and value pair:
 

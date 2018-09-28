@@ -64,5 +64,5 @@ As with forks, all users are encourage to develop code inside branches. This way
 Git cheat sheet
 ~~~~~~~~~~~~~~~
 
-A usefull `cheat sheet <https://services.github.com/on-demand/downloads/github-git-cheat-sheet.pdf>`_ when using git from Terminal has been written by Github. 
+A useful `cheat sheet <https://services.github.com/on-demand/downloads/github-git-cheat-sheet.pdf>`_ when using git from Terminal has been written by Github. 
 

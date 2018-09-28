@@ -192,8 +192,8 @@
             
   <div class="section" id="perturbed-earth-orbiting-satellite">
 <span id="jsoninterface-tutorials-perturbedorbitpropagation"></span><h1>2.2. Perturbed Earth-orbiting Satellite<a class="headerlink" href="#perturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
-<p>This page describes how to set up the propagation of a perturbed Earth-orbiting satellite can be set up using the <code class="docutils literal"><span class="pre">json_interface</span></code>.</p>
-<p>This example takes the code from <a class="reference internal" href="../unperturbedSatellite/index.html#jsoninterface-tutorials-basicpropagation"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> as a starting point, upon which we can start to build our new application.</p>
+<p>This page describes how to set up the propagation of a perturbed Earth-orbiting satellite using the <code class="docutils literal"><span class="pre">json_interface</span></code>.</p>
+<p>This example takes the code from <a class="reference internal" href="../unperturbedSatellite/index.html#jsoninterface-tutorials-basicpropagation"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> as a base upon which we can start to build our new application.</p>
 <p>The initial conditions and general simulation settings are thus the same as for the previous example. The only difference will be in the addition of perturbing accelerations.</p>
 <div class="section" id="adding-perturbations">
 <h2>2.2.1. Adding Perturbations<a class="headerlink" href="#adding-perturbations" title="Permalink to this headline">¶</a></h2>
@@ -202,9 +202,9 @@
 <blockquote>
 <div><ul class="simple">
 <li><strong>Spherical harmonics gravity</strong> of the Earth up to degree and order 5.</li>
-<li><strong>Third body perturbations</strong> due to Sun, Moon, Mars and Venus.</li>
-<li><strong>Solar radiation pressure</strong></li>
-<li><strong>Aerodynamics</strong> due to Earth’s atmosphere</li>
+<li><strong>Third body perturbations</strong> due to Sun, Moon, Mars and Venus gravity.</li>
+<li><strong>Solar radiation pressure</strong> (with occultations by the Earth).</li>
+<li><strong>Aerodynamic drag</strong> due to Earth’s atmosphere.</li>
 </ul>
 </div></blockquote>
 <p>Each of these accelerations require some small modifications to the previous code. In the text below, we will analyze what are the missing elements, and how they can be added to the JSON file.</p>
@@ -213,9 +213,11 @@
 <p>To model spherical harmonics (SH), two steps are necessary. The first is the addition of the SH model to the body. This is done by specifying a new key for the object for which the SH model needs to be added. In case you want to add SH to the Earth, as we want to do for this example, you should add the following specification to the <span class="jsonkey">Earth</span> key:</p>
 <blockquote>
 <div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="nt">&quot;gravityField&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sphericalHarmonic&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;ggm02c&quot;</span>
+   <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;gravityField&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sphericalHarmonic&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;ggm02c&quot;</span>
+      <span class="p">}</span>
    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -239,7 +241,7 @@
 </div>
 <div class="section" id="third-bodies">
 <h3>2.2.1.2. Third Bodies<a class="headerlink" href="#third-bodies" title="Permalink to this headline">¶</a></h3>
-<p>The addition of third bodies is very straight-forward. Firstly, we need to add these extra bodies to the simulation. Since we do not have any specific request for these bodies, we can simply load the default settings for each of the extra bodies we need, i.e., Sun, Moon, Mars and Venus. Therefore, under the key <span class="jsonkey">bodies</span> we can add, taking the Sun as example:</p>
+<p>The addition of third bodies is very straight-forward. Firstly, we need to add these extra bodies to the simulation. Since we do not have any specific request for these bodies, we can simply load the default settings for each of the bodies we need, i.e., for Sun, Moon, Mars and Venus. Therefore, under the key <span class="jsonkey">bodies</span> we can add, taking the Sun as example:</p>
 <blockquote>
 <div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
    <span class="nt">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -292,7 +294,7 @@
 </pre></div>
 </div>
 </div></blockquote>
-<p>For the radiation parameters, one element is compulsory: the radiation pressure coefficient (which in the example at hand is 1.2). The second element shown above, i.e., <span class="jsonkey">occultingBodies</span> can be added if you want to also model the shadow cone due to some other bodies. In this case, we are modeling the shadow due to the Earth, which for a LEO spacecraft, accounts for a large part of the orbit.</p>
+<p>For the radiation parameters, one element is compulsory: the radiation pressure coefficient (which in the example at hand is 1.2). The second element shown above, i.e., <span class="jsonkey">occultingBodies</span>, can be added if you want to also model the shadow cone due to some other bodies. In this case, we are modeling the shadow due to the Earth, which for a LEO spacecraft, can account for a large part of the orbit.</p>
 <p>The next step is to add the acceleration. This is very similar to what we have done for the previous accelerations. Thus, we will add to the list of accelerations of Asterix, due to the Sun, the following key and value pair:</p>
 <blockquote>
 <div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>

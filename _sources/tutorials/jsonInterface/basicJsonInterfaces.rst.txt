@@ -16,28 +16,29 @@ Writing a JSON file is a very simple process. The text you write will firstly ha
 
 .. code-block:: json
 
-	{
-	  "firstName": "John",
-	  "lastName": "Smith",
-	  "isAlive": true,
-	  "age": 27,
-	  "address": {
-	    "streetAddress": "21 2nd Street",
-	    "city": "New York",
-	  },
-	  "phoneNumbers": [
-	    {
-	      "type": "home",
-	      "number": "212 555-1234"
-	    },
-	    {
-	      "type": "office",
-	      "number": "646 555-4567"
-	    }
-	  ],
-	  "children": [],
-	  "spouse": null
-	}
+   {
+      "firstName": "Dylan",
+      "lastName": "Smith",
+      "isAlive": true,
+      "gender": "X",
+      "age": 29,
+      "address": {
+         "streetAddress": "21 2nd Street",
+         "city": "New York",
+      },
+      "phoneNumbers": [
+         {
+            "type": "home",
+            "number": "212 555-1234"
+         },
+         {
+            "type": "office",
+            "number": "646 555-4567"
+         }
+      ],
+      "children": [ ],
+      "spouse": null
+   }
 
 Below, some of the main characteristics of how a JSON file is written will be outlined:
 

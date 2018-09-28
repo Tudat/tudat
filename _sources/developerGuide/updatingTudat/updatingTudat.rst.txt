@@ -38,15 +38,12 @@ Step 3: Synchronize with official Tudat
 **Update to the latest Tudat (Do this every time!)**
     Right-click on ``upstream`` and select ``Pull``. Choose ``Fetch only``. Right-click on the ``master`` branch under the ``upstream`` entry and select ``Merge``. You will be asked how to incorporate any changes. In almost all cases ``Fast forward`` is the best option. In case there are conflicts you should do a merge. You have now succesfully updated your local Tudat to the latest version. However, you need to synchronize this change to your remote version as well. It could be that you have to checkout the local ``master`` branch first if an error message pops up. Double click the local branches, ``master`` branch. Try ``Sync`` again.
 
-
 Switching branches
 ~~~~~~~~~~~~~~~~~~
 Repositories can have multiple branches. These branches are used to develop new applications or versions of the project while keeping a clear and working version of the code available in the master branch. Once the new application is verified it can be merged into the master branch for a new working version of the project. Switching between branches is simple in Smartgit:
 
-Select a branch, for example the ``development`` branch of Tudat, select ``Check Out...``. Smartgit will ask you whether you want to create a local branch, if you intend to work on this branch and change code, create a local branch and choose ``Checkout``. If you only want to view the code inside this branch select the other option and ``Checkout``. 
+Select a branch, for example the ``development`` branch of Tudat, select ``Check Out...``. Smartgit will ask you whether you want to create a local branch, if you intend to work on this branch and change code, create a local branch and choose ``Checkout``. If you only want to view the code inside this branch select the other option and ``Checkout``.
 
 If you have created a local branch one can easily switch between the local branches by double-clicking on the branch and selecting ``Checkout``. 
 
 .. warning:: Make sure to commit any changes you made in your branch before switching to a different branch. If not, you will lose all changes you've made up to the latest commit. Smartgit will likely warn you if you have made any changes to the code which have not been committed. 
-
-

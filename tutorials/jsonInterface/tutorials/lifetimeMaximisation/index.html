@@ -193,6 +193,8 @@
   <div class="section" id="perturbed-earth-orbiting-satellite-lifetime-maximisation">
 <span id="jsoninterface-tutorials-lifetimemaximisation"></span><h1>2.3. Perturbed Earth-orbiting Satellite Lifetime Maximisation<a class="headerlink" href="#perturbed-earth-orbiting-satellite-lifetime-maximisation" title="Permalink to this headline">¶</a></h1>
 <p>This page describes how to set up a single-variable optimisation of the lifetime of an Earth-orbiting satellite using the JSON Interface.</p>
+<div class="section" id="problem-setup">
+<h2>2.3.1. Problem Setup<a class="headerlink" href="#problem-setup" title="Permalink to this headline">¶</a></h2>
 <p>The rate of decrease of the perigee altitude is assumed to be a good indicator of the lifetime of the satellite. If a small rate of decrease is undergone, longer lifetimes can be expected, and vice versa. Thus, the optimisation problem is defined as:</p>
 <div class="math">
 \[minimise\,-\frac{h_{p_f} - h_{p_0}}{t_f - t_0}\]</div>
@@ -214,7 +216,7 @@ h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
 <blockquote>
 <div><ul class="simple">
 <li>Mass of 400 kg.</li>
-<li>Reference area of 10 <span class="math">\(\text{m}^2\)</span>.</li>
+<li>Reference area of 10 m <span class="math">\({}^2\)</span>.</li>
 <li>Drag coefficient of 2.2.</li>
 <li>Radiation pressure coefficients of 1.5.</li>
 </ul>
@@ -222,14 +224,14 @@ h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
 <p>The following orbital perturbations are considered:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Atmospheric drag (NRLMSISE00 model).</li>
-<li>Zonal terms of the geopotential up to degree 7 (GGM02C model).</li>
-<li>Sun and Moon’s third-body gravitational attraction.</li>
-<li>Solar radiation pressure (with occultations by the Earth).</li>
+<li><strong>Spherical harmonics gravity</strong> of the Earth up to degree 7 (GGM02C model).</li>
+<li><strong>Third body perturbations</strong> due to Sun and Moon gravity.</li>
+<li><strong>Solar radiation pressure</strong> (with occultations by the Earth).</li>
+<li><strong>Aerodynamic drag</strong> (NRLMSISE00 model).</li>
 </ul>
 </div></blockquote>
-<p>The first step is to define the initial epoch and the maximum final epoch. Since <span class="math">\(t_0\)</span> is the optimisation variable, and the value of <span class="math">\(t_f\)</span> depends on <span class="math">\(t_0\)</span>, these two variable cannot be defined in a shared JSON file, but have to be defined individually for each case. A total of 365 days (one for each day of the year 2000) will be propagated.</p>
-<p>The first step is to define the file tree. In this case, we will have a <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code> file containing the settings shared by all propagations, and then an <code class="xref py py-class docutils literal"><span class="pre">inputs</span></code> folder where the individual root input files for each case will be located. After running the propagations, an <code class="xref py py-class docutils literal"><span class="pre">outputs</span></code> folder containing the results for each case will be generated. Thus, the file tree will look like this eventually:</p>
+<p>Before starting with the maximisation process, we need to define the initial epoch and the maximum final epoch. Since <span class="math">\(t_0\)</span> is the optimisation variable, and the value of <span class="math">\(t_f\)</span> depends on <span class="math">\(t_0\)</span>, these two variable cannot be defined in a shared JSON file, but have to be defined individually for each case. A total of 365 days (one for each day of the year 2000) will be propagated.</p>
+<p>The next step is to define the file tree. In this case, we will have a <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code> file containing the settings shared by all propagations, and then an <code class="xref py py-class docutils literal"><span class="pre">inputs</span></code> folder where the individual root input files for each case will be located. After running the propagations, an <code class="xref py py-class docutils literal"><span class="pre">outputs</span></code> folder containing the results for each case will be generated. Thus, the file tree will look like this eventually:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lifetimeMaximisation</span>
 <span class="o">|</span>
 <span class="o">|</span> <span class="n">inputs</span>
@@ -249,7 +251,10 @@ h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
 <span class="o">|</span> <span class="n">shared</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
-<p>The global frame origin is the Solar system’s barycentre, which is the default value for the key <span class="jsonkey">globalFrameOrigin</span>, so there is no need to provide it. The <span class="jsonkey">globalFrameOrientation</span> is set to <code class="docutils literal"><span class="pre">&quot;J2000&quot;</span></code>.</p>
+</div>
+<div class="section" id="general-settings">
+<h2>2.3.2. General Settings<a class="headerlink" href="#general-settings" title="Permalink to this headline">¶</a></h2>
+<p>The global frame origin is the Solar System barycentre (SSB), which is the default value for the key <span class="jsonkey">globalFrameOrigin</span>, so there is no need to provide it. The <span class="jsonkey">globalFrameOrientation</span> is set to <code class="docutils literal"><span class="pre">&quot;J2000&quot;</span></code>.</p>
 <p>Then, we request using the standard Spice kernels, namely <code class="xref py py-class docutils literal"><span class="pre">pck00010.tpc</span></code>, <code class="xref py py-class docutils literal"><span class="pre">gm_de431.tpc</span></code>, <code class="xref py py-class docutils literal"><span class="pre">de430_small.bsp</span></code> and <code class="xref py py-class docutils literal"><span class="pre">pck00010.tpc</span></code>. We do this by defining the key <span class="jsonkey">spice</span> to be:</p>
 <div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;useStandardKernels&quot;</span><span class="p">:</span> <span class="kc">true</span>
@@ -257,6 +262,9 @@ h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
 </pre></div>
 </div>
 <p>Since <span class="jsonkey">spice.preloadEphemeris</span> defaults to <code class="docutils literal"><span class="pre">true</span></code>, the ephemeris of the celestial bodies from the period <span class="jsonkey">initialEpoch</span> to <span class="jsonkey">finalEpoch</span> will be preloaded using an interpolation step that is, by default, 300 seconds, and which can be configured through the key <span class="jsonkey">spice.interpolationStep</span>.</p>
+</div>
+<div class="section" id="body-settings">
+<h2>2.3.3. Body Settings<a class="headerlink" href="#body-settings" title="Permalink to this headline">¶</a></h2>
 <p>The next step is to define the body settings. In this case, we include the Sun, Earth, the Moon and the orbiting body (named <span class="jsonkey">satellite</span>). Thus, we set the key <code class="docutils literal"><span class="pre">bodies</span></code> to be:</p>
 <div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -285,26 +293,30 @@ h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
     <span class="nt">&quot;mass&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
     <span class="nt">&quot;referenceArea&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
     <span class="nt">&quot;aerodynamics&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;forceCoefficients&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">2.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+      <span class="nt">&quot;forceCoefficients&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mf">2.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">]</span>
     <span class="p">},</span>
     <span class="nt">&quot;radiationPressure&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="nt">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="nt">&quot;radiationPressureCoefficient&quot;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span>
-        <span class="nt">&quot;occultingBodies&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Earth&quot;</span><span class="p">]</span>
+        <span class="nt">&quot;occultingBodies&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;Earth&quot;</span> <span class="p">]</span>
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>As can be seen, the bodies <span class="jsonkey">Sun</span> and <span class="jsonkey">Moon</span> have no properties other than the <span class="jsonkey">useDefaultSettings</span> set to <code class="docutils literal"><span class="pre">true</span></code>, which means that their properties (such as gravitational parameter, ephemeris, gravitational models) will be loaded automatically from Spice. For <span class="jsonkey">Earth</span>, we also use the default settings, but then we re-define the atmosphere and the spherical harmonic gravity model, since NRLMSISE00 and GGM02C are not used by default. We do this by defining <span class="jsonkey">bodies.Earth.atmosphere</span> and <span class="jsonkey">bodies.Earth.gravityField</span> keys. The order in which the keys <span class="jsonkey">useDefaultSettings</span>, <span class="jsonkey">atmosphere</span> and <span class="jsonkey">gravityField</span> are defined inside the <span class="jsonkey">bodies.Earth</span> objects is irrelevant: the default settings will always be loaded first, and then the settings specified in the input file (if any) will be overridden.</p>
-<p>For the orbiting body, <span class="jsonkey">satellite</span>, we do not specify the key <span class="jsonkey">useDefaultSettings</span>, which defaults to <code class="docutils literal"><span class="pre">false</span></code>. Thus, no properties will be pre-loaded. We provided an <span class="jsonkey">initialState</span> of type <code class="docutils literal"><span class="pre">&quot;keplerian&quot;</span></code>. We need not define the keys <span class="jsonkey">argumentOfPeriapsis</span>, <span class="jsonkey">longitudeOfAscendingNode</span> and <span class="jsonkey">trueAnomaly</span>, which are assumed to be <code class="docutils literal"><span class="pre">0</span></code>. Then we define its constant <span class="jsonkey">mass</span> and <span class="jsonkey">referenceArea</span>. Finally, we add aerodynamics and radiation pressure settings. In both cases, there is no need to specify a key <span class="jsonkey">type</span> because constant aerodynamics coefficients and cannon ball radiation pressure are the default types. For the aerodynamics, we only need to specify the force coefficients (only drag, no lift or side force). For the key <span class="jsonkey">radiationPressure</span>, we provide an object in which each key is the name of the radiating bodies (in this case, only the <span class="jsonkey">Sun</span>). We specify the <span class="jsonkey">radiationPressureCoefficient</span> and a list of <span class="jsonkey">occultingBodies</span> (i.e. bodies which can block the flux from the Sun on the satellite).</p>
+<p>As can be seen, the bodies <span class="jsonkey">Sun</span> and <span class="jsonkey">Moon</span> have no properties other than the <span class="jsonkey">useDefaultSettings</span> set to <code class="docutils literal"><span class="pre">true</span></code>, which means that their properties (such as gravitational parameter, ephemeris, gravitational models) will be loaded automatically from Spice. For <span class="jsonkey">Earth</span>, we also use the default settings, but then we re-define the atmosphere and the spherical harmonic gravity model, since NRLMSISE00 and GGM02C are not used by default. We do this by defining the <span class="jsonkey">bodies.Earth.atmosphere</span> and <span class="jsonkey">bodies.Earth.gravityField</span> keys.</p>
+<p>..note:: The order in which the keys <span class="jsonkey">useDefaultSettings</span>, <span class="jsonkey">atmosphere</span> and <span class="jsonkey">gravityField</span> are defined inside the <span class="jsonkey">bodies.Earth</span> objects is irrelevant: the default settings will always be loaded first, and then the settings specified in the input file (if any) will be overridden.</p>
+<p>For the orbiting body, <span class="jsonkey">satellite</span>, we do not specify the key <span class="jsonkey">useDefaultSettings</span>, which defaults to <code class="docutils literal"><span class="pre">false</span></code>. Thus, no properties will be pre-loaded. We provided an <span class="jsonkey">initialState</span> of type <code class="docutils literal"><span class="pre">&quot;keplerian&quot;</span></code>. We need not define the keys <span class="jsonkey">argumentOfPeriapsis</span>, <span class="jsonkey">longitudeOfAscendingNode</span> and <span class="jsonkey">trueAnomaly</span>, which are assumed to be <code class="docutils literal"><span class="pre">0</span></code>. Then we define its constant <span class="jsonkey">mass</span> and <span class="jsonkey">referenceArea</span>. Finally, we add aerodynamics and radiation pressure settings. In both cases, there is no need to specify a key <span class="jsonkey">type</span> because constant aerodynamics coefficients and cannonball radiation pressure are the default types. For the aerodynamics, we only need to specify the force coefficients (only drag, no lift nor side forces). For the key <span class="jsonkey">radiationPressure</span>, we provide an object in which each key is the name of the radiating bodies (in this case, only the <span class="jsonkey">Sun</span>). We specify the <span class="jsonkey">radiationPressureCoefficient</span> and a list of <span class="jsonkey">occultingBodies</span> (i.e. bodies which can block the flux from the Sun on the satellite).</p>
+</div>
+<div class="section" id="propagation-settings">
+<h2>2.3.4. Propagation Settings<a class="headerlink" href="#propagation-settings" title="Permalink to this headline">¶</a></h2>
 <p>Then, we specify the propagator settings. In this case, we are going to propagate the translational state of <span class="jsonkey">satellite</span> about <span class="jsonkey">Earth</span>, so we define the key <span class="jsonkey">propagators</span> to be:</p>
 <div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">[</span>
   <span class="p">{</span>
     <span class="nt">&quot;integratedStateType&quot;</span><span class="p">:</span> <span class="s2">&quot;translational&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;centralBodies&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Earth&quot;</span><span class="p">],</span>
-    <span class="nt">&quot;bodiesToPropagate&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Asterix&quot;</span><span class="p">],</span>
+    <span class="nt">&quot;centralBodies&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;Earth&quot;</span> <span class="p">],</span>
+    <span class="nt">&quot;bodiesToPropagate&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;Asterix&quot;</span> <span class="p">],</span>
     <span class="nt">&quot;accelerations&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="nt">&quot;satellite&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -336,8 +348,11 @@ h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
 <span class="p">]</span>
 </pre></div>
 </div>
-<p>We specify the key <span class="jsonkey">propagators[0].accelerations</span>, an object containing lists of accelerations. The inner keys (in this case, <span class="jsonkey">Earth</span>, <span class="jsonkey">Sun</span> and <span class="jsonkey">Moon</span>) are the names of the bodies exerting the accelerations, while the outer keys (in this case, <span class="jsonkey">satellite</span>), are the names of the bodies undergoing the accelerations. Thus, <span class="jsonkey">accelerations.satellite.Earth</span> is read as “accelerations on the satellite caused by Earth”. In this case, this is a list with two accelerations: the spherical harmonic gravity up to degree 7 and order 0 (i.e. only zonal terms), and the aerodynamic acceleration caused by the atmosphere. For the Sun, we specify the point-mass gravitational attraction and the cannon-ball radiation pressure acceleration. Finally, for the Moon, there is only one acceleration: that caused by the point-mass gravitational attraction.</p>
-<p>In this case, some keys of <span class="jsonkey">propagators[0]</span> have been omitted. For instance, the key <code class="docutils literal"><span class="pre">type</span></code> has not been specified, meaning that the default value <code class="docutils literal"><span class="pre">&quot;cowell&quot;</span></code> is used.</p>
+<p>We specify the key <span class="jsonkey">propagators[ 0 ].accelerations</span>, an object containing lists of accelerations. The inner keys (in this case, <span class="jsonkey">Earth</span>, <span class="jsonkey">Sun</span> and <span class="jsonkey">Moon</span>) are the names of the bodies exerting the accelerations, while the outer keys (in this case, <span class="jsonkey">satellite</span>), are the names of the bodies undergoing the accelerations. Thus, <span class="jsonkey">accelerations.satellite.Earth</span> is read as “accelerations on the <em>satellite</em> caused by <em>Earth</em>”. In this case, this is a list with two accelerations: the spherical harmonic gravity up to degree 7 and order 0 (i.e. only zonal terms), and the aerodynamic acceleration caused by the atmosphere. For the Sun, we specify the point-mass gravitational attraction and the cannonball radiation pressure acceleration. Finally, for the Moon, there is only one acceleration: the one caused by the point-mass gravitational attraction.</p>
+<p>In this case, some keys of <span class="jsonkey">propagators[ 0 ]</span> have been omitted. For instance, the key <code class="docutils literal"><span class="pre">type</span></code> has not been specified, meaning that the default value <code class="docutils literal"><span class="pre">&quot;cowell&quot;</span></code> is used.</p>
+</div>
+<div class="section" id="integration-settings">
+<h2>2.3.5. Integration Settings<a class="headerlink" href="#integration-settings" title="Permalink to this headline">¶</a></h2>
 <p>The next step is to define the integrator settings. The initial time is retrieved from the key <span class="jsonkey">initialEpoch</span> defined at root level. Thus, we define the key <span class="jsonkey">integrator</span> to be equal to the following object:</p>
 <div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;rungeKuttaVariableStepSize&quot;</span><span class="p">,</span>
@@ -351,6 +366,9 @@ h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
 </pre></div>
 </div>
 <p>The key <span class="jsonkey">saveFrequency</span> is not specified, so the save frequency is assumed to be <code class="docutils literal"><span class="pre">1</span></code>, which means that all the steps are saved.</p>
+</div>
+<div class="section" id="output-settings">
+<h2>2.3.6. Output Settings<a class="headerlink" href="#output-settings" title="Permalink to this headline">¶</a></h2>
 <p>Then, we have to define the files to which the results of the integration should be saved. We do this by assigning an array of objects containing export settings to the <span class="jsonkey">export</span> key:</p>
 <div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">[</span>
   <span class="p">{</span>
@@ -369,19 +387,25 @@ h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
 </pre></div>
 </div>
 <p>Note the usage of <code class="docutils literal"><span class="pre">${ROOT_FILE_STEM}</span></code> in the path of the output file. Since we are going to generate a root input file for each day of year 2000, a different output file for each case will be generated. These files must have different names. Instead of defining this key in each of the individual files, we define it in the <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code> file using the special string <code class="docutils literal"><span class="pre">${ROOT_FILE_STEM}</span></code>, which will be replaced by e.g. <code class="docutils literal"><span class="pre">day1</span></code> when running <code class="docutils literal"><span class="pre">json_interface</span> <span class="pre">day1.json</span></code>.</p>
-<p>We also specify the list of variables to be exported. Only the initial and final epoch and perigee altitude are relevant. The epoch is outputted in the first column of the generated files automatically (unless <span class="jsonkey">epochsInFirstColumn</span> is set to <code class="docutils literal"><span class="pre">false</span></code>). We request to output only the results of the initial and final epochs by settings <span class="jsonkey">onlyInitialStep</span> and <span class="jsonkey">onlyFinalStep</span> to <code class="docutils literal"><span class="pre">true</span></code> (note that these keys are not mutually exclusive, i.e. settings both to <code class="docutils literal"><span class="pre">true</span></code> will result in a results matrix with two rows corresponding to the initial and final epochs). The variable to be outputted is the satellite’s periapsis altitude w.r.t. Earth.</p>
+<p>We also specify the list of variables to be exported. Only the initial and final epoch and perigee altitude are relevant. The epoch is output in the first column of the generated files automatically (unless <span class="jsonkey">epochsInFirstColumn</span> is set to <code class="docutils literal"><span class="pre">false</span></code>). We request to output only the results of the initial and final epochs by settings <span class="jsonkey">onlyInitialStep</span> and <span class="jsonkey">onlyFinalStep</span> to <code class="docutils literal"><span class="pre">true</span></code> (note that these keys are not mutually exclusive, i.e. settings both to <code class="docutils literal"><span class="pre">true</span></code> will result in a results matrix with two rows corresponding to the initial and final epochs). The variable to be output is the satellite’s periapsis altitude w.r.t. Earth.</p>
+</div>
+<div class="section" id="termination-settings">
+<h2>2.3.7. Termination Settings<a class="headerlink" href="#termination-settings" title="Permalink to this headline">¶</a></h2>
 <p>Finally, we have to define the termination conditions, which are:</p>
 <div class="math">
 \[\begin{split}t_f &amp;&lt; t_0 + 1\text{ Julian year} \\
 h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
 <p>Since <span class="math">\(t_0\)</span> is not a shared property, one of the termination conditions will be different for each propagation. However, there is no need to manually define the time-based termination condition because <code class="docutils literal"><span class="pre">json_interface</span></code> will create automatically from the key <span class="jsonkey">finalEpoch</span> defined at root level, and add it to other conditions (which means that, if the condition defined manually OR the condition created from <span class="jsonkey">finalEpoch</span> are met, the propagation will terminate). Thus, we only need to specify the termination condition for the periapsis altitude, by defining the key <span class="jsonkey">termination</span> at root level to be:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="s">&quot;variable&quot;</span><span class="o">:</span> <span class="s">&quot;${export[0].variables[0]}&quot;</span><span class="p">,</span>
+  <span class="s">&quot;variable&quot;</span><span class="o">:</span> <span class="s">&quot;${export[ 0 ].variables[ 0 ]}&quot;</span><span class="p">,</span>
   <span class="s">&quot;lowerLimit&quot;</span><span class="o">:</span> <span class="mi">110000</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Note that there is no need to manually provide the variable object again (i.e. <code class="docutils literal"><span class="pre">{&quot;body&quot;:&quot;satellite&quot;,&quot;dependentVariableType&quot;:&quot;periapsisAltitude&quot;,&quot;relativeToBody&quot;:&quot;Earth&quot;}</span></code>). Thanks to the modularity capabilities of the <code class="docutils literal"><span class="pre">json_interface</span></code>, we can reference parts of other files, and even of the same file, using the special string format <code class="docutils literal"><span class="pre">&quot;$(file.json){variable}&quot;</span></code>. If the part <code class="docutils literal"><span class="pre">(file.json)</span></code> is omitted, the variable will be retrieved from the current file. In this case, <span class="jsonkey">export[0].variables[0]</span> is read as “the first element of the key <span class="jsonkey">variables</span> of the first element of the key <span class="jsonkey">export</span>”. It is <strong>not</strong> necessary for the variable <span class="jsonkey">export[0].variables[0]</span> to be defined before the line in which the special string <code class="docutils literal"><span class="pre">&quot;${export[0].variables[0]}&quot;</span></code> is used.</p>
+<p>Note that there is no need to manually provide the variable object again (i.e. <code class="docutils literal"><span class="pre">{&quot;body&quot;:&quot;satellite&quot;,&quot;dependentVariableType&quot;:&quot;periapsisAltitude&quot;,&quot;relativeToBody&quot;:&quot;Earth&quot;}</span></code>). Thanks to the modularity capabilities of the <code class="docutils literal"><span class="pre">json_interface</span></code>, we can reference parts of other files, and even of the same file, using the special string format <code class="docutils literal"><span class="pre">&quot;$(file.json){variable}&quot;</span></code>. If the part <code class="docutils literal"><span class="pre">(file.json)</span></code> is omitted, the variable will be retrieved from the current file. In this case, <span class="jsonkey">export[ 0 ].variables[ 0 ]</span> is read as “the first element of the key <span class="jsonkey">variables</span> of the first element of the key <span class="jsonkey">export</span>”. It is <strong>not</strong> necessary for the variable <span class="jsonkey">export[ 0 ].variables[ 0 ]</span> to be defined before the line in which the special string <code class="docutils literal"><span class="pre">&quot;${export[</span> <span class="pre">0</span> <span class="pre">].variables[</span> <span class="pre">0</span> <span class="pre">]}&quot;</span></code> is used.</p>
+</div>
+<div class="section" id="running-the-simulation">
+<h2>2.3.8. Running the Simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">¶</a></h2>
 <p>Since we are going to run 365 propagations, we want to get some output in Terminal when each of the propagation ends. We achieve this by setting the key <span class="jsonkey">options</span> to be:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="s">&quot;notifyOnPropagationTermination&quot;</span><span class="o">:</span> <span class="nb">true</span>
@@ -628,8 +652,8 @@ h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
 </pre></div>
 </div>
 <p>When the propagations complete, we will have 365 files in the <code class="xref py py-class docutils literal"><span class="pre">outputs</span></code> directory, which we can process using the following MATLAB script:</p>
-<div class="literal-block-wrapper docutils container" id="plotresults-m">
-<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">plotResults.m</span></code></span><a class="headerlink" href="#plotresults-m" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="plotresults2-m">
+<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">plotResults.m</span></code></span><a class="headerlink" href="#plotresults2-m" title="Permalink to this code">¶</a></div>
 <div class="highlight-matlab"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -667,6 +691,7 @@ h_{p_f} &amp;\ge 110\text{ km}\end{split}\]</div>
 <p>which generates the following plot:</p>
 <img alt="../../../../_images/lifetimeMaximisation.png" src="../../../../_images/lifetimeMaximisation.png" />
 <p>Using this plot, we can provide an answer to our optimisation problem: in order to maximise the lifetime of our satellite, we would have to launch it either in the months of June or December, as this would lead to the lowest rates of decrease of the perigee altitude.</p>
+</div>
 </div>
 
 

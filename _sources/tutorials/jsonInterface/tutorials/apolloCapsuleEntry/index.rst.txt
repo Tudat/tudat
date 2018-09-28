@@ -6,7 +6,7 @@
 Apollo Capsule Entry
 ====================
 
-The example described on this page is that of Apollo on a reentry trajectory towards the surface of Earth. The code for this tutorial is located in your Tudat Bundle at::
+The example described on this page is that of Apollo on a reentry trajectory towards the surface of Earth. The code for this tutorial is located in your Tudat Bundle at: ::
 
   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/apolloCapsuleEntryJSON.cpp
 
@@ -38,10 +38,12 @@ Then, in the C++ app, as explained in :ref:`jsonInterface_customJsonApp`, a deri
   class ApolloJsonSimulationManager : public tudat::json_interface::JsonSimulationManager< >
   {
   public:
+
       // Inherit constructor.
       using JsonSimulationManager< >::JsonSimulationManager;
 
   protected:
+
       virtual void resetBodies( )
       {
           ...
@@ -56,6 +58,7 @@ Then, in the C++ app, as explained in :ref:`jsonInterface_customJsonApp`, a deri
       {
           ...
       }
+      
   };
 
 For the :literal:`resetBodies` method, we first call the default implementation of the base class, and then we create Apollo's aerodynamic coefficients interface manually, using a function defined in :literal:`tudat::unit_tests`:
