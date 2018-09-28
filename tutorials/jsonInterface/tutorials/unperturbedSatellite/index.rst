@@ -38,7 +38,7 @@ The next step is to define the body settings. In this case, only Earth and the o
             "useDefaultSettings": true,
             "ephemeris": {
                "type": "constant",
-               "constantState": [0, 0, 0, 0, 0, 0],
+               "constantState": [ 0, 0, 0, 0, 0, 0 ],
                "frameOrientation": "J2000"
             }
          },
@@ -69,8 +69,8 @@ Then, we specify the propagator settings. In this case, we are going to propagat
       [
          {
             "integratedStateType": "translational",
-            "centralBodies": ["Earth"],
-            "bodiesToPropagate": ["Asterix"],
+            "centralBodies": [ "Earth" ],
+            "bodiesToPropagate": [ "Asterix" ],
             "accelerations": {
                "Asterix": {
                   "Earth": [
@@ -83,9 +83,9 @@ Then, we specify the propagator settings. In this case, we are going to propagat
          }
       ]
 
-We specify the key :jsonkey:`propagators[0].accelerations`, an object containing lists of accelerations. The inner keys (in this case, :jsonkey:`Earth`) are the names of the bodies exerting the accelerations, while the outer keys (in this case, :jsonkey:`Asterix`), are the names of the bodies undergoing the accelerations. Thus, :jsonkey:`accelerations.Asterix.Earth` is read as "accelerations on Asterix caused by Earth". In this case, the only acceleration is Earth's point-mass gravity.
+We specify the key :jsonkey:`propagators[ 0 ].accelerations`, an object containing lists of accelerations. The inner keys (in this case, :jsonkey:`Earth`) are the names of the bodies exerting the accelerations, while the outer keys (in this case, :jsonkey:`Asterix`), are the names of the bodies undergoing the accelerations. Thus, :jsonkey:`accelerations.Asterix.Earth` is read as "accelerations on Asterix caused by Earth". In this case, the only acceleration is Earth's point-mass gravity.
 
-In this case, some keys of :jsonkey:`propagators[0]` have been omitted. For instance, the key :literal:`type` has not been specified, meaning that the default value :literal:`"cowell"` is used.
+In this case, some keys of :jsonkey:`propagators[ 0 ]` have been omitted. For instance, the key :literal:`type` has not been specified, meaning that the default value :literal:`"cowell"` is used.
 
 Integration Settings
 ~~~~~~~~~~~~~~~~~~~~

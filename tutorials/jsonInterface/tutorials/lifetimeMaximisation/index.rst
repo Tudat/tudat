@@ -8,6 +8,9 @@ Perturbed Earth-orbiting Satellite Lifetime Maximisation
 
 This page describes how to set up a single-variable optimisation of the lifetime of an Earth-orbiting satellite using the JSON Interface.
 
+Problem Setup
+~~~~~~~~~~~~~
+
 The rate of decrease of the perigee altitude is assumed to be a good indicator of the lifetime of the satellite. If a small rate of decrease is undergone, longer lifetimes can be expected, and vice versa. Thus, the optimisation problem is defined as:
 
 .. math:: minimise\,-\frac{h_{p_f} - h_{p_0}}{t_f - t_0}
@@ -30,20 +33,20 @@ The initial sate of the satellite is given by:
 Other relevant properties of the satellite are set constant:
 
   - Mass of 400 kg.
-  - Reference area of 10 :math:`\text{m}^2`.
+  - Reference area of 10 m :math:`{}^2`.
   - Drag coefficient of 2.2.
   - Radiation pressure coefficients of 1.5.
 
 The following orbital perturbations are considered:
 
-  - Atmospheric drag (NRLMSISE00 model).
-  - Zonal terms of the geopotential up to degree 7 (GGM02C model).
-  - Sun and Moon's third-body gravitational attraction.
-  - Solar radiation pressure (with occultations by the Earth).
+  - **Spherical harmonics gravity** of the Earth up to degree 7 (GGM02C model).
+  - **Third body perturbations** due to Sun and Moon gravity.
+  - **Solar radiation pressure** (with occultations by the Earth).
+  - **Aerodynamic drag** (NRLMSISE00 model).
 
-The first step is to define the initial epoch and the maximum final epoch. Since :math:`t_0` is the optimisation variable, and the value of :math:`t_f` depends on :math:`t_0`, these two variable cannot be defined in a shared JSON file, but have to be defined individually for each case. A total of 365 days (one for each day of the year 2000) will be propagated.
+Before starting with the maximisation process, we need to define the initial epoch and the maximum final epoch. Since :math:`t_0` is the optimisation variable, and the value of :math:`t_f` depends on :math:`t_0`, these two variable cannot be defined in a shared JSON file, but have to be defined individually for each case. A total of 365 days (one for each day of the year 2000) will be propagated.
 
-The first step is to define the file tree. In this case, we will have a :class:`shared.json` file containing the settings shared by all propagations, and then an :class:`inputs` folder where the individual root input files for each case will be located. After running the propagations, an :class:`outputs` folder containing the results for each case will be generated. Thus, the file tree will look like this eventually::
+The next step is to define the file tree. In this case, we will have a :class:`shared.json` file containing the settings shared by all propagations, and then an :class:`inputs` folder where the individual root input files for each case will be located. After running the propagations, an :class:`outputs` folder containing the results for each case will be generated. Thus, the file tree will look like this eventually: ::
 
   lifetimeMaximisation
   | 
@@ -63,8 +66,10 @@ The first step is to define the file tree. In this case, we will have a :class:`
   |      
   | shared.json
 
+General Settings
+~~~~~~~~~~~~~~~~
 
-The global frame origin is the Solar system's barycentre, which is the default value for the key :jsonkey:`globalFrameOrigin`, so there is no need to provide it. The :jsonkey:`globalFrameOrientation` is set to :literal:`"J2000"`.
+The global frame origin is the Solar System barycentre (SSB), which is the default value for the key :jsonkey:`globalFrameOrigin`, so there is no need to provide it. The :jsonkey:`globalFrameOrientation` is set to :literal:`"J2000"`.
 
 Then, we request using the standard Spice kernels, namely :class:`pck00010.tpc`, :class:`gm_de431.tpc`, :class:`de430_small.bsp` and :class:`pck00010.tpc`. We do this by defining the key :jsonkey:`spice` to be:
 
@@ -75,6 +80,9 @@ Then, we request using the standard Spice kernels, namely :class:`pck00010.tpc`,
   }
 
 Since :jsonkey:`spice.preloadEphemeris` defaults to :literal:`true`, the ephemeris of the celestial bodies from the period :jsonkey:`initialEpoch` to :jsonkey:`finalEpoch` will be preloaded using an interpolation step that is, by default, 300 seconds, and which can be configured through the key :jsonkey:`spice.interpolationStep`.
+
+Body Settings
+~~~~~~~~~~~~~
 
 The next step is to define the body settings. In this case, we include the Sun, Earth, the Moon and the orbiting body (named :jsonkey:`satellite`). Thus, we set the key :literal:`bodies` to be:
 
@@ -107,20 +115,25 @@ The next step is to define the body settings. In this case, we include the Sun, 
       "mass": 400,
       "referenceArea": 10,
       "aerodynamics": {
-        "forceCoefficients": [2.2, 0, 0]
+        "forceCoefficients": [ 2.2, 0, 0 ]
       },
       "radiationPressure": {
         "Sun": {
           "radiationPressureCoefficient": 1.5,
-          "occultingBodies": ["Earth"]
+          "occultingBodies": [ "Earth" ]
         }
       }
     }
   }
 
-As can be seen, the bodies :jsonkey:`Sun` and :jsonkey:`Moon` have no properties other than the :jsonkey:`useDefaultSettings` set to :literal:`true`, which means that their properties (such as gravitational parameter, ephemeris, gravitational models) will be loaded automatically from Spice. For :jsonkey:`Earth`, we also use the default settings, but then we re-define the atmosphere and the spherical harmonic gravity model, since NRLMSISE00 and GGM02C are not used by default. We do this by defining :jsonkey:`bodies.Earth.atmosphere` and :jsonkey:`bodies.Earth.gravityField` keys. The order in which the keys :jsonkey:`useDefaultSettings`, :jsonkey:`atmosphere` and :jsonkey:`gravityField` are defined inside the :jsonkey:`bodies.Earth` objects is irrelevant: the default settings will always be loaded first, and then the settings specified in the input file (if any) will be overridden.
+As can be seen, the bodies :jsonkey:`Sun` and :jsonkey:`Moon` have no properties other than the :jsonkey:`useDefaultSettings` set to :literal:`true`, which means that their properties (such as gravitational parameter, ephemeris, gravitational models) will be loaded automatically from Spice. For :jsonkey:`Earth`, we also use the default settings, but then we re-define the atmosphere and the spherical harmonic gravity model, since NRLMSISE00 and GGM02C are not used by default. We do this by defining the :jsonkey:`bodies.Earth.atmosphere` and :jsonkey:`bodies.Earth.gravityField` keys. 
 
-For the orbiting body, :jsonkey:`satellite`, we do not specify the key :jsonkey:`useDefaultSettings`, which defaults to :literal:`false`. Thus, no properties will be pre-loaded. We provided an :jsonkey:`initialState` of type :literal:`"keplerian"`. We need not define the keys :jsonkey:`argumentOfPeriapsis`, :jsonkey:`longitudeOfAscendingNode` and :jsonkey:`trueAnomaly`, which are assumed to be :literal:`0`. Then we define its constant :jsonkey:`mass` and :jsonkey:`referenceArea`. Finally, we add aerodynamics and radiation pressure settings. In both cases, there is no need to specify a key :jsonkey:`type` because constant aerodynamics coefficients and cannon ball radiation pressure are the default types. For the aerodynamics, we only need to specify the force coefficients (only drag, no lift or side force). For the key :jsonkey:`radiationPressure`, we provide an object in which each key is the name of the radiating bodies (in this case, only the :jsonkey:`Sun`). We specify the :jsonkey:`radiationPressureCoefficient` and a list of :jsonkey:`occultingBodies` (i.e. bodies which can block the flux from the Sun on the satellite).
+..note:: The order in which the keys :jsonkey:`useDefaultSettings`, :jsonkey:`atmosphere` and :jsonkey:`gravityField` are defined inside the :jsonkey:`bodies.Earth` objects is irrelevant: the default settings will always be loaded first, and then the settings specified in the input file (if any) will be overridden.
+
+For the orbiting body, :jsonkey:`satellite`, we do not specify the key :jsonkey:`useDefaultSettings`, which defaults to :literal:`false`. Thus, no properties will be pre-loaded. We provided an :jsonkey:`initialState` of type :literal:`"keplerian"`. We need not define the keys :jsonkey:`argumentOfPeriapsis`, :jsonkey:`longitudeOfAscendingNode` and :jsonkey:`trueAnomaly`, which are assumed to be :literal:`0`. Then we define its constant :jsonkey:`mass` and :jsonkey:`referenceArea`. Finally, we add aerodynamics and radiation pressure settings. In both cases, there is no need to specify a key :jsonkey:`type` because constant aerodynamics coefficients and cannonball radiation pressure are the default types. For the aerodynamics, we only need to specify the force coefficients (only drag, no lift nor side forces). For the key :jsonkey:`radiationPressure`, we provide an object in which each key is the name of the radiating bodies (in this case, only the :jsonkey:`Sun`). We specify the :jsonkey:`radiationPressureCoefficient` and a list of :jsonkey:`occultingBodies` (i.e. bodies which can block the flux from the Sun on the satellite).
+
+Propagation Settings
+~~~~~~~~~~~~~~~~~~~~
 
 Then, we specify the propagator settings. In this case, we are going to propagate the translational state of :jsonkey:`satellite` about :jsonkey:`Earth`, so we define the key :jsonkey:`propagators` to be:
 
@@ -129,8 +142,8 @@ Then, we specify the propagator settings. In this case, we are going to propagat
   [
     {
       "integratedStateType": "translational",
-      "centralBodies": ["Earth"],
-      "bodiesToPropagate": ["Asterix"],
+      "centralBodies": [ "Earth" ],
+      "bodiesToPropagate": [ "Asterix" ],
       "accelerations": {
         "satellite": {
           "Earth": [
@@ -161,9 +174,12 @@ Then, we specify the propagator settings. In this case, we are going to propagat
     }
   ]
 
-We specify the key :jsonkey:`propagators[0].accelerations`, an object containing lists of accelerations. The inner keys (in this case, :jsonkey:`Earth`, :jsonkey:`Sun` and :jsonkey:`Moon`) are the names of the bodies exerting the accelerations, while the outer keys (in this case, :jsonkey:`satellite`), are the names of the bodies undergoing the accelerations. Thus, :jsonkey:`accelerations.satellite.Earth` is read as "accelerations on the satellite caused by Earth". In this case, this is a list with two accelerations: the spherical harmonic gravity up to degree 7 and order 0 (i.e. only zonal terms), and the aerodynamic acceleration caused by the atmosphere. For the Sun, we specify the point-mass gravitational attraction and the cannon-ball radiation pressure acceleration. Finally, for the Moon, there is only one acceleration: that caused by the point-mass gravitational attraction.
+We specify the key :jsonkey:`propagators[ 0 ].accelerations`, an object containing lists of accelerations. The inner keys (in this case, :jsonkey:`Earth`, :jsonkey:`Sun` and :jsonkey:`Moon`) are the names of the bodies exerting the accelerations, while the outer keys (in this case, :jsonkey:`satellite`), are the names of the bodies undergoing the accelerations. Thus, :jsonkey:`accelerations.satellite.Earth` is read as "accelerations on the *satellite* caused by *Earth*". In this case, this is a list with two accelerations: the spherical harmonic gravity up to degree 7 and order 0 (i.e. only zonal terms), and the aerodynamic acceleration caused by the atmosphere. For the Sun, we specify the point-mass gravitational attraction and the cannonball radiation pressure acceleration. Finally, for the Moon, there is only one acceleration: the one caused by the point-mass gravitational attraction.
 
-In this case, some keys of :jsonkey:`propagators[0]` have been omitted. For instance, the key :literal:`type` has not been specified, meaning that the default value :literal:`"cowell"` is used.
+In this case, some keys of :jsonkey:`propagators[ 0 ]` have been omitted. For instance, the key :literal:`type` has not been specified, meaning that the default value :literal:`"cowell"` is used.
+
+Integration Settings
+~~~~~~~~~~~~~~~~~~~~
 
 The next step is to define the integrator settings. The initial time is retrieved from the key :jsonkey:`initialEpoch` defined at root level. Thus, we define the key :jsonkey:`integrator` to be equal to the following object:
 
@@ -180,6 +196,9 @@ The next step is to define the integrator settings. The initial time is retrieve
   }
 
 The key :jsonkey:`saveFrequency` is not specified, so the save frequency is assumed to be :literal:`1`, which means that all the steps are saved.
+
+Output Settings
+~~~~~~~~~~~~~~~
 
 Then, we have to define the files to which the results of the integration should be saved. We do this by assigning an array of objects containing export settings to the :jsonkey:`export` key:
 
@@ -202,7 +221,10 @@ Then, we have to define the files to which the results of the integration should
 
 Note the usage of :literal:`${ROOT_FILE_STEM}` in the path of the output file. Since we are going to generate a root input file for each day of year 2000, a different output file for each case will be generated. These files must have different names. Instead of defining this key in each of the individual files, we define it in the :class:`shared.json` file using the special string :literal:`${ROOT_FILE_STEM}`, which will be replaced by e.g. :literal:`day1` when running :literal:`json_interface day1.json`.
 
-We also specify the list of variables to be exported. Only the initial and final epoch and perigee altitude are relevant. The epoch is outputted in the first column of the generated files automatically (unless :jsonkey:`epochsInFirstColumn` is set to :literal:`false`). We request to output only the results of the initial and final epochs by settings :jsonkey:`onlyInitialStep` and :jsonkey:`onlyFinalStep` to :literal:`true` (note that these keys are not mutually exclusive, i.e. settings both to :literal:`true` will result in a results matrix with two rows corresponding to the initial and final epochs). The variable to be outputted is the satellite's periapsis altitude w.r.t. Earth.
+We also specify the list of variables to be exported. Only the initial and final epoch and perigee altitude are relevant. The epoch is output in the first column of the generated files automatically (unless :jsonkey:`epochsInFirstColumn` is set to :literal:`false`). We request to output only the results of the initial and final epochs by settings :jsonkey:`onlyInitialStep` and :jsonkey:`onlyFinalStep` to :literal:`true` (note that these keys are not mutually exclusive, i.e. settings both to :literal:`true` will result in a results matrix with two rows corresponding to the initial and final epochs). The variable to be output is the satellite's periapsis altitude w.r.t. Earth.
+
+Termination Settings
+~~~~~~~~~~~~~~~~~~~~
 
 Finally, we have to define the termination conditions, which are:
 
@@ -216,11 +238,14 @@ Since :math:`t_0` is not a shared property, one of the termination conditions wi
 .. code-block:: cpp
 
   {
-    "variable": "${export[0].variables[0]}",
+    "variable": "${export[ 0 ].variables[ 0 ]}",
     "lowerLimit": 110000
   }
 
-Note that there is no need to manually provide the variable object again (i.e. :literal:`{"body":"satellite","dependentVariableType":"periapsisAltitude","relativeToBody":"Earth"}`). Thanks to the modularity capabilities of the :literal:`json_interface`, we can reference parts of other files, and even of the same file, using the special string format :literal:`"$(file.json){variable}"`. If the part :literal:`(file.json)` is omitted, the variable will be retrieved from the current file. In this case, :jsonkey:`export[0].variables[0]` is read as "the first element of the key :jsonkey:`variables` of the first element of the key :jsonkey:`export`". It is **not** necessary for the variable :jsonkey:`export[0].variables[0]` to be defined before the line in which the special string :literal:`"${export[0].variables[0]}"` is used.
+Note that there is no need to manually provide the variable object again (i.e. :literal:`{"body":"satellite","dependentVariableType":"periapsisAltitude","relativeToBody":"Earth"}`). Thanks to the modularity capabilities of the :literal:`json_interface`, we can reference parts of other files, and even of the same file, using the special string format :literal:`"$(file.json){variable}"`. If the part :literal:`(file.json)` is omitted, the variable will be retrieved from the current file. In this case, :jsonkey:`export[ 0 ].variables[ 0 ]` is read as "the first element of the key :jsonkey:`variables` of the first element of the key :jsonkey:`export`". It is **not** necessary for the variable :jsonkey:`export[ 0 ].variables[ 0 ]` to be defined before the line in which the special string :literal:`"${export[ 0 ].variables[ 0 ]}"` is used.
+
+Running the Simulation
+~~~~~~~~~~~~~~~~~~~~~~
 
 Since we are going to run 365 propagations, we want to get some output in Terminal when each of the propagation ends. We achieve this by setting the key :jsonkey:`options` to be:
 
@@ -252,14 +277,13 @@ Finally, we have to run the :literal:`json_interface` for each of the file in th
 
   parallel json_interface ::: inputs/*.json
 
-
 When the propagations complete, we will have 365 files in the :class:`outputs` directory, which we can process using the following MATLAB script:
 
 .. literalinclude:: plotResults.m
   :linenos:
   :language: matlab
   :caption: :class:`plotResults.m`
-  :name: plotResults-m
+  :name: plotResults2-m
 
 which generates the following plot:
 
