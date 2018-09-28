@@ -3,7 +3,7 @@
 Kalman Filter for State Estimation
 ==================================
 
-In this example application, you will learn how to set up and use a Kalman filter object. In particular, this tutorial focuses only on the extended (EKF) and unscented (UKF) Kalman filters. 
+In this example application, you will learn how to set up and use a Kalman filter object. In particular, this tutorial focuses only on the extended (EKF) and unscented (UKF) Kalman filters.
 
 Problem Description
 ~~~~~~~~~~~~~~~~~~~
@@ -16,7 +16,7 @@ and it represents a very simple case of a falling object, with the additional ch
 
 Clearly, this is an uncontrolled problem. However, for sake of completeness and to show its use, a control system object is added nonetheless. As you will notice by going through the code, this object always provides a control vector of zeros (and the control vector is not used in any of the equations).
 
-By looking at the code, you will also see that the filter settings and objects are created consecutively. This is a step that could, instead, have been done by directly creating a :literal:`UnscentedKalmanFilter` object directly. However, it is customary (in Tudat) for the user to input a set of settings, which are then used as input to another object (could be e.g., a navigation system), where the settings are converted to the filter itself. Thus, these two steps are taken just to show how it would be done in such a situation. 
+By looking at the code, you will also see that the filter settings and objects are created consecutively. This is a step that could, instead, have been done by directly creating a :class:`UnscentedKalmanFilter` object. However, it is customary (in Tudat) for the user to input a set of settings, which are then used as input to another object (could be e.g., a navigation system), where the settings are converted to the filter itself. Thus, these two steps are taken just to show how it would be done in such a situation. 
 
 Initial Conditions
 ~~~~~~~~~~~~~~~~~~
@@ -38,4 +38,4 @@ Results
 
 If you run the application as is, the result should be similar to the ones shown below. Over 300 steps, the filter manages to converge very closely to the actual values of position, velocity and ballistic coefficient. Note, however, how the convergence in position is much quicker than the one in ballistic coefficient and much more stable than the one in velocity. This is simply related to the fact that position is the only state that is directly measured (and consequently, much less uncertain).
 
-.. figure:: images/filterExample.pdf
+.. figure:: images/filterExample.png

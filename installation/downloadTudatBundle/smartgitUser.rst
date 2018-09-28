@@ -40,5 +40,5 @@ Add the Tudat Bundle repository
 
    .. tip:: It is good practice to avoid long paths and names with special characters (preferably no spaces). Pick something short and sensible. Especially if you are working on a Windows system, it is recommended that you place the Tudat Bundle directly in your C:\ drive, to avoid problems with filepath lengths.
 
-Congratulations! You have now downloaded the tudatBundel. You can now head to the :ref:`configureTudatLibraries` guide to configure the bundled libraries correctly and build them.
+Congratulations! You have now downloaded the tudatBundle. You can now head to the :ref:`configureTudatLibraries` guide to configure the bundled libraries correctly and build them.
 

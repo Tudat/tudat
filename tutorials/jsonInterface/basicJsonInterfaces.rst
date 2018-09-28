@@ -16,28 +16,29 @@ Writing a JSON file is a very simple process. The text you write will firstly ha
 
 .. code-block:: json
 
-	{
-	  "firstName": "John",
-	  "lastName": "Smith",
-	  "isAlive": true,
-	  "age": 27,
-	  "address": {
-	    "streetAddress": "21 2nd Street",
-	    "city": "New York",
-	  },
-	  "phoneNumbers": [
-	    {
-	      "type": "home",
-	      "number": "212 555-1234"
-	    },
-	    {
-	      "type": "office",
-	      "number": "646 555-4567"
-	    }
-	  ],
-	  "children": [],
-	  "spouse": null
-	}
+   {
+      "firstName": "Dylan",
+      "lastName": "Smith",
+      "isAlive": true,
+      "gender": "X",
+      "age": 29,
+      "address": {
+         "streetAddress": "21 2nd Street",
+         "city": "New York",
+      },
+      "phoneNumbers": [
+         {
+            "type": "home",
+            "number": "212 555-1234"
+         },
+         {
+            "type": "office",
+            "number": "646 555-4567"
+         }
+      ],
+      "children": [ ],
+      "spouse": null
+   }
 
 Below, some of the main characteristics of how a JSON file is written will be outlined:
 
@@ -78,7 +79,7 @@ There are two ways of using the JSON interface with Tudat. In the first case, yo
 
 The :literal:`json_interface` application can be used to run Tudat propagations by providing the path to a JSON input file as command-line argument in Terminal::
 
-	cd // insert the path to the tudatBundle directory
+	cd // insert the path to the JSON application file
 	tudatBundle/tudat/bin/json_interface main.json
 
 .. note:: The extension can be omitted, in which case :literal:`.json` will be assumed. The argument can also be the path to a directory containing a :literal:`main.json` file, and it can be omitted if a :literal:`main.json` file exists in the current directory.

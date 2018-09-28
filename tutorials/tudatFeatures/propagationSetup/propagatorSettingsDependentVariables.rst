@@ -57,9 +57,9 @@ Below, we provide a list of all dependent variables that can be saved using Tuda
 
    - **Local temperature** in atmosphere of body exerting aerodynamic acceleration (at position of body undergoing acceleration). Requires an aerodynamic acceleration to be acting on the vehicle. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`local_temperature_dependent_variable` as :literal:`variableType`.
 
-   - **Local dynamic pressure** felt by the vehicle based on the current velocity and atmospheric conditions, i.e., computed with :math:`0.5 \rho V^2`. Requires an aerodynamic acceleration to be acting on the vehicle. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`local_temperature_dependent_variable` as :literal:`variableType`.
+   - **Local dynamic pressure** felt by the vehicle based on the current velocity and atmospheric conditions, i.e., computed with :math:`\frac{1}{2} \rho V^2`. Requires an aerodynamic acceleration to be acting on the vehicle. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`local_temperature_dependent_variable` as :literal:`variableType`.
 
-   - **Local aerodynamic heat rate** felt by the vehicle based on the current velocity and atmospheric conditions, i.e., computed with :math:`0.5 \rho V^3`. Requires an aerodynamic acceleration to be acting on the vehicle. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`local_temperature_dependent_variable` as :literal:`variableType`.
+   - **Local aerodynamic heat rate** felt by the vehicle based on the current velocity and atmospheric conditions, i.e., computed with :math:`\frac{1}{2} \rho V^3`. Requires an aerodynamic acceleration to be acting on the vehicle. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`local_temperature_dependent_variable` as :literal:`variableType`.
 
    - **Relative speed** (scalar velocity) of body w.r.t. a second body (between centers of mass). Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`relative_speed_dependent_variable` as :literal:`variableType`.
 
@@ -84,6 +84,12 @@ Below, we provide a list of all dependent variables that can be saved using Tuda
    - **Norm of single acceleration** acting on a body. Defined by creating a :class:`SingleAccelerationDependentVariableSaveSettings`, with :literal:`useNorm` set to true.
 
    - **Single acceleration** acting on a body. Defined by creating a :class:`SingleAccelerationDependentVariableSaveSettings`, with :literal:`useNorm` set to false.
+
+   - **Spherical harmonic acceleration terms** acting on a body, thus the full list of accelerations *for each* spherical harmonics term. Defined by creating a :class:`SphericalHarmonicAccelerationTermsDependentVariableSaveSettings` object.
+
+   - **Variation in spherical harmomic acceleration** acting on a body. Defined by creating a :class:`SingleVariationSphericalHarmonicAccelerationSaveSettings` object.
+
+   - **Variation in spherical harmomic acceleration terms** acting on a body, thus the full list of accelerations *for each* spherical harmonics term.. Defined by creating a :class:`SingleVariationSingleTermSphericalHarmonicAccelerationSaveSettings` object.
     
    - **Norm of single torque** acting on a body. Defined by creating a :class:`SingleTorqueDependentVariableSaveSettings`, with :literal:`useNorm` set to true.
 
@@ -140,8 +146,6 @@ Below, we provide a list of all dependent variables that can be saved using Tuda
     
       .. warning:: The computaton of the periapsis altitude uses the average radius of the central body, not the local radius.
 
-   - **Spherical harmonic acceleration terms**, thus the full list of accelerations *for each* spherical harmonics term. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`spherical_harmonic_acceleration_terms_dependent_variable` as :literal:`variableType`.
-
 Setting Up Dependent Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The framework discussed in the previous section explains how the :literal:`dependentVariablesList` is populated and passed to the :class:`PropagatorSettings`. The goal of this section is to list the available dependent variables and to explain how these are pushed to the :literal:`dependentVariablesList`.
@@ -153,8 +157,8 @@ The framework discussed in the previous section explains how the :literal:`depen
    .. code-block:: cpp
 
       dependentVariablesList.push_back(
-                boost::make_shared< SingleDependentVariableSaveSettings >( variableType , associatedBody , secondaryBody ) );
-                
+                boost::make_shared< SingleDependentVariableSaveSettings >( variableType , associatedBody , secondaryBody, componentIndex ) );
+
    where:
 
    - :literal:`variableType`
@@ -193,49 +197,50 @@ The framework discussed in the previous section explains how the :literal:`depen
             - :literal:`lvlh_to_inertial_frame_rotation_dependent_variable` (secondary body defines body w.r.t. which the state is computed when determining the matrix, taken as SSB if left empty)
             - :literal:`rotation_matrix_to_body_fixed_frame_variable`
             - :literal:`total_torque_dependent_variable`
-            - :literal:`single_torque_dependent_variable`
-            - :literal:`single_torque_norm_dependent_variable`
             - :literal:`body_fixed_groundspeed_based_velocity_variable`
             - :literal:`keplerian_state_dependent_variable` (secondary body defines body w.r.t. which the Keplerian state is computed)
             - :literal:`modified_equinocial_state_dependent_variable` (secondary body defines body w.r.t. which the modified equinoctial state is computed)
             - :literal:`body_fixed_relative_cartesian_position` (secondary body defines body w.r.t. which the Cartesian state is computed)
             - :literal:`body_fixed_relative_spherical_position` (secondary body defines body w.r.t. which the spherical state is computed)
-            - :literal:`spherical_harmonic_acceleration_terms_dependent_variable`
 
-- :literal:`associatedBody`
+   - :literal:`associatedBody`
 
-   Indicates to which body the saved dependent variables are associated.
+      Indicates to which body the saved dependent variables are associated.
 
-- :literal:`secondaryBody`
+   - :literal:`secondaryBody`
 
-   Optional argument that provides a secondary body that may be necessary to save the dependent variable. By default, this argument is empty. In the list above, it is indicated which parameters require a secondaryBody to be defined, and what this parameter represents.
-   
+      Optional argument that provides a secondary body that may be necessary to save the dependent variable. By default, this argument is empty. In the list above, it is indicated which parameters require a secondaryBody to be defined, and what this parameter represents.
+
+   - :literal:`componentIndex`
+
+      :literal:`int` denoting which element of the acceleration vector is to be saved. Default value is -1, which means all elements are saved. Make sure that this value is compatible with the size of :literal:`variableType`.
+      
 .. class:: SingleAccelerationDependentVariableSaveSettings
 
-   This derived class is used to retrieve acceleration-related dependent variables. A large number of acceleration models are supported and both the acceleration-norm and the acceleration-vector can be saved. Variables are saved to the :literal:`dependentVariablesList` using the following code:
+   This derived class is used to retrieve acceleration-related dependent variables. A large number of acceleration models are supported and both the acceleration-norm and the acceleration-vector can be saved. Variables are added to the :literal:`dependentVariablesList` using the following code:
 
    .. code-block:: cpp
 
             dependentVariablesList.push_back(
                 boost::make_shared< SingleAccelerationDependentVariableSaveSettings >(
-                accelerationModeType, bodyUndergoingAcceleration, bodyExertingAcceleration, useNorm )
+                accelerationModelType, bodyUndergoingAcceleration, bodyExertingAcceleration, useNorm, componentIndex );
 
    where:
 
-   - :literal:`accelerationModeType`
+   - :literal:`accelerationModelType`
   
       :class:`AvailableAcceleration` variable that defines the type of acceleration that must be retrieved. It can take the following values:
-      
-      - :literal:`undefined_acceleration`
-      - :literal:`central_gravity`
-      - :literal:`aerodynamic`
-      - :literal:`cannon_ball_radiation_pressure`
-      - :literal:`spherical_harmonic_gravity`
-      - :literal:`mutual_spherical_harmonic_gravity`
-      - :literal:`third_body_central_gravity`
-      - :literal:`third_body_spherical_harmonic_gravity`
-      - :literal:`third_body_mutual_spherical_harmonic_gravity`
-      - :literal:`thrust_acceleration`
+         
+         - :literal:`undefined_acceleration`
+         - :literal:`central_gravity`
+         - :literal:`aerodynamic`
+         - :literal:`cannon_ball_radiation_pressure`
+         - :literal:`spherical_harmonic_gravity`
+         - :literal:`mutual_spherical_harmonic_gravity`
+         - :literal:`third_body_central_gravity`
+         - :literal:`third_body_spherical_harmonic_gravity`
+         - :literal:`third_body_mutual_spherical_harmonic_gravity`
+         - :literal:`thrust_acceleration`
 
    - :literal:`bodyUndergoingAcceleration`
 
@@ -249,7 +254,145 @@ The framework discussed in the previous section explains how the :literal:`depen
 
       :literal:`bool` variable that indicates if the norm of the acceleration (true) or the acceleration vector (false) must be retrieved.
 
-   .. warning:: Make sure that the selected :literal:`bodyExertingAcceleration` is compatible with the :literal:`accelerationModeType`.
+   - :literal:`componentIndex`
+
+      :literal:`int` denoting which element of the acceleration vector is to be saved. Default value is -1, which means all elements are saved.
+
+   .. warning:: Make sure that the selected :literal:`bodyExertingAcceleration` is compatible with the :literal:`accelerationModelType`.
+
+.. class:: SphericalHarmonicAccelerationTermsDependentVariableSaveSettings
+
+   This derived class is used to save contributions to spherical harmonic acceleration at separate degree/order. This type of variable is added to the :literal:`dependentVariablesList` using the following code:
+
+   .. code-block:: cpp
+
+            dependentVariablesList.push_back(
+                boost::make_shared< SphericalHarmonicAccelerationTermsDependentVariableSaveSettings >(
+                bodyUndergoingAcceleration, bodyExertingAcceleration, maximumDegree, maximumOrder, componentIndex );
+
+   - :literal:`bodyUndergoingAcceleration`
+
+      :literal:`std::string` variable that indicates the body that experiences the gravitational acceleration. Make sure that the body's name is listed in :class:`NamedBodyMap`.
+
+   - :literal:`bodyExertingAcceleration`
+
+      :literal:`std::string` variable that indicates the body that exerts the gravitational acceleration that needs to be retrieved on :literal:`bodyUndergoingAcceleration`. Make sure that the body's name is listed in :class:`NamedBodyMap`.
+
+   - :literal:`maximumDegree`
+
+      :literal:`int` denoting the maximum degree of the spherical harmonics model, for which an acceleration has to be saved.
+
+   - :literal:`maximumOrder`
+
+      :literal:`int` denoting the maximum order of the spherical harmonics model, for which an acceleration has to be saved. Make sure that this value is smaller or equal to :literal:`maximumDegree`.
+
+   - :literal:`componentIndex`
+
+      :literal:`int` denoting which element of the acceleration vector is to be saved. Default value is -1, which means all elements are saved.
+
+.. class:: SingleVariationSphericalHarmonicAccelerationSaveSettings
+
+   This derived class is used to save contributions to the variation of the spherical harmonic acceleration. This type of variable is added to the :literal:`dependentVariablesList` using the following code:
+
+   .. code-block:: cpp
+
+            dependentVariablesList.push_back(
+                boost::make_shared< SingleVariationSphericalHarmonicAccelerationSaveSettings >(
+                bodyUndergoingAcceleration, bodyExertingAcceleration, deformationType, identifier );
+
+   - :literal:`bodyUndergoingAcceleration`
+
+      :literal:`std::string` variable that indicates the body that experiences the gravitational acceleration. Make sure that the body's name is listed in :class:`NamedBodyMap`.
+
+   - :literal:`bodyExertingAcceleration`
+
+      :literal:`std::string` variable that indicates the body that exerts the gravitational acceleration that needs to be retrieved on :literal:`bodyUndergoingAcceleration`. Make sure that the body's name is listed in :class:`NamedBodyMap`.
+
+   - :literal:`deformationType`
+
+      :class:`BodyDeformationTypes` variable defining the type of gravity field variation. The supported values are:
+
+         - :literal:`basic_solid_body`
+         - :literal:`tabulated_variation`
+
+   - :literal:`identifier`
+
+      :literal:`std::string` variable denoting the identifier for gravity field variation.
+
+.. class:: SingleVariationSingleTermSphericalHarmonicAccelerationSaveSettings
+
+   This derived class is used to save contributions to the variation of the spherical harmonic acceleration at separate degree/order. This type of variable is added to the :literal:`dependentVariablesList` using the following code:
+
+   .. code-block:: cpp
+
+            dependentVariablesList.push_back(
+                boost::make_shared< SingleVariationSingleTermSphericalHarmonicAccelerationSaveSettings >(
+                bodyUndergoingAcceleration, bodyExertingAcceleration, maximumDegree, maximumOrder, deformationType, identifier );
+
+   - :literal:`bodyUndergoingAcceleration`
+
+      :literal:`std::string` variable that indicates the body that experiences the gravitational acceleration. Make sure that the body's name is listed in :class:`NamedBodyMap`.
+
+   - :literal:`bodyExertingAcceleration`
+
+      :literal:`std::string` variable that indicates the body that exerts the gravitational acceleration that needs to be retrieved on :literal:`bodyUndergoingAcceleration`. Make sure that the body's name is listed in :class:`NamedBodyMap`.
+
+   - :literal:`maximumDegree`
+
+      :literal:`int` denoting the maximum degree of the spherical harmonics model, for which an acceleration has to be saved.
+
+   - :literal:`maximumOrder`
+
+      :literal:`int` denoting the maximum order of the spherical harmonics model, for which an acceleration has to be saved. Make sure that this value is smaller or equal to :literal:`maximumDegree`.
+
+   - :literal:`deformationType`
+
+      :class:`BodyDeformationTypes` variable defining the type of gravity field variation. The supported values are:
+
+         - :literal:`basic_solid_body`
+         - :literal:`tabulated_variation`
+
+   - :literal:`identifier`
+
+      :literal:`std::string` variable denoting the identifier for gravity field variation.
+
+.. class:: SingleTorqueDependentVariableSaveSettings
+
+   This derived class is used to retrieve torque-related dependent variables. A number of torque models are supported and both the norm and the vector form of the torque can be saved. Variables are added to the :literal:`dependentVariablesList` using the following code:
+
+   .. code-block:: cpp
+
+            dependentVariablesList.push_back(
+                boost::make_shared< SingleTorqueDependentVariableSaveSettings >(
+                torqueModelType, bodyUndergoingTorque, bodyExertingTorque, useNorm, componentIndex );
+
+   where:
+
+   - :literal:`torqueModelType`
+  
+      :class:`AvailableTorque` variable that defines the type of torque that must be retrieved. It can take the following values:
+      
+         - :literal:`underfined_torque`
+         - :literal:`second_order_gravitational_torque`
+         - :literal:`aerodynamic_torque`
+
+   - :literal:`bodyUndergoingAcceleration`
+
+      :literal:`std::string` variable that indicates the body that experiences the torque that needs to be retrieved. Make sure that the body's name is listed in :class:`NamedBodyMap`.
+
+   - :literal:`bodyExertingAcceleration`
+
+      :literal:`std::string` variable that indicates the body that exerts the torque that needs to be retrieved on :literal:`bodyUndergoingAcceleration`. Make sure that the body's name is listed in :class:`NamedBodyMap`.
+
+   - :literal:`useNorm`
+
+      :literal:`bool` variable that indicates if the norm of the torque (true) or the torque vector (false) must be retrieved.
+
+   - :literal:`componentIndex`
+
+      :literal:`int` denoting which element of the torque vector is to be saved. Default value is -1, which means all elements are saved.
+
+   .. warning:: Make sure that the selected :literal:`bodyExertingAcceleration` is compatible with the :literal:`accelerationModelType`.
 
 .. class:: IntermediateAerodynamicRotationVariableSaveSettings
 

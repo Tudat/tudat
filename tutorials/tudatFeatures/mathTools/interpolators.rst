@@ -139,7 +139,7 @@ Currently, only one multi-dimensional interpolator is supported in Tudat. This i
 Interpolation When Independent Variables are Out-of-range
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It may be possible that in some situation, the independent variable at which interpolation has to take place, falls outside the list of independent variables defined in the interpolator. In this case, the default behavior is extrapolation, but as you may imagine, this can lead to very wrong and strange behaviors, especially if a method like cubic spline is selected. For this reason, the user has the option of changing this, so called, boundary handling method, or :literal:`boundaryHandling`, by specifying an extra input to the :class:`IntegratorSettings` object. The allowed methods for independent variable out-of-range are the following:
+In some instances, it can happen that the independent variable at which interpolation has to take place, falls outside the list of independent variables defined in the interpolator. In this case, the default behavior is extrapolation, but as you can imagine, this may lead to very wrong and strange behaviors, especially if a method like cubic spline is selected. For this reason, the user has the option of changing this so called, boundary handling method, or :literal:`boundaryHandling`, by specifying an extra input to the :class:`InterpolatorSettings` object. The allowed methods for independent variable out-of-range are the following:
 
    - :literal:`throw_exception_at_boundary`: throw a runtime error
 
