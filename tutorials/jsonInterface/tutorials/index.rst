@@ -11,8 +11,8 @@ In these pages of the wiki, you will be taught how to use the JSON Interface by 
 
 it will be shown how to use the :literal:`json_interface` application, so no C++ code will have to be written. In the two latter examples:
 
-	- :ref:`jsonInterface_tutorials_apolloCapsuleEntry`
-	- :ref:`jsonInterface_tutorials_lifetimeMaximisationCPP`
+   - :ref:`jsonInterface_tutorials_lifetimeMaximisationCPP`
+   - :ref:`jsonInterface_tutorials_apolloCapsuleEntry`
 
 custom C++ applications, which use the JSON Interface, will be written. Some additional example applications can be found in your tudatBundle, in the folder::
 
@@ -25,5 +25,5 @@ custom C++ applications, which use the JSON Interface, will be written. Some add
    unperturbedSatellite/index
    perturbedSatellite/index
    lifetimeMaximisation/index
-   apolloCapsuleEntry/index
    lifetimeMaximisationCPP/index
+   apolloCapsuleEntry/index

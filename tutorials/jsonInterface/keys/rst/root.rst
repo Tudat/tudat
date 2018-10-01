@@ -25,7 +25,7 @@
 			:arrow:`Body`
 
 		.. include:: Body.rst
-- :jsontype:`object[]` :jsonkey:`propagators` (mandatory). Used to define the propagator(s), sets the Tudat :class:`PropagatorSettings` class.
+- :jsontype:`object[ ]` :jsonkey:`propagators` (mandatory). Used to define the propagator(s), sets the Tudat :class:`PropagatorSettings` class.
 
 	.. container:: toggle
 
@@ -60,7 +60,7 @@
 			:arrow:`Multiple Termination Condition`
 
 		.. include:: MultipleTerminationCondition.rst
-- :jsontype:`object[]` :jsonkey:`export` (optional). Used to define the export settings. Each element represents an output file to which results will be saved.
+- :jsontype:`object[ ]` :jsonkey:`export` (optional). Used to define the export settings. Each element represents an output file to which results will be saved.
 
 	.. container:: toggle
 

@@ -4,7 +4,7 @@
 .. role:: arrow
 
 - :jsontype:`path` :jsonkey:`file` (mandatory). Path to the file in which to save the results. The file will contain a matrix in which each row corresponds to an integration step and each column to the values of the variables in the same order as provided in :jsonkey:`variables`.
-- :jsontype:`object[]` :jsonkey:`variables` (mandatory). List of variables that are going to be saved.
+- :jsontype:`object[ ]` :jsonkey:`variables` (mandatory). List of variables that are going to be saved.
 
 	.. container:: toggle
 
