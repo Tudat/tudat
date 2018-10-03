@@ -4,31 +4,7 @@ Setting up the Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 In Tudat, the physical environment is defined by a list of :class:`Body` objects, each of which represents either a celestial body, or a manmade vehicle. Consequently, all properties that are required for computing e.g. accelerations are stored in :class:`Body` objects.
 
-.. class:: Body
-  
-   Container for all properties of a body required for computing e.g. accelerations.
-
-Typically the entire environment is stored in a named list of :class:`Body` object, the standard typedef for which is the :class:`NamedBodyMap`.
-
-.. class:: NamedBodyMap
-
-   An unordered map of shared pointers to :class:`Body` objects, see :ref:`this <externalBoost>` wiki page for a discussion of shared pointers; don't worry if you're not sure what a shared pointer or unordered map is at this point.
-
-Manually creating the environment
-*********************************
-The following shows how to manually declare a :class:`NamedBodyMap`, and then create entries in this body map for a number of bodies:
-
-.. code-block:: cpp
-
-    NamedBodyMap bodyMap;
-    bodyMap[ "Earth" ] = boost::make_shared< Body >( );
-    bodyMap[ "Moon" ] = boost::make_shared< Body >( );
-    bodyMap[ "Sun" ] = boost::make_shared< Body >( );
-    bodyMap[ "Apollo" ] = boost::make_shared< Body >( );
-
-This creates four body objects (representing three celestial bodies and one vehicle; Tudat does not distinguish between the two). However, these bodies do not yet have any physical properties, the :literal:`bodyMap` created above now only indicates the existence of these four bodies.
-
-To actually define the physical properties of the environment, a :class:`Body` object may be endowed with any of a number of properties. In particular, the following properties may be set. A more extensive list of possible model types is given at the end of this tutorial page:
+Tudat provides the following options for environment models:
 
     - **Ephemeris:** defines the state of the body as a function of time (Dynamical Barycentric Time seconds since J2000 is default).
     - **Gravity field:** defines the gravity field of the body, in terms of its gravitational potential and associated quantities.
@@ -41,20 +17,24 @@ To actually define the physical properties of the environment, a :class:`Body`�
     - **Mass model:** defines the mass of a body (possibly as a function of time). This separate function is typically used for vehicles only. For celestial bodies, the mass is typically derived from the gravity field member (if applicable).
     - **Vehicle system models:** This is a container object that stores properties of systems and physical properties of a vehicle. The options in this container are presently limited to propulsion systems and some physical characteristics related to entry heating.
 
-These properties can be set manually or default settings can be used. For instance, to manually create and set an ephemeris (from Spice w.r.t. the barycenter) and gravity field (point-mass only) object in the ``"Earth"`` entry of the body map, the following can be used:
+These properties can be set manually or default settings can be used (see below). 
 
-.. code-block:: cpp
+.. class:: Body
+  
+   Container for all properties of a body required for computing e.g. accelerations.
 
-    bodyMap[ "Earth" ]->setEphemeris( boost::make_shared< SpiceEphemeris >( "Earth", "SSB", false, false, true, "J2000" ) ); 
-    bodyMap[ "Earth" ]->setGravityFieldModel( boost::make_shared< GravityFieldModel >( 3.986004418E14 ) );  
+Typically the entire environment is stored in a named list of :class:`Body` object, the standard typedef for which is the :class:`NamedBodyMap`.
 
-This calls the constructors of the :class:`SpiceEphemeris` and :class:`GravityFieldModel` classes, and assigns the objects that are constructed to the "Earth" entry of the ``bodyMap``.
+.. class:: NamedBodyMap
+
+   An unordered map of shared pointers to :class:`Body` objects, see :ref:`this <externalBoost>` wiki page for a discussion of shared pointers; don't worry if you're not sure what a shared pointer or unordered map is at this point.
+
 
 .. _tudatFeaturesCreatingTheEnvironment:
 
 Creating the environment from :class:`BodySettings`
 ***************************************************
-Manually creating all objects defining the full environment is possible, but not recommended. In particular, various environment models are interdependent and these dependencies must be fully and consistently defined for the code to function properly. To this end, we provide a :class:`BodySettings` object.
+Manually creating all objects defining the full environment is possible (see below), but not recommended. In particular, various environment models are interdependent and these dependencies must be fully and consistently defined for the code to function properly. To this end, we provide a :class:`BodySettings` object, which is the easiest way to create a set of (natural or artificial) bodies in Tudat.
 
 .. class:: BodySettings
 
@@ -112,3 +92,37 @@ where the ``getApolloCoefficientInterface`` is a predefined function that gener
     setGlobalFrameBodyEphemerides( bodyMap, "SSB", "ECLIPJ2000" );
  
 This line of code allows the ephemerides and rotation models of the various bodies to be defined w.r.t. different origins (and even w.r.t. each other).
+
+Manually creating the environment
+*********************************
+The following shows how to manually declare a :class:`NamedBodyMap`, and then create entries in this body map for a number of bodies:
+
+.. code-block:: cpp
+
+    NamedBodyMap bodyMap;
+    bodyMap[ "Earth" ] = boost::make_shared< Body >( );
+    bodyMap[ "Moon" ] = boost::make_shared< Body >( );
+    bodyMap[ "Sun" ] = boost::make_shared< Body >( );
+    bodyMap[ "Apollo" ] = boost::make_shared< Body >( );
+
+This creates four body objects (representing three celestial bodies and one vehicle; Tudat does not distinguish between the two). However, these bodies do not yet have any physical properties, the :literal:`bodyMap` created above now only indicates the existence of these four bodies.
+
+To actually define the physical properties of the environment, a :class:`Body` object may be endowed with any of a number of properties. In particular, the following properties may be set. A more extensive list of possible model types is given at the end of this tutorial page:
+
+For instance, to manually create and set an ephemeris (from Spice w.r.t. the barycenter) and gravity field (point-mass only) object in the ``"Earth"`` entry of the body map, the following can be used:
+
+.. code-block:: cpp
+
+    bodyMap[ "Earth" ]->setEphemeris( boost::make_shared< SpiceEphemeris >( "Earth", "SSB", false, false, true, "J2000" ) ); 
+    bodyMap[ "Earth" ]->setGravityFieldModel( boost::make_shared< GravityFieldModel >( 3.986004418E14 ) );  
+
+This calls the constructors of the :class:`SpiceEphemeris` and :class:`GravityFieldModel` classes, and assigns the objects that are constructed to the "Earth" entry of the ``bodyMap``.
+
+Valid Time-Range of Environment
+*******************************
+Most of the environment models are valid for any time, but there is a key exception. In particular, the default settings do not directly use the Spice ephemerides, but retrieve the state for each body from Spice, and then create a :class:`TabulatedEphemeris` (which is only valid in the given time range, of which settings are explained in :class:`TabulatedEphemerisSettings`), as opposed to a :class:`SpiceEphemeris` (as discussed in :class:`DirectSpiceEphermerisSettings`), which is valid for the entire time interval that the Spice kernels contain data. This approach is taken for computational reasons: retrieving a state from Spice is very time-consuming, much more so than retrieving it from a 6th- or 8th-order Lagrange interpolator that is used here for the tabulated ephemeris. An additional consequence of this is that the start and end time of the environment must be slightly (3 times the integration time step) larger than that which is used for the actual propagation, as a Lagrange interpolator can be unreliable at the edges of its domain. It is also possible to use the :class:`SpiceEphemeris` directly, at the expense of longer runtimes, by creating the ``bodySettings`` and ``bodyMap`` as:
+
+.. code-block:: cpp
+
+    std::map< std::string, boost::shared_ptr< BodySettings > > bodySettings = getDefaultBodySettings( bodiesToCreate )
+    NamedBodyMap bodyMap = createBodies( bodySettings );
