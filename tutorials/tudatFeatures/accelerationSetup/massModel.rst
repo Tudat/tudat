@@ -23,7 +23,7 @@ where the map key denotes the body of which the mass-rate is to be computed.
    Using this mass-rate model, the change in vehicle mass due to the expulsion of propellant is taken into account when propagating a vehicle's dynamics. It retrieves the required data from a :class:`ThrustAcceleration` object (set by :class:`ThrustAccelerationSettings`), ensuring full consistency between the two. Two option are available when creating this type of mass-rate model:
 
    - Use all thrust forces acting on a single body, combined into a single mass-rate model. This will in most cases be the model of choice, as there is often no need to distinguish between thrust sources when computing the mass rate: only the total amount of propellant usage is relevant. This option is toggled by setting the :literal:`useAllThrustModels` input argument of the :class:`FromThrustMassModelSettings` constructor to true.
-   - Use a single thrust model, defined by a string-identifier. When creating a thrust model, a :literal:`thrustOriginId` input is provided to the :class:`ThrustEngineSettings` settings constructor. Only in the :class:`FromBodyThrustEngineSettings` derived class is this thrust origin id set to anything else than an empty string: it represents the engine name.
+   - Use a single thrust model, defined by a string-identifier. When creating a thrust model, a :literal:`thrustOriginId` input is provided to the :class:`ThrustMagnitudeSettings` settings constructor. Only in the :class:`FromBodyThrustMagnitudeSettings` derived class is this thrust origin id set to anything else than an empty string: it represents the engine name.
 
 
 

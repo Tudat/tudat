@@ -207,7 +207,7 @@ Subsequently, we provide details on how to add settings for the model to the :cl
    Used to define the resulting accerelations of a thrust force, requiring:
 
    - Mass of body undergoing acceleration.
-   - Settings for both the direction and magnitude of the thrust force (set by :class:`ThrustEngineSettings`). These models may in turn have additional environmental dependencies. 
+   - Settings for both the direction and magnitude of the thrust force (set by :class:`ThrustMagnitudeSettings`). These models may in turn have additional environmental dependencies. 
    
 Setting up a thrust acceleration is discussed in more detail on the page :ref:`tudatFeaturesThrustModels`.
     
