@@ -31,8 +31,8 @@ The first main difference w.r.t. the other examples is the use of a thrust accel
         std::shared_ptr< ThrustDirectionGuidanceSettings > thrustDirectionGuidanceSettings =
                 std::make_shared< ThrustDirectionFromStateGuidanceSettings >(
                     "Earth", true, false );
-        std::shared_ptr< ThrustEngineSettings > thrustMagnitudeSettings =
-                std::make_shared< ConstantThrustEngineSettings >(
+        std::shared_ptr< ThrustMagnitudeSettings > thrustMagnitudeSettings =
+                std::make_shared< ConstantThrustMagnitudeSettings >(
                     thrustMagnitude, specificImpulse );
 
         // Define acceleration model settings.
@@ -56,15 +56,15 @@ The three input arguments to the constructor of the :class:`ThrustDirectionFromS
     - Whether the thrust is colinear with velocity (true) or position (false) w.r.t. the central body.
     - Whether the thrust force is in the same direction (false), or opposite to the direction (true), of the state of the vehicle w.r.t. the central body.
 
-We have set the thrust force to be in line and in the same direction as the velocity vector of the spacecraft w.r.t. the Earth. Defining the magnitude of the thrust (and specific impulse) is done through the dedicated derived class :class:`ConstantThrustEngineSettings`:
+We have set the thrust force to be in line and in the same direction as the velocity vector of the spacecraft w.r.t. the Earth. Defining the magnitude of the thrust (and specific impulse) is done through the dedicated derived class :class:`ConstantThrustMagnitudeSettings`:
     
     .. code-block:: cpp
 
-        std::shared_ptr< ThrustEngineSettings > thrustMagnitudeSettings =
-                std::make_shared< ConstantThrustEngineSettings >(
+        std::shared_ptr< ThrustMagnitudeSettings > thrustMagnitudeSettings =
+                std::make_shared< ConstantThrustMagnitudeSettings >(
                     thrustMagnitude, specificImpulse );
 
-with the first and second arguments of the :class:`ConstantThrustEngineSettings` representing the constant thrust force and specific impulse. Now, the thrust acceleration settings are added to the :literal:`accelerationsOfVehicle` list as follows:
+with the first and second arguments of the :class:`ConstantThrustMagnitudeSettings` representing the constant thrust force and specific impulse. Now, the thrust acceleration settings are added to the :literal:`accelerationsOfVehicle` list as follows:
     
     .. code-block:: cpp
 

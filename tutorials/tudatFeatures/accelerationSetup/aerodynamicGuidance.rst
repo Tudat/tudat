@@ -124,9 +124,42 @@ The example of aerodynamic guidance given above is not very representative, of c
 
 .. class:: FlightConditions
 
-   Class which stores data on altitude, density, airspeed, etc. 
+   Class which calculates and stores data on altitude, longitude, latitude, etc. for non-atmospheric flight (stored as a member of a :class:`Body` object). Can be used during propagation to retrieve various data, using the functions:
 
-To compute orientation angles from these flight conditions:
+   - :literal:`getCurrentAltitude`  Returns the current altitude w.r.t. the central body shape model
+
+   - :literal:`getCurrentLongitude` Returns the current longitude, in the body-fixed frame of the central body
+
+   - :literal:`getCurrentGeodeticLatitude` Returns the current geodetic latitude, in the body-fixed frame of the central body
+
+   - :literal:`getAerodynamicAngleCalculator` Returns a :literal:`AerodynamicAngleCalculator` object, from which the current geographic latitude, longitude, flight path angle, heading angle, bank angle, sideslip angle and angle of attack can be retrieved.
+ 
+
+.. class:: AtmosphericFlightConditions
+
+   Class, derived from :class:`FlightConditions`, which stores data on altitude, longitude, latitude, density, airspeed, etc. for atmospheric flight.  Can be used during propagation to retrieve various data. It derives all functions of :class:`FlightConditions`, and also provides the functions:
+
+   - :literal:`getCurrentDensity` Returns the current atmospheric density at the vehicle current state.
+
+   - :literal:`getCurrentFreestreamTemperature` Returns the current atmospheric temperature at the vehicle current state.
+
+   - :literal:`getCurrentDynamicPressure` Returns the current dynamic pressure at the vehicle current state.
+
+   - :literal:`getCurrentPressure` Returns the current static pressure at the vehicle current state.
+
+   - :literal:`getCurrentAirspeed` Returns the current airspeed at the vehicle current state.
+
+   - :literal:`getCurrentSpeedOfSound` Returns the current speed of sound at the vehicle current state.
+
+   - :literal:`getCurrentMachNumber` Returns the current Mach number at the vehicle current state.
+
+   - :literal:`getCurrentAirspeedBasedVelocity` Returns the current velocity vectorof the vehicle w.r.t. the atmosphere, expressed in the frame fixed to the central body.
+
+   - :literal:`getAerodynamicCoefficientInterface` Returns the object of type :class:`AerodynamicCoefficientInterface` responsible for computing and updating the aerodynamic coefficients.
+
+   - :literal:`getAerodynamicCoefficientIndependentVariables` Returns the current list of independent variables of teh aerodynamic coefficients. For instance, if the coefficients depend on Mach number, angle of attack and sideslip angle, this function returns a vector containing these three variables (in order).
+
+An example of an implementation of an aerodynamic guidance class is given and discussed below.
 
 .. code-block:: cpp
 
@@ -136,17 +169,25 @@ To compute orientation angles from these flight conditions:
                 const NamedBodyMap& bodyMap,
                 const std::string vehicleName )
         { 
-            vehicleFlightConditions_ = bodyMap.at( vehicleName )->getFlightConditions( );
+            vehicleFlightConditions_ = 
+               std::dynamic_pointer_cast< AtmosphericFlightConditions >( 
+                  bodyMap.at( vehicleName )->getFlightConditions( ) );
+            if( vehicleFlightConditions_ == nullptr )
+	    {
+   		throw std::runtime_error( "Error in FlightConditionsBasedAerodynamicGuidance, expected AtmosphericFlightConditions" );
+	    }
         }
 
         void updateGuidance( const double currentTime );
 
     private:
 
-        std::shared_ptr< FlightConditions > vehicleFlightConditions_;
+        std::shared_ptr< AtmosphericFlightConditions > vehicleFlightConditions_;
     };
 
-where the :literal:`updateGuidance` function is not defined directly in the :literal:`.h` file, but instead in the :literal:`.cpp` file. As an example, let's consider the simplified (and still not particularly realistic) aerodynamic guidance where:
+where the :literal:`updateGuidance` function is not defined directly in the :literal:`.h` file, but instead in the :literal:`.cpp` file (below). Note the ``dynamic_pointer_cast`` in the constructor, and the check to see if the :class:`FlightConditions` object is actually of the type :class:`AtmosphericFlightConditions`.
+
+As an example for a guidance scheme, let's consider the simplified (and still not particularly realistic) aerodynamic guidance where:
 
    - Angle of attack is 35 degrees is altitude is larger than 60 km, angle of attack is 5 degrees at 30 km, and changes linearly between these two values.
    - Sideslip angle is always zero.
@@ -190,7 +231,7 @@ Using the environment models
 ****************************
 In computing your aerodynamic guidance commands, you will likely need to use a number of physical quantities from your environment, as is the case with the example above, where the altitude is used. Below, a list is given with the way in which to retrieve some variables that are typical in aerodynamic guidance:
 
-   - **Current conditions at a vehicle's location w.r.t. a central central body:** These are stored in an object of type :class:`FlightConditions` (stored in a :class:`Body` object; retrieved by using the :literal:`getFlightConditions` function). In the :class:`FlightConditions` class, you will see a number of functions called :literal:`getCurrent...`. When called from the :class:`AerodynamicGuidance` derived class, the current value of the associated quantity is returned (e.g. :literal:`getCurrentAltitude` returns altitude, :literal:`getCurrentAirspeed` returns airspeed, etc.).
+   - **Current conditions at a vehicle's location w.r.t. a central central body:** These are stored in an object of type :class:`FlightConditions`, which may be of the :class:`AtmosphericFlightConditions` derived class, as in the case above (stored in a :class:`Body` object; retrieved by using the :literal:`getFlightConditions` function). In the :class:`FlightConditions` and :class:`AtmosphericFlightConditions` class code, you will see a number of functions called :literal:`getCurrent...`. These functions are key in linking the environment with the guidance. When called from the :class:`AerodynamicGuidance` derived class, the current value of the associated quantity is returned (e.g. :literal:`getCurrentAltitude` returns altitude, :literal:`getCurrentAirspeed` returns airspeed, etc.).
 
    - **Aerodynamic coefficients:** These often play a particularly important role in the aerodynamic guidance. Whereas the other dependent variables are computed before updating the angles of attack, sideslip and bank, the aerodynamic coefficients are computed as a function of these angles. Therefore, the 'current aerodynamic coefficients' cannot yet be retrieved from the environment when updating the guidance. However, if the angles on which the aerodynamic coefficients depend have already been locally computed (in :literal:`currentAngleOfAttack_`, etc.), they may be used for determination of subsequent angles. Below is an example of aerodynamic coefficients depending on angle of attack, angle of sideslip and Mach number and the bank angle determined as a function of aerodynamic coefficients. The following can then be used inside the :literal:`updateGuidance` function:
    
@@ -198,7 +239,7 @@ In computing your aerodynamic guidance commands, you will likely need to use a n
 
         // Define aerodynamic coefficient interface/flight conditions (typically retrieved from body map; may also be a member variable)
         std::shared_ptr< aerodynamics::AerodynamicCoefficientInterface > coefficientInterface_ = ...
-        std::shared_ptr< aerodynamics::FlightConditions > flightConditions_ = ...
+        std::shared_ptr< aerodynamics::AtmosphericFlightConditions > flightConditions_ = ...
 
         // Compute angles of attack and sideslip
         currentAngleOfAttack_ = ...
@@ -272,7 +313,13 @@ In general, however, you will want to determine the control surface deflections 
                 const NamedBodyMap& bodyMap,
                 const std::string vehicleName )
         { 
-            vehicleFlightConditions_ = bodyMap.at( vehicleName )->getFlightConditions( );
+            vehicleFlightConditions_ = 
+               std::dynamic_pointer_cast< AtmosphericFlightConditions >( 
+                  bodyMap.at( vehicleName )->getFlightConditions( ) );
+            if( vehicleFlightConditions_ == nullptr )
+	    {
+   		throw std::runtime_error( "Error in FlightConditionsBasedAerodynamicGuidance, expected AtmosphericFlightConditions" );
+	    }
             vehicleSystems_ = bodyMap.at( vehicleName )->getVehicleSystems( );
         }
 
@@ -280,7 +327,7 @@ In general, however, you will want to determine the control surface deflections 
 
     private:
 
-        std::shared_ptr< FlightConditions > vehicleFlightConditions_;
+        std::shared_ptr< AtmosphericFlightConditions > vehicleFlightConditions_;
 
         std::shared_ptr< system_models::VehicleSystems > vehicleSystems_;
 
