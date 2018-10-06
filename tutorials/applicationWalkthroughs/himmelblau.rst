@@ -2,7 +2,7 @@
 
 Himmelblau Optimization
 ====================================
-The example described on this page is that of finding a minimum of the Himmelblau function. The Himmelblau function is often used to test optimization algorithms, thus it is a good start to understand the Pagmo 2 optimization library. The code for this tutorial is given here on Github, and is also located in your tudat bundle at:
+The example described on this page is that of finding a minimum of the Himmelblau function. The Himmelblau function is often used to test optimization algorithms, thus it is a good start to understand the Pagmo 2 optimization library. The code for this tutorial is given on Github, and is also located in your tudat bundle at:
 
    tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/himmelblauOptimization.cpp
 

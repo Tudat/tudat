@@ -1,5 +1,9 @@
 .. _walkthroughsPropagatorTypesComparison:
 
+The code for this tutorial is given on Github, and is also located in your tudat bundle at::
+
+   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/propagatorTypesComparison.cpp
+
 Comparison of Propagator Types
 ==============================
 
@@ -64,15 +68,19 @@ The following settings are used as default, but you can always change them by mo
 The values above are rather arbitrary. As mentioned above for the integrator settings, the choice of tolerances and time steps highly depends on the accruacy requirements and environment of you mission. 
 
 .. tip::
-   In Tudat you can also set a tolerance for each of the elements in the state vector. For instance, while using the USM7 method (see :ref:`tudatFeaturesFrameStateTransformations` for a brief introduction to these propagation coordinates) you may want to set a separate tolerance for the velocity and the quaternion elements of the state, since their dynamics are quite different. 
+   In Tudat you can also set a tolerance for each of the elements in the state vector, by using the settings :class:`RungeKuttaVariableStepSizeSettingsVectorTolerances` (only available for Runge-Kutta variable step size). For instance, while using the USM7 method (see :ref:`tudatFeaturesFrameStateTransformations` for a brief introduction to these propagation coordinates) you may want to set a separate tolerance for the velocity and the quaternion elements of the state, since their dynamics are quite different. 
 
 For the **constant step-size** method, :literal:`rungeKutta4` is the selected method. In the table above, you can also see the step-size chosen for this application. 
 
 Results and Analysis
 ~~~~~~~~~~~~~~~~~~~~
-Once you run the simulation in Tudat (select executable :literal:`application_PropagatorTypesComparison`), you can access the results by going to the folder ``SimulationOutput/PropagatorTypesComparison``, you will find a text file for each of the propagator/integrator combinations. A preliminary MATLAB file for loading and plotting the results is available in ``MatlabScripts``, under the name :literal:`propagatorTypesComparison.m`. You can use this file as a basis for your more in-depth analysis. 
+Once you run the simulation in Tudat (select executable :literal:`application_PropagatorTypesComparison`), you can access the results by going to the folder ``SimulationOutput/PropagatorTypesComparison``, you will find a text file for each of the propagator/integrator combinations. A preliminary MATLAB file for loading and plotting the results is available in ``MatlabScripts``, under the name :literal:`propagatorTypesComparison.m`. You can use this file as a basis for your more in-depth analysis. You will find more detailed descriptions of the performance of the USM propagators w.r.t. Cowell in e.g.:
+   
+   - Vittaldev, V., “The Unified State Model,” Master Thesis, Delft University of Technology, May 2010.
+   - Vittaldev, V., Mooij, E., and Naeije, M., “Unified State Model Theory and Application in Astrodynamics,” Celestial Mechanics and Dynamical Astronomy, vol. 112, no. 3, pp. 253–282, February 2012.
+   .. - Facchinelli, M., “Aerobraking Navigation, Guidance and Control,” Master Thesis, Delft University of Technology, November 2018.
 
-The only output of the MATLAB file is a plot, where the RMS error in position is plotted for each propagator and integrator, as a function of function evaluations for the variable step-size integrator and as a function of time for the constant step-size integrator. Below you see the figures that are output for when a Keplerian orbit is used, and for when the full acceleration list introduced earlier is added. 
+The only output of the MATLAB file is a plot, where the RMS error in position is plotted for each propagator and integrator, as a function of function evaluations for the variable step-size integrator and as a function of time for the constant step-size integrator. Below you see the figures that are output for when a Keplerian orbit is used, and for when the full acceleration list introduced earlier is added.
 
 .. method:: Un-perturbed Orbit
 

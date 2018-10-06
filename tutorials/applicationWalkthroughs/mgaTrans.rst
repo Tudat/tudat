@@ -2,7 +2,7 @@
 
 Multiple Gravity Assist Transfer
 =====================================
-The example described in this tutorial will cover a transfer using multiple gravity assists. The code for this tutorial is given here on Github, and is also located in your tudat bundle at:
+The example described in this tutorial will cover a transfer using multiple gravity assists. The code for this tutorial is given on Github, and is also located in your tudat bundle at:
 
    tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/mgaTransferExample.cpp
 

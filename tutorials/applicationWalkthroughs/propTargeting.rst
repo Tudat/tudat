@@ -6,7 +6,7 @@ The example described in this tutorial will cover the following problem statemen
 
    A satellite is going to be launched on an elliptical orbit with min and max altitudes respectively 180 km and 40000 km with inclination i=0 (and argument of perigee omega = 0). A fixed target is set on the same plane at an altitude of 35000 km, fixed latitude of 30 deg. What is the value of the RAAN for which the satellite achieves a minimum approach distance from the target?
 
-The code for this tutorial is given here on Github, and is also located in your tudat bundle at:
+The code for this tutorial is given on Github, and is also located in your tudat bundle at:
 
    tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/propagationTargetingExample.cpp
 

@@ -2,17 +2,17 @@
 
 Un-guided Capsule Entry
 =======================
-The example described on this page is that of Apollo on a re-entry trajectory towards the surface of Earth. The code for this tutorial is given here on Github, and is also located in your tudat bundle at::
+The example described on this page is that of Apollo on a re-entry trajectory towards the surface of Earth. The code for this tutorial is given on Github, and is also located in your tudat bundle at::
 
    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/apolloCapsuleEntry.cpp
 
 For this example, we have the following problem statement:
 
-*Given the position and velocity of the Apollo capsule at a certain point in time with respect to the Earth, what will its position and velocity be once it reaches an altitude of 25 km over the surface of Earth?*
+   *Given the position and velocity of the Apollo capsule at a certain point in time with respect to the Earth, what will its position and velocity be once it reaches an altitude of 25 km over the surface of Earth?*
 
 .. warning:: The example described in this page assumes that the user has read the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite`. This page only describes the differences with respect to such example, so please go back before proceeding.
 
-Create the vehicle
+Create the Vehicle
 ~~~~~~~~~~~~~~~~~~
 First, the vehicle is created by placing an :literal:`"Apollo"` entry vehicle in the :literal:`bodyMap`, as shown below:
 
@@ -40,7 +40,7 @@ In this example a pre-made interface is used to define the aerodynamic coefficie
 
 .. tip:: If you want to include a different vehicle, you will have to define a new :class:`AerodynamicCoefficientInterface` and implement your own custom aerodynamic database. Please go to :ref:`tudatFeaturesAerodynamicGuidance` for further details.
 
-Set up the acceleration models
+Set Up the Acceleration Models
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 A major difference with respect to the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` is the use of a spherical-harmonic gravity model and the presence of an aerodynamic force on the vehicle. The spherical-harmonic gravity model is selected by the derived-class :class:`SphericalHarmonicAccelerationSettings` with degree and order as input parameters. Both acceleration models are added to the :literal:`accelerationMap` as follows:
 
@@ -50,9 +50,9 @@ A major difference with respect to the :ref:`walkthroughsUnperturbedEarthOrbitin
     std::map< std::string, std::vector< std::shared_ptr< AccelerationSettings > > > accelerationsOfApollo;
     accelerationsOfApollo[ "Earth" ].push_back( std::make_shared< SphericalHarmonicAccelerationSettings >( 4, 0 ) );
     accelerationsOfApollo[ "Earth" ].push_back( std::make_shared< AccelerationSettings >( aerodynamic ) );
-    accelerationMap[  "Apollo" ] = accelerationsOfApollo;
+    accelerationMap[ "Apollo" ] = accelerationsOfApollo;
 
-A crucial step in re-entry modelling is the definition of a :class:`AerodynamicGuidance` model. Controlling the orientation of the vehicle during atmospheric flight plays an important role in the shape of the trajectory as well as on the magnitude of the aerodynamic and thermal loads. In this example, a simple fixed-angle aerodynamic guidance model is used. This is implemented using a lambda expression (explained in detail :ref:`here <externalBoostExamplesFunction>`). In short this function always outputs the value of :literal:`constantAngleOfAttack` which in turn sets the orientation angles of the :literal:`"Apollo"` body:
+A crucial step in re-entry modelling is the definition of an :class:`AerodynamicGuidance` model. Controlling the orientation of the vehicle during atmospheric flight plays an important role in the shape of the trajectory as well as on the magnitude of the aerodynamic and thermal loads. In this example, a simple fixed-angle aerodynamic guidance model is used. This is implemented using a lambda expression (explained in detail :ref:`here <externalBoostExamplesFunction>`). In short this function always outputs the value of :literal:`constantAngleOfAttack`, which in turn sets the orientation angles of the :literal:`"Apollo"` body:
 
 .. code-block:: cpp
 
@@ -63,18 +63,18 @@ A crucial step in re-entry modelling is the definition of a :class:`AerodynamicG
 
 .. tip:: To view the available options for aerodynamic guidance check out the :ref:`tudatFeaturesAerodynamicGuidance` section. 
 
-Set up the propagation settings
+Set Up the Propagation Settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In most re-entry studies, it is convenient to define the entry conditions using a spherical state. The following entry state is used:
 
-- Altitude: 120 km
-- Latitude: 0 deg
-- Longitude: 68.75 deg 
-- Inertial speed: 7.7 km/s
-- Flight-path angle: -0.9 deg
-- Heading angle: 34.37 deg
+   - Altitude: 120 km
+   - Latitude: 0 deg
+   - Longitude: 68.75 deg 
+   - Inertial speed: 7.7 km/s
+   - Flight-path angle: -0.9 deg
+   - Heading angle: 34.37 deg
 
-Such state must is defined and converted to Cartesian state variables as follows:
+Such state must be defined and converted to Cartesian state variables as follows:
 
 .. code-block:: cpp
 
@@ -96,16 +96,25 @@ Such state must is defined and converted to Cartesian state variables as follows
     Eigen::Vector6d systemInitialState = convertSphericalOrbitalToCartesianState(
                 apolloSphericalEntryState );
 
-.. note:: Note that speed defined in the :literal:`speedIndex` makes reference to the **inertial** speed of the vehicle. Furthermore, the :literal:`latitudeIndex` makes reference to the **geocentric** latitude.
+Finally, the state needs to be converted to inertial frame. As it is customary, in fact, the spherical state above (and thus also the converted Cartesian state), is defined in the rotating frame centered at the Earth center (ECEF). However, as mentioned in :ref:`walkthroughsUnperturbedEarthOrbitingSatellite`, in Tudat propagation can only occurr in inertial frames. Hence, the following lines are included:
 
-Create a list of dependent variables to save
+.. code-block:: cpp
+   
+    // Convert the state to the global (inertial) frame.
+    std::shared_ptr< ephemerides::RotationalEphemeris > earthRotationalEphemeris =
+            bodyMap.at( "Earth" )->getRotationalEphemeris( );
+    systemInitialState = transformStateToGlobalFrame( systemInitialState, simulationStartEpoch, earthRotationalEphemeris );
+
+.. note:: Note that the :literal:`latitudeIndex` of :literal:`apolloSphericalEntryState` makes reference to the **geocentric** latitude.
+
+Create a List of Dependent Variables to Save
 ********************************************
 In this example, a number of dependent variables are saved to plot the trajectory of Apollo after re-entry. The following dependent variables are saved:
 
-- Mach number
-- Altitude
-- Aerodynamic acceleration norm
-- Aerodynamic force coefficients (CD, CS, CL)
+   - Mach number
+   - Altitude
+   - Aerodynamic acceleration norm
+   - Aerodynamic force coefficients (:math:`C_D`, :math:`C_S`, :math:`C_L`)
 
 First, a :literal:`dependentVariablesList` needs to be created, which will list all the variables to save:
 
@@ -118,45 +127,40 @@ Next, the list is populated with the desired dependent variables. Please go to :
 
 .. code-block:: cpp
 
-    dependentVariablesList.push_back(
-                std::make_shared< SingleDependentVariableSaveSettings >( mach_number_dependent_variable, "Apollo" ) );
-    dependentVariablesList.push_back(
-                std::make_shared< SingleDependentVariableSaveSettings >(
-                    altitude_dependent_variable, "Apollo", "Earth" ) );
-    dependentVariablesList.push_back(
-                std::make_shared< SingleAccelerationDependentVariableSaveSettings >(
-                    aerodynamic, "Apollo", "Earth", 1 ) );
-    dependentVariablesList.push_back(
-                std::make_shared< SingleDependentVariableSaveSettings >(
-                    aerodynamic_force_coefficients_dependent_variable, "Apollo" ) );
+    dependentVariablesList.push_back( std::make_shared< SingleDependentVariableSaveSettings >(
+                                          mach_number_dependent_variable, "Apollo" ) );
+    dependentVariablesList.push_back( std::make_shared< SingleDependentVariableSaveSettings >(
+                                          altitude_dependent_variable, "Apollo", "Earth" ) );
+    dependentVariablesList.push_back( std::make_shared< SingleAccelerationDependentVariableSaveSettings >(
+                                          aerodynamic, "Apollo", "Earth", 1 ) );
+    dependentVariablesList.push_back( std::make_shared< SingleDependentVariableSaveSettings >(
+                                          aerodynamic_force_coefficients_dependent_variable, "Apollo" ) );
 
     // Create object with list of dependent variables
     std::shared_ptr< DependentVariableSaveSettings > dependentVariablesToSave =
             std::make_shared< DependentVariableSaveSettings >( dependentVariablesList );
 
-Define the termination conditions
+.. tip:: If you do not want the console output generated by :class:`DependentVariableSaveSettings` to show, you can simply set the second input argument as :literal:`false`.
+
+Define the Termination Conditions
 *********************************
-Finally, the termination conditions are established. The termination settings are stored in the :class:`PropagationTerminationSettings` object. In this example, the re-entry trajectory is propagated until Apollo's altitude drops below 25 km. The boolean in the constructor of the derived-class :class:`PropagationDependentVariableTerminationSettings` indicates whether the simulation is terminated when :literal:`terminationDependentVariable` goes below the supplied value (true) or above (false):
+Finally, the termination conditions are established. The termination settings are stored in the :class:`PropagationTerminationSettings` object. In this example, the re-entry trajectory is propagated until Apollo's altitude drops below 25 km. The boolean in the constructor of the derived-class :class:`PropagationDependentVariableTerminationSettings` indicates whether the simulation is terminated when :literal:`terminationDependentVariable` goes below the supplied value (:literal:`true`) or above (:literal:`false`):
 
 .. code-block:: cpp
 
     // Define termination conditions
     std::shared_ptr< SingleDependentVariableSaveSettings > terminationDependentVariable =
-            std::make_shared< SingleDependentVariableSaveSettings >(
-                altitude_dependent_variable, "Apollo", "Earth" );
+            std::make_shared< SingleDependentVariableSaveSettings >( altitude_dependent_variable, "Apollo", "Earth" );
     std::shared_ptr< PropagationTerminationSettings > terminationSettings =
-            std::make_shared< PropagationDependentVariableTerminationSettings >(
-                terminationDependentVariable, 25.0E3, true );
+            std::make_shared< PropagationDependentVariableTerminationSettings >( terminationDependentVariable, 25.0E3, true );
 
 .. tip:: Please go to :ref:`tudatFeaturesPropagatorSettingsTermination` for a detailed description of the available termination conditions.
 
 Results
 ~~~~~~~
 
-Below the history of some of the saved parameters is shown. One can see the capsule skipping several times before it's final descent into the atmosphere until reaching 25km altitude. The dependent variable history can be obtained in Tudat from the :literal:`getDependentVariableHistory` function inside the :class:`DynamicsSimulator` class. The resulting :literal:`std::map` can be saved as discussed in :ref:`tudatFeaturesInputOutput`. 
+Below the history of some of the saved parameters is shown. One can see the capsule skipping several times before its final descent into the atmosphere, where it reaches 25 km altitude. The dependent variable history can be obtained in Tudat from the :literal:`getDependentVariableHistory` function of the :class:`DynamicsSimulator` class. The resulting :literal:`std::map` can be saved as discussed in :ref:`tudatFeaturesInputOutput`. 
 
 .. figure:: images/apolloResults.png
 
 .. tip:: Open the figure in a new tab for more detail.
-
-
