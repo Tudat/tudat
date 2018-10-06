@@ -163,7 +163,7 @@ In typical basic simulation studies, time-uncorrelated white noise is used. To e
 
    // Create noise function
    std::function< double( ) > inputFreeNoiseFunction = createBoostContinuousRandomVariableGeneratorFunction(
-       normal_boost_distribution, boost::assign::list_of( meanValue )( standardDeviation ), 0.0 );
+       normal_boost_distribution, { meanValue, standardDeviation }, 0.0 );
    std::function< double( const double ) > noiseFunction =
        std::bind( &utilities::evaluateFunctionWithoutInputArgumentDependency< double, const double >,
           inputFreeNoiseFunction, std::placeholders::_1 );

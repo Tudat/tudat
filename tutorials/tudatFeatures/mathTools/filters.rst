@@ -23,7 +23,7 @@ Linear Kalman Filter
 
    .. code-block:: cpp
 
-      boost::shared_pointer< LinearKalmanFilter< IndependentVariableType, DependentVariableType > > linearFilter = 
+      std::shared_ptr< LinearKalmanFilter< IndependentVariableType, DependentVariableType > > linearFilter = 
          std::make_shared< LinearKalmanFilter< IndependentVariableType, DependentVariableType > >(
                      stateTransitionMatrix,
                      controlMatrix,

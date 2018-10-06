@@ -157,7 +157,7 @@ Where :literal:`orderedBodySettings` is an ordered map of all the bodies. This c
 	    {
 		// Check whether settings for atmosphere are consistent with its type
 		std::shared_ptr< TabulatedAtmosphereSettings > tabulatedAtmosphereSettings =
-		        boost::dynamic_pointer_cast< TabulatedAtmosphereSettings >( atmosphereSettings );
+		        std::dynamic_pointer_cast< TabulatedAtmosphereSettings >( atmosphereSettings );
 		if( tabulatedAtmosphereSettings == NULL )
 		{
 		    throw std::runtime_error(

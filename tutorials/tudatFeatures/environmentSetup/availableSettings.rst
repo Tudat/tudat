@@ -105,7 +105,7 @@ Atmosphere model
    
       bodySettings[ "Earth" ]->atmosphereSettings = std::make_shared< CustomWindModelSettings >(  windFunction )
    
-   where ``windFunction`` is a ``std::function`` with inputs; altitude, longitude, latitude and time (for more details about boost: :ref:`externalBoost`).
+   where ``windFunction`` is a ``std::function`` with inputs; altitude, longitude, latitude and time.
 
 Ephemeris model
 ****************  
@@ -208,7 +208,7 @@ Ephemeris model
 
 .. class:: CustomEphemerisSettings
 
-   Allows user to provide arbitrary boost function as ephemeris model. 
+   Allows user to provide arbitrary function as ephemeris model. 
 
    .. code-block:: cpp
 
@@ -350,6 +350,8 @@ Body shape model
        double bodyFlattening = 1.0 / 300.0;
        bodySettings[ "Earth" ]->shapeModelSettings = std::make_shared< OblateSphericalBodyShapeSettings >( bodyRadius, bodyFlattening ); 
 
+.. _radiationPressureModelOptions:
+
 Radiation pressure interface
 ****************************
 
@@ -379,8 +381,7 @@ Radiation pressure interface
 
    .. note:: Occultations by multiple bodies are not yet supported. Please contact the Tudat suppport team if you wish to use multiple occultations.
 
-   .. _aerodynamicCoefficientOptions:
-
+.. _aerodynamicCoefficientOptions:
 
 Aerodynamic coefficient interface
 *********************************

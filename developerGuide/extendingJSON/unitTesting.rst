@@ -32,7 +32,7 @@ The first point has little relevance, since classes that cannot be represented a
   {
       ...
       std::shared_ptr< OblateSphericalBodyShapeSettings > oblateSphericalBodyShapeSettings =
-        boost::dynamic_pointer_cast< OblateSphericalBodyShapeSettings >( bodyShapeSettings );
+        std::dynamic_pointer_cast< OblateSphericalBodyShapeSettings >( bodyShapeSettings );
       assertNonNullPointer( oblateSphericalBodyShapeSettings );
       
       jsonObject[ K::equatorialRadius ] = oblateSphericalBodyShapeSettings->getEquatorialRadius( );

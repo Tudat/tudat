@@ -69,7 +69,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
             By default, the :literal:`cowell` propagator is used. Moreover, you should keep in mind that this option only changes the coordinates for propagation, but the acceleration model is still computed with Cartesian coordinates, i.e., the conventional coordinates.
 
-               .. tip:: You can find more information about the difference between *conventional* and *propagated* coordinates in :ref:`tudatFeaturesPropagatorSettingsCoordinates`.
+            .. tip:: You can find more information about the difference between *conventional* and *propagated* coordinates in :ref:`tudatFeaturesPropagatorSettingsCoordinates`.
 
         - :literal:`dependentVariablesToSave`
 
@@ -144,7 +144,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
       By default, the :literal:`quaternions` propagator is used. Moreover, you should keep in mind that this option only changes the coordinates for propagation, but the acceleration model is still computed with quaternions, i.e., the conventional coordinates.
 
-         .. tip:: You can find more information about the difference between *conventional* and *propagated* coordinates in :ref:`tudatFeaturesPropagatorSettingsCoordinates`.
+      .. tip:: You can find more information about the difference between *conventional* and *propagated* coordinates in :ref:`tudatFeaturesPropagatorSettingsCoordinates`.
 
    - :literal:`dependentVariablesToSave`
 

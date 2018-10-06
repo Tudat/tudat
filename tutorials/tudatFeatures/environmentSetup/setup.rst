@@ -100,10 +100,10 @@ The following shows how to manually declare a :class:`NamedBodyMap`, and then c
 .. code-block:: cpp
 
     NamedBodyMap bodyMap;
-    bodyMap[ "Earth" ] = boost::make_shared< Body >( );
-    bodyMap[ "Moon" ] = boost::make_shared< Body >( );
-    bodyMap[ "Sun" ] = boost::make_shared< Body >( );
-    bodyMap[ "Apollo" ] = boost::make_shared< Body >( );
+    bodyMap[ "Earth" ] = std::make_shared< Body >( );
+    bodyMap[ "Moon" ] = std::make_shared< Body >( );
+    bodyMap[ "Sun" ] = std::make_shared< Body >( );
+    bodyMap[ "Apollo" ] = std::make_shared< Body >( );
 
 This creates four body objects (representing three celestial bodies and one vehicle; Tudat does not distinguish between the two). However, these bodies do not yet have any physical properties, the :literal:`bodyMap` created above now only indicates the existence of these four bodies.
 
@@ -113,8 +113,8 @@ For instance, to manually create and set an ephemeris (from Spice w.r.t. the bar
 
 .. code-block:: cpp
 
-    bodyMap[ "Earth" ]->setEphemeris( boost::make_shared< SpiceEphemeris >( "Earth", "SSB", false, false, true, "J2000" ) ); 
-    bodyMap[ "Earth" ]->setGravityFieldModel( boost::make_shared< GravityFieldModel >( 3.986004418E14 ) );  
+    bodyMap[ "Earth" ]->setEphemeris( std::make_shared< SpiceEphemeris >( "Earth", "SSB", false, false, true, "J2000" ) ); 
+    bodyMap[ "Earth" ]->setGravityFieldModel( std::make_shared< GravityFieldModel >( 3.986004418E14 ) );  
 
 This calls the constructors of the :class:`SpiceEphemeris` and :class:`GravityFieldModel` classes, and assigns the objects that are constructed to the "Earth" entry of the ``bodyMap``.
 
@@ -124,5 +124,5 @@ Most of the environment models are valid for any time, but there is a key except
 
 .. code-block:: cpp
 
-    std::map< std::string, boost::shared_ptr< BodySettings > > bodySettings = getDefaultBodySettings( bodiesToCreate )
+    std::map< std::string, std::shared_ptr< BodySettings > > bodySettings = getDefaultBodySettings( bodiesToCreate )
     NamedBodyMap bodyMap = createBodies( bodySettings );

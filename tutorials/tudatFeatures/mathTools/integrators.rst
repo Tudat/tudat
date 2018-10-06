@@ -23,9 +23,9 @@ All numerical integrators presented in this page follow the same framework, wher
                         intervalStart,
                         initialState );
 
-Although in this case :literal:`NumericalIntegratorXdPointer` is a *typedef* for a boost :literal:`shared_ptr`, the constructor can be created explicitly. To initialize an Euler integrator, the following arguments need to be specified:
+Although in this case :literal:`NumericalIntegratorXdPointer` is a *typedef* for a :literal:`std::shared_ptr`, the constructor can be created explicitly. To initialize an Euler integrator, the following arguments need to be specified:
 
-- :literal:`EulerIntegratorXd` is the input argument for boost's :literal:`make_shared`, which defines the derived integrator class that we want to use.
+- :literal:`EulerIntegratorXd` is the input argument for :literal:`std::make_shared`, which defines the derived integrator class that we want to use.
 - :literal:`stateDerivativeFunction` passes the state derivative function that defines the differential equation to be integrated. See below for more details.
 - :literal:`intervalStart` provides the start of the integration interval and must have the type of the independent variable.
 - :literal:`initialState` provides the initial state and must have the type of the dependent variable.
@@ -141,7 +141,7 @@ The Runge-Kutta variable step-size integrator involves a number of methods where
 
 where the following arguments are necessary:
 
-- :literal:`RungeKuttaVariableStepSizeIntegratorXd` is the input argument for boost's :literal:`make_shared`, which defines the derived integrator class that we want to use.
+- :literal:`RungeKuttaVariableStepSizeIntegratorXd` is the input argument for :literal:`std::make_shared`, which defines the derived integrator class that we want to use.
 - :literal:`rungeKuttaCoefficients` provides the set of coefficients that define the particular variable step-size method being used. A number of Runge-Kutta coefficient sets are available in Tudat:
 
     .. code-block:: cpp

@@ -10,23 +10,29 @@ Observation Types
 
 Tudat supports a diverse set of observation types, which are defined in the :literal:`ObservableType` enum. Below, we provide a list of observable types, with a brief description, as well as the set of link end types that they require:
 
-* :class:`one_way_range` Range (in meters) between two link ends. Observable has size 1. Requires :literal:`transmitter` and :literal:`receiver` link ends.
-* :class:`angular_position` Right ascension and declination (in radians) of one link end (the transmitter) as observed by other link end (the receiver) as measured in the base frame in which the states of the link ends are defined. Observable has size 2. Requires :literal:`transmitter` and :literal:`receiver` link ends.
-* :class:`position_observable` Three-dimensional position of link end (in m) as measured in base the frame in which the state of the link end is defined. Observable has size 3 (*x*, *y* and *z* components). Requires :literal:`observed_body` link end, which directly defines the body of which an observation is taken. Note that this observable is not realized in practice, but is typically used for testing or analysis purposes. It does not use a light-time calculation
-* :class:`one_way_doppler` Doppler effect of a signal (dimensionless) between two link ends. Observable has size 1. The value approximately requal to the range-rate between the link ends, divided by *c*. The full model one-way Doppler observable :math:`h_{D(1),AB}` from link end *A* to link end *B* is computed from: 
- 
-   .. math::
-      h_{D(1),AB}=\frac{d\tau_{A}}{dt_{A}}\frac{t_{A}}{dt_{B}}\frac{dt_{B}}{d\tau_{B}}-1
-      
-   where :math:`t` and :math:`\tau` denote coordinate anr proper time. The one-way Doppler requires :literal:`transmitter` and :literal:`receiver` link ends.
-* :class:`two_way_doppler` The combined effect from two one-way Doppler effects: one from link end :math:`A` to link end  :math:`B`, and one from :math:`B` to :math:`C`, computed as:  
- 
-   .. math::
-      h_{D(2),ABC}=(h_{D(1),AB}+1)(h_{D(1),BC}+1)-1
-      
-   The two-way Doppler requires :literal:`transmitter`, :literal:`reflector1` and :literal:`receiver` link ends (:math:`A`, :math:`B` and :math:`C` in the above example).
-* :class:`one_way_differenced_range` Doppler observable as it is typically obtained in interplanetary tracking in so-called 'closed-loop' mode (in m/s) between two link ends. Observable has size 1. The value is computed from the averaged range-rate over some integration time (see below). Requires :literal:`transmitter` and :literal:`receiver` link ends.
-* :class:`n_way_range` Accumulated range (in meters) over any number of signal paths, may be used for two-way range (as in SLR or deep space tracking), as well as more exotic situations where more than 2 signal paths are used in generating the observable (as was the case for, for instance, the SELENE mission) Observable has size 1. The value is computed accumulating the light-time (multiplied by *c*) with any retransmission delays that the user defines (see below) Requires :literal:`transmitter`, :literal:`receiver`, as well as :literal:`reflector1`, :literal:`reflector2` ... :literal:`reflectorX` for X+1 signal paths (when only a :literal:`transmitter` and :literal:`receiver` are defined the observation is identical to a :literal:`one_way_range`)
+   * :class:`one_way_range` Range (in meters) between two link ends. Observable has size 1. Requires :literal:`transmitter` and :literal:`receiver` link ends.
+
+   * :class:`angular_position` Right ascension and declination (in radians) of one link end (the transmitter) as observed by other link end (the receiver) as measured in the base frame in which the states of the link ends are defined. Observable has size 2. Requires :literal:`transmitter` and :literal:`receiver` link ends.
+
+   * :class:`position_observable` Three-dimensional position of link end (in m) as measured in base the frame in which the state of the link end is defined. Observable has size 3 (*x*, *y* and *z* components). Requires :literal:`observed_body` link end, which directly defines the body of which an observation is taken. Note that this observable is not realized in practice, but is typically used for testing or analysis purposes. It does not use a light-time calculation.
+
+   * :class:`one_way_doppler` Doppler effect of a signal (dimensionless) between two link ends. Observable has size 1. The value approximately requal to the range-rate between the link ends, divided by *c*. The full model one-way Doppler observable :math:`h_{D(1),AB}` from link end *A* to link end *B* is computed from: 
+    
+      .. math::
+         h_{D(1),AB}=\frac{d\tau_{A}}{dt_{A}}\frac{t_{A}}{dt_{B}}\frac{dt_{B}}{d\tau_{B}}-1
+         
+      where :math:`t` and :math:`\tau` denote coordinate anr proper time. The one-way Doppler requires :literal:`transmitter` and :literal:`receiver` link ends.
+
+   * :class:`two_way_doppler` The combined effect from two one-way Doppler effects: one from link end :math:`A` to link end  :math:`B`, and one from :math:`B` to :math:`C`, computed as:  
+    
+      .. math::
+         h_{D(2),ABC}=(h_{D(1),AB}+1)(h_{D(1),BC}+1)-1
+         
+      The two-way Doppler requires :literal:`transmitter`, :literal:`reflector1` and :literal:`receiver` link ends (:math:`A`, :math:`B` and :math:`C` in the above example).
+
+   * :class:`one_way_differenced_range` Doppler observable as it is typically obtained in interplanetary tracking in so-called 'closed-loop' mode (in m/s) between two link ends. Observable has size 1. The value is computed from the averaged range-rate over some integration time (see below). Requires :literal:`transmitter` and :literal:`receiver` link ends.
+
+   * :class:`n_way_range` Accumulated range (in meters) over any number of signal paths, may be used for two-way range (as in SLR or deep space tracking), as well as more exotic situations where more than 2 signal paths are used in generating the observable (as was the case for, for instance, the SELENE mission) Observable has size 1. The value is computed accumulating the light-time (multiplied by *c*) with any retransmission delays that the user defines (see below) Requires :literal:`transmitter`, :literal:`receiver`, as well as :literal:`reflector1`, :literal:`reflector2` ... :literal:`reflectorX` for X+1 signal paths (when only a :literal:`transmitter` and :literal:`receiver` are defined the observation is identical to a :literal:`one_way_range`).
 
 .. _observationSettings:
 
@@ -84,7 +90,6 @@ and:
 may be used as well to create an observation model without light-time corrections or biases (in the case of the former) and no biases (in the case of the latter).
 
 Additionally, a second constructor is provided that takes a single light-time correction setting, instead of a list, as its second argument. So, you may substitute the input of type :literal:`std::vector< std::shared_ptr< LightTimeCorrectionSettings > >` by an input of type :literal:`std::shared_ptr< LightTimeCorrectionSettings >`, in which case you can set only a single light-time correction. 
-
 
 .. class:: OneWayDifferencedRangeRateObservationSettings
 
@@ -217,8 +222,6 @@ As an example, a one-way Doppler model, where the Earth's mass is used to pertur
                 std::vector< std::shared_ptr< LightTimeCorrectionSettings > >, transmitterProperTimeRateSettings, receiverProperTimeRateSettings );
                 
 For a case where no light-time corrections, and no observation bias, is used
-                               
-
 
 .. _lightTimeCorrections:
 
@@ -260,27 +263,27 @@ In Tudat, the following types of biases are currently incorporated, where :math:
 
    * Relative bias :math:`K_{r}`, which influences the observable as:
 
-   .. math::
-      \tilde{h}=h(1+K_{r})
-      
+      .. math::
+         \tilde{h}=h(1+K_{r})
+         
       For an observable with size greater than 1, :math:`K_{r}` is a vector and the multiplication is component-wise.
 
    * Absolute bias :math:`K_{a}`, which influences the observable as: 
-   
-   .. math::
-      \tilde{h}=h+K_{a}
+      
+      .. math::
+         \tilde{h}=h+K_{a}
       
       For an observable with size greater than 1, :math:`K_{a}` is a vector and the multiplication is component-wise.
 
    * A combined bias, which is computed from any number of the above bias types combined. Note that each contribution of the combined bias is computed from the unbiased observable, so when applying both a relative and absolute bias, we get:
 
-   .. math::
-      \tilde{h}=h+K_{a}+hK_{r}
+      .. math::
+         \tilde{h}=h+K_{a}+hK_{r}
 
       And, crucially:
 
-   .. math::
-      \tilde{h}\neq (h+K_{a})(1+K_{r})
+      .. math::
+         \tilde{h}\neq (h+K_{a})(1+K_{r})
 
 As discussed above, the biases are created by passing a :class:`ObservationBiasSettings` (or derived class) object to the :class:`ObservationSettings` (or derived class)  constructor. Each bias type has a dedicated derived class of :class:`ObservationBiasSettings`, which are defined as follows:
 

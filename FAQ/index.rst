@@ -36,7 +36,7 @@ This page will give some answers to frequently asked questions about Tudat. If y
 	   A: The dynamics Simulator class has a function: :literal:`getPropagationTerminationReason`, which allows you to retrieve a pointer to the :literal:`PropagationTerminationDetails`. This object has a function called :literal:`getPropagationTerminationReason`, which returns the reason for termination of the propagation.
 
 	- *Q: I have my own custom aerodynamic coefficient file/function that does not work with any of the given options in Tudat, how can I implement this?*
-	   A: Tudat has a :literal:`customAerodynamicCoefficientInterface` which can be used for this purpose (see the class definition for more information on how to use this). You do need to make a :literal:`boost::function` for your coefficients to be able to use it.
+	   A: Tudat has a :literal:`customAerodynamicCoefficientInterface` which can be used for this purpose (see the class definition for more information on how to use this). You do need to make a :literal:`std::function` for your coefficients to be able to use it.
 
 	- *Q: When making a Pagmo problem with a propagation step in it, the optimization stops after a while due to high RAM usage, how can I fix this?*
 	   A: Put some variables (especially the creation of the :literal:`bodyMap`) in the constructor of the problem. This will make sure that some vectors will not grow unnecesarily large after several generations.

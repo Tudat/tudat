@@ -1,7 +1,7 @@
 .. _tudatFeaturesPropagatorSettingsCoordinates:
 
 Propagator Settings: Conventional vs. Propagated Coordinates
-=============================================================
+============================================================
 
 In the description of some of the objects in this part of the wiki about the simulation set-up, you may have noticed the use of two names to describe the states of an object. These two names are *conventional* and *propagated*, and they describe two slightly different concepts. In this part of the Wiki, you will get to know in what they differ and how that may affect your application. 
 
@@ -45,6 +45,8 @@ Since the conventional coordinates are used to update the environment and accele
 .. note:: The fact that using a different set of propagated coordinates may lead to a longer computation time is not always true. As a matter of fact, the default translational propagator (i.e., :literal:`cowell`) is considerably slower and less accurate than other propagators, in certain situations. Check out :ref:`walkthroughsPropagatorTypesComparison` to get an idea of the difference in performance among the various translational propagators offered by Tudat.
 
 Another fact to consider, is that sometimes there may be a difference between the size of the conventional and propagates states. For instance, a Cartesian state is expressed with 6 elements, but the USM7 state with 7. This may lead to some confusion when extracting the results, so keep this in mind. In the next section, you can find the size of each propagated type used in Tudat.
+
+.. _tudatFeaturesPropagatorSettingsPropagatedCoordinates:
 
 Propagated Coordinates in Tudat
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

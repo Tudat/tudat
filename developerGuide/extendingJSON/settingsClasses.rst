@@ -41,7 +41,6 @@ Then, if class :class:`T` is convertible to/from :class:`nlohmann::json`, :liter
   
 Thus, given that the settings classes used throughout Tudat are always used as shared pointers, rather than providing :literal:`to_json` and :literal:`from_json` functions for these classes, these functions have been written for shared pointers of these classes. Before introducing the best-practices to be followed when writing these functions, the way in which the keys to be used in these functions are defined in the JSON Interface library is described.
 
-
 Definition of keys
 ~~~~~~~~~~~~~~~~~~
 
@@ -361,7 +360,7 @@ An example of a :literal:`to_json` function is provided below:
       case simple_rotation_model:
       {
           std::shared_ptr< SimpleRotationModelSettings > simpleRotationModelSettings =
-                  boost::dynamic_pointer_cast< SimpleRotationModelSettings >( rotationModelSettings );
+                  std::dynamic_pointer_cast< SimpleRotationModelSettings >( rotationModelSettings );
           assertNonNullPointer( simpleRotationModelSettings );
           jsonObject[ K::initialOrientation ] = simpleRotationModelSettings->getInitialOrientation( );
           jsonObject[ K::initialTime ] = simpleRotationModelSettings->getInitialTime( );
