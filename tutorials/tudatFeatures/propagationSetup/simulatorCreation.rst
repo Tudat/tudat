@@ -1,12 +1,13 @@
 .. _tudatFeaturesSimulatorCreation:
 
-Create a Dynamics Simulator Object
-==================================
-At the moment, the following :class:`DynamicsSimulator` options are available or under development in Tudat:
+Performing State Propagation
+============================
 
-- Single-arc dynamics simulator.
-- Multi-arc dynamics simulator.
-- Hybrid dynamics simulator (under development).
+Propagating the dynamics, using the settings discussed in previous wiki pages, is done by using a :class:`DynamicsSimulator` object. We have several different derived classes of :class:`DynamicsSimulator` for different types of propagation. The following are available or under development in Tudat:
+
+- Single-arc dynamics simulator, by using :class:`SingleArcDynamicsSimulator`. For most Tudat applications, this will be the preferred option (if you're not sure which one you need, it's probably this one).
+- Multi-arc dynamics simulator, by using :class:`MultiArcDynamicsSimulator`.
+- Hybrid dynamics simulator, by using :class:`HybridArcDynamicsSimulator` (under development).
 
 These are implemented in derived classes and are discussed below. 
 
@@ -24,14 +25,6 @@ These are implemented in derived classes and are discussed below.
 
    where:
 
-   - :literal:`StateScalarType`
-
-      Template argument used to set the precision of the state, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal:`long double`. 
-
-   - :literal:`TimeType`
-
-      Template argument used to set the precision of the time, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal`long double`. 
-
    - :literal:`bodyMap`
 
       :class:`NamedBodyMap` the map containing al the objects of type :class:`Body` used in the simulation.
@@ -42,7 +35,15 @@ These are implemented in derived classes and are discussed below.
 
    - :literal:`propagatorSettings`
 
-      :class:`PropagatorSettings` contains the settings that defines how the orbit is propagated, as described in :ref:`tudatFeaturesPropagatorSettings`.
+      :class:`SingleArcPropagatorSettings` contains the settings that defines how the orbit is propagated, as described in :ref:`tudatFeaturesPropagatorSettings`.
+
+   - :literal:`StateScalarType`
+
+      Template argument used to set the precision of the state, :literal:`double` by default. For some application where a high precision is required this can be changed to e.g. :literal:`long double` (see :ref:`tudatFeaturesTimeStateTemplates`). 
+
+   - :literal:`TimeType`
+
+      Template argument used to set the precision of the time, :literal:`double` by default. For some application where a high precision is required this can be changed to e.g. :class:`Time` (see :ref:`tudatFeaturesTimeStateTemplates`). 
 
 .. class:: MultiArcDynamicsSimulator
    
@@ -50,13 +51,29 @@ These are implemented in derived classes and are discussed below.
 
    .. code-block:: cpp
    
-    MultiArcDynamicsSimulator( bodyMap, integratorSettings, propagatorSettings, arcStartTimes )
+    MultiArcDynamicsSimulator( bodyMap, integratorSettings, propagatorSettings, arcStartTimes );
 
    where:
 
+ - :literal:`propagatorSettings`
+
+      :class:`MultiArcPropagatorSettings`, contains the settings that defines how the orbit is propagated, as described in :ref:`tudatFeaturesPropagatorSettings`. Note that the propagator settings may be identical, or different, per arc (depending on the contents of the settings object).
+
    - :literal:`arcStartTimes`
 
-      :literal:`std::vector< double >` containing the times at which the separate arcs start.
+      :literal:`std::vector< double >` containing the times at which the separate arcs start. Note: there is no requirement for the arcs to be contiguous and/or overlapping.
+
+The following, alternative, constructor allows you to specify different integrator settings per arc:
+
+    .. code-block:: cpp
+   
+      MultiArcDynamicsSimulator( bodyMap, integratorSettingsList, propagatorSettings, arcStartTimes );
+
+  
+   - :literal:`integratorSettingsList`
+
+      :class:`std::vector< std::shared_ptr< IntegratorSettings > >` is the list (same size as number of arcs) with the settings of the integrator used, per arc.
+
 
 .. class:: HybridDynamicsSimulator
 

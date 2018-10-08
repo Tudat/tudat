@@ -1,7 +1,9 @@
 .. _tudatFeaturesFrameworkAccelerations:
 
-Implementation Framework of the Acceleration Settings
-=====================================================
+Acceleration Model Set-up
+=========================
+
+Below is a schemaric overview of the various acceleration options in Tudat, and the top-level architecture for how to set up acceleration models.
 
 Acceleration settings
 ~~~~~~~~~~~~~~~~~~~~~
@@ -15,7 +17,8 @@ The settings for accelerations are defined and stored by the user in a :class:`S
 
          std::map< std::string, std::map< std::string, std::vector< boost::shared_ptr< AccelerationSettings > > > >
 
-   This is a double map (with twice a string as a key). The two levels correspond to the names of bodies undergoing an acceleration (first key) , and those for bodies exerting an acceleration (second key). This allows any number of bodies to be propagated, undergoing any number (and type) of accelerations from any number of bodies.
+   This is a double map (with twice a string as a key). The two levels correspond to the names of bodies undergoing an acceleration (first key) , and those for bodies exerting an acceleration (second key). This allows any number of bodies to be propagated, undergoing any number (and type) of accelerations from any number of bodies. In this manner, settings for each required acceleration model are stored in an object of type :class:`AccelerationSettings`.
+ 
 For a given environment, most acceleration models are completely defined by:
 
     - Type of acceleration model (a list is provided in the :class:`AvailableAcceleration` enum in ``Tudat/Astrodynamics/BasicAstrodynamics/accelerationModelTypes.h``).
@@ -32,7 +35,108 @@ For instance, when using the following from the :ref:`walkthroughsUnguidedCapsul
 
 We have defined a point-mass Earth gravity model and an aerodynamic acceleration due to Earth's atmosphere to be used. In this example, we have only defined the type of the acceleration, without the need for any additional information. All required variables used on the computations of the accelerations are uniquely defined in the Apollo and Earth entries of the body map (provided that the required environment models have been set as discussed in :ref:`tudatFeaturesEnvironmentIndex`).
 
-However, as was the case for the settings of the environment models, certain types of accelerations require additional information. An important example is the spherical harmonic acceleration. We cannot replace :literal:`central_gravity` with :literal:`spherical_harmonic_gravity` in the above, as there is still an ambiguity in how the acceleration model is defined. In particular, we now also need the maximum degree and order of the gravity field that is to be used in addition to the three properties listed above. Consequently, we have created a dedicated :class:`AccelerationSettings` derived class for defining spherical harmonic acceleration settings: :class:`SphericalHarmonicAccelerationSettings`. Updating the above example to use J\ :sub:`2`, J\ :sub:`3` and J\ :sub:`4` (maximum degree = 4; maximum order = 0), we now have:
+Below a graphical representation of the acceleration setup, with the different model types and top-level architecture.
+
+.. graphviz::
+
+   digraph
+   {
+      # General diagram settings
+      rankdir = "TB";
+      splines = ortho;    
+      compound = true;   
+
+
+      # general node settings 
+      node [shape = box, style = filled, width = 1.5, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+
+
+      # specific node color settings
+      NamedBodyMap, bodiesToPropagate, centralBodies, AccelerationSettings [color = lightblue];
+      AccelerationModel [color= lightgreen];
+      Empirical, "Relativistic correction", "Mutual spherical \nharmonic gravity", "Tidal Dissipation", "Thrust" [color =  darkturquoise]; 
+      "Additional \ninformation" [style = dotted, fillcolor = lightgrey, color = black];
+
+      subgraph clusterAccelerationType
+      {
+         label = AccelerationType;
+         fontsize = 9;
+         style = dashed;
+      
+         {rank = same; "Cannon ball \nradiation pressure", "Central gravity", Aerodynamic};
+         {rank = same; "Thrust", "Tidal Dissipation", "Spherical harmonic \ngravity" };
+         {rank = same; "Mutual spherical \nharmonic gravity", "Relativistic correction", Empirical};
+         
+         "Mutual spherical \nharmonic gravity" -> "Spherical harmonic \ngravity" -> "Central gravity" [style = invis];
+         Empirical -> Thrust -> Aerodynamic [style = invis];
+         "Cannon ball \nradiation pressure" -> "Central gravity" [style = invis];
+
+      }
+      
+      Aerodynamic -> "Additional \ninformation"-> NamedBodyMap [style = invis];
+      "Mutual spherical \nharmonic gravity" -> bodiesToPropagate [style = invis];
+      AccelerationSettings -> bodiesToPropagate [style = invis];
+
+      # AccelerationSettings input
+      "Additional \ninformation" -> AccelerationSettings;
+      "Central gravity" -> AccelerationSettings [ltail = clusterAccelerationType];    
+
+      
+      # AccelerationModel input
+      AccelerationSettings -> AccelerationModel;
+      bodiesToPropagate -> AccelerationModel;
+      centralBodies -> AccelerationModel;
+      NamedBodyMap -> AccelerationModel;
+     
+
+      # Structure the layout
+      {rank = same; NamedBodyMap, AccelerationModel, centralBodies, bodiesToPropagate};
+      {rank = same; AccelerationSettings, "Additional \ninformation"};
+
+      # Hyperlinks (Sphinx auto referencing not working here, need to link to exact web adres)
+      "AccelerationSettings" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings", target = "_top"];
+      "Central gravity" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings", target = "_top"];
+      "AccelerationModel" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html##SelectedAccelerationMap", target = "_top"];
+      NamedBodyMap [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#NamedBodyMap", target = "_top"];
+      "Spherical harmonic \ngravity" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#SphericalHarmonicAccelerationSettings", target = "_top"];
+      "Mutual spherical \nharmonic gravity" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings", target = "_top"];
+      "Aerodynamic" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings", target = "_top"];
+      "Cannon ball \nradiation pressure" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings", target = "_top"];
+      "Thrust" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#ThrustAccelerationSettings", target = "_top"];
+      "Tidal Dissipation" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#DissipationAccelerationSettings", target = "_top"];
+      "Relativistic correction" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#RelativisticAccelerationCorrectionSettings", target = "_top"];
+      "Empirical" [href = "http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#EmpiricalAccelerationSettings", target = "_top"];
+
+   }
+
+.. graphviz::
+
+   digraph
+   {
+      # General diagram settings
+      rankdir = "LR";
+      splines = ortho;    
+      compound = true;  
+
+      subgraph clusterLegend
+      {
+      rank = min;
+      style = dashed;
+
+
+     	# general node settings 
+     	node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+
+
+   	"Object requiring \nadditional information" [ fillcolor = darkturquoise];
+     	"Main block" [fillcolor = lightgreen];
+     	"Optional input" [style = dotted, fillcolor = lightgrey, color = black];
+     	"Input for \nmain block" [fillcolor = lightblue];
+     	"Optional input"-> "Object requiring \nadditional information" -> "Input for \nmain block" -> "Main block" [style = invis];
+      }
+   }
+
+As was the case for the settings of the environment models, certain types of accelerations require additional information. An important example is the spherical harmonic acceleration. We cannot replace :literal:`central_gravity` with :literal:`spherical_harmonic_gravity` in the above, as there is still an ambiguity in how the acceleration model is defined. In particular, we now also need the maximum degree and order of the gravity field that is to be used in addition to the three properties listed above. Consequently, we have created a dedicated :class:`AccelerationSettings` derived class for defining spherical harmonic acceleration settings: :class:`SphericalHarmonicAccelerationSettings`. Updating the above example to use J\ :sub:`2`, J\ :sub:`3` and J\ :sub:`4` (maximum degree = 4; maximum order = 0), we now have:
 
 .. code-block:: cpp
 
@@ -40,7 +144,10 @@ However, as was the case for the settings of the environment models, certain typ
     accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< SphericalHarmonicAccelerationSettings >( 4, 0 ) );
     accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( aerodynamic ) );
 
-A full list of the available acceleration models, as well as their required input and environment models, is given at the end of this page. One KEY point to understand is that, when creating an object of the :class:`AccelerationSettings` type (or its derived class), you must not provide any of the third body acceleration types (:literal:`third_body_central_gravity`, :literal:`third_body_spherical_harmonic_gravity`, :literal:`third_body_mutual_spherical_harmonic_gravity`) as input. If you wish to use a third-body gravity acceleration (typically from a point mass), simply provide :literal:`central_gravity` as input. Depending on the settings for your central bodies, the code will automatically create the corresponding acceleration object (central or third-body).
+A full list of the available acceleration models, as well as their required input and environment models, is given at the end of this page. 
+
+.. note:: When creating an object of the :class:`AccelerationSettings` type (or its derived class), you must not provide any of the third body acceleration types (:literal:`third_body_central_gravity`, :literal:`third_body_spherical_harmonic_gravity`, :literal:`third_body_mutual_spherical_harmonic_gravity`) as input. If you wish to use a third-body gravity acceleration (typically from a point mass), simply provide :literal:`central_gravity` as input. Depending on the settings for your central bodies, the code will automatically create the corresponding acceleration object (central or third-body).
+
 
 Having defined all the required settings for the accelerations in your :class:`SelectedAccelerationMap`, you can create the actual acceleration models by using the :literal:`createAccelerationModelsMap` function. This function requires four input parameters:
 
@@ -53,11 +160,17 @@ The list of central bodies defines the reference frame origins in which the bodi
 
 .. code-block:: cpp
 
-    std::map< std::string, std::string > centralBodyMap;
-    centralBodyMap[ "Moon" ] = "Earth";
-    centralBodyMap[ "Earth" ] = "Sun";
-    centralBodyMap[ "Mars" ] = "Sun";
-    centralBodyMap[ "Sun" ] = "SSB";
+    std::vector< std::string > propagatedBodies;
+    propagatedBodies.push_back( "Moon" );
+    propagatedBodies.push_back( "Earth" );
+    propagatedBodies.push_back( "Mars" );
+    propagatedBodies.push_back( "Sun" );
+
+    std::vector< std::string > centralBodies;
+    centralBodies.push_back( "Earth" );
+    centralBodies.push_back( "Sun" );
+    centralBodies.push_back( "Sun" );
+    centralBodies.push_back( "SSB" );
 
 There is no hardcoded limit to the number of permitted levels in the frame hierarchy, but it is not allowed to include circular dependencies, i.e. body A w.r.t. body B, body B w.r.t. body C and body C w.r.t. body A. More information of the acceleration models is discussed in :ref:`tudatFeaturesPropagatorSettings`. The following gives an example on how to create the acceleration model objects:
 
@@ -67,11 +180,12 @@ There is no hardcoded limit to the number of permitted levels in the frame hiera
     ....
     // Create environment here
     ....
-    std::map< std::string, std::string > centralBodyMap;
+    std::vector< std::string > propagatedBodies;
+    std::vector< std::string > centralBodies;
     ....
     // Set central and propagated bodies here
     ....
-    AccelerationMap accelerationModelMap = createAccelerationModelsMap( bodyMap, accelerationMap, centralBodyMap )
+    AccelerationMap accelerationModelMap = createAccelerationModelsMap( bodyMap, accelerationMap, propagatedBodies, centralBodies );
 
 Mutual acceleration between bodies being propagated (i.e body A exerting acceleation on body B and vice versa), as is the case for solar system dynamics, is automatically handled by the :literal:`createAccelerationModelsMap` code and requires no specific consideration. Moreover, when creating a gravitational acceleration, the code checks whether it is a direct or a third-body gravitational acceleration and creates the acceleration models accordingly. Similarly, the code automatically checks which value of the gravitational parameter "mu" to use in such computations. For instance, when computing the gravitational acceleration due to the Sun acting on the Earth, :literal:`mu_Sun` is used when propagating w.r.t. the barycenter, whereas :literal:`mu_Sun + mu_Earth` is used when propagating w.r.t. the Sun.
 
@@ -132,6 +246,8 @@ Subsequently, we provide details on how to add settings for the model to the :cl
    - Spherical harmonic gravity field for body exerting acceleration (set by :class:`SphericalHarmonicsGravityFieldSettings`).
    - Rotation model from the inertial frame to the body-fixed frame (set by :class:`RotationModelSettings`).
    - Current state of bodies undergoing and exerting acceleration, either from an ephemeris model (set by :class:`EphemerisSettings`) or from the numerical propagation.
+
+.. note:: The spherical harmonic acceleration up to degree N and order M includes the point-mass gravity acceleration (which is the degree and order 0 term).
 
 .. class:: MutualSphericalHarmonicAccelerationSettings
 

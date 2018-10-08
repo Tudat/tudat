@@ -18,11 +18,11 @@ Path-functions
 **************
 These are functions that return the root-path of the library (or a particular folder). They can be used to define a path relative to the root-path of Tudat when using a file-reader/writer. The following path functions are available:
 
-   - :literal:`getTudatRootPath` (Tudat)
+   - :literal:`getTudatRootPath` (Tudat)
 
       This function returns the root-path corresponding with the root-directory of the Tudat library as a string with trailing slash included.
 
-   - :literal:`getSpiceKernelPath` (Tudat)
+   - :literal:`getSpiceKernelPath` (Tudat)
 
       This function returns the path where the Spice Kernels are located as a string with trailing slash included. This is very useful when writing code that will work cross-platform. For instance, if you have a file inputData.txt that is located at::
 
@@ -46,7 +46,7 @@ File-readers
 
 If needed, you can use this functionality as a starting point to create your own file-reader for your specific file type. If you run into issues when doing so, please contact the Tudat support team. However, there is a dedicated file-reader available in the Tudat library:
 
-   - :literal:`readMatrixFromFile` (Tudat)
+   - :literal:`readMatrixFromFile` (Tudat)
       
       This function can be used to read a simple text file with separated numbers. The documentation includes the options for a separator and the character used to skip a line (e.g. a comment-line). Note that the new-line character (:literal:`\\n`) is reserved to split the lines of the matrix.
 
@@ -64,8 +64,8 @@ File-writers
 ************
 The :literal:`InputOutput` directory in the Tudat library also contains functionality to write data (e.g. the propagation history of a satellite) to a file. The following function is available:
 
-   - :literal:`writeDataMapToTextFile` (Tudat)
-      This function writes data stored in a map to a text file. A number of overloads exists for this function based on the input given to the function. Furthermore, the data-map can store different types of data (e.g. doubles and Eigen vectors, which are typical types for the propagation history). The following overload is most relevant:
+   - :literal:`writeDataMapToTextFile` (Tudat)
+      This function writes data stored in a map to a text file. A number of overloads exists for this function based on the input given to the function. Furthermore, the data-map can store different types of data (e.g. doubles and Eigen vectors, which are typical types for the propagation history). The following overload is most relevant:
 
       .. code-block:: cpp
 
@@ -222,6 +222,6 @@ A good example on how to store the propagation history in a data map can be foun
 
     tudatBundle/tudatApplications/satellitePropagatorExamples/SatellitePropagatorExamples
 
-On the other hand, an example of saving the propagation history to a data file is described at the end of the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` walkthrough. 
+On the other hand, an example of saving the propagation history to a data file is described at the end of the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` tutorial.
 
 .. tip:: You can also scroll to the end of :ref:`tudatFeaturesSimulatorCreation`, for an overview on how to access and save the propagation history, as well as the **dependent variables**, from a :class:`DynamicsSimulator` object.
