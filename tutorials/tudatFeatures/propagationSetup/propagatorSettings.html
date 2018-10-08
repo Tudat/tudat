@@ -96,21 +96,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials and Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Acceleration Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Setting up State Derivative Models</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">5. Simulator Set-Up</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="integratorSettings.html">5.1. Integrator Settings</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">5.2. Propagator Settings: Basics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettingsTermination.html">5.3. Propagator Settings: Termination Settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettingsDependentVariables.html">5.4. Propagator Settings: Dependent Variables</a></li>
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettingsCoordinates.html">5.5. Propagator Settings: Conventional vs. Propagated Coordinates</a></li>
-<li class="toctree-l4"><a class="reference internal" href="simulatorCreation.html">5.6. Create a Dynamics Simulator Object</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TimeStateTemplates.html">5.7. Time and State Templates</a></li>
-<li class="toctree-l4"><a class="reference internal" href="variationalSimulatorCreation.html">5.8. Create a Variational Equations Solver Object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulatorCreation.html">5.6. Performing State Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variationalSimulatorCreation.html">5.7. Performing Variational Equations Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TimeStateTemplates.html">5.8. Time and State Templates</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">6. Estimation Set-Up</a></li>
@@ -205,6 +205,12 @@
 </dd></dl>
 
 <dl class="class">
+<dt id="SingleArcPropagatorSettings">
+<em class="property">class </em><code class="descname">SingleArcPropagatorSettings</code><a class="headerlink" href="#SingleArcPropagatorSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Derived class of <a href="#id1"><span class="problematic" id="id2">:PropagatorSettings:`PropagatorSettings`</span></a>. Base class from which the other single-arc settings classes described below are derived. Settings object for a specific type (e.g. translational, rotational, etc.) are always derived from this class. A list of single-arc settings may be passed to a <code class="docutils literal"><span class="pre">MultiArcPropagatorSettings</span></code> for multi-arc propagation.</p>
+</dd></dl>
+
+<dl class="class">
 <dt id="TranslationalStatePropagatorSettings">
 <em class="property">class </em><code class="descname">TranslationalStatePropagatorSettings</code><a class="headerlink" href="#TranslationalStatePropagatorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class implements the framework required to propagate the translation state of a body. The constructor of this derived class is overloaded allowing two types of termination conditions:</p>
@@ -214,7 +220,7 @@
 </ul>
 <dl class="method">
 <dt>
-<code class="descname">Default termination settings</code></dt>
+<code class="descname">Using default termination settings</code></dt>
 <dd><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span><span class="n">StateScalarType</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span>
                                                        <span class="n">accelerationsMap</span><span class="p">,</span>
                                                        <span class="n">bodiesToIntegrate</span><span class="p">,</span>
@@ -238,7 +244,7 @@
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">accelerationsMap</span></code></p>
 <blockquote>
-<div><p><code class="xref py py-class docutils literal"><span class="pre">AccelerationMap</span></code> that contains the accelerations for each body as discussed in <a class="reference internal" href="../accelerationSetup/index.html#tudatfeaturesaccelerationindex"><span class="std std-ref">Acceleration Set-Up</span></a>.</p>
+<div><p><code class="xref py py-class docutils literal"><span class="pre">AccelerationMap</span></code> that contains the accelerations for each body as discussed in <a class="reference internal" href="../accelerationSetup/index.html#tudatfeaturesaccelerationindex"><span class="std std-ref">Setting up State Derivative Models</span></a>.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">bodiesToIntegrate</span></code></p>
@@ -281,10 +287,18 @@
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">dependentVariablesToSave</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">DependentVariableSaveSettings</span> <span class="pre">&gt;</span></code> that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved. See the tutorial on <a class="reference internal" href="propagatorSettingsDependentVariables.html#DependentVariableSaveSettings" title="DependentVariableSaveSettings"><code class="xref py py-class docutils literal"><span class="pre">DependentVariableSaveSettings</span></code></a> for more details on this class.</p>
+<div><p><code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">DependentVariableSaveSettings</span> <span class="pre">&gt;</span></code> that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved. See the tutorial on <a class="reference internal" href="propagatorSettingsDependentVariables.html#DependentVariableSaveSettings" title="DependentVariableSaveSettings"><code class="xref py py-class docutils literal"><span class="pre">DependentVariableSaveSettings</span></code></a> for more details on this class. Note that the literal:<cite>dependentVariablesToSave</cite> may be left unspecified, in which case no dependent variables are saved, so:</p>
 </div></blockquote>
 </li>
 </ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span><span class="n">StateScalarType</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span>
+                                                       <span class="n">accelerationsMap</span><span class="p">,</span>
+                                                       <span class="n">bodiesToIntegrate</span><span class="p">,</span>
+                                                       <span class="n">initialBodyStates</span><span class="p">,</span>
+                                                       <span class="n">endTime</span><span class="p">,</span>
+                                                       <span class="n">propagator</span> <span class="p">)</span>
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>The state variables contained in <code class="docutils literal"><span class="pre">initialBodyStates</span></code> are ordered with respect to the elements of <code class="docutils literal"><span class="pre">centralBodies</span></code> and <code class="docutils literal"><span class="pre">bodiesToIntegrate</span></code>. Please take a look at the following pseudocode:</p>
@@ -299,7 +313,7 @@
 
 <dl class="method">
 <dt>
-<code class="descname">User-defined termination settings</code></dt>
+<code class="descname">With user-defined termination settings</code></dt>
 <dd><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span><span class="n">StateScalarType</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span>
                                                        <span class="n">accelerationsMap</span><span class="p">,</span>
                                                        <span class="n">bodiesToIntegrate</span><span class="p">,</span>

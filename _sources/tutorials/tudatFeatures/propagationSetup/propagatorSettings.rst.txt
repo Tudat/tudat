@@ -10,6 +10,10 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
    Base class from which the other settings classes described below are derived.
 
+.. class:: SingleArcPropagatorSettings
+
+   Derived class of :PropagatorSettings:`PropagatorSettings`. Base class from which the other single-arc settings classes described below are derived. Settings object for a specific type (e.g. translational, rotational, etc.) are always derived from this class. A list of single-arc settings may be passed to a :literal:`MultiArcPropagatorSettings` for multi-arc propagation.
+
 .. class:: TranslationalStatePropagatorSettings
 
     This class implements the framework required to propagate the translation state of a body. The constructor of this derived class is overloaded allowing two types of termination conditions:
@@ -17,7 +21,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
     - Termination when the simulation time reaches a predefined :literal:`endTime` (Default).
     - Termination when a predefined dependent variables meets a certain criterion.
 
-    .. method:: Default termination settings
+    .. method:: Using default termination settings
 
         .. code-block:: cpp
 
@@ -73,7 +77,16 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
         - :literal:`dependentVariablesToSave`
 
-            :literal:`boost::shared_ptr< DependentVariableSaveSettings >` that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved. See the tutorial on :class:`DependentVariableSaveSettings` for more details on this class.
+            :literal:`boost::shared_ptr< DependentVariableSaveSettings >` that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved. See the tutorial on :class:`DependentVariableSaveSettings` for more details on this class. Note that the literal:`dependentVariablesToSave` may be left unspecified, in which case no dependent variables are saved, so:
+
+        .. code-block:: cpp
+
+            TranslationalStatePropagatorSettings<StateScalarType>( centralBodies,
+                                                                   accelerationsMap,
+                                                                   bodiesToIntegrate,
+                                                                   initialBodyStates,
+                                                                   endTime,
+                                                                   propagator )
 
         .. note:: The state variables contained in :literal:`initialBodyStates` are ordered with respect to the elements of :literal:`centralBodies` and :literal:`bodiesToIntegrate`. Please take a look at the following pseudocode:
 
@@ -85,7 +98,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
                                       xMoonWrtEarth , yMoonWrtEarth , zMoonWrtEarth , uMoonWrtEarth , vMoonWrtEarth , wMoonWrtEarth }
             
 
-    .. method:: User-defined termination settings
+    .. method:: With user-defined termination settings
 
         .. code-block:: cpp
 

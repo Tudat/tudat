@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>4.1. Implementation Framework of the Acceleration Settings &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>4.1. Acceleration Model Set-up &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -38,9 +38,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="4. Acceleration Set-Up" href="index.html"/>
+        <link rel="up" title="4. Setting up State Derivative Models" href="index.html"/>
         <link rel="next" title="4.2. Rotational Model Set-up" href="rotModel.html"/>
-        <link rel="prev" title="4. Acceleration Set-Up" href="index.html"/> 
+        <link rel="prev" title="4. Setting up State Derivative Models" href="index.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -96,13 +96,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials and Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">4. Acceleration Set-Up</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">4.1. Implementation Framework of the Acceleration Settings</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">4. Setting up State Derivative Models</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">4.1. Acceleration Model Set-up</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rotModel.html">4.2. Rotational Model Set-up</a></li>
 <li class="toctree-l4"><a class="reference internal" href="massModel.html">4.3. Mass Rate Model Set-up</a></li>
 <li class="toctree-l4"><a class="reference internal" href="aerodynamicGuidance.html">4.4. Aerodynamic Guidance</a></li>
@@ -120,6 +120,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
 </ul>
 
@@ -169,9 +170,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">4. Acceleration Set-Up</a> &raquo;</li>
+          <li><a href="index.html">4. Setting up State Derivative Models</a> &raquo;</li>
         
-      <li>4.1. Implementation Framework of the Acceleration Settings</li>
+      <li>4.1. Acceleration Model Set-up</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -190,8 +191,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="implementation-framework-of-the-acceleration-settings">
-<span id="tudatfeaturesframeworkaccelerations"></span><h1>4.1. Implementation Framework of the Acceleration Settings<a class="headerlink" href="#implementation-framework-of-the-acceleration-settings" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="acceleration-model-set-up">
+<span id="tudatfeaturesframeworkaccelerations"></span><h1>4.1. Acceleration Model Set-up<a class="headerlink" href="#acceleration-model-set-up" title="Permalink to this headline">¶</a></h1>
+<p>Below is a schemaric overview of the various acceleration options in Tudat, and the top-level architecture for how to set up acceleration models.</p>
 <div class="section" id="acceleration-settings">
 <h2>4.1.1. Acceleration settings<a class="headerlink" href="#acceleration-settings" title="Permalink to this headline">¶</a></h2>
 <p>The settings for accelerations are defined and stored by the user in a <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a>.</p>
@@ -202,7 +204,7 @@
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>This is a double map (with twice a string as a key). The two levels correspond to the names of bodies undergoing an acceleration (first key) , and those for bodies exerting an acceleration (second key). This allows any number of bodies to be propagated, undergoing any number (and type) of accelerations from any number of bodies.</p>
+<p>This is a double map (with twice a string as a key). The two levels correspond to the names of bodies undergoing an acceleration (first key) , and those for bodies exerting an acceleration (second key). This allows any number of bodies to be propagated, undergoing any number (and type) of accelerations from any number of bodies. In this manner, settings for each required acceleration model are stored in an object of type <a class="reference internal" href="#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a>.</p>
 </dd></dl>
 
 <p>For a given environment, most acceleration models are completely defined by:</p>
@@ -220,28 +222,134 @@
 </pre></div>
 </div>
 <p>We have defined a point-mass Earth gravity model and an aerodynamic acceleration due to Earth’s atmosphere to be used. In this example, we have only defined the type of the acceleration, without the need for any additional information. All required variables used on the computations of the accelerations are uniquely defined in the Apollo and Earth entries of the body map (provided that the required environment models have been set as discussed in <a class="reference internal" href="../environmentSetup/index.html#tudatfeaturesenvironmentindex"><span class="std std-ref">Environment Set-up</span></a>).</p>
-<p>However, as was the case for the settings of the environment models, certain types of accelerations require additional information. An important example is the spherical harmonic acceleration. We cannot replace <code class="docutils literal"><span class="pre">central_gravity</span></code> with <code class="docutils literal"><span class="pre">spherical_harmonic_gravity</span></code> in the above, as there is still an ambiguity in how the acceleration model is defined. In particular, we now also need the maximum degree and order of the gravity field that is to be used in addition to the three properties listed above. Consequently, we have created a dedicated <a class="reference internal" href="#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a> derived class for defining spherical harmonic acceleration settings: <a class="reference internal" href="#SphericalHarmonicAccelerationSettings" title="SphericalHarmonicAccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicAccelerationSettings</span></code></a>. Updating the above example to use J<sub>2</sub>, J<sub>3</sub> and J<sub>4</sub> (maximum degree = 4; maximum order = 0), we now have:</p>
+<p>Below a graphical representation of the acceleration setup, with the different model types and top-level architecture.</p>
+<object data="../../../_images/graphviz-c884630deceb02092f86f6cf7652335f9f564ac5.svg" type="image/svg+xml">
+            <p class="warning">digraph
+{
+   # General diagram settings
+   rankdir = &quot;TB&quot;;
+   splines = ortho;
+   compound = true;
+
+
+   # general node settings
+   node [shape = box, style = filled, width = 1.5, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+
+
+   # specific node color settings
+   NamedBodyMap, bodiesToPropagate, centralBodies, AccelerationSettings [color = lightblue];
+   AccelerationModel [color= lightgreen];
+   Empirical, &quot;Relativistic correction&quot;, &quot;Mutual spherical \nharmonic gravity&quot;, &quot;Tidal Dissipation&quot;, &quot;Thrust&quot; [color =  darkturquoise];
+   &quot;Additional \ninformation&quot; [style = dotted, fillcolor = lightgrey, color = black];
+
+   subgraph clusterAccelerationType
+   {
+      label = AccelerationType;
+      fontsize = 9;
+      style = dashed;
+
+      {rank = same; &quot;Cannon ball \nradiation pressure&quot;, &quot;Central gravity&quot;, Aerodynamic};
+      {rank = same; &quot;Thrust&quot;, &quot;Tidal Dissipation&quot;, &quot;Spherical harmonic \ngravity&quot; };
+      {rank = same; &quot;Mutual spherical \nharmonic gravity&quot;, &quot;Relativistic correction&quot;, Empirical};
+
+      &quot;Mutual spherical \nharmonic gravity&quot; -&gt; &quot;Spherical harmonic \ngravity&quot; -&gt; &quot;Central gravity&quot; [style = invis];
+      Empirical -&gt; Thrust -&gt; Aerodynamic [style = invis];
+      &quot;Cannon ball \nradiation pressure&quot; -&gt; &quot;Central gravity&quot; [style = invis];
+
+   }
+
+   Aerodynamic -&gt; &quot;Additional \ninformation&quot;-&gt; NamedBodyMap [style = invis];
+   &quot;Mutual spherical \nharmonic gravity&quot; -&gt; bodiesToPropagate [style = invis];
+   AccelerationSettings -&gt; bodiesToPropagate [style = invis];
+
+   # AccelerationSettings input
+   &quot;Additional \ninformation&quot; -&gt; AccelerationSettings;
+   &quot;Central gravity&quot; -&gt; AccelerationSettings [ltail = clusterAccelerationType];
+
+
+   # AccelerationModel input
+   AccelerationSettings -&gt; AccelerationModel;
+   bodiesToPropagate -&gt; AccelerationModel;
+   centralBodies -&gt; AccelerationModel;
+   NamedBodyMap -&gt; AccelerationModel;
+
+
+   # Structure the layout
+   {rank = same; NamedBodyMap, AccelerationModel, centralBodies, bodiesToPropagate};
+   {rank = same; AccelerationSettings, &quot;Additional \ninformation&quot;};
+
+   # Hyperlinks (Sphinx auto referencing not working here, need to link to exact web adres)
+   &quot;AccelerationSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings&quot;, target = &quot;_top&quot;];
+   &quot;Central gravity&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings&quot;, target = &quot;_top&quot;];
+   &quot;AccelerationModel&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html##SelectedAccelerationMap&quot;, target = &quot;_top&quot;];
+   NamedBodyMap [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#NamedBodyMap&quot;, target = &quot;_top&quot;];
+   &quot;Spherical harmonic \ngravity&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#SphericalHarmonicAccelerationSettings&quot;, target = &quot;_top&quot;];
+   &quot;Mutual spherical \nharmonic gravity&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings&quot;, target = &quot;_top&quot;];
+   &quot;Aerodynamic&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings&quot;, target = &quot;_top&quot;];
+   &quot;Cannon ball \nradiation pressure&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings&quot;, target = &quot;_top&quot;];
+   &quot;Thrust&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#ThrustAccelerationSettings&quot;, target = &quot;_top&quot;];
+   &quot;Tidal Dissipation&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#DissipationAccelerationSettings&quot;, target = &quot;_top&quot;];
+   &quot;Relativistic correction&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#RelativisticAccelerationCorrectionSettings&quot;, target = &quot;_top&quot;];
+   &quot;Empirical&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#EmpiricalAccelerationSettings&quot;, target = &quot;_top&quot;];
+
+}</p></object>
+<object data="../../../_images/graphviz-3c28fd20e3861e7965bedc388a54f8fc55de85cf.svg" type="image/svg+xml">
+            <p class="warning">digraph
+{
+   # General diagram settings
+   rankdir = &quot;LR&quot;;
+   splines = ortho;
+   compound = true;
+
+   subgraph clusterLegend
+   {
+   rank = min;
+   style = dashed;
+
+
+     # general node settings
+     node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+
+
+     &quot;Object requiring \nadditional information&quot; [ fillcolor = darkturquoise];
+     &quot;Main block&quot; [fillcolor = lightgreen];
+     &quot;Optional input&quot; [style = dotted, fillcolor = lightgrey, color = black];
+     &quot;Input for \nmain block&quot; [fillcolor = lightblue];
+     &quot;Optional input&quot;-&gt; &quot;Object requiring \nadditional information&quot; -&gt; &quot;Input for \nmain block&quot; -&gt; &quot;Main block&quot; [style = invis];
+   }
+}</p></object>
+<p>As was the case for the settings of the environment models, certain types of accelerations require additional information. An important example is the spherical harmonic acceleration. We cannot replace <code class="docutils literal"><span class="pre">central_gravity</span></code> with <code class="docutils literal"><span class="pre">spherical_harmonic_gravity</span></code> in the above, as there is still an ambiguity in how the acceleration model is defined. In particular, we now also need the maximum degree and order of the gravity field that is to be used in addition to the three properties listed above. Consequently, we have created a dedicated <a class="reference internal" href="#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a> derived class for defining spherical harmonic acceleration settings: <a class="reference internal" href="#SphericalHarmonicAccelerationSettings" title="SphericalHarmonicAccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicAccelerationSettings</span></code></a>. Updating the above example to use J<sub>2</sub>, J<sub>3</sub> and J<sub>4</sub> (maximum degree = 4; maximum order = 0), we now have:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettings</span><span class="p">;</span>
 <span class="n">accelerationSettings</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">);</span>
 <span class="n">accelerationSettings</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">aerodynamic</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>A full list of the available acceleration models, as well as their required input and environment models, is given at the end of this page. One KEY point to understand is that, when creating an object of the <a class="reference internal" href="#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a> type (or its derived class), you must not provide any of the third body acceleration types (<code class="docutils literal"><span class="pre">third_body_central_gravity</span></code>, <code class="docutils literal"><span class="pre">third_body_spherical_harmonic_gravity</span></code>, <code class="docutils literal"><span class="pre">third_body_mutual_spherical_harmonic_gravity</span></code>) as input. If you wish to use a third-body gravity acceleration (typically from a point mass), simply provide <code class="docutils literal"><span class="pre">central_gravity</span></code> as input. Depending on the settings for your central bodies, the code will automatically create the corresponding acceleration object (central or third-body).</p>
+<p>A full list of the available acceleration models, as well as their required input and environment models, is given at the end of this page.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When creating an object of the <a class="reference internal" href="#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a> type (or its derived class), you must not provide any of the third body acceleration types (<code class="docutils literal"><span class="pre">third_body_central_gravity</span></code>, <code class="docutils literal"><span class="pre">third_body_spherical_harmonic_gravity</span></code>, <code class="docutils literal"><span class="pre">third_body_mutual_spherical_harmonic_gravity</span></code>) as input. If you wish to use a third-body gravity acceleration (typically from a point mass), simply provide <code class="docutils literal"><span class="pre">central_gravity</span></code> as input. Depending on the settings for your central bodies, the code will automatically create the corresponding acceleration object (central or third-body).</p>
+</div>
 <p>Having defined all the required settings for the accelerations in your <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a>, you can create the actual acceleration models by using the <code class="docutils literal"><span class="pre">createAccelerationModelsMap</span></code> function. This function requires four input parameters:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Full environment, as defined by a <a class="reference internal" href="../environmentSetup/index.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a>.</li>
+<li>Full environment, as defined by a <a class="reference internal" href="../environmentSetup/setup.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a>.</li>
 <li>Settings for the acceleration models, given by <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a>.</li>
 <li>A list of bodies to numerically propagate.</li>
 <li>A list of central bodies (one for each numerically propagated body).</li>
 </ul>
 </div></blockquote>
 <p>The list of central bodies defines the reference frame origins in which the bodies are propagated. The use of a hierarchical system is perfectly acceptable. For instance, one can propagate the Earth and Mars w.r.t. the Sun, the Sun w.r.t. the barycenter, the Moon w.r.t the Earth, etc. For this case, the central bodies and propagated bodies are defined as:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodyMap</span><span class="p">;</span>
-<span class="n">centralBodyMap</span><span class="p">[</span> <span class="s">&quot;Moon&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Earth&quot;</span><span class="p">;</span>
-<span class="n">centralBodyMap</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
-<span class="n">centralBodyMap</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
-<span class="n">centralBodyMap</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;SSB&quot;</span><span class="p">;</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">propagatedBodies</span><span class="p">;</span>
+<span class="n">propagatedBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Moon&quot;</span> <span class="p">);</span>
+<span class="n">propagatedBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
+<span class="n">propagatedBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Mars&quot;</span> <span class="p">);</span>
+<span class="n">propagatedBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Sun&quot;</span> <span class="p">);</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodies</span><span class="p">;</span>
+<span class="n">centralBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
+<span class="n">centralBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Sun&quot;</span> <span class="p">);</span>
+<span class="n">centralBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Sun&quot;</span> <span class="p">);</span>
+<span class="n">centralBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;SSB&quot;</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>There is no hardcoded limit to the number of permitted levels in the frame hierarchy, but it is not allowed to include circular dependencies, i.e. body A w.r.t. body B, body B w.r.t. body C and body C w.r.t. body A. More information of the acceleration models is discussed in <a class="reference internal" href="../propagationSetup/propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>. The following gives an example on how to create the acceleration model objects:</p>
@@ -249,11 +357,12 @@
 <span class="p">....</span>
 <span class="c1">// Create environment here</span>
 <span class="p">....</span>
-<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodyMap</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">propagatedBodies</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodies</span><span class="p">;</span>
 <span class="p">....</span>
 <span class="c1">// Set central and propagated bodies here</span>
 <span class="p">....</span>
-<span class="n">AccelerationMap</span> <span class="n">accelerationModelMap</span> <span class="o">=</span> <span class="n">createAccelerationModelsMap</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationMap</span><span class="p">,</span> <span class="n">centralBodyMap</span> <span class="p">)</span>
+<span class="n">AccelerationMap</span> <span class="n">accelerationModelMap</span> <span class="o">=</span> <span class="n">createAccelerationModelsMap</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationMap</span><span class="p">,</span> <span class="n">propagatedBodies</span><span class="p">,</span> <span class="n">centralBodies</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>Mutual acceleration between bodies being propagated (i.e body A exerting acceleation on body B and vice versa), as is the case for solar system dynamics, is automatically handled by the <code class="docutils literal"><span class="pre">createAccelerationModelsMap</span></code> code and requires no specific consideration. Moreover, when creating a gravitational acceleration, the code checks whether it is a direct or a third-body gravitational acceleration and creates the acceleration models accordingly. Similarly, the code automatically checks which value of the gravitational parameter “mu” to use in such computations. For instance, when computing the gravitational acceleration due to the Sun acting on the Earth, <code class="docutils literal"><span class="pre">mu_Sun</span></code> is used when propagating w.r.t. the barycenter, whereas <code class="docutils literal"><span class="pre">mu_Sun</span> <span class="pre">+</span> <span class="pre">mu_Earth</span></code> is used when propagating w.r.t. the Sun.</p>
@@ -297,15 +406,15 @@
 </div>
 <p>Requires the following environment models to be defined:</p>
 <ul class="simple">
-<li>Gravity field for body exerting acceleration (set by <a class="reference internal" href="../environmentSetup/index.html#GravityFieldSettings" title="GravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">GravityFieldSettings</span></code></a>).</li>
-<li>Current state of bodies undergoing and exerting acceleration, either from an Ephemeris model (set by <a class="reference internal" href="../environmentSetup/index.html#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a>) or from the numerical propagation.</li>
+<li>Gravity field for body exerting acceleration (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#GravityFieldSettings" title="GravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">GravityFieldSettings</span></code></a>).</li>
+<li>Current state of bodies undergoing and exerting acceleration, either from an Ephemeris model (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a>) or from the numerical propagation.</li>
 </ul>
 </dd></dl>
 
 <dl class="class">
 <dt id="SphericalHarmonicAccelerationSettings">
 <em class="property">class </em><code class="descname">SphericalHarmonicAccelerationSettings</code><a class="headerlink" href="#SphericalHarmonicAccelerationSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Settings for the accelerations as set by <a class="reference internal" href="../environmentSetup/index.html#SphericalHarmonicsGravityFieldSettings" title="SphericalHarmonicsGravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicsGravityFieldSettings</span></code></a>. Added to <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a> as follows, for example of acceleration exerted on “Apollo” by “Earth”:</p>
+<dd><p>Settings for the accelerations as set by <a class="reference internal" href="../environmentSetup/availableSettings.html#SphericalHarmonicsGravityFieldSettings" title="SphericalHarmonicsGravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicsGravityFieldSettings</span></code></a>. Added to <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a> as follows, for example of acceleration exerted on “Apollo” by “Earth”:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettings</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">maximumDegree</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">maximumOrder</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
@@ -314,12 +423,16 @@
 </div>
 <p>where the gravity field will be expanded up to degree and order 12 in the acceleration model. Requires the following environment models to be defined:</p>
 <ul class="simple">
-<li>Spherical harmonic gravity field for body exerting acceleration (set by <a class="reference internal" href="../environmentSetup/index.html#SphericalHarmonicsGravityFieldSettings" title="SphericalHarmonicsGravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicsGravityFieldSettings</span></code></a>).</li>
-<li>Rotation model from the inertial frame to the body-fixed frame (set by <a class="reference internal" href="../environmentSetup/index.html#RotationModelSettings" title="RotationModelSettings"><code class="xref py py-class docutils literal"><span class="pre">RotationModelSettings</span></code></a>).</li>
-<li>Current state of bodies undergoing and exerting acceleration, either from an ephemeris model (set by <a class="reference internal" href="../environmentSetup/index.html#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a>) or from the numerical propagation.</li>
+<li>Spherical harmonic gravity field for body exerting acceleration (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#SphericalHarmonicsGravityFieldSettings" title="SphericalHarmonicsGravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicsGravityFieldSettings</span></code></a>).</li>
+<li>Rotation model from the inertial frame to the body-fixed frame (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#RotationModelSettings" title="RotationModelSettings"><code class="xref py py-class docutils literal"><span class="pre">RotationModelSettings</span></code></a>).</li>
+<li>Current state of bodies undergoing and exerting acceleration, either from an ephemeris model (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a>) or from the numerical propagation.</li>
 </ul>
 </dd></dl>
 
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The spherical harmonic acceleration up to degree N and order M includes the point-mass gravity acceleration (which is the degree and order 0 term).</p>
+</div>
 <dl class="class">
 <dt id="MutualSphericalHarmonicAccelerationSettings">
 <em class="property">class </em><code class="descname">MutualSphericalHarmonicAccelerationSettings</code><a class="headerlink" href="#MutualSphericalHarmonicAccelerationSettings" title="Permalink to this definition">¶</a></dt>
@@ -335,9 +448,9 @@
 </div>
 <p>where the gravity fields of Io and Jupiter will be expanded up to degree and order 12 and 4, respectively, in the acceleration model. Requires the following environment models to be defined:</p>
 <ul class="simple">
-<li>Spherical harmonic gravity field for body exerting acceleration and body undergoing acceleration set by <a class="reference internal" href="../environmentSetup/index.html#SphericalHarmonicsGravityFieldSettings" title="SphericalHarmonicsGravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicsGravityFieldSettings</span></code></a>).</li>
-<li>Rotation model from the inertial frame to the body-fixed frame and body undergoing acceleration (set by <a class="reference internal" href="../environmentSetup/index.html#RotationModelSettings" title="RotationModelSettings"><code class="xref py py-class docutils literal"><span class="pre">RotationModelSettings</span></code></a>).</li>
-<li>Current state of bodies undergoing and exerting acceleration, either from an Ephemeris model (set by <a class="reference internal" href="../environmentSetup/index.html#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a>) or from the numerical propagation.</li>
+<li>Spherical harmonic gravity field for body exerting acceleration and body undergoing acceleration set by <a class="reference internal" href="../environmentSetup/availableSettings.html#SphericalHarmonicsGravityFieldSettings" title="SphericalHarmonicsGravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicsGravityFieldSettings</span></code></a>).</li>
+<li>Rotation model from the inertial frame to the body-fixed frame and body undergoing acceleration (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#RotationModelSettings" title="RotationModelSettings"><code class="xref py py-class docutils literal"><span class="pre">RotationModelSettings</span></code></a>).</li>
+<li>Current state of bodies undergoing and exerting acceleration, either from an Ephemeris model (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a>) or from the numerical propagation.</li>
 </ul>
 <p>For the case where a third-body mutual spherical harmonic acceleration (e.g. Ganymede on Io when propagating w.r.t. Jupiter), additional parameters have to be provided that denote the expansion degree/order of the central body, so:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettings</span><span class="p">;</span>
@@ -364,9 +477,9 @@
 </div>
 <p>Requires the following environment models to be defined:</p>
 <ul class="simple">
-<li>Atmosphere model for body exerting acceleration (set by <a class="reference internal" href="../environmentSetup/index.html#AtmosphereSettings" title="AtmosphereSettings"><code class="xref py py-class docutils literal"><span class="pre">AtmosphereSettings</span></code></a>).</li>
-<li>Shape model for body exerting acceleration (set by <a class="reference internal" href="../environmentSetup/index.html#BodyShapeSettings" title="BodyShapeSettings"><code class="xref py py-class docutils literal"><span class="pre">BodyShapeSettings</span></code></a>).</li>
-<li>Aerodynamic coefficient interface for body undergoing acceleration (set by <a class="reference internal" href="../environmentSetup/index.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientSettings</span></code></a>). NOTE: In the case that the aerodynamic coefficients are defined as a function of the vehicle orientation (e.g. angle of attack and sideslip angle), these angles can be manually or automatically defined.</li>
+<li>Atmosphere model for body exerting acceleration (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#AtmosphereSettings" title="AtmosphereSettings"><code class="xref py py-class docutils literal"><span class="pre">AtmosphereSettings</span></code></a>).</li>
+<li>Shape model for body exerting acceleration (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#BodyShapeSettings" title="BodyShapeSettings"><code class="xref py py-class docutils literal"><span class="pre">BodyShapeSettings</span></code></a>).</li>
+<li>Aerodynamic coefficient interface for body undergoing acceleration (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientSettings</span></code></a>). NOTE: In the case that the aerodynamic coefficients are defined as a function of the vehicle orientation (e.g. angle of attack and sideslip angle), these angles can be manually or automatically defined.</li>
 <li>Mass model for body undergoing acceleration.</li>
 <li>Current state of body undergoing acceleration and body with atmosphere.</li>
 </ul>
@@ -386,7 +499,7 @@
 </div>
 <p>Requires the following environment models to be defined:</p>
 <ul class="simple">
-<li>Radiation pressure model for body undergoing acceleration (from source equal to body exerting acceleration) (set by <a class="reference internal" href="../environmentSetup/index.html#RadiationPressureInterfaceSettings" title="RadiationPressureInterfaceSettings"><code class="xref py py-class docutils literal"><span class="pre">RadiationPressureInterfaceSettings</span></code></a>).</li>
+<li>Radiation pressure model for body undergoing acceleration (from source equal to body exerting acceleration) (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#RadiationPressureInterfaceSettings" title="RadiationPressureInterfaceSettings"><code class="xref py py-class docutils literal"><span class="pre">RadiationPressureInterfaceSettings</span></code></a>).</li>
 <li>Current state of body undergoing and body emitting radiation</li>
 </ul>
 </dd></dl>
@@ -483,7 +596,7 @@
         <a href="rotModel.html" class="btn btn-neutral float-right" title="4.2. Rotational Model Set-up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="4. Acceleration Set-Up" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="4. Setting up State Derivative Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

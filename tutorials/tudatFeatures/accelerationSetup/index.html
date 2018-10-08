@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>4. Acceleration Set-Up &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>4. Setting up State Derivative Models &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -39,8 +39,8 @@
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
         <link rel="up" title="Tudat Libraries" href="../index.html"/>
-        <link rel="next" title="4.1. Implementation Framework of the Acceleration Settings" href="frameworkAcceleration.html"/>
-        <link rel="prev" title="3. Environment Set-up" href="../environmentSetup/index.html"/> 
+        <link rel="next" title="4.1. Acceleration Model Set-up" href="frameworkAcceleration.html"/>
+        <link rel="prev" title="3.6. Aerodynamic Coefficients" href="../environmentSetup/aerodynamicCoefficients.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -96,13 +96,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials and Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">4. Acceleration Set-Up</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="frameworkAcceleration.html">4.1. Implementation Framework of the Acceleration Settings</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4. Setting up State Derivative Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="frameworkAcceleration.html">4.1. Acceleration Model Set-up</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rotModel.html">4.2. Rotational Model Set-up</a></li>
 <li class="toctree-l4"><a class="reference internal" href="massModel.html">4.3. Mass Rate Model Set-up</a></li>
 <li class="toctree-l4"><a class="reference internal" href="aerodynamicGuidance.html">4.4. Aerodynamic Guidance</a></li>
@@ -120,6 +120,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
 </ul>
 
@@ -169,7 +170,7 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-      <li>4. Acceleration Set-Up</li>
+      <li>4. Setting up State Derivative Models</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -188,107 +189,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="acceleration-set-up">
-<span id="tudatfeaturesaccelerationindex"></span><h1>4. Acceleration Set-Up<a class="headerlink" href="#acceleration-set-up" title="Permalink to this headline">¶</a></h1>
-<p>These pages of the wiki will help you build a strong knowledge basis to get started with Tudat. It is mandatory to understand the concepts taught here before proceding any further. Below a graphical representation of the acceleration setup is shown after which a list of content is shown.</p>
-<object data="../../../_images/graphviz-c884630deceb02092f86f6cf7652335f9f564ac5.svg" type="image/svg+xml">
-            <p class="warning">digraph
-{
-   # General diagram settings
-   rankdir = &quot;TB&quot;;
-   splines = ortho;
-   compound = true;
-
-
-   # general node settings
-   node [shape = box, style = filled, width = 1.5, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
-
-
-   # specific node color settings
-   NamedBodyMap, bodiesToPropagate, centralBodies, AccelerationSettings [color = lightblue];
-   AccelerationModel [color= lightgreen];
-   Empirical, &quot;Relativistic correction&quot;, &quot;Mutual spherical \nharmonic gravity&quot;, &quot;Tidal Dissipation&quot;, &quot;Thrust&quot; [color =  darkturquoise];
-   &quot;Additional \ninformation&quot; [style = dotted, fillcolor = lightgrey, color = black];
-
-   subgraph clusterAccelerationType
-   {
-      label = AccelerationType;
-      fontsize = 9;
-      style = dashed;
-
-      {rank = same; &quot;Cannon ball \nradiation pressure&quot;, &quot;Central gravity&quot;, Aerodynamic};
-      {rank = same; &quot;Thrust&quot;, &quot;Tidal Dissipation&quot;, &quot;Spherical harmonic \ngravity&quot; };
-      {rank = same; &quot;Mutual spherical \nharmonic gravity&quot;, &quot;Relativistic correction&quot;, Empirical};
-
-      &quot;Mutual spherical \nharmonic gravity&quot; -&gt; &quot;Spherical harmonic \ngravity&quot; -&gt; &quot;Central gravity&quot; [style = invis];
-      Empirical -&gt; Thrust -&gt; Aerodynamic [style = invis];
-      &quot;Cannon ball \nradiation pressure&quot; -&gt; &quot;Central gravity&quot; [style = invis];
-
-   }
-
-   Aerodynamic -&gt; &quot;Additional \ninformation&quot;-&gt; NamedBodyMap [style = invis];
-   &quot;Mutual spherical \nharmonic gravity&quot; -&gt; bodiesToPropagate [style = invis];
-   AccelerationSettings -&gt; bodiesToPropagate [style = invis];
-
-   # AccelerationSettings input
-   &quot;Additional \ninformation&quot; -&gt; AccelerationSettings;
-   &quot;Central gravity&quot; -&gt; AccelerationSettings [ltail = clusterAccelerationType];
-
-
-   # AccelerationModel input
-   AccelerationSettings -&gt; AccelerationModel;
-   bodiesToPropagate -&gt; AccelerationModel;
-   centralBodies -&gt; AccelerationModel;
-   NamedBodyMap -&gt; AccelerationModel;
-
-
-   # Structure the layout
-   {rank = same; NamedBodyMap, AccelerationModel, centralBodies, bodiesToPropagate};
-   {rank = same; AccelerationSettings, &quot;Additional \ninformation&quot;};
-
-   # Hyperlinks (Sphinx auto referencing not working here, need to link to exact web adres)
-   &quot;AccelerationSettings&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings&quot;, target = &quot;_top&quot;];
-   &quot;Central gravity&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings&quot;, target = &quot;_top&quot;];
-   &quot;AccelerationModel&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html##SelectedAccelerationMap&quot;, target = &quot;_top&quot;];
-   NamedBodyMap [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/environmentSetup/index.html#NamedBodyMap&quot;, target = &quot;_top&quot;];
-   &quot;Spherical harmonic \ngravity&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#SphericalHarmonicAccelerationSettings&quot;, target = &quot;_top&quot;];
-   &quot;Mutual spherical \nharmonic gravity&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings&quot;, target = &quot;_top&quot;];
-   &quot;Aerodynamic&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings&quot;, target = &quot;_top&quot;];
-   &quot;Cannon ball \nradiation pressure&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#MutualSphericalHarmonicAccelerationSettings&quot;, target = &quot;_top&quot;];
-   &quot;Thrust&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#ThrustAccelerationSettings&quot;, target = &quot;_top&quot;];
-   &quot;Tidal Dissipation&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#DissipationAccelerationSettings&quot;, target = &quot;_top&quot;];
-   &quot;Relativistic correction&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#RelativisticAccelerationCorrectionSettings&quot;, target = &quot;_top&quot;];
-   &quot;Empirical&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#EmpiricalAccelerationSettings&quot;, target = &quot;_top&quot;];
-
-}</p></object>
-<object data="../../../_images/graphviz-3c28fd20e3861e7965bedc388a54f8fc55de85cf.svg" type="image/svg+xml">
-            <p class="warning">digraph
-{
-   # General diagram settings
-   rankdir = &quot;LR&quot;;
-   splines = ortho;
-   compound = true;
-
-   subgraph clusterLegend
-   {
-   rank = min;
-   style = dashed;
-
-
-     # general node settings
-     node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
-
-
-     &quot;Object requiring \nadditional information&quot; [ fillcolor = darkturquoise];
-     &quot;Main block&quot; [fillcolor = lightgreen];
-     &quot;Optional input&quot; [style = dotted, fillcolor = lightgrey, color = black];
-     &quot;Input for \nmain block&quot; [fillcolor = lightblue];
-     &quot;Optional input&quot;-&gt; &quot;Object requiring \nadditional information&quot; -&gt; &quot;Input for \nmain block&quot; -&gt; &quot;Main block&quot; [style = invis];
-   }
-}</p></object>
+  <div class="section" id="setting-up-state-derivative-models">
+<span id="tudatfeaturesaccelerationindex"></span><h1>4. Setting up State Derivative Models<a class="headerlink" href="#setting-up-state-derivative-models" title="Permalink to this headline">¶</a></h1>
+<p>Here, we go into detail on how to set up state derivative models, such as accelerations, torques and mass-rate models, in Tudat.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="frameworkAcceleration.html">4.1. Implementation Framework of the Acceleration Settings</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="frameworkAcceleration.html">4.1. Acceleration Model Set-up</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="frameworkAcceleration.html#acceleration-settings">4.1.1. Acceleration settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="frameworkAcceleration.html#available-acceleration-models">4.1.2. Available acceleration models</a></li>
 </ul>
@@ -328,10 +234,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="frameworkAcceleration.html" class="btn btn-neutral float-right" title="4.1. Implementation Framework of the Acceleration Settings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="frameworkAcceleration.html" class="btn btn-neutral float-right" title="4.1. Acceleration Model Set-up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../environmentSetup/index.html" class="btn btn-neutral" title="3. Environment Set-up" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../environmentSetup/aerodynamicCoefficients.html" class="btn btn-neutral" title="3.6. Aerodynamic Coefficients" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

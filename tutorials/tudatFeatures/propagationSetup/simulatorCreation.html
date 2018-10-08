@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>5.6. Create a Dynamics Simulator Object &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>5.6. Performing State Propagation &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
         <link rel="up" title="5. Simulator Set-Up" href="index.html"/>
-        <link rel="next" title="5.7. Time and State Templates" href="TimeStateTemplates.html"/>
+        <link rel="next" title="5.7. Performing Variational Equations Propagation" href="variationalSimulatorCreation.html"/>
         <link rel="prev" title="5.5. Propagator Settings: Conventional vs. Propagated Coordinates" href="propagatorSettingsCoordinates.html"/> 
 
   
@@ -96,21 +96,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials and Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Walkthroughs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Acceleration Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Setting up State Derivative Models</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">5. Simulator Set-Up</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="integratorSettings.html">5.1. Integrator Settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettings.html">5.2. Propagator Settings: Basics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettingsTermination.html">5.3. Propagator Settings: Termination Settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettingsDependentVariables.html">5.4. Propagator Settings: Dependent Variables</a></li>
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettingsCoordinates.html">5.5. Propagator Settings: Conventional vs. Propagated Coordinates</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">5.6. Create a Dynamics Simulator Object</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TimeStateTemplates.html">5.7. Time and State Templates</a></li>
-<li class="toctree-l4"><a class="reference internal" href="variationalSimulatorCreation.html">5.8. Create a Variational Equations Solver Object</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">5.6. Performing State Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variationalSimulatorCreation.html">5.7. Performing Variational Equations Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TimeStateTemplates.html">5.8. Time and State Templates</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">6. Estimation Set-Up</a></li>
@@ -175,7 +175,7 @@
         
           <li><a href="index.html">5. Simulator Set-Up</a> &raquo;</li>
         
-      <li>5.6. Create a Dynamics Simulator Object</li>
+      <li>5.6. Performing State Propagation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -194,13 +194,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="create-a-dynamics-simulator-object">
-<span id="tudatfeaturessimulatorcreation"></span><h1>5.6. Create a Dynamics Simulator Object<a class="headerlink" href="#create-a-dynamics-simulator-object" title="Permalink to this headline">¶</a></h1>
-<p>At the moment, the following <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> options are available or under development in Tudat:</p>
+  <div class="section" id="performing-state-propagation">
+<span id="tudatfeaturessimulatorcreation"></span><h1>5.6. Performing State Propagation<a class="headerlink" href="#performing-state-propagation" title="Permalink to this headline">¶</a></h1>
+<p>Propagating the dynamics, using the settings discussed in previous wiki pages, is done by using a <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> object. We have several different derived classes of <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> for different types of propagation. The following are available or under development in Tudat:</p>
 <ul class="simple">
-<li>Single-arc dynamics simulator.</li>
-<li>Multi-arc dynamics simulator.</li>
-<li>Hybrid dynamics simulator (under development).</li>
+<li>Single-arc dynamics simulator, by using <a class="reference internal" href="#SingleArcDynamicsSimulator" title="SingleArcDynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">SingleArcDynamicsSimulator</span></code></a>. For most Tudat applications, this will be the preferred option (if you’re not sure which one you need, it’s probably this one).</li>
+<li>Multi-arc dynamics simulator, by using <a class="reference internal" href="#MultiArcDynamicsSimulator" title="MultiArcDynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">MultiArcDynamicsSimulator</span></code></a>.</li>
+<li>Hybrid dynamics simulator, by using <code class="xref py py-class docutils literal"><span class="pre">HybridArcDynamicsSimulator</span></code> (under development).</li>
 </ul>
 <p>These are implemented in derived classes and are discussed below.</p>
 <dl class="class">
@@ -218,16 +218,6 @@
 </div>
 <p>where:</p>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">StateScalarType</span></code></p>
-<blockquote>
-<div><p>Template argument used to set the precision of the state, in general <code class="docutils literal"><span class="pre">double</span></code> is used. For some application where a high precision is required this can be changed to e.g. <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code>.</p>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">TimeType</span></code></p>
-<blockquote>
-<div><p>Template argument used to set the precision of the time, in general <code class="docutils literal"><span class="pre">double</span></code> is used. For some application where a high precision is required this can be changed to e.g. :literal`long double`.</p>
-</div></blockquote>
-</li>
 <li><p class="first"><code class="docutils literal"><span class="pre">bodyMap</span></code></p>
 <blockquote>
 <div><p><a class="reference internal" href="../environmentSetup/setup.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a> the map containing al the objects of type <a class="reference internal" href="../environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> used in the simulation.</p>
@@ -240,7 +230,17 @@
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">propagatorSettings</span></code></p>
 <blockquote>
-<div><p><a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> contains the settings that defines how the orbit is propagated, as described in <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>.</p>
+<div><p><code class="xref py py-class docutils literal"><span class="pre">SingleArcPropagatorSettings</span></code> contains the settings that defines how the orbit is propagated, as described in <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">StateScalarType</span></code></p>
+<blockquote>
+<div><p>Template argument used to set the precision of the state, <code class="docutils literal"><span class="pre">double</span></code> by default. For some application where a high precision is required this can be changed to e.g. <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code> (see <a class="reference internal" href="TimeStateTemplates.html#tudatfeaturestimestatetemplates"><span class="std std-ref">Time and State Templates</span></a>).</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">TimeType</span></code></p>
+<blockquote>
+<div><p>Template argument used to set the precision of the time, <code class="docutils literal"><span class="pre">double</span></code> by default. For some application where a high precision is required this can be changed to e.g. <code class="xref py py-class docutils literal"><span class="pre">Time</span></code> (see <a class="reference internal" href="TimeStateTemplates.html#tudatfeaturestimestatetemplates"><span class="std std-ref">Time and State Templates</span></a>).</p>
 </div></blockquote>
 </li>
 </ul>
@@ -249,20 +249,44 @@
 <dl class="class">
 <dt id="MultiArcDynamicsSimulator">
 <em class="property">class </em><code class="descname">MultiArcDynamicsSimulator</code><a class="headerlink" href="#MultiArcDynamicsSimulator" title="Permalink to this definition">¶</a></dt>
-<dd><p>This derived class allows the numerical propagation to be performed in an arc-wise manner. It is constructed using:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">MultiArcDynamicsSimulator</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="n">arcStartTimes</span> <span class="p">)</span>
+<dd><blockquote>
+<div><p>This derived class allows the numerical propagation to be performed in an arc-wise manner. It is constructed using:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">MultiArcDynamicsSimulator</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="n">arcStartTimes</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>where:</p>
+</div></blockquote>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">propagatorSettings</span></code></p>
+<blockquote>
+<div><p><a class="reference internal" href="propagatorSettings.html#MultiArcPropagatorSettings" title="MultiArcPropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">MultiArcPropagatorSettings</span></code></a>, contains the settings that defines how the orbit is propagated, as described in <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>. Note that the propagator settings may be identical, or different, per arc (depending on the contents of the settings object).</p>
+</div></blockquote>
 <ul>
 <li><p class="first"><code class="docutils literal"><span class="pre">arcStartTimes</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">double</span> <span class="pre">&gt;</span></code> containing the times at which the separate arcs start.</p>
+<div><p><code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">double</span> <span class="pre">&gt;</span></code> containing the times at which the separate arcs start. Note: there is no requirement for the arcs to be contiguous and/or overlapping.</p>
 </div></blockquote>
+</li>
+</ul>
 </li>
 </ul>
 </dd></dl>
 
+<p>The following, alternative, constructor allows you to specify different integrator settings per arc:</p>
+<blockquote>
+<div><blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">MultiArcDynamicsSimulator</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettingsList</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="n">arcStartTimes</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">integratorSettingsList</span></code></p>
+<blockquote>
+<div><p><code class="xref py py-class docutils literal"><span class="pre">std::vector</span></code> is the list (same size as number of arcs) with the settings of the integrator used, per arc.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
 <dl class="class">
 <dt id="HybridDynamicsSimulator">
 <em class="property">class </em><code class="descname">HybridDynamicsSimulator</code><a class="headerlink" href="#HybridDynamicsSimulator" title="Permalink to this definition">¶</a></dt>
@@ -385,7 +409,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="TimeStateTemplates.html" class="btn btn-neutral float-right" title="5.7. Time and State Templates" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="variationalSimulatorCreation.html" class="btn btn-neutral float-right" title="5.7. Performing Variational Equations Propagation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="propagatorSettingsCoordinates.html" class="btn btn-neutral" title="5.5. Propagator Settings: Conventional vs. Propagated Coordinates" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
