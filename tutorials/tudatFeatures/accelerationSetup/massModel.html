@@ -38,7 +38,7 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="4. Acceleration Set-Up" href="index.html"/>
+        <link rel="up" title="4. Setting up State Derivative Models" href="index.html"/>
         <link rel="next" title="4.4. Aerodynamic Guidance" href="aerodynamicGuidance.html"/>
         <link rel="prev" title="4.2. Rotational Model Set-up" href="rotModel.html"/> 
 
@@ -101,8 +101,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">4. Acceleration Set-Up</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="frameworkAcceleration.html">4.1. Implementation Framework of the Acceleration Settings</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">4. Setting up State Derivative Models</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="frameworkAcceleration.html">4.1. Acceleration Model Set-up</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rotModel.html">4.2. Rotational Model Set-up</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">4.3. Mass Rate Model Set-up</a></li>
 <li class="toctree-l4"><a class="reference internal" href="aerodynamicGuidance.html">4.4. Aerodynamic Guidance</a></li>
@@ -170,7 +170,7 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">4. Acceleration Set-Up</a> &raquo;</li>
+          <li><a href="index.html">4. Setting up State Derivative Models</a> &raquo;</li>
         
       <li>4.3. Mass Rate Model Set-up</li>
     
@@ -216,7 +216,7 @@
 <dd><p>Using this mass-rate model, the change in vehicle mass due to the expulsion of propellant is taken into account when propagating a vehicle’s dynamics. It retrieves the required data from a <a class="reference internal" href="thrustModels.html#ThrustAcceleration" title="ThrustAcceleration"><code class="xref py py-class docutils literal"><span class="pre">ThrustAcceleration</span></code></a> object (set by <a class="reference internal" href="frameworkAcceleration.html#ThrustAccelerationSettings" title="ThrustAccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustAccelerationSettings</span></code></a>), ensuring full consistency between the two. Two option are available when creating this type of mass-rate model:</p>
 <ul class="simple">
 <li>Use all thrust forces acting on a single body, combined into a single mass-rate model. This will in most cases be the model of choice, as there is often no need to distinguish between thrust sources when computing the mass rate: only the total amount of propellant usage is relevant. This option is toggled by setting the <code class="docutils literal"><span class="pre">useAllThrustModels</span></code> input argument of the <a class="reference internal" href="#FromThrustMassModelSettings" title="FromThrustMassModelSettings"><code class="xref py py-class docutils literal"><span class="pre">FromThrustMassModelSettings</span></code></a> constructor to true.</li>
-<li>Use a single thrust model, defined by a string-identifier. When creating a thrust model, a <code class="docutils literal"><span class="pre">thrustOriginId</span></code> input is provided to the <a class="reference internal" href="thrustModels.html#ThrustEngineSettings" title="ThrustEngineSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustEngineSettings</span></code></a> settings constructor. Only in the <a class="reference internal" href="thrustModels.html#FromBodyThrustEngineSettings" title="FromBodyThrustEngineSettings"><code class="xref py py-class docutils literal"><span class="pre">FromBodyThrustEngineSettings</span></code></a> derived class is this thrust origin id set to anything else than an empty string: it represents the engine name.</li>
+<li>Use a single thrust model, defined by a string-identifier. When creating a thrust model, a <code class="docutils literal"><span class="pre">thrustOriginId</span></code> input is provided to the <a class="reference internal" href="thrustModels.html#ThrustMagnitudeSettings" title="ThrustMagnitudeSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustMagnitudeSettings</span></code></a> settings constructor. Only in the <a class="reference internal" href="thrustModels.html#FromBodyThrustMagnitudeSettings" title="FromBodyThrustMagnitudeSettings"><code class="xref py py-class docutils literal"><span class="pre">FromBodyThrustMagnitudeSettings</span></code></a> derived class is this thrust origin id set to anything else than an empty string: it represents the engine name.</li>
 </ul>
 </dd></dl>
 

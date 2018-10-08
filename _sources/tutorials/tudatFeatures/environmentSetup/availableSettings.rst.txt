@@ -297,9 +297,22 @@ Rotational model
        std::string targetFrame = "IAU_Earth";
        bodySettings[ "Earth" ]->rotationModelSettings = boost::make_shared< RotationModelSettings >( spice_rotation_model, originalFrame, targetFrame ); 
 
+.. class:: GcrsToItrsRotationModelSettings
+
+   High-accuracy rotation model of the Earth, according to the IERS 2010 Conventions. This class has various options to deviate from the default settings, here we only show the main options (typical applications will use default):
+
+   .. code-block:: cpp
+
+       IAUConventions precessionNutationTheory = iau_2006;
+       std::string originalFrame = "J2000";
+       bodySettings[ "Earth" ]->rotationModelSettings = boost::make_shared< GcrsToItrsRotationModelSettings >( 
+          precessionNutationTheory, originalFrame ); 
+
+   Note that for this model the original frame must be J2000, ECLIPJ2000 or GCRS. The precession-nutation theory may be :literal:`iau_2000a`, :literal:`iau_2000b` or :literal:`iau_2006`, as implemented in the SOFA toolbox. Alternative options to modify (not shown above) include the EOP correction file, input time scale, short period UT1 and polar motion variations. Please see the Dosygen documentation for details.
+
 .. method:: Tabulated RotationalEphemeris model
 
-   Rotation model obtained from an interpolator, with dependent variable a ``Eigen::VectorXd`` of size 7. Currently the settings interface is not yet implemented but the functionality is implemented in :class:`TabulatedRotationalEphemeris`. The tabulated rotational ephemeris can be implemented as follows:
+   Rotation model obtained from an interpolator, with dependent variable a ``Eigen::VectorXd`` of size 7: the four entries (w,x,y,z) of the quaternion from the target frame to the base frame, and body's angular velocity vector, expressed in its body-fixed frame . Currently the settings interface is not yet implemented but the functionality is implemented in :class:`TabulatedRotationalEphemeris`. The tabulated rotational ephemeris can be implemented as follows:
 
    .. code-block:: cpp
 
@@ -331,13 +344,12 @@ Body shape model
        double bodyRadius = 6378.0E3;
        bodySettings[ "Earth" ]->shapeModelSettings = boost::make_shared< SphericalBodyShapeSettings >( bodyRadius ); 
 
-.. method:: Perfect sphere
+.. method:: Spherical shape from SPice
 
    Model defining a body shape as a perfect sphere, with the sphere radius retrieved from Spice. No derived class of :class:`BodyShapeSettings` base class required, created by passing ``spherical_spice`` as argument to base class constructor.
 
    .. code-block:: cpp
 
-       double bodyRadius = 6378.0E3;
        bodySettings[ "Earth" ]->shapeModelSettings = boost::make_shared< BodyShapeSettings >( spherical_spice ); 
 
 .. class:: OblateSphericalBodyShapeSettings  

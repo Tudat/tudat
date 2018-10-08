@@ -103,13 +103,12 @@
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">3. Environment Set-up</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">3.1. Setting up the Environment</a></li>
 <li class="toctree-l4"><a class="reference internal" href="availableSettings.html">3.2. Available Settings for the Environment Models</a></li>
-<li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphere.html">3.3. Tabulated Atmosphere Settings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="duringPropagation.html">3.4. The Environment During Propagation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="timeRange.html">3.5. The Environment Valid Time-Range</a></li>
-<li class="toctree-l4"><a class="reference internal" href="aerodynamicCoefficients.html">3.6. Aerodynamic Coefficients</a></li>
+<li class="toctree-l4"><a class="reference internal" href="duringPropagation.html">3.3. The Environment During Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphere.html">3.4. Tabulated Atmosphere Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aerodynamicCoefficients.html">3.5. Aerodynamic Coefficients</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Acceleration Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Setting up State Derivative Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Simulator Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">6. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
@@ -195,31 +194,7 @@
   <div class="section" id="setting-up-the-environment">
 <span id="tudatfeaturesenvironmentsetup"></span><h1>3.1. Setting up the Environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this headline">¶</a></h1>
 <p>In Tudat, the physical environment is defined by a list of&nbsp;<a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;objects, each of which represents either a celestial body, or a manmade vehicle. Consequently, all properties that are required for computing e.g. accelerations are stored in&nbsp;<a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;objects.</p>
-<dl class="class">
-<dt id="Body">
-<em class="property">class </em><code class="descname">Body</code><a class="headerlink" href="#Body" title="Permalink to this definition">¶</a></dt>
-<dd><p>Container for all properties of a body required for computing e.g. accelerations.</p>
-</dd></dl>
-
-<p>Typically the entire environment is stored in a named list of&nbsp;<a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object, the standard typedef for which is the&nbsp;<a class="reference internal" href="#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a>.</p>
-<dl class="class">
-<dt id="NamedBodyMap">
-<em class="property">class </em><code class="descname">NamedBodyMap</code><a class="headerlink" href="#NamedBodyMap" title="Permalink to this definition">¶</a></dt>
-<dd><p>An unordered map of shared pointers to <a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> objects, see&nbsp;<a class="reference internal" href="../../basics/externalLibraries/boost.html#externalboost"><span class="std std-ref">this</span></a> wiki page&nbsp;for a discussion of shared pointers; don’t worry if you’re not sure what a shared pointer or unordered map is at this point.</p>
-</dd></dl>
-
-<div class="section" id="manually-creating-the-environment">
-<h2>3.1.1. Manually creating the environment<a class="headerlink" href="#manually-creating-the-environment" title="Permalink to this headline">¶</a></h2>
-<p>The following shows how to manually declare a&nbsp;<a class="reference internal" href="#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a>, and then create entries in this body map for a number of bodies:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span><span class="p">;</span>
-<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
-<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Moon&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
-<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
-<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
-</pre></div>
-</div>
-<p>This creates four body objects (representing three celestial bodies and one vehicle; Tudat does not distinguish between the two). However, these bodies do not yet have any physical properties, the&nbsp;<code class="docutils literal"><span class="pre">bodyMap</span></code>&nbsp;created above now only indicates the&nbsp;existence&nbsp;of these four bodies.</p>
-<p>To actually define the physical properties of the environment, a&nbsp;<a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object may be endowed with any of a number of properties. In particular, the following properties may be set. A more extensive list of possible model types is given at the end of this tutorial page:</p>
+<p>Tudat provides the following options for environment models:</p>
 <blockquote>
 <div><ul class="simple">
 <li><strong>Ephemeris:</strong> defines the state of the body as a function of time (Dynamical Barycentric Time seconds since J2000 is default).</li>
@@ -234,16 +209,23 @@
 <li><strong>Vehicle system models:</strong> This is a container object that stores properties of systems and physical properties of a vehicle. The options in this container are presently limited to propulsion systems and some physical characteristics related to entry heating.</li>
 </ul>
 </div></blockquote>
-<p>These properties can be set manually or default settings can be used. For instance, to manually create and set an ephemeris (from Spice w.r.t. the barycenter) and gravity field (point-mass only) object in the <code class="docutils literal"><span class="pre">&quot;Earth&quot;</span></code> entry of the body map, the following can be used:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setEphemeris</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SpiceEphemeris</span> <span class="o">&gt;</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;SSB&quot;</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="s">&quot;J2000&quot;</span> <span class="p">)</span> <span class="p">);</span>
-<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setGravityFieldModel</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GravityFieldModel</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mf">3.986004418E14</span> <span class="p">)</span> <span class="p">);</span>
-</pre></div>
-</div>
-<p>This calls the constructors of the&nbsp;<a class="reference internal" href="../otherLibraries/spice.html#SpiceEphemeris" title="SpiceEphemeris"><code class="xref py py-class docutils literal"><span class="pre">SpiceEphemeris</span></code></a>&nbsp;and&nbsp;<a class="reference internal" href="availableSettings.html#GravityFieldModel" title="GravityFieldModel"><code class="xref py py-class docutils literal"><span class="pre">GravityFieldModel</span></code></a>&nbsp;classes, and assigns the objects that are constructed to the&nbsp;”Earth”&nbsp;entry of the&nbsp;<code class="docutils literal"><span class="pre">bodyMap</span></code>.</p>
-</div>
+<p>These properties can be set manually or default settings can be used (see below).</p>
+<dl class="class">
+<dt id="Body">
+<em class="property">class </em><code class="descname">Body</code><a class="headerlink" href="#Body" title="Permalink to this definition">¶</a></dt>
+<dd><p>Container for all properties of a body required for computing e.g. accelerations.</p>
+</dd></dl>
+
+<p>Typically the entire environment is stored in a named list of&nbsp;<a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object, the standard typedef for which is the&nbsp;<a class="reference internal" href="#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a>.</p>
+<dl class="class">
+<dt id="NamedBodyMap">
+<em class="property">class </em><code class="descname">NamedBodyMap</code><a class="headerlink" href="#NamedBodyMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>An unordered map of shared pointers to <a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> objects, see&nbsp;<a class="reference internal" href="../../basics/externalLibraries/boost.html#externalboost"><span class="std std-ref">this</span></a> wiki page&nbsp;for a discussion of shared pointers; don’t worry if you’re not sure what a shared pointer or unordered map is at this point.</p>
+</dd></dl>
+
 <div class="section" id="creating-the-environment-from-bodysettings">
-<span id="tudatfeaturescreatingtheenvironment"></span><h2>3.1.2. Creating the environment from&nbsp;<a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a><a class="headerlink" href="#creating-the-environment-from-bodysettings" title="Permalink to this headline">¶</a></h2>
-<p>Manually creating all objects defining the full environment is possible, but not recommended. In particular, various environment models are interdependent and these dependencies must be fully and consistently defined for the code to function properly. To this end, we provide a&nbsp;<a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;object.</p>
+<span id="tudatfeaturescreatingtheenvironment"></span><h2>3.1.1. Creating the environment from&nbsp;<a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a><a class="headerlink" href="#creating-the-environment-from-bodysettings" title="Permalink to this headline">¶</a></h2>
+<p>Manually creating all objects defining the full environment is possible (see below), but not recommended. In particular, various environment models are interdependent and these dependencies must be fully and consistently defined for the code to function properly. To this end, we provide a&nbsp;<a class="reference internal" href="#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;object, which is the easiest way to create a set of (natural or artificial) bodies in Tudat.</p>
 <dl class="class">
 <dt id="BodySettings">
 <em class="property">class </em><code class="descname">BodySettings</code><a class="headerlink" href="#BodySettings" title="Permalink to this definition">¶</a></dt>
@@ -293,6 +275,33 @@
 </pre></div>
 </div>
 <p>This line of code allows the ephemerides and rotation models of the various bodies to be defined w.r.t. different origins (and even w.r.t. each other).</p>
+</div>
+<div class="section" id="manually-creating-the-environment">
+<h2>3.1.2. Manually creating the environment<a class="headerlink" href="#manually-creating-the-environment" title="Permalink to this headline">¶</a></h2>
+<p>The following shows how to manually declare a&nbsp;<a class="reference internal" href="#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a>, and then create entries in this body map for a number of bodies:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span><span class="p">;</span>
+<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Moon&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>This creates four body objects (representing three celestial bodies and one vehicle; Tudat does not distinguish between the two). However, these bodies do not yet have any physical properties, the&nbsp;<code class="docutils literal"><span class="pre">bodyMap</span></code>&nbsp;created above now only indicates the&nbsp;existence&nbsp;of these four bodies.</p>
+<p>To actually define the physical properties of the environment, a&nbsp;<a class="reference internal" href="#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object may be endowed with any of a number of properties. In particular, the following properties may be set. A more extensive list of possible model types is given at the end of this tutorial page:</p>
+<p>For instance, to manually create and set an ephemeris (from Spice w.r.t. the barycenter) and gravity field (point-mass only) object in the <code class="docutils literal"><span class="pre">&quot;Earth&quot;</span></code> entry of the body map, the following can be used:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setEphemeris</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SpiceEphemeris</span> <span class="o">&gt;</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;SSB&quot;</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="s">&quot;J2000&quot;</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setGravityFieldModel</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GravityFieldModel</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mf">3.986004418E14</span> <span class="p">)</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>This calls the constructors of the&nbsp;<a class="reference internal" href="../otherLibraries/spice.html#SpiceEphemeris" title="SpiceEphemeris"><code class="xref py py-class docutils literal"><span class="pre">SpiceEphemeris</span></code></a>&nbsp;and&nbsp;<a class="reference internal" href="availableSettings.html#GravityFieldModel" title="GravityFieldModel"><code class="xref py py-class docutils literal"><span class="pre">GravityFieldModel</span></code></a>&nbsp;classes, and assigns the objects that are constructed to the&nbsp;”Earth”&nbsp;entry of the&nbsp;<code class="docutils literal"><span class="pre">bodyMap</span></code>.</p>
+</div>
+<div class="section" id="valid-time-range-of-environment">
+<h2>3.1.3. Valid Time-Range of Environment<a class="headerlink" href="#valid-time-range-of-environment" title="Permalink to this headline">¶</a></h2>
+<p>Most of the environment models are valid for any time, but there is a key exception. In particular, the default settings do not directly use the Spice ephemerides, but retrieve the state for each body from Spice, and then create a&nbsp;<code class="xref py py-class docutils literal"><span class="pre">TabulatedEphemeris</span></code>&nbsp;(which is only valid in the given time range, of which settings are explained in <a class="reference internal" href="availableSettings.html#TabulatedEphemerisSettings" title="TabulatedEphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">TabulatedEphemerisSettings</span></code></a>), as opposed to a&nbsp;<a class="reference internal" href="../otherLibraries/spice.html#SpiceEphemeris" title="SpiceEphemeris"><code class="xref py py-class docutils literal"><span class="pre">SpiceEphemeris</span></code></a> (as discussed in <a class="reference internal" href="availableSettings.html#DirectSpiceEphermerisSettings" title="DirectSpiceEphermerisSettings"><code class="xref py py-class docutils literal"><span class="pre">DirectSpiceEphermerisSettings</span></code></a>), which is valid for the entire time interval that the Spice kernels contain data. This approach is taken for computational reasons: retrieving a state from Spice is very time-consuming, much more so than retrieving it from a 6th- or 8th-order Lagrange interpolator that is used here for the tabulated ephemeris. An additional consequence of this is that the start and end time of the environment must be slightly (3 times the integration time step) larger than that which is used for the actual propagation, as a Lagrange interpolator can be unreliable at the edges of its domain. It is also possible to use the&nbsp;<a class="reference internal" href="../otherLibraries/spice.html#SpiceEphemeris" title="SpiceEphemeris"><code class="xref py py-class docutils literal"><span class="pre">SpiceEphemeris</span></code></a>&nbsp;directly, at the expense of longer runtimes, by creating the <code class="docutils literal"><span class="pre">bodySettings</span></code> and <code class="docutils literal"><span class="pre">bodyMap</span></code> as:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodySettings</span> <span class="o">=</span> <span class="n">getDefaultBodySettings</span><span class="p">(</span> <span class="n">bodiesToCreate</span> <span class="p">)</span>
+<span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
+</pre></div>
+</div>
 </div>
 </div>
 

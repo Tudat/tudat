@@ -38,7 +38,7 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="4. Acceleration Set-Up" href="index.html"/>
+        <link rel="up" title="4. Setting up State Derivative Models" href="index.html"/>
         <link rel="next" title="4.5. Thrust Guidance" href="thrustModels.html"/>
         <link rel="prev" title="4.3. Mass Rate Model Set-up" href="massModel.html"/> 
 
@@ -101,8 +101,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">4. Acceleration Set-Up</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="frameworkAcceleration.html">4.1. Implementation Framework of the Acceleration Settings</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">4. Setting up State Derivative Models</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="frameworkAcceleration.html">4.1. Acceleration Model Set-up</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rotModel.html">4.2. Rotational Model Set-up</a></li>
 <li class="toctree-l4"><a class="reference internal" href="massModel.html">4.3. Mass Rate Model Set-up</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">4.4. Aerodynamic Guidance</a></li>
@@ -170,7 +170,7 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">4. Acceleration Set-Up</a> &raquo;</li>
+          <li><a href="index.html">4. Setting up State Derivative Models</a> &raquo;</li>
         
       <li>4.4. Aerodynamic Guidance</li>
     
@@ -308,28 +308,59 @@
 <dl class="class">
 <dt id="FlightConditions">
 <em class="property">class </em><code class="descname">FlightConditions</code><a class="headerlink" href="#FlightConditions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class which stores data on altitude, density, airspeed, etc.</p>
+<dd><p>Class which calculates and stores data on altitude, longitude, latitude, etc. for non-atmospheric flight (stored as a member of a <a class="reference internal" href="../environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> object). Can be used during propagation to retrieve various data, using the functions:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">getCurrentAltitude</span></code>  Returns the current altitude w.r.t. the central body shape model</li>
+<li><code class="docutils literal"><span class="pre">getCurrentLongitude</span></code> Returns the current longitude, in the body-fixed frame of the central body</li>
+<li><code class="docutils literal"><span class="pre">getCurrentGeodeticLatitude</span></code> Returns the current geodetic latitude, in the body-fixed frame of the central body</li>
+<li><code class="docutils literal"><span class="pre">getAerodynamicAngleCalculator</span></code> Returns a <code class="docutils literal"><span class="pre">AerodynamicAngleCalculator</span></code> object, from which the current geographic latitude, longitude, flight path angle, heading angle, bank angle, sideslip angle and angle of attack can be retrieved.</li>
+</ul>
 </dd></dl>
 
-<p>To compute orientation angles from these flight conditions:</p>
+<dl class="class">
+<dt id="AtmosphericFlightConditions">
+<em class="property">class </em><code class="descname">AtmosphericFlightConditions</code><a class="headerlink" href="#AtmosphericFlightConditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class, derived from <a class="reference internal" href="#FlightConditions" title="FlightConditions"><code class="xref py py-class docutils literal"><span class="pre">FlightConditions</span></code></a>, which stores data on altitude, longitude, latitude, density, airspeed, etc. for atmospheric flight.  Can be used during propagation to retrieve various data. It derives all functions of <a class="reference internal" href="#FlightConditions" title="FlightConditions"><code class="xref py py-class docutils literal"><span class="pre">FlightConditions</span></code></a>, and also provides the functions:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">getCurrentDensity</span></code> Returns the current atmospheric density at the vehicle current state.</li>
+<li><code class="docutils literal"><span class="pre">getCurrentFreestreamTemperature</span></code> Returns the current atmospheric temperature at the vehicle current state.</li>
+<li><code class="docutils literal"><span class="pre">getCurrentDynamicPressure</span></code> Returns the current dynamic pressure at the vehicle current state.</li>
+<li><code class="docutils literal"><span class="pre">getCurrentPressure</span></code> Returns the current static pressure at the vehicle current state.</li>
+<li><code class="docutils literal"><span class="pre">getCurrentAirspeed</span></code> Returns the current airspeed at the vehicle current state.</li>
+<li><code class="docutils literal"><span class="pre">getCurrentSpeedOfSound</span></code> Returns the current speed of sound at the vehicle current state.</li>
+<li><code class="docutils literal"><span class="pre">getCurrentMachNumber</span></code> Returns the current Mach number at the vehicle current state.</li>
+<li><code class="docutils literal"><span class="pre">getCurrentAirspeedBasedVelocity</span></code> Returns the current velocity vectorof the vehicle w.r.t. the atmosphere, expressed in the frame fixed to the central body.</li>
+<li><code class="docutils literal"><span class="pre">getAerodynamicCoefficientInterface</span></code> Returns the object of type <a class="reference internal" href="../environmentSetup/availableSettings.html#AerodynamicCoefficientInterface" title="AerodynamicCoefficientInterface"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientInterface</span></code></a> responsible for computing and updating the aerodynamic coefficients.</li>
+<li><code class="docutils literal"><span class="pre">getAerodynamicCoefficientIndependentVariables</span></code> Returns the current list of independent variables of teh aerodynamic coefficients. For instance, if the coefficients depend on Mach number, angle of attack and sideslip angle, this function returns a vector containing these three variables (in order).</li>
+</ul>
+</dd></dl>
+
+<p>An example of an implementation of an aerodynamic guidance class is given and discussed below.</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FlightConditionsBasedAerodynamicGuidance</span><span class="o">:</span> <span class="k">public</span> <span class="n">AerodynamicGuidance</span>
 <span class="p">{</span>
     <span class="n">FlightConditionsBasedAerodynamicGuidance</span><span class="p">(</span>
             <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span>
             <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">vehicleName</span> <span class="p">)</span>
     <span class="p">{</span>
-        <span class="n">vehicleFlightConditions_</span> <span class="o">=</span> <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">vehicleName</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span> <span class="p">);</span>
+        <span class="n">vehicleFlightConditions_</span> <span class="o">=</span>
+           <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">AtmosphericFlightConditions</span> <span class="o">&gt;</span><span class="p">(</span>
+              <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">vehicleName</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span> <span class="n">vehicleFlightConditions_</span> <span class="o">==</span> <span class="k">nullptr</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="s">&quot;Error in FlightConditionsBasedAerodynamicGuidance, expected AtmosphericFlightConditions&quot;</span> <span class="p">);</span>
+        <span class="p">}</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">updateGuidance</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">currentTime</span> <span class="p">);</span>
 
 <span class="k">private</span><span class="o">:</span>
 
-    <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">FlightConditions</span> <span class="o">&gt;</span> <span class="n">vehicleFlightConditions_</span><span class="p">;</span>
+    <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AtmosphericFlightConditions</span> <span class="o">&gt;</span> <span class="n">vehicleFlightConditions_</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
 </div>
-<p>where the&nbsp;<code class="docutils literal"><span class="pre">updateGuidance</span></code>&nbsp;function is not defined directly in the <code class="docutils literal"><span class="pre">.h</span></code> file, but instead in the <code class="docutils literal"><span class="pre">.cpp</span></code> file. As an example, let’s consider the simplified (and still not particularly realistic) aerodynamic guidance where:</p>
+<p>where the&nbsp;<code class="docutils literal"><span class="pre">updateGuidance</span></code>&nbsp;function is not defined directly in the <code class="docutils literal"><span class="pre">.h</span></code> file, but instead in the <code class="docutils literal"><span class="pre">.cpp</span></code> file (below). Note the <code class="docutils literal"><span class="pre">dynamic_pointer_cast</span></code> in the constructor, and the check to see if the <a class="reference internal" href="#FlightConditions" title="FlightConditions"><code class="xref py py-class docutils literal"><span class="pre">FlightConditions</span></code></a> object is actually of the type <a class="reference internal" href="#AtmosphericFlightConditions" title="AtmosphericFlightConditions"><code class="xref py py-class docutils literal"><span class="pre">AtmosphericFlightConditions</span></code></a>.</p>
+<p>As an example for a guidance scheme, let’s consider the simplified (and still not particularly realistic) aerodynamic guidance where:</p>
 <blockquote>
 <div><ul class="simple">
 <li>Angle of attack is 35 degrees is altitude is larger than 60 km, angle of attack is 5 degrees at 30 km, and changes linearly between these two values.</li>
@@ -374,12 +405,12 @@
 <p>In computing your aerodynamic guidance commands, you will likely need to use a number of physical quantities from your environment, as is the case with the example above, where the altitude is used. Below, a list is given with the way in which to retrieve some variables that are typical in aerodynamic guidance:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>Current conditions at a vehicle’s location w.r.t. a central central body:</strong> These are stored in an object of type&nbsp;<a class="reference internal" href="#FlightConditions" title="FlightConditions"><code class="xref py py-class docutils literal"><span class="pre">FlightConditions</span></code></a>&nbsp;(stored in a&nbsp;<a class="reference internal" href="../environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object; retrieved by using the&nbsp;<code class="docutils literal"><span class="pre">getFlightConditions</span></code>&nbsp;function). In the&nbsp;<a class="reference internal" href="#FlightConditions" title="FlightConditions"><code class="xref py py-class docutils literal"><span class="pre">FlightConditions</span></code></a>&nbsp;class, you will see a number of functions called&nbsp;<code class="docutils literal"><span class="pre">getCurrent...</span></code>. When called from the&nbsp;<a class="reference internal" href="#AerodynamicGuidance" title="AerodynamicGuidance"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicGuidance</span></code></a>&nbsp;derived class, the current value of the associated quantity is returned (e.g.&nbsp;<code class="docutils literal"><span class="pre">getCurrentAltitude</span></code>&nbsp;returns altitude,&nbsp;<code class="docutils literal"><span class="pre">getCurrentAirspeed</span></code>&nbsp;returns airspeed,&nbsp;etc.).</li>
+<li><strong>Current conditions at a vehicle’s location w.r.t. a central central body:</strong> These are stored in an object of type&nbsp;<a class="reference internal" href="#FlightConditions" title="FlightConditions"><code class="xref py py-class docutils literal"><span class="pre">FlightConditions</span></code></a>, which may be of the <a class="reference internal" href="#AtmosphericFlightConditions" title="AtmosphericFlightConditions"><code class="xref py py-class docutils literal"><span class="pre">AtmosphericFlightConditions</span></code></a> derived class, as in the case above&nbsp;(stored in a&nbsp;<a class="reference internal" href="../environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object; retrieved by using the&nbsp;<code class="docutils literal"><span class="pre">getFlightConditions</span></code>&nbsp;function). In the&nbsp;<a class="reference internal" href="#FlightConditions" title="FlightConditions"><code class="xref py py-class docutils literal"><span class="pre">FlightConditions</span></code></a> and <a class="reference internal" href="#AtmosphericFlightConditions" title="AtmosphericFlightConditions"><code class="xref py py-class docutils literal"><span class="pre">AtmosphericFlightConditions</span></code></a>&nbsp;class code, you will see a number of functions called&nbsp;<code class="docutils literal"><span class="pre">getCurrent...</span></code>. These functions are key in linking the environment with the guidance. When called from the&nbsp;<a class="reference internal" href="#AerodynamicGuidance" title="AerodynamicGuidance"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicGuidance</span></code></a>&nbsp;derived class, the current value of the associated quantity is returned (e.g.&nbsp;<code class="docutils literal"><span class="pre">getCurrentAltitude</span></code>&nbsp;returns altitude,&nbsp;<code class="docutils literal"><span class="pre">getCurrentAirspeed</span></code>&nbsp;returns airspeed,&nbsp;etc.).</li>
 <li><strong>Aerodynamic coefficients:</strong> These often play a particularly important role in the aerodynamic guidance. Whereas the other dependent variables are computed before updating the angles of attack, sideslip and bank, the aerodynamic coefficients are computed&nbsp;as a function of these angles. Therefore, the ‘current aerodynamic coefficients’ cannot yet be retrieved from the environment when updating the guidance. However, if the angles on which the aerodynamic coefficients depend have already been locally computed (in <code class="docutils literal"><span class="pre">currentAngleOfAttack_</span></code>,&nbsp;etc.), they may be used for determination of subsequent angles. Below is an example of aerodynamic coefficients depending on angle of attack, angle of sideslip and Mach number and the bank angle determined as a function of aerodynamic coefficients. The following can then be used inside the&nbsp;<code class="docutils literal"><span class="pre">updateGuidance</span></code>&nbsp;function:</li>
 </ul>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define aerodynamic coefficient interface/flight conditions (typically retrieved from body map; may also be a member variable)</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">aerodynamics</span><span class="o">::</span><span class="n">AerodynamicCoefficientInterface</span> <span class="o">&gt;</span> <span class="n">coefficientInterface_</span> <span class="o">=</span> <span class="p">...</span>
-<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">aerodynamics</span><span class="o">::</span><span class="n">FlightConditions</span> <span class="o">&gt;</span> <span class="n">flightConditions_</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">aerodynamics</span><span class="o">::</span><span class="n">AtmosphericFlightConditions</span> <span class="o">&gt;</span> <span class="n">flightConditions_</span> <span class="o">=</span> <span class="p">...</span>
 
 <span class="c1">// Compute angles of attack and sideslip</span>
 <span class="n">currentAngleOfAttack_</span> <span class="o">=</span> <span class="p">...</span>
@@ -447,7 +478,13 @@
             <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span>
             <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">vehicleName</span> <span class="p">)</span>
     <span class="p">{</span>
-        <span class="n">vehicleFlightConditions_</span> <span class="o">=</span> <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">vehicleName</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span> <span class="p">);</span>
+        <span class="n">vehicleFlightConditions_</span> <span class="o">=</span>
+           <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">AtmosphericFlightConditions</span> <span class="o">&gt;</span><span class="p">(</span>
+              <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">vehicleName</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span> <span class="n">vehicleFlightConditions_</span> <span class="o">==</span> <span class="k">nullptr</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="s">&quot;Error in FlightConditionsBasedAerodynamicGuidance, expected AtmosphericFlightConditions&quot;</span> <span class="p">);</span>
+        <span class="p">}</span>
         <span class="n">vehicleSystems_</span> <span class="o">=</span> <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">vehicleName</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getVehicleSystems</span><span class="p">(</span> <span class="p">);</span>
     <span class="p">}</span>
 
@@ -455,7 +492,7 @@
 
 <span class="k">private</span><span class="o">:</span>
 
-    <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">FlightConditions</span> <span class="o">&gt;</span> <span class="n">vehicleFlightConditions_</span><span class="p">;</span>
+    <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AtmosphericFlightConditions</span> <span class="o">&gt;</span> <span class="n">vehicleFlightConditions_</span><span class="p">;</span>
 
     <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">system_models</span><span class="o">::</span><span class="n">VehicleSystems</span> <span class="o">&gt;</span> <span class="n">vehicleSystems_</span><span class="p">;</span>
 

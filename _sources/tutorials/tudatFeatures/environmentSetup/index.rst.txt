@@ -116,7 +116,6 @@ On this page, we will give an overview of how the environment is represented in 
 
    setup
    availableSettings
-   tabulatedAtmosphere
    duringPropagation
-   timeRange
+   tabulatedAtmosphere
    aerodynamicCoefficients

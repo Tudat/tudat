@@ -38,7 +38,7 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="4. Acceleration Set-Up" href="index.html"/>
+        <link rel="up" title="4. Setting up State Derivative Models" href="index.html"/>
         <link rel="next" title="5. Simulator Set-Up" href="../propagationSetup/index.html"/>
         <link rel="prev" title="4.4. Aerodynamic Guidance" href="aerodynamicGuidance.html"/> 
 
@@ -101,8 +101,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">4. Acceleration Set-Up</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="frameworkAcceleration.html">4.1. Implementation Framework of the Acceleration Settings</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">4. Setting up State Derivative Models</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="frameworkAcceleration.html">4.1. Acceleration Model Set-up</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rotModel.html">4.2. Rotational Model Set-up</a></li>
 <li class="toctree-l4"><a class="reference internal" href="massModel.html">4.3. Mass Rate Model Set-up</a></li>
 <li class="toctree-l4"><a class="reference internal" href="aerodynamicGuidance.html">4.4. Aerodynamic Guidance</a></li>
@@ -170,7 +170,7 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">4. Acceleration Set-Up</a> &raquo;</li>
+          <li><a href="index.html">4. Setting up State Derivative Models</a> &raquo;</li>
         
       <li>4.5. Thrust Guidance</li>
     
@@ -193,7 +193,7 @@
             
   <div class="section" id="thrust-guidance">
 <span id="tudatfeaturesthrustmodels"></span><h1>4.5. Thrust Guidance<a class="headerlink" href="#thrust-guidance" title="Permalink to this headline">¶</a></h1>
-<p>When including thrust in the orbit propagation, it may often be desirable to modify the thrust properties of the vehicle as a function of the current environment. Depending on the settings of the system, the magnitude and direction of this force can be controlled to within certain bounds. How the thrust guidance is setup is the topic of this page.</p>
+<p>This page deals with the inclusion of a thrust force into the dynamical model. Note that when using thrust, it may often be desirable to include the mass in the state vector. A good example of incorporating mass propagation is given in <a class="reference internal" href="../../applicationWalkthroughs/useOfThrustThrustForceAlongVelocityVector.html#walkthroughsuseofthrustthrustforcealongvelocityvector"><span class="std std-ref">Use of Thrust: Thrust Force Along Velocity Vector</span></a>. Details of combining mass and state propagation can be found on the <a class="reference internal" href="../propagationSetup/propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a> page.</p>
 <p>In Tudat, we define the thrust force by two separate types of settings (which may or may not be linked):</p>
 <blockquote>
 <div><ul class="simple">
@@ -203,13 +203,13 @@
 </div></blockquote>
 <p>In fact, when creating settings for a thrust force, the user needs to provide settings for these two aspects of the force model</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustDirectionGuidanceSettings</span> <span class="o">&gt;</span> <span class="n">thrustDirectionSettings</span><span class="p">;</span>
-<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustEngineSettings</span> <span class="o">&gt;</span> <span class="n">thrustMagnitudeSettings</span><span class="p">;</span>
+<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustMagnitudeSettings</span> <span class="o">&gt;</span> <span class="n">thrustMagnitudeSettings</span><span class="p">;</span>
 
 <span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettingsMap</span><span class="p">;</span>
 <span class="n">accelerationSettingsMap</span><span class="p">[</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">][</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ThrustAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">thrustDirectionSettings</span><span class="p">,</span> <span class="n">thrustMagnitudeSettings</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>In the above code snippet, two things may stand out. First of all, we define the thrust force as one that the vehicle&nbsp;exerts on itself. Secondly, to define the thrust force, the user must provide two objects: one of type (derived from)&nbsp;<a class="reference internal" href="#ThrustDirectionGuidanceSettings" title="ThrustDirectionGuidanceSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustDirectionGuidanceSettings</span></code></a>&nbsp;and&nbsp;<a class="reference internal" href="#ThrustEngineSettings" title="ThrustEngineSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustEngineSettings</span></code></a>. The settings are used to create a <a class="reference internal" href="#ThrustAcceleration" title="ThrustAcceleration"><code class="xref py py-class docutils literal"><span class="pre">ThrustAcceleration</span></code></a> acceleration object.</p>
+<p>In the above code snippet, two things may stand out. First of all, we define the thrust force as one that the vehicle exerts on itself. Secondly, to define the thrust force, the user must provide two objects: one of type (derived from) <a class="reference internal" href="#ThrustDirectionGuidanceSettings" title="ThrustDirectionGuidanceSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustDirectionGuidanceSettings</span></code></a> and <a class="reference internal" href="#ThrustMagnitudeSettings" title="ThrustMagnitudeSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustMagnitudeSettings</span></code></a>. The settings are used to create a <a class="reference internal" href="#ThrustAcceleration" title="ThrustAcceleration"><code class="xref py py-class docutils literal"><span class="pre">ThrustAcceleration</span></code></a> acceleration object.</p>
 <dl class="class">
 <dt id="ThrustAcceleration">
 <em class="property">class </em><code class="descname">ThrustAcceleration</code><a class="headerlink" href="#ThrustAcceleration" title="Permalink to this definition">¶</a></dt>
@@ -218,106 +218,192 @@
 
 <div class="section" id="thrust-direction">
 <h2>4.5.1. Thrust direction<a class="headerlink" href="#thrust-direction" title="Permalink to this headline">¶</a></h2>
-<p>For the&nbsp;direction&nbsp;of the thrust, there are presently four available types of guidance. As is done for the acceleration models, some of the types of thrust direction require a specific derived class of&nbsp;<a class="reference internal" href="#ThrustDirectionGuidanceSettings" title="ThrustDirectionGuidanceSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustDirectionGuidanceSettings</span></code></a>, while others are defined purely by their type.</p>
+<p>For the direction of the thrust, there are presently four available types of guidance. As is done for the acceleration models, some of the types of thrust direction require a specific derived class of <a class="reference internal" href="#ThrustDirectionGuidanceSettings" title="ThrustDirectionGuidanceSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustDirectionGuidanceSettings</span></code></a>, while others are defined purely by their type.</p>
 <dl class="class">
 <dt id="ThrustDirectionGuidanceSettings">
 <em class="property">class </em><code class="descname">ThrustDirectionGuidanceSettings</code><a class="headerlink" href="#ThrustDirectionGuidanceSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the setting for the direction of the thrust.</p>
+<dd><p>Base class for the setting for the direction of the thrust, in most cases not created directly by user. Important exception: thrust direction from existing orientation (see below).</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The thrust-direction in the inertial frame is defined by this class. The direction of the thrust in the body-fixed frame (which may be required for the computation of the thrust) is defined in the <a class="reference internal" href="#ThrustMagnitudeSettings" title="ThrustMagnitudeSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustMagnitudeSettings</span></code></a> class.</p>
+</div>
+</div></blockquote>
 </dd></dl>
 
 <dl class="class">
 <dt id="ThrustDirectionFromStateGuidanceSettings">
 <em class="property">class </em><code class="descname">ThrustDirectionFromStateGuidanceSettings</code><a class="headerlink" href="#ThrustDirectionFromStateGuidanceSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>In various cases, the thrust direction is to be in line with the position or velocity w.r.t. some body. The user must specify:</p>
-<blockquote>
-<div><ul class="simple">
-<li>The central body w.r.t. which the state is to be computed. For instance, the propagation of a vehicle may be done w.r.t. the Sun, while the thrust direction is computed from the state w.r.t. the Earth.</li>
-<li>Whether the thrust is colinear with velocity or position w.r.t. the central body.</li>
-<li>Whether the thrust force is in the same direction, or opposite to the direction, of the state of the vehicle w.r.t. the central body.</li>
-</ul>
-</div></blockquote>
+<dd><p>In various simplified cases, the thrust direction can be assumed to be in line with either the position or velocity w.r.t. some body. As an example:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">ThrustDirectionFromStateGuidanceSettings</span><span class="p">(</span>
+        <span class="n">centralBodyName</span><span class="p">,</span> <span class="n">isThurstInVelocityDirection</span><span class="p">,</span> <span class="n">directionIsOppositeToVector</span> <span class="p">);</span>
+</pre></div>
+</div>
 </dd></dl>
 
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">centralBodyName</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">std::string</span></code> which defines the name of the central body. Note that this need not be the same body as the center of propagation. For instance, the propagation of a vehicle may be done w.r.t. the Sun, while the thrust direction is computed from the state w.r.t. the Earth.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">isThurstInVelocityDirection</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">bool</span></code> defining whether the thrust is colinear with velocity (if true) or position (if false) w.r.t. the central body.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">directionIsOppositeToVector</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">bool</span></code> defining whether the thrust force is in the same direction, or opposite to the direction, of the position/velocity w.r.t. the central body.</p>
+</div></blockquote>
+</li>
+</ul>
 <dl class="class">
 <dt id="CustomThrustDirectionSettings">
 <em class="property">class </em><code class="descname">CustomThrustDirectionSettings</code><a class="headerlink" href="#CustomThrustDirectionSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>For a generalized thrust direction guidance, the thrust can be defined as an arbitrary function of time. This allows a broad range of options to be defined, at the expense of increased complexity (somehow this thrust direction needs to be manually defined). The user must specify:</p>
-<blockquote>
-<div><ul class="simple">
-<li>A function returning a <code class="docutils literal"><span class="pre">Eigen::Vector3d</span></code> (which should be of unit norm!) as a function of a <code class="docutils literal"><span class="pre">double</span></code> (representing time). If any help is required in defining this function for your specific application, don’t hesitate to contact the Tudat support team.</li>
-</ul>
-</div></blockquote>
+<dd><p>For a generalized thrust direction guidance, the thrust can be defined as an arbitrary function of time. This allows a broad range of options to be defined, at the expense of increased complexity (somehow this thrust direction needs to be manually defined):</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">CustomThrustDirectionSettings</span><span class="p">(</span>
+        <span class="n">thrustDirectionFunction</span> <span class="p">);</span>
+</pre></div>
+</div>
 </dd></dl>
 
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">thrustDirectionFunction</span></code></p>
+<blockquote>
+<div><p>A <code class="docutils literal"><span class="pre">std::function&lt;</span> <span class="pre">Eigen::Vector3d(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> returning a the thrust direction in the inertial frame as an <code class="docutils literal"><span class="pre">Eigen::Vector3d</span></code> (which should be of unit norm!) as a function of a <code class="docutils literal"><span class="pre">double</span></code> (representing time). Details on how to create such an <code class="docutils literal"><span class="pre">std::function</span></code> are given on <a class="reference internal" href="../../basics/externalLibraries/boostExamples.html#externalboostexamples"><span class="std std-ref">Boost: Usage Examples</span></a>.</p>
+</div></blockquote>
+</li>
+</ul>
+<p>As a possible example of how to use this function:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">myThrustFunction</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">time</span><span class="p">,</span> <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span> <span class="p">)</span>
+<span class="p">{</span>
+   <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">thrustDirection</span> <span class="o">=</span>
+      <span class="c1">//... define algorithm to compute thurst based on current environment</span>
+
+   <span class="k">return</span> <span class="n">thrustDirection</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span> <span class="p">)</span>
+<span class="p">{</span>
+   <span class="c1">// Define environment and other settings</span>
+   <span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="p">...</span>
+
+   <span class="c1">// ...</span>
+   <span class="c1">// ...</span>
+   <span class="c1">// ...</span>
+
+   <span class="c1">// Create custom thrust direction settings</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CustomThrustDirectionSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">myThrustFunction</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">bodyMap</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
 <dl class="class">
 <dt id="CustomThrustOrientationSettings">
 <em class="property">class </em><code class="descname">CustomThrustOrientationSettings</code><a class="headerlink" href="#CustomThrustOrientationSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>As an alternative expression for generalized thrust direction guidance, the thrust orientation can be defined as an arbitrary function of time. As with the custom thrust direction. this allows a broad range of options to be defined, at the expense of increased complexity). The user must specify:</p>
+<dd></dd></dl>
+
+<p>As an alternative expression for generalized thrust direction guidance, the thrust orientation can be defined as an arbitrary function of time. As with the custom thrust direction. this allows a broad range of options to be defined, at the expense of increased complexity).</p>
 <blockquote>
-<div><ul class="simple">
-<li>A function returning a <code class="docutils literal"><span class="pre">Eigen::Quateriond</span></code> as a function of a <code class="docutils literal"><span class="pre">double</span></code> (representing time). The quaternion defines the rotation from the body-fixed to the propagation frame. If any help is required in defining this function for your specific application, don’t hesitate to contact the Tudat support team.</li>
-</ul>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The direction of the thrust in the body-fixed frame (which is required for the computation of the thrust) is defined in the&nbsp;<a class="reference internal" href="#ThrustEngineSettings" title="ThrustEngineSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustEngineSettings</span></code></a>&nbsp;class.</p>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">CustomThrustOrientationSettings</span><span class="p">(</span>
+        <span class="n">thrustOrientationFunction</span> <span class="p">);</span>
+</pre></div>
 </div>
 </div></blockquote>
-</dd></dl>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">thrustOrientationFunction</span></code></p>
+<blockquote>
+<div><p>A <code class="docutils literal"><span class="pre">std::function&lt;</span> <span class="pre">Eigen::Quaterniond(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> returning the rotation from body-fixed to inertial state, represented as an <code class="docutils literal"><span class="pre">Eigen::Quaterniond</span></code> (which should be of unit norm!) as a function of a <code class="docutils literal"><span class="pre">double</span></code> (representing time). See <a class="reference internal" href="#CustomThrustDirectionSettings" title="CustomThrustDirectionSettings"><code class="xref py py-class docutils literal"><span class="pre">CustomThrustDirectionSettings</span></code></a> for an example on how to realize this construction.</p>
+</div></blockquote>
+</li>
+</ul>
+<dl class="class">
+<dt id="MeeCostateBasedThrustDirectionSettings">
+<em class="property">class </em><code class="descname">MeeCostateBasedThrustDirectionSettings</code><a class="headerlink" href="#MeeCostateBasedThrustDirectionSettings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
+<p>By using these settings for the thrust direction, the so-called co-states of the Modified Equinoctial elements are used to determine the direction of the thrust. Details of this model are given by Kluever (2010), Boudestijn (2014) and Hogervorst (2017).</p>
 <dl class="method">
 <dt>
 <code class="descname">Thrust direction from existing orientation</code></dt>
-<dd><p>In some cases (discussed in more detail below), the vehicle’s orientation may be predefined, either due to aerodynamic guidance of concurrent propagation of the rotational equations of motion. In such a case, the thrust direction is computed from the body-fixed thrust direction and the existing vehicle orientation. This thrust direction does&nbsp;not&nbsp;require a specific derived class, but instead only requires the input of&nbsp;<code class="docutils literal"><span class="pre">thrust_direction_from_existing_body_orientation</span></code>&nbsp;to the&nbsp;<a class="reference internal" href="#ThrustDirectionGuidanceSettings" title="ThrustDirectionGuidanceSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustDirectionGuidanceSettings</span></code></a>&nbsp;constructor.</p>
+<dd><blockquote>
+<div>In some cases, the vehicle’s orientation may be predetermined, either due to aerodynamic guidance of concurrent propagation of the rotational equations of motion. In such a case, the thrust direction is computed from the body-fixed thrust direction (defined in <a class="reference internal" href="#ThrustMagnitudeSettings" title="ThrustMagnitudeSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustMagnitudeSettings</span></code></a>) and the existing vehicle orientation. This thrust direction does not require a specific derived class, but instead only requires the input of <code class="docutils literal"><span class="pre">thrust_direction_from_existing_body_orientation</span></code> to the <a class="reference internal" href="#ThrustDirectionGuidanceSettings" title="ThrustDirectionGuidanceSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustDirectionGuidanceSettings</span></code></a> constructor, so:</div></blockquote>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">ThrustDirectionGuidanceSettings</span><span class="p">(</span>
+        <span class="n">thrust_direction_from_existing_body_orientation</span><span class="p">,</span> <span class="s">&quot;&quot;</span> <span class="p">);</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
 <div class="section" id="thrust-magnitude">
 <h2>4.5.2. Thrust magnitude<a class="headerlink" href="#thrust-magnitude" title="Permalink to this headline">¶</a></h2>
-<p>To define the thrust magnitude, there are presently three available types of settings, each with its own dedicated derived class of&nbsp;<a class="reference internal" href="#ThrustEngineSettings" title="ThrustEngineSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustEngineSettings</span></code></a>. We note that presently, the definition of the thrust direction in the body-fixed frame is also defined through these derived classes. In essence, the&nbsp;<a class="reference internal" href="#ThrustEngineSettings" title="ThrustEngineSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustEngineSettings</span></code></a>&nbsp;defines all&nbsp;local&nbsp;(to the vehicle systems) settings for the thrust, while&nbsp;<a class="reference internal" href="#ThrustDirectionGuidanceSettings" title="ThrustDirectionGuidanceSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustDirectionGuidanceSettings</span></code></a>&nbsp;defines how the full vehicle must orient itself in space for the required thrust direction to be achieved. At present, there is no option for thrust-vector control (i.e. modifying the thrust direction in the body-fixed frame). If your application requires such functionality, please contact the Tudat support team. The following thrust magnitude settings are available:</p>
+<p>To define the thrust magnitude, there are presently three available types of settings, each with its own dedicated derived class of <a class="reference internal" href="#ThrustMagnitudeSettings" title="ThrustMagnitudeSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustMagnitudeSettings</span></code></a>. We note that presently, the definition of the thrust direction in the body-fixed frame is also defined through these derived classes. In essence, the <a class="reference internal" href="#ThrustMagnitudeSettings" title="ThrustMagnitudeSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustMagnitudeSettings</span></code></a> defines all local (to the vehicle systems) settings for the thrust, while <a class="reference internal" href="#ThrustDirectionGuidanceSettings" title="ThrustDirectionGuidanceSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustDirectionGuidanceSettings</span></code></a> defines how the full vehicle must orient itself in space for the required thrust direction to be achieved. At present, there is no direct option for thrust-vector control (i.e. modifying the thrust direction in the body-fixed frame). If your application requires such functionality, please contact the Tudat support team. The following thrust magnitude settings are available:</p>
 <dl class="class">
-<dt id="ThrustEngineSettings">
-<em class="property">class </em><code class="descname">ThrustEngineSettings</code><a class="headerlink" href="#ThrustEngineSettings" title="Permalink to this definition">¶</a></dt>
+<dt id="ThrustMagnitudeSettings">
+<em class="property">class </em><code class="descname">ThrustMagnitudeSettings</code><a class="headerlink" href="#ThrustMagnitudeSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for the thrust magnitude settings.</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="ConstantThrustEngineSettings">
-<em class="property">class </em><code class="descname">ConstantThrustEngineSettings</code><a class="headerlink" href="#ConstantThrustEngineSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>This model defines a constant thrust&nbsp;force. It requires the following settings as input:</p>
-<blockquote>
-<div><ul class="simple">
-<li>Thrust magnitude to use (in Newtons)</li>
-<li>Specific impulse to use for the thrust. This quantity is used when applying a mass rate model in the propagation the vehicle dynamics, relating the thrust to the mass decrease of the vehicle.</li>
-<li>Body-fixed thrust direction (positive x-direction by default). Note that this should be a unit-vector, and represents the direction&nbsp;opposite&nbsp;to the nozzle direction.</li>
-</ul>
-</div></blockquote>
+<dt id="ConstantThrustMagnitudeSettings">
+<em class="property">class </em><code class="descname">ConstantThrustMagnitudeSettings</code><a class="headerlink" href="#ConstantThrustMagnitudeSettings" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>This model defines a constant thrust force and specific impulse:</div></blockquote>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">ConstantThrustMagnitudeSettings</span><span class="p">(</span>
+    <span class="n">thrustMagnitude</span><span class="p">,</span> <span class="n">specificImpulse</span><span class="p">,</span> <span class="n">bodyFixedThrustDirection</span> <span class="p">)</span><span class="o">:</span>
+</pre></div>
+</div>
 </dd></dl>
 
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">thrustMagnitude</span></code> Constant thrust magnitude to use (in Newtons, as <code class="docutils literal"><span class="pre">double</span></code>)</li>
+<li><code class="docutils literal"><span class="pre">specificImpulse</span></code> Specific impulse to use for the thrust, as <code class="docutils literal"><span class="pre">double</span></code>. This quantity is used when applying a mass rate model in the propagation the vehicle dynamics, relating the thrust to the mass decrease of the vehicle.</li>
+<li><code class="docutils literal"><span class="pre">bodyFixedThrustDirection</span></code> Body-fixed thrust direction (positive x-direction by default) as an <code class="docutils literal"><span class="pre">Eigen::Vector3d</span></code>. Note that this should be a unit-vector, and represents the direction opposite to the nozzle direction.</li>
+</ul>
 <dl class="class">
-<dt id="FromFunctionThrustEngineSettings">
-<em class="property">class </em><code class="descname">FromFunctionThrustEngineSettings</code><a class="headerlink" href="#FromFunctionThrustEngineSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>This model defines a thrust force and specific impulse that can vary with time. It requires the following settings as input:</p>
-<blockquote>
-<div><ul class="simple">
-<li>Thrust magnitude to use (in Newtons), as a function of time as a function of time.</li>
-<li>Specific impulse to use for the thrust, as a function of time. This quantity is used when applying a mass rate model in the propagation the vehicle dynamics, relating the thrust to the mass decrease of the vehicle.</li>
-<li>Body-fixed thrust direction (positive x-direction by default). Note that this should be a unit-vector, and represents the direction&nbsp;opposite&nbsp;to the nozzle direction.</li>
-</ul>
-</div></blockquote>
+<dt id="FromFunctionThrustMagnitudeSettings">
+<em class="property">class </em><code class="descname">FromFunctionThrustMagnitudeSettings</code><a class="headerlink" href="#FromFunctionThrustMagnitudeSettings" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>This model defines a thrust force and specific impulse that can vary with time. It requires the following settings as input:</div></blockquote>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">FromFunctionThrustMagnitudeSettings</span><span class="p">(</span>
+         <span class="n">thrustMagnitudeFunction</span><span class="p">,</span> <span class="n">specificImpulseFunction</span><span class="p">,</span>
+         <span class="n">isEngineOnFunction</span><span class="p">,</span> <span class="n">bodyFixedThrustDirection</span> <span class="p">);</span>
+</pre></div>
+</div>
 </dd></dl>
 
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">thrustMagnitudeFunction</span></code> Thrust magnitude to use (in Newtons), as a function of time as a function of time, defined by an <cite>std::function&lt; double( const double ) &gt;</cite></li>
+<li><code class="docutils literal"><span class="pre">specificImpulseFunction</span></code> Specific impulse to use for the thrust as a function of time, defined by an <cite>std::function&lt; double( const double ) &gt;</cite>. This quantity is used when applying a mass rate model in the propagation the vehicle dynamics, relating the thrust to the mass decrease of the vehicle.</li>
+<li><code class="docutils literal"><span class="pre">isEngineOnFunction</span></code> Boolean defining whether the thrust should be engaged at all, as a function of time (e.g. thrust is 0 N if it returns false), defined by an <cite>std::function&lt; bool( const double ) &gt;</cite>. By default this function always returns true.</li>
+<li><code class="docutils literal"><span class="pre">bodyFixedThrustDirection</span></code> Body-fixed thrust direction (positive x-direction by default) as an <code class="docutils literal"><span class="pre">Eigen::Vector3d</span></code>. Note that this should be a unit-vector, and represents the direction opposite to the nozzle direction.</li>
+</ul>
+<p>Note that if you wish to use a constant value (as opposed to the <code class="docutils literal"><span class="pre">std::function</span></code> expression) for any or all of the first three arguments, you can use lambda expression. For instance, for a variable thrust magnitude, but constant specific impulse of 300 s, you can use:</p>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">FromFunctionThrustMagnitudeSettings</span><span class="p">(</span>
+         <span class="n">thrustMagnitudeFunction</span><span class="p">,</span> <span class="p">[](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="mi">300</span><span class="p">;</span> <span class="p">}</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Where the last two arguments (isEngineOnFunction and bodyFixedThrustDirection) are omitted and therefore are set to their default values.</p>
 <dl class="class">
-<dt id="FromBodyThrustEngineSettings">
-<em class="property">class </em><code class="descname">FromBodyThrustEngineSettings</code><a class="headerlink" href="#FromBodyThrustEngineSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A&nbsp;<a class="reference internal" href="../environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object may be endowed with a&nbsp;<code class="xref py py-class docutils literal"><span class="pre">VehicleSystems</span></code>&nbsp;property, which defines the suite of hardware that it carries. One of the systems that may be defined in the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">VehicleSystems</span></code>&nbsp;object which is a list of&nbsp;<a class="reference internal" href="#EngineModel" title="EngineModel"><code class="xref py py-class docutils literal"><span class="pre">EngineModel</span></code></a>&nbsp;objects (stored in a list). We provide thrust engine settings that use the thrust from one or all of the&nbsp;<a class="reference internal" href="#EngineModel" title="EngineModel"><code class="xref py py-class docutils literal"><span class="pre">EngineModel</span></code></a>&nbsp;objects that a vehicle is endowed with, in this class. It requires the following settings:</p>
-<blockquote>
-<div><ul class="simple">
-<li>A boolean defining whether all engines (i.e. all entries in the&nbsp;<code class="docutils literal"><span class="pre">engineModels</span></code>&nbsp;member of the&nbsp;<code class="xref py py-class docutils literal"><span class="pre">VehicleSystems</span></code>&nbsp;object in the vehicle’s&nbsp;<a class="reference internal" href="../environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object.</li>
-<li>The name of the engine that is to be used for the thrust (to be empty if all engines are used)</li>
-</ul>
-</div></blockquote>
+<dt id="FromBodyThrustMagnitudeSettings">
+<em class="property">class </em><code class="descname">FromBodyThrustMagnitudeSettings</code><a class="headerlink" href="#FromBodyThrustMagnitudeSettings" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>A <a class="reference internal" href="../environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> object may be endowed with a <code class="xref py py-class docutils literal"><span class="pre">VehicleSystems</span></code> property, which defines the suite of hardware that it carries. One of the systems that may be defined in the <code class="xref py py-class docutils literal"><span class="pre">VehicleSystems</span></code> object which is a list of <a class="reference internal" href="#EngineModel" title="EngineModel"><code class="xref py py-class docutils literal"><span class="pre">EngineModel</span></code></a> objects (stored in a list). This class creates thrust magnitude settings that use the thrust from one or all of the <a class="reference internal" href="#EngineModel" title="EngineModel"><code class="xref py py-class docutils literal"><span class="pre">EngineModel</span></code></a> objects that a vehicle is endowed with. In such a situation, the thrust direction, force and specific impulse are taken from the <a class="reference internal" href="#EngineModel" title="EngineModel"><code class="xref py py-class docutils literal"><span class="pre">EngineModel</span></code></a>. It requires the following settings:</div></blockquote>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">FromBodyThrustMagnitudeSettings</span><span class="p">(</span>
+         <span class="n">useAllEngines</span><span class="p">,</span> <span class="n">thrustOrigin</span> <span class="p">);</span>
+</pre></div>
+</div>
 </dd></dl>
 
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">useAllEngines</span></code> A <code class="docutils literal"><span class="pre">bool</span></code> defining whether all engines (i.e. all entries in the <code class="docutils literal"><span class="pre">engineModels</span></code> member of the <code class="xref py py-class docutils literal"><span class="pre">VehicleSystems</span></code> object in the vehicle’s <a class="reference internal" href="../environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> object) are to be used, or only a single engine.</li>
+<li><code class="docutils literal"><span class="pre">thrustOrigin</span></code> A <code class="docutils literal"><span class="pre">std::string</span></code> with the name of the engine that is to be used for the thrust (to be empty if useAllEngines is true)</li>
+</ul>
 <dl class="class">
 <dt id="EngineModel">
 <em class="property">class </em><code class="descname">EngineModel</code><a class="headerlink" href="#EngineModel" title="Permalink to this definition">¶</a></dt>

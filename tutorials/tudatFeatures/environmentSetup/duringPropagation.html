@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3.4. The Environment During Propagation &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>3.3. The Environment During Propagation &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -39,8 +39,8 @@
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
         <link rel="up" title="3. Environment Set-up" href="index.html"/>
-        <link rel="next" title="3.5. The Environment Valid Time-Range" href="timeRange.html"/>
-        <link rel="prev" title="3.3. Tabulated Atmosphere Settings" href="tabulatedAtmosphere.html"/> 
+        <link rel="next" title="3.4. Tabulated Atmosphere Settings" href="tabulatedAtmosphere.html"/>
+        <link rel="prev" title="3.2. Available Settings for the Environment Models" href="availableSettings.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -103,13 +103,12 @@
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">3. Environment Set-up</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="setup.html">3.1. Setting up the Environment</a></li>
 <li class="toctree-l4"><a class="reference internal" href="availableSettings.html">3.2. Available Settings for the Environment Models</a></li>
-<li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphere.html">3.3. Tabulated Atmosphere Settings</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">3.4. The Environment During Propagation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="timeRange.html">3.5. The Environment Valid Time-Range</a></li>
-<li class="toctree-l4"><a class="reference internal" href="aerodynamicCoefficients.html">3.6. Aerodynamic Coefficients</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">3.3. The Environment During Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphere.html">3.4. Tabulated Atmosphere Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aerodynamicCoefficients.html">3.5. Aerodynamic Coefficients</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Acceleration Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Setting up State Derivative Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Simulator Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">6. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
@@ -173,7 +172,7 @@
         
           <li><a href="index.html">3. Environment Set-up</a> &raquo;</li>
         
-      <li>3.4. The Environment During Propagation</li>
+      <li>3.3. The Environment During Propagation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -193,18 +192,41 @@
            <div itemprop="articleBody">
             
   <div class="section" id="the-environment-during-propagation">
-<h1>3.4. The Environment During Propagation<a class="headerlink" href="#the-environment-during-propagation" title="Permalink to this headline">¶</a></h1>
-<p>Each&nbsp;<a class="reference internal" href="setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object and its constituent members is updated to the current state and time automatically during the numerical propagation. We stress that only those models that are relevant for a given propagation are updated every time step (this is handled automatically, without user intervention). Most time-dependent properties of the body are set in the environment models themselves. However, a number are updated and stored directly in the&nbsp;<a class="reference internal" href="setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object. These are:</p>
+<h1>3.3. The Environment During Propagation<a class="headerlink" href="#the-environment-during-propagation" title="Permalink to this headline">¶</a></h1>
+<p>Each&nbsp;<a class="reference internal" href="setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object and its constituent members is updated to the current state and time automatically during the numerical propagation. We stress that only those models that are relevant for a given propagation are updated every time step (this is handled automatically, without user intervention). Some time-dependent properties of the body are set in the environment models themselves. Others are updated and stored directly in the&nbsp;<a class="reference internal" href="setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object. Below is a full list of (possibly) time varying environment models, and how to retrieve them from a Body object during propagation.</p>
+<p><strong>The current translational state</strong></p>
 <blockquote>
-<div><ul class="simple">
-<li>The current translational state of the body</li>
-<li>The current orientation of the body (and its time derivative)</li>
-<li>The current mass of the body</li>
-</ul>
-</div></blockquote>
+<div>Retrieved direct from a <a class="reference internal" href="setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> object directly, with the <code class="docutils literal"><span class="pre">getState</span></code> function, as Cartesian elements. Note that this state is <em>always</em> in the global frame origin and orientation (note that separate <code class="docutils literal"><span class="pre">getPosition</span></code> and <code class="docutils literal"><span class="pre">getVelocity</span></code> functions are also available.</div></blockquote>
+<p><strong>The current rotational state</strong></p>
+<blockquote>
+<div>Retrieved direct from a <a class="reference internal" href="setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> object directly. The current orientation is defined by the body’s rotation model, and is retrieved as a quaternion. To get the quaternion to transform a vector from inertial (e.g. with global frame orientation) to the body-fixed frame, the <code class="docutils literal"><span class="pre">getCurrentRotationToLocalFrame</span></code> can be used. The inverse rotation can be obtained from <code class="docutils literal"><span class="pre">getCurrentRotationToGlobalFrame</span></code>. The time-derivative of the orientation is provided in two formulations (with equivalent information content): the angular velocity vector, and the time derivative of the rotation matrix. The angular velocity vector, in inertial and body-fixed coordinates, is obtained from the <code class="docutils literal"><span class="pre">getCurrentAngularVelocityVectorInGlobalFrame</span></code> and <code class="docutils literal"><span class="pre">getCurrentAngularVelocityVectorInLocalFrame</span></code> functions respectively. The time-derivative of the rotation matrix from inertial to body-fixed frame is given by <code class="docutils literal"><span class="pre">getCurrentRotationMatrixDerivativeToLocalFrame</span></code>, while the derivative of the inverse rotation is taken from <code class="docutils literal"><span class="pre">getCurrentRotationMatrixDerivativeToGlobalFrame</span></code></div></blockquote>
+<p><strong>The current body mass</strong></p>
+<blockquote>
+<div>Retrieved direct from a <a class="reference internal" href="setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> object directly, with the <code class="docutils literal"><span class="pre">getBodyMass</span></code> function.</div></blockquote>
+<p><strong>Spherical harmonic gravity field coefficients</strong></p>
+<blockquote>
+<div>These coefficients may be time variable (set by using one or more <a class="reference internal" href="availableSettings.html#GravityFieldVariationSettings" title="GravityFieldVariationSettings"><code class="xref py py-class docutils literal"><span class="pre">GravityFieldVariationSettings</span></code></a>). The cosine and sine coefficients can be retrieved from a Body object through its gravity field model. A piece of example code on retrieving these coefficients is given below for the case of Earth:</div></blockquote>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="p">....</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicsGravityField</span> <span class="o">&gt;</span> <span class="n">sphericalHarmonicsGravityField</span> <span class="o">=</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicsGravityField</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">)</span> <span class="p">);</span>
+
+<span class="k">if</span><span class="p">(</span> <span class="n">sphericalHarmonicsGravityField</span> <span class="o">==</span> <span class="k">nullptr</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="s">&quot;Error when retrieving spherical harmonic coefficients: Earth does not have a SphericalHarmonicsGravityField&quot;</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">cosineCoefficients</span> <span class="o">=</span> <span class="n">sphericalHarmonicsGravityField</span><span class="o">-&gt;</span><span class="n">getCosineCoefficients</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">sineCoefficients</span> <span class="o">=</span> <span class="n">sphericalHarmonicsGravityField</span><span class="o">-&gt;</span><span class="n">getSineCoefficients</span><span class="p">(</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Note the check to see if the <code class="docutils literal"><span class="pre">dynamic_pointer_cast</span></code> was succesfull. These checks are very helpful in ascertaining the reason for a crashing program.</p>
+<p><strong>Curent flight conditions</strong></p>
+<blockquote>
+<div>The <a class="reference internal" href="../accelerationSetup/aerodynamicGuidance.html#FlightConditions" title="FlightConditions"><code class="xref py py-class docutils literal"><span class="pre">FlightConditions</span></code></a> class, and its derived class <a class="reference internal" href="../accelerationSetup/aerodynamicGuidance.html#AtmosphericFlightConditions" title="AtmosphericFlightConditions"><code class="xref py py-class docutils literal"><span class="pre">AtmosphericFlightConditions</span></code></a> stores data relating to altitude, flight angles, atmospheric properties, etc. Follow the links for their detailed description. The <a class="reference internal" href="../accelerationSetup/aerodynamicGuidance.html#FlightConditions" title="FlightConditions"><code class="xref py py-class docutils literal"><span class="pre">FlightConditions</span></code></a> base class pointer is obtained from the <code class="docutils literal"><span class="pre">getFlightConditions</span></code> function of a <a class="reference internal" href="setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> object.</div></blockquote>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">As a user, you will typically&nbsp;not&nbsp;access these variables directly.</p>
+<p class="last">As a user, you will typically&nbsp;not&nbsp;access these variables directly. Important examples of cases where users <em>can</em> explicitly access them, are custom aerodynamic or thrust guidance.</p>
 </div>
 </div>
 
@@ -218,10 +240,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="timeRange.html" class="btn btn-neutral float-right" title="3.5. The Environment Valid Time-Range" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tabulatedAtmosphere.html" class="btn btn-neutral float-right" title="3.4. Tabulated Atmosphere Settings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tabulatedAtmosphere.html" class="btn btn-neutral" title="3.3. Tabulated Atmosphere Settings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="availableSettings.html" class="btn btn-neutral" title="3.2. Available Settings for the Environment Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

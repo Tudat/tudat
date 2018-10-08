@@ -160,7 +160,7 @@
   <ul class="simple">
 <li><span class="jsontype">string</span> <span class="jsonkey">type</span> (mandatory). Possible values: <code class="docutils literal"><span class="pre">&quot;simple&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;spice&quot;</span></code>.</li>
 <li><span class="jsontype">string</span> <span class="jsonkey">originalFrame</span> (mandatory). Identifier of the base frame of rotation model.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">targetFrame</span> (mandatory). Identifier of the target frame of rotation model.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">targetFrame</span> (mandatory; except for GCRS to ITRS, where “GCRS” is hard-coded). Identifier of the target frame of rotation model.</li>
 </ul>
 <div class="toggle docutils container">
 <div class="header docutils container">
@@ -169,6 +169,13 @@
 <li><span class="jsontype">number</span> <span class="jsonkey">initialTime</span> (mandatory). Time at which <span class="jsonkey">initialOrientation</span> represents the instantaneous rotation.</li>
 <li><span class="jsontype">number</span> <span class="jsonkey">rotationRate</span> (mandatory). Rotation rate of body about its local z-axis.</li>
 <li><span class="jsontype">number[3][3]</span> <span class="jsonkey">initialOrientation</span> (optional). Rotation from base to target frame at <span class="jsonkey">initialTime</span>. If not specified, will be computed using Spice.</li>
+</ul>
+</div>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<span class="arrow">GCRS to ITRS (high-accuracy Earth model)</span></div>
+<ul class="simple">
+<li><span class="jsontype">strinf</span> <span class="jsonkey">precessionNutationTheory</span> (optional). IAU convention to use for precession-nutation model (may be “IAU2000a”, “IAU2000b” or “IAU2006”)</li>
 </ul>
 </div>
 

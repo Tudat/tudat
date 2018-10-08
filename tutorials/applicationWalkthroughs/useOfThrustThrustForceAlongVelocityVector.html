@@ -98,7 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/index.html">Tudat Basics</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Tutorials</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html#example-tutorials">Example Tutorials</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html#tudat-example-application-tutorials">Tudat Example Application Tutorials</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphereExamples.html">1. Tabulated Atmosphere Usage</a></li>
 <li class="toctree-l4"><a class="reference internal" href="unperturbedEarthOrbitingSatellite.html">2. Unperturbed Earth-orbiting Satellite</a></li>
 <li class="toctree-l4"><a class="reference internal" href="perturbedEarthOrbitingSatellite.html">3. Perturbed Earth-orbiting Satellite</a></li>
@@ -114,7 +114,7 @@
 <li class="toctree-l4"><a class="reference internal" href="interplanetaryTrajectory.html">13. MGA Trajectory Design</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="index.html#optimization-tutorials">Optimization Tutorials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#pagmo-optimization-tutorials">Pagmo Optimization Tutorials</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../tudatFeatures/index.html">Tudat Libraries</a></li>
@@ -225,8 +225,8 @@
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustDirectionGuidanceSettings</span> <span class="o">&gt;</span> <span class="n">thrustDirectionGuidanceSettings</span> <span class="o">=</span>
         <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ThrustDirectionFromStateGuidanceSettings</span> <span class="o">&gt;</span><span class="p">(</span>
             <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
-<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustEngineSettings</span> <span class="o">&gt;</span> <span class="n">thrustMagnitudeSettings</span> <span class="o">=</span>
-        <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantThrustEngineSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustMagnitudeSettings</span> <span class="o">&gt;</span> <span class="n">thrustMagnitudeSettings</span> <span class="o">=</span>
+        <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantThrustMagnitudeSettings</span> <span class="o">&gt;</span><span class="p">(</span>
             <span class="n">thrustMagnitude</span><span class="p">,</span> <span class="n">specificImpulse</span> <span class="p">);</span>
 
 <span class="c1">// Define acceleration model settings.</span>
@@ -253,15 +253,15 @@
 <li>Whether the thrust force is in the same direction (false), or opposite to the direction (true), of the state of the vehicle w.r.t. the central body.</li>
 </ul>
 </div></blockquote>
-<p>We have set the thrust force to be in line and in the same direction as the velocity vector of the spacecraft w.r.t. the Earth. Defining the magnitude of the thrust (and specific impulse) is done through the dedicated derived class <a class="reference internal" href="../tudatFeatures/accelerationSetup/thrustModels.html#ConstantThrustEngineSettings" title="ConstantThrustEngineSettings"><code class="xref py py-class docutils literal"><span class="pre">ConstantThrustEngineSettings</span></code></a>:</p>
+<p>We have set the thrust force to be in line and in the same direction as the velocity vector of the spacecraft w.r.t. the Earth. Defining the magnitude of the thrust (and specific impulse) is done through the dedicated derived class <a class="reference internal" href="../tudatFeatures/accelerationSetup/thrustModels.html#ConstantThrustMagnitudeSettings" title="ConstantThrustMagnitudeSettings"><code class="xref py py-class docutils literal"><span class="pre">ConstantThrustMagnitudeSettings</span></code></a>:</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustEngineSettings</span> <span class="o">&gt;</span> <span class="n">thrustMagnitudeSettings</span> <span class="o">=</span>
-        <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantThrustEngineSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustMagnitudeSettings</span> <span class="o">&gt;</span> <span class="n">thrustMagnitudeSettings</span> <span class="o">=</span>
+        <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantThrustMagnitudeSettings</span> <span class="o">&gt;</span><span class="p">(</span>
             <span class="n">thrustMagnitude</span><span class="p">,</span> <span class="n">specificImpulse</span> <span class="p">);</span>
 </pre></div>
 </div>
 </div></blockquote>
-<p>with the first and second arguments of the <a class="reference internal" href="../tudatFeatures/accelerationSetup/thrustModels.html#ConstantThrustEngineSettings" title="ConstantThrustEngineSettings"><code class="xref py py-class docutils literal"><span class="pre">ConstantThrustEngineSettings</span></code></a> representing the constant thrust force and specific impulse. Now, the thrust acceleration settings are added to the <code class="docutils literal"><span class="pre">accelerationsOfVehicle</span></code> list as follows:</p>
+<p>with the first and second arguments of the <a class="reference internal" href="../tudatFeatures/accelerationSetup/thrustModels.html#ConstantThrustMagnitudeSettings" title="ConstantThrustMagnitudeSettings"><code class="xref py py-class docutils literal"><span class="pre">ConstantThrustMagnitudeSettings</span></code></a> representing the constant thrust force and specific impulse. Now, the thrust acceleration settings are added to the <code class="docutils literal"><span class="pre">accelerationsOfVehicle</span></code> list as follows:</p>
 <blockquote>
 <div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">accelerationsOfVehicle</span><span class="p">[</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span>
             <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ThrustAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">thrustDirectionGuidanceSettings</span><span class="p">,</span> <span class="n">thrustMagnitudeSettings</span><span class="p">)</span> <span class="p">);</span>
@@ -372,7 +372,7 @@
 </pre></div>
 </div>
 </div></blockquote>
-<p>As is discussed in more detail in <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#tudatfeaturessimulatorcreation"><span class="std std-ref">Create a Dynamics Simulator Object</span></a>. This <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> object, which contains settings for both translational dynamics and mass rate, can be passed to the <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#SingleArcDynamicsSimulator" title="SingleArcDynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">SingleArcDynamicsSimulator</span></code></a> in the exact same manner as was done in the previous examples.</p>
+<p>As is discussed in more detail in <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#tudatfeaturessimulatorcreation"><span class="std std-ref">Performing State Propagation</span></a>. This <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> object, which contains settings for both translational dynamics and mass rate, can be passed to the <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#SingleArcDynamicsSimulator" title="SingleArcDynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">SingleArcDynamicsSimulator</span></code></a> in the exact same manner as was done in the previous examples.</p>
 </div>
 <div class="section" id="results">
 <h2>7.3. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>

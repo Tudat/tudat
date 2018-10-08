@@ -39,7 +39,7 @@
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
         <link rel="up" title="3. Environment Set-up" href="index.html"/>
-        <link rel="next" title="3.3. Tabulated Atmosphere Settings" href="tabulatedAtmosphere.html"/>
+        <link rel="next" title="3.3. The Environment During Propagation" href="duringPropagation.html"/>
         <link rel="prev" title="3.1. Setting up the Environment" href="setup.html"/> 
 
   
@@ -103,13 +103,12 @@
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">3. Environment Set-up</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="setup.html">3.1. Setting up the Environment</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">3.2. Available Settings for the Environment Models</a></li>
-<li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphere.html">3.3. Tabulated Atmosphere Settings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="duringPropagation.html">3.4. The Environment During Propagation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="timeRange.html">3.5. The Environment Valid Time-Range</a></li>
-<li class="toctree-l4"><a class="reference internal" href="aerodynamicCoefficients.html">3.6. Aerodynamic Coefficients</a></li>
+<li class="toctree-l4"><a class="reference internal" href="duringPropagation.html">3.3. The Environment During Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphere.html">3.4. Tabulated Atmosphere Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aerodynamicCoefficients.html">3.5. Aerodynamic Coefficients</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Acceleration Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Setting up State Derivative Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Simulator Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">6. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
@@ -544,10 +543,23 @@
 </div>
 </dd></dl>
 
+<dl class="class">
+<dt id="GcrsToItrsRotationModelSettings">
+<em class="property">class </em><code class="descname">GcrsToItrsRotationModelSettings</code><a class="headerlink" href="#GcrsToItrsRotationModelSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>High-accuracy rotation model of the Earth, according to the IERS 2010 Conventions. This class has various options to deviate from the default settings, here we only show the main options (typical applications will use default):</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">IAUConventions</span> <span class="n">precessionNutationTheory</span> <span class="o">=</span> <span class="n">iau_2006</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">originalFrame</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GcrsToItrsRotationModelSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+   <span class="n">precessionNutationTheory</span><span class="p">,</span> <span class="n">originalFrame</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Note that for this model the original frame must be J2000, ECLIPJ2000 or GCRS. The precession-nutation theory may be <code class="docutils literal"><span class="pre">iau_2000a</span></code>, <code class="docutils literal"><span class="pre">iau_2000b</span></code> or <code class="docutils literal"><span class="pre">iau_2006</span></code>, as implemented in the SOFA toolbox. Alternative options to modify (not shown above) include the EOP correction file, input time scale, short period UT1 and polar motion variations. Please see the Dosygen documentation for details.</p>
+</dd></dl>
+
 <dl class="method">
 <dt>
 <code class="descname">Tabulated RotationalEphemeris model</code></dt>
-<dd><p>Rotation model obtained from an interpolator, with dependent variable a <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code> of size 7. Currently the settings interface is not yet implemented but the functionality is implemented in <code class="xref py py-class docutils literal"><span class="pre">TabulatedRotationalEphemeris</span></code>. The tabulated rotational ephemeris can be implemented as follows:</p>
+<dd><p>Rotation model obtained from an interpolator, with dependent variable a <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code> of size 7: the four entries (w,x,y,z) of the quaternion from the target frame to the base frame, and body’s angular velocity vector, expressed in its body-fixed frame . Currently the settings interface is not yet implemented but the functionality is implemented in <code class="xref py py-class docutils literal"><span class="pre">TabulatedRotationalEphemeris</span></code>. The tabulated rotational ephemeris can be implemented as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create tabulated rotational model</span>
 <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TabulatedRotationalEphemeris</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">tabulatedEphemeris</span> <span class="o">=</span>
         <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TabulatedRotationalEphemeris</span><span class="o">&lt;</span>  <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">rotationInterpolator</span> <span class="p">);</span>
@@ -588,10 +600,9 @@
 
 <dl class="method">
 <dt>
-<code class="descname">Perfect sphere</code></dt>
+<code class="descname">Spherical shape from SPice</code></dt>
 <dd><p>Model defining a body shape as a perfect sphere, with the sphere radius retrieved from Spice. No derived class of&nbsp;<a class="reference internal" href="#BodyShapeSettings" title="BodyShapeSettings"><code class="xref py py-class docutils literal"><span class="pre">BodyShapeSettings</span></code></a>&nbsp;base class required, created by passing&nbsp;<code class="docutils literal"><span class="pre">spherical_spice</span></code>&nbsp;as argument to base class constructor.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">bodyRadius</span> <span class="o">=</span> <span class="mf">6378.0E3</span><span class="p">;</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">BodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">spherical_spice</span> <span class="p">);</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">BodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">spherical_spice</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -724,7 +735,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="tabulatedAtmosphere.html" class="btn btn-neutral float-right" title="3.3. Tabulated Atmosphere Settings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="duringPropagation.html" class="btn btn-neutral float-right" title="3.3. The Environment During Propagation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="setup.html" class="btn btn-neutral" title="3.1. Setting up the Environment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
