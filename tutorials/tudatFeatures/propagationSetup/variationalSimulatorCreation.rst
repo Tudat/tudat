@@ -1,6 +1,6 @@
 .. _tudatFeaturesVariationalSimulatorCreation:
 
-Create a Variational Equations Solver Object
+Performing Variational Equations Propagation
 ============================================
 
 Up to this point, we have been concerned with propagating states of bodies only. Tudat is also capable of propagating the variational equations associated with the dynamics to produce the state transition matrix :math:`\Phi(t,t_{0})` and sensitivity matrix :math:`S(t)`, which we define here as:
