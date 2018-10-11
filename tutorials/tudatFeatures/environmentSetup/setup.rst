@@ -27,7 +27,7 @@ Typically the entire environment is stored in a named list of :class:`Body` ob
 
 .. class:: NamedBodyMap
 
-   An unordered map of shared pointers to :class:`Body` objects, see :ref:`this <externalBoost>` wiki page for a discussion of shared pointers; don't worry if you're not sure what a shared pointer or unordered map is at this point.
+   An unordered map of shared pointers to :class:`Body` objects, see :ref:`this <externalUtility>` wiki page for a discussion of shared pointers; don't worry if you're not sure what a shared pointer or unordered map is at this point.
 
 
 .. _tudatFeaturesCreatingTheEnvironment:

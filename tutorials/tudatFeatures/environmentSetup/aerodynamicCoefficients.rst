@@ -293,11 +293,11 @@ where:
 
 - :literal:`forceCoefficientFunction`:
       A function outputting the aerodynamic force coefficients as a function of the independent variables, listed in :literal:`independentVariableNames`. This requires a :literal:`std::function
-      and :literal:`std::bind`, which is explained in: :ref:`externalBoost`.
+      and :literal:`std::bind`, which is explained in: :ref:`externalUtility`.
 
 - :literal:`momentCoefficientFunction`:
       A function outputting the aerodynamic moment coefficients as a function of the independent variables, listed in :literal:`independentVariableNames`. This requires a :literal:`std::function
-      and :literal:`std::bind`, which is explained in: :ref:`externalBoost`. 
+      and :literal:`std::bind`, which is explained in: :ref:`externalUtility`. 
 
 - :literal:`referenceLength`:
       The length with which the coefficients are non-dimensionalized (about the z- and x-axis). 

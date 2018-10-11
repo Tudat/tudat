@@ -39,15 +39,15 @@ Atmosphere model
 
    If you want to model the exponential atmosphere for Earth or Mars, you can also simply input :literal:`aerodynamics::earth` or :literal:`aerodynamics::mars` to load the default settings, which are defined in the table below. 
 
-      ============================  ==========  ==========  ==========
+      ============================  ==========  ==========  =================
       Property                      Earth       Mars        Units
-      ============================  ==========  ==========  ==========
+      ============================  ==========  ==========  =================
       Scale Height                  7.2         1.11        km
-      Density at Zero Altitude      1.225       0.02        kg/m^3
+      Density at Zero Altitude      1.225       0.02        kg/m :math:`{}^3`
       Constant Temperature          246.0       215.0       K
       Specific Gas Constant         287.0       197.0       J/kg/K
       Ratio of Specific Heats       1.4         1.3         --
-      ============================  ==========  ==========  ==========
+      ============================  ==========  ==========  =================
 
    References for the values above are:
 

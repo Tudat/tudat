@@ -151,7 +151,7 @@ Observation Noise
 
 In addition to the observation biases (see :ref:`observationBiases`), which are part of the observation model and typically deterministic, stochastic noise may be added to the observations when simulating them. 
 
-The interface for observation noise is made general, allowing both time-correlated and time-uncorrelated noise to be added: a function of type :literal:`std::function< double( const double ) >` must be created. Here, the function input is the current time, and the output the noise value. You are free to define this function in any way you like. Refer to the documentation of :literal:`std::function` and :literal:`std::bind` (see :ref:`externalBoost`).
+The interface for observation noise is made general, allowing both time-correlated and time-uncorrelated noise to be added: a function of type :literal:`std::function< double( const double ) >` must be created. Here, the function input is the current time, and the output the noise value. You are free to define this function in any way you like. Refer to the documentation of :literal:`std::function` and :literal:`std::bind` (see :ref:`externalUtility`).
 
 In typical basic simulation studies, time-uncorrelated white noise is used. To easily add this type of noise, you can make use of the Tudat interface to boost probability distributions/random number generation (see :ref:`tudatFeaturesProbabilityDistributions`). As an example, the following will generate a function which generates which noise with a mean of 0.005 and a standard deviationof 0.003.
 

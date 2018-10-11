@@ -70,7 +70,7 @@ For the direction of the thrust, there are presently four available types of gui
 
 - :literal:`thrustDirectionFunction`
 
-        A :literal:`std::function< Eigen::Vector3d( const double ) >` returning a the thrust direction in the inertial frame as an ``Eigen::Vector3d`` (which should be of unit norm!) as a function of a ``double`` (representing time). Details on how to create such an :literal:`std::function` are given on :ref:`externalBoostExamples`. 
+        A :literal:`std::function< Eigen::Vector3d( const double ) >` returning a the thrust direction in the inertial frame as an ``Eigen::Vector3d`` (which should be of unit norm!) as a function of a ``double`` (representing time). Details on how to create such an :literal:`std::function` are given on :ref:`externalPointersExamples`. 
 
 As a possible example of how to use this function:
 

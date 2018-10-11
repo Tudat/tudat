@@ -52,7 +52,7 @@ A major difference with respect to the :ref:`walkthroughsUnperturbedEarthOrbitin
     accelerationsOfApollo[ "Earth" ].push_back( std::make_shared< AccelerationSettings >( aerodynamic ) );
     accelerationMap[ "Apollo" ] = accelerationsOfApollo;
 
-A crucial step in re-entry modelling is the definition of an :class:`AerodynamicGuidance` model. Controlling the orientation of the vehicle during atmospheric flight plays an important role in the shape of the trajectory as well as on the magnitude of the aerodynamic and thermal loads. In this example, a simple fixed-angle aerodynamic guidance model is used. This is implemented using a lambda expression (explained in detail :ref:`here <externalBoostExamplesFunction>`). In short this function always outputs the value of :literal:`constantAngleOfAttack`, which in turn sets the orientation angles of the :literal:`"Apollo"` body:
+A crucial step in re-entry modelling is the definition of an :class:`AerodynamicGuidance` model. Controlling the orientation of the vehicle during atmospheric flight plays an important role in the shape of the trajectory as well as on the magnitude of the aerodynamic and thermal loads. In this example, a simple fixed-angle aerodynamic guidance model is used. This is implemented using a lambda expression (explained in detail :ref:`here <exampleUtilityLambdaExpression>`). In short this function always outputs the value of :literal:`constantAngleOfAttack`, which in turn sets the orientation angles of the :literal:`"Apollo"` body:
 
 .. code-block:: cpp
 
