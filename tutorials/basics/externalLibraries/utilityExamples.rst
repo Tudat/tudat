@@ -450,7 +450,8 @@ The function to compute the state derivative is the same as above, and the funct
                                                const double endTime, const double timeStep )
       {
           tudat::mathematics::numerical_integrators::RungeKutta4IntegratorXd integrator(
-                      std::bind( &Skydiver::computeStateDerivative, this, std::placeholders::_1, std::placeholders::_2 ),
+                      std::bind( &Skydiver::computeStateDerivative, this, 
+                      std::placeholders::_1, std::placeholders::_2 ),
                       initialTime, initialState );
 
           return integrator.integrateTo( endTime, timeStep );
@@ -471,18 +472,10 @@ Results
 
 Using the code that was discussed in this example, you should be able to reproduce the following results: ::
 
-      Time [s]
-      Position [m]
-      Velocity [m/s]
-      10
-      24509.5
-      -98.1
-      20
-      23038
-     -196.2
-      50
-     12737.5
-     -490.5
+      Time [s]        Position [m]        Velocity [m/s]
+      10              24509.5            -98.1
+      20              23038.0            -196.2
+      50              12737.5            -490.5
 
 Note that the following explanation about function calls in C++ is a simplification of reality, and for a rigorous explanation refer to your local computer scientist. When a new instance of a class is created, this does not mean that all function definitions etc. are copied. There is only one copy of a function in memory, regardless of the amount of class instances. When a class method is called, the function is called with a hidden pointer to the class instance; this way the method knows about the class variables. When a class method is called via a function pointer, then the pointer to the class instance needs to be passed explicitly by the called. This is where :class:`bind` comes into the picture. The :class:`bind` function wraps a function into another object, and stores the passed arguments (which in the examples are respectively ``testDiver`` and this). When the function wrapper is eventually called, the function wrapper will call the wrapped function with both the arguments passed at its construction, as those passed to the call. The arguments passed to the function wrapper call are indicated with the ``std::placeholders::_1``, respectively ``std::placeholders::_2`` in the :class:`bind` call.
 

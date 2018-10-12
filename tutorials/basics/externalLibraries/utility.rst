@@ -41,6 +41,8 @@ Function objects are defined in the header :literal:`<functional>`. You can find
 Common Features
 ~~~~~~~~~~~~~~~
 
+Function objects are less common in Tudat than smart pointer, but you will definitely encounter them or even need to use them, if you are planning on expanding the Tudat libraries. Two functions that might be useful to know and recognize are:
+
    .. class:: function
 
       The :class:`function` function contains a family of class templates that are function object wrappers. This feature is used in Tudat because it is an easy way to pass a function as an input to another object or function. It is used instead of a normal C++ function pointer. The :class:`function` type describes what the function should 'look' like, in the sense that it defines both its input types (and order) and its output type. Any function that fits this profile is accepted when it is passed. In Tudat it is frequently combined with :class:`bind` to create a link to a class member function.
