@@ -34,16 +34,16 @@ As is the case for acceleration models, integration models, environment models, 
    .. code-block:: cpp
 
        // Define parameter settings
-       std::vector< boost::shared_ptr< EstimatableParameterSettings > > parameterNames;
-       parameterNames.push_back( boost::make_shared< EstimatableParameterSettings >( 
+       std::vector< std::shared_ptr< EstimatableParameterSettings > > parameterNames;
+       parameterNames.push_back( std::make_shared< EstimatableParameterSettings >( 
           "Vehicle", radiation_pressure_coefficient ) );
-       parameterNames.push_back( boost::make_shared< EstimatableParameterSettings >( 
+       parameterNames.push_back( std::make_shared< EstimatableParameterSettings >( 
           "Vehicle", constant_drag_coefficient ) );
-       parameterNames.push_back(  boost::make_shared< EstimatableParameterSettings >(
+       parameterNames.push_back(  std::make_shared< EstimatableParameterSettings >(
           "Earth", rotation_pole_position ) );
           
        // Define parameter objects   
-       boost::shared_ptr< EstimatableParameterSet< double > > parametersToEstimate =
+       std::shared_ptr< EstimatableParameterSet< double > > parametersToEstimate =
             createParametersToEstimate( parameterNames, bodyMap );
          
 Which creates parameter objects for the radiation pressure coefficient and drag coefficient of body "Vehicle", and the orientation of the rotation axis of the body "Earth".
@@ -58,7 +58,7 @@ Resetting the full parameter vector :math:`\mathbf{p}(=[\mathbf{x}_{0};\mathbf{q
    .. code-block:: cpp
 
        // Create parameter set  
-       boost::shared_ptr< EstimatableParameterSet< double > > parametersToEstimate = ...
+       std::shared_ptr< EstimatableParameterSet< double > > parametersToEstimate = ...
        
        Eigen::VectorXd parameterVector =
             parametersToEstimate->getFullParameterValues< double >( );
@@ -68,7 +68,7 @@ While resetting the full parameter vector is done as:
    .. code-block:: cpp
 
        // Create parameter set  
-       boost::shared_ptr< EstimatableParameterSet< double > > parametersToEstimate = ...
+       std::shared_ptr< EstimatableParameterSet< double > > parametersToEstimate = ...
        
        // Define vector of new values of estimated parameters
        Eigen::VectorXd newParameterVector = ...
@@ -93,7 +93,7 @@ The framework discussed in the previous section explains how the :literal:`param
    .. code-block:: cpp
 
       parameterNames.push_back(
-                   boost::make_shared< EstimatableParameterSettings >( associatedBody, parameterType, secondaryIdentifier ) );
+                   std::make_shared< EstimatableParameterSettings >( associatedBody, parameterType, secondaryIdentifier ) );
 
    where:
    - :literal:`associatedBody`
@@ -125,7 +125,7 @@ The framework discussed in the previous section explains how the :literal:`param
    .. code-block:: cpp
    
             parameterNames.push_back(
-                   boost::make_shared< InitialTranslationalStateEstimatableParameterSettings< double > >( 
+                   std::make_shared< InitialTranslationalStateEstimatableParameterSettings< double > >( 
                       associatedBody, initialStateValue, centralBody, frameOrientation  ) );
                       
                       
@@ -153,7 +153,7 @@ The second constructor is called as:
    .. code-block:: cpp
    
             parameterNames.push_back(
-                   boost::make_shared< InitialTranslationalStateEstimatableParameterSettings< double > >( 
+                   std::make_shared< InitialTranslationalStateEstimatableParameterSettings< double > >( 
                       associatedBody, initialTime, centralBody, frameOrientation  ) );
                       
                       
@@ -182,7 +182,7 @@ The second constructor is called as:
    .. code-block:: cpp
    
             parameterNames.push_back(
-                   boost::make_shared< ArcWiseInitialTranslationalStateEstimatableParameterSettings< double > >( 
+                   std::make_shared< ArcWiseInitialTranslationalStateEstimatableParameterSettings< double > >( 
                       associatedBody, concatenatedInitialStateValues, arcStartTimes, centralBody, frameOrientation  ) );
                       
                       
@@ -214,7 +214,7 @@ The second constructor is called as:
    .. code-block:: cpp
    
             parameterNames.push_back(
-                   boost::make_shared< ArcWiseInitialTranslationalStateEstimatableParameterSettings< double > >( 
+                   std::make_shared< ArcWiseInitialTranslationalStateEstimatableParameterSettings< double > >( 
                       associatedBody, arcStartTimes, centralBody, frameOrientation  ) );
                       
                       
@@ -243,7 +243,7 @@ The second constructor is called as:
    .. code-block:: cpp
    
             parameterNames.push_back(
-                   boost::make_shared< SphericalHarmonicEstimatableParameterSettings >( 
+                   std::make_shared< SphericalHarmonicEstimatableParameterSettings >( 
                       blockIndices, associatedBody, coefficientType ) );
                       
                       
@@ -266,7 +266,7 @@ The second constructor is called as:
     .. code-block:: cpp
    
          parameterNames.push_back(
-                boost::make_shared< SphericalHarmonicEstimatableParameterSettings >( 
+                std::make_shared< SphericalHarmonicEstimatableParameterSettings >( 
                    minimumDegree, minimumOrder, maximumDegree, maximumOrder, associatedBody, coefficientType ) );
                       
                       
@@ -302,7 +302,7 @@ The second constructor is called as:
    .. code-block:: cpp
    
        parameterNames.push_back(
-          boost::make_shared< SphericalHarmonicEstimatableParameterSettings >( 
+          std::make_shared< SphericalHarmonicEstimatableParameterSettings >( 
              2, 1, 4, 3, "Earth", spherical_harmonics_cosine_coefficient_block ) );
             
             
@@ -319,7 +319,7 @@ The second constructor is called as:
    .. code-block:: cpp
    
          parameterNames.push_back(
-            boost::make_shared< FullDegreeTidalLoveNumberEstimatableParameterSettings >( 
+            std::make_shared< FullDegreeTidalLoveNumberEstimatableParameterSettings >( 
                associatedBody, degree, deformingBodies, useComplexValue ) );
                       
    where:
@@ -347,7 +347,7 @@ The second constructor is called as:
    .. code-block:: cpp
    
          parameterNames.push_back(
-            boost::make_shared< SingleDegreeVariableTidalLoveNumberEstimatableParameterSettings >( 
+            std::make_shared< SingleDegreeVariableTidalLoveNumberEstimatableParameterSettings >( 
                associatedBody, degree, orders deformingBodies, useComplexValue ) );
                       
    where:
@@ -379,7 +379,7 @@ The second constructor is called as:
    .. code-block:: cpp
    
          parameterNames.push_back(
-            boost::make_shared< ConstantObservationBiasEstimatableParameterSettings >( 
+            std::make_shared< ConstantObservationBiasEstimatableParameterSettings >( 
                linkEnds, observableType, isBiasAdditive ) );
                       
    where:
@@ -403,7 +403,7 @@ The second constructor is called as:
    .. code-block:: cpp
    
          parameterNames.push_back(
-            boost::make_shared< EmpiricalAccelerationEstimatableParameterSettings >( 
+            std::make_shared< EmpiricalAccelerationEstimatableParameterSettings >( 
                associatedBody, centralBody, componentsToEstimate ) );
                       
    where:
@@ -450,7 +450,7 @@ The second constructor is called as:
    .. code-block:: cpp
    
          parameterNames.push_back(
-            boost::make_shared< EmpiricalAccelerationEstimatableParameterSettings >( 
+            std::make_shared< EmpiricalAccelerationEstimatableParameterSettings >( 
                associatedBody, centralBody, componentsToEstimate, arcStartTimeList ) );
                       
    where:

@@ -53,9 +53,7 @@ Even when the keys :jsonkey:`satellite.mass` or :jsonkey:`satellite` are undefin
 
 This feature is especially useful when running multi-case simulations (for solving optimisation problems), as it allows the user to define the shared settings in a file, that is referenced from mergeable files in which some keys (the optimisation variables) are (re-)defined. In this way, repeating the same information in every file is avoided, which can lead to large file sizes specially for complex propagations or when the number of simulations to be run is large.
 
-For instance, the following tree structure can be used to run the same simulations with a variable value for the mass of the vehicle:
-
-.. code-block:: txt
+For instance, the following tree structure can be used to run the same simulations with a variable value for the mass of the vehicle: ::
 
   root
   | 
@@ -68,16 +66,12 @@ For instance, the following tree structure can be used to run the same simulatio
   |      
   | shared.json
 
-Then, the :literal:`json_interface` application is called for each of the files inside the :class:`inputs` directory. Note that there is no need to call it for the file :class:`shared.json`. If one has `GNU Parallel <https://www.gnu.org/software/parallel/>`_ installed, it is possible to run the simulations in parallel by writing in Terminal:
-
-.. code-block:: txt
+Then, the :literal:`json_interface` application is called for each of the files inside the :class:`inputs` directory. Note that there is no need to call it for the file :class:`shared.json`. If one has `GNU Parallel <https://www.gnu.org/software/parallel/>`_ installed, it is possible to run the simulations in parallel by writing in Terminal: ::
 
   parallel json_interface ::: inputs/*.json
 
 
-Note that the second element of the array to be merged can contain several keys to be (re-)defined, and even more than one object can be provided. For instance, consider the following tree structure:
-
-.. code-block:: txt
+Note that the second element of the array to be merged can contain several keys to be (re-)defined, and even more than one object can be provided. For instance, consider the following tree structure: ::
 
   root
   | 
@@ -183,9 +177,7 @@ In this case, the :class:`mass8000.json` file is a mergeable file that reference
 
   In this case, the contents of :class:`rk4.json` would be loaded first, and then the property of the key :jsonkey:`bodies` would be re-defined to be equal to :literal:`{ "satellite": { "mass": 8000 } }`. This would result in the loss of other keys defined inside :literal:`bodies.satellite` and :literal:`bodies` in the file :class:`shared.json`.
 
-Generally, we will want to save the results of each simulation (e.g. the epochs and states) to a different file, so that we end up with the following file tree:
-
-.. code-block:: txt
+Generally, we will want to save the results of each simulation (e.g. the epochs and states) to a different file, so that we end up with the following file tree: ::
 
   root
   | 
@@ -279,4 +271,4 @@ When running :literal:`json_interface mass8000.json`, the string :literal:`"@pat
   - When a path is provided using the :literal:`@path` keyword (e.g. :literal:`"@path(relativePath)"`), it must be relative to the declaration file.
   - When a special string is used to include (parts of) the contents of another JSON file (e.g. :literal:`"$(shared.json)"`), the :literal:`@path` keyword is not used and it must be relative to the declaration file.
 
-It is recommended to never provide relative paths as plain strings, and to always use either :literal:`@path()` or :literal:`$()`, so that the paths are always specified relative to the declaration file. When no modular or mergeable files are used, the root file and the definition file are always the same, so using the :literal:`@path` keyword makes it unnecessary but still recommended, as the project could be modularised in the future or parts of it may be end up being used in other projects, potentially requiring the use of the :literal:`@path` keyword.
+It is recommended to never provide relative paths as plain strings, and to always use either :literal:`@path( )` or :literal:`$( )`, so that the paths are always specified relative to the declaration file. When no modular or mergeable files are used, the root file and the definition file are always the same, so using the :literal:`@path` keyword makes it unnecessary but still recommended, as the project could be modularised in the future or parts of it may be end up being used in other projects, potentially requiring the use of the :literal:`@path` keyword.

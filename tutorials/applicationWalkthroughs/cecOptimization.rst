@@ -2,7 +2,7 @@
 
 CEC 2013 Optimizer Comparison
 ====================================
-The example described in this tutorial will cover the CEC 2013 optimizer comparison code. This example contains 28 benchmark functions that were optimized using different algorithms during the Special Session and Competition on Real-Parameter Single Objective Optimization at CEC 2013. The code for this tutorial is given here on Github, and is also located in your tudat bundle at: ::
+The example described in this tutorial will cover the CEC 2013 optimizer comparison code. This example contains 28 benchmark functions that were optimized using different algorithms during the Special Session and Competition on Real-Parameter Single Objective Optimization at CEC 2013. The code for this tutorial is given on Github, and is also located in your tudat bundle at: ::
 
    tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/cec2013OptimizerComparison.cpp
 

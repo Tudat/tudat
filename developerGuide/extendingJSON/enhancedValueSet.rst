@@ -14,7 +14,7 @@ Nonetheless, there are a few functions provided by the :literal:`json_interface`
 
 - :literal:`void assignIfNotNaN( nlohmann::json& j, const std::string& key, const EquatableType& value )`: updates or defines :literal:`j[ key ]` only if :literal:`value == value` (this comparison returns :literal:`false` for :literal:`TUDAT_NAN`). Can only be used when the comparison operator is defined for :literal:`EquatableType`.
 
-- :literal:`void assignIfNotNull( nlohmann::json& j, const std::string& key, const boost::shared_ptr< T >& object )`: updates or defines :literal:`j[ key ]` only if :literal:`object != NULL`.
+- :literal:`void assignIfNotNull( nlohmann::json& j, const std::string& key, const std::shared_ptr< T >& object )`: updates or defines :literal:`j[ key ]` only if :literal:`object != NULL`.
 
 - :literal:`void assignIfNotEmpty( nlohmann::json& j, const std::string& key, const ContainerType& container )`: updates or defines :literal:`j[ key ]` only if :literal:`object.empty( ) == false`. Can only be used when the method :literal:`empty` is defined for :literal:`ContainerType`.
 

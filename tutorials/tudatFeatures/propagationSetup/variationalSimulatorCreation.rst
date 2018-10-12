@@ -56,6 +56,8 @@ These are implemented in derived classes and are discussed below. Note that thes
    - :literal:`propagatorSettings`
 
       :class:`PropagatorSettings` contains the settings that defines how the dynamics is propagated, as described in :ref:`tudatFeaturesPropagatorSettings`.
+
+      .. warning:: Propagation of variational equations (for translational motion) is only supported for propagated coordinates of size 6. For a description of the difference between conventional and propagated coordinates, see :ref:`tudatFeaturesPropagatorSettingsCoordinates`. On the same page (in :ref:`tudatFeaturesPropagatorSettingsPropagatedCoordinates`) you can find a list of the available propagated coordinates and their respective sizes.
       
    - :literal:`parametersToEstimate`
 

@@ -144,7 +144,7 @@ After running in Terminal the following command::
 
    json_inteface main.json
 
-we will get a :class:`stateHistory.txt` file containing the results, and a :class:`fullSettings.json` file containing default settings and with some keys moved to a different place (e.g. :jsonkey:`bodies.Asterix.initialState` to :jsonkey:`propagators[0].initialStates`):
+we will get a :class:`stateHistory.txt` file containing the results, and a :class:`fullSettings.json` file containing default settings and with some keys moved to a different place (e.g. :jsonkey:`bodies.Asterix.initialState` to :jsonkey:`propagators[ 0 ].initialStates`):
 
 .. literalinclude:: fullSettings.json
   :linenos:

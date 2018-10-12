@@ -13,11 +13,11 @@ In fact, when creating settings for a thrust force, the user needs to provide se
 
 .. code-block:: cpp
     
-        boost::shared_ptr< ThrustDirectionGuidanceSettings > thrustDirectionSettings;
-        boost::shared_ptr< ThrustMagnitudeSettings > thrustMagnitudeSettings;
+        std::shared_ptr< ThrustDirectionGuidanceSettings > thrustDirectionSettings;
+        std::shared_ptr< ThrustMagnitudeSettings > thrustMagnitudeSettings;
 
         SelectedAccelerationMap accelerationSettingsMap;
-        accelerationSettingsMap[ "Vehicle" ][ "Vehicle" ].push_back( boost::make_shared< ThrustAccelerationSettings >( thrustDirectionSettings, thrustMagnitudeSettings ) ); 
+        accelerationSettingsMap[ "Vehicle" ][ "Vehicle" ].push_back( std::make_shared< ThrustAccelerationSettings >( thrustDirectionSettings, thrustMagnitudeSettings ) ); 
 
 In the above code snippet, two things may stand out. First of all, we define the thrust force as one that the vehicle exerts on itself. Secondly, to define the thrust force, the user must provide two objects: one of type (derived from) :class:`ThrustDirectionGuidanceSettings` and :class:`ThrustMagnitudeSettings`. The settings are used to create a :class:`ThrustAcceleration` acceleration object. 
 
@@ -70,7 +70,7 @@ For the direction of the thrust, there are presently four available types of gui
 
 - :literal:`thrustDirectionFunction`
 
-        A :literal:`std::function< Eigen::Vector3d( const double ) >` returning a the thrust direction in the inertial frame as an ``Eigen::Vector3d`` (which should be of unit norm!) as a function of a ``double`` (representing time). Details on how to create such an :literal:`std::function` are given on :ref:`externalBoostExamples`. 
+        A :literal:`std::function< Eigen::Vector3d( const double ) >` returning a the thrust direction in the inertial frame as an ``Eigen::Vector3d`` (which should be of unit norm!) as a function of a ``double`` (representing time). Details on how to create such an :literal:`std::function` are given on :ref:`externalPointersExamples`. 
 
 As a possible example of how to use this function:
 

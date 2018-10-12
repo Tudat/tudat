@@ -2,57 +2,33 @@
 
 Use of Thrust: User-defined Thrust Vector
 =========================================
-In the previous tutorial, we discussed how to include thrust in a simulation, separately specifying the direction and magnitude of the thrust force. Alternatively, however, you may want to impose the thrust vector (direction and magnitude in some reference frame) as a function of time explicitly. In this tutorial, we will look at which Tudat interfaces you can use to accomplish this. The code for this tutorial is given here on Github, and is also located in your tudat bundle at::
+In the previous tutorial, we discussed how to include thrust in a simulation, separately specifying the direction and magnitude of the thrust force. Alternatively, you may want to impose the thrust vector (direction and magnitude in some reference frame) as a function of time explicitly. In this tutorial, we will look at which Tudat interfaces you can use to accomplish this. The code for this tutorial is given on Github, and is also located in your tudat bundle at::
 
-    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/thrustAccelerationFromFileExample.cpp
+   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/thrustAccelerationFromFileExample.cpp
 
 The main difference of this example w.r.t. the previous one lies in the following steps:
 
-    1. Loading discrete thrust data from a file.
-    2. Creating an interpolator that turns the discrete data set into a continuous function.
-    3. Creating settings for the thrust acceleration using these data.
+   1. Loading discrete thrust data from a file.
+   2. Creating an interpolator that turns the discrete data set into a continuous function.
+   3. Creating settings for the thrust acceleration using these data.
 
-Loading the data
+Loading the Data
 ~~~~~~~~~~~~~~~~
 Reading data from a file can be done in many different ways. Since the manner in which a file is read depends on the structure of the particular file, there can be many different approaches (and file readers) for different applications. Here, we chose a very basic setup in which the thrust file is set up as follows::
 
-    0       0 0 5
-    6068    0 1 5
-    6097    1.0 0 5
-    6097.5  0.8 0 5
-    6098    0.6 0.1 5
-    6099    0.1 0.5 5
-    12192   0.2 1.0 4.5
-    18288   0.3 1.5 4.0
-    243575  0.4 2.0 3.0
-    3.999e6 1.0 1.0 2.0
-    4e6     1.1 5.0 1.0
+   0       0 0 5
+   6068    0 1 5
+   6097    1.0 0 5
+   6097.5  0.8 0 5
+   6098    0.6 0.1 5
+   6099    0.1 0.5 5
+   12192   0.2 1.0 4.5
+   18288   0.3 1.5 4.0
+   243575  0.4 2.0 3.0
+   3.999e6 1.0 1.0 2.0
+   4e6     1.1 5.0 1.0
 
-The first column of this file represents a time, the following three columns represent the x-, y- and z-components of the thrust force vector. To load these data into Tudat, we use the following custom function:
-
-.. code-block:: cpp
-
-   std::map< double, Eigen::Vector3d > getThrustData( )
-   {
-       // Find filepath and folder of this cpp file
-       std::string cppFilePath( __FILE__ );
-       std::string cppFolder = cppFilePath.substr( 0 , cppFilePath.find_last_of("/\\")+1 );
-
-       // Load data into matrix
-       Eigen::MatrixXd thrustForceMatrix =
-              tudat::input_output::readMatrixFromFile( cppFolder + "testThrustValues.txt" , " \t", "#" );
-
-       // Fill thrustData map using thrustForceMatrix Eigen matrix
-       std::map< double, Eigen::Vector3d > thrustData; 
-       for ( int i = 0; i < thrustForceMatrix.rows( ); i++ )
-       {
-           Eigen::Vector3d temp = thrustForceMatrix.block( i, 1, 1, 3 ).transpose( );
-           thrustData[ thrustForceMatrix( i, 0 ) ] = temp;
-       }
-       return thrustData;
-   }
-
-First, we need to specify the location of the file we wish to load. To do this, we retrieve the string containing the current file (e.g. the .cpp file with the source code of the example) as follows:
+The first column of this file represents a time, the following three columns represent the x-, y- and z-components of the thrust force vector. To load these data into Tudat, we firstly need to specify the location of the file we wish to load. To do this, we retrieve the string containing the current file (e.g. the :literal:`.cpp` file with the source code of the example) as follows:
 
 .. code-block:: cpp
 
@@ -64,92 +40,73 @@ Subsequently, we strip of the name of the current file as follows:
 
    std::string cppFolder = cppFilePath.substr( 0 , cppFilePath.find_last_of("/\\")+1 );
 
-Don't worry if the details of these steps escape you. What is important is to know that the cppFolder now contains the location of the current directory. We now load the data into an :literal:`Eigen::MatrixXd` using a Tudat function :literal:`readMatrixFromFile`, located in :literal:`InputOutput/matrixTextFileReader.cpp` as follows:
+Do not worry if the details of these steps escape you. What is important is to know that the :literal:`cppFolder` now contains the location of the current directory. We now load the data into an :literal:`Eigen::MatrixXd` using the Tudat class :class:`FromFileDataMapSettings`, which can be used to extract data into a map format, which can later be used as input to the interpolation settings:
 
 .. code-block:: cpp
 
-   // Load data into matrix
-   Eigen::MatrixXd thrustForceMatrix =
-           tudat::input_output::readMatrixFromFile( cppFolder + "testThrustValues.txt" , " \t" );
+   std::shared_ptr< FromFileDataMapSettings< Eigen::Vector3d > > thrustDataSettings =
+           std::make_shared< FromFileDataMapSettings< Eigen::Vector3d > >( cppFolder + "testThrustValues.txt" );
 
-The first argument to the :literal:`readMatrixFromFile` denotes the full file location of our :literal:`testThrustValues.txt` file containing the thrust data. The second argument: " \t" denotes that both spaces and tabs (\t) are considered separators for the file contents (points in the file where a new entry starts). To use the interpolator, we want to have our thrust data in a :literal:`std::map`, with the time as key and thrust vector as value. The following block of code converts the :literal:`Eigen::MatrixXd` to a :literal:`std::map< double, Eigen::Vector3d >`:
-
-.. code-block:: cpp
-
-   // Fill thrustData map using thrustForceMatrix Eigen matrix
-   std::map< double, Eigen::Vector3d > thrustData;    
-   for ( int i = 0; i < thrustForceMatrix.rows( ); i++ )
-   {
-       thrustData[ thrustForceMatrix( i, 0 ) ] = thrustForceMatrix.block( i, 1, 1, 3 ).transpose( );
-   }
-   return thrustData;
-
-Creating the interpolator
+Creating the Interpolator
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-We now have a :literal:`std::map` with time vs. thrust force. To pass this information to the :class:`AccelerationSettings`, we need to turn this discrete data into a continuous function, for which we use an interpolator. Here, we choose to use a linear interpolator. For a list of the various other interpolation options, details of their implementation, and instructions on how to use/create them, go to :ref:`tudatFeaturesInterpolators`. For this example, we use the following code to create an interpolator of the thrust vector:
+We now have a :class:`FromFileDataMapSettings` object containing the time vs. thrust data from the file. To pass this information to the :class:`AccelerationSettings`, we need to turn this discrete data into a continuous function, for which we use an interpolator. Here, we choose to use a linear interpolator. For a list of the various other interpolation options, details of their implementation, and instructions on how to use/create them, go to :ref:`tudatFeaturesInterpolators`. For this example, we use the following code to create an interpolator of the thrust vector:
 
 .. code-block:: cpp
 
-   // Retrieve thrust data as function of time.
-   std::map< double, Eigen::Vector3d > thrustData = getThrustData( );
+   // Define interpolator settings.
+   std::shared_ptr< InterpolatorSettings > thrustInterpolatorSettings =
+           std::make_shared< InterpolatorSettings >( linear_interpolator );
 
-   // Make interpolator
-   boost::shared_ptr< InterpolatorSettings >
-           thrustInterpolatorSettingsPointer = boost::make_shared< InterpolatorSettings >( linear_interpolator );
+   // Create data interpolation settings
+   std::shared_ptr< DataInterpolationSettings< double, Eigen::Vector3d > > thrustDataInterpolatorSettings =
+           std::make_shared< DataInterpolationSettings< double, Eigen::Vector3d > >(
+               thrustDataSettings, thrustInterpolatorSettings );
 
-   // Creating settings for thrust force
-   boost::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector3d > >
-           thrustInterpolatorPointer = createOneDimensionalInterpolator< double, Eigen::Vector3d >(
-              thrustData, thrustInterpolatorSettingsPointer );
-
-The first line reads the :literal:`std::map` from the file we have specified. The following part:
+The first part:
 
 .. code-block:: cpp
 
-   // Make interpolator
-   boost::shared_ptr< InterpolatorSettings >
-           thrustInterpolatorSettingsPointer = boost::make_shared< InterpolatorSettings >( linear_interpolator );
+   std::shared_ptr< InterpolatorSettings >
+           thrustInterpolatorSettingsPointer = std::make_shared< InterpolatorSettings >( linear_interpolator );
 
-creates an object :class:`InterpolatorSettings` that contains the settings for how to create the interpolator. For this application, this means specifying that the interpolator should be of the type :literal:`linear_interpolator`. Note that this setup is very similar to how an environment/acceleration/etc. model is set up.
-The interpolator is then created by calling:
+creates an :class:`InterpolatorSettings` object that contains the settings for how to create the interpolator. For this application, this means specifying that the interpolator should be of the type :literal:`linear_interpolator`. Note that this setup is very similar to how an environment/acceleration/etc. model is set up. The interpolator is then created by calling:
 
 .. code-block:: cpp
 
    // Creating settings for thrust force
-   boost::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector3d > >
-          thrustInterpolatorPointer = createOneDimensionalInterpolator< double, Eigen::Vector3d >(
-               thrustData, thrustInterpolatorSettingsPointer );
+   std::shared_ptr< DataInterpolationSettings< double, Eigen::Vector3d > > thrustDataInterpolatorSettings =
+           std::make_shared< DataInterpolationSettings< double, Eigen::Vector3d > >(
+               thrustDataSettings, thrustInterpolatorSettings );
 
-The :class:`OneDimensionalInterpolator< double, Eigen::Vector3d >` object is created using the :literal:`thrustData` and :literal:`thrustInterpolatorPointer` defined above. The first parameter of the :class:`OneDimensionalInterpolator` denotes that the independent variable is a :literal:`double` (time) and the dependent variable is a :literal:`Eigen::Vector3d` (thrust). 
+The :class:`DataInterpolationSettings< double, Eigen::Vector3d >` object is created using the :literal:`thrustDataSettings` and :literal:`thrustInterpolatorSettings` defined above. The first parameter of the :class:`DataInterpolationSettings` denotes that the independent variable is a :literal:`double` (time) and the dependent variable is a :literal:`Eigen::Vector3d` (thrust). 
 
-Creating the thrust acceleration.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Creating the Thrust Acceleration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The creation of the thrust acceleration is done similarly as in the previous example, by creating an object of type :class:`ThrustAccelerationSettings`, as follows:
 
 .. code-block:: cpp
 
    double constantSpecificImpulse = 3000.0;
 
-   accelerationsOfVehicle[ "Vehicle" ].push_back(
-               boost::make_shared< ThrustAccelerationSettings >(
-                   thrustInterpolatorPointer,
-                   boost::lambda::constant( constantSpecificImpulse ), lvlh_thrust_frame, "Earth" ) );
+    accelerationsOfVehicle[ "Vehicle" ].push_back( std::make_shared< ThrustAccelerationSettings >(
+                                                       thrustDataInterpolatorSettings, constantSpecificImpulse,
+                                                       lvlh_thrust_frame, "Earth" ) );
 
 The input to the :class:`ThrustAccelerationSettings`, however, is different from that used in the previous example. In fact, we use a different constructor here, an example of constructor overloading. The input required to the constructor we use here is:
 
-    - The interpolator used to compute the thrust force vector as a function of time.
-    - Function returning the specific impulse as a function of time (here constant at the 3000 s). If you are not familiar with :literal:`boost::lambda::constant`, have a look :ref:`here <externalBoostExamplesFunction>`.
-    - The frame type in which the thrust vector is expressed.
-    - The reference body for any frame transformation that may be required.
+   - The interpolator used to compute the thrust force vector as a function of time.
+   - The constant value of specific impulse (could also be a function depending on the current time).
+   - The frame type in which the thrust vector is expressed.
+   - The reference body for any frame transformation that may be required.
 
-The last two argument define the frame orientation in which the thrust force produced by the :literal:`thrustInterpolatorPointer` is expressed. At present, there are two options:
+The last two argument define the frame orientation in which the thrust force produced by the :literal:`thrustDataInterpolatorSettings` is expressed. At present, there are two options:
 
-    1. Inertial frame: if this is the case, there is no need to specify a reference body. The interpolated thrust is used directly in the equations of motion, without and transformation.
-    2. Local-Vertical Local-Horizontal. This is a satellite-based frame in which the x-axis is colinear and in the direction of the velocity vector (relative to the reference body). The z-axis is perpendicular to the orbital plane (direction of cross-product of velocity with postion) and the y-axis completes the system.
+   1. Inertial frame: if this is the case, there is no need to specify a reference body. The interpolated thrust is used directly in the equations of motion, without and transformation.
+   2. Local-Vertical Local-Horizontal. This is a satellite-based frame in which the :math:`x`-axis is colinear and in the direction of the velocity vector (relative to the reference body). The :math:`z`-axis is perpendicular to the orbital plane (direction of cross-product of velocity with postion) and the :math:`y`-axis completes the right-handed system.
 
 In this example, we use the second option, basing the thrust direction on the current Earth-centered position of the spacecraft.
 
-The rest of the application, including the definition of the mass propagation, is set up analogously to the previous example, with a single addition: two dependent variables are saved during the propagation, the thrust acceleration, and the rotation matrix from LVLH to inertial frame. Note that when saving an acceleration, it is always saved as expressed in the inertial frame. We also save the rotation matrix here, to reconstruct the original thrust profile that we provided, checking the correct implementation.
+The rest of the application, including the definition of the mass propagation, is set up analogously to the previous example, with a single addition: two dependent variables are saved during the propagation, namely the thrust acceleration, and the rotation matrix from LVLH to inertial frame. Note that when saving an acceleration, it is always saved as expressed in the inertial frame. We also save the rotation matrix here, to reconstruct the original thrust profile that we provided, checking the correct implementation.
 
 Results
 ~~~~~~~
@@ -162,5 +119,3 @@ We also show plots of the acceleration (in an inertial frame) and force (in the 
 .. figure:: images/accelerationThrustFromFile.png
 
 The dependent variable history (accelerations) are obtained from the :literal:`getDependentVariableHistory` function inside the :class:`DynamicsSimulator` class. The resulting :literal:`std::map` can be saved as discussed in :ref:`tudatFeaturesInputOutput`. 
-
-

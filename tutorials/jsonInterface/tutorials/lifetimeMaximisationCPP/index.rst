@@ -6,6 +6,8 @@
 Perturbed Earth-orbiting Satellite Lifetime Maximisation Using a Custom C++ Application
 =======================================================================================
 
+In this tutorial, the creation of a custom JSON-based application is described. Read first the general introduction on :ref:`jsonInterface_customJsonApp`.
+
 The example described on this page is identical to that described in :ref:`jsonInterface_tutorials_lifetimeMaximisation`. The only difference is that there, the :literal:`json_interface` application is used with many input files to run the different cases, while in this case only one input file, containing the shared settings, is used, and a custom C++ application is written to manually modify a few parameters for each case. The C++ code can be found in::
 
   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/lifetimeMaximisation.cpp
@@ -62,7 +64,7 @@ In this case there is no need to write a derived class of :class:`JsonSimulation
     return EXIT_SUCCESS;
   }
 
-In this example, we first create a :class:`JsonSimulationManager`, which will contain the JSON object obtained by parsing the specified input file. Then, we write a loop in which we modify this JSON object before it is actually used to set up the objects needed for the propagation (integrator, propagators, bodies, etc.) when we call the :literal:`updateSettings` method. We can access this JSON object by using the method :literal:`getJsonObject`. However, we can also modify this object by accessing the :literal:`at` method and the :literal:`[]` operators of the :class:`JsonSimulationManager` directly. Thus, these two lines are equivalent:
+In this example, we first create a :class:`JsonSimulationManager`, which will contain the JSON object obtained by parsing the specified input file. Then, we write a loop in which we modify this JSON object before it is actually used to set up the objects needed for the propagation (integrator, propagators, bodies, etc.) when we call the :literal:`updateSettings` method. We can access this JSON object by using the method :literal:`getJsonObject`. However, we can also modify this object by accessing the :literal:`at` method and the :literal:`[ ]` operators of the :class:`JsonSimulationManager` directly. Thus, these two lines are equivalent:
 
 .. code-block:: cpp
 
@@ -76,6 +78,6 @@ And so are these two lines too:
   std::cout << jsonSimulationManager.getJsonObject( ).at( "initialEpoch" ) << std::endl;
   std::cout << jsonSimulationManager.at( "initialEpoch" ) << std::endl;
 
-Inside the loop, in which we iterate for each of the propagations to be carried out, we modify the keys :jsonkey:`initialEpoch` and :jsonkey:`finalEpoch` of the JSON object. Additionally, we want each propagation to generate an output file with a unique name, so we also modify the key :jsonkey:`export[0].file`. Then, we can set up the simulation, run the propagation and export the results.
+Inside the loop, in which we iterate for each of the propagations to be carried out, we modify the keys :jsonkey:`initialEpoch` and :jsonkey:`finalEpoch` of the JSON object. Additionally, we want each propagation to generate an output file with a unique name, so we also modify the key :jsonkey:`export[ 0 ].file`. Then, we can set up the simulation, run the propagation and export the results.
 
-After the first propagation has been completed, we turn off warnings for unused keys. This is done to silence warnings about the key :jsonkey:`bodies.satellite.initialState` being unused. When running the first propagation, the Keplerian state defined in :jsonkey:`bodies.satellite.initialState` is converted to Cartesian and assigned to :jsonkey:`propagators[0].initialStates`. Further propagations find that the key :jsonkey:`propagators[0].initialStates` is defined, and thus they do not use the information at :jsonkey:`bodies.satellite.initialState`, resulting in an unused key warning if we do not set the key :jsonkey:`options.unusedKey` to :literal:`"continueSilently"`.
+After the first propagation has been completed, we turn off warnings for unused keys. This is done to silence warnings about the key :jsonkey:`bodies.satellite.initialState` being unused. When running the first propagation, the Keplerian state defined in :jsonkey:`bodies.satellite.initialState` is converted to Cartesian and assigned to :jsonkey:`propagators[ 0 ].initialStates`. Further propagations find that the key :jsonkey:`propagators[ 0 ].initialStates` is defined, and thus they do not use the information at :jsonkey:`bodies.satellite.initialState`, resulting in an unused key warning if we do not set the key :jsonkey:`options.unusedKey` to :literal:`"continueSilently"`.
