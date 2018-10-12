@@ -71,7 +71,7 @@ This UDP contains an empty constructor, and a constructor that initializes the p
     }
 
 
-The trajectory starts with a departure from Earth, and ends with a capture at Jupiter. All the legs between the departure and capture are swing-by legs. This application will not go into detail on the trajectory design setup, if this is not understood the reader is referred to the :ref:`interplanetaryTrajectoryDesign` application walkthrough. 
+The trajectory starts with a departure from Earth, and ends with a capture at Jupiter. All the legs between the departure and capture are swing-by legs. This application will not go into detail on the trajectory design setup, if this is not understood the reader is referred to the :ref:`interplanetaryTrajectoryDesign` application tutorial.
 
 After the trajectory is setup, the parameters for the selected order of planets is intialized using a large switch statement:
 
