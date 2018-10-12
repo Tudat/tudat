@@ -22,7 +22,6 @@ The main problem of this approach is that, in case that the user didn't define t
 
 As it can be seen, for a simple input file such as :ref:`main-json` the key :jsonkey:`type` is defined for six objects. If we forget to define it for any of them, the message :literal:`key 'type' not found` will be useless as we cannot know for which object it is missing. The only way to find out is to determine which objects require a mandatory :literal:`type` key and to manually check the input file for any of those objects with this key missing. For more complex simulations, in which the JSON input file is hundreds of lines long, or splitted into several modular files, identification of the source of the problem can be difficult. A message that *is* informative would be something like :literal:`key 'integrator.type' not found`. In the JSON Interface library, :literal:`integrator.type` is known as a key path.
 
-
 Key paths
 ~~~~~~~~~
 
