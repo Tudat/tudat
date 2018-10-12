@@ -243,11 +243,11 @@ There are cases in which you will want to create a function that always returns 
 
       [ captures ]( params ){ body }
 
-   - :literal:`captures`: How the value should be returned:
+   - :literal:`captures`: How the input values should be captured:
 
       - :literal:`=`: by copy
       - :literal:`&`: by reference
-      - :literal:`_` (white space)
+      - :literal:`_` (blank): no capture
 
    - :literal:`params`: List of the input values, as defined in the function declaration or in the :class:`function` template parameters.
 

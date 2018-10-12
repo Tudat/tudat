@@ -10,7 +10,7 @@ Almost all classes containing settings for Tudat simulations are used in the for
 
 .. code-block:: cpp
   
-  namespace boost
+  namespace std
   {
   
   template< typename T >
@@ -44,7 +44,7 @@ Thus, given that the settings classes used throughout Tudat are always used as s
 Definition of keys
 ~~~~~~~~~~~~~~~~~~
 
-In all the example :literal:`to_json` and :literal:`from_json` functions presented so far, the keys were hard-coded, i.e. literal strings were used when using the :literal:`[]` operator of a :class:`nlohmann::json` object, calling the :literal:`getValue` function or constructing a key path (by concatenating several strings). However, this approach makes code-updating very complex. Image that, in the future, we want to update a key called :literal:`initialTime` to :literal:`initialEpoch`. Although a global search could do the trick, this may result in modifying parts of the code that should not be modified. If we want to update the name of the key :jsonkey:`type` to :literal:`modelType`, but only for rotation model settings, the only option is doing it manually to avoid changing also the :literal:`type` keys of other objects.
+In all the example :literal:`to_json` and :literal:`from_json` functions presented so far, the keys were hard-coded, i.e. literal strings were used when using the :literal:`[ ]` operator of a :class:`nlohmann::json` object, calling the :literal:`getValue` function or constructing a key path (by concatenating several strings). However, this approach makes code-updating very complex. Image that, in the future, we want to update a key called :literal:`initialTime` to :literal:`initialEpoch`. Although a global search could do the trick, this may result in modifying parts of the code that should not be modified. If we want to update the name of the key :jsonkey:`type` to :literal:`modelType`, but only for rotation model settings, the only option is doing it manually to avoid changing also the :literal:`type` keys of other objects.
 
 Thus, in the JSON Interface library, literal strings are never used inside :literal:`to_json` and :literal:`from_json` functions. Instead, all the keys that are recognised by the JSON Interface are declared in :class:`Tudat/JsonInterface/Support/keys.h`, and their string-value is defined in :class:`Tudat/JsonInterface/Support/keys.cpp`. This is done using a struct called :class:`Keys` containing several nested structs for each level. For instance:
 

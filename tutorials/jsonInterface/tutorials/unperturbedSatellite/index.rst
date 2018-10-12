@@ -13,7 +13,7 @@ The first step is to define the file tree. Since this is a simple example, there
 General Settings
 ~~~~~~~~~~~~~~~~
 
-We define the key :jsonkey:`initialEpoch` at root level, which will be used as initial time for the integrator and for interpolation of the Spice ephemeris. We also define the key :jsonkey:`finalEpoch`, which is used for interpolation of the Spice ephemeris and to create a time-based termination condition. In both cases, we need to specify the values in seconds since J2000. In this case, :jsonkey:`globalFrameOrigin` is not specified, so the default value of :literal:`"SSB"` (Solar system barycentre) is used. The :jsonkey:`globalFrameOrientation` is set to :literal:`J2000`.
+We define the key :jsonkey:`initialEpoch` at root level, which will be used as initial time for the integrator and for interpolation of the Spice ephemeris. We also define the key :jsonkey:`finalEpoch`, which is used for interpolation of the Spice ephemeris and to create a time-based termination condition. In both cases, we need to specify the values in seconds since J2000. In this case, :jsonkey:`globalFrameOrigin` is specified to be :literal:`"Earth"`. This is because we are only interested in simulating the orbit of a spacecraft around the Earth, and are not interested in any additional celestial body. Finally, the :jsonkey:`globalFrameOrientation` is set to :literal:`J2000`.
 
 Then, we request using the standard Spice kernels, namely :class:`pck00010.tpc`, :class:`gm_de431.tpc`, :class:`de430_small.bsp` and :class:`pck00010.tpc`. We do this by defining the key :jsonkey:`spice` to be:
 
@@ -35,12 +35,7 @@ The next step is to define the body settings. In this case, only Earth and the o
 
       {
          "Earth": {
-            "useDefaultSettings": true,
-            "ephemeris": {
-               "type": "constant",
-               "constantState": [ 0, 0, 0, 0, 0, 0 ],
-               "frameOrientation": "J2000"
-            }
+            "useDefaultSettings": true
          },
          "Asterix": {
             "initialState": {
@@ -55,7 +50,7 @@ The next step is to define the body settings. In this case, only Earth and the o
          }
       }
 
-The first body, :jsonkey:`Earth`, has the key :jsonkey:`useDefaultSettings` set to :literal:`true`, which means that its properties (such as gravitational parameter) will be loaded automatically. For this simple propagation, since we are not considering additional celestial bodies, we can place Earth anywhere, e.g. in the global frame origin (i.e. in the Solar system barycentre). We do that by defining :jsonkey:`bodies.Earth.ephemeris` to be of type :literal:`constant` and we use a constant zero state (we also assume it is stationary). The order in which the keys :jsonkey:`useDefaultSettings` and :jsonkey:`ephemeris` are defined inside the :jsonkey:`bodies.Earth` objects is irrelevant: the default settings will always be loaded first, and then the settings specified in the input file (if any) will override the default ones.
+The first body, :jsonkey:`Earth`, has the key :jsonkey:`useDefaultSettings` set to :literal:`true`, which means that its properties (such as gravitational parameter, atmosphere, etc.) will be loaded automatically. 
 
 The second body, :jsonkey:`Asterix`, does not specify the key :jsonkey:`useDefaultSettings`, which defaults to :literal:`false`. Thus, no properties will be loaded from Spice. Since no perturbations are considered in this propagation, we need not specify a mass or aerodynamic properties. Thus, we only need to provided an :jsonkey:`initialState`. We can provide directly a vector with the Cartesian components, or an object defining the different keys of a Keplerian state, as shown above.
 
