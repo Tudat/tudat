@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Boost: Basic Concepts &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Tutorials and Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Boost: Basic Concepts</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/tutorials/basics/externalLibraries/boost_old.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="boost-basic-concepts">
+<span id="externalboost"></span><h1>Boost: Basic Concepts<a class="headerlink" href="#boost-basic-concepts" title="Permalink to this headline">¶</a></h1>
+<p>Boost is a collection of useful libraries providing a wide variety of functionality in C++ that we use. The boost library is included in the Tudat Bundle, pre-compiled and ready for use. Alternatively, you can download the library from the boost website itself, where you will find downloads and documentation for different operating systems. Note that when downloading the boost library, you will have to compile it yourself.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">For Windows, pre-built binaries are available. In this case, compilation is not necessary by the user.</p>
+</div>
+<p>General information on boost can be found on the&nbsp;boost website. This website also contains documentation on all boost features. Be sure to look up the version number of the boost library that you are using when checking out this documentation. Note that the boost documentation can be quite complex, especially for people who are starting to learn and use C++ and Tudat.</p>
+<div class="section" id="why-use-boost">
+<h2>Why use boost?<a class="headerlink" href="#why-use-boost" title="Permalink to this headline">¶</a></h2>
+<p>Boost is a collection of generally well-coded C++ libraries that are a substantial addition to the standard libraries. Some boost features are particularly useful for Tudat and are frequently used for two reasons:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>It makes the use of some Tudat features easier.</li>
+<li>It makes the Tudat library more robust.</li>
+</ol>
+</div></blockquote>
+<p>In Tudat, the main overall uses of the boost libraries are in cases where <strong>dynamic memory allocation</strong> is used and when a function is passed as an argument to another object. In case of dynamic memory allocation, use the boost shared pointer class to ensure that memory is allocated and destroyed correctly, so that no manual calls to ‘delete’ are required. In case of passing a function as an argument we use the boost function class, which allows for very generic interfaces and makes it easy to pass a function, where it doesn’t matter whether the function is a free function or a class member function.</p>
+<p>Although the above two cases represent the main boost features that are throughout much of the code, there are many other instances of usages of other specific boost functionalities in both the library and users’ applications.</p>
+</div>
+<div class="section" id="common-boost-features">
+<h2>Common Boost Features<a class="headerlink" href="#common-boost-features" title="Permalink to this headline">¶</a></h2>
+<p>A couple of elements from boost are frequently used in Tudat. These are:</p>
+<p><strong>Basic Features:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="first docutils">
+<dt><a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal"><span class="pre">shared_ptr</span></code></a></dt>
+<dd>This is a part of the boost smart pointer library. It is a template class that stores a smart pointer to a dynamically allocated object. The smart pointer behaves much like a normal built-in C++ pointer, except that the object pointed to is guaranteed to be <strong>automatically deleted</strong> when the last <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal"><span class="pre">shared_ptr</span></code></a> pointing to the object is destroyed or reset. This boost feature is used in Tudat because it is a safe way to use pointers to dynamically allocated objects. In Tudat it is frequently combined with <a class="reference internal" href="utility.html#make_shared" title="make_shared"><code class="xref py py-class docutils literal"><span class="pre">make_shared</span></code></a>.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference internal" href="utility.html#make_shared" title="make_shared"><code class="xref py py-class docutils literal"><span class="pre">make_shared</span></code></a></dt>
+<dd>This is a part of the boost smart pointer library. It is a factory function that creates an object of a given type and <strong>returns a shared pointer</strong> to it. This way the explicit use of new is avoided. This boost feature is frequently used in Tudat because it is an easy, efficient and safe way to use pointers to dynamically allocated objects.</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>Advanced Features:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="first docutils">
+<dt><a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal"><span class="pre">function</span></code></a></dt>
+<dd>The boost function library contains a family of class templates that are function object wrappers. This boost feature is used in Tudat because it is an easy way to pass a function as an input to another object or function. It is used instead of a normal C++ function pointer. The boost function type describes what the function should ‘look’ like, in the sense that it defines both its input types (and order) and its output type. Any function that fits this profile is accepted when it is passed. In Tudat it is frequently combined with <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal"><span class="pre">bind</span></code></a> to create a link to a class member function.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal"><span class="pre">bind</span></code></a></dt>
+<dd>The boost bind library is a template library that implements a simple and versatile function argument binding mechanism. Typically, it is used to create boost function objects from either a free function or a member function. It supports arbitrary function objects, functions, function pointers, and member function pointers. It can bind any argument to a specific value or route input arguments into arbitrary positions. This boost feature is used in Tudat because it is a versatile method, and it is a good way to pass function objects.</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="boost-shared-libraries-dynamic-linking">
+<h2>Boost Shared Libraries (Dynamic Linking)<a class="headerlink" href="#boost-shared-libraries-dynamic-linking" title="Permalink to this headline">¶</a></h2>
+<p>During the build process of any application, multiple object files can be linked in a library. This library can be linked either statically or dynamically. Usually, we make use of the static boost libraries. These files have the extension <code class="docutils literal"><span class="pre">.a</span></code> and can be found in the <code class="docutils literal"><span class="pre">boost/stage/lib</span> <span class="pre">directory</span></code>. However, it could be that you require the dynamically linked libraries (for instance, if you are making use of&nbsp;PaGMO). These files have the extension <code class="docutils literal"><span class="pre">.dll</span></code> and can be found in the <code class="docutils literal"><span class="pre">boost/shared</span></code> directory.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1. Tabulated Atmosphere Usage &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>7. Tabulated Atmosphere Usage &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -39,8 +39,8 @@
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
         <link rel="up" title="Application Tutorials" href="index.html"/>
-        <link rel="next" title="2. Unperturbed Earth-orbiting Satellite" href="unperturbedEarthOrbitingSatellite.html"/>
-        <link rel="prev" title="Application Tutorials" href="index.html"/> 
+        <link rel="next" title="8. Comparison of Propagator Types" href="propagatorTypesComparison.html"/>
+        <link rel="prev" title="6. Use of Thrust: User-defined Thrust Vector" href="useOfThrustUserDefinedThrustVector.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -99,14 +99,14 @@
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Tutorials</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html#tudat-example-application-tutorials">Tudat Example Application Tutorials</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">1. Tabulated Atmosphere Usage</a></li>
-<li class="toctree-l4"><a class="reference internal" href="unperturbedEarthOrbitingSatellite.html">2. Unperturbed Earth-orbiting Satellite</a></li>
-<li class="toctree-l4"><a class="reference internal" href="perturbedEarthOrbitingSatellite.html">3. Perturbed Earth-orbiting Satellite</a></li>
-<li class="toctree-l4"><a class="reference internal" href="propagatorTypesComparison.html">4. Comparison of Propagator Types</a></li>
-<li class="toctree-l4"><a class="reference internal" href="unguidedCapsuleEntry.html">5. Un-guided Capsule Entry</a></li>
-<li class="toctree-l4"><a class="reference internal" href="innerSolarSystemPropagation.html">6. Inner Solar System Propagation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="useOfThrustThrustForceAlongVelocityVector.html">7. Use of Thrust: Thrust Force Along Velocity Vector</a></li>
-<li class="toctree-l4"><a class="reference internal" href="useOfThrustUserDefinedThrustVector.html">8. Use of Thrust: User-defined Thrust Vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unperturbedEarthOrbitingSatellite.html">1. Unperturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="perturbedEarthOrbitingSatellite.html">2. Perturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unguidedCapsuleEntry.html">3. Un-guided Capsule Entry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="innerSolarSystemPropagation.html">4. Inner Solar System Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="useOfThrustThrustForceAlongVelocityVector.html">5. Use of Thrust: Thrust Force Along Velocity Vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="useOfThrustUserDefinedThrustVector.html">6. Use of Thrust: User-defined Thrust Vector</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7. Tabulated Atmosphere Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="propagatorTypesComparison.html">8. Comparison of Propagator Types</a></li>
 <li class="toctree-l4"><a class="reference internal" href="filterExample.html">9. Kalman Filter for State Estimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="variationalEquationsPropagation.html">10. Variational Equations Propagation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">11. Orbit Determination and Parameter Estimation (Basic)</a></li>
@@ -174,7 +174,7 @@
         
           <li><a href="index.html">Application Tutorials</a> &raquo;</li>
         
-      <li>1. Tabulated Atmosphere Usage</li>
+      <li>7. Tabulated Atmosphere Usage</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -193,8 +193,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="tabulated-atmosphere-usage">
-<span id="walkthroughstabulatedatmosphere"></span><h1>1. Tabulated Atmosphere Usage<a class="headerlink" href="#tabulated-atmosphere-usage" title="Permalink to this headline">¶</a></h1>
+  <p id="walkthroughstabulatedatmosphere">The code for this tutorial is given on Github, and is also located in your tudat bundle at:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">tabulatedAtmosphereUsage</span><span class="o">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
+<div class="section" id="tabulated-atmosphere-usage">
+<h1>7. Tabulated Atmosphere Usage<a class="headerlink" href="#tabulated-atmosphere-usage" title="Permalink to this headline">¶</a></h1>
 <p>In the example application folder you will find an example called <code class="docutils literal"><span class="pre">tabulatedAtmosphereUsage.cpp</span></code>, which can be run by selecting the executable <code class="docutils literal"><span class="pre">application_TabulatedAtmosphereUsage</span></code>. If you run this simple script as is, its output should look something like this:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Example</span> <span class="mf">1.</span> <span class="o">-----------------------------------------------------------------------</span>
 <span class="n">Altitude</span><span class="p">:</span> <span class="mi">0</span> <span class="n">km</span><span class="o">.</span> <span class="n">Density</span><span class="p">:</span> <span class="mf">7.61788e-05</span> <span class="n">kg</span><span class="o">/</span><span class="n">m</span><span class="o">^</span><span class="mf">3.</span> <span class="n">Speed</span> <span class="n">of</span> <span class="n">sound</span><span class="p">:</span> <span class="mf">205.817</span> <span class="n">m</span><span class="o">/</span><span class="n">s</span><span class="o">.</span>
@@ -234,14 +238,14 @@
 <p class="last">Note that the location of the warnings may be different in your output. This is fine, since even on different runs on the same computer, these lines may appear in different places. The important thing is that they do show.</p>
 </div>
 <p>In <strong>example 1</strong>, the settings are very basic. The resulting atmosphere object describes how density, pressure, temperature, gas constant, specific heat ratio and molar mass, change over time for the Martian atmosphere, as a function of altitude. Here, the internal interpolator is instructed to use the boundary value, in case the altitude goes beyond its defined domain. As you can see from the results above, the atmosphere object does indeed output the boundary value when the altitude is both above and below the altitude bounds (which are given by the 2 results in the middle).</p>
-<p>A more interesting case is the <strong>second example</strong>. Here, the atmosphere is three-dimensional, depending on longitude, latitude and altitude. In this case <code class="docutils literal"><span class="pre">use_default_value</span></code> is used as boundary handling method and a pair of extrapolation values is defined for each combination of dependent and independent variables. For longitude and latitude, these values are quite straightforward:</p>
+<p>A more interesting case is the <strong>second example</strong>. Here, the atmosphere is three-dimensional, depending on longitude, latitude and altitude. In this case <code class="docutils literal"><span class="pre">use_default_value</span></code> is used as boundary handling method and a pair of default values is defined for each combination of dependent and independent variables. For longitude and latitude, these values are quite straightforward:</p>
 <blockquote>
 <div><ul class="simple">
 <li><strong>Longitude</strong>: if out-of-bounds, give 0.0</li>
 <li><strong>Latitude</strong>: if out-of-bounds, give NaN</li>
 </ul>
 </div></blockquote>
-<p>For <strong>altitude</strong>, on the other hand, a more complicated system is set up, where for each dependent value a specific pair is defined. What is interesting to notice is the order in which the out-of-range methods are processed. For instance, in the first test case (when i, j and k all equal 0), all three variables are outside their domain, however the default value of longitude (i.e., the first independent variable as defined by the user) is used as output. This would also be valid in the case that the third independent variable had was using <code class="docutils literal"><span class="pre">throw_exception_at_boundary</span></code> method. Thus, only during the last test case, would the simulation fail and give a runtime error (this is the only case where only the third variable is out-of-range).</p>
+<p>For <strong>altitude</strong>, on the other hand, a more complicated system is set up, where for each dependent value a specific pair is defined. What is interesting to notice is the order in which the out-of-range methods are processed. For instance, in the first test case (when <span class="math">\(i\)</span>, <span class="math">\(j\)</span> and <span class="math">\(k\)</span> all equal 0), all three variables are outside their domain, however the default value of longitude (i.e., the first independent variable as defined by the user) is used as output. This would also be valid in the case that the third independent variable was using <code class="docutils literal"><span class="pre">throw_exception_at_boundary</span></code> method. Thus, only during the last test case, would the simulation fail and give a runtime error (this is the only case where only the third variable is out-of-range).</p>
 </div>
 
 
@@ -254,10 +258,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="unperturbedEarthOrbitingSatellite.html" class="btn btn-neutral float-right" title="2. Unperturbed Earth-orbiting Satellite" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="propagatorTypesComparison.html" class="btn btn-neutral float-right" title="8. Comparison of Propagator Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Application Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="useOfThrustUserDefinedThrustVector.html" class="btn btn-neutral" title="6. Use of Thrust: User-defined Thrust Vector" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -3,4 +3,4 @@
 .. role:: jsonkey
 .. role:: arrow
 
-- :jsontype:`number[6]` :jsonkey:`constantState` (mandatory). Constant Cartesian state.
+- :jsontype:`number[ 6 ]` :jsonkey:`constantState` (mandatory). Constant Cartesian state.

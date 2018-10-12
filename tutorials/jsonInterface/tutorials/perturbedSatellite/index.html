@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2.2. Perturbed Earth-orbiting Satellite &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>3.2. Perturbed Earth-orbiting Satellite &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -38,9 +38,9 @@
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../../index.html"/>
-        <link rel="up" title="2. Tutorials" href="../index.html"/>
-        <link rel="next" title="2.3. Perturbed Earth-orbiting Satellite Lifetime Maximisation" href="../lifetimeMaximisation/index.html"/>
-        <link rel="prev" title="2.1. Unperturbed Earth-orbiting Satellite" href="../unperturbedSatellite/index.html"/> 
+        <link rel="up" title="3. Tutorials" href="../index.html"/>
+        <link rel="next" title="3.3. Perturbed Earth-orbiting Satellite Lifetime Maximisation" href="../lifetimeMaximisation/index.html"/>
+        <link rel="prev" title="3.1. Unperturbed Earth-orbiting Satellite" href="../unperturbedSatellite/index.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -100,16 +100,16 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../tudatFeatures/index.html">Tudat Libraries</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../index.html">JSON Interface</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../../basicJsonInterfaces.html">1. Basic JSON Interfaces</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="../index.html">2. Tutorials</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="../unperturbedSatellite/index.html">2.1. Unperturbed Earth-orbiting Satellite</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">2.2. Perturbed Earth-orbiting Satellite</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../lifetimeMaximisation/index.html">2.3. Perturbed Earth-orbiting Satellite Lifetime Maximisation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../apolloCapsuleEntry/index.html">2.4. Apollo Capsule Entry</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../lifetimeMaximisationCPP/index.html">2.5. Perturbed Earth-orbiting Satellite Lifetime Maximisation Using a Custom C++ Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../customJsonApp.html">2. Writing Custom JSON-based Applications</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">3. Tutorials</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../unperturbedSatellite/index.html">3.1. Unperturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">3.2. Perturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lifetimeMaximisation/index.html">3.3. Perturbed Earth-orbiting Satellite Lifetime Maximisation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lifetimeMaximisationCPP/index.html">3.4. Perturbed Earth-orbiting Satellite Lifetime Maximisation Using a Custom C++ Application</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../apolloCapsuleEntry/index.html">3.5. Apollo Capsule Entry</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../../keys/rst/index.html">3. List of Keys</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../customJsonApp.html">4. Writing Custom JSON-based Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../keys/rst/index.html">4. List of Keys</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../modularFiles.html">5. Modular Files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../multicase.html">6. Multi-case Simulations</a></li>
 </ul>
@@ -169,9 +169,9 @@
         
           <li><a href="../../index.html">JSON Interface</a> &raquo;</li>
         
-          <li><a href="../index.html">2. Tutorials</a> &raquo;</li>
+          <li><a href="../index.html">3. Tutorials</a> &raquo;</li>
         
-      <li>2.2. Perturbed Earth-orbiting Satellite</li>
+      <li>3.2. Perturbed Earth-orbiting Satellite</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -191,12 +191,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="perturbed-earth-orbiting-satellite">
-<span id="jsoninterface-tutorials-perturbedorbitpropagation"></span><h1>2.2. Perturbed Earth-orbiting Satellite<a class="headerlink" href="#perturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
+<span id="jsoninterface-tutorials-perturbedorbitpropagation"></span><h1>3.2. Perturbed Earth-orbiting Satellite<a class="headerlink" href="#perturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
 <p>This page describes how to set up the propagation of a perturbed Earth-orbiting satellite using the <code class="docutils literal"><span class="pre">json_interface</span></code>.</p>
 <p>This example takes the code from <a class="reference internal" href="../unperturbedSatellite/index.html#jsoninterface-tutorials-basicpropagation"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> as a base upon which we can start to build our new application.</p>
 <p>The initial conditions and general simulation settings are thus the same as for the previous example. The only difference will be in the addition of perturbing accelerations.</p>
 <div class="section" id="adding-perturbations">
-<h2>2.2.1. Adding Perturbations<a class="headerlink" href="#adding-perturbations" title="Permalink to this headline">¶</a></h2>
+<h2>3.2.1. Adding Perturbations<a class="headerlink" href="#adding-perturbations" title="Permalink to this headline">¶</a></h2>
 <p>The addition of perturbations requires the specifications of a few more characteristics, both for the environment and the spacecraft.</p>
 <p>In this simple application, we would like to reproduce the results of the example in <a class="reference internal" href="../../../applicationWalkthroughs/perturbedEarthOrbitingSatellite.html#walkthroughsperturbedearthorbitingsatellite"><span class="std std-ref">Perturbed Earth-orbiting Satellite</span></a>. Hence, we would like to model the following accelerations:</p>
 <blockquote>
@@ -209,7 +209,7 @@
 </div></blockquote>
 <p>Each of these accelerations require some small modifications to the previous code. In the text below, we will analyze what are the missing elements, and how they can be added to the JSON file.</p>
 <div class="section" id="spherical-harmonics">
-<h3>2.2.1.1. Spherical Harmonics<a class="headerlink" href="#spherical-harmonics" title="Permalink to this headline">¶</a></h3>
+<h3>3.2.1.1. Spherical Harmonics<a class="headerlink" href="#spherical-harmonics" title="Permalink to this headline">¶</a></h3>
 <p>To model spherical harmonics (SH), two steps are necessary. The first is the addition of the SH model to the body. This is done by specifying a new key for the object for which the SH model needs to be added. In case you want to add SH to the Earth, as we want to do for this example, you should add the following specification to the <span class="jsonkey">Earth</span> key:</p>
 <blockquote>
 <div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -224,6 +224,10 @@
 </div>
 </div></blockquote>
 <p>Here, we have specified the <code class="docutils literal"><span class="pre">ggm02c</span></code> model, which will be used to load the SH coefficients <span class="math">\(C\)</span> and <span class="math">\(S\)</span>. Note that you can find a list of the available spherical harmonics models at <a class="reference internal" href="../../keys/rst/index.html#jsoninterface-keys"><span class="std std-ref">List of Keys</span></a>, under Body, Gravity Field, Spherical Harmonic Gravity Field from built-in model.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The order in which the keys <span class="jsonkey">useDefaultSettings</span> and <span class="jsonkey">gravityField</span> are defined inside the <span class="jsonkey">bodies.Earth</span> objects is irrelevant: the default settings will always be loaded first, and then the settings specified in the input file (if any) will override the default ones.</p>
+</div>
 <p>Now, we also need to tell the simulation to model the gravitational acceleration. This is done by replacing the <code class="docutils literal"><span class="pre">&quot;pointMassGravity&quot;</span></code> value of the <span class="jsonkey">type</span> key under the accelerations of Asterix. In this case, we want to add <code class="docutils literal"><span class="pre">&quot;sphericalHarmonicGravity&quot;</span></code>. For this type of acceleration, we also need to specify the maximum degree and order to use. This is done by adding two extra keys, namely <span class="jsonkey">degree</span> and <span class="jsonkey">order</span>, after <span class="jsonkey">type</span>. Thus, for now, the JSON code specifying the accelerations acting on the body Asterix will look like this:</p>
 <blockquote>
 <div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -240,7 +244,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="third-bodies">
-<h3>2.2.1.2. Third Bodies<a class="headerlink" href="#third-bodies" title="Permalink to this headline">¶</a></h3>
+<h3>3.2.1.2. Third Bodies<a class="headerlink" href="#third-bodies" title="Permalink to this headline">¶</a></h3>
 <p>The addition of third bodies is very straight-forward. Firstly, we need to add these extra bodies to the simulation. Since we do not have any specific request for these bodies, we can simply load the default settings for each of the bodies we need, i.e., for Sun, Moon, Mars and Venus. Therefore, under the key <span class="jsonkey">bodies</span> we can add, taking the Sun as example:</p>
 <blockquote>
 <div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -268,7 +272,7 @@
 <p>where the Sun is taken as example, once more.</p>
 </div>
 <div class="section" id="solar-radiation-pressure">
-<h3>2.2.1.3. Solar Radiation Pressure<a class="headerlink" href="#solar-radiation-pressure" title="Permalink to this headline">¶</a></h3>
+<h3>3.2.1.3. Solar Radiation Pressure<a class="headerlink" href="#solar-radiation-pressure" title="Permalink to this headline">¶</a></h3>
 <p>Inclusion of solar radiation pressure to the simulation requires three steps:</p>
 <blockquote>
 <div><ul class="simple">
@@ -311,7 +315,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="aerodynamics">
-<h3>2.2.1.4. Aerodynamics<a class="headerlink" href="#aerodynamics" title="Permalink to this headline">¶</a></h3>
+<h3>3.2.1.4. Aerodynamics<a class="headerlink" href="#aerodynamics" title="Permalink to this headline">¶</a></h3>
 <p>Modeling of the aerodynamic acceleration is somewhat similar to the modeling of the solar radiation. Firstly, we need to specify the atmosphere of the planet we are orbiting. However, since we want to keep the default atmosphere of the Earth (the tabulated 1976 Standard Atmosphere Model), we do not need to specify this.</p>
 <p>The second step is the addition of the aerodynamic properties of the spacecraft. In this case, we want to model only a constant drag coefficient, equal to 1.2. We can do this by adding a new key to <span class="jsonkey">Asterix</span>, under <span class="jsonkey">bodies</span>:</p>
 <blockquote>
@@ -343,7 +347,7 @@
 </div>
 </div>
 <div class="section" id="running-the-simulation">
-<h2>2.2.2. Running the Simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">¶</a></h2>
+<h2>3.2.2. Running the Simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">¶</a></h2>
 <p>The resulting input file, where all the settings have been combined, should look something like this:</p>
 <div class="literal-block-wrapper docutils container" id="main-json-perturbed">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">main.json</span></code></span><a class="headerlink" href="#main-json-perturbed" title="Permalink to this code">¶</a></div>
@@ -590,7 +594,7 @@
 <p>we will get a <code class="xref py py-class docutils literal"><span class="pre">stateHistory.txt</span></code> file containing the results, and a <code class="xref py py-class docutils literal"><span class="pre">fullSettings.json</span></code> file containing the list of the full settings, including the default ones.</p>
 </div>
 <div class="section" id="results">
-<h2>2.2.3. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2>3.2.3. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p>Finally, we can load the results and plot the difference between perturbed and unperturbed state, which is shown below.</p>
 <img alt="../../../../_images/perturbedSatellite.png" src="../../../../_images/perturbedSatellite.png" />
 <p>Clearly, the addition of the perturbations causes quite a difference in the position of the spacecraft over one Julian day.</p>
@@ -607,10 +611,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../lifetimeMaximisation/index.html" class="btn btn-neutral float-right" title="2.3. Perturbed Earth-orbiting Satellite Lifetime Maximisation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../lifetimeMaximisation/index.html" class="btn btn-neutral float-right" title="3.3. Perturbed Earth-orbiting Satellite Lifetime Maximisation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../unperturbedSatellite/index.html" class="btn btn-neutral" title="2.1. Unperturbed Earth-orbiting Satellite" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../unperturbedSatellite/index.html" class="btn btn-neutral" title="3.1. Unperturbed Earth-orbiting Satellite" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

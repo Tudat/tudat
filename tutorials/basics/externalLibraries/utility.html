@@ -1,0 +1,338 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>4. Dynamic Memory and Function Objects &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
+        <link rel="up" title="Tudat Basics" href="../index.html"/>
+        <link rel="next" title="5. Dynamic Memory: Usage Examples" href="utilityExamples.html"/>
+        <link rel="prev" title="3. Boost: Basic Concepts" href="boost.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials and Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Basics</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="eigen.html">1. Eigen: Basic Concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eigenExamples.html">2. Eigen: Usage Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boost.html">3. Boost: Basic Concepts</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4. Dynamic Memory and Function Objects</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dynamic-memory">4.1. Dynamic Memory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#function-objects">4.2. Function Objects</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="utilityExamples.html">5. Dynamic Memory: Usage Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utilityExamples.html#function-objects-usage-examples">6. Function Objects: Usage Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cppTutorials.html">7. C++ Tutorials</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tudatFeatures/index.html">Tudat Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../jsonInterface/index.html">JSON Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference external" href="http://doxygen.tudat.tudelft.nl">Doxygen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Tutorials and Documentation</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tudat Basics</a> &raquo;</li>
+        
+      <li>4. Dynamic Memory and Function Objects</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/tutorials/basics/externalLibraries/utility.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dynamic-memory-and-function-objects">
+<span id="externalutility"></span><h1>4. Dynamic Memory and Function Objects<a class="headerlink" href="#dynamic-memory-and-function-objects" title="Permalink to this headline">¶</a></h1>
+<p>Dynamic memory and function objects are two concepts that are widely used in Tudat. They allow for a much more streamlined and powerful implementation of the C++ language, and greatly simplify application and features implementation.</p>
+<p>These two features used to be part of the <code class="docutils literal"><span class="pre">boost</span></code> library (introduced in <a class="reference internal" href="boost_old.html#externalboost"><span class="std std-ref">Boost: Basic Concepts</span></a>), but their use became so extensive and their utility so considerable, that they were included in the standard C++ libraries, after C++11.</p>
+<p>On these page, the basic concepts of these C++ features will be explained, at a basic level. Together with the tutorial provided in <a class="reference internal" href="utilityExamples.html#externalutilityexamples"><span class="std std-ref">Dynamic Memory: Usage Examples</span></a>, you should get an idea of how these are used throughout Tudat and of how you can implement them in your own applications.</p>
+<div class="section" id="dynamic-memory">
+<h2>4.1. Dynamic Memory<a class="headerlink" href="#dynamic-memory" title="Permalink to this headline">¶</a></h2>
+<p>In Tudat, dynamic memory allocation is used to ensure that memory is allocated and destroyed correctly (and automatically), such that no manual calls to <code class="docutils literal"><span class="pre">delete</span></code> are required.</p>
+<p>Pointers are a very common example of where these features come in handy. The allocation and descrution of pointers in C++ can be a hard task to understand, when first learning to use this language. Dynamic memory management helps reducing this gap by introducing the concept of smart pointers.</p>
+<p>Dynamic memory management is defined in the header <code class="docutils literal"><span class="pre">&lt;memory&gt;</span></code>. You can find a complete description of the other elements available in this header, <a class="reference external" href="https://en.cppreference.com/w/cpp/memory">here</a>.</p>
+<div class="section" id="common-features">
+<h3>4.1.1. Common Features<a class="headerlink" href="#common-features" title="Permalink to this headline">¶</a></h3>
+<p>While going through virtually any Tudat application or function, you will routinely encounter a couple of elements related to dynamic memory. These are:</p>
+<blockquote>
+<div><dl class="class">
+<dt id="shared_ptr">
+<em class="property">class </em><code class="descname">shared_ptr</code><a class="headerlink" href="#shared_ptr" title="Permalink to this definition">¶</a></dt>
+<dd><p>It is a template class that stores a smart pointer to a dynamically allocated object. The smart pointer behaves much like a normal C++ pointer, except that the object pointed to is guaranteed to be <strong>automatically deleted</strong> when the last <a class="reference internal" href="#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal"><span class="pre">shared_ptr</span></code></a> pointing to the object is destroyed or reset. This feature is used in Tudat because it is a safe way to use pointers to dynamically allocated objects. In Tudat it is frequently combined with <a class="reference internal" href="#make_shared" title="make_shared"><code class="xref py py-class docutils literal"><span class="pre">make_shared</span></code></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="make_shared">
+<em class="property">class </em><code class="descname">make_shared</code><a class="headerlink" href="#make_shared" title="Permalink to this definition">¶</a></dt>
+<dd><p>It is a factory function that creates an object of a given type and <strong>returns a shared pointer</strong> to it. This way the explicit use of new is avoided. This feature is frequently used in Tudat because it is an easy, efficient and safe way to use pointers to dynamically allocated objects.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="function-objects">
+<h2>4.2. Function Objects<a class="headerlink" href="#function-objects" title="Permalink to this headline">¶</a></h2>
+<p>In case of passing a function as an argument we use the <code class="docutils literal"><span class="pre">function</span></code> class, which allows for very generic interfaces and makes it easy to pass a function, where it doesn’t matter whether the function is a free function or a class member function.</p>
+<p>Function objects are defined in the header <code class="docutils literal"><span class="pre">&lt;functional&gt;</span></code>. You can find a complete description of the other elements available in this header, <a class="reference external" href="https://en.cppreference.com/w/cpp/utility/functional">here</a>.</p>
+<div class="section" id="id2">
+<h3>4.2.1. Common Features<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Function objects are less common in Tudat than smart pointer, but you will definitely encounter them or even need to use them, if you are planning on expanding the Tudat libraries. Two functions that might be useful to know and recognize are:</p>
+<blockquote>
+<div><dl class="class">
+<dt id="function">
+<em class="property">class </em><code class="descname">function</code><a class="headerlink" href="#function" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#function" title="function"><code class="xref py py-class docutils literal"><span class="pre">function</span></code></a> function contains a family of class templates that are function object wrappers. This feature is used in Tudat because it is an easy way to pass a function as an input to another object or function. It is used instead of a normal C++ function pointer. The <a class="reference internal" href="#function" title="function"><code class="xref py py-class docutils literal"><span class="pre">function</span></code></a> type describes what the function should ‘look’ like, in the sense that it defines both its input types (and order) and its output type. Any function that fits this profile is accepted when it is passed. In Tudat it is frequently combined with <a class="reference internal" href="#bind" title="bind"><code class="xref py py-class docutils literal"><span class="pre">bind</span></code></a> to create a link to a class member function.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="bind">
+<em class="property">class </em><code class="descname">bind</code><a class="headerlink" href="#bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#bind" title="bind"><code class="xref py py-class docutils literal"><span class="pre">bind</span></code></a> function is a template library that implements a simple and versatile function argument binding mechanism. Typically, it is used to create <a class="reference internal" href="#function" title="function"><code class="xref py py-class docutils literal"><span class="pre">function</span></code></a> objects from either a free function or a member function. It supports arbitrary function objects, functions, function pointers, and member function pointers. It can bind any argument to a specific value or route input arguments into arbitrary positions. This feature is used in Tudat because it is a versatile method, and it is a good way to pass function objects.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="utilityExamples.html" class="btn btn-neutral float-right" title="5. Dynamic Memory: Usage Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="boost.html" class="btn btn-neutral" title="3. Boost: Basic Concepts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>

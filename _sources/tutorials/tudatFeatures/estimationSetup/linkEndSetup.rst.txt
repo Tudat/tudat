@@ -22,7 +22,7 @@ Now, creating a ground station is done by:
 
 .. code-block:: cpp
 
-    boost::shared_ptr< Body > earth = ...;// Define object for Earth
+    std::shared_ptr< Body > earth = ...;// Define object for Earth
 
     // Define name of station
     std::string stationName = "Graz"; 

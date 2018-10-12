@@ -23,8 +23,8 @@ Linear Kalman Filter
 
    .. code-block:: cpp
 
-      boost::shared_pointer< LinearKalmanFilter< IndependentVariableType, DependentVariableType > > linearFilter = 
-         boost::make_shared< LinearKalmanFilter< IndependentVariableType, DependentVariableType > >(
+      std::shared_ptr< LinearKalmanFilter< IndependentVariableType, DependentVariableType > > linearFilter = 
+         std::make_shared< LinearKalmanFilter< IndependentVariableType, DependentVariableType > >(
                      stateTransitionMatrix,
                      controlMatrix,
                      measurementMatrix,
@@ -57,7 +57,7 @@ Extended Kalman Filter
 
    .. code-block:: cpp
 
-      boost::shared_ptr< FilterBase< IndependentVariableType, DependentVariableType > > filterObject;
+      std::shared_ptr< FilterBase< IndependentVariableType, DependentVariableType > > filterObject;
       filterObject = createFilter( filterSettings,
                                    systemFunction,
                                    measurementFunction,
@@ -82,8 +82,8 @@ Extended Kalman Filter
 
       .. code-block:: cpp
 
-         boost::shared_ptr< FilterSettings< IndependentVariableType, DependentVariableType > > filterSettings = 
-            boost::make_shared< ExtendedKalmanFilterSettings< IndependentVariableType, DependentVariableType > >( 
+         std::shared_ptr< FilterSettings< IndependentVariableType, DependentVariableType > > filterSettings = 
+            std::make_shared< ExtendedKalmanFilterSettings< IndependentVariableType, DependentVariableType > >( 
                         systemUncertainty,
                         measurementUncertainty,
                         filteringTimeStep,
@@ -109,7 +109,7 @@ Unscented Kalman Filter
 
    .. code-block:: cpp
 
-      boost::shared_ptr< FilterBase< IndependentVariableType, DependentVariableType > > filterObject;
+      std::shared_ptr< FilterBase< IndependentVariableType, DependentVariableType > > filterObject;
       filterObject = createFilter( filterSettings,
                                    systemFunction,
                                    measurementFunction )
@@ -126,8 +126,8 @@ Unscented Kalman Filter
 
       .. code-block:: cpp
 
-         boost::shared_ptr< FilterSettings< IndependentVariableType, DependentVariableType > > filterSettings = 
-            boost::make_shared< UnscentedKalmanFilterSettings< IndependentVariableType, DependentVariableType > >( 
+         std::shared_ptr< FilterSettings< IndependentVariableType, DependentVariableType > > filterSettings = 
+            std::make_shared< UnscentedKalmanFilterSettings< IndependentVariableType, DependentVariableType > >( 
                         systemUncertainty,
                         measurementUncertainty,
                         filteringTimeStep,
@@ -198,13 +198,13 @@ The last input of the :literal:`stateFunction` is another vector which denotes t
 
    .. code-block:: cpp
 
-      boost::function< DependentVector( const IndependentVariableType, const DependentVector& ) >
+      std::function< DependentVector( const IndependentVariableType, const DependentVector& ) >
 
-which one has two inputs (a :literal:`double` and an :literal:`Eigen::Vector3d`, in our case). The extra vector can be added by using the very handy :literal:`boost::bind` command. This function allows us to bind the output of a function as an input to another function. Thus, by using the control class mentioned above, one can replace the :literal:`systemFunction` input with:
+which one has two inputs (a :literal:`double` and an :literal:`Eigen::Vector3d`, in our case). The extra vector can be added by using the very handy :literal:`std::bind` command. This function allows us to bind the output of a function as an input to another function. Thus, by using the control class mentioned above, one can replace the :literal:`systemFunction` input with:
 
    .. code-block:: cpp
 
-      boost::bind( &stateFunction, _1, _2, boost::bind( &ControlSystem::getCurrentStateVector, controlSystem ) )
+      std::bind( &stateFunction, std::placeholders::_1, std::placeholders::_2, std::bind( &ControlSystem::getCurrentStateVector, controlSystem ) )
 
 where the :literal:`controlSystem` object is of type :class:`ControlSystem`. Using this method, if the control system is regularly updated (possibly every time step), the control vector will be automatically retrieved and parsed by the filter.
 

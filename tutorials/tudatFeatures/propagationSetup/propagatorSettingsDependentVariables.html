@@ -202,12 +202,12 @@
 <dt id="DependentVariableSaveSettings">
 <em class="property">class </em><code class="descname">DependentVariableSaveSettings</code><a class="headerlink" href="#DependentVariableSaveSettings" title="Permalink to this definition">¶</a></dt>
 <dd><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create object with list of dependent variables</span>
-<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">DependentVariableSaveSettings</span> <span class="o">&gt;</span> <span class="n">dependentVariablesToSave</span> <span class="o">=</span>
-<span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">dependentVariablesList</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">DependentVariableSaveSettings</span> <span class="o">&gt;</span> <span class="n">dependentVariablesToSave</span> <span class="o">=</span>
+<span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">dependentVariablesList</span> <span class="p">);</span>
 
 <span class="c1">// Create propagation settings.</span>
-<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">propagatorSettings</span> <span class="o">=</span>
-<span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">propagatorSettings</span> <span class="o">=</span>
+<span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
 <span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span> <span class="n">accelerationModelMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">systemInitialState</span><span class="p">,</span>
   <span class="n">terminationSettings</span><span class="p">,</span> <span class="n">propagator</span><span class="p">,</span> <span class="n">dependentVariablesToSave</span> <span class="p">);</span>
 </pre></div>
@@ -223,12 +223,12 @@
 <h2>5.4.1. Saving Dependent Variables<a class="headerlink" href="#saving-dependent-variables" title="Permalink to this headline">¶</a></h2>
 <p>The dependent variables are computed during the body propagation, thus the user must provide a list of dependent variables to save prior creating the <a class="reference internal" href="simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a>:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define list of dependent variables to save.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">dependentVariablesList</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">dependentVariablesList</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>where <code class="docutils literal"><span class="pre">dependentVariableList</span></code> is populated as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">dependentVariablesList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-          <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">variableType</span> <span class="p">,</span> <span class="n">associatedBody</span> <span class="p">,</span> <span class="n">secondaryBody</span> <span class="p">)</span> <span class="p">);</span>
+          <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">variableType</span> <span class="p">,</span> <span class="n">associatedBody</span> <span class="p">,</span> <span class="n">secondaryBody</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>The details of the creation of the settings <a class="reference internal" href="#SingleDependentVariableSaveSettings" title="SingleDependentVariableSaveSettings"><code class="xref py py-class docutils literal"><span class="pre">SingleDependentVariableSaveSettings</span></code></a> object are discussed below.</p>
@@ -358,7 +358,7 @@
 <em class="property">class </em><code class="descname">SingleDependentVariableSaveSettings</code><a class="headerlink" href="#SingleDependentVariableSaveSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This base-class is a generic method to retrieve a large number of dependent variables that are not classified under a particular group. Variables are saved to the <code class="docutils literal"><span class="pre">dependentVariablesList</span></code> using the following code:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">dependentVariablesList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-          <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">variableType</span> <span class="p">,</span> <span class="n">associatedBody</span> <span class="p">,</span> <span class="n">secondaryBody</span><span class="p">,</span> <span class="n">componentIndex</span> <span class="p">)</span> <span class="p">);</span>
+          <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">variableType</span> <span class="p">,</span> <span class="n">associatedBody</span> <span class="p">,</span> <span class="n">secondaryBody</span><span class="p">,</span> <span class="n">componentIndex</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -439,7 +439,7 @@
 <em class="property">class </em><code class="descname">SingleAccelerationDependentVariableSaveSettings</code><a class="headerlink" href="#SingleAccelerationDependentVariableSaveSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class is used to retrieve acceleration-related dependent variables. A large number of acceleration models are supported and both the acceleration-norm and the acceleration-vector can be saved. Variables are added to the <code class="docutils literal"><span class="pre">dependentVariablesList</span></code> using the following code:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">dependentVariablesList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleAccelerationDependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleAccelerationDependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
     <span class="n">accelerationModelType</span><span class="p">,</span> <span class="n">bodyUndergoingAcceleration</span><span class="p">,</span> <span class="n">bodyExertingAcceleration</span><span class="p">,</span> <span class="n">useNorm</span><span class="p">,</span> <span class="n">componentIndex</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -496,7 +496,7 @@
 <em class="property">class </em><code class="descname">SphericalHarmonicAccelerationTermsDependentVariableSaveSettings</code><a class="headerlink" href="#SphericalHarmonicAccelerationTermsDependentVariableSaveSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class is used to save contributions to spherical harmonic acceleration at separate degree/order. This type of variable is added to the <code class="docutils literal"><span class="pre">dependentVariablesList</span></code> using the following code:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">dependentVariablesList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicAccelerationTermsDependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicAccelerationTermsDependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
     <span class="n">bodyUndergoingAcceleration</span><span class="p">,</span> <span class="n">bodyExertingAcceleration</span><span class="p">,</span> <span class="n">maximumDegree</span><span class="p">,</span> <span class="n">maximumOrder</span><span class="p">,</span> <span class="n">componentIndex</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -534,7 +534,7 @@
 <em class="property">class </em><code class="descname">SingleVariationSphericalHarmonicAccelerationSaveSettings</code><a class="headerlink" href="#SingleVariationSphericalHarmonicAccelerationSaveSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class is used to save contributions to the variation of the spherical harmonic acceleration. This type of variable is added to the <code class="docutils literal"><span class="pre">dependentVariablesList</span></code> using the following code:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">dependentVariablesList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleVariationSphericalHarmonicAccelerationSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleVariationSphericalHarmonicAccelerationSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
     <span class="n">bodyUndergoingAcceleration</span><span class="p">,</span> <span class="n">bodyExertingAcceleration</span><span class="p">,</span> <span class="n">deformationType</span><span class="p">,</span> <span class="n">identifier</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -573,7 +573,7 @@
 <em class="property">class </em><code class="descname">SingleVariationSingleTermSphericalHarmonicAccelerationSaveSettings</code><a class="headerlink" href="#SingleVariationSingleTermSphericalHarmonicAccelerationSaveSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class is used to save contributions to the variation of the spherical harmonic acceleration at separate degree/order. This type of variable is added to the <code class="docutils literal"><span class="pre">dependentVariablesList</span></code> using the following code:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">dependentVariablesList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleVariationSingleTermSphericalHarmonicAccelerationSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleVariationSingleTermSphericalHarmonicAccelerationSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
     <span class="n">bodyUndergoingAcceleration</span><span class="p">,</span> <span class="n">bodyExertingAcceleration</span><span class="p">,</span> <span class="n">maximumDegree</span><span class="p">,</span> <span class="n">maximumOrder</span><span class="p">,</span> <span class="n">deformationType</span><span class="p">,</span> <span class="n">identifier</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -622,7 +622,7 @@
 <em class="property">class </em><code class="descname">SingleTorqueDependentVariableSaveSettings</code><a class="headerlink" href="#SingleTorqueDependentVariableSaveSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class is used to retrieve torque-related dependent variables. A number of torque models are supported and both the norm and the vector form of the torque can be saved. Variables are added to the <code class="docutils literal"><span class="pre">dependentVariablesList</span></code> using the following code:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">dependentVariablesList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleTorqueDependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleTorqueDependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
     <span class="n">torqueModelType</span><span class="p">,</span> <span class="n">bodyUndergoingTorque</span><span class="p">,</span> <span class="n">bodyExertingTorque</span><span class="p">,</span> <span class="n">useNorm</span><span class="p">,</span> <span class="n">componentIndex</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -672,7 +672,7 @@
 <em class="property">class </em><code class="descname">IntermediateAerodynamicRotationVariableSaveSettings</code><a class="headerlink" href="#IntermediateAerodynamicRotationVariableSaveSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class is used to retrieve the rotation matrix between two desired frames. Variables are saved to the <code class="docutils literal"><span class="pre">dependentVariablesList</span></code> using the following code:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">dependentVariablesList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">IntermediateAerodynamicRotationVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">IntermediateAerodynamicRotationVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
         <span class="n">associatedBody</span><span class="p">,</span> <span class="n">baseFrame</span><span class="p">,</span> <span class="n">targetFrame</span> <span class="p">)</span>
 </pre></div>
 </div>
@@ -709,7 +709,7 @@
 <em class="property">class </em><code class="descname">BodyAerodynamicAngleVariableSaveSettings</code><a class="headerlink" href="#BodyAerodynamicAngleVariableSaveSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class is used to retrieve a number of rotation angles. Variables are saved to the <code class="docutils literal"><span class="pre">dependentVariablesList</span></code> using the following code:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">dependentVariablesList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-    <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">BodyAerodynamicAngleVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">BodyAerodynamicAngleVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
         <span class="n">associatedBody</span><span class="p">,</span> <span class="n">angle</span> <span class="p">)</span>
 </pre></div>
 </div>

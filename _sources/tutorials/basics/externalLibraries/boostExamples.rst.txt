@@ -34,15 +34,15 @@ shared_ptr
 
         .. code-block:: cpp
         
-            boost::shared_ptr< objectType >
+            std::shared_ptr< objectType >
     
-        where ``boost::shared_ptr`` is used to indicate that it is a shared pointer, and ``objectType`` is the type of the object that it points to. The object type is placed in angular brackets, because it is a template parameter.
+        where ``std::shared_ptr`` is used to indicate that it is a shared pointer, and ``objectType`` is the type of the object that it points to. The object type is placed in angular brackets, because it is a template parameter.
 
         The shared pointer to an object of the TestBody class can now be declared as:
 
         .. code-block:: cpp
         
-            boost::shared_ptr< TestBody >
+            std::shared_ptr< TestBody >
 
         The above type can be roughly considered as the 'equivalent' to the following raw pointer-type:
 
@@ -55,7 +55,7 @@ shared_ptr
 
         .. code-block:: cpp
 
-            typedef boost::shared_ptr< TestBody > TestBodyPointer;
+            typedef std::shared_ptr< TestBody > TestBodyPointer;
 
         Such a typedef can be placed in the header file of the class below the class itself, or in the main function. Within Tudat you will see many typedefs for shared pointers. Creating such a type definition makes it easier to read the code.
 
@@ -64,11 +64,11 @@ shared_ptr
 
         .. code-block:: cpp
 
-            boost::shared_ptr< TestBody > exampleTestBodyPointer( new TestBody( initialState ) );
+            std::shared_ptr< TestBody > exampleTestBodyPointer( new TestBody( initialState ) );
 
         where: 
 
-        - ``boost::shared_ptr< TestBody >`` is the type: a shared pointer to an object of type :class:`TestBody`.
+        - ``std::shared_ptr< TestBody >`` is the type: a shared pointer to an object of type :class:`TestBody`.
         - ``exampleTestBodyPointer`` is the name of the object-pointer.
         - ``new`` is used to dynamically allocate the memory to the object.
         - ``TestBody( )`` is the call to the constructor of the :class:`TestBody` class.
@@ -109,13 +109,13 @@ make_shared
 
         .. code-block:: cpp
 
-            boost::shared_ptr< TestBody > newExampleTestBodyPointer = boost::make_shared< TestBody >( initialState );
+            std::shared_ptr< TestBody > newExampleTestBodyPointer = std::make_shared< TestBody >( initialState );
 
         where:
     
-        - ``boost::shared_ptr< TestBody >`` is the type: a shared pointer to an object of type :class:`TestBody`.
+        - ``std::shared_ptr< TestBody >`` is the type: a shared pointer to an object of type :class:`TestBody`.
         - ``newExampleTestBodyPointer`` is the name of the object-pointer.
-        - ``boost::make_shared< TestBody >`` is the factory function that creates an object of type :class:`TestBody` and returns a shared pointer to it.
+        - ``std::make_shared< TestBody >`` is the factory function that creates an object of type :class:`TestBody` and returns a shared pointer to it.
         - ``( initialState )`` is the input to the :class:`TestBody` class constructor.
 
         The above line of code can be roughly considered as the :class:`shared_ptr` and :class:`make_shared` 'equivalent' to the following raw pointer code:
@@ -128,7 +128,7 @@ make_shared
 
         .. code-block:: cpp
 
-            boost::shared_ptr< objectType > newExampleTestBodyPointer( new objectType( input1, input2, ..., inputN ) ); // Where N > 10.
+            std::shared_ptr< objectType > newExampleTestBodyPointer( new objectType( input1, input2, ..., inputN ) ); // Where N > 10.
 
 .. _externalBoostExamplesFunction:
 
@@ -168,7 +168,7 @@ function
 
         .. code-block:: cpp
 
-            boost::function< double ( double, double ) >;
+            std::function< double ( double, double ) >;
 
         where the parameters between the angular brackets are the template parameters. These parameters comply to the form:
 
@@ -183,11 +183,11 @@ function
 
         .. code-block:: cpp
 
-            boost::function< double ( double, double ) > exampleFunction = &himmelblau;
+            std::function< double ( double, double ) > exampleFunction = &himmelblau;
 
         where:
 
-        - ``boost::function< double ( double, double ) >`` is the type of exampleFunction, which describes the form of the function (input: double, double; output: double).
+        - ``std::function< double ( double, double ) >`` is the type of exampleFunction, which describes the form of the function (input: double, double; output: double).
         - ``exampleFunction`` is the name of the object.
         - ``&himmelblau`` is the function object that is assigned (note the use of the ampersand &).
 
@@ -227,7 +227,7 @@ function
 
         .. code-block:: cpp
 
-            boost::function< double( ) > testFunction = boost::lambda::constant( 3.0 );
+            std::function< double( ) > testFunction = boost::lambda::constant( 3.0 );
 
         Now, if at any point in the code, the following is called:
 
@@ -239,13 +239,13 @@ function
 
         .. code-block:: cpp
 
-            boost::function< Eigen::Vector3d( ) > testVectorFunction = boost::lambda::constant( Eigen::Vector3d::UnitX( ) );
+            std::function< Eigen::Vector3d( ) > testVectorFunction = boost::lambda::constant( Eigen::Vector3d::UnitX( ) );
 
         will create a function that always returns the (1,0,0) vector. Also, this interface can be used for boost functions requiring inputs, so that:
 
         .. code-block:: cpp
 
-            boost::function< double( const double ) > testFunction = boost::lambda::constant( 3.0 );
+            std::function< double( const double ) > testFunction = boost::lambda::constant( 3.0 );
            double inputValue = 20.0;
             double testValue = testFunction( inputValue );
 
@@ -334,25 +334,25 @@ bind
 
         .. code-block:: cpp
 
-            boost::function< Eigen::Vector2d ( const double, const Eigen::Vector2d ) >
+            std::function< Eigen::Vector2d ( const double, const Eigen::Vector2d ) >
 
         The state derivative is the class method ``computeStateDerivative`` of the Skydiver class, because this is a class method, :class:`bind` is used to create a function pointer to the state-derivative function:
 
         .. code-block:: cpp
 
-            boost::function< Eigen::Vector2d ( const double, const Eigen::Vector2d ) > stateDerivativeFunction
-                = boost::bind( &Skydiver::computeStateDerivative, &testDiver, _1, _2 );
+            std::function< Eigen::Vector2d ( const double, const Eigen::Vector2d ) > stateDerivativeFunction
+                = std::bind( &Skydiver::computeStateDerivative, &testDiver, std::placeholders::_1, std::placeholders::_2 );
 
         where:
 
-        - ``boost::function< Eigen::Vector2d ( const double, const Eigen::Vector2d ) >`` is the type of stateDerivativeFunction, which describes the form of the function (input: double, Vector2d; output: Vector2d.
+        - ``std::function< Eigen::Vector2d ( const double, const Eigen::Vector2d ) >`` is the type of stateDerivativeFunction, which describes the form of the function (input: double, Vector2d; output: Vector2d.
         - ``stateDerivativeFunction`` is the name of the object.
-        - ``boost::bind( ... )`` is the call to boost::bind that binds the class method of the object testDiver to the object.
+        - ``std::bind( ... )`` is the call to std::bind that binds the class method of the object testDiver to the object.
         - ``&Skydiver::computeStateDerivative`` is the member function of the Skydiver class that is bound (note the use of the ampersand &).
         - ``&testDiver`` is the object that the member function belongs to. Note the use of the ampersand &: this is used to pass a pointer to the object and not the object itself. Note that you can also pass a shared_ptr.
-        - ``_1`` and ``_2`` specify placeholders. This is used to route the input arguments such that the input of the function can be provided later-on. In this case it specifies that the argument list for the computeStateDerivative function takes two arguments (time, state), and the order in which these arguments are taken.
+        - ``std::placeholders::_1`` and ``std::placeholders::_2`` specify placeholders. This is used to route the input arguments such that the input of the function can be provided later-on. In this case it specifies that the argument list for the computeStateDerivative function takes two arguments (time, state), and the order in which these arguments are taken.
 
-        This ``boost::function`` can then be passed to the constructor of the integrator, the integrator is created as follows:
+        This ``std::function`` can then be passed to the constructor of the integrator, the integrator is created as follows:
 
         .. code-block:: cpp
 
@@ -370,7 +370,7 @@ bind
         .. code-block:: cpp
 
             tudat::mathematics::numerical_integrators::RungeKutta4IntegratorXd integrator(
-                boost::bind( &Skydiver::computeStateDerivative, &testDiver, _1, _2 ),
+                std::bind( &Skydiver::computeStateDerivative, &testDiver, std::placeholders::_1, std::placeholders::_2 ),
                 initialTime, initialState );
 
         The end state can now be computed using the class method integrateTo( ) of the integrator:
@@ -411,7 +411,7 @@ bind
                                                      const double endTime, const double timeStep )
             {
                 tudat::mathematics::numerical_integrators::RungeKutta4IntegratorXd integrator(
-                            boost::bind( &Skydiver::computeStateDerivative, this, _1, _2 ),
+                            std::bind( &Skydiver::computeStateDerivative, this, std::placeholders::_1, std::placeholders::_2 ),
                             initialTime, initialState );
 
                 return integrator.integrateTo( endTime, timeStep );
@@ -419,7 +419,7 @@ bind
 
         Now, compare this function to the code of the previous example. The integrator is now used inside the class method ``computeFinalState``. This method calls the state derivative function from within the class. Do you notice the difference?
 
-        Focus on the ``boost::bind`` call. In the previous example, the object that the method belonged to was ``testDiver``. Now, the class method is called from within the class and the object that the method belongs to is this. Did you spot it? Great! That is the difference between calling from outside or inside a class.
+        Focus on the ``std::bind`` call. In the previous example, the object that the method belonged to was ``testDiver``. Now, the class method is called from within the class and the object that the method belongs to is this. Did you spot it? Great! That is the difference between calling from outside or inside a class.
 
         As in the previous example, declare the constants that were given in the main function. In the same manner as before, also the ``testDiver`` is declared. Now the end state can be computed using:
 
@@ -445,7 +445,7 @@ bind
            12737.5
            -490.5
 
-        Note that the following explanation about function calls in C++ is a simplification of reality, and for a rigorous explanation refer to your local computer scientist. When a new instance of a class is created, this does not mean that all function definitions etc. are copied. There is only one copy of a function in memory, regardless of the amount of class instances. When a class method is called, the function is called with a hidden pointer to the class instance; this way the method knows about the class variables. When a class method is called via a function pointer, then the pointer to the class instance needs to be passed explicitly by the called. This is where :class:`bind` comes into the picture. The :class:`bind` function wraps a function into another object, and stores the passed arguments (which in the examples are respectively ``testDiver`` and this). When the function wrapper is eventually called, the function wrapper will call the wrapped function with both the arguments passed at its construction, as those passed to the call. The arguments passed to the function wrapper call are indicated with the ``_1``, respectively ``_2`` in the :class:`bind` call.
+        Note that the following explanation about function calls in C++ is a simplification of reality, and for a rigorous explanation refer to your local computer scientist. When a new instance of a class is created, this does not mean that all function definitions etc. are copied. There is only one copy of a function in memory, regardless of the amount of class instances. When a class method is called, the function is called with a hidden pointer to the class instance; this way the method knows about the class variables. When a class method is called via a function pointer, then the pointer to the class instance needs to be passed explicitly by the called. This is where :class:`bind` comes into the picture. The :class:`bind` function wraps a function into another object, and stores the passed arguments (which in the examples are respectively ``testDiver`` and this). When the function wrapper is eventually called, the function wrapper will call the wrapped function with both the arguments passed at its construction, as those passed to the call. The arguments passed to the function wrapper call are indicated with the ``std::placeholders::_1``, respectively ``std::placeholders::_2`` in the :class:`bind` call.
 
 .. class:: TestBody
 

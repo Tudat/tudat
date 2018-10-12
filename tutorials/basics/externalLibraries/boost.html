@@ -39,7 +39,7 @@
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
         <link rel="up" title="Tudat Basics" href="../index.html"/>
-        <link rel="next" title="4. Boost: Usage Examples" href="boostExamples.html"/>
+        <link rel="next" title="4. Dynamic Memory and Function Objects" href="utility.html"/>
         <link rel="prev" title="2. Eigen: Usage Examples" href="eigenExamples.html"/> 
 
   
@@ -99,13 +99,15 @@
 <li class="toctree-l3"><a class="reference internal" href="eigen.html">1. Eigen: Basic Concepts</a></li>
 <li class="toctree-l3"><a class="reference internal" href="eigenExamples.html">2. Eigen: Usage Examples</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">3. Boost: Basic Concepts</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#why-use-boost">3.1. Why use boost?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#why-use-boost">3.1. Why use Boost?</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#common-boost-features">3.2. Common Boost Features</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#boost-shared-libraries-dynamic-linking">3.3. Boost Shared Libraries (Dynamic Linking)</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="boostExamples.html">4. Boost: Usage Examples</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cppTutorials.html">5. C++ Tutorials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utility.html">4. Dynamic Memory and Function Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utilityExamples.html">5. Dynamic Memory: Usage Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utilityExamples.html#function-objects-usage-examples">6. Function Objects: Usage Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cppTutorials.html">7. C++ Tutorials</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
@@ -187,61 +189,66 @@
             
   <div class="section" id="boost-basic-concepts">
 <span id="externalboost"></span><h1>3. Boost: Basic Concepts<a class="headerlink" href="#boost-basic-concepts" title="Permalink to this headline">¶</a></h1>
-<p>Boost is a collection of useful libraries providing a wide variety of functionality in C++ that we use. The boost library is included in the Tudat Bundle, pre-compiled and ready for use. Alternatively, you can download the library from the boost website itself, where you will find downloads and documentation for different operating systems. Note that when downloading the boost library, you will have to compile it yourself.</p>
+<p>Boost is a collection of useful libraries providing a wide variety of functionality in C++ that we use. The Boost library is included in the Tudat Bundle, pre-compiled and ready for use. Alternatively, you can download the library from the Boost website itself, where you will find downloads and documentation for different operating systems. Note that when downloading the Boost library, you will have to compile it yourself.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">For Windows, pre-built binaries are available. In this case, compilation is not necessary by the user.</p>
 </div>
-<p>General information on boost can be found on the&nbsp;boost website. This website also contains documentation on all boost features. Be sure to look up the version number of the boost library that you are using when checking out this documentation. Note that the boost documentation can be quite complex, especially for people who are starting to learn and use C++ and Tudat.</p>
+<p>General information on Boost can be found on the&nbsp;Boost website. This website also contains documentation on all Boost features. Be sure to look up the version number of the Boost library that you are using when checking out this documentation. Note that the Boost documentation can be quite complex, especially for people who are starting to learn and use C++ and Tudat.</p>
 <div class="section" id="why-use-boost">
-<h2>3.1. Why use boost?<a class="headerlink" href="#why-use-boost" title="Permalink to this headline">¶</a></h2>
-<p>Boost is a collection of generally well-coded C++ libraries that are a substantial addition to the standard libraries. Some boost features are particularly useful for Tudat and are frequently used for two reasons:</p>
+<h2>3.1. Why use Boost?<a class="headerlink" href="#why-use-boost" title="Permalink to this headline">¶</a></h2>
+<p>Boost is a collection of generally well-coded C++ libraries that are a substantial addition to the standard libraries. Some Boost features are particularly useful for Tudat and are frequently used for two reasons:</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li>It makes the use of some Tudat features easier.</li>
 <li>It makes the Tudat library more robust.</li>
 </ol>
 </div></blockquote>
-<p>In Tudat, the main overall uses of the boost libraries are in cases where <strong>dynamic memory allocation</strong> is used and when a function is passed as an argument to another object. In case of dynamic memory allocation, use the boost shared pointer class to ensure that memory is allocated and destroyed correctly, so that no manual calls to ‘delete’ are required. In case of passing a function as an argument we use the boost function class, which allows for very generic interfaces and makes it easy to pass a function, where it doesn’t matter whether the function is a free function or a class member function.</p>
-<p>Although the above two cases represent the main boost features that are throughout much of the code, there are many other instances of usages of other specific boost functionalities in both the library and users’ applications.</p>
+<p>Although the above two cases represent the main Boost features that are throughout much of the code, there are many other instances of usages of other specific Boost functionalities in both the library and users’ applications.</p>
 </div>
 <div class="section" id="common-boost-features">
 <h2>3.2. Common Boost Features<a class="headerlink" href="#common-boost-features" title="Permalink to this headline">¶</a></h2>
-<p>A couple of elements from boost are frequently used in Tudat. These are:</p>
-<p><strong>Basic Features:</strong></p>
+<p>In general, you will see the use of Boost in the following cases:</p>
 <blockquote>
-<div><ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="xref py py-class docutils literal"><span class="pre">shared_ptr</span></code></dt>
-<dd>This is a part of the boost smart pointer library. It is a template class that stores a smart pointer to a dynamically allocated object. The smart pointer behaves much like a normal built-in C++ pointer, except that the object pointed to is guaranteed to be <strong>automatically deleted</strong> when the last <code class="xref py py-class docutils literal"><span class="pre">shared_ptr</span></code> pointing to the object is destroyed or reset. This boost feature is used in Tudat because it is a safe way to use pointers to dynamically allocated objects. In Tudat it is frequently combined with <code class="xref py py-class docutils literal"><span class="pre">make_shared</span></code>.</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><code class="xref py py-class docutils literal"><span class="pre">make_shared</span></code></dt>
-<dd>This is a part of the boost smart pointer library. It is a factory function that creates an object of a given type and <strong>returns a shared pointer</strong> to it. This way the explicit use of new is avoided. This boost feature is frequently used in Tudat because it is an easy, efficient and safe way to use pointers to dynamically allocated objects.</dd>
-</dl>
-</li>
-</ul>
+<div><ul>
+<li><p class="first"><strong>Multi-dimensional Arrays</strong></p>
+<blockquote>
+<div><p>In C++, vectors and matrices are usually defined by using the <code class="docutils literal"><span class="pre">Eigen</span></code> library (see <a class="reference internal" href="eigen.html#externaleigen"><span class="std std-ref">Eigen: Basic Concepts</span></a> for an introduction). Despite their usefulness, however, these linear algebra tools are only defined for up to 2-dimensional matrices. In case you wanted to store data with more dimensions, then it is common practice in Tudat to use <code class="docutils literal"><span class="pre">boost::multi_array</span></code>. You can find examples of the use of this objects, whenever files are read or written, and for the storage of aerodynamic coefficients, tabulated atmospheres, etc.</p>
 </div></blockquote>
-<p><strong>Advanced Features:</strong></p>
-<blockquote>
-<div><ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="xref py py-class docutils literal"><span class="pre">function</span></code></dt>
-<dd>The boost function library contains a family of class templates that are function object wrappers. This boost feature is used in Tudat because it is an easy way to pass a function as an input to another object or function. It is used instead of a normal C++ function pointer. The boost function type describes what the function should ‘look’ like, in the sense that it defines both its input types (and order) and its output type. Any function that fits this profile is accepted when it is passed. In Tudat it is frequently combined with <code class="xref py py-class docutils literal"><span class="pre">bind</span></code> to create a link to a class member function.</dd>
-</dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="xref py py-class docutils literal"><span class="pre">bind</span></code></dt>
-<dd>The boost bind library is a template library that implements a simple and versatile function argument binding mechanism. Typically, it is used to create boost function objects from either a free function or a member function. It supports arbitrary function objects, functions, function pointers, and member function pointers. It can bind any argument to a specific value or route input arguments into arbitrary positions. This boost feature is used in Tudat because it is a versatile method, and it is a good way to pass function objects.</dd>
-</dl>
+<li><p class="first"><strong>Random Number Generators</strong></p>
+<blockquote>
+<div><p>Generation of random numbers in Tudat is done with the aid of Boost. You can see <a class="reference internal" href="../../tudatFeatures/mathTools/probabilityDistributions.html#tudatfeaturesprobabilitydistributions"><span class="std std-ref">Probability Distributions</span></a> for a description of the available distributions and how they are used.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Special Math Operators</strong></p>
+<blockquote>
+<div><p>The use of inverse hyperbolic, cumulative distribution and probability density functions are taken from the Boost libraries.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Date Conversions</strong></p>
+<blockquote>
+<div><p>Similarly to the case above, conversion between various dates format (day/month/year to Gregorian dates) is done with Boost.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>File Management</strong></p>
+<blockquote>
+<div><p>File management with Boost allows for the creation of directories, to check if directories exist, manipulation of paths, etc.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Unit Tests</strong></p>
+<blockquote>
+<div><p>Testing of Tudat features is fully based on the unit testing suite provided by Boost. It allows for very structured and consistent verification of Tudat function and for simple addition of new tests.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Other</strong></p>
 </li>
 </ul>
 </div></blockquote>
 </div>
 <div class="section" id="boost-shared-libraries-dynamic-linking">
 <h2>3.3. Boost Shared Libraries (Dynamic Linking)<a class="headerlink" href="#boost-shared-libraries-dynamic-linking" title="Permalink to this headline">¶</a></h2>
-<p>During the build process of any application, multiple object files can be linked in a library. This library can be linked either statically or dynamically. Usually, we make use of the static boost libraries. These files have the extension <code class="docutils literal"><span class="pre">.a</span></code> and can be found in the <code class="docutils literal"><span class="pre">boost/stage/lib</span> <span class="pre">directory</span></code>. However, it could be that you require the dynamically linked libraries (for instance, if you are making use of&nbsp;PaGMO). These files have the extension <code class="docutils literal"><span class="pre">.dll</span></code> and can be found in the <code class="docutils literal"><span class="pre">boost/shared</span></code> directory.</p>
+<p>During the build process of any application, multiple object files can be linked in a library. This library can be linked either statically or dynamically. Usually, we make use of the static Boost libraries. These files have the extension <code class="docutils literal"><span class="pre">.a</span></code> and can be found in the <code class="docutils literal"><span class="pre">boost/stage/lib</span> <span class="pre">directory</span></code>. However, it could be that you require the dynamically linked libraries (for instance, if you are making use of&nbsp;PaGMO). These files have the extension <code class="docutils literal"><span class="pre">.dll</span></code> and can be found in the <code class="docutils literal"><span class="pre">boost/shared</span></code> directory.</p>
 </div>
 </div>
 
@@ -255,7 +262,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="boostExamples.html" class="btn btn-neutral float-right" title="4. Boost: Usage Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="utility.html" class="btn btn-neutral float-right" title="4. Dynamic Memory and Function Objects" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="eigenExamples.html" class="btn btn-neutral" title="2. Eigen: Usage Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

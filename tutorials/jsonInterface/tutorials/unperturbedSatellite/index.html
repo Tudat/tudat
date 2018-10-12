@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2.1. Unperturbed Earth-orbiting Satellite &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>3.1. Unperturbed Earth-orbiting Satellite &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -38,9 +38,9 @@
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../../index.html"/>
-        <link rel="up" title="2. Tutorials" href="../index.html"/>
-        <link rel="next" title="2.2. Perturbed Earth-orbiting Satellite" href="../perturbedSatellite/index.html"/>
-        <link rel="prev" title="2. Tutorials" href="../index.html"/> 
+        <link rel="up" title="3. Tutorials" href="../index.html"/>
+        <link rel="next" title="3.2. Perturbed Earth-orbiting Satellite" href="../perturbedSatellite/index.html"/>
+        <link rel="prev" title="3. Tutorials" href="../index.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -100,16 +100,16 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../tudatFeatures/index.html">Tudat Libraries</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../index.html">JSON Interface</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../../basicJsonInterfaces.html">1. Basic JSON Interfaces</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="../index.html">2. Tutorials</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">2.1. Unperturbed Earth-orbiting Satellite</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../perturbedSatellite/index.html">2.2. Perturbed Earth-orbiting Satellite</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../lifetimeMaximisation/index.html">2.3. Perturbed Earth-orbiting Satellite Lifetime Maximisation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../apolloCapsuleEntry/index.html">2.4. Apollo Capsule Entry</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../lifetimeMaximisationCPP/index.html">2.5. Perturbed Earth-orbiting Satellite Lifetime Maximisation Using a Custom C++ Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../customJsonApp.html">2. Writing Custom JSON-based Applications</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">3. Tutorials</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">3.1. Unperturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../perturbedSatellite/index.html">3.2. Perturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lifetimeMaximisation/index.html">3.3. Perturbed Earth-orbiting Satellite Lifetime Maximisation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lifetimeMaximisationCPP/index.html">3.4. Perturbed Earth-orbiting Satellite Lifetime Maximisation Using a Custom C++ Application</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../apolloCapsuleEntry/index.html">3.5. Apollo Capsule Entry</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../../keys/rst/index.html">3. List of Keys</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../customJsonApp.html">4. Writing Custom JSON-based Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../keys/rst/index.html">4. List of Keys</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../modularFiles.html">5. Modular Files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../multicase.html">6. Multi-case Simulations</a></li>
 </ul>
@@ -169,9 +169,9 @@
         
           <li><a href="../../index.html">JSON Interface</a> &raquo;</li>
         
-          <li><a href="../index.html">2. Tutorials</a> &raquo;</li>
+          <li><a href="../index.html">3. Tutorials</a> &raquo;</li>
         
-      <li>2.1. Unperturbed Earth-orbiting Satellite</li>
+      <li>3.1. Unperturbed Earth-orbiting Satellite</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -191,12 +191,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="unperturbed-earth-orbiting-satellite">
-<span id="jsoninterface-tutorials-basicpropagation"></span><h1>2.1. Unperturbed Earth-orbiting Satellite<a class="headerlink" href="#unperturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
+<span id="jsoninterface-tutorials-basicpropagation"></span><h1>3.1. Unperturbed Earth-orbiting Satellite<a class="headerlink" href="#unperturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
 <p>This page describes how to set up the propagation of the unperturbed Earth-orbiting satellite described in <a class="reference internal" href="../../../applicationWalkthroughs/unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> using the <code class="docutils literal"><span class="pre">json_interface</span></code>.</p>
 <p>The first step is to define the file tree. Since this is a simple example, there is no need to split the root input file into several files. Thus, we will have just a single file called <code class="xref py py-class docutils literal"><span class="pre">main.json</span></code>, as shown at the end of this tutorial.</p>
 <div class="section" id="general-settings">
-<h2>2.1.1. General Settings<a class="headerlink" href="#general-settings" title="Permalink to this headline">¶</a></h2>
-<p>We define the key <span class="jsonkey">initialEpoch</span> at root level, which will be used as initial time for the integrator and for interpolation of the Spice ephemeris. We also define the key <span class="jsonkey">finalEpoch</span>, which is used for interpolation of the Spice ephemeris and to create a time-based termination condition. In both cases, we need to specify the values in seconds since J2000. In this case, <span class="jsonkey">globalFrameOrigin</span> is not specified, so the default value of <code class="docutils literal"><span class="pre">&quot;SSB&quot;</span></code> (Solar system barycentre) is used. The <span class="jsonkey">globalFrameOrientation</span> is set to <code class="docutils literal"><span class="pre">J2000</span></code>.</p>
+<h2>3.1.1. General Settings<a class="headerlink" href="#general-settings" title="Permalink to this headline">¶</a></h2>
+<p>We define the key <span class="jsonkey">initialEpoch</span> at root level, which will be used as initial time for the integrator and for interpolation of the Spice ephemeris. We also define the key <span class="jsonkey">finalEpoch</span>, which is used for interpolation of the Spice ephemeris and to create a time-based termination condition. In both cases, we need to specify the values in seconds since J2000. In this case, <span class="jsonkey">globalFrameOrigin</span> is specified to be <code class="docutils literal"><span class="pre">&quot;Earth&quot;</span></code>. This is because we are only interested in simulating the orbit of a spacecraft around the Earth, and are not interested in any additional celestial body. Finally, the <span class="jsonkey">globalFrameOrientation</span> is set to <code class="docutils literal"><span class="pre">J2000</span></code>.</p>
 <p>Then, we request using the standard Spice kernels, namely <code class="xref py py-class docutils literal"><span class="pre">pck00010.tpc</span></code>, <code class="xref py py-class docutils literal"><span class="pre">gm_de431.tpc</span></code>, <code class="xref py py-class docutils literal"><span class="pre">de430_small.bsp</span></code> and <code class="xref py py-class docutils literal"><span class="pre">pck00010.tpc</span></code>. We do this by defining the key <span class="jsonkey">spice</span> to be:</p>
 <blockquote>
 <div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -209,17 +209,12 @@
 <p>where we disabled preloading of the ephemeris of the celestial bodies from the period <span class="jsonkey">initialEpoch</span> to <span class="jsonkey">finalEpoch</span>.</p>
 </div>
 <div class="section" id="body-settings">
-<h2>2.1.2. Body Settings<a class="headerlink" href="#body-settings" title="Permalink to this headline">¶</a></h2>
+<h2>3.1.2. Body Settings<a class="headerlink" href="#body-settings" title="Permalink to this headline">¶</a></h2>
 <p>The next step is to define the body settings. In this case, only Earth and the orbiting body (named <span class="jsonkey">Asterix</span>) are considered. Thus, we set the key <span class="jsonkey">bodies</span> to be:</p>
 <blockquote>
 <div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
    <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-      <span class="nt">&quot;ephemeris&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;constant&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;constantState&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">],</span>
-         <span class="nt">&quot;frameOrientation&quot;</span><span class="p">:</span> <span class="s2">&quot;J2000&quot;</span>
-      <span class="p">}</span>
+      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
    <span class="p">},</span>
    <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="nt">&quot;initialState&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -236,11 +231,11 @@
 </pre></div>
 </div>
 </div></blockquote>
-<p>The first body, <span class="jsonkey">Earth</span>, has the key <span class="jsonkey">useDefaultSettings</span> set to <code class="docutils literal"><span class="pre">true</span></code>, which means that its properties (such as gravitational parameter) will be loaded automatically. For this simple propagation, since we are not considering additional celestial bodies, we can place Earth anywhere, e.g. in the global frame origin (i.e. in the Solar system barycentre). We do that by defining <span class="jsonkey">bodies.Earth.ephemeris</span> to be of type <code class="docutils literal"><span class="pre">constant</span></code> and we use a constant zero state (we also assume it is stationary). The order in which the keys <span class="jsonkey">useDefaultSettings</span> and <span class="jsonkey">ephemeris</span> are defined inside the <span class="jsonkey">bodies.Earth</span> objects is irrelevant: the default settings will always be loaded first, and then the settings specified in the input file (if any) will override the default ones.</p>
+<p>The first body, <span class="jsonkey">Earth</span>, has the key <span class="jsonkey">useDefaultSettings</span> set to <code class="docutils literal"><span class="pre">true</span></code>, which means that its properties (such as gravitational parameter, atmosphere, etc.) will be loaded automatically.</p>
 <p>The second body, <span class="jsonkey">Asterix</span>, does not specify the key <span class="jsonkey">useDefaultSettings</span>, which defaults to <code class="docutils literal"><span class="pre">false</span></code>. Thus, no properties will be loaded from Spice. Since no perturbations are considered in this propagation, we need not specify a mass or aerodynamic properties. Thus, we only need to provided an <span class="jsonkey">initialState</span>. We can provide directly a vector with the Cartesian components, or an object defining the different keys of a Keplerian state, as shown above.</p>
 </div>
 <div class="section" id="propagation-settings">
-<h2>2.1.3. Propagation Settings<a class="headerlink" href="#propagation-settings" title="Permalink to this headline">¶</a></h2>
+<h2>3.1.3. Propagation Settings<a class="headerlink" href="#propagation-settings" title="Permalink to this headline">¶</a></h2>
 <p>Then, we specify the propagator settings. In this case, we are going to propagate the translational state of <span class="jsonkey">Asterix</span> about <span class="jsonkey">Earth</span>, so we define the key <span class="jsonkey">propagators</span> to be:</p>
 <blockquote>
 <div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">[</span>
@@ -266,7 +261,7 @@
 <p>In this case, some keys of <span class="jsonkey">propagators[ 0 ]</span> have been omitted. For instance, the key <code class="docutils literal"><span class="pre">type</span></code> has not been specified, meaning that the default value <code class="docutils literal"><span class="pre">&quot;cowell&quot;</span></code> is used.</p>
 </div>
 <div class="section" id="integration-settings">
-<h2>2.1.4. Integration Settings<a class="headerlink" href="#integration-settings" title="Permalink to this headline">¶</a></h2>
+<h2>3.1.4. Integration Settings<a class="headerlink" href="#integration-settings" title="Permalink to this headline">¶</a></h2>
 <p>The next step is to define the integrator settings. The initial time is retrieved from the key <span class="jsonkey">initialEpoch</span> defined at root level, so it is sufficient to define the key <span class="jsonkey">integrator</span> to be equal to the following object:</p>
 <blockquote>
 <div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -279,7 +274,7 @@
 <p>The key <span class="jsonkey">saveFrequency</span> is not specified, so the save frequency is assumed to be <code class="docutils literal"><span class="pre">1</span></code>, which means that all the steps are saved.</p>
 </div>
 <div class="section" id="output-settings">
-<h2>2.1.5. Output Settings<a class="headerlink" href="#output-settings" title="Permalink to this headline">¶</a></h2>
+<h2>3.1.5. Output Settings<a class="headerlink" href="#output-settings" title="Permalink to this headline">¶</a></h2>
 <p>Then, we have to define the files to which the results of the integration should be saved. We do this by assigning an array of objects containing export settings to the <span class="jsonkey">export</span> key:</p>
 <blockquote>
 <div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">[</span>
@@ -298,7 +293,7 @@
 <p>Here, each element in the array will result in the generation of a different output file; in this case, only one file (<code class="xref py py-class docutils literal"><span class="pre">stateHistory.txt</span></code> in the same directory as the input file) will be created. This file will contain a matrix of results, where each row corresponds to an epoch. The key <span class="jsonkey">epochsInFirstColumn</span> defaults to <code class="docutils literal"><span class="pre">true</span></code>, which means that the first column of the matrix will contain the epochs, and subsequent columns will contain the values of the variables specified in the key <span class="jsonkey">variables</span>. In this case, only the state (of the propagated body).</p>
 </div>
 <div class="section" id="running-the-simulation">
-<h2>2.1.6. Running the Simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">¶</a></h2>
+<h2>3.1.6. Running the Simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">¶</a></h2>
 <p>We can now carry out the propagation. However, if we want a file containing all the settings actually used by Tudat to be generated (including all default settings), we must specify the <span class="jsonkey">options</span> key to be:</p>
 <blockquote>
 <div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -372,13 +367,10 @@
 60
 61
 62
-63
-64
-65
-66
-67</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">{</span>
+63</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;initialEpoch&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
   <span class="nt">&quot;finalEpoch&quot;</span><span class="p">:</span> <span class="mi">86400</span><span class="p">,</span>
+  <span class="nt">&quot;globalFrameOrientation&quot;</span><span class="p">:</span> <span class="s2">&quot;Earth&quot;</span><span class="p">,</span>
   <span class="nt">&quot;globalFrameOrientation&quot;</span><span class="p">:</span> <span class="s2">&quot;J2000&quot;</span><span class="p">,</span>
   <span class="nt">&quot;spice&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;useStandardKernels&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
@@ -386,12 +378,7 @@
   <span class="p">},</span>
   <span class="nt">&quot;bodies&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-      <span class="nt">&quot;ephemeris&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;constant&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;constantState&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-        <span class="nt">&quot;frameOrientation&quot;</span><span class="p">:</span> <span class="s2">&quot;J2000&quot;</span>
-      <span class="p">}</span>
+      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
     <span class="p">},</span>
     <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="nt">&quot;initialState&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -450,7 +437,7 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">json_inteface</span> <span class="n">main</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
-<p>we will get a <code class="xref py py-class docutils literal"><span class="pre">stateHistory.txt</span></code> file containing the results, and a <code class="xref py py-class docutils literal"><span class="pre">fullSettings.json</span></code> file containing default settings and with some keys moved to a different place (e.g. <span class="jsonkey">bodies.Asterix.initialState</span> to <span class="jsonkey">propagators[0].initialStates</span>):</p>
+<p>we will get a <code class="xref py py-class docutils literal"><span class="pre">stateHistory.txt</span></code> file containing the results, and a <code class="xref py py-class docutils literal"><span class="pre">fullSettings.json</span></code> file containing default settings and with some keys moved to a different place (e.g. <span class="jsonkey">bodies.Asterix.initialState</span> to <span class="jsonkey">propagators[ 0 ].initialStates</span>):</p>
 <div class="literal-block-wrapper docutils container" id="fullsettings-json">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">fullSettings.json</span></code></span><a class="headerlink" href="#fullsettings-json" title="Permalink to this code">¶</a></div>
 <div class="highlight-json"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -581,40 +568,36 @@
 126
 127
 128
-129
-130
-131</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">{</span>
+129</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;bodies&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
     <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="nt">&quot;atmosphere&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;${ATMOSPHERE_TABLES_PATH}/USSA1976Until100kmPer100mUntil1000kmPer1000m.dat&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;boundaryHandling&quot;</span><span class="p">:</span> <span class="p">[</span>
+          <span class="s2">&quot;boundaryValue&quot;</span>
+        <span class="p">],</span>
+        <span class="nt">&quot;dependentVariablesNames&quot;</span><span class="p">:</span> <span class="p">[</span>
+          <span class="s2">&quot;density&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;pressure&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;temperature&quot;</span>
+        <span class="p">],</span>
+        <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="s2">&quot;/Users/Michele/GitHub/tudat/tudatBundle/tudat/Tudat/../Tudat/External/AtmosphereTables/USSA1976Until100kmPer100mUntil1000kmPer1000m.dat&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;independentVariablesNames&quot;</span><span class="p">:</span> <span class="p">[</span>
+          <span class="s2">&quot;altitude&quot;</span>
+        <span class="p">],</span>
+        <span class="nt">&quot;ratioOfSpecificHeats&quot;</span><span class="p">:</span> <span class="mf">1.4</span><span class="p">,</span>
+        <span class="nt">&quot;specificGasConstant&quot;</span><span class="p">:</span> <span class="mf">287.0</span><span class="p">,</span>
         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;tabulated&quot;</span>
       <span class="p">},</span>
       <span class="nt">&quot;ephemeris&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;constantState&quot;</span><span class="p">:</span> <span class="p">[</span>
-          <span class="p">[</span>
-            <span class="mf">0.0</span>
-          <span class="p">],</span>
-          <span class="p">[</span>
-            <span class="mf">0.0</span>
-          <span class="p">],</span>
-          <span class="p">[</span>
-            <span class="mf">0.0</span>
-          <span class="p">],</span>
-          <span class="p">[</span>
-            <span class="mf">0.0</span>
-          <span class="p">],</span>
-          <span class="p">[</span>
-            <span class="mf">0.0</span>
-          <span class="p">],</span>
-          <span class="p">[</span>
-            <span class="mf">0.0</span>
-          <span class="p">]</span>
-        <span class="p">],</span>
+        <span class="nt">&quot;convergeLighTimeAberration&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nt">&quot;correctForLightTimeAberration&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nt">&quot;correctForStellarAberration&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
         <span class="nt">&quot;frameOrientation&quot;</span><span class="p">:</span> <span class="s2">&quot;J2000&quot;</span><span class="p">,</span>
         <span class="nt">&quot;frameOrigin&quot;</span><span class="p">:</span> <span class="s2">&quot;SSB&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;constant&quot;</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;directSpice&quot;</span>
       <span class="p">},</span>
       <span class="nt">&quot;gravityField&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="nt">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;egm96&quot;</span><span class="p">,</span>
@@ -646,7 +629,7 @@
     <span class="p">}</span>
   <span class="p">],</span>
   <span class="nt">&quot;globalFrameOrientation&quot;</span><span class="p">:</span> <span class="s2">&quot;J2000&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;globalFrameOrigin&quot;</span><span class="p">:</span> <span class="s2">&quot;SSB&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;globalFrameOrigin&quot;</span><span class="p">:</span> <span class="s2">&quot;Earth&quot;</span><span class="p">,</span>
   <span class="nt">&quot;integrator&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;assessPropagationTerminationConditionDuringIntegrationSubsteps&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
     <span class="nt">&quot;initialTime&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
@@ -719,7 +702,7 @@
 </div>
 </div>
 <div class="section" id="results">
-<h2>2.1.7. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2>3.1.7. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p>Finally, we can plot the results using the following MATLAB script:</p>
 <div class="literal-block-wrapper docutils container" id="plotresults-m">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">plotResults.m</span></code></span><a class="headerlink" href="#plotresults-m" title="Permalink to this code">¶</a></div>
@@ -749,10 +732,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../perturbedSatellite/index.html" class="btn btn-neutral float-right" title="2.2. Perturbed Earth-orbiting Satellite" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../perturbedSatellite/index.html" class="btn btn-neutral float-right" title="3.2. Perturbed Earth-orbiting Satellite" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral" title="2. Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../index.html" class="btn btn-neutral" title="3. Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

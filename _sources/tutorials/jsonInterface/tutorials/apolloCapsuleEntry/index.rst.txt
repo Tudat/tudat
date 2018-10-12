@@ -6,11 +6,9 @@
 Apollo Capsule Entry
 ====================
 
-The example described on this page is that of Apollo on a reentry trajectory towards the surface of Earth. The code for this tutorial is located in your Tudat Bundle at: ::
+The example described on this page is that of Apollo on a reentry trajectory towards the surface of Earth. To have a clearer overview of the application, you should check out the example at :ref:`walkthroughsUnguidedCapsuleEntry`, which is identical to this one but without the use of JSON files. The code for this tutorial is located in your Tudat Bundle at: ::
 
   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/apolloCapsuleEntryJSON.cpp
-
-In this tutorial, the creation of a custom JSON-based application is described. Read first the general introduction on :ref:`jsonInterface_customJsonApp` and the example :ref:`walkthroughsUnguidedCapsuleEntry`, which is identical to this one but without the use of JSON files.
 
 The Apollo capsule entry cannot be simulated using exclusively JSON input files and the :literal:`json_interface` application. Some of the Tudat features that this application uses cannot be provided using JSON files, and thus a custom JSON-based application, in which part of the settings are read from a JSON file and others specified manually using C++ code, has to be written.
 
@@ -28,8 +26,8 @@ A few remarks about the contents of this file can be made:
 
   - The key :jsonkey:`spice.preloadEphemeris` has to be set to :literal:`false` because the key :jsonkey:`finalEpoch` is not defined, so it is not possible to interpolate the ephemeris of celestial bodies.
   - For the body :literal:`Apollo`, only the mass is specified; the aerodynamic settings (including coefficients and reference area) will be loaded manually in the C++ application.
-  - Since the key :jsonkey:`file` of the export settings is mandatory, a placeholder empty string is provided for :jsonkey:`export[0].file` and :jsonkey:`export[1].file`, which will be then redefined in the C++ application.
-  - The variable representing Apollo's altitude w.r.t. Earth is used twice: as termination condition and as dependent variable to be exported to an output file. Rather than repeating it twice, the key :jsonkey:`export[1].variables[1]` has been set to reference the termination's variable by using the special string :literal:`"${termination.variable}"`.
+  - Since the key :jsonkey:`file` of the export settings is mandatory, a placeholder empty string is provided for :jsonkey:`export[ 0 ].file` and :jsonkey:`export[ 1 ].file`, which will be then redefined in the C++ application.
+  - The variable representing Apollo's altitude w.r.t. Earth is used twice: as termination condition and as dependent variable to be exported to an output file. Rather than repeating it twice, the key :jsonkey:`export[ 1 ].variables[ 1 ]` has been set to reference the termination's variable by using the special string :literal:`"${termination.variable}"`.
 
 Then, in the C++ app, as explained in :ref:`jsonInterface_customJsonApp`, a derived class of :class:`JsonSimulationManager` has been created, providing custom implementations for the virtual methods :literal:`resetBodies`, :literal:`resetExportSettings` and :literal:`resetPropagatorSettings`:
 
@@ -91,7 +89,7 @@ For the :literal:`resetExportSettings` method, we first call the default impleme
       getExportSettings( 1 )->setOutputFile( outputDirectory + "apolloDependentVariableHistory.dat" );
   }
 
-In this case, we use the method :literal:`getExportSettings( unsigned int index )`, which returns the :class:`ExportSettings` object created from the key :jsonkey:`export[index]` in the JSON file.
+In this case, we use the method :literal:`getExportSettings( unsigned int index )`, which returns the :class:`ExportSettings` object created from the key :jsonkey:`export[ index ]` in the JSON file.
 
 Finally, we also override the method :literal:`resetPropagatorSettings`:
 
@@ -106,7 +104,7 @@ Finally, we also override the method :literal:`resetPropagatorSettings`:
       // Define constant 30 degree angle of attack
       double constantAngleOfAttack = 30.0 * tudat::mathematical_constants::PI / 180.0;
       getBody( "Apollo" )->getFlightConditions( )->getAerodynamicAngleCalculator( )->
-              setOrientationAngleFunctions( boost::lambda::constant( constantAngleOfAttack ) );
+              setOrientationAngleFunctions( [ = ]( ){ return constantAngleOfAttack; } );
   }
 
 After calling the original implementation in line 4, we define an angle of attack for Apollo. This is done by modifying Apollo's flight conditions. This can only be done once the flight conditions have been created, i.e. after :literal:`JsonSimulationManager::resetPropagatorSettings( )` has been called, since this method will create the acceleration aerodynamic models based on the body map created previously.

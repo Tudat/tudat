@@ -15,7 +15,7 @@ The settings for accelerations are defined and stored by the user in a :class:`S
 
    .. code-block:: cpp
 
-         std::map< std::string, std::map< std::string, std::vector< boost::shared_ptr< AccelerationSettings > > > >
+         std::map< std::string, std::map< std::string, std::vector< std::shared_ptr< AccelerationSettings > > > >
 
    This is a double map (with twice a string as a key). The two levels correspond to the names of bodies undergoing an acceleration (first key) , and those for bodies exerting an acceleration (second key). This allows any number of bodies to be propagated, undergoing any number (and type) of accelerations from any number of bodies. In this manner, settings for each required acceleration model are stored in an object of type :class:`AccelerationSettings`.
  
@@ -30,8 +30,8 @@ For instance, when using the following from the :ref:`walkthroughsUnguidedCapsul
 .. code-block:: cpp
 
     SelectedAccelerationMap accelerationSettings;
-    accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( central_gravity ) );
-    accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( aerodynamic ) );
+    accelerationSettings[ "Apollo" ][ "Earth" ].push_back( std::make_shared< AccelerationSettings >( central_gravity ) );
+    accelerationSettings[ "Apollo" ][ "Earth" ].push_back( std::make_shared< AccelerationSettings >( aerodynamic ) );
 
 We have defined a point-mass Earth gravity model and an aerodynamic acceleration due to Earth's atmosphere to be used. In this example, we have only defined the type of the acceleration, without the need for any additional information. All required variables used on the computations of the accelerations are uniquely defined in the Apollo and Earth entries of the body map (provided that the required environment models have been set as discussed in :ref:`tudatFeaturesEnvironmentIndex`).
 
@@ -141,8 +141,8 @@ As was the case for the settings of the environment models, certain types of acc
 .. code-block:: cpp
 
     SelectedAccelerationMap accelerationSettings;
-    accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< SphericalHarmonicAccelerationSettings >( 4, 0 ) );
-    accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( aerodynamic ) );
+    accelerationSettings[ "Apollo" ][ "Earth" ].push_back( std::make_shared< SphericalHarmonicAccelerationSettings >( 4, 0 ) );
+    accelerationSettings[ "Apollo" ][ "Earth" ].push_back( std::make_shared< AccelerationSettings >( aerodynamic ) );
 
 A full list of the available acceleration models, as well as their required input and environment models, is given at the end of this page. 
 
@@ -223,7 +223,7 @@ Subsequently, we provide details on how to add settings for the model to the :cl
    .. code-block:: cpp
 
        SelectedAccelerationMap accelerationSettings;
-       accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( central_gravity ) );
+       accelerationSettings[ "Apollo" ][ "Earth" ].push_back( std::make_shared< AccelerationSettings >( central_gravity ) );
 
    Requires the following environment models to be defined:
 
@@ -239,7 +239,7 @@ Subsequently, we provide details on how to add settings for the model to the :cl
       SelectedAccelerationMap accelerationSettings;
       int maximumDegree = 12;
       int maximumOrder = 12;
-          accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< SphericalHarmonicAccelerationSettings >( maximumDegree, maximumOrder ) );
+          accelerationSettings[ "Apollo" ][ "Earth" ].push_back( std::make_shared< SphericalHarmonicAccelerationSettings >( maximumDegree, maximumOrder ) );
 
    where the gravity field will be expanded up to degree and order 12 in the acceleration model. Requires the following environment models to be defined:
 
@@ -260,7 +260,7 @@ Subsequently, we provide details on how to add settings for the model to the :cl
       int maximumOrderOfIo = 12;
       int maximumDegreeOfJupiter = 4;
       int maximumOrderOfJupiter = 4;
-      accelerationSettings[ "Io" ][ "Jupiter" ].push_back( boost::make_shared< MutualSphericalHarmonicAccelerationSettings >( 
+      accelerationSettings[ "Io" ][ "Jupiter" ].push_back( std::make_shared< MutualSphericalHarmonicAccelerationSettings >( 
           maximumDegreeOfJupiter, maximumOrderOfJupiter, maximumDegreeOfIo, maximumOrderOfIo ) );
 
    where the gravity fields of Io and Jupiter will be expanded up to degree and order 12 and 4, respectively, in the acceleration model. Requires the following environment models to be defined:
@@ -280,7 +280,7 @@ Subsequently, we provide details on how to add settings for the model to the :cl
       int maximumOrderOfGanymede = 4;
       int maximumDegreeOfJupiter = 4;
       int maximumOrderOfJupiter = 4;
-      accelerationSettings[ "Io" ][ "Jupiter" ].push_back( boost::make_shared< MutualSphericalHarmonicAccelerationSettings >( 
+      accelerationSettings[ "Io" ][ "Jupiter" ].push_back( std::make_shared< MutualSphericalHarmonicAccelerationSettings >( 
           maximumDegreeOfJupiter, maximumOrderOfJupiter, maximumDegreeOfGanymede, maximumOrderOfGanymede, maximumDegreeOfIo, maximumOrderOfIo ) );
 
    where Jupiter now takes the role of central body, instead of body exerting the acceleration.
@@ -292,7 +292,7 @@ Subsequently, we provide details on how to add settings for the model to the :cl
    .. code-block:: cpp
 
       SelectedAccelerationMap accelerationSettings;
-      accelerationSettings[ "Apollo" ][ "Earth" ].push_back( boost::make_shared< AccelerationSettings >( aerodynamic ) );
+      accelerationSettings[ "Apollo" ][ "Earth" ].push_back( std::make_shared< AccelerationSettings >( aerodynamic ) );
 
    Requires the following environment models to be defined:
 
@@ -311,7 +311,7 @@ Subsequently, we provide details on how to add settings for the model to the :cl
    .. code-block:: cpp
 
       SelectedAccelerationMap accelerationSettings;
-      accelerationSettings[ "Apollo" ][ "Sun" ].push_back( boost::make_shared< AccelerationSettings >( cannon_ball_radiation_pressure ) );
+      accelerationSettings[ "Apollo" ][ "Sun" ].push_back( std::make_shared< AccelerationSettings >( cannon_ball_radiation_pressure ) );
 
    Requires the following environment models to be defined:
 
@@ -339,7 +339,7 @@ Setting up a thrust acceleration is discussed in more detail on the page :ref:`t
     bool calculateDeSitterCorrection = true;
     std::string primaryBody = "Sun";
     const Eigen::Vector3d marsAngularMomentum = ...
-    accelerationSettings[ "Orbiter" ][ "Mars" ] = boost::make_shared< RelativisticAccelerationCorrectionSettings >( 
+    accelerationSettings[ "Orbiter" ][ "Mars" ] = std::make_shared< RelativisticAccelerationCorrectionSettings >( 
        calculateSchwarzschildCorrection, calculateLenseThirringCorrection,  calculateDeSitterCorrection, primaryBody,
        centralBodyAngularMomentum )
 
@@ -355,7 +355,7 @@ Here, the 'primary body' for a planetary orbiter should always be set as the Sun
       Eigen::Vector3d constantAcceleration = ( Eigen::Vector3d( ) << 0.4, -0.1, 0.05 ).finished( );
       Eigen::Vector3d sineAcceleration = ( Eigen::Vector3d( ) << 0.0, 0.02, 0.0 ).finished( );
       Eigen::Vector3d cosineAcceleration = ( Eigen::Vector3d( ) << -0.01, 0.0, 0.0 ).finished( );
-      accelerationSettings[ "Orbiter" ][ "Mars" ] = boost::make_shared< EmpiricalAccelerationSettings >( 
+      accelerationSettings[ "Orbiter" ][ "Mars" ] = std::make_shared< EmpiricalAccelerationSettings >( 
          constantAcceleration, sineAcceleration, cosineAcceleration );
 
 Where the three input variables represent:
@@ -377,7 +377,7 @@ Where the three input variables represent:
       double timeLag = 100.0;
     
       SelectedAccelerationMap accelerationSettings;
-      accelerationSettings[ "Io" ][ "Jupiter" ] = boost::make_shared< DirectTidalDissipationAccelerationSettings >(
+      accelerationSettings[ "Io" ][ "Jupiter" ] = std::make_shared< DirectTidalDissipationAccelerationSettings >(
          loveNumber, timeLag, false, false );      
 
 Where the three input variables represent:       

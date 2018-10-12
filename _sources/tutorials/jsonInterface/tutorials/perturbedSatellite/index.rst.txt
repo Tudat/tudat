@@ -44,6 +44,8 @@ To model spherical harmonics (SH), two steps are necessary. The first is the add
 
 Here, we have specified the :literal:`ggm02c` model, which will be used to load the SH coefficients :math:`C` and :math:`S`. Note that you can find a list of the available spherical harmonics models at :ref:`jsonInterface_keys`, under Body, Gravity Field, Spherical Harmonic Gravity Field from built-in model. 
 
+.. note:: The order in which the keys :jsonkey:`useDefaultSettings` and :jsonkey:`gravityField` are defined inside the :jsonkey:`bodies.Earth` objects is irrelevant: the default settings will always be loaded first, and then the settings specified in the input file (if any) will override the default ones.
+
 Now, we also need to tell the simulation to model the gravitational acceleration. This is done by replacing the :literal:`"pointMassGravity"` value of the :jsonkey:`type` key under the accelerations of Asterix. In this case, we want to add :literal:`"sphericalHarmonicGravity"`. For this type of acceleration, we also need to specify the maximum degree and order to use. This is done by adding two extra keys, namely :jsonkey:`degree` and :jsonkey:`order`, after :jsonkey:`type`. Thus, for now, the JSON code specifying the accelerations acting on the body Asterix will look like this:
 
    .. code-block:: json

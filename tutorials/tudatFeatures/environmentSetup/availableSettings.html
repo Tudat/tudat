@@ -193,15 +193,15 @@
             
   <div class="section" id="available-settings-for-the-environment-models">
 <h1>3.2. Available Settings for the Environment Models<a class="headerlink" href="#available-settings-for-the-environment-models" title="Permalink to this headline">¶</a></h1>
-<p>Here, we will provide a full list of the available properties of the&nbsp;<a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;object. Each type of environment model has one base class to define settings for the creation of the model). Often, a specific derived class is implemented for a specific environment model of a given class, in which any additional information that may be needed can be provided. For instance, when defining a gravity field model, one can simply use:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">central_spice</span> <span class="p">);</span>
+<p>Here, we will provide a full list of the available properties of the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> object. Each type of environment model has one base class to define settings for the creation of the model). Often, a specific derived class is implemented for a specific environment model of a given class, in which any additional information that may be needed can be provided. For instance, when defining a gravity field model, one can simply use:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">central_spice</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>if you want to use a central gravity field with the gravitational parameter taken from Spice: no information is needed except the&nbsp;type&nbsp;of gravity field model that is created. On the other hand, if you want to use a spherical harmonic gravity field, you need to specify additional parameters yourself, which is done by using the specific derived class:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicsGravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">gravitationalParameter</span><span class="p">,</span> <span class="n">referenceRadius</span><span class="p">,</span> <span class="n">cosineCoefficients</span><span class="p">,</span> <span class="n">sineCoefficients</span><span class="p">,</span> <span class="n">associatedReferenceFrame</span> <span class="p">);</span>
+<p>if you want to use a central gravity field with the gravitational parameter taken from Spice: no information is needed except the type of gravity field model that is created. On the other hand, if you want to use a spherical harmonic gravity field, you need to specify additional parameters yourself, which is done by using the specific derived class:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicsGravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">gravitationalParameter</span><span class="p">,</span> <span class="n">referenceRadius</span><span class="p">,</span> <span class="n">cosineCoefficients</span><span class="p">,</span> <span class="n">sineCoefficients</span><span class="p">,</span> <span class="n">associatedReferenceFrame</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>To find out which input arguments must be provided to create a specific settings class, have a look at the documentation in the code (written above the code for the constructor of the settings class you are interested in).&nbsp;Below, we give examples of each type of environment model setting.</p>
+<p>To find out which input arguments must be provided to create a specific settings class, have a look at the documentation in the code (written above the code for the constructor of the settings class you are interested in). Below, we give examples of each type of environment model setting.</p>
 <p>The full list of available environment model settings is described below.</p>
 <div class="section" id="atmosphere-model">
 <h2>3.2.1. Atmosphere model<a class="headerlink" href="#atmosphere-model" title="Permalink to this headline">¶</a></h2>
@@ -221,7 +221,7 @@
 <dt id="ExponentialAtmosphereSettings">
 <em class="property">class </em><code class="descname">ExponentialAtmosphereSettings</code><a class="headerlink" href="#ExponentialAtmosphereSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simple atmosphere model independent of time, latitude and longitude based on an exponentially decaying density profile with a constant temperature.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ExponentialAtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mf">7.2E3</span><span class="p">,</span> <span class="mf">290.0</span><span class="p">,</span> <span class="mf">1.225</span><span class="p">,</span> <span class="mf">287.06</span> <span class="p">);</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ExponentialAtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mf">7.2E3</span><span class="p">,</span> <span class="mf">290.0</span><span class="p">,</span> <span class="mf">1.225</span><span class="p">,</span> <span class="mf">287.06</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>for an exponential atmosphere with a scale height of 7200 m, a constant temperature of 290 K, a density at 0 m altitude of 1.225 kg/m^3 and a specific gas constant of 287.06 J/(kg K).</p>
@@ -229,10 +229,10 @@
 <blockquote>
 <div><table border="1" class="docutils">
 <colgroup>
-<col width="48%" />
-<col width="17%" />
-<col width="17%" />
-<col width="17%" />
+<col width="43%" />
+<col width="15%" />
+<col width="15%" />
+<col width="26%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Property</th>
@@ -250,7 +250,7 @@
 <tr class="row-odd"><td>Density at Zero Altitude</td>
 <td>1.225</td>
 <td>0.02</td>
-<td>kg/m^3</td>
+<td>kg/m <span class="math">\({}^3\)</span></td>
 </tr>
 <tr class="row-even"><td>Constant Temperature</td>
 <td>246.0</td>
@@ -304,7 +304,7 @@
   <span class="kt">double</span> <span class="n">constantTemperature</span> <span class="o">=</span> <span class="mf">250.0</span><span class="p">;</span>
   <span class="kt">double</span> <span class="n">specificGasConstant</span> <span class="o">=</span> <span class="mf">300.0</span><span class="p">;</span>
   <span class="kt">double</span> <span class="n">ratioOfSpecificHeats</span> <span class="o">=</span> <span class="mf">1.4</span><span class="p">;</span>
-  <span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CustomConstantTemperatureAtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">customDensityFunction</span><span class="p">,</span> <span class="n">constantTemperature</span><span class="p">,</span> <span class="n">specificGasConstant</span><span class="p">,</span> <span class="n">ratioOfSpecificHeats</span> <span class="p">);</span>
+  <span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CustomConstantTemperatureAtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">customDensityFunction</span><span class="p">,</span> <span class="n">constantTemperature</span><span class="p">,</span> <span class="n">specificGasConstant</span><span class="p">,</span> <span class="n">ratioOfSpecificHeats</span> <span class="p">);</span>
 
   <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -313,15 +313,15 @@
 <p>As shown in the example above, the user-defined function, in this case <code class="docutils literal"><span class="pre">customDensityFunction</span></code>, is required to have those inputs, and in that specific order. The value of pressure is computed by assuming hydrostatic equilibrium, whereas temperature, gas constant and the ratio of specific heats are assumed to be constant.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">Note that, by using <code class="docutils literal"><span class="pre">boost::bind</span></code>, you can have more inputs than the ones in <code class="docutils literal"><span class="pre">customDensityFunction</span></code>. However, keep in mind that <code class="docutils literal"><span class="pre">boost::bind</span></code> only allows up to 9 inputs.</p>
+<p class="last">Note that, by using <code class="docutils literal"><span class="pre">std::bind</span></code>, you can have more inputs than the ones in <code class="docutils literal"><span class="pre">customDensityFunction</span></code>. However, keep in mind that <code class="docutils literal"><span class="pre">std::bind</span></code> only allows up to 9 inputs.</p>
 </div>
 </dd></dl>
 
 <dl class="method">
 <dt>
 <code class="descname">NRLMSISE-00</code></dt>
-<dd><p>This can be used to select the NRLMSISE-00 atmosphere model. To use this model, the&nbsp;<code class="docutils literal"><span class="pre">USE_NRLMSISE</span></code>&nbsp;flag in your top-level <code class="docutils literal"><span class="pre">CMakeLists</span></code> must be set to true. No derived class of&nbsp;<a class="reference internal" href="#AtmosphereSettings" title="AtmosphereSettings"><code class="xref py py-class docutils literal"><span class="pre">AtmosphereSettings</span></code></a> base class required, the model can be created by passing&nbsp;<code class="docutils literal"><span class="pre">nrlmsise00</span></code>&nbsp;as argument to base class constructor.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">nrlmsise00</span> <span class="p">);</span>
+<dd><p>This can be used to select the NRLMSISE-00 atmosphere model. To use this model, the <code class="docutils literal"><span class="pre">USE_NRLMSISE</span></code> flag in your top-level <code class="docutils literal"><span class="pre">CMakeLists</span></code> must be set to true. No derived class of <a class="reference internal" href="#AtmosphereSettings" title="AtmosphereSettings"><code class="xref py py-class docutils literal"><span class="pre">AtmosphereSettings</span></code></a> base class required, the model can be created by passing <code class="docutils literal"><span class="pre">nrlmsise00</span></code> as argument to base class constructor.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">nrlmsise00</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -330,10 +330,10 @@
 <dt id="CustomWindModelSettings">
 <em class="property">class </em><code class="descname">CustomWindModelSettings</code><a class="headerlink" href="#CustomWindModelSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Custom wind model which can be used to retrieve a wind vector. This wind vector is in the body-fixed, body-centered reference frame.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CustomWindModelSettings</span> <span class="o">&gt;</span><span class="p">(</span>  <span class="n">windFunction</span> <span class="p">)</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CustomWindModelSettings</span> <span class="o">&gt;</span><span class="p">(</span>  <span class="n">windFunction</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>where <code class="docutils literal"><span class="pre">windFunction</span></code> is a <code class="docutils literal"><span class="pre">boost::function</span></code> with inputs; altitude, longitude, latitude and time (for more details about boost: <a class="reference internal" href="../../basics/externalLibraries/boost.html#externalboost"><span class="std std-ref">Boost: Basic Concepts</span></a>).</p>
+<p>where <code class="docutils literal"><span class="pre">windFunction</span></code> is a <code class="docutils literal"><span class="pre">std::function</span></code> with inputs; altitude, longitude, latitude and time.</p>
 </dd></dl>
 
 </div>
@@ -348,17 +348,17 @@
 <dl class="class">
 <dt id="EphemerisSettings">
 <em class="property">class </em><code class="descname">EphemerisSettings</code><a class="headerlink" href="#EphemerisSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the ephemeris settings. Models currently available through the&nbsp;<a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;architecture and set by their respective derived classes are:</p>
+<dd><p>Base class for the ephemeris settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> architecture and set by their respective derived classes are:</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="ApproximatePlanetPositionSettings">
 <em class="property">class </em><code class="descname">ApproximatePlanetPositionSettings</code><a class="headerlink" href="#ApproximatePlanetPositionSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Highly simplified model of ephemerides of major Solar system bodies (model described&nbsp;here). Both a three-dimensional, and circular coplanar approximation may be used.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ApproximatePlanetPositionSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">jupiter</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
+<dd><p>Highly simplified model of ephemerides of major Solar system bodies (model described here). Both a three-dimensional, and circular coplanar approximation may be used.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ApproximatePlanetPositionSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">jupiter</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>where the first constructor argument is taken from the enum in&nbsp;approximatePlanetPositionsBase.h, and the second argument (false) denotes that the circular coplanar approximation is&nbsp;not&nbsp;made.</p>
+<p>where the first constructor argument is taken from the enum in approximatePlanetPositionsBase.h, and the second argument (false) denotes that the circular coplanar approximation is not made.</p>
 </dd></dl>
 
 <dl class="class">
@@ -367,7 +367,7 @@
 <dd><p>Ephemeris retrieved directly using <a class="reference internal" href="../otherLibraries/spice.html#tudatfeaturesspice"><span class="std std-ref">External Libraries: SPICE</span></a>.</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrigin</span> <span class="o">=</span> <span class="s">&quot;SSB&quot;</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrientation</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DirectSpiceEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">frameOrigin</span><span class="p">,</span> <span class="n">frameOrientation</span> <span class="p">);</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DirectSpiceEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">frameOrigin</span><span class="p">,</span> <span class="n">frameOrientation</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>creating a barycentric (SSB) ephemeris with axes along J2000, with data directly from spice.</p>
@@ -382,11 +382,11 @@
 <span class="kt">double</span> <span class="n">timeStep</span> <span class="o">=</span> <span class="mf">3600.0</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrigin</span> <span class="o">=</span> <span class="s">&quot;SSB&quot;</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrientation</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">InterpolatedSpiceEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">InterpolatedSpiceEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
     <span class="n">initialTime</span><span class="p">,</span> <span class="n">finalTime</span><span class="p">,</span> <span class="n">timeStep</span><span class="p">,</span> <span class="n">frameOrigin</span><span class="p">,</span> <span class="n">frameOrientation</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>creating a barycentric (SSB) ephemeris with axes along J2000, with data retrieved from Spice at 3600 s intervals between t=0 and t=1.0E8, using a 6th order Lagrange interpolator. Settings for the interpolator (discussed&nbsp;here, can be added as a sixth argument if you wish to use a different interpolation method)</p>
+<p>creating a barycentric (SSB) ephemeris with axes along J2000, with data retrieved from Spice at 3600 s intervals between t=0 and t=1.0E8, using a 6th order Lagrange interpolator. Settings for the interpolator (discussed here, can be added as a sixth argument if you wish to use a different interpolation method)</p>
 </dd></dl>
 
 <dl class="class">
@@ -396,11 +396,11 @@
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="n">bodyStateHistory</span> <span class="p">...</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrigin</span> <span class="o">=</span> <span class="s">&quot;SSB&quot;</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrientation</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TabulatedEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TabulatedEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
     <span class="n">bodyStateHistory</span><span class="p">,</span> <span class="n">frameOrigin</span><span class="p">,</span> <span class="n">frameOrientation</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>creating an ephemeris interpolated (with 6th order Lagrange interpolation) from the data in&nbsp;bodyStateHistory, which contains the Cartesian state (w.r.t. SSB; axes along J2000) for a given number of times (map keys, valid time range between first and last time in this map).</p>
+<p>creating an ephemeris interpolated (with 6th order Lagrange interpolation) from the data in bodyStateHistory, which contains the Cartesian state (w.r.t. SSB; axes along J2000) for a given number of times (map keys, valid time range between first and last time in this map).</p>
 </dd></dl>
 
 <dl class="class">
@@ -412,11 +412,11 @@
 <span class="kt">double</span> <span class="n">centralBodyGravitationalParameter</span> <span class="o">=</span> <span class="p">...</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrigin</span> <span class="o">=</span> <span class="s">&quot;SSB&quot;</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrientation</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">KeplerEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">KeplerEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
     <span class="n">initialStateInKeplerianElements</span><span class="p">,</span> <span class="n">epochOfInitialState</span><span class="p">,</span> <span class="n">centralBodyGravitationalParameter</span><span class="p">,</span> <span class="n">frameOrigin</span><span class="p">,</span> <span class="n">frameOrientation</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>creating a Kepler orbit as ephemeris using the given kepler elements and associated initial time and gravitational parameter. See <a class="reference internal" href="../astroTools/framestateTransformations.html#tudatfeaturesframestatetransformations"><span class="std std-ref">Frame/State Transformations</span></a>&nbsp;for more details on orbital elements in Tudat.</p>
+<p>creating a Kepler orbit as ephemeris using the given kepler elements and associated initial time and gravitational parameter. See <a class="reference internal" href="../astroTools/framestateTransformations.html#tudatfeaturesframestatetransformations"><span class="std std-ref">Frame/State Transformations</span></a> for more details on orbital elements in Tudat.</p>
 </dd></dl>
 
 <dl class="class">
@@ -426,7 +426,7 @@
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">constantCartesianState</span> <span class="o">=</span> <span class="p">...</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrigin</span> <span class="o">=</span> <span class="s">&quot;SSB&quot;</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrientation</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
     <span class="n">constantCartesianState</span><span class="p">,</span> <span class="n">frameOrigin</span><span class="p">,</span> <span class="n">frameOrientation</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -435,7 +435,7 @@
 <dl class="method">
 <dt>
 <code class="descname">Multi-arc ephemeris</code></dt>
-<dd><p>An ephemeris model (for translational state) that allows the body’s state to be defined by distinct ephemeris models over different arcs. Class is implemented to support multi-arc propagation/estimation. No derived class of&nbsp;<a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a> base class required, the created ephemeris can be made multi-arc by using the <code class="docutils literal"><span class="pre">resetMakeMultiArcEphemeris</span></code> function of the <a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a> class. The resulting <a class="reference internal" href="#Ephemeris" title="Ephemeris"><code class="xref py py-class docutils literal"><span class="pre">Ephemeris</span></code></a> object will then be <code class="xref py py-class docutils literal"><span class="pre">MultiArcEphemeris</span></code> (with the same ephemeris model for each arc when created, according to the settings in the <a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a> object)</p>
+<dd><p>An ephemeris model (for translational state) that allows the body’s state to be defined by distinct ephemeris models over different arcs. Class is implemented to support multi-arc propagation/estimation. No derived class of <a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a> base class required, the created ephemeris can be made multi-arc by using the <code class="docutils literal"><span class="pre">resetMakeMultiArcEphemeris</span></code> function of the <a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a> class. The resulting <a class="reference internal" href="#Ephemeris" title="Ephemeris"><code class="xref py py-class docutils literal"><span class="pre">Ephemeris</span></code></a> object will then be <code class="xref py py-class docutils literal"><span class="pre">MultiArcEphemeris</span></code> (with the same ephemeris model for each arc when created, according to the settings in the <a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a> object)</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span><span class="o">-&gt;</span> <span class="n">resetMakeMultiArcEphemeris</span><span class="p">(</span> <span class="nb">true</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -444,9 +444,9 @@
 <dl class="class">
 <dt id="CustomEphemerisSettings">
 <em class="property">class </em><code class="descname">CustomEphemerisSettings</code><a class="headerlink" href="#CustomEphemerisSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Allows user to provide arbitrary boost function as ephemeris model.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EphemerisSettings</span> <span class="o">&gt;</span> <span class="n">customEphemerisSettings</span> <span class="o">=</span>
-             <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CustomEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<dd><p>Allows user to provide arbitrary function as ephemeris model.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EphemerisSettings</span> <span class="o">&gt;</span> <span class="n">customEphemerisSettings</span> <span class="o">=</span>
+             <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CustomEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
                 <span class="n">customBoostFunction</span><span class="p">,</span> <span class="n">frameOrigin</span><span class="p">,</span> <span class="n">frameOrientation</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -464,7 +464,7 @@
 <dl class="class">
 <dt id="GravityFieldSettings">
 <em class="property">class </em><code class="descname">GravityFieldSettings</code><a class="headerlink" href="#GravityFieldSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the gravity field settings. Models currently available through the&nbsp;<a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;architecture can be called by the following:</p>
+<dd><p>Base class for the gravity field settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> architecture can be called by the following:</p>
 </dd></dl>
 
 <dl class="class">
@@ -472,7 +472,7 @@
 <em class="property">class </em><code class="descname">CentralGravityFieldSettings</code><a class="headerlink" href="#CentralGravityFieldSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Point-mass gravity field model, with user-defined gravitational parameter.</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">gravitationalParameter</span> <span class="o">=</span> <span class="p">...</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CentralGravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">gravitationalParameter</span> <span class="p">);</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CentralGravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">gravitationalParameter</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -480,8 +480,8 @@
 <dl class="method">
 <dt>
 <code class="descname">Point-mass gravity field model from Spice</code></dt>
-<dd><p>Point-mass gravity field model, with gravitational parameter from Spice. No derived class of&nbsp;<a class="reference internal" href="#GravityFieldSettings" title="GravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">GravityFieldSettings</span></code></a> base class required, created by passing&nbsp;<code class="docutils literal"><span class="pre">central_spice</span></code>&nbsp;as argument to base class constructor.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">central_spice</span> <span class="p">);</span>
+<dd><p>Point-mass gravity field model, with gravitational parameter from Spice. No derived class of <a class="reference internal" href="#GravityFieldSettings" title="GravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">GravityFieldSettings</span></code></a> base class required, created by passing <code class="docutils literal"><span class="pre">central_spice</span></code> as argument to base class constructor.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">central_spice</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -495,10 +495,10 @@
 <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">cosineCoefficients</span> <span class="o">=</span>  <span class="c1">// NOTE: entry (i,j) denotes coefficient at degree i and order j</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">sineCoefficients</span> <span class="o">=</span>  <span class="c1">// NOTE: entry (i,j) denotes coefficient at degree i and order j</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">associatedReferenceFrame</span> <span class="o">=</span> <span class="p">...</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicsGravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">gravitationalParameter</span><span class="p">,</span> <span class="n">referenceRadius</span><span class="p">,</span> <span class="n">cosineCoefficients</span><span class="p">,</span> <span class="n">sineCoefficients</span><span class="p">,</span> <span class="n">associatedReferenceFrame</span> <span class="p">);</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicsGravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">gravitationalParameter</span><span class="p">,</span> <span class="n">referenceRadius</span><span class="p">,</span> <span class="n">cosineCoefficients</span><span class="p">,</span> <span class="n">sineCoefficients</span><span class="p">,</span> <span class="n">associatedReferenceFrame</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The&nbsp;<code class="docutils literal"><span class="pre">associatedReferenceFrame</span></code>&nbsp;reference frame must presently be the same frame as the target frame of the body’s rotation model (see below). It represents the frame to which the spherical harmonic field is fixed.</p>
+<p>The <code class="docutils literal"><span class="pre">associatedReferenceFrame</span></code> reference frame must presently be the same frame as the target frame of the body’s rotation model (see below). It represents the frame to which the spherical harmonic field is fixed.</p>
 </dd></dl>
 
 </div>
@@ -513,7 +513,7 @@
 <dl class="class">
 <dt id="RotationModelSettings">
 <em class="property">class </em><code class="descname">RotationModelSettings</code><a class="headerlink" href="#RotationModelSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the rotational model settings. Models currently available through the&nbsp;<a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;architecture are:</p>
+<dd><p>Base class for the rotational model settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> architecture are:</p>
 </dd></dl>
 
 <dl class="class">
@@ -525,20 +525,20 @@
 <span class="kt">double</span> <span class="n">rotationRate</span> <span class="o">=</span> <span class="p">...</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">originalFrame</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">targetFrame</span> <span class="o">=</span> <span class="s">&quot;IAU_Earth&quot;</span><span class="p">;</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SimpleRotationModelSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SimpleRotationModelSettings</span> <span class="o">&gt;</span><span class="p">(</span>
     <span class="n">originalFrame</span><span class="p">,</span> <span class="n">targetFrame</span> <span class="p">,</span> <span class="n">initialOrientation</span><span class="p">,</span> <span class="n">initialTime</span><span class="p">,</span> <span class="n">rotationRate</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>where the rotation from&nbsp;originalFrame&nbsp;to&nbsp;targetFrame&nbsp;at&nbsp;initialTime&nbsp;is given by the quaternion&nbsp;initialOrientation. This is mapped to other times using the rotation rate&nbsp;rotationRate.</p>
+<p>where the rotation from originalFrame to targetFrame at initialTime is given by the quaternion initialOrientation. This is mapped to other times using the rotation rate rotationRate.</p>
 </dd></dl>
 
 <dl class="method">
 <dt>
 <code class="descname">Spice Rotation model</code></dt>
-<dd><p>Rotation model directly obtained from Spice. No derived class of&nbsp;<a class="reference internal" href="#RotationModelSettings" title="RotationModelSettings"><code class="xref py py-class docutils literal"><span class="pre">RotationModelSettings</span></code></a>&nbsp;base class required, created by passing&nbsp;<code class="docutils literal"><span class="pre">spice_rotation_model</span></code>&nbsp;as argument to base class constructor.</p>
+<dd><p>Rotation model directly obtained from Spice. No derived class of <a class="reference internal" href="#RotationModelSettings" title="RotationModelSettings"><code class="xref py py-class docutils literal"><span class="pre">RotationModelSettings</span></code></a> base class required, created by passing <code class="docutils literal"><span class="pre">spice_rotation_model</span></code> as argument to base class constructor.</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">originalFrame</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">targetFrame</span> <span class="o">=</span> <span class="s">&quot;IAU_Earth&quot;</span><span class="p">;</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">spice_rotation_model</span><span class="p">,</span> <span class="n">originalFrame</span><span class="p">,</span> <span class="n">targetFrame</span> <span class="p">);</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">spice_rotation_model</span><span class="p">,</span> <span class="n">originalFrame</span><span class="p">,</span> <span class="n">targetFrame</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -561,8 +561,8 @@
 <code class="descname">Tabulated RotationalEphemeris model</code></dt>
 <dd><p>Rotation model obtained from an interpolator, with dependent variable a <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code> of size 7: the four entries (w,x,y,z) of the quaternion from the target frame to the base frame, and body’s angular velocity vector, expressed in its body-fixed frame . Currently the settings interface is not yet implemented but the functionality is implemented in <code class="xref py py-class docutils literal"><span class="pre">TabulatedRotationalEphemeris</span></code>. The tabulated rotational ephemeris can be implemented as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create tabulated rotational model</span>
-<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TabulatedRotationalEphemeris</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">tabulatedEphemeris</span> <span class="o">=</span>
-        <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TabulatedRotationalEphemeris</span><span class="o">&lt;</span>  <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">rotationInterpolator</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TabulatedRotationalEphemeris</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">tabulatedEphemeris</span> <span class="o">=</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TabulatedRotationalEphemeris</span><span class="o">&lt;</span>  <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">rotationInterpolator</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -585,7 +585,7 @@
 <dl class="class">
 <dt id="BodyShapeSettings">
 <em class="property">class </em><code class="descname">BodyShapeSettings</code><a class="headerlink" href="#BodyShapeSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the body shape settings. Models currently available through the&nbsp;<a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;architecture are:</p>
+<dd><p>Base class for the body shape settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> architecture are:</p>
 </dd></dl>
 
 <dl class="class">
@@ -593,7 +593,7 @@
 <em class="property">class </em><code class="descname">SphericalBodyShapeSettings</code><a class="headerlink" href="#SphericalBodyShapeSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Model defining a body shape as a perfect sphere, with the sphere radius provided by the user.</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">bodyRadius</span> <span class="o">=</span> <span class="mf">6378.0E3</span><span class="p">;</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalBodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodyRadius</span> <span class="p">);</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalBodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodyRadius</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -601,8 +601,8 @@
 <dl class="method">
 <dt>
 <code class="descname">Spherical shape from SPice</code></dt>
-<dd><p>Model defining a body shape as a perfect sphere, with the sphere radius retrieved from Spice. No derived class of&nbsp;<a class="reference internal" href="#BodyShapeSettings" title="BodyShapeSettings"><code class="xref py py-class docutils literal"><span class="pre">BodyShapeSettings</span></code></a>&nbsp;base class required, created by passing&nbsp;<code class="docutils literal"><span class="pre">spherical_spice</span></code>&nbsp;as argument to base class constructor.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">BodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">spherical_spice</span> <span class="p">);</span>
+<dd><p>Model defining a body shape as a perfect sphere, with the sphere radius retrieved from Spice. No derived class of <a class="reference internal" href="#BodyShapeSettings" title="BodyShapeSettings"><code class="xref py py-class docutils literal"><span class="pre">BodyShapeSettings</span></code></a> base class required, created by passing <code class="docutils literal"><span class="pre">spherical_spice</span></code> as argument to base class constructor.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">BodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">spherical_spice</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -613,14 +613,14 @@
 <dd><p>Model defining a body shape as a flattened sphere, with the equatorial radius and flattening provided by the user.</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">bodyRadius</span> <span class="o">=</span> <span class="mf">6378.0E3</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">bodyFlattening</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">300.0</span><span class="p">;</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OblateSphericalBodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodyRadius</span><span class="p">,</span> <span class="n">bodyFlattening</span> <span class="p">);</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OblateSphericalBodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodyRadius</span><span class="p">,</span> <span class="n">bodyFlattening</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
 
 </div>
 <div class="section" id="radiation-pressure-interface">
-<h2>3.2.6. Radiation pressure interface<a class="headerlink" href="#radiation-pressure-interface" title="Permalink to this headline">¶</a></h2>
+<span id="radiationpressuremodeloptions"></span><h2>3.2.6. Radiation pressure interface<a class="headerlink" href="#radiation-pressure-interface" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="RadiationPressureInterface">
 <em class="property">class </em><code class="descname">RadiationPressureInterface</code><a class="headerlink" href="#RadiationPressureInterface" title="Permalink to this definition">¶</a></dt>
@@ -630,19 +630,19 @@
 <dl class="class">
 <dt id="RadiationPressureInterfaceSettings">
 <em class="property">class </em><code class="descname">RadiationPressureInterfaceSettings</code><a class="headerlink" href="#RadiationPressureInterfaceSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the radiation pressure interface settings. A separate model can be used for different bodies emitting radiation (key values of&nbsp;radiationPressureSettings) Models currently available through the&nbsp;<a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;architecture are:</p>
+<dd><p>Base class for the radiation pressure interface settings. A separate model can be used for different bodies emitting radiation (key values of radiationPressureSettings) Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> architecture are:</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="CannonBallRadiationPressureInterfaceSettings">
 <em class="property">class </em><code class="descname">CannonBallRadiationPressureInterfaceSettings</code><a class="headerlink" href="#CannonBallRadiationPressureInterfaceSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Properties for a cannonball radiation pressure model,&nbsp;i.e.&nbsp;effective force colinear with vector from source to target.</p>
+<dd><p>Properties for a cannonball radiation pressure model, i.e. effective force colinear with vector from source to target.</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">sourceBody</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">area</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">;</span>
 <span class="k">const</span> <span class="kt">double</span> <span class="n">radiationPressureCoefficient</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">occultingBodies</span><span class="p">;</span>
 <span class="n">occultingBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;TestVehicle&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">radiationPressureSettings</span><span class="p">[</span> <span class="n">sourceBody</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CannonBallRadiationPressureInterfaceSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;TestVehicle&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">radiationPressureSettings</span><span class="p">[</span> <span class="n">sourceBody</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CannonBallRadiationPressureInterfaceSettings</span> <span class="o">&gt;</span><span class="p">(</span>
     <span class="n">sourceBody</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="n">radiationPressureCoefficient</span><span class="p">,</span> <span class="n">occultingBodies</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -665,7 +665,7 @@
 <dl class="class">
 <dt id="AerodynamicCoefficientSettings">
 <em class="property">class </em><code class="descname">AerodynamicCoefficientSettings</code><a class="headerlink" href="#AerodynamicCoefficientSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the aerodynamic coefficient settings. Models currently available through the&nbsp;<a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;architecture are:</p>
+<dd><p>Base class for the aerodynamic coefficient settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> architecture are:</p>
 </dd></dl>
 
 <dl class="class">
@@ -676,7 +676,7 @@
 <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">constantCoefficients</span><span class="p">;</span>
 <span class="n">constantCoefficients</span><span class="p">(</span> <span class="mi">0</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">;</span>
 <span class="n">constantCoefficients</span><span class="p">(</span> <span class="mi">2</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;TestVehicle&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">aerodynamicCoefficientSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantAerodynamicCoefficientSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;TestVehicle&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">aerodynamicCoefficientSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantAerodynamicCoefficientSettings</span> <span class="o">&gt;</span><span class="p">(</span>
     <span class="n">referenceArea</span><span class="p">,</span> <span class="n">constantCoefficients</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="nb">true</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -686,13 +686,13 @@
 <dl class="class">
 <dt id="TabulatedAerodynamicCoefficientSettings">
 <em class="property">class </em><code class="descname">TabulatedAerodynamicCoefficientSettings</code><a class="headerlink" href="#TabulatedAerodynamicCoefficientSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Settings for tabulated aerodynamic coefficients as a function of given independent variables. These tables can be defined either manually or loaded from a file, as discussed in more detail&nbsp;<a class="reference internal" href="aerodynamicCoefficients.html#tudatfeaturesaerodynamicguidancereadingaerodynamiccoefficients"><span class="std std-ref">here</span></a>.&nbsp;Coefficients can be defined as a function of angle of sideslip, angle of attack, Mach number or altitude. If you simulation requires any other dependencies for the coefficients, please open an issue on Github requesting feature.</p>
+<dd><p>Settings for tabulated aerodynamic coefficients as a function of given independent variables. These tables can be defined either manually or loaded from a file, as discussed in more detail <a class="reference internal" href="aerodynamicCoefficients.html#tudatfeaturesaerodynamicguidancereadingaerodynamiccoefficients"><span class="std std-ref">here</span></a>. Coefficients can be defined as a function of angle of sideslip, angle of attack, Mach number or altitude. If you simulation requires any other dependencies for the coefficients, please open an issue on Github requesting feature.</p>
 </dd></dl>
 
 <dl class="method">
 <dt>
 <code class="descname">Local Inclination methods</code></dt>
-<dd><p>Settings for aerodynamic coefficients computed internally using a shape model of the vehicle, valid for hypersonic Mach numbers. Currently, this type of aerodynamic coefficients can only be set manually in the&nbsp;<a class="reference internal" href="setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object directly.</p>
+<dd><p>Settings for aerodynamic coefficients computed internally using a shape model of the vehicle, valid for hypersonic Mach numbers. Currently, this type of aerodynamic coefficients can only be set manually in the <a class="reference internal" href="setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> object directly.</p>
 </dd></dl>
 
 </div>
@@ -707,7 +707,7 @@
 <dl class="class">
 <dt id="GravityFieldVariationSettings">
 <em class="property">class </em><code class="descname">GravityFieldVariationSettings</code><a class="headerlink" href="#GravityFieldVariationSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the gravity field variation settings. Any number of gravity field variations may be used (hence the use of a vector). NOTE: You can only use gravity field variations for bodies where you have defined a spherical harmonic gravity field (through the use of&nbsp;<a class="reference internal" href="#SphericalHarmonicsGravityFieldSettings" title="SphericalHarmonicsGravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicsGravityFieldSettings</span></code></a>). Models currently available through the&nbsp;<a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;architecture are:</p>
+<dd><p>Base class for the gravity field variation settings. Any number of gravity field variations may be used (hence the use of a vector). NOTE: You can only use gravity field variations for bodies where you have defined a spherical harmonic gravity field (through the use of <a class="reference internal" href="#SphericalHarmonicsGravityFieldSettings" title="SphericalHarmonicsGravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicsGravityFieldSettings</span></code></a>). Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> architecture are:</p>
 </dd></dl>
 
 <dl class="class">

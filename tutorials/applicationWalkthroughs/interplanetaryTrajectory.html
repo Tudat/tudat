@@ -99,14 +99,14 @@
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Tutorials</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html#tudat-example-application-tutorials">Tudat Example Application Tutorials</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphereExamples.html">1. Tabulated Atmosphere Usage</a></li>
-<li class="toctree-l4"><a class="reference internal" href="unperturbedEarthOrbitingSatellite.html">2. Unperturbed Earth-orbiting Satellite</a></li>
-<li class="toctree-l4"><a class="reference internal" href="perturbedEarthOrbitingSatellite.html">3. Perturbed Earth-orbiting Satellite</a></li>
-<li class="toctree-l4"><a class="reference internal" href="propagatorTypesComparison.html">4. Comparison of Propagator Types</a></li>
-<li class="toctree-l4"><a class="reference internal" href="unguidedCapsuleEntry.html">5. Un-guided Capsule Entry</a></li>
-<li class="toctree-l4"><a class="reference internal" href="innerSolarSystemPropagation.html">6. Inner Solar System Propagation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="useOfThrustThrustForceAlongVelocityVector.html">7. Use of Thrust: Thrust Force Along Velocity Vector</a></li>
-<li class="toctree-l4"><a class="reference internal" href="useOfThrustUserDefinedThrustVector.html">8. Use of Thrust: User-defined Thrust Vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unperturbedEarthOrbitingSatellite.html">1. Unperturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="perturbedEarthOrbitingSatellite.html">2. Perturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unguidedCapsuleEntry.html">3. Un-guided Capsule Entry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="innerSolarSystemPropagation.html">4. Inner Solar System Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="useOfThrustThrustForceAlongVelocityVector.html">5. Use of Thrust: Thrust Force Along Velocity Vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="useOfThrustUserDefinedThrustVector.html">6. Use of Thrust: User-defined Thrust Vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphereExamples.html">7. Tabulated Atmosphere Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="propagatorTypesComparison.html">8. Comparison of Propagator Types</a></li>
 <li class="toctree-l4"><a class="reference internal" href="filterExample.html">9. Kalman Filter for State Estimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="variationalEquationsPropagation.html">10. Variational Equations Propagation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">11. Orbit Determination and Parameter Estimation (Basic)</a></li>
@@ -195,43 +195,45 @@
             
   <div class="section" id="mga-trajectory-design">
 <span id="interplanetarytrajectorydesign"></span><h1>13. MGA Trajectory Design<a class="headerlink" href="#mga-trajectory-design" title="Permalink to this headline">¶</a></h1>
-<p>This tutorial will focus on the trajectory design tool that is included in Tudat. This tool allows the definition of a MGA trajectory using a patched conics approach.</p>
+<p>This tutorial will focus on the trajectory design tool that is included in Tudat. This tool allows the definition of a multiple gravity assist (MGA) trajectory using a patched conics approach.</p>
 <p>The code for this tutorial is given on Github, and is also located in your tudat bundle at:</p>
-<blockquote>
-<div>tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/interplanetaryTrajectoryDesign.cpp</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">interplanetaryTrajectoryDesign</span><span class="o">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
 <p>The first trajectory that will be calculated is that of Cassini using only gravity assists and no deep space maneuvers (DSM). The code starts by defining the different leg types:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Specify required parameters</span>
 <span class="c1">// Specify the number of legs and type of legs.</span>
 <span class="kt">int</span> <span class="n">numberOfLegs</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">int</span> <span class="o">&gt;</span> <span class="n">legTypeVector</span><span class="p">;</span>
 <span class="n">legTypeVector</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">numberOfLegs</span> <span class="p">);</span>
-<span class="n">legTypeVector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">mga_Departure</span><span class="p">;</span>
-<span class="n">legTypeVector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">mga_Swingby</span><span class="p">;</span>
-<span class="n">legTypeVector</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">mga_Swingby</span><span class="p">;</span>
-<span class="n">legTypeVector</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">mga_Swingby</span><span class="p">;</span>
-<span class="n">legTypeVector</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">mga_Swingby</span><span class="p">;</span>
-<span class="n">legTypeVector</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">capture</span><span class="p">;</span>
+<span class="n">legTypeVector</span><span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="n">mga_Departure</span><span class="p">;</span>
+<span class="n">legTypeVector</span><span class="p">[</span> <span class="mi">1</span> <span class="p">]</span> <span class="o">=</span> <span class="n">mga_Swingby</span><span class="p">;</span>
+<span class="n">legTypeVector</span><span class="p">[</span> <span class="mi">2</span> <span class="p">]</span> <span class="o">=</span> <span class="n">mga_Swingby</span><span class="p">;</span>
+<span class="n">legTypeVector</span><span class="p">[</span> <span class="mi">3</span> <span class="p">]</span> <span class="o">=</span> <span class="n">mga_Swingby</span><span class="p">;</span>
+<span class="n">legTypeVector</span><span class="p">[</span> <span class="mi">4</span> <span class="p">]</span> <span class="o">=</span> <span class="n">mga_Swingby</span><span class="p">;</span>
+<span class="n">legTypeVector</span><span class="p">[</span> <span class="mi">5</span> <span class="p">]</span> <span class="o">=</span> <span class="n">capture</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The leg types can be found in the <code class="docutils literal"><span class="pre">legTypes</span></code> enum, located in the following file:</p>
-<blockquote>
-<div>tudatBundle/tudat/Tudat/Astrodynamics/TrajectoryDesign/trajectory.h</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudat</span><span class="o">/</span><span class="n">Tudat</span><span class="o">/</span><span class="n">Astrodynamics</span><span class="o">/</span><span class="n">TrajectoryDesign</span><span class="o">/</span><span class="n">trajectory</span><span class="o">.</span><span class="n">h</span>
+</pre></div>
+</div>
 <p>A trajectory always has to start with a departure leg, and has to end with a capture leg.
 The following step is creating a vector with pointers to the ephemerides of the planets that the vehicle will visit:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create the ephemeris vector.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">EphemerisPointer</span> <span class="o">&gt;</span>
         <span class="n">ephemerisVector</span><span class="p">(</span> <span class="n">numberOfLegs</span> <span class="p">);</span>
-<span class="n">ephemerisVector</span><span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">ephemerisVector</span><span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
             <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">earthMoonBarycenter</span> <span class="p">);</span>
-<span class="n">ephemerisVector</span><span class="p">[</span> <span class="mi">1</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">ephemerisVector</span><span class="p">[</span> <span class="mi">1</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
             <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">venus</span> <span class="p">);</span>
-<span class="n">ephemerisVector</span><span class="p">[</span> <span class="mi">2</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">ephemerisVector</span><span class="p">[</span> <span class="mi">2</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
             <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">venus</span> <span class="p">);</span>
-<span class="n">ephemerisVector</span><span class="p">[</span> <span class="mi">3</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">ephemerisVector</span><span class="p">[</span> <span class="mi">3</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
             <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">earthMoonBarycenter</span> <span class="p">);</span>
-<span class="n">ephemerisVector</span><span class="p">[</span> <span class="mi">4</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">ephemerisVector</span><span class="p">[</span> <span class="mi">4</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
             <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">jupiter</span> <span class="p">);</span>
-<span class="n">ephemerisVector</span><span class="p">[</span> <span class="mi">5</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">ephemerisVector</span><span class="p">[</span> <span class="mi">5</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
             <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">saturn</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -239,22 +241,21 @@ The following step is creating a vector with pointers to the ephemerides of the 
 Next, a vector of gravitational parameters are given for the planets.</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create gravitational parameter vector</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">gravitationalParameterVector</span><span class="p">(</span> <span class="n">numberOfLegs</span> <span class="p">);</span>
-<span class="n">gravitationalParameterVector</span> <span class="o">&lt;&lt;</span> <span class="mf">3.9860119e14</span><span class="p">,</span> <span class="mf">3.24860e14</span><span class="p">,</span> <span class="mf">3.24860e14</span><span class="p">,</span> <span class="mf">3.9860119e14</span><span class="p">,</span> <span class="mf">1.267e17</span><span class="p">,</span>
-                        <span class="mf">3.79e16</span><span class="p">;</span>
+<span class="n">gravitationalParameterVector</span> <span class="o">&lt;&lt;</span> <span class="mf">3.9860119e14</span><span class="p">,</span> <span class="mf">3.24860e14</span><span class="p">,</span> <span class="mf">3.24860e14</span><span class="p">,</span> <span class="mf">3.9860119e14</span><span class="p">,</span> <span class="mf">1.267e17</span><span class="p">,</span> <span class="mf">3.79e16</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>All the different legs in the trajectory need different characteristics to be defined by the user. For swingby only legs, the trajectory variables vector looks as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create variable vector.</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">variableVector</span> <span class="p">(</span> <span class="n">numberOfLegs</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">variableVector</span><span class="p">(</span> <span class="n">numberOfLegs</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">);</span>
 <span class="n">variableVector</span> <span class="o">&lt;&lt;</span> <span class="o">-</span><span class="mf">789.8117</span><span class="p">,</span> <span class="mf">158.302027105278</span><span class="p">,</span> <span class="mf">449.385873819743</span><span class="p">,</span> <span class="mf">54.7489684339665</span><span class="p">,</span>
-                  <span class="mf">1024.36205846918</span><span class="p">,</span> <span class="mf">4552.30796805542</span><span class="p">,</span> <span class="mi">1</span><span class="cm">/*dummy*/</span><span class="p">;</span>
+        <span class="mf">1024.36205846918</span><span class="p">,</span> <span class="mf">4552.30796805542</span><span class="p">,</span> <span class="mi">1</span><span class="cm">/*dummy*/</span><span class="p">;</span>
 <span class="n">variableVector</span> <span class="o">*=</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>The first variable is the departure date (in MJD2000), after that, each number is the time of flight (in days) of the corresponding leg. The time of flight of the capture leg is not important for further calculations, thus it can be given a dummy value. These variables are all then converted to seconds (since MJD2000 for the departure time).
-Finally, some extra variables that characterise the orbits of the vehicle in between planets and around them are given:</p>
+<p>The first variable is the departure date (in MJD2000), after that, each number is the time of flight (in days) of the corresponding leg. The time of flight of the capture leg is not important for further calculations, thus it can be given a dummy value. These variables are all then converted to seconds (since MJD2000 for the departure time).</p>
+<p>Finally, some extra variables that characterise the orbits of the vehicle in between planets and around them are given:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create departure and capture variables.</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">semiMajorAxes</span> <span class="p">(</span> <span class="mi">2</span> <span class="p">),</span> <span class="n">eccentricities</span> <span class="p">(</span> <span class="mi">2</span> <span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">semiMajorAxes</span><span class="p">(</span> <span class="mi">2</span> <span class="p">),</span> <span class="n">eccentricities</span><span class="p">(</span> <span class="mi">2</span> <span class="p">);</span>
 <span class="n">semiMajorAxes</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;::</span><span class="n">infinity</span><span class="p">(</span> <span class="p">),</span> <span class="mf">1.0895e8</span> <span class="o">/</span> <span class="mf">0.02</span><span class="p">;</span>
 <span class="n">eccentricities</span> <span class="o">&lt;&lt;</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">;</span>
 
@@ -262,56 +263,56 @@ Finally, some extra variables that characterise the orbits of the vehicle in bet
 <span class="k">const</span> <span class="kt">double</span> <span class="n">sunGravitationalParameter</span> <span class="o">=</span> <span class="mf">1.32712428e20</span><span class="p">;</span>
 
 <span class="c1">// Create minimum pericenter radii vector</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">minimumPericenterRadii</span> <span class="p">(</span> <span class="n">numberOfLegs</span> <span class="p">);</span>
-<span class="n">minimumPericenterRadii</span> <span class="o">&lt;&lt;</span> <span class="mf">6778000.</span><span class="p">,</span> <span class="mf">6351800.</span><span class="p">,</span> <span class="mf">6351800.</span><span class="p">,</span> <span class="mf">6778000.</span><span class="p">,</span> <span class="mf">600000000.</span><span class="p">,</span> <span class="mf">600000000.</span><span class="p">;</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">minimumPericenterRadii</span><span class="p">(</span> <span class="n">numberOfLegs</span> <span class="p">);</span>
+<span class="n">minimumPericenterRadii</span> <span class="o">&lt;&lt;</span> <span class="mf">6778000.0</span><span class="p">,</span> <span class="mf">6351800.0</span><span class="p">,</span> <span class="mf">6351800.0</span><span class="p">,</span> <span class="mf">6778000.0</span><span class="p">,</span> <span class="mf">600000000.0</span><span class="p">,</span> <span class="mf">600000000.0</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>First the semi-major axes and eccentricities of the departure and target planet are given, then the central body gravitational parameter (the central body meaning the main gravitational influence when the vehicle is not in the sphere of influence of any planet) is given, and finally the minimum distance between a planet’s centre and the vehicle during a swing-by is given.
 Once all these variables are defined, they can be used as input to the trajectory class, which will the be able to calculate various properties of the trajectory:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create the trajectory problem.</span>
-<span class="n">Trajectory</span> <span class="nf">Cassini1</span> <span class="p">(</span> <span class="n">numberOfLegs</span><span class="p">,</span> <span class="n">legTypeVector</span><span class="p">,</span> <span class="n">ephemerisVector</span><span class="p">,</span>
-                      <span class="n">gravitationalParameterVector</span><span class="p">,</span> <span class="n">variableVector</span><span class="p">,</span> <span class="n">sunGravitationalParameter</span><span class="p">,</span>
-                      <span class="n">minimumPericenterRadii</span><span class="p">,</span> <span class="n">semiMajorAxes</span><span class="p">,</span> <span class="n">eccentricities</span> <span class="p">);</span>
+<span class="n">Trajectory</span> <span class="nf">Cassini1</span><span class="p">(</span> <span class="n">numberOfLegs</span><span class="p">,</span> <span class="n">legTypeVector</span><span class="p">,</span> <span class="n">ephemerisVector</span><span class="p">,</span>
+                     <span class="n">gravitationalParameterVector</span><span class="p">,</span> <span class="n">variableVector</span><span class="p">,</span> <span class="n">sunGravitationalParameter</span><span class="p">,</span>
+                     <span class="n">minimumPericenterRadii</span><span class="p">,</span> <span class="n">semiMajorAxes</span><span class="p">,</span> <span class="n">eccentricities</span> <span class="p">);</span>
 
 <span class="c1">// Vectors for the specific maneuvers and the total delta v</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">positionVector</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">timeVector</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">deltaVVector</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">positionVector</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">timeVector</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">deltaVVector</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">resultingDeltaV</span><span class="p">;</span>
 
 <span class="c1">// Calculate the orbits</span>
 <span class="n">Cassini1</span><span class="p">.</span><span class="n">calculateTrajectory</span><span class="p">(</span> <span class="n">resultingDeltaV</span> <span class="p">);</span>
-<span class="n">Cassini1</span><span class="p">.</span><span class="n">maneuvers</span><span class="p">(</span><span class="n">positionVector</span><span class="p">,</span> <span class="n">timeVector</span><span class="p">,</span> <span class="n">deltaVVector</span><span class="p">);</span>
+<span class="n">Cassini1</span><span class="p">.</span><span class="n">maneuvers</span><span class="p">(</span> <span class="n">positionVector</span><span class="p">,</span> <span class="n">timeVector</span><span class="p">,</span> <span class="n">deltaVVector</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>In this example, the total delta V needed in the trajectory is calculated using <code class="docutils literal"><span class="pre">calculateTrajectory(</span> <span class="pre">resultingDeltaV</span> <span class="pre">)</span></code>, where <code class="docutils literal"><span class="pre">resultingDeltaV</span></code> will contain the final value, and the individual delta V contributions, and time and positions of these contributions are given by <code class="docutils literal"><span class="pre">maneuvers(positionVector,</span> <span class="pre">timeVector,</span> <span class="pre">deltaVVector)</span></code>.</p>
+<p>In this example, the total delta V needed in the trajectory is calculated using <code class="docutils literal"><span class="pre">calculateTrajectory(</span> <span class="pre">resultingDeltaV</span> <span class="pre">)</span></code>, where <code class="docutils literal"><span class="pre">resultingDeltaV</span></code> will contain the final value, and the individual delta V contributions, and time and positions of these contributions are given by <code class="docutils literal"><span class="pre">maneuvers(</span> <span class="pre">positionVector,</span> <span class="pre">timeVector,</span> <span class="pre">deltaVVector</span> <span class="pre">)</span></code>.</p>
 <p>The second example is the trajectory of Messenger and shows how DSM’s can be added into the trajectory. The first thing that changes is the leg types that are defined:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Specify required parameters</span>
 <span class="c1">// Specify the number of legs and type of legs.</span>
 <span class="n">numberOfLegs</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 <span class="n">legTypeVector</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">numberOfLegs</span> <span class="p">);</span>
-<span class="n">legTypeVector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">mga1DsmVelocity_Departure</span><span class="p">;</span>
-<span class="n">legTypeVector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">mga1DsmVelocity_Swingby</span><span class="p">;</span>
-<span class="n">legTypeVector</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">mga1DsmVelocity_Swingby</span><span class="p">;</span>
-<span class="n">legTypeVector</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">mga1DsmVelocity_Swingby</span><span class="p">;</span>
-<span class="n">legTypeVector</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">capture</span><span class="p">;</span>
+<span class="n">legTypeVector</span><span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="n">mga1DsmVelocity_Departure</span><span class="p">;</span>
+<span class="n">legTypeVector</span><span class="p">[</span> <span class="mi">1</span> <span class="p">]</span> <span class="o">=</span> <span class="n">mga1DsmVelocity_Swingby</span><span class="p">;</span>
+<span class="n">legTypeVector</span><span class="p">[</span> <span class="mi">2</span> <span class="p">]</span> <span class="o">=</span> <span class="n">mga1DsmVelocity_Swingby</span><span class="p">;</span>
+<span class="n">legTypeVector</span><span class="p">[</span> <span class="mi">3</span> <span class="p">]</span> <span class="o">=</span> <span class="n">mga1DsmVelocity_Swingby</span><span class="p">;</span>
+<span class="n">legTypeVector</span><span class="p">[</span> <span class="mi">4</span> <span class="p">]</span> <span class="o">=</span> <span class="n">capture</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The velocity in <code class="docutils literal"><span class="pre">mga1DsmVelocity</span></code> stands for the way the DSM is calculated, more information on this can be found <a class="reference external" href="https://repository.tudelft.nl/islandora/object/uuid%3A02468c77-5c64-4df8-9a24-1ed7ad9d1408?collection=education">here</a>.
 The other part of the code that is different is the trajectory variables that need to be given. It looks as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Add the time of flight and start epoch, which are in JD.</span>
 <span class="n">variableVector</span> <span class="o">&lt;&lt;</span> <span class="mf">1171.64503236</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">,</span>
-                  <span class="mf">399.999999715</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">,</span>
-                  <span class="mf">178.372255301</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">,</span>
-                  <span class="mf">299.223139512</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">,</span>
-                  <span class="mf">180.510754824</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">,</span>
-                  <span class="mi">1</span><span class="p">,</span> <span class="c1">// The capture time is irrelevant for the final leg.</span>
-<span class="c1">// Add the additional variables.</span>
-                  <span class="mf">0.234594654679</span><span class="p">,</span> <span class="mf">1408.99421278</span><span class="p">,</span> <span class="mf">0.37992647165</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="mf">3.14159265358979</span><span class="p">,</span>
-                  <span class="n">std</span><span class="o">::</span><span class="n">acos</span><span class="p">(</span>  <span class="mi">2</span> <span class="o">*</span> <span class="mf">0.498004040298</span> <span class="o">-</span> <span class="mf">1.</span> <span class="p">)</span> <span class="o">-</span> <span class="mf">3.14159265358979</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="c1">// 1st leg.</span>
-                  <span class="mf">0.0964769387134</span><span class="p">,</span> <span class="mf">1.35077257078</span><span class="p">,</span> <span class="mf">1.80629232251</span> <span class="o">*</span> <span class="mf">6.378e6</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="c1">// 2nd leg.</span>
-                  <span class="mf">0.829948744508</span><span class="p">,</span> <span class="mf">1.09554368115</span><span class="p">,</span> <span class="mf">3.04129845698</span> <span class="o">*</span> <span class="mf">6.052e6</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="c1">// 3rd leg.</span>
-                  <span class="mf">0.317174785637</span><span class="p">,</span> <span class="mf">1.34317576594</span><span class="p">,</span> <span class="mf">1.10000000891</span> <span class="o">*</span> <span class="mf">6.052e6</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">;</span> <span class="c1">//4th leg.</span>
+        <span class="mf">399.999999715</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">,</span>
+        <span class="mf">178.372255301</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">,</span>
+        <span class="mf">299.223139512</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">,</span>
+        <span class="mf">180.510754824</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">,</span>
+        <span class="mi">1</span><span class="p">,</span> <span class="c1">// The capture time is irrelevant for the final leg.</span>
+        <span class="c1">// Add the additional variables.</span>
+        <span class="mf">0.234594654679</span><span class="p">,</span> <span class="mf">1408.99421278</span><span class="p">,</span> <span class="mf">0.37992647165</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="mf">3.14159265358979</span><span class="p">,</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">acos</span><span class="p">(</span>  <span class="mi">2</span> <span class="o">*</span> <span class="mf">0.498004040298</span> <span class="o">-</span> <span class="mf">1.</span> <span class="p">)</span> <span class="o">-</span> <span class="mf">3.14159265358979</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="c1">// 1st leg.</span>
+        <span class="mf">0.0964769387134</span><span class="p">,</span> <span class="mf">1.35077257078</span><span class="p">,</span> <span class="mf">1.80629232251</span> <span class="o">*</span> <span class="mf">6.378e6</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="c1">// 2nd leg.</span>
+        <span class="mf">0.829948744508</span><span class="p">,</span> <span class="mf">1.09554368115</span><span class="p">,</span> <span class="mf">3.04129845698</span> <span class="o">*</span> <span class="mf">6.052e6</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="c1">// 3rd leg.</span>
+        <span class="mf">0.317174785637</span><span class="p">,</span> <span class="mf">1.34317576594</span><span class="p">,</span> <span class="mf">1.10000000891</span> <span class="o">*</span> <span class="mf">6.052e6</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">;</span> <span class="c1">// 4th leg.</span>
 </pre></div>
 </div>
 <p>The first part is the same as the MGA without DSMs, departure time and time of flights. However, the DSMs need to be defined by the user, which is done here. For each leg there are four variables, for the departure leg:</p>
@@ -322,79 +323,80 @@ The other part of the code that is different is the trajectory variables that ne
 4: the out-of-plane angle for the hyperbolic excess velocity.</div></blockquote>
 <p>For the swing-by leg:</p>
 <blockquote>
+<div><blockquote>
 <div>1: the time of flight fraction at which the DSM is performed.
 2: the rotation angle of the GA.
-3: the pericenter radius of the GA.
-4: the <span class="math">\(\Delta\)</span> V added for the powered GA.</div></blockquote>
-<p>This is done for each leg containing a DSM.
-The calculation of the final values of the trajectory is done in the same manner as before, but now the <code class="docutils literal"><span class="pre">maneuvers(positionVector,</span> <span class="pre">timeVector,</span> <span class="pre">deltaVVector)</span></code> also contains the DSMs.</p>
+3: the pericenter radius of the GA.</div></blockquote>
+<p>4: the <span class="math">\(\Delta V\)</span> added for the powered GA.</p>
+</div></blockquote>
+<p>This is done for each leg containing a DSM. The calculation of the final values of the trajectory is done in the same manner as before, but now the <code class="docutils literal"><span class="pre">maneuvers(</span> <span class="pre">positionVector,</span> <span class="pre">timeVector,</span> <span class="pre">deltaVVector</span> <span class="pre">)</span></code> also contains the DSMs.</p>
 <div class="section" id="application-output">
 <h2>13.1. Application Output<a class="headerlink" href="#application-output" title="Permalink to this headline">¶</a></h2>
 <p>All the output of the trajectory is handled as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define vectors to calculate intermediate points</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">interPositionVectorMessenger</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">interTimeVectorMessenger</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">interPositionVectorMessenger</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">interTimeVectorMessenger</span><span class="p">;</span>
 
 <span class="c1">// Calculate intermediate points and write to file</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputFileTraj</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span> <span class="p">)</span><span class="o">+</span><span class="s">&quot;messengerTrajectory.dat&quot;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputFileTraj</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;messengerTrajectory.dat&quot;</span><span class="p">;</span>
 <span class="n">Messenger</span><span class="p">.</span><span class="n">intermediatePoints</span><span class="p">(</span> <span class="mf">1000.0</span> <span class="p">,</span> <span class="n">interPositionVectorMessenger</span><span class="p">,</span> <span class="n">interTimeVectorMessenger</span> <span class="p">);</span>
 <span class="n">writeTrajectoryToFile</span><span class="p">(</span> <span class="n">interPositionVectorMessenger</span><span class="p">,</span> <span class="n">interTimeVectorMessenger</span><span class="p">,</span> <span class="n">outputFileTraj</span> <span class="p">);</span>
 
 <span class="c1">// Define vectors to calculate intermediate points</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">manPositionVectorMessenger</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">manTimeVectorMessenger</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">manDeltaVVectorMessenger</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">manPositionVectorMessenger</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">manTimeVectorMessenger</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">manDeltaVVectorMessenger</span><span class="p">;</span>
 
 <span class="c1">// Calculate maneuvers and write to file</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputFileMan</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span> <span class="p">)</span><span class="o">+</span><span class="s">&quot;messengerManeuvers.dat&quot;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputFileMan</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;messengerManeuvers.dat&quot;</span><span class="p">;</span>
 <span class="n">Messenger</span><span class="p">.</span><span class="n">maneuvers</span><span class="p">(</span> <span class="n">manPositionVectorMessenger</span><span class="p">,</span> <span class="n">manTimeVectorMessenger</span><span class="p">,</span> <span class="n">manDeltaVVectorMessenger</span> <span class="p">);</span>
 <span class="n">writeTrajectoryToFile</span><span class="p">(</span> <span class="n">manPositionVectorMessenger</span><span class="p">,</span> <span class="n">manTimeVectorMessenger</span><span class="p">,</span> <span class="n">outputFileMan</span> <span class="p">);</span>
 
 <span class="c1">// Calculate trajectories of the planets and output to file</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">positionVectorEarth</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">timeVectorEarth</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">positionVectorVenus</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">timeVectorVenus</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">positionVectorMercury</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">timeVectorMercury</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">positionVectorEarth</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">timeVectorEarth</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">positionVectorVenus</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">timeVectorVenus</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">positionVectorMercury</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">timeVectorMercury</span><span class="p">;</span>
 
 <span class="c1">// Earth</span>
 <span class="n">returnSingleRevolutionPlanetTrajectory</span><span class="p">(</span>
-            <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
-                            <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">earthMoonBarycenter</span> <span class="p">),</span>
-        <span class="n">sunGravitationalParameter</span><span class="p">,</span>
-        <span class="mf">1171.64503236</span><span class="p">,</span>
-        <span class="mf">1000.0</span><span class="p">,</span>
-        <span class="n">positionVectorEarth</span><span class="p">,</span>
-        <span class="n">timeVectorEarth</span><span class="p">);</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
+                <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">earthMoonBarycenter</span> <span class="p">),</span>
+            <span class="n">sunGravitationalParameter</span><span class="p">,</span>
+            <span class="mf">1171.64503236</span><span class="p">,</span>
+            <span class="mf">1000.0</span><span class="p">,</span>
+            <span class="n">positionVectorEarth</span><span class="p">,</span>
+            <span class="n">timeVectorEarth</span> <span class="p">);</span>
 
 <span class="c1">// Venus</span>
 <span class="n">returnSingleRevolutionPlanetTrajectory</span><span class="p">(</span>
-            <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
-                            <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">venus</span> <span class="p">),</span>
-        <span class="n">sunGravitationalParameter</span><span class="p">,</span>
-        <span class="mf">1171.64503236</span><span class="p">,</span>
-        <span class="mf">1000.0</span><span class="p">,</span>
-        <span class="n">positionVectorVenus</span><span class="p">,</span>
-        <span class="n">timeVectorVenus</span><span class="p">);</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
+                <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">venus</span> <span class="p">),</span>
+            <span class="n">sunGravitationalParameter</span><span class="p">,</span>
+            <span class="mf">1171.64503236</span><span class="p">,</span>
+            <span class="mf">1000.0</span><span class="p">,</span>
+            <span class="n">positionVectorVenus</span><span class="p">,</span>
+            <span class="n">timeVectorVenus</span> <span class="p">);</span>
 
 <span class="c1">// Mercury</span>
 <span class="n">returnSingleRevolutionPlanetTrajectory</span><span class="p">(</span>
-            <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
-                            <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">mercury</span> <span class="p">),</span>
-        <span class="n">sunGravitationalParameter</span><span class="p">,</span>
-        <span class="mf">1171.64503236</span><span class="p">,</span>
-        <span class="mf">1000.0</span><span class="p">,</span>
-        <span class="n">positionVectorMercury</span><span class="p">,</span>
-        <span class="n">timeVectorMercury</span><span class="p">);</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span><span class="p">(</span>
+                <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">mercury</span> <span class="p">),</span>
+            <span class="n">sunGravitationalParameter</span><span class="p">,</span>
+            <span class="mf">1171.64503236</span><span class="p">,</span>
+            <span class="mf">1000.0</span><span class="p">,</span>
+            <span class="n">positionVectorMercury</span><span class="p">,</span>
+            <span class="n">timeVectorMercury</span> <span class="p">);</span>
 
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputFilePlanetE</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span>  <span class="p">)</span><span class="o">+</span><span class="s">&quot;earthTrajectory.dat&quot;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputFilePlanetE</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span>  <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;earthTrajectory.dat&quot;</span><span class="p">;</span>
 <span class="n">writeTrajectoryToFile</span><span class="p">(</span> <span class="n">positionVectorEarth</span><span class="p">,</span> <span class="n">timeVectorEarth</span><span class="p">,</span> <span class="n">outputFilePlanetE</span> <span class="p">);</span>
 
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputFilePlanetV</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span>  <span class="p">)</span><span class="o">+</span><span class="s">&quot;venusTrajectory.dat&quot;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputFilePlanetV</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span>  <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;venusTrajectory.dat&quot;</span><span class="p">;</span>
 <span class="n">writeTrajectoryToFile</span><span class="p">(</span> <span class="n">positionVectorVenus</span><span class="p">,</span> <span class="n">timeVectorVenus</span><span class="p">,</span> <span class="n">outputFilePlanetV</span> <span class="p">);</span>
 
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputFilePlanetM</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span>  <span class="p">)</span><span class="o">+</span><span class="s">&quot;mercuryTrajectory.dat&quot;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputFilePlanetM</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span>  <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;mercuryTrajectory.dat&quot;</span><span class="p">;</span>
 <span class="n">writeTrajectoryToFile</span><span class="p">(</span> <span class="n">positionVectorMercury</span><span class="p">,</span> <span class="n">timeVectorMercury</span><span class="p">,</span> <span class="n">outputFilePlanetM</span> <span class="p">);</span>
 </pre></div>
 </div>

@@ -166,9 +166,9 @@
 </div>
 <ul class="simple">
 <li><span class="jsontype">object</span> <span class="jsonkey">map</span> (mandatory if <span class="jsonkey">independentVariableValues</span>, <span class="jsonkey">dependentVariableValues</span> or <span class="jsonkey">file</span> undefined). Object containing the values of the dependent variable (scalar or vectorial) to be interpolated. The keys are the string representation of the values of the independent variable (scalar).</li>
-<li><span class="jsontype">number[]</span> <span class="jsonkey">independentVariableValues</span> (optional). List of values of the dependent variable (scalar).</li>
-<li><span class="jsontype">number[][]</span> <span class="jsonkey">dependentVariableValues</span> (optional). List of values of the independent variable (scalar or vectorial).</li>
-<li><span class="jsontype">number[][]</span> <span class="jsonkey">dependentVariableFirstDerivativeValues</span> (mandatory if the interpolator type is <code class="docutils literal"><span class="pre">&quot;hermiteSpline&quot;</span></code>). List of values of the first derivatives of the independent variable (scalar or vectorial).</li>
+<li><span class="jsontype">number[ ]</span> <span class="jsonkey">independentVariableValues</span> (optional). List of values of the dependent variable (scalar).</li>
+<li><span class="jsontype">number[ ][ ]</span> <span class="jsonkey">dependentVariableValues</span> (optional). List of values of the independent variable (scalar or vectorial).</li>
+<li><span class="jsontype">number[ ][ ]</span> <span class="jsonkey">dependentVariableFirstDerivativeValues</span> (mandatory if the interpolator type is <code class="docutils literal"><span class="pre">&quot;hermiteSpline&quot;</span></code>). List of values of the first derivatives of the independent variable (scalar or vectorial).</li>
 <li><span class="jsontype">path</span> <span class="jsonkey">file</span> (optional). Path to the file containing the data to be interpolated. Each line corresponds to a pair of dependent-independent values. The first column contains the values of the independent variables, while the second column (and subsequent columns for vectorial dependent variables) contains the values of the dependent variable. Empty characters (such as space or tabulator) can be used to separate values.</li>
 </ul>
 </div>
@@ -184,6 +184,7 @@
 <li><span class="jsontype">string</span> <span class="jsonkey">type</span> (mandatory). Possible values: <code class="docutils literal"><span class="pre">&quot;linear&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;cubicSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;lagrange&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;hermiteSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;piecewiseConstant&quot;</span></code>.</li>
 <li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
 <li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Boundary handling method, in case the independent variable is outside the specified range. Possible values: <code class="docutils literal"><span class="pre">&quot;throwException&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValue&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValueWithWarning&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolateWithWarning&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>.</li>
 </ul>
 <div class="toggle docutils container">
 <div class="header docutils container">
@@ -191,7 +192,9 @@
 </div>
 <ul class="simple">
 <li><span class="jsontype">number</span> <span class="jsonkey">order</span> (mandatory). Order of the Lagrange interpolator.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</li>
+<li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">lagrangeBoundaryHandling</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</li>
 </ul>
 </div>
 </div>

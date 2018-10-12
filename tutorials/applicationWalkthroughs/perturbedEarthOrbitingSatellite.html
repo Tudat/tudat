@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3. Perturbed Earth-orbiting Satellite &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>2. Perturbed Earth-orbiting Satellite &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -39,8 +39,8 @@
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
         <link rel="up" title="Application Tutorials" href="index.html"/>
-        <link rel="next" title="4. Comparison of Propagator Types" href="propagatorTypesComparison.html"/>
-        <link rel="prev" title="2. Unperturbed Earth-orbiting Satellite" href="unperturbedEarthOrbitingSatellite.html"/> 
+        <link rel="next" title="3. Un-guided Capsule Entry" href="unguidedCapsuleEntry.html"/>
+        <link rel="prev" title="1. Unperturbed Earth-orbiting Satellite" href="unperturbedEarthOrbitingSatellite.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -99,14 +99,14 @@
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Tutorials</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html#tudat-example-application-tutorials">Tudat Example Application Tutorials</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphereExamples.html">1. Tabulated Atmosphere Usage</a></li>
-<li class="toctree-l4"><a class="reference internal" href="unperturbedEarthOrbitingSatellite.html">2. Unperturbed Earth-orbiting Satellite</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">3. Perturbed Earth-orbiting Satellite</a></li>
-<li class="toctree-l4"><a class="reference internal" href="propagatorTypesComparison.html">4. Comparison of Propagator Types</a></li>
-<li class="toctree-l4"><a class="reference internal" href="unguidedCapsuleEntry.html">5. Un-guided Capsule Entry</a></li>
-<li class="toctree-l4"><a class="reference internal" href="innerSolarSystemPropagation.html">6. Inner Solar System Propagation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="useOfThrustThrustForceAlongVelocityVector.html">7. Use of Thrust: Thrust Force Along Velocity Vector</a></li>
-<li class="toctree-l4"><a class="reference internal" href="useOfThrustUserDefinedThrustVector.html">8. Use of Thrust: User-defined Thrust Vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unperturbedEarthOrbitingSatellite.html">1. Unperturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">2. Perturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unguidedCapsuleEntry.html">3. Un-guided Capsule Entry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="innerSolarSystemPropagation.html">4. Inner Solar System Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="useOfThrustThrustForceAlongVelocityVector.html">5. Use of Thrust: Thrust Force Along Velocity Vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="useOfThrustUserDefinedThrustVector.html">6. Use of Thrust: User-defined Thrust Vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphereExamples.html">7. Tabulated Atmosphere Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="propagatorTypesComparison.html">8. Comparison of Propagator Types</a></li>
 <li class="toctree-l4"><a class="reference internal" href="filterExample.html">9. Kalman Filter for State Estimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="variationalEquationsPropagation.html">10. Variational Equations Propagation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">11. Orbit Determination and Parameter Estimation (Basic)</a></li>
@@ -174,7 +174,7 @@
         
           <li><a href="index.html">Application Tutorials</a> &raquo;</li>
         
-      <li>3. Perturbed Earth-orbiting Satellite</li>
+      <li>2. Perturbed Earth-orbiting Satellite</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -194,19 +194,20 @@
            <div itemprop="articleBody">
             
   <div class="section" id="perturbed-earth-orbiting-satellite">
-<span id="walkthroughsperturbedearthorbitingsatellite"></span><h1>3. Perturbed Earth-orbiting Satellite<a class="headerlink" href="#perturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
-<p>The example described on this page is that of Asterix, a single satellite that is orbiting the Earth. The code for this tutorial is given here on Github, and is also located in your tudat bundle at:</p>
+<span id="walkthroughsperturbedearthorbitingsatellite"></span><h1>2. Perturbed Earth-orbiting Satellite<a class="headerlink" href="#perturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
+<p>The example described on this page is that of Asterix, a single satellite that is orbiting the Earth. The code for this tutorial is given on Github, and is also located in your tudat bundle at:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">singlePerturbedSatellitePropagator</span><span class="o">.</span><span class="n">cpp</span>
 </pre></div>
 </div>
 <p>For this example, we have the following problem statement:</p>
-<p><em>Given the position and velocity of Asterix at a certain point in time with respect to the Earth, what will its position and velocity be after a Julian day has passed? Take into account perturbations due to gravitational forces by other celestial bodies, due to radiation pressure and due to aerodynamic forces.</em></p>
+<blockquote>
+<div><em>Given the position and velocity of Asterix at a certain point in time with respect to the Earth, what will its position and velocity be after a Julian day has passed? Take into account perturbations due to gravitational forces by other celestial bodies, due to radiation pressure and due to aerodynamic forces.</em></div></blockquote>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">The example described in this page assumes that the user has read the <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a>. This page only describes the differences with respect such example, so please go back before proceeding.</p>
 </div>
 <div class="section" id="set-up-the-environment">
-<h2>3.1. Set up the environment<a class="headerlink" href="#set-up-the-environment" title="Permalink to this headline">¶</a></h2>
+<h2>2.1. Set Up the Environment<a class="headerlink" href="#set-up-the-environment" title="Permalink to this headline">¶</a></h2>
 <p>Although this example is largely similar to the <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> example, there are a number of key differences. To begin with, the environment creation includes a number of additional bodies which will provide the gravitational perturbation that affect the Asterix satellite. Such bodies are added as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define body settings for simulation.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToCreate</span><span class="p">;</span>
@@ -219,7 +220,7 @@
 </div>
 <p>Next, the <code class="docutils literal"><span class="pre">bodySettings</span></code> are created with a limitation on the time for which the <a class="reference internal" href="../tudatFeatures/otherLibraries/spice.html#tudatfeaturesspice"><span class="std std-ref">Spice</span></a> ephemeris is to be interpolated. Such ephemeris is created 300 seconds ahead of the <code class="docutils literal"><span class="pre">simulationStartEpoch</span></code> and 300 seconds past the <code class="docutils literal"><span class="pre">simulationEndEpoch</span></code>:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create body objects.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodySettings</span> <span class="o">=</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodySettings</span> <span class="o">=</span>
         <span class="n">getDefaultBodySettings</span><span class="p">(</span> <span class="n">bodiesToCreate</span><span class="p">,</span> <span class="n">simulationStartEpoch</span> <span class="o">-</span> <span class="mf">300.0</span><span class="p">,</span> <span class="n">simulationEndEpoch</span> <span class="o">+</span> <span class="mf">300.0</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -229,32 +230,33 @@
     <span class="n">bodySettings</span><span class="p">[</span> <span class="n">bodiesToCreate</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span><span class="o">-&gt;</span><span class="n">resetFrameOrientation</span><span class="p">(</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
     <span class="n">bodySettings</span><span class="p">[</span> <span class="n">bodiesToCreate</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span><span class="o">-&gt;</span><span class="n">resetOriginalFrame</span><span class="p">(</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
 <span class="p">}</span>
-
 <span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="create-the-vehicle">
-<h2>3.2. Create the vehicle<a class="headerlink" href="#create-the-vehicle" title="Permalink to this headline">¶</a></h2>
+<h2>2.2. Create the Vehicle<a class="headerlink" href="#create-the-vehicle" title="Permalink to this headline">¶</a></h2>
 <p>A number of additional settings need to be linked to the vehicle when using additional perturbations. To begin with, the mass of the spacecraft needs to be defined:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create spacecraft object.</span>
-<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
 <span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setConstantBodyMass</span><span class="p">(</span> <span class="mf">400.0</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>We also need to set the aerodynamic coefficients of the spacecraft. These setting are stored in the <a class="reference internal" href="../tudatFeatures/environmentSetup/availableSettings.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientSettings</span></code></a> object. For this example, we will consider constant aerodynamic coefficients. This option is set by using the derived-class <a class="reference internal" href="../tudatFeatures/environmentSetup/availableSettings.html#ConstantAerodynamicCoefficientSettings" title="ConstantAerodynamicCoefficientSettings"><code class="xref py py-class docutils literal"><span class="pre">ConstantAerodynamicCoefficientSettings</span></code></a>. The settings for the aerodynamic coefficients are the following:</p>
-<ul class="simple">
+<blockquote>
+<div><ul class="simple">
 <li>The reference area.</li>
 <li>The aerodynamic coefficients in three directions.</li>
-<li>A boolean to indicate whether the aerodynamic coefficients are defined in the aerodynamic frame (CD, CS, CL) or in the body frame (typically denoted as Cx, Cy, Cz).</li>
+<li>A boolean to indicate whether the aerodynamic coefficients are defined in the aerodynamic frame (<span class="math">\(C_D\)</span>, <span class="math">\(C_S\)</span>, <span class="math">\(C_L\)</span>) or in the body frame (typically denoted as <span class="math">\(C_x\)</span>, <span class="math">\(C_y\)</span>, <span class="math">\(C_z\)</span>).</li>
 <li>A boolean to define whether the aerodynamic coefficients are positive along the negative axes of the body or aerodynamic frame.</li>
 </ul>
+</div></blockquote>
 <p>These settings are provided in the following block of code:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create aerodynamic coefficient interface settings.</span>
 <span class="kt">double</span> <span class="n">referenceArea</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">aerodynamicCoefficient</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
-<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AerodynamicCoefficientSettings</span> <span class="o">&gt;</span> <span class="n">aerodynamicCoefficientSettings</span> <span class="o">=</span>
-        <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantAerodynamicCoefficientSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AerodynamicCoefficientSettings</span> <span class="o">&gt;</span> <span class="n">aerodynamicCoefficientSettings</span> <span class="o">=</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantAerodynamicCoefficientSettings</span> <span class="o">&gt;</span><span class="p">(</span>
             <span class="n">referenceArea</span><span class="p">,</span> <span class="n">aerodynamicCoefficient</span> <span class="o">*</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitX</span><span class="p">(</span> <span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
 
 <span class="c1">// Create and set aerodynamic coefficients object</span>
@@ -266,15 +268,15 @@
 <p class="first admonition-title">Tip</p>
 <p class="last">Available options for <a class="reference internal" href="../tudatFeatures/environmentSetup/availableSettings.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientSettings</span></code></a> can be found <a class="reference internal" href="../tudatFeatures/environmentSetup/availableSettings.html#aerodynamiccoefficientoptions"><span class="std std-ref">here</span></a>.</p>
 </div>
-<p>Next, a number of parameters necessary for the cannonball radiation pressure model are defined. This is similar to the aerodynamic coefficients as discussed above. The settings are stored in the <a class="reference internal" href="../tudatFeatures/environmentSetup/availableSettings.html#RadiationPressureInterfaceSettings" title="RadiationPressureInterfaceSettings"><code class="xref py py-class docutils literal"><span class="pre">RadiationPressureInterfaceSettings</span></code></a> object. This example uses a simple cannonball model. This option is set by the derived-class <a class="reference internal" href="../tudatFeatures/environmentSetup/availableSettings.html#CannonBallRadiationPressureInterfaceSettings" title="CannonBallRadiationPressureInterfaceSettings"><code class="xref py py-class docutils literal"><span class="pre">CannonBallRadiationPressureInterfaceSettings</span></code></a>. One of the assumptions made here is that Earth acts an occulting body, meaning that when Asterix enters the Earth’s shadow no radiation pressure from body <code class="docutils literal"><span class="pre">&quot;Sun&quot;</span></code> is experienced:</p>
+<p>Next, a number of parameters necessary for the radiation pressure model are defined. This is similar to the aerodynamic coefficients as discussed above. The settings are stored in the <a class="reference internal" href="../tudatFeatures/environmentSetup/availableSettings.html#RadiationPressureInterfaceSettings" title="RadiationPressureInterfaceSettings"><code class="xref py py-class docutils literal"><span class="pre">RadiationPressureInterfaceSettings</span></code></a> object. This example uses a simple cannonball model. This option is set by the derived-class <a class="reference internal" href="../tudatFeatures/environmentSetup/availableSettings.html#CannonBallRadiationPressureInterfaceSettings" title="CannonBallRadiationPressureInterfaceSettings"><code class="xref py py-class docutils literal"><span class="pre">CannonBallRadiationPressureInterfaceSettings</span></code></a>. One of the assumptions made here is that Earth acts an occulting body, meaning that when Asterix enters the Earth’s shadow no radiation pressure from body <code class="docutils literal"><span class="pre">&quot;Sun&quot;</span></code> is experienced:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create radiation pressure settings</span>
 <span class="kt">double</span> <span class="n">referenceAreaRadiation</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">radiationPressureCoefficient</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
 
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">occultingBodies</span><span class="p">;</span>
 <span class="n">occultingBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
-<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RadiationPressureInterfaceSettings</span> <span class="o">&gt;</span> <span class="n">asterixRadiationPressureSettings</span> <span class="o">=</span>
-        <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CannonBallRadiationPressureInterfaceSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RadiationPressureInterfaceSettings</span> <span class="o">&gt;</span> <span class="n">asterixRadiationPressureSettings</span> <span class="o">=</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CannonBallRadiationPressureInterfaceSettings</span> <span class="o">&gt;</span><span class="p">(</span>
             <span class="s">&quot;Sun&quot;</span><span class="p">,</span> <span class="n">referenceAreaRadiation</span><span class="p">,</span> <span class="n">radiationPressureCoefficient</span><span class="p">,</span> <span class="n">occultingBodies</span> <span class="p">);</span>
 
 <span class="c1">// Create and set radiation pressure settings</span>
@@ -285,48 +287,52 @@
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">Available options for <code class="xref py py-class docutils literal"><span class="pre">RadiationPressureInterFaceSettings</span></code> can be found <span class="xref std std-ref">here</span>.</p>
+<p class="last">Available options for <a class="reference internal" href="../tudatFeatures/environmentSetup/availableSettings.html#RadiationPressureInterfaceSettings" title="RadiationPressureInterfaceSettings"><code class="xref py py-class docutils literal"><span class="pre">RadiationPressureInterfaceSettings</span></code></a> can be found <a class="reference internal" href="../tudatFeatures/environmentSetup/availableSettings.html#radiationpressuremodeloptions"><span class="std std-ref">here</span></a>.</p>
 </div>
 </div>
 <div class="section" id="set-up-the-acceleration-models">
-<h2>3.3. Set up the acceleration models<a class="headerlink" href="#set-up-the-acceleration-models" title="Permalink to this headline">¶</a></h2>
+<h2>2.3. Set Up the Acceleration Models<a class="headerlink" href="#set-up-the-acceleration-models" title="Permalink to this headline">¶</a></h2>
 <p>So far we have defined the celestial bodies that will perturb the orbit of Asterix, the <code class="xref py py-class docutils literal"><span class="pre">ArodynamicCoefficientSettings</span></code>, and  the <a class="reference internal" href="../tudatFeatures/environmentSetup/availableSettings.html#RadiationPressureInterfaceSettings" title="RadiationPressureInterfaceSettings"><code class="xref py py-class docutils literal"><span class="pre">RadiationPressureInterfaceSettings</span></code></a>. In summary, the Asterix spacecraft will experience the following accelerations:</p>
-<ul class="simple">
+<blockquote>
+<div><ul class="simple">
 <li>Primary gravitational acceleration caused by Earth, according to a spherical-harmonics gravity model.</li>
 <li>Perturbing gravitational acceleration caused by the Sun, the Moon, Mars and Venus.</li>
 <li>Perturbing aerodynamic acceleration caused by Earth.</li>
 <li>Perturbing radiation pressure acceleration caused by the Sun.</li>
 </ul>
-<p>These needs to be binded to the Asterix <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> object:</p>
+</div></blockquote>
+<p>These need to be binded to the Asterix <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> object:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define propagation settings.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">accelerationsOfAsterix</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">accelerationsOfAsterix</span><span class="p">;</span>
 
-<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span> <span class="p">)</span> <span class="p">);</span>
 
-<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
                                                <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
-<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Moon&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Moon&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
                                                  <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
-<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
                                                  <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
-<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Venus&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Venus&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
                                                  <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
-<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+
+<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
                                                  <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">cannon_ball_radiation_pressure</span> <span class="p">)</span> <span class="p">);</span>
-<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+
+<span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
                                                  <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">aerodynamic</span> <span class="p">)</span> <span class="p">);</span>
 
-<span class="n">accelerationMap</span><span class="p">[</span>  <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">accelerationsOfAsterix</span><span class="p">;</span>
+<span class="n">accelerationMap</span><span class="p">[</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">accelerationsOfAsterix</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Note that the spherical-harmonic gravitational model is implemented with the derived-class <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#SphericalHarmonicAccelerationSettings" title="SphericalHarmonicAccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicAccelerationSettings</span></code></a> with inputs the degree and order of the model. Finally, <code class="docutils literal"><span class="pre">&quot;Asterix&quot;</span></code> is added to <code class="docutils literal"><span class="pre">bodiesToPropagate</span></code> while having <code class="docutils literal"><span class="pre">&quot;Earth&quot;</span></code> as the respective central body. This means that despite that other celestial bodies have been included, these will not be propagated.</p>
+<p>Note that the spherical-harmonic gravitational model is implemented with the derived-class <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#SphericalHarmonicAccelerationSettings" title="SphericalHarmonicAccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicAccelerationSettings</span></code></a> with inputs the degree and order of the model. Finally, <code class="docutils literal"><span class="pre">&quot;Asterix&quot;</span></code> is added to <code class="docutils literal"><span class="pre">bodiesToPropagate</span></code> while having <code class="docutils literal"><span class="pre">&quot;Earth&quot;</span></code> as the respective central body. This means that despite the inclusion of the other celestial bodies, these will not be propagated.</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">);</span>
 <span class="n">centralBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="results">
-<h2>3.4. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2>2.4. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p>Both the <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> and <a class="reference internal" href="#walkthroughsperturbedearthorbitingsatellite"><span class="std std-ref">Perturbed Earth-orbiting Satellite</span></a> are now discussed. The orbits of both simulations can now be compared. This results are shown below.</p>
 <div class="figure">
 <img alt="../../_images/perturbedAndUnperturbed.png" src="../../_images/perturbedAndUnperturbed.png" />
@@ -348,10 +354,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="propagatorTypesComparison.html" class="btn btn-neutral float-right" title="4. Comparison of Propagator Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="unguidedCapsuleEntry.html" class="btn btn-neutral float-right" title="3. Un-guided Capsule Entry" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="unperturbedEarthOrbitingSatellite.html" class="btn btn-neutral" title="2. Unperturbed Earth-orbiting Satellite" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="unperturbedEarthOrbitingSatellite.html" class="btn btn-neutral" title="1. Unperturbed Earth-orbiting Satellite" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

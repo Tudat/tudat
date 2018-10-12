@@ -1,5 +1,9 @@
 .. _walkthroughsFiltering:
 
+The code for this tutorial is given on Github, and is also located in your tudat bundle at::
+
+   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/filterExample.cpp
+
 Kalman Filter for State Estimation
 ==================================
 

@@ -10,23 +10,29 @@ Observation Types
 
 Tudat supports a diverse set of observation types, which are defined in the :literal:`ObservableType` enum. Below, we provide a list of observable types, with a brief description, as well as the set of link end types that they require:
 
-* :class:`one_way_range` Range (in meters) between two link ends. Observable has size 1. Requires :literal:`transmitter` and :literal:`receiver` link ends.
-* :class:`angular_position` Right ascension and declination (in radians) of one link end (the transmitter) as observed by other link end (the receiver) as measured in the base frame in which the states of the link ends are defined. Observable has size 2. Requires :literal:`transmitter` and :literal:`receiver` link ends.
-* :class:`position_observable` Three-dimensional position of link end (in m) as measured in base the frame in which the state of the link end is defined. Observable has size 3 (*x*, *y* and *z* components). Requires :literal:`observed_body` link end, which directly defines the body of which an observation is taken. Note that this observable is not realized in practice, but is typically used for testing or analysis purposes. It does not use a light-time calculation
-* :class:`one_way_doppler` Doppler effect of a signal (dimensionless) between two link ends. Observable has size 1. The value approximately requal to the range-rate between the link ends, divided by *c*. The full model one-way Doppler observable :math:`h_{D(1),AB}` from link end *A* to link end *B* is computed from: 
- 
-   .. math::
-      h_{D(1),AB}=\frac{d\tau_{A}}{dt_{A}}\frac{t_{A}}{dt_{B}}\frac{dt_{B}}{d\tau_{B}}-1
-      
-   where :math:`t` and :math:`\tau` denote coordinate anr proper time. The one-way Doppler requires :literal:`transmitter` and :literal:`receiver` link ends.
-* :class:`two_way_doppler` The combined effect from two one-way Doppler effects: one from link end :math:`A` to link end  :math:`B`, and one from :math:`B` to :math:`C`, computed as:  
- 
-   .. math::
-      h_{D(2),ABC}=(h_{D(1),AB}+1)(h_{D(1),BC}+1)-1
-      
-   The two-way Doppler requires :literal:`transmitter`, :literal:`reflector1` and :literal:`receiver` link ends (:math:`A`, :math:`B` and :math:`C` in the above example).
-* :class:`one_way_differenced_range` Doppler observable as it is typically obtained in interplanetary tracking in so-called 'closed-loop' mode (in m/s) between two link ends. Observable has size 1. The value is computed from the averaged range-rate over some integration time (see below). Requires :literal:`transmitter` and :literal:`receiver` link ends.
-* :class:`n_way_range` Accumulated range (in meters) over any number of signal paths, may be used for two-way range (as in SLR or deep space tracking), as well as more exotic situations where more than 2 signal paths are used in generating the observable (as was the case for, for instance, the SELENE mission) Observable has size 1. The value is computed accumulating the light-time (multiplied by *c*) with any retransmission delays that the user defines (see below) Requires :literal:`transmitter`, :literal:`receiver`, as well as :literal:`reflector1`, :literal:`reflector2` ... :literal:`reflectorX` for X+1 signal paths (when only a :literal:`transmitter` and :literal:`receiver` are defined the observation is identical to a :literal:`one_way_range`)
+   * :class:`one_way_range` Range (in meters) between two link ends. Observable has size 1. Requires :literal:`transmitter` and :literal:`receiver` link ends.
+
+   * :class:`angular_position` Right ascension and declination (in radians) of one link end (the transmitter) as observed by other link end (the receiver) as measured in the base frame in which the states of the link ends are defined. Observable has size 2. Requires :literal:`transmitter` and :literal:`receiver` link ends.
+
+   * :class:`position_observable` Three-dimensional position of link end (in m) as measured in base the frame in which the state of the link end is defined. Observable has size 3 (*x*, *y* and *z* components). Requires :literal:`observed_body` link end, which directly defines the body of which an observation is taken. Note that this observable is not realized in practice, but is typically used for testing or analysis purposes. It does not use a light-time calculation.
+
+   * :class:`one_way_doppler` Doppler effect of a signal (dimensionless) between two link ends. Observable has size 1. The value approximately requal to the range-rate between the link ends, divided by *c*. The full model one-way Doppler observable :math:`h_{D(1),AB}` from link end *A* to link end *B* is computed from: 
+    
+      .. math::
+         h_{D(1),AB}=\frac{d\tau_{A}}{dt_{A}}\frac{t_{A}}{dt_{B}}\frac{dt_{B}}{d\tau_{B}}-1
+         
+      where :math:`t` and :math:`\tau` denote coordinate anr proper time. The one-way Doppler requires :literal:`transmitter` and :literal:`receiver` link ends.
+
+   * :class:`two_way_doppler` The combined effect from two one-way Doppler effects: one from link end :math:`A` to link end  :math:`B`, and one from :math:`B` to :math:`C`, computed as:  
+    
+      .. math::
+         h_{D(2),ABC}=(h_{D(1),AB}+1)(h_{D(1),BC}+1)-1
+         
+      The two-way Doppler requires :literal:`transmitter`, :literal:`reflector1` and :literal:`receiver` link ends (:math:`A`, :math:`B` and :math:`C` in the above example).
+
+   * :class:`one_way_differenced_range` Doppler observable as it is typically obtained in interplanetary tracking in so-called 'closed-loop' mode (in m/s) between two link ends. Observable has size 1. The value is computed from the averaged range-rate over some integration time (see below). Requires :literal:`transmitter` and :literal:`receiver` link ends.
+
+   * :class:`n_way_range` Accumulated range (in meters) over any number of signal paths, may be used for two-way range (as in SLR or deep space tracking), as well as more exotic situations where more than 2 signal paths are used in generating the observable (as was the case for, for instance, the SELENE mission) Observable has size 1. The value is computed accumulating the light-time (multiplied by *c*) with any retransmission delays that the user defines (see below) Requires :literal:`transmitter`, :literal:`receiver`, as well as :literal:`reflector1`, :literal:`reflector2` ... :literal:`reflectorX` for X+1 signal paths (when only a :literal:`transmitter` and :literal:`receiver` are defined the observation is identical to a :literal:`one_way_range`).
 
 .. _observationSettings:
 
@@ -40,8 +46,8 @@ The settings for most obsevation model types are provided to an object of the :c
 An :literal:`ObservationSettings` is created as follows:
    .. code-block:: cpp
 
-      boost::shared_ptr< ObservationSettings > observationSettings =
-            boost::make_shared< ObservationSettings >( 
+      std::shared_ptr< ObservationSettings > observationSettings =
+            std::make_shared< ObservationSettings >( 
                 observableType, lightTimeCorrectionsList, biasSettings );
 
    where:
@@ -60,31 +66,30 @@ An :literal:`ObservationSettings` is created as follows:
 
    - :literal:`lightTimeCorrectionsList`
   
-      A list of light-time corrections of type :literal:`std::vector< boost::shared_ptr<'LightTimeCorrectionSettings > >` that are used to compute the light-time between the link ends, see :ref:`lightTimeCorrections`. 
+      A list of light-time corrections of type :literal:`std::vector< std::shared_ptr<'LightTimeCorrectionSettings > >` that are used to compute the light-time between the link ends, see :ref:`lightTimeCorrections`. 
 
    - :literal:`biasSettings`
 
-      An object that defines the settings for an observation bias, of type :literal:`boost::shared_ptr< ObservationBiasSettings >`, see :ref:`observationBiases`. 
+      An object that defines the settings for an observation bias, of type :literal:`std::shared_ptr< ObservationBiasSettings >`, see :ref:`observationBiases`. 
       
 Note that the light-time correction and bias settings are empty by default, so that:
 
    .. code-block:: cpp
 
-      boost::shared_ptr< ObservationSettings > observationSettings =
-            boost::make_shared< ObservationSettings >( observableType );
+      std::shared_ptr< ObservationSettings > observationSettings =
+            std::make_shared< ObservationSettings >( observableType );
          
 and:
    
    .. code-block:: cpp
 
-      boost::shared_ptr< ObservationSettings > observationSettings =
-            boost::make_shared< ObservationSettings >( 
+      std::shared_ptr< ObservationSettings > observationSettings =
+            std::make_shared< ObservationSettings >( 
                 observableType, lightTimeCorrectionsList );
             
 may be used as well to create an observation model without light-time corrections or biases (in the case of the former) and no biases (in the case of the latter).
 
-Additionally, a second constructor is provided that takes a single light-time correction setting, instead of a list, as its second argument. So, you may substitute the input of type :literal:`std::vector< boost::shared_ptr< LightTimeCorrectionSettings > >` by an input of type :literal:`boost::shared_ptr< LightTimeCorrectionSettings >`, in which case you can set only a single light-time correction. 
-
+Additionally, a second constructor is provided that takes a single light-time correction setting, instead of a list, as its second argument. So, you may substitute the input of type :literal:`std::vector< std::shared_ptr< LightTimeCorrectionSettings > >` by an input of type :literal:`std::shared_ptr< LightTimeCorrectionSettings >`, in which case you can set only a single light-time correction. 
 
 .. class:: OneWayDifferencedRangeRateObservationSettings
 
@@ -92,22 +97,22 @@ The :literal:`OneWayDifferencedRangeRateObservationSettings` class is used to de
 
    .. code-block:: cpp
 
-      boost::shared_ptr< OneWayDifferencedRangeRateObservationSettings > observationSettings =
-            boost::make_shared< OneWayDifferencedRangeRateObservationSettings >( 
+      std::shared_ptr< OneWayDifferencedRangeRateObservationSettings > observationSettings =
+            std::make_shared< OneWayDifferencedRangeRateObservationSettings >( 
                 integrationTimeFunction, lightTimeCorrectionsList, biasSettings );
 
 where no input on the type of observable is given (it is :literal:`one_way_differenced_range` by default). The new input is:
 
    - :literal:`integrationTimeFunction`
 
-      :literal:`boost::function< double( const double ) >` that returns the integration time of the observable as a function of observation time (function input). In many cases, the integration time will be constant, and you may use a :literal:`boost::lambda`, so for a constant 60 s integration time:
+      :literal:`std::function< double( const double ) >` that returns the integration time of the observable as a function of observation time (function input). In many cases, the integration time will be constant, and you may use a lambda expression, so for a constant 60 s integration time:
       
      .. code-block:: cpp
 
-      boost::function< double( const double ) >  integrationTimeFunction = 
-          boost::lambda::constant( 60.0 );
+      std::function< double( const double ) > integrationTimeFunction = 
+          [ = ]( const double ){ return 60.0; };
       
-As is the case for the :class:`ObservationSettings` class, the second and third constructor arguments are optional, and the second argument may be either a :literal:`std::vector` of :literal:`boost::shared_ptr< LightTimeCorrectionSettings >`, or a single such object.  
+As is the case for the :class:`ObservationSettings` class, the second and third constructor arguments are optional, and the second argument may be either a :literal:`std::vector` of :literal:`std::shared_ptr< LightTimeCorrectionSettings >`, or a single such object.  
 
 .. class:: NWayRangeObservationSettings
 
@@ -115,19 +120,19 @@ The :literal:`NWayRangeObservationSettings` class is used to define settings for
 
    .. code-block:: cpp
 
-      boost::shared_ptr< NWayRangeObservationSettings > observationSettings =
-            boost::make_shared< NWayRangeObservationSettings >( 
+      std::shared_ptr< NWayRangeObservationSettings > observationSettings =
+            std::make_shared< NWayRangeObservationSettings >( 
                 oneWayRangeObsevationSettings, retransmissionTimesFunction, biasSettings );
 
 where no input on the type of observable is given (it is :literal:`n_way_range` by default). The bias settings input is handled in the same way as for the :class:`ObservationSettings` class (and is again empty by default). The other input arguments are:
 
    - :literal:`oneWayRangeObsevationSettings`
 
-      A :literal:`std::vector< boost::shared_ptr< ObservationSettings > >` list, that has the observation settings for each leg of the n-way link. Note that the observable type of each of the :class:`ObservationSettings` in this list must be :literal:`one_way_range`.
+      A :literal:`std::vector< std::shared_ptr< ObservationSettings > >` list, that has the observation settings for each leg of the n-way link. Note that the observable type of each of the :class:`ObservationSettings` in this list must be :literal:`one_way_range`.
 
    - :literal:`retransmissionTimesFunction`
 
-      A :literal:`boost::function< std::vector< double >( const double ) >` list that returns the retransmission time at each of the intermediate link ends. For instance, for a Graz station -> LRO -> Matera station n-way-range observable, there may be some delay between LRO receiving the signal from Graz, and retransmitting the signal to Matera. The :literal:`retransmissionTimesFunction` list returns this delay as a function of the observation time at the retransmitting link end. As was the case for the integration time in the :class:`OneWayDifferencedRangeRateObservationSettings` class, you can use :literal:`boost::lambda` to define constant retransmission delay. When providing an empty :literal:`std::vector`, no retransmission delay is assumed.
+      A :literal:`std::function< std::vector< double >( const double ) >` list that returns the retransmission time at each of the intermediate link ends. For instance, for a Graz station -> LRO -> Matera station n-way-range observable, there may be some delay between LRO receiving the signal from Graz, and retransmitting the signal to Matera. The :literal:`retransmissionTimesFunction` list returns this delay as a function of the observation time at the retransmitting link end. As was the case for the integration time in the :class:`OneWayDifferencedRangeRateObservationSettings` class, you can use lambda expression to define constant retransmission delay. When providing an empty :literal:`std::vector`, no retransmission delay is assumed.
 
 .. class:: OneWayDopperObservationSettings
 
@@ -135,27 +140,27 @@ The :literal:`OneWayDopperObservationSettings` class is used to define settings 
 
    .. code-block:: cpp
 
-      boost::shared_ptr< OneWayDopperObservationSettings > observationSettings =
-            boost::make_shared< OneWayDopperObservationSettings >( 
+      std::shared_ptr< OneWayDopperObservationSettings > observationSettings =
+            std::make_shared< OneWayDopperObservationSettings >( 
                 lightTimeCorrectionsList, transmitterProperTimeRateSettings, receiverProperTimeRateSettings, biasSettings );
                                
 where:
 
    - :literal:`lightTimeCorrectionsList`
   
-      A list of light-time corrections of type :literal:`std::vector< boost::shared_ptr<'LightTimeCorrectionSettings > >` that are used to compute the light-time between the link ends, see :ref:`lightTimeCorrections`. 
+      A list of light-time corrections of type :literal:`std::vector< std::shared_ptr<'LightTimeCorrectionSettings > >` that are used to compute the light-time between the link ends, see :ref:`lightTimeCorrections`. 
 
    - :literal:`transmitterProperTimeRateSettings`
 
-      An object that defines the settings for the proper time rate :math:`d\tau/dt` of the transmitter, of type :literal:`boost::shared_ptr< DopplerProperTimeRateSettings >`, see :ref:`properTimeRates`.
+      An object that defines the settings for the proper time rate :math:`d\tau/dt` of the transmitter, of type :literal:`std::shared_ptr< DopplerProperTimeRateSettings >`, see :ref:`properTimeRates`.
 
    - :literal:`receiverProperTimeRateSettings`
    
-      An object that defines the settings for the proper time rate :math:`d\tau/dt` of the transmitter, of type :literal:`boost::shared_ptr< DopplerProperTimeRateSettings >`, see :ref:`properTimeRates`.
+      An object that defines the settings for the proper time rate :math:`d\tau/dt` of the transmitter, of type :literal:`std::shared_ptr< DopplerProperTimeRateSettings >`, see :ref:`properTimeRates`.
 
    - :literal:`biasSettings`
    
-      An object that defines the settings for an observation bias, of type :literal:`boost::shared_ptr< ObservationBiasSettings >`, see :ref:`observationBiases`. 
+      An object that defines the settings for an observation bias, of type :literal:`std::shared_ptr< ObservationBiasSettings >`, see :ref:`observationBiases`. 
 
 .. class:: TwoWayDopperObservationSettings
 
@@ -163,23 +168,23 @@ The :literal:`TwoWayDopperObservationSettings` class is used to define settings 
 
    .. code-block:: cpp
 
-      boost::shared_ptr< TwoWayDopperObservationSettings > observationSettings =
-            boost::make_shared< TwoWayDopperObservationSettings >( 
+      std::shared_ptr< TwoWayDopperObservationSettings > observationSettings =
+            std::make_shared< TwoWayDopperObservationSettings >( 
                 uplinkOneWayDopplerSettings, downlinkOneWayDopplerSettings, biasSettings );
                                
 where:
 
    - :literal:`uplinkOneWayDopplerSettings`
 
-      An object that defines the settings for uplink one-way Doppler, of type :literal:`boost::shared_ptr< OneWayDopperObservationSettings >`
+      An object that defines the settings for uplink one-way Doppler, of type :literal:`std::shared_ptr< OneWayDopperObservationSettings >`
       
    - :literal:`downlinkOneWayDopplerSettings`
    
-      An object that defines the settings for uplink one-way Doppler, of type :literal:`boost::shared_ptr< OneWayDopperObservationSettings >`
+      An object that defines the settings for uplink one-way Doppler, of type :literal:`std::shared_ptr< OneWayDopperObservationSettings >`
 
    - :literal:`biasSettings`
    
-      An object that defines the settings for an observation bias, of type :literal:`boost::shared_ptr< ObservationBiasSettings >`, see :ref:`observationBiases`. 
+      An object that defines the settings for an observation bias, of type :literal:`std::shared_ptr< ObservationBiasSettings >`, see :ref:`observationBiases`. 
 
 .. _properTimeRates:
      
@@ -194,8 +199,8 @@ The :literal:`DirectFirstOrderDopplerProperTimeRateSettings` class is derived fr
 
    .. code-block:: cpp
 
-      boost::shared_ptr< DirectFirstOrderDopplerProperTimeRateSettings > properTimeRateSettings =
-            boost::make_shared< DirectFirstOrderDopplerProperTimeRateSettings >( 
+      std::shared_ptr< DirectFirstOrderDopplerProperTimeRateSettings > properTimeRateSettings =
+            std::make_shared< DirectFirstOrderDopplerProperTimeRateSettings >( 
                 bodyName );
                                
 where:
@@ -208,17 +213,15 @@ As an example, a one-way Doppler model, where the Earth's mass is used to pertur
 
    .. code-block:: cpp
    
-      boost::shared_ptr< DopplerProperTimeRateSettings > transmitterProperTimeRateSettings = 
-         boost::make_shared< DirectFirstOrderDopplerProperTimeRateSettings >( "Earth" );
-      boost::shared_ptr< DopplerProperTimeRateSettings > receiverProperTimeRateSettings = 
-         boost::make_shared< DirectFirstOrderDopplerProperTimeRateSettings >( "Moon" );
-      boost::shared_ptr< OneWayDopperObservationSettings > observationSettings =
-            boost::make_shared< OneWayDopperObservationSettings >( 
-                std::vector< boost::shared_ptr< LightTimeCorrectionSettings > >, transmitterProperTimeRateSettings, receiverProperTimeRateSettings );
+      std::shared_ptr< DopplerProperTimeRateSettings > transmitterProperTimeRateSettings = 
+         std::make_shared< DirectFirstOrderDopplerProperTimeRateSettings >( "Earth" );
+      std::shared_ptr< DopplerProperTimeRateSettings > receiverProperTimeRateSettings = 
+         std::make_shared< DirectFirstOrderDopplerProperTimeRateSettings >( "Moon" );
+      std::shared_ptr< OneWayDopperObservationSettings > observationSettings =
+            std::make_shared< OneWayDopperObservationSettings >( 
+                std::vector< std::shared_ptr< LightTimeCorrectionSettings > >, transmitterProperTimeRateSettings, receiverProperTimeRateSettings );
                 
 For a case where no light-time corrections, and no observation bias, is used
-                               
-
 
 .. _lightTimeCorrections:
 
@@ -237,8 +240,8 @@ As is the case with many other models, a base class settings object is provided 
    
     .. code-block:: cpp
 
-      boost::shared_ptr< FirstOrderRelativisticLightTimeCorrectionSettings > lightTimeCorrectionSettings =
-            boost::make_shared< FirstOrderRelativisticLightTimeCorrectionSettings >( 
+      std::shared_ptr< FirstOrderRelativisticLightTimeCorrectionSettings > lightTimeCorrectionSettings =
+            std::make_shared< FirstOrderRelativisticLightTimeCorrectionSettings >( 
                 perturbingBodies );
    
  The input is:
@@ -260,27 +263,27 @@ In Tudat, the following types of biases are currently incorporated, where :math:
 
    * Relative bias :math:`K_{r}`, which influences the observable as:
 
-   .. math::
-      \tilde{h}=h(1+K_{r})
-      
+      .. math::
+         \tilde{h}=h(1+K_{r})
+         
       For an observable with size greater than 1, :math:`K_{r}` is a vector and the multiplication is component-wise.
 
    * Absolute bias :math:`K_{a}`, which influences the observable as: 
-   
-   .. math::
-      \tilde{h}=h+K_{a}
+      
+      .. math::
+         \tilde{h}=h+K_{a}
       
       For an observable with size greater than 1, :math:`K_{a}` is a vector and the multiplication is component-wise.
 
    * A combined bias, which is computed from any number of the above bias types combined. Note that each contribution of the combined bias is computed from the unbiased observable, so when applying both a relative and absolute bias, we get:
 
-   .. math::
-      \tilde{h}=h+K_{a}+hK_{r}
+      .. math::
+         \tilde{h}=h+K_{a}+hK_{r}
 
       And, crucially:
 
-   .. math::
-      \tilde{h}\neq (h+K_{a})(1+K_{r})
+      .. math::
+         \tilde{h}\neq (h+K_{a})(1+K_{r})
 
 As discussed above, the biases are created by passing a :class:`ObservationBiasSettings` (or derived class) object to the :class:`ObservationSettings` (or derived class)  constructor. Each bias type has a dedicated derived class of :class:`ObservationBiasSettings`, which are defined as follows:
 
@@ -290,8 +293,8 @@ As discussed above, the biases are created by passing a :class:`ObservationBiasS
 
    .. code-block:: cpp
 
-      boost::shared_ptr< ConstantObservationBiasSettings > observationBiasSettings =
-            boost::make_shared< ConstantObservationBiasSettings >( 
+      std::shared_ptr< ConstantObservationBiasSettings > observationBiasSettings =
+            std::make_shared< ConstantObservationBiasSettings >( 
                 observationBias );
 
    The input is:
@@ -306,8 +309,8 @@ As discussed above, the biases are created by passing a :class:`ObservationBiasS
 
    .. code-block:: cpp
 
-      boost::shared_ptr< ConstantRelativeObservationBiasSettings > observationBiasSettings =
-            boost::make_shared< ConstantRelativeObservationBiasSettings >( 
+      std::shared_ptr< ConstantRelativeObservationBiasSettings > observationBiasSettings =
+            std::make_shared< ConstantRelativeObservationBiasSettings >( 
                 observationBias );
 
    The input is:
@@ -322,15 +325,15 @@ As discussed above, the biases are created by passing a :class:`ObservationBiasS
 
    .. code-block:: cpp
 
-      boost::shared_ptr< MultipleObservationBiasSettings > observationBiasSettings =
-            boost::make_shared< MultipleObservationBiasSettings >( 
+      std::shared_ptr< MultipleObservationBiasSettings > observationBiasSettings =
+            std::make_shared< MultipleObservationBiasSettings >( 
                 biasSettingsList );
 
    The input is:
 
    - :literal:`biasSettingsList`
 
-      A :literal:`std::vector< boost::shared_ptr< ObservationBiasSettings > >` list containing the bias models to be applied.
+      A :literal:`std::vector< std::shared_ptr< ObservationBiasSettings > >` list containing the bias models to be applied.
 
 
 

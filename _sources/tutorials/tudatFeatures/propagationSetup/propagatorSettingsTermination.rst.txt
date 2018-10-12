@@ -50,8 +50,8 @@ The different types of :class:`PropagationTerminationSettings` are implemented b
 
    .. code-block:: cpp
 
-      boost::shared_ptr< SingleDependentVariableSaveSettings > terminationDependentVariable =
-            boost::make_shared< SingleDependentVariableSaveSettings >(
+      std::shared_ptr< SingleDependentVariableSaveSettings > terminationDependentVariable =
+            std::make_shared< SingleDependentVariableSaveSettings >(
                 altitude_dependent_variable, "Vehicle", "Earth" );
 
    where in this example the variable created is an :literal:`altitude_dependent_variable` which provides the altitude of :literal:`Vehicle` with respect to :literal:`Earth`.
@@ -71,7 +71,7 @@ The different types of :class:`PropagationTerminationSettings` are implemented b
 
    - :literal:`terminationDependentVariable`
 
-      :literal:`boost::shared_ptr< SingleDependentVariableSaveSettings >` contains the dependent variable used for termination, in this example: :literal:`altitude_dependent_variable` as declared above.
+      :literal:`std::shared_ptr< SingleDependentVariableSaveSettings >` contains the dependent variable used for termination, in this example: :literal:`altitude_dependent_variable` as declared above.
 
    - :literal:`limitValue`
 
@@ -93,20 +93,20 @@ The different types of :class:`PropagationTerminationSettings` are implemented b
 
       PropagationCustomTerminationSettings( checkStopCondition )
 
-   where :literal:`checkStopCondition` is the only input and is of type :literal:`boost::function< bool( const double ) >`. 
+   where :literal:`checkStopCondition` is the only input and is of type :literal:`std::function< bool( const double ) >`. 
 
    .. tip::
-      In case your custom function requires more inputs (e.g., it may depend on the position of the spacecraft or other variables that are not the current time), you can use :literal:`boost::bind` to add more inputs.
+      In case your custom function requires more inputs (e.g., it may depend on the position of the spacecraft or other variables that are not the current time), you can use :literal:`std::bind` to add more inputs.
 
    As an example, the case where the state of the spacecraft is added as an input is shown below: 
 
    .. code-block:: cpp
 
-      boost::function< Eigen::Vector6d( ) > spacecraftStateFunction =
-              boost::bind( &Body::getState, bodyMap.at( "Satellite" ) );
-      boost::shared_ptr< PropagationTerminationSettings > terminationSettings =
-              boost::make_shared< PropagationCustomTerminationSettings >(
-                  boost::bind( &customTerminationFunction, _1, spacecraftStateFunction ) );
+      std::function< Eigen::Vector6d( ) > spacecraftStateFunction =
+              std::bind( &Body::getState, bodyMap.at( "Satellite" ) );
+      std::shared_ptr< PropagationTerminationSettings > terminationSettings =
+              std::make_shared< PropagationCustomTerminationSettings >(
+                  std::bind( &customTerminationFunction, std::placeholders::_1, spacecraftStateFunction ) );
 
 .. class:: PropagationHybridTerminationSettings
 
@@ -122,7 +122,7 @@ The different types of :class:`PropagationTerminationSettings` are implemented b
 
    - :literal:`terminationSettingsList`
 
-      :literal:`std::vector< boost::shared_ptr< PropagationTerminationSettings > >` where each of its elements contains derived classes of :class:`PropagationTerminationSettings`. The desired :class:`PropagationTerminationSettings` can be added by using the :literal:`push_back` method of :literal:`std::vector`, where the pushed elements are objects of the classes discussed above.
+      :literal:`std::vector< std::shared_ptr< PropagationTerminationSettings > >` where each of its elements contains derived classes of :class:`PropagationTerminationSettings`. The desired :class:`PropagationTerminationSettings` can be added by using the :literal:`push_back` method of :literal:`std::vector`, where the pushed elements are objects of the classes discussed above.
 
    - :literal:`fulFillSingleCondition`
 

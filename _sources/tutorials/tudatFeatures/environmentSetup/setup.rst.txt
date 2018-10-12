@@ -27,7 +27,7 @@ Typically the entire environment is stored in a named list of :class:`Body` ob
 
 .. class:: NamedBodyMap
 
-   An unordered map of shared pointers to :class:`Body` objects, see :ref:`this <externalBoost>` wiki page for a discussion of shared pointers; don't worry if you're not sure what a shared pointer or unordered map is at this point.
+   An unordered map of shared pointers to :class:`Body` objects, see :ref:`this <externalUtility>` wiki page for a discussion of shared pointers; don't worry if you're not sure what a shared pointer or unordered map is at this point.
 
 
 .. _tudatFeaturesCreatingTheEnvironment:
@@ -60,7 +60,7 @@ The default settings for a body are loaded as follows:
     double initialEphemerisTime = 1.0E7;
     double finalEphemerisTime = 2.0E7;
     double buffer = 5000.0;
-    std::map< std::string, boost::shared_ptr< BodySettings > > bodySettings =
+    std::map< std::string, std::shared_ptr< BodySettings > > bodySettings =
                 getDefaultBodySettings( bodyNames, initialEphemerisTime - buffer, finalEphemerisTime + buffer );
 
 The reasons for passing the initial/final time (as well as the 'buffer') are discussed in more detail at the end of this page. As can be seen from the above, the settings for the environment are stored in a map of pointers to :class:`BodySettings` objects (with the key the name of the associated bodies). If you have a look at the definition of the :class:`BodySettings` class (in ``SimulationSetup/createBodies.h``), you will see that this type is simply a container for a list of specific environment settings, which we discuss in more detail below. As a result, specifying settings for a given type of environment model requires the creation of an object of the correct type of class (derived class of :class:`EphemerisSettings` for defining an ephemeris; derived class of :class:`BodyShapeSettings` for defining a body shape etc.)
@@ -69,7 +69,7 @@ Often, one will wish to load the default settings, but make slight modifications
 
 .. code-block:: cpp
 
-    bodySettings[ "Earth" ]->shapeModelSettings = boost::make_shared< OblateSphericalBodyShapeSettings >( 6378.0E3, 0.01 );
+    bodySettings[ "Earth" ]->shapeModelSettings = std::make_shared< OblateSphericalBodyShapeSettings >( 6378.0E3, 0.01 );
 
 which changes the shape model settings of the Earth from the default spherical to the oblate spheroid. A list of available environment models, as well as the manner in which to provide settings for them, is provided at the end of this tutorial. The above appproach is identical for adding or modifying environment model settings (that is, it does not matter whether Earth already had ``shapeModelSettings`` or not). Once the settings for the environment model have been defined, the following creates the actual :class:`Body` objects and all associated environment models
 
@@ -81,7 +81,7 @@ It should be noted that default settings presently exist only for celestial bodi
 
 .. code-block:: cpp
 
-    bodyMap[ "Apollo" ] = boost::make_shared< Body >( );
+    bodyMap[ "Apollo" ] = std::make_shared< Body >( );
     bodyMap[ "Apollo" ]->setAerodynamicCoefficientInterface( getApolloCoefficientInterface( ) );
     bodyMap[ "Apollo" ]->setConstantBodyMass( 5.0E3 );
 
@@ -100,10 +100,10 @@ The following shows how to manually declare a :class:`NamedBodyMap`, and then c
 .. code-block:: cpp
 
     NamedBodyMap bodyMap;
-    bodyMap[ "Earth" ] = boost::make_shared< Body >( );
-    bodyMap[ "Moon" ] = boost::make_shared< Body >( );
-    bodyMap[ "Sun" ] = boost::make_shared< Body >( );
-    bodyMap[ "Apollo" ] = boost::make_shared< Body >( );
+    bodyMap[ "Earth" ] = std::make_shared< Body >( );
+    bodyMap[ "Moon" ] = std::make_shared< Body >( );
+    bodyMap[ "Sun" ] = std::make_shared< Body >( );
+    bodyMap[ "Apollo" ] = std::make_shared< Body >( );
 
 This creates four body objects (representing three celestial bodies and one vehicle; Tudat does not distinguish between the two). However, these bodies do not yet have any physical properties, the :literal:`bodyMap` created above now only indicates the existence of these four bodies.
 
@@ -113,8 +113,8 @@ For instance, to manually create and set an ephemeris (from Spice w.r.t. the bar
 
 .. code-block:: cpp
 
-    bodyMap[ "Earth" ]->setEphemeris( boost::make_shared< SpiceEphemeris >( "Earth", "SSB", false, false, true, "J2000" ) ); 
-    bodyMap[ "Earth" ]->setGravityFieldModel( boost::make_shared< GravityFieldModel >( 3.986004418E14 ) );  
+    bodyMap[ "Earth" ]->setEphemeris( std::make_shared< SpiceEphemeris >( "Earth", "SSB", false, false, true, "J2000" ) ); 
+    bodyMap[ "Earth" ]->setGravityFieldModel( std::make_shared< GravityFieldModel >( 3.986004418E14 ) );  
 
 This calls the constructors of the :class:`SpiceEphemeris` and :class:`GravityFieldModel` classes, and assigns the objects that are constructed to the "Earth" entry of the ``bodyMap``.
 
@@ -124,5 +124,5 @@ Most of the environment models are valid for any time, but there is a key except
 
 .. code-block:: cpp
 
-    std::map< std::string, boost::shared_ptr< BodySettings > > bodySettings = getDefaultBodySettings( bodiesToCreate )
+    std::map< std::string, std::shared_ptr< BodySettings > > bodySettings = getDefaultBodySettings( bodiesToCreate )
     NamedBodyMap bodyMap = createBodies( bodySettings );

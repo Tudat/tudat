@@ -222,7 +222,7 @@
 <span class="n">parameters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mf">2.5</span> <span class="p">);</span>
 
 <span class="c1">// Create distribution</span>
-<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">InvertibleContinuousProbabilityDistribution</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">probabilityDistribution</span> <span class="o">=</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">InvertibleContinuousProbabilityDistribution</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">probabilityDistribution</span> <span class="o">=</span>
         <span class="n">createBoostRandomVariable</span><span class="p">(</span> <span class="n">uniform_boost_distribution</span><span class="p">,</span> <span class="n">parameters</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -366,7 +366,7 @@
 <blockquote>
 <div><ul class="simple">
 <li>A class <code class="xref py py-class docutils literal"><span class="pre">ContinuousRandomVariableGenerator</span></code>, with a <code class="docutils literal"><span class="pre">getRandomVariableValue</span></code> that produces random numbers.</li>
-<li>A boost function <code class="docutils literal"><span class="pre">boost::function&lt;</span> <span class="pre">double(</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> which produces random numbers every time it is called.</li>
+<li>A boost function <code class="docutils literal"><span class="pre">std::function&lt;</span> <span class="pre">double(</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> which produces random numbers every time it is called.</li>
 </ul>
 </div></blockquote>
 <p>We illustrate these two options with some examples below.</p>
@@ -379,12 +379,12 @@
 
 <span class="c1">// Create distribution object</span>
 <span class="kt">double</span> <span class="n">distributionSeed</span> <span class="o">=</span> <span class="mf">42.0</span><span class="p">;</span>
-<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RandomVariableGenerator</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">randomNumberGenerator</span> <span class="o">=</span> <span class="n">createBoostContinuousRandomVariableGenerator</span><span class="p">(</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RandomVariableGenerator</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">randomNumberGenerator</span> <span class="o">=</span> <span class="n">createBoostContinuousRandomVariableGenerator</span><span class="p">(</span>
         <span class="n">uniform_boost_distribution</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">distributionSeed</span> <span class="p">);</span>
 
 <span class="c1">// Create distrubution function</span>
 <span class="n">distributionSeed</span> <span class="o">=</span> <span class="mf">43.0</span><span class="p">;</span>
-<span class="n">boost</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">randomNumberFunction</span> <span class="o">=</span> <span class="n">createBoostContinuousRandomVariableGeneratorFunction</span><span class="p">(</span>
+<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">randomNumberFunction</span> <span class="o">=</span> <span class="n">createBoostContinuousRandomVariableGeneratorFunction</span><span class="p">(</span>
         <span class="n">uniform_boost_distribution</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">distributionSeed</span> <span class="p">);</span>
 
 <span class="c1">// Generate random variables</span>

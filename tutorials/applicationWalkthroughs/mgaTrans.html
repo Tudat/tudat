@@ -187,7 +187,7 @@
             
   <div class="section" id="multiple-gravity-assist-transfer">
 <span id="walkthroughsmga"></span><h1>4. Multiple Gravity Assist Transfer<a class="headerlink" href="#multiple-gravity-assist-transfer" title="Permalink to this headline">¶</a></h1>
-<p>The example described in this tutorial will cover a transfer using multiple gravity assists. The code for this tutorial is given here on Github, and is also located in your tudat bundle at:</p>
+<p>The example described in this tutorial will cover a transfer using multiple gravity assists. The code for this tutorial is given on Github, and is also located in your tudat bundle at:</p>
 <blockquote>
 <div>tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/mgaTransferExample.cpp</div></blockquote>
 <p>This tutorial will use the same concepts described in previous examples, but now applied to a complex problem that may require a high number of generations to find the optima. It is necessary that the previous examples are understood to be able to go through this example.</p>
@@ -242,7 +242,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The trajectory starts with a departure from Earth, and ends with a capture at Jupiter. All the legs between the departure and capture are swing-by legs. This application will not go into detail on the trajectory design setup, if this is not understood the reader is referred to the <a class="reference internal" href="interplanetaryTrajectory.html#interplanetarytrajectorydesign"><span class="std std-ref">MGA Trajectory Design</span></a> application walkthrough.</p>
+<p>The trajectory starts with a departure from Earth, and ends with a capture at Jupiter. All the legs between the departure and capture are swing-by legs. This application will not go into detail on the trajectory design setup, if this is not understood the reader is referred to the <a class="reference internal" href="interplanetaryTrajectory.html#interplanetarytrajectorydesign"><span class="std std-ref">MGA Trajectory Design</span></a> application tutorial.</p>
 <p>After the trajectory is setup, the parameters for the selected order of planets is intialized using a large switch statement:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create the ephemeris, gravitational parameter, and minimum pericentre vector.</span>
 <span class="n">ephemerisVector_</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">numberOfLegs_</span> <span class="p">);</span>
@@ -253,13 +253,13 @@
     <span class="k">switch</span><span class="p">(</span><span class="n">flybySequence</span><span class="p">[</span> <span class="n">i</span> <span class="p">])</span>
     <span class="p">{</span>
     <span class="k">case</span><span class="p">(</span> <span class="mi">1</span> <span class="p">)</span><span class="o">:</span>
-        <span class="n">ephemerisVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span>
+        <span class="n">ephemerisVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span>
                 <span class="p">(</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">mercury</span> <span class="p">);</span>
         <span class="n">gravitationalParameterVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">2.2032E13</span><span class="p">;</span>
         <span class="n">minimumPericenterRadii_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">2639.7E3</span><span class="p">;</span>
         <span class="k">break</span><span class="p">;</span>
     <span class="k">case</span><span class="p">(</span> <span class="mi">2</span> <span class="p">)</span><span class="o">:</span>
-        <span class="n">ephemerisVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span>
+        <span class="n">ephemerisVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span>
                 <span class="p">(</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">venus</span> <span class="p">);</span>
         <span class="n">gravitationalParameterVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">3.24859E14</span><span class="p">;</span>
         <span class="n">minimumPericenterRadii_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">6251.8E3</span><span class="p">;</span>
@@ -268,13 +268,13 @@
     <span class="p">...</span>
     <span class="p">...</span>
     <span class="k">case</span><span class="p">(</span> <span class="mi">8</span> <span class="p">)</span><span class="o">:</span>
-        <span class="n">ephemerisVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span>
+        <span class="n">ephemerisVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span>
                 <span class="p">(</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">neptune</span> <span class="p">);</span>
         <span class="n">gravitationalParameterVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">6.836529E15</span><span class="p">;</span>
         <span class="n">minimumPericenterRadii_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">25000.0E3</span><span class="p">;</span>
         <span class="k">break</span><span class="p">;</span>
     <span class="k">case</span><span class="p">(</span> <span class="mi">9</span> <span class="p">)</span><span class="o">:</span>
-        <span class="n">ephemerisVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span>
+        <span class="n">ephemerisVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span>
                 <span class="p">(</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">pluto</span> <span class="p">);</span>
         <span class="n">gravitationalParameterVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">8.71E11</span><span class="p">;</span>
         <span class="n">minimumPericenterRadii_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">1395.0E3</span><span class="p">;</span>

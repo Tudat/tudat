@@ -196,12 +196,13 @@
 <div class="section" id="observation-types">
 <span id="observationtypes"></span><h2>6.2.1. Observation Types<a class="headerlink" href="#observation-types" title="Permalink to this headline">¶</a></h2>
 <p>Tudat supports a diverse set of observation types, which are defined in the <code class="docutils literal"><span class="pre">ObservableType</span></code> enum. Below, we provide a list of observable types, with a brief description, as well as the set of link end types that they require:</p>
-<ul>
+<blockquote>
+<div><ul>
 <li><p class="first"><code class="xref py py-class docutils literal"><span class="pre">one_way_range</span></code> Range (in meters) between two link ends. Observable has size 1. Requires <code class="docutils literal"><span class="pre">transmitter</span></code> and <code class="docutils literal"><span class="pre">receiver</span></code> link ends.</p>
 </li>
 <li><p class="first"><code class="xref py py-class docutils literal"><span class="pre">angular_position</span></code> Right ascension and declination (in radians) of one link end (the transmitter) as observed by other link end (the receiver) as measured in the base frame in which the states of the link ends are defined. Observable has size 2. Requires <code class="docutils literal"><span class="pre">transmitter</span></code> and <code class="docutils literal"><span class="pre">receiver</span></code> link ends.</p>
 </li>
-<li><p class="first"><code class="xref py py-class docutils literal"><span class="pre">position_observable</span></code> Three-dimensional position of link end (in m) as measured in base the frame in which the state of the link end is defined. Observable has size 3 (<em>x</em>, <em>y</em> and <em>z</em> components). Requires <code class="docutils literal"><span class="pre">observed_body</span></code> link end, which directly defines the body of which an observation is taken. Note that this observable is not realized in practice, but is typically used for testing or analysis purposes. It does not use a light-time calculation</p>
+<li><p class="first"><code class="xref py py-class docutils literal"><span class="pre">position_observable</span></code> Three-dimensional position of link end (in m) as measured in base the frame in which the state of the link end is defined. Observable has size 3 (<em>x</em>, <em>y</em> and <em>z</em> components). Requires <code class="docutils literal"><span class="pre">observed_body</span></code> link end, which directly defines the body of which an observation is taken. Note that this observable is not realized in practice, but is typically used for testing or analysis purposes. It does not use a light-time calculation.</p>
 </li>
 <li><p class="first"><code class="xref py py-class docutils literal"><span class="pre">one_way_doppler</span></code> Doppler effect of a signal (dimensionless) between two link ends. Observable has size 1. The value approximately requal to the range-rate between the link ends, divided by <em>c</em>. The full model one-way Doppler observable <span class="math">\(h_{D(1),AB}\)</span> from link end <em>A</em> to link end <em>B</em> is computed from:</p>
 <blockquote>
@@ -219,9 +220,10 @@
 </li>
 <li><p class="first"><code class="xref py py-class docutils literal"><span class="pre">one_way_differenced_range</span></code> Doppler observable as it is typically obtained in interplanetary tracking in so-called ‘closed-loop’ mode (in m/s) between two link ends. Observable has size 1. The value is computed from the averaged range-rate over some integration time (see below). Requires <code class="docutils literal"><span class="pre">transmitter</span></code> and <code class="docutils literal"><span class="pre">receiver</span></code> link ends.</p>
 </li>
-<li><p class="first"><code class="xref py py-class docutils literal"><span class="pre">n_way_range</span></code> Accumulated range (in meters) over any number of signal paths, may be used for two-way range (as in SLR or deep space tracking), as well as more exotic situations where more than 2 signal paths are used in generating the observable (as was the case for, for instance, the SELENE mission) Observable has size 1. The value is computed accumulating the light-time (multiplied by <em>c</em>) with any retransmission delays that the user defines (see below) Requires <code class="docutils literal"><span class="pre">transmitter</span></code>, <code class="docutils literal"><span class="pre">receiver</span></code>, as well as <code class="docutils literal"><span class="pre">reflector1</span></code>, <code class="docutils literal"><span class="pre">reflector2</span></code> … <code class="docutils literal"><span class="pre">reflectorX</span></code> for X+1 signal paths (when only a <code class="docutils literal"><span class="pre">transmitter</span></code> and <code class="docutils literal"><span class="pre">receiver</span></code> are defined the observation is identical to a <code class="docutils literal"><span class="pre">one_way_range</span></code>)</p>
+<li><p class="first"><code class="xref py py-class docutils literal"><span class="pre">n_way_range</span></code> Accumulated range (in meters) over any number of signal paths, may be used for two-way range (as in SLR or deep space tracking), as well as more exotic situations where more than 2 signal paths are used in generating the observable (as was the case for, for instance, the SELENE mission) Observable has size 1. The value is computed accumulating the light-time (multiplied by <em>c</em>) with any retransmission delays that the user defines (see below) Requires <code class="docutils literal"><span class="pre">transmitter</span></code>, <code class="docutils literal"><span class="pre">receiver</span></code>, as well as <code class="docutils literal"><span class="pre">reflector1</span></code>, <code class="docutils literal"><span class="pre">reflector2</span></code> … <code class="docutils literal"><span class="pre">reflectorX</span></code> for X+1 signal paths (when only a <code class="docutils literal"><span class="pre">transmitter</span></code> and <code class="docutils literal"><span class="pre">receiver</span></code> are defined the observation is identical to a <code class="docutils literal"><span class="pre">one_way_range</span></code>).</p>
 </li>
 </ul>
+</div></blockquote>
 </div>
 <div class="section" id="observation-settings">
 <span id="observationsettings"></span><h2>6.2.2. Observation Settings<a class="headerlink" href="#observation-settings" title="Permalink to this headline">¶</a></h2>
@@ -233,8 +235,8 @@
 
 <dl class="docutils">
 <dt>An <code class="docutils literal"><span class="pre">ObservationSettings</span></code> is created as follows:</dt>
-<dd><div class="first highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
-      <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<dd><div class="first highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
           <span class="n">observableType</span><span class="p">,</span> <span class="n">lightTimeCorrectionsList</span><span class="p">,</span> <span class="n">biasSettings</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -257,12 +259,12 @@
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">lightTimeCorrectionsList</span></code></p>
 <blockquote>
-<div><p>A list of light-time corrections of type <code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">boost::shared_ptr&lt;'LightTimeCorrectionSettings</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> that are used to compute the light-time between the link ends, see <a class="reference internal" href="#lighttimecorrections"><span class="std std-ref">Light-time Corrections</span></a>.</p>
+<div><p>A list of light-time corrections of type <code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">std::shared_ptr&lt;'LightTimeCorrectionSettings</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> that are used to compute the light-time between the link ends, see <a class="reference internal" href="#lighttimecorrections"><span class="std std-ref">Light-time Corrections</span></a>.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">biasSettings</span></code></p>
 <blockquote>
-<div><p>An object that defines the settings for an observation bias, of type <code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">ObservationBiasSettings</span> <span class="pre">&gt;</span></code>, see <a class="reference internal" href="#observationbiases"><span class="std std-ref">Observation Biases</span></a>.</p>
+<div><p>An object that defines the settings for an observation bias, of type <code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">ObservationBiasSettings</span> <span class="pre">&gt;</span></code>, see <a class="reference internal" href="#observationbiases"><span class="std std-ref">Observation Biases</span></a>.</p>
 </div></blockquote>
 </li>
 </ul>
@@ -270,21 +272,21 @@
 </dl>
 <p>Note that the light-time correction and bias settings are empty by default, so that:</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
-      <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">observableType</span> <span class="p">);</span>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">observableType</span> <span class="p">);</span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>and:</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
-      <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
           <span class="n">observableType</span><span class="p">,</span> <span class="n">lightTimeCorrectionsList</span> <span class="p">);</span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>may be used as well to create an observation model without light-time corrections or biases (in the case of the former) and no biases (in the case of the latter).</p>
-<p>Additionally, a second constructor is provided that takes a single light-time correction setting, instead of a list, as its second argument. So, you may substitute the input of type <code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">boost::shared_ptr&lt;</span> <span class="pre">LightTimeCorrectionSettings</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> by an input of type <code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">LightTimeCorrectionSettings</span> <span class="pre">&gt;</span></code>, in which case you can set only a single light-time correction.</p>
+<p>Additionally, a second constructor is provided that takes a single light-time correction setting, instead of a list, as its second argument. So, you may substitute the input of type <code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">std::shared_ptr&lt;</span> <span class="pre">LightTimeCorrectionSettings</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> by an input of type <code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">LightTimeCorrectionSettings</span> <span class="pre">&gt;</span></code>, in which case you can set only a single light-time correction.</p>
 <dl class="class">
 <dt id="OneWayDifferencedRangeRateObservationSettings">
 <em class="property">class </em><code class="descname">OneWayDifferencedRangeRateObservationSettings</code><a class="headerlink" href="#OneWayDifferencedRangeRateObservationSettings" title="Permalink to this definition">¶</a></dt>
@@ -292,8 +294,8 @@
 
 <p>The <code class="docutils literal"><span class="pre">OneWayDifferencedRangeRateObservationSettings</span></code> class is used to define settings for one-way differenced range observables (typically termed one-way Doppler in the deep-space tracking community). An object of this type is created as follows, similar to an <code class="docutils literal"><span class="pre">ObservationSettings</span></code> object:</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneWayDifferencedRangeRateObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
-      <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OneWayDifferencedRangeRateObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneWayDifferencedRangeRateObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OneWayDifferencedRangeRateObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
           <span class="n">integrationTimeFunction</span><span class="p">,</span> <span class="n">lightTimeCorrectionsList</span><span class="p">,</span> <span class="n">biasSettings</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -303,16 +305,16 @@
 <div><ul>
 <li><p class="first"><code class="docutils literal"><span class="pre">integrationTimeFunction</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">boost::function&lt;</span> <span class="pre">double(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> that returns the integration time of the observable as a function of observation time (function input). In many cases, the integration time will be constant, and you may use a <code class="docutils literal"><span class="pre">boost::lambda</span></code>, so for a constant 60 s integration time:</p>
+<div><p><code class="docutils literal"><span class="pre">std::function&lt;</span> <span class="pre">double(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> that returns the integration time of the observable as a function of observation time (function input). In many cases, the integration time will be constant, and you may use a lambda expression, so for a constant 60 s integration time:</p>
 </div></blockquote>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span>  <span class="n">integrationTimeFunction</span> <span class="o">=</span>
-    <span class="n">boost</span><span class="o">::</span><span class="n">lambda</span><span class="o">::</span><span class="n">constant</span><span class="p">(</span> <span class="mf">60.0</span> <span class="p">);</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">integrationTimeFunction</span> <span class="o">=</span>
+    <span class="p">[</span> <span class="o">=</span> <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="mf">60.0</span><span class="p">;</span> <span class="p">};</span>
 </pre></div>
 </div>
 </li>
 </ul>
 </div></blockquote>
-<p>As is the case for the <a class="reference internal" href="#ObservationSettings" title="ObservationSettings"><code class="xref py py-class docutils literal"><span class="pre">ObservationSettings</span></code></a> class, the second and third constructor arguments are optional, and the second argument may be either a <code class="docutils literal"><span class="pre">std::vector</span></code> of <code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">LightTimeCorrectionSettings</span> <span class="pre">&gt;</span></code>, or a single such object.</p>
+<p>As is the case for the <a class="reference internal" href="#ObservationSettings" title="ObservationSettings"><code class="xref py py-class docutils literal"><span class="pre">ObservationSettings</span></code></a> class, the second and third constructor arguments are optional, and the second argument may be either a <code class="docutils literal"><span class="pre">std::vector</span></code> of <code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">LightTimeCorrectionSettings</span> <span class="pre">&gt;</span></code>, or a single such object.</p>
 <dl class="class">
 <dt id="NWayRangeObservationSettings">
 <em class="property">class </em><code class="descname">NWayRangeObservationSettings</code><a class="headerlink" href="#NWayRangeObservationSettings" title="Permalink to this definition">¶</a></dt>
@@ -320,8 +322,8 @@
 
 <p>The <code class="docutils literal"><span class="pre">NWayRangeObservationSettings</span></code> class is used to define settings for n-way range observables. An object of this type is created as follows:</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">NWayRangeObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
-      <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">NWayRangeObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">NWayRangeObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">NWayRangeObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
           <span class="n">oneWayRangeObsevationSettings</span><span class="p">,</span> <span class="n">retransmissionTimesFunction</span><span class="p">,</span> <span class="n">biasSettings</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -331,12 +333,12 @@
 <div><ul>
 <li><p class="first"><code class="docutils literal"><span class="pre">oneWayRangeObsevationSettings</span></code></p>
 <blockquote>
-<div><p>A <code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">boost::shared_ptr&lt;</span> <span class="pre">ObservationSettings</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> list, that has the observation settings for each leg of the n-way link. Note that the observable type of each of the <a class="reference internal" href="#ObservationSettings" title="ObservationSettings"><code class="xref py py-class docutils literal"><span class="pre">ObservationSettings</span></code></a> in this list must be <code class="docutils literal"><span class="pre">one_way_range</span></code>.</p>
+<div><p>A <code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">std::shared_ptr&lt;</span> <span class="pre">ObservationSettings</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> list, that has the observation settings for each leg of the n-way link. Note that the observable type of each of the <a class="reference internal" href="#ObservationSettings" title="ObservationSettings"><code class="xref py py-class docutils literal"><span class="pre">ObservationSettings</span></code></a> in this list must be <code class="docutils literal"><span class="pre">one_way_range</span></code>.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">retransmissionTimesFunction</span></code></p>
 <blockquote>
-<div><p>A <code class="docutils literal"><span class="pre">boost::function&lt;</span> <span class="pre">std::vector&lt;</span> <span class="pre">double</span> <span class="pre">&gt;(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> list that returns the retransmission time at each of the intermediate link ends. For instance, for a Graz station -&gt; LRO -&gt; Matera station n-way-range observable, there may be some delay between LRO receiving the signal from Graz, and retransmitting the signal to Matera. The <code class="docutils literal"><span class="pre">retransmissionTimesFunction</span></code> list returns this delay as a function of the observation time at the retransmitting link end. As was the case for the integration time in the <a class="reference internal" href="#OneWayDifferencedRangeRateObservationSettings" title="OneWayDifferencedRangeRateObservationSettings"><code class="xref py py-class docutils literal"><span class="pre">OneWayDifferencedRangeRateObservationSettings</span></code></a> class, you can use <code class="docutils literal"><span class="pre">boost::lambda</span></code> to define constant retransmission delay. When providing an empty <code class="docutils literal"><span class="pre">std::vector</span></code>, no retransmission delay is assumed.</p>
+<div><p>A <code class="docutils literal"><span class="pre">std::function&lt;</span> <span class="pre">std::vector&lt;</span> <span class="pre">double</span> <span class="pre">&gt;(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> list that returns the retransmission time at each of the intermediate link ends. For instance, for a Graz station -&gt; LRO -&gt; Matera station n-way-range observable, there may be some delay between LRO receiving the signal from Graz, and retransmitting the signal to Matera. The <code class="docutils literal"><span class="pre">retransmissionTimesFunction</span></code> list returns this delay as a function of the observation time at the retransmitting link end. As was the case for the integration time in the <a class="reference internal" href="#OneWayDifferencedRangeRateObservationSettings" title="OneWayDifferencedRangeRateObservationSettings"><code class="xref py py-class docutils literal"><span class="pre">OneWayDifferencedRangeRateObservationSettings</span></code></a> class, you can use lambda expression to define constant retransmission delay. When providing an empty <code class="docutils literal"><span class="pre">std::vector</span></code>, no retransmission delay is assumed.</p>
 </div></blockquote>
 </li>
 </ul>
@@ -348,8 +350,8 @@
 
 <p>The <code class="docutils literal"><span class="pre">OneWayDopperObservationSettings</span></code> class is used to define settings for one-way Doppler observables. Here, the term Doppler is used in the instantaneous sense, and is distinct from what is typically termed Doppler in the deep-space tracking community, which is defined by the <a class="reference internal" href="#OneWayDifferencedRangeRateObservationSettings" title="OneWayDifferencedRangeRateObservationSettings"><code class="xref py py-class docutils literal"><span class="pre">OneWayDifferencedRangeRateObservationSettings</span></code></a> class. An object of the <a class="reference internal" href="#OneWayDopperObservationSettings" title="OneWayDopperObservationSettings"><code class="xref py py-class docutils literal"><span class="pre">OneWayDopperObservationSettings</span></code></a> type is created as follows:</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneWayDopperObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
-      <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OneWayDopperObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneWayDopperObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OneWayDopperObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
           <span class="n">lightTimeCorrectionsList</span><span class="p">,</span> <span class="n">transmitterProperTimeRateSettings</span><span class="p">,</span> <span class="n">receiverProperTimeRateSettings</span><span class="p">,</span> <span class="n">biasSettings</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -359,22 +361,22 @@
 <div><ul>
 <li><p class="first"><code class="docutils literal"><span class="pre">lightTimeCorrectionsList</span></code></p>
 <blockquote>
-<div><p>A list of light-time corrections of type <code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">boost::shared_ptr&lt;'LightTimeCorrectionSettings</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> that are used to compute the light-time between the link ends, see <a class="reference internal" href="#lighttimecorrections"><span class="std std-ref">Light-time Corrections</span></a>.</p>
+<div><p>A list of light-time corrections of type <code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">std::shared_ptr&lt;'LightTimeCorrectionSettings</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> that are used to compute the light-time between the link ends, see <a class="reference internal" href="#lighttimecorrections"><span class="std std-ref">Light-time Corrections</span></a>.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">transmitterProperTimeRateSettings</span></code></p>
 <blockquote>
-<div><p>An object that defines the settings for the proper time rate <span class="math">\(d\tau/dt\)</span> of the transmitter, of type <code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">DopplerProperTimeRateSettings</span> <span class="pre">&gt;</span></code>, see <a class="reference internal" href="#propertimerates"><span class="std std-ref">Proper-time Rate Settings</span></a>.</p>
+<div><p>An object that defines the settings for the proper time rate <span class="math">\(d\tau/dt\)</span> of the transmitter, of type <code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">DopplerProperTimeRateSettings</span> <span class="pre">&gt;</span></code>, see <a class="reference internal" href="#propertimerates"><span class="std std-ref">Proper-time Rate Settings</span></a>.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">receiverProperTimeRateSettings</span></code></p>
 <blockquote>
-<div><p>An object that defines the settings for the proper time rate <span class="math">\(d\tau/dt\)</span> of the transmitter, of type <code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">DopplerProperTimeRateSettings</span> <span class="pre">&gt;</span></code>, see <a class="reference internal" href="#propertimerates"><span class="std std-ref">Proper-time Rate Settings</span></a>.</p>
+<div><p>An object that defines the settings for the proper time rate <span class="math">\(d\tau/dt\)</span> of the transmitter, of type <code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">DopplerProperTimeRateSettings</span> <span class="pre">&gt;</span></code>, see <a class="reference internal" href="#propertimerates"><span class="std std-ref">Proper-time Rate Settings</span></a>.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">biasSettings</span></code></p>
 <blockquote>
-<div><p>An object that defines the settings for an observation bias, of type <code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">ObservationBiasSettings</span> <span class="pre">&gt;</span></code>, see <a class="reference internal" href="#observationbiases"><span class="std std-ref">Observation Biases</span></a>.</p>
+<div><p>An object that defines the settings for an observation bias, of type <code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">ObservationBiasSettings</span> <span class="pre">&gt;</span></code>, see <a class="reference internal" href="#observationbiases"><span class="std std-ref">Observation Biases</span></a>.</p>
 </div></blockquote>
 </li>
 </ul>
@@ -386,8 +388,8 @@
 
 <p>The <code class="docutils literal"><span class="pre">TwoWayDopperObservationSettings</span></code> class is used to define settings for two-way Doppler observables:</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TwoWayDopperObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
-      <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TwoWayDopperObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TwoWayDopperObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TwoWayDopperObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
           <span class="n">uplinkOneWayDopplerSettings</span><span class="p">,</span> <span class="n">downlinkOneWayDopplerSettings</span><span class="p">,</span> <span class="n">biasSettings</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -397,17 +399,17 @@
 <div><ul>
 <li><p class="first"><code class="docutils literal"><span class="pre">uplinkOneWayDopplerSettings</span></code></p>
 <blockquote>
-<div><p>An object that defines the settings for uplink one-way Doppler, of type <code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">OneWayDopperObservationSettings</span> <span class="pre">&gt;</span></code></p>
+<div><p>An object that defines the settings for uplink one-way Doppler, of type <code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">OneWayDopperObservationSettings</span> <span class="pre">&gt;</span></code></p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">downlinkOneWayDopplerSettings</span></code></p>
 <blockquote>
-<div><p>An object that defines the settings for uplink one-way Doppler, of type <code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">OneWayDopperObservationSettings</span> <span class="pre">&gt;</span></code></p>
+<div><p>An object that defines the settings for uplink one-way Doppler, of type <code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">OneWayDopperObservationSettings</span> <span class="pre">&gt;</span></code></p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">biasSettings</span></code></p>
 <blockquote>
-<div><p>An object that defines the settings for an observation bias, of type <code class="docutils literal"><span class="pre">boost::shared_ptr&lt;</span> <span class="pre">ObservationBiasSettings</span> <span class="pre">&gt;</span></code>, see <a class="reference internal" href="#observationbiases"><span class="std std-ref">Observation Biases</span></a>.</p>
+<div><p>An object that defines the settings for an observation bias, of type <code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">ObservationBiasSettings</span> <span class="pre">&gt;</span></code>, see <a class="reference internal" href="#observationbiases"><span class="std std-ref">Observation Biases</span></a>.</p>
 </div></blockquote>
 </li>
 </ul>
@@ -422,8 +424,8 @@
 
 <p>The <code class="docutils literal"><span class="pre">DirectFirstOrderDopplerProperTimeRateSettings</span></code> class is derived from  <code class="docutils literal"><span class="pre">DopplerProperTimeRateSettings</span></code> and defines the proper time rate due to a single static point mass. In this sense, the term ‘static’ indicates that the motion of the body causing a change in proper time rate is not incorporated in the model. An object of this type is created as:</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">DirectFirstOrderDopplerProperTimeRateSettings</span> <span class="o">&gt;</span> <span class="n">properTimeRateSettings</span> <span class="o">=</span>
-      <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DirectFirstOrderDopplerProperTimeRateSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">DirectFirstOrderDopplerProperTimeRateSettings</span> <span class="o">&gt;</span> <span class="n">properTimeRateSettings</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DirectFirstOrderDopplerProperTimeRateSettings</span> <span class="o">&gt;</span><span class="p">(</span>
           <span class="n">bodyName</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -440,13 +442,13 @@
 </div></blockquote>
 <p>As an example, a one-way Doppler model, where the Earth’s mass is used to perturtb the transmitting station’s proper time rate, and the Moon’s mass the receiver’s proper time rate would be by creating <a class="reference internal" href="#OneWayDopperObservationSettings" title="OneWayDopperObservationSettings"><code class="xref py py-class docutils literal"><span class="pre">OneWayDopperObservationSettings</span></code></a> as follows:</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">DopplerProperTimeRateSettings</span> <span class="o">&gt;</span> <span class="n">transmitterProperTimeRateSettings</span> <span class="o">=</span>
-   <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DirectFirstOrderDopplerProperTimeRateSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
-<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">DopplerProperTimeRateSettings</span> <span class="o">&gt;</span> <span class="n">receiverProperTimeRateSettings</span> <span class="o">=</span>
-   <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DirectFirstOrderDopplerProperTimeRateSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="s">&quot;Moon&quot;</span> <span class="p">);</span>
-<span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneWayDopperObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
-      <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OneWayDopperObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">LightTimeCorrectionSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">,</span> <span class="n">transmitterProperTimeRateSettings</span><span class="p">,</span> <span class="n">receiverProperTimeRateSettings</span> <span class="p">);</span>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">DopplerProperTimeRateSettings</span> <span class="o">&gt;</span> <span class="n">transmitterProperTimeRateSettings</span> <span class="o">=</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DirectFirstOrderDopplerProperTimeRateSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">DopplerProperTimeRateSettings</span> <span class="o">&gt;</span> <span class="n">receiverProperTimeRateSettings</span> <span class="o">=</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DirectFirstOrderDopplerProperTimeRateSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="s">&quot;Moon&quot;</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneWayDopperObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OneWayDopperObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+          <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">LightTimeCorrectionSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">,</span> <span class="n">transmitterProperTimeRateSettings</span><span class="p">,</span> <span class="n">receiverProperTimeRateSettings</span> <span class="p">);</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -466,8 +468,8 @@
 <dd><blockquote>
 <div><p>The <a class="reference internal" href="#FirstOrderRelativisticLightTimeCorrectionSettings" title="FirstOrderRelativisticLightTimeCorrectionSettings"><code class="xref py py-class docutils literal"><span class="pre">FirstOrderRelativisticLightTimeCorrectionSettings</span></code></a> defines settings for a first-order relativistic correction to the light-time, as formulated by <em>e.g.</em> Moyer (2000). The class is created by:</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">FirstOrderRelativisticLightTimeCorrectionSettings</span> <span class="o">&gt;</span> <span class="n">lightTimeCorrectionSettings</span> <span class="o">=</span>
-      <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">FirstOrderRelativisticLightTimeCorrectionSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">FirstOrderRelativisticLightTimeCorrectionSettings</span> <span class="o">&gt;</span> <span class="n">lightTimeCorrectionSettings</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">FirstOrderRelativisticLightTimeCorrectionSettings</span> <span class="o">&gt;</span><span class="p">(</span>
           <span class="n">perturbingBodies</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -495,31 +497,39 @@
 <p>Real observations in reality often differ (slightly) from the physical ideal value due to for instance instrumental effects at the link ends. Part of these effects influence the observation in a predictable manner, and can be modelled deterministically. It is these deterministic effects that we collectively term observation biases in Tudat. The stochastic errors are not used as part of the observation model in Tudat, but can be incorporated when simulating observations.</p>
 <p>In Tudat, the following types of biases are currently incorporated, where <span class="math">\(h\)</span> is the physically ideal observation, and <span class="math">\(\tilde{h}\)</span> is the biases version of the observable.</p>
 <blockquote>
-<div><ul class="simple">
-<li>Relative bias <span class="math">\(K_{r}\)</span>, which influences the observable as:</li>
-</ul>
-<div class="math">
-\[ \begin{align}\begin{aligned}\tilde{h}=h(1+K_{r})\\For an observable with size greater than 1, :math:`K_{r}` is a vector and the multiplication is component-wise.\end{aligned}\end{align} \]</div>
-<ul class="simple">
-<li>Absolute bias <span class="math">\(K_{a}\)</span>, which influences the observable as:</li>
-</ul>
-<div class="math">
-\[ \begin{align}\begin{aligned}\tilde{h}=h+K_{a}\\For an observable with size greater than 1, :math:`K_{a}` is a vector and the multiplication is component-wise.\end{aligned}\end{align} \]</div>
-<ul class="simple">
-<li>A combined bias, which is computed from any number of the above bias types combined. Note that each contribution of the combined bias is computed from the unbiased observable, so when applying both a relative and absolute bias, we get:</li>
-</ul>
-<div class="math">
-\[ \begin{align}\begin{aligned}\tilde{h}=h+K_{a}+hK_{r}\\And, crucially:\end{aligned}\end{align} \]</div>
+<div><ul>
+<li><p class="first">Relative bias <span class="math">\(K_{r}\)</span>, which influences the observable as:</p>
+<blockquote>
+<div><div class="math">
+\[\tilde{h}=h(1+K_{r})\]</div>
+<p>For an observable with size greater than 1, <span class="math">\(K_{r}\)</span> is a vector and the multiplication is component-wise.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Absolute bias <span class="math">\(K_{a}\)</span>, which influences the observable as:</p>
+<blockquote>
+<div><div class="math">
+\[\tilde{h}=h+K_{a}\]</div>
+<p>For an observable with size greater than 1, <span class="math">\(K_{a}\)</span> is a vector and the multiplication is component-wise.</p>
+</div></blockquote>
+</li>
+<li><p class="first">A combined bias, which is computed from any number of the above bias types combined. Note that each contribution of the combined bias is computed from the unbiased observable, so when applying both a relative and absolute bias, we get:</p>
+<blockquote>
+<div><div class="math">
+\[\tilde{h}=h+K_{a}+hK_{r}\]</div>
+<p>And, crucially:</p>
 <div class="math">
 \[\tilde{h}\neq (h+K_{a})(1+K_{r})\]</div>
+</div></blockquote>
+</li>
+</ul>
 </div></blockquote>
 <p>As discussed above, the biases are created by passing a <code class="xref py py-class docutils literal"><span class="pre">ObservationBiasSettings</span></code> (or derived class) object to the <a class="reference internal" href="#ObservationSettings" title="ObservationSettings"><code class="xref py py-class docutils literal"><span class="pre">ObservationSettings</span></code></a> (or derived class)  constructor. Each bias type has a dedicated derived class of <code class="xref py py-class docutils literal"><span class="pre">ObservationBiasSettings</span></code>, which are defined as follows:</p>
 <dl class="class">
 <dt id="ConstantObservationBiasSettings">
 <em class="property">class </em><code class="descname">ConstantObservationBiasSettings</code><a class="headerlink" href="#ConstantObservationBiasSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>The <code class="docutils literal"><span class="pre">ConstantObservationBiasSettings</span></code> class is used to define settings for an absolute bias <span class="math">\(K_{a}\)</span> and is created by:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ConstantObservationBiasSettings</span> <span class="o">&gt;</span> <span class="n">observationBiasSettings</span> <span class="o">=</span>
-      <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantObservationBiasSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ConstantObservationBiasSettings</span> <span class="o">&gt;</span> <span class="n">observationBiasSettings</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantObservationBiasSettings</span> <span class="o">&gt;</span><span class="p">(</span>
           <span class="n">observationBias</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -537,8 +547,8 @@
 <dt id="ConstantRelativeObservationBiasSettings">
 <em class="property">class </em><code class="descname">ConstantRelativeObservationBiasSettings</code><a class="headerlink" href="#ConstantRelativeObservationBiasSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>The <code class="docutils literal"><span class="pre">ConstantRelativeObservationBiasSettings</span></code> class is used to define settings for an absolute bias <span class="math">\(K_{r}\)</span> and is created by:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ConstantRelativeObservationBiasSettings</span> <span class="o">&gt;</span> <span class="n">observationBiasSettings</span> <span class="o">=</span>
-      <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantRelativeObservationBiasSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ConstantRelativeObservationBiasSettings</span> <span class="o">&gt;</span> <span class="n">observationBiasSettings</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantRelativeObservationBiasSettings</span> <span class="o">&gt;</span><span class="p">(</span>
           <span class="n">observationBias</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -556,8 +566,8 @@
 <dt id="MultipleObservationBiasSettings">
 <em class="property">class </em><code class="descname">MultipleObservationBiasSettings</code><a class="headerlink" href="#MultipleObservationBiasSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>The <code class="docutils literal"><span class="pre">MultipleObservationBiasSettings</span></code> class is used to define settings for a combined bias, that is composed of multiple bias models.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">MultipleObservationBiasSettings</span> <span class="o">&gt;</span> <span class="n">observationBiasSettings</span> <span class="o">=</span>
-      <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">MultipleObservationBiasSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">MultipleObservationBiasSettings</span> <span class="o">&gt;</span> <span class="n">observationBiasSettings</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">MultipleObservationBiasSettings</span> <span class="o">&gt;</span><span class="p">(</span>
           <span class="n">biasSettingsList</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -565,7 +575,7 @@
 <ul>
 <li><p class="first"><code class="docutils literal"><span class="pre">biasSettingsList</span></code></p>
 <blockquote>
-<div><p>A <code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">boost::shared_ptr&lt;</span> <span class="pre">ObservationBiasSettings</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> list containing the bias models to be applied.</p>
+<div><p>A <code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">std::shared_ptr&lt;</span> <span class="pre">ObservationBiasSettings</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> list containing the bias models to be applied.</p>
 </div></blockquote>
 </li>
 </ul>

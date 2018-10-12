@@ -203,7 +203,7 @@
 <p>Each component test is designed to exhaustively test all the features of a given settings-container class (and its derived classes). In these tests, it is checked that objects created by reading a JSON file are identical to the objects created manually by writing C++ code. In order to compare the created objects, it will be necessary to define a comparison operator for each settings class in Tudat. Fortunately, this has been done indirectly by writing <code class="docutils literal"><span class="pre">to_json</span></code> methods, so we can compare the JSON representation of the created objects rather than the objects themselves. The only drawbacks of this approach are:</p>
 <blockquote>
 <div><ul class="simple">
-<li>It cannot be followed for classes storing information that is not convertible to JSON (such as <code class="xref py py-class docutils literal"><span class="pre">boost::function</span></code>).</li>
+<li>It cannot be followed for classes storing information that is not convertible to JSON (such as <code class="xref py py-class docutils literal"><span class="pre">std::function</span></code>).</li>
 <li>An error in the <code class="docutils literal"><span class="pre">to_json</span></code> function can lead to overlooking of errors in the <code class="docutils literal"><span class="pre">from_json</span></code> functions.</li>
 </ul>
 </div></blockquote>
@@ -227,11 +227,11 @@
 17
 18
 19
-20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">to_json</span><span class="p">(</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">jsonObject</span><span class="p">,</span> <span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodyShapeSettings</span> <span class="o">&gt;&amp;</span> <span class="n">bodyShapeSettings</span> <span class="p">)</span>
+20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">to_json</span><span class="p">(</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">jsonObject</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodyShapeSettings</span> <span class="o">&gt;&amp;</span> <span class="n">bodyShapeSettings</span> <span class="p">)</span>
 <span class="p">{</span>
     <span class="p">...</span>
-    <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OblateSphericalBodyShapeSettings</span> <span class="o">&gt;</span> <span class="n">oblateSphericalBodyShapeSettings</span> <span class="o">=</span>
-      <span class="n">boost</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">OblateSphericalBodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodyShapeSettings</span> <span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OblateSphericalBodyShapeSettings</span> <span class="o">&gt;</span> <span class="n">oblateSphericalBodyShapeSettings</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">OblateSphericalBodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodyShapeSettings</span> <span class="p">);</span>
     <span class="n">assertNonNullPointer</span><span class="p">(</span> <span class="n">oblateSphericalBodyShapeSettings</span> <span class="p">);</span>
 
     <span class="n">jsonObject</span><span class="p">[</span> <span class="n">K</span><span class="o">::</span><span class="n">equatorialRadius</span> <span class="p">]</span> <span class="o">=</span> <span class="n">oblateSphericalBodyShapeSettings</span><span class="o">-&gt;</span><span class="n">getEquatorialRadius</span><span class="p">(</span> <span class="p">);</span>
@@ -239,10 +239,10 @@
     <span class="p">...</span>
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="nf">from_json</span><span class="p">(</span> <span class="k">const</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">jsonObject</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodyShapeSettings</span> <span class="o">&gt;&amp;</span> <span class="n">bodyShapeSettings</span> <span class="p">)</span>
+<span class="kt">void</span> <span class="nf">from_json</span><span class="p">(</span> <span class="k">const</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">jsonObject</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodyShapeSettings</span> <span class="o">&gt;&amp;</span> <span class="n">bodyShapeSettings</span> <span class="p">)</span>
 <span class="p">{</span>
     <span class="p">...</span>
-    <span class="n">bodyShapeSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OblateSphericalBodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">bodyShapeSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OblateSphericalBodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span>
       <span class="n">getValue</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">jsonObject</span><span class="p">,</span> <span class="n">K</span><span class="o">::</span><span class="n">equatorialRadius</span> <span class="p">),</span>
       <span class="n">getValue</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">jsonObject</span><span class="p">,</span> <span class="n">K</span><span class="o">::</span><span class="n">flattening</span> <span class="p">)</span> <span class="p">);</span>
     <span class="p">...</span>
@@ -250,7 +250,7 @@
 </pre></div>
 </td></tr></table></div>
 <p>Now, imagine that we forget line 9 and additionally we have:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodyShapeSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OblateSphericalBodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodyShapeSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OblateSphericalBodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span>
   <span class="n">getValue</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">jsonObject</span><span class="p">,</span> <span class="n">K</span><span class="o">::</span><span class="n">equatorialRadius</span> <span class="p">),</span>
   <span class="n">getValue</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">jsonObject</span><span class="p">,</span> <span class="n">K</span><span class="o">::</span><span class="n">equatorialRadius</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
@@ -380,8 +380,8 @@
     <span class="n">loadSpiceKernelInTudat</span><span class="p">(</span> <span class="n">kernelsPath</span> <span class="o">+</span> <span class="s">&quot;de421.bsp&quot;</span><span class="p">);</span>
 
     <span class="c1">// Create RotationModelSettings from JSON file</span>
-    <span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span> <span class="n">fromFileSettings</span> <span class="o">=</span>
-            <span class="n">parseJSONFile</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">INPUT</span><span class="p">(</span> <span class="s">&quot;simple&quot;</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span> <span class="n">fromFileSettings</span> <span class="o">=</span>
+            <span class="n">parseJSONFile</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">INPUT</span><span class="p">(</span> <span class="s">&quot;simple&quot;</span> <span class="p">)</span> <span class="p">);</span>
 
     <span class="c1">// Create RotationModelSettings manually</span>
     <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">originalFrame</span> <span class="o">=</span> <span class="s">&quot;ECLIPJ2000&quot;</span><span class="p">;</span>
@@ -390,8 +390,8 @@
     <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span> <span class="n">initialOrientation</span> <span class="o">=</span>
             <span class="n">spice_interface</span><span class="o">::</span><span class="n">computeRotationQuaternionBetweenFrames</span><span class="p">(</span> <span class="n">originalFrame</span><span class="p">,</span> <span class="n">targetFrame</span><span class="p">,</span> <span class="n">initialTime</span> <span class="p">);</span>
     <span class="k">const</span> <span class="kt">double</span> <span class="n">rotationRate</span> <span class="o">=</span> <span class="mf">2.0e-5</span><span class="p">;</span>
-    <span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span> <span class="n">manualSettings</span> <span class="o">=</span>
-            <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SimpleRotationModelSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">originalFrame</span><span class="p">,</span>
+    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span> <span class="n">manualSettings</span> <span class="o">=</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SimpleRotationModelSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">originalFrame</span><span class="p">,</span>
                                                                <span class="n">targetFrame</span><span class="p">,</span>
                                                                <span class="n">initialOrientation</span><span class="p">,</span>
                                                                <span class="n">initialTime</span><span class="p">,</span>
@@ -408,14 +408,14 @@
     <span class="k">using</span> <span class="k">namespace</span> <span class="n">json_interface</span><span class="p">;</span>
 
     <span class="c1">// Create RotationModelSettings from JSON file</span>
-    <span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span> <span class="n">fromFileSettings</span> <span class="o">=</span>
-            <span class="n">parseJSONFile</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">INPUT</span><span class="p">(</span> <span class="s">&quot;spice&quot;</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span> <span class="n">fromFileSettings</span> <span class="o">=</span>
+            <span class="n">parseJSONFile</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">INPUT</span><span class="p">(</span> <span class="s">&quot;spice&quot;</span> <span class="p">)</span> <span class="p">);</span>
 
     <span class="c1">// Create RotationModelSettings manually</span>
     <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">originalFrame</span> <span class="o">=</span> <span class="s">&quot;foo&quot;</span><span class="p">;</span>
     <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">targetFrame</span> <span class="o">=</span> <span class="s">&quot;oof&quot;</span><span class="p">;</span>
-    <span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span> <span class="n">manualSettings</span> <span class="o">=</span>
-            <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">spice_rotation_model</span><span class="p">,</span>
+    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span> <span class="n">manualSettings</span> <span class="o">=</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">spice_rotation_model</span><span class="p">,</span>
                                                          <span class="n">originalFrame</span><span class="p">,</span>
                                                          <span class="n">targetFrame</span> <span class="p">);</span>
 
@@ -452,8 +452,8 @@
 <p class="last">Since all the paths defined in the input file are relative to the directory in which that file is located, the current working directory is changed when calling the <code class="docutils literal"><span class="pre">parseJSONFile</span></code> function. This can have consequences for building the paths of objects created manually in C++ code after this function call.</p>
 </div>
 <p>Since the <code class="docutils literal"><span class="pre">to_json</span></code> and <code class="docutils literal"><span class="pre">from_json</span></code> functions are only defined for shared pointers of the base class, we always create two shared pointers of the base class. Thus, when creating the object manually using C++ code, we write:</p>
-<div class="highlight-json"><div class="highlight"><pre><span></span>const boost::shared_ptr&lt; RotationModelSettings &gt; manualSettings =
-          boost::make_shared&lt; SimpleRotationModelSettings &gt;( ...
+<div class="highlight-json"><div class="highlight"><pre><span></span>const std::shared_ptr&lt; RotationModelSettings &gt; manualSettings =
+          std::make_shared&lt; SimpleRotationModelSettings &gt;( ...
 </pre></div>
 </div>
 <p>The final step is to check that the JSON representation of the two objects is identical. This is done by using the macro <code class="docutils literal"><span class="pre">BOOST_CHECK_EQUAL_JSON</span></code> defined in <code class="xref py py-class docutils literal"><span class="pre">Tudat/JsonInterface/UnitTests/unitTestSupport.h</span></code>.</p>
@@ -476,8 +476,8 @@
 </div>
 <p>Note that the results are not exported to an output file. This means that, in these tests, the export feature of the <code class="docutils literal"><span class="pre">json_interface</span></code> application is not being tested, and thus it has to be tested separately in a component test.</p>
 <p>The next step is to manually set-up and run the same simulation by writing C++ code in the test case. Once that all the required objects have been created, the final steps are:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">dynamicsSimulator</span> <span class="o">=</span>
-        <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span> <span class="p">);</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">dynamicsSimulator</span> <span class="o">=</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span> <span class="p">);</span>
 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">results</span> <span class="o">=</span> <span class="n">dynamicsSimulator</span><span class="o">-&gt;</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
 </pre></div>
 </div>

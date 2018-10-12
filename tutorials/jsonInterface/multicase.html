@@ -100,9 +100,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../tudatFeatures/index.html">Tudat Libraries</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">JSON Interface</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="basicJsonInterfaces.html">1. Basic JSON Interfaces</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/index.html">2. Tutorials</a></li>
-<li class="toctree-l3"><a class="reference internal" href="keys/rst/index.html">3. List of Keys</a></li>
-<li class="toctree-l3"><a class="reference internal" href="customJsonApp.html">4. Writing Custom JSON-based Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="customJsonApp.html">2. Writing Custom JSON-based Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/index.html">3. Tutorials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keys/rst/index.html">4. List of Keys</a></li>
 <li class="toctree-l3"><a class="reference internal" href="modularFiles.html">5. Modular Files</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">6. Multi-case Simulations</a></li>
 </ul>
@@ -227,44 +227,44 @@
 <p>Even when the keys <span class="jsonkey">satellite.mass</span> or <span class="jsonkey">satellite</span> are undefined in <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code>, the same combined object would be obtained.</p>
 <p>This feature is especially useful when running multi-case simulations (for solving optimisation problems), as it allows the user to define the shared settings in a file, that is referenced from mergeable files in which some keys (the optimisation variables) are (re-)defined. In this way, repeating the same information in every file is avoided, which can lead to large file sizes specially for complex propagations or when the number of simulations to be run is large.</p>
 <p>For instance, the following tree structure can be used to run the same simulations with a variable value for the mass of the vehicle:</p>
-<div class="highlight-txt"><div class="highlight"><pre><span></span>root
-|
-| inputs
-|      |
-|      | mass5000.json
-|      | mass6000.json
-|      | mass7000.json
-|      | mass8000.json
-|
-| shared.json
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">inputs</span>
+<span class="o">|</span>      <span class="o">|</span>
+<span class="o">|</span>      <span class="o">|</span> <span class="n">mass5000</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span>      <span class="o">|</span> <span class="n">mass6000</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span>      <span class="o">|</span> <span class="n">mass7000</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span>      <span class="o">|</span> <span class="n">mass8000</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">shared</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
 <p>Then, the <code class="docutils literal"><span class="pre">json_interface</span></code> application is called for each of the files inside the <code class="xref py py-class docutils literal"><span class="pre">inputs</span></code> directory. Note that there is no need to call it for the file <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code>. If one has <a class="reference external" href="https://www.gnu.org/software/parallel/">GNU Parallel</a> installed, it is possible to run the simulations in parallel by writing in Terminal:</p>
-<div class="highlight-txt"><div class="highlight"><pre><span></span>parallel json_interface ::: inputs/*.json
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">parallel</span> <span class="n">json_interface</span> <span class="p">:::</span> <span class="n">inputs</span><span class="o">/*.</span><span class="n">json</span>
 </pre></div>
 </div>
 <p>Note that the second element of the array to be merged can contain several keys to be (re-)defined, and even more than one object can be provided. For instance, consider the following tree structure:</p>
-<div class="highlight-txt"><div class="highlight"><pre><span></span>root
-|
-| inputs
-|      |
-|      | rk4
-|      |   |
-|      |   | mass5000.json
-|      |   | mass6000.json
-|      |   | mass7000.json
-|      |   | mass8000.json
-|      |
-|      | rk78
-|           |
-|           | mass5000.json
-|           | mass6000.json
-|           | mass7000.json
-|           | mass8000.json
-|
-| shared.json
-| rk4.json
-| rk78.json
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">inputs</span>
+<span class="o">|</span>      <span class="o">|</span>
+<span class="o">|</span>      <span class="o">|</span> <span class="n">rk4</span>
+<span class="o">|</span>      <span class="o">|</span>   <span class="o">|</span>
+<span class="o">|</span>      <span class="o">|</span>   <span class="o">|</span> <span class="n">mass5000</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span>      <span class="o">|</span>   <span class="o">|</span> <span class="n">mass6000</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span>      <span class="o">|</span>   <span class="o">|</span> <span class="n">mass7000</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span>      <span class="o">|</span>   <span class="o">|</span> <span class="n">mass8000</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span>      <span class="o">|</span>
+<span class="o">|</span>      <span class="o">|</span> <span class="n">rk78</span>
+<span class="o">|</span>           <span class="o">|</span>
+<span class="o">|</span>           <span class="o">|</span> <span class="n">mass5000</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span>           <span class="o">|</span> <span class="n">mass6000</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span>           <span class="o">|</span> <span class="n">mass7000</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span>           <span class="o">|</span> <span class="n">mass8000</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">shared</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span> <span class="n">rk4</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span> <span class="n">rk78</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="id3">
@@ -350,23 +350,23 @@
 <p class="last">In this case, the contents of <code class="xref py py-class docutils literal"><span class="pre">rk4.json</span></code> would be loaded first, and then the property of the key <span class="jsonkey">bodies</span> would be re-defined to be equal to <code class="docutils literal"><span class="pre">{</span> <span class="pre">&quot;satellite&quot;:</span> <span class="pre">{</span> <span class="pre">&quot;mass&quot;:</span> <span class="pre">8000</span> <span class="pre">}</span> <span class="pre">}</span></code>. This would result in the loss of other keys defined inside <code class="docutils literal"><span class="pre">bodies.satellite</span></code> and <code class="docutils literal"><span class="pre">bodies</span></code> in the file <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code>.</p>
 </div>
 <p>Generally, we will want to save the results of each simulation (e.g. the epochs and states) to a different file, so that we end up with the following file tree:</p>
-<div class="highlight-txt"><div class="highlight"><pre><span></span>root
-|
-| inputs
-|      |
-|      | mass5000.json
-|      | mass6000.json
-|      | mass7000.json
-|      | mass8000.json
-|
-| outputs
-|       |
-|       | mass5000.txt
-|       | mass6000.txt
-|       | mass7000.txt
-|       | mass8000.txt
-|
-| shared.json
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">inputs</span>
+<span class="o">|</span>      <span class="o">|</span>
+<span class="o">|</span>      <span class="o">|</span> <span class="n">mass5000</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span>      <span class="o">|</span> <span class="n">mass6000</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span>      <span class="o">|</span> <span class="n">mass7000</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span>      <span class="o">|</span> <span class="n">mass8000</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">outputs</span>
+<span class="o">|</span>       <span class="o">|</span>
+<span class="o">|</span>       <span class="o">|</span> <span class="n">mass5000</span><span class="o">.</span><span class="n">txt</span>
+<span class="o">|</span>       <span class="o">|</span> <span class="n">mass6000</span><span class="o">.</span><span class="n">txt</span>
+<span class="o">|</span>       <span class="o">|</span> <span class="n">mass7000</span><span class="o">.</span><span class="n">txt</span>
+<span class="o">|</span>       <span class="o">|</span> <span class="n">mass8000</span><span class="o">.</span><span class="n">txt</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">shared</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
 <p>We can do this by defining the key <span class="jsonkey">export</span> in the <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code> file:</p>
@@ -449,7 +449,7 @@
 <li>When a special string is used to include (parts of) the contents of another JSON file (e.g. <code class="docutils literal"><span class="pre">&quot;$(shared.json)&quot;</span></code>), the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword is not used and it must be relative to the declaration file.</li>
 </ul>
 </div></blockquote>
-<p>It is recommended to never provide relative paths as plain strings, and to always use either <code class="docutils literal"><span class="pre">&#64;path()</span></code> or <code class="docutils literal"><span class="pre">$()</span></code>, so that the paths are always specified relative to the declaration file. When no modular or mergeable files are used, the root file and the definition file are always the same, so using the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword makes it unnecessary but still recommended, as the project could be modularised in the future or parts of it may be end up being used in other projects, potentially requiring the use of the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword.</p>
+<p>It is recommended to never provide relative paths as plain strings, and to always use either <code class="docutils literal"><span class="pre">&#64;path(</span> <span class="pre">)</span></code> or <code class="docutils literal"><span class="pre">$(</span> <span class="pre">)</span></code>, so that the paths are always specified relative to the declaration file. When no modular or mergeable files are used, the root file and the definition file are always the same, so using the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword makes it unnecessary but still recommended, as the project could be modularised in the future or parts of it may be end up being used in other projects, potentially requiring the use of the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword.</p>
 </div>
 
 

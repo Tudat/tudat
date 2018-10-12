@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3. List of Keys &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>4. List of Keys &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -39,8 +39,8 @@
         <link rel="search" title="Search" href="../../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../../index.html"/>
         <link rel="up" title="JSON Interface" href="../../index.html"/>
-        <link rel="next" title="4. Writing Custom JSON-based Applications" href="../../customJsonApp.html"/>
-        <link rel="prev" title="2.5. Perturbed Earth-orbiting Satellite Lifetime Maximisation Using a Custom C++ Application" href="../../tutorials/lifetimeMaximisationCPP/index.html"/> 
+        <link rel="next" title="5. Modular Files" href="../../modularFiles.html"/>
+        <link rel="prev" title="3.5. Apollo Capsule Entry" href="../../tutorials/apolloCapsuleEntry/index.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -100,9 +100,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../tudatFeatures/index.html">Tudat Libraries</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../index.html">JSON Interface</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../../basicJsonInterfaces.html">1. Basic JSON Interfaces</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../tutorials/index.html">2. Tutorials</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">3. List of Keys</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../customJsonApp.html">4. Writing Custom JSON-based Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../customJsonApp.html">2. Writing Custom JSON-based Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/index.html">3. Tutorials</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4. List of Keys</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../modularFiles.html">5. Modular Files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../multicase.html">6. Multi-case Simulations</a></li>
 </ul>
@@ -162,7 +162,7 @@
         
           <li><a href="../../index.html">JSON Interface</a> &raquo;</li>
         
-      <li>3. List of Keys</li>
+      <li>4. List of Keys</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -182,12 +182,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="list-of-keys">
-<span id="jsoninterface-keys"></span><h1>3. List of Keys<a class="headerlink" href="#list-of-keys" title="Permalink to this headline">¶</a></h1>
+<span id="jsoninterface-keys"></span><h1>4. List of Keys<a class="headerlink" href="#list-of-keys" title="Permalink to this headline">¶</a></h1>
 <p>In this page, an exhaustive list with the possible keys that can be defined in input JSON files for the <code class="docutils literal"><span class="pre">json_interface</span></code> application is provided. These are used to create the settings as discussed in <a class="reference internal" href="../../../tudatFeatures/index.html#tudatfeaturesindex"><span class="std std-ref">Tudat Libraries</span></a>.</p>
 <p>The type <span class="jsontype">path</span> before a key name denotes that a <span class="jsontype">string</span> such as <code class="docutils literal"><span class="pre">&quot;&#64;path(relPath)&quot;</span></code> has to be provided when using relative paths inside <a class="reference internal" href="../../modularFiles.html#jsoninterface-modularfiles"><span class="std std-ref">Modular Files</span></a>. When providing absolute paths or not using modular files, both <code class="docutils literal"><span class="pre">&quot;&#64;path(file)&quot;</span></code> and <code class="docutils literal"><span class="pre">&quot;file&quot;</span></code> will work.</p>
-<p><span class="jsontype">T[]</span> denotes that an array of <span class="jsontype">T</span> is expected. If no number is indicated, there is no constraint on the size of the array. For instance, <span class="jsontype">number[6]</span> is used for state vectors. A second <span class="jsontype">[]</span> is used to represent matrices, e.g. <span class="jsontype">number[][]</span> corresponds to <code class="xref py py-class docutils literal"><span class="pre">Eigen::MatrixXd</span></code>, and <span class="jsontype">number[3][3]</span> corresponds to <code class="xref py py-class docutils literal"><span class="pre">Eigen::Matrix3d</span></code>. When a vector is expected (i.e. an <code class="xref py py-class docutils literal"><span class="pre">Eigen::Matrix</span></code> with only one row and/or one column), it is possible to provide it as a an array of numbers (e.g. <code class="docutils literal"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code>) only if at least one of the dimensions of the expected <code class="xref py py-class docutils literal"><span class="pre">Eigen::Matrix</span></code> is of fixed size, and this size matches the length of the provided array. If the expected matrix has dynamic size (both for the number of rows and columns), it is mandatory to provide an array of arrays (e.g. <code class="docutils literal"><span class="pre">[[1,</span> <span class="pre">2,</span> <span class="pre">3]]</span></code> will be converted to a matrix of dynamic size 1x3, while <code class="docutils literal"><span class="pre">[[1],</span> <span class="pre">[2],</span> <span class="pre">[3]]</span></code> will be converted to a matrix of dynamic size 3x1).</p>
-<p>Some keys appear twice because they accept different value types (and a different description for each case is provided). For instance, the body’s initial state can be of value type <span class="jsontype">number[6]</span> (where a Cartesian state is assumed), or an <span class="jsontype">object</span> containing keys such as <span class="jsonkey">x</span>, <span class="jsonkey">vy</span>, <span class="jsonkey">semiMajorAxis</span>, <span class="jsonkey">inclination</span>, etc.</p>
-<p>In some parts, key paths are used to refer to the key of a given object in the JSON tree. The different keys are separated by dots. For instance <span class="jsonkey">atmosphere.type</span> refers to the key <span class="jsonkey">type</span> of an <span class="jsontype">object</span> assigned to the key <span class="jsonkey">atmosphere</span>. When the key path is absolute (or in other words relative to the JSON defined in the main input file), the key path starts with a dot (for instance, <span class="jsonkey">.initialEpoch</span> refers to the key <span class="jsonkey">initialEpoch</span> defined directly in the root object of the main input file). When the key path does not start with a dot, it is relative to the context in which it is mentioned. For arrays, the index (starting from zero) is used, so <span class="jsonkey">centralBodies[1]</span> refers to the second body in the <span class="jsontype">array</span> assigned to the key <span class="jsonkey">centralBodies</span>.</p>
+<p><span class="jsontype">T[ ]</span> denotes that an array of <span class="jsontype">T</span> is expected. If no number is indicated, there is no constraint on the size of the array. For instance, <span class="jsontype">number[ 6 ]</span> is used for state vectors. A second <span class="jsontype">[ ]</span> is used to represent matrices, e.g. <span class="jsontype">number[ ][ ]</span> corresponds to <code class="xref py py-class docutils literal"><span class="pre">Eigen::MatrixXd</span></code>, and <span class="jsontype">number[ 3 ][ 3 ]</span> corresponds to <code class="xref py py-class docutils literal"><span class="pre">Eigen::Matrix3d</span></code>. When a vector is expected (i.e. an <code class="xref py py-class docutils literal"><span class="pre">Eigen::Matrix</span></code> with only one row and/or one column), it is possible to provide it as a an array of numbers (e.g. <code class="docutils literal"><span class="pre">[</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3</span> <span class="pre">]</span></code>) only if at least one of the dimensions of the expected <code class="xref py py-class docutils literal"><span class="pre">Eigen::Matrix</span></code> is of fixed size, and this size matches the length of the provided array. If the expected matrix has dynamic size (both for the number of rows and columns), it is mandatory to provide an array of arrays (e.g. <code class="docutils literal"><span class="pre">[</span> <span class="pre">[</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3</span> <span class="pre">]</span> <span class="pre">]</span></code> will be converted to a matrix of dynamic size 1x3, while <code class="docutils literal"><span class="pre">[</span> <span class="pre">[</span> <span class="pre">1</span> <span class="pre">],</span> <span class="pre">[</span> <span class="pre">2</span> <span class="pre">],</span> <span class="pre">[</span> <span class="pre">3</span> <span class="pre">]</span> <span class="pre">]</span></code> will be converted to a matrix of dynamic size 3x1).</p>
+<p>Some keys appear twice because they accept different value types (and a different description for each case is provided). For instance, the body’s initial state can be of value type <span class="jsontype">number[ 6 ]</span> (where a Cartesian state is assumed), or an <span class="jsontype">object</span> containing keys such as <span class="jsonkey">x</span>, <span class="jsonkey">vy</span>, <span class="jsonkey">semiMajorAxis</span>, <span class="jsonkey">inclination</span>, etc.</p>
+<p>In some parts, key paths are used to refer to the key of a given object in the JSON tree. The different keys are separated by dots. For instance <span class="jsonkey">atmosphere.type</span> refers to the key <span class="jsonkey">type</span> of an <span class="jsontype">object</span> assigned to the key <span class="jsonkey">atmosphere</span>. When the key path is absolute (or in other words relative to the JSON defined in the main input file), the key path starts with a dot (for instance, <span class="jsonkey">.initialEpoch</span> refers to the key <span class="jsonkey">initialEpoch</span> defined directly in the root object of the main input file). When the key path does not start with a dot, it is relative to the context in which it is mentioned. For arrays, the index (starting from zero) is used, so <span class="jsonkey">centralBodies[ 1 ]</span> refers to the second body in the <span class="jsontype">array</span> assigned to the key <span class="jsonkey">centralBodies</span>.</p>
 <p><span class="showall">Unfold All</span> <span class="hideall">Fold All</span></p>
 <ul>
 <li><p class="first"><span class="jsontype">number</span> <span class="jsonkey">initialEpoch</span> (optional). Used for the initial time of the integrator (if not provided inside the integrator object) and for interpolation of Spice ephemeris (if Spice enabled and set to preload ephemeris).</p>
@@ -206,11 +206,11 @@
 </div>
 <ul class="simple">
 <li><span class="jsontype">boolean</span> <span class="jsonkey">useStandardKernels</span> (mandatory). Whether the standard kernels should be preloaded.</li>
-<li><span class="jsontype">path[]</span> <span class="jsonkey">alternativeKernels</span> (optional). Additional kernels to load when using standard kernels. Default value: <code class="docutils literal"><span class="pre">[]</span></code>.</li>
-<li><span class="jsontype">path[]</span> <span class="jsonkey">kernels</span> (mandatory if <span class="jsonkey">useStandardKernels</span> set to <code class="docutils literal"><span class="pre">false</span></code>). Kernels to load when not using standard kernels.</li>
-<li><span class="jsontype">boolean</span> <span class="jsonkey">preloadEphemeris</span> (optional). Whether the kernels should be preloaded from <span class="jsonkey">.initialEpoch</span> - <span class="jsonkey">interpolationOffsets[0]</span> to <span class="jsonkey">.finalEpoch</span> + <span class="jsonkey">interpolationOffsets[1]</span>. Default value: <code class="docutils literal"><span class="pre">true</span></code>.</li>
+<li><span class="jsontype">path[ ]</span> <span class="jsonkey">alternativeKernels</span> (optional). Additional kernels to load when using standard kernels. Default value: <code class="docutils literal"><span class="pre">[</span> <span class="pre">]</span></code>.</li>
+<li><span class="jsontype">path[ ]</span> <span class="jsonkey">kernels</span> (mandatory if <span class="jsonkey">useStandardKernels</span> set to <code class="docutils literal"><span class="pre">false</span></code>). Kernels to load when not using standard kernels.</li>
+<li><span class="jsontype">boolean</span> <span class="jsonkey">preloadEphemeris</span> (optional). Whether the kernels should be preloaded from <span class="jsonkey">.initialEpoch</span> - <span class="jsonkey">interpolationOffsets[ 0 ]</span> to <span class="jsonkey">.finalEpoch</span> + <span class="jsonkey">interpolationOffsets[ 1 ]</span>. Default value: <code class="docutils literal"><span class="pre">true</span></code>.</li>
 <li><span class="jsontype">number</span> <span class="jsonkey">interpolationStep</span> (optional). Step to use for interpolation of ephemeris. Default value: <code class="docutils literal"><span class="pre">300.0</span></code>.</li>
-<li><span class="jsontype">number[2]</span> <span class="jsonkey">interpolationOffsets</span> (optional). Offsets to use for the interpolation. Default value: <code class="docutils literal"><span class="pre">[10*interpolationStep,</span> <span class="pre">10*interpolationStep]</span></code>.</li>
+<li><span class="jsontype">number[ 2 ]</span> <span class="jsonkey">interpolationOffsets</span> (optional). Offsets to use for the interpolation. Default value: <code class="docutils literal"><span class="pre">[10*interpolationStep,</span> <span class="pre">10*interpolationStep]</span></code>.</li>
 </ul>
 </div>
 </div></blockquote>
@@ -224,7 +224,7 @@
 <ul>
 <li><p class="first"><span class="jsontype">boolean</span> <span class="jsonkey">useDefaultSettings</span> (optional). Whether the default settings should be used. If any of the settings listed below is provided, the default settings will be overridden. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</p>
 </li>
-<li><p class="first"><span class="jsontype">number[6]</span> <span class="jsonkey">initialState</span> (optional). Initial Cartesian state. Used to define a segment of the propagator’s initial states (if not defined).</p>
+<li><p class="first"><span class="jsontype">number[ 6 ]</span> <span class="jsonkey">initialState</span> (optional). Initial Cartesian state. Used to define a segment of the propagator’s initial states (if not defined).</p>
 </li>
 <li><p class="first"><span class="jsontype">object</span> <span class="jsonkey">initialState</span> (optional). Initial state. Used to define a segment of the propagator’s initial states (if not defined).</p>
 <blockquote>
@@ -295,7 +295,7 @@
 </li>
 <li><p class="first"><span class="jsontype">number</span> <span class="jsonkey">mass</span> (optional). Initial/constant mass. Used to define the constant mass of the body or its initial mass when it is varying, in which case it will be used to define an entry of the propagator’s initial states (if not defined).</p>
 </li>
-<li><p class="first"><span class="jsontype">number[7]</span> <span class="jsonkey">rotationalState</span> (optional). Initial rotational state. Used to define a segment of the propagator’s initial states (if not defined).</p>
+<li><p class="first"><span class="jsontype">number[ 7 ]</span> <span class="jsonkey">rotationalState</span> (optional). Initial rotational state. Used to define a segment of the propagator’s initial states (if not defined).</p>
 </li>
 <li><p class="first"><span class="jsontype">number</span> <span class="jsonkey">referenceArea</span> (optional). Area to be used for aerodynamics and radiation pressure settings (if not defined for these individual objects).</p>
 </li>
@@ -311,7 +311,7 @@
 <li><span class="jsontype">number</span> <span class="jsonkey">referenceLength</span> (mandatory if moment coefficients provided). Reference length with which aerodynamic moments are non-dimensionalized.</li>
 <li><span class="jsontype">number</span> <span class="jsonkey">lateralReferenceLength</span> (mandatory if moment coefficients provided). Lateral reference length with which aerodynamic moments are non-dimensionalized.</li>
 <li><span class="jsontype">number</span> <span class="jsonkey">momentReferencePoint</span> (mandatory if moment coefficients provided). Point w.r.t. which the arm of the moment on a vehicle panel is determined.</li>
-<li><span class="jsontype">string[]</span> <span class="jsonkey">independentVariableNames</span> (optional). Vector with identifiers of the physical meaning of each independent variable of the aerodynamic coefficients. Possible values: <code class="docutils literal"><span class="pre">machNumber</span></code>, <code class="docutils literal"><span class="pre">angleOfAttack</span></code>, <code class="docutils literal"><span class="pre">angleOfSideslip</span></code>, <code class="docutils literal"><span class="pre">altitude</span></code>, <code class="docutils literal"><span class="pre">controlSurfaceDeflection</span></code>, <code class="docutils literal"><span class="pre">undefined</span></code>.</li>
+<li><span class="jsontype">string[ ]</span> <span class="jsonkey">independentVariableNames</span> (optional). Vector with identifiers of the physical meaning of each independent variable of the aerodynamic coefficients. Possible values: <code class="docutils literal"><span class="pre">machNumber</span></code>, <code class="docutils literal"><span class="pre">angleOfAttack</span></code>, <code class="docutils literal"><span class="pre">angleOfSideslip</span></code>, <code class="docutils literal"><span class="pre">altitude</span></code>, <code class="docutils literal"><span class="pre">controlSurfaceDeflection</span></code>, <code class="docutils literal"><span class="pre">undefined</span></code>.</li>
 <li><span class="jsontype">boolean</span> <span class="jsonkey">areCoefficientsInAerodynamicFrame</span> (optional). Boolean to define whether the aerodynamic coefficients are defined in the aerodynamic frame (lift, drag, side force) or in the body frame (typically denoted as Cx, Cy, Cz). Default value: <code class="docutils literal"><span class="pre">FIXME</span></code>.</li>
 <li><span class="jsontype">boolean</span> <span class="jsonkey">areCoefficientsInNegativeAxisDirection</span> (optional). Boolean to define whether the aerodynamic coefficients are positive along the positive axes of the body or aerodynamic frame. FIXME Note that for (lift, drag, side force), the coefficients are typically defined in negative direction. Default value: <code class="docutils literal"><span class="pre">true</span></code>.</li>
 </ul>
@@ -321,8 +321,8 @@
 </div>
 <ul class="simple">
 <li><span class="jsontype">number</span> <span class="jsonkey">dragCoefficient</span> (optional). FIXME.</li>
-<li><span class="jsontype">number[3]</span> <span class="jsonkey">forceCoefficients</span> (mandatory if <span class="jsonkey">dragCoefficient</span> undefined). Constant force coefficients. Default value: <code class="docutils literal"><span class="pre">FIXME</span></code>.</li>
-<li><span class="jsontype">number[3]</span> <span class="jsonkey">momentCoefficients</span> (optional). Constant moment coefficients.</li>
+<li><span class="jsontype">number[ 3 ]</span> <span class="jsonkey">forceCoefficients</span> (mandatory if <span class="jsonkey">dragCoefficient</span> undefined). Constant force coefficients. Default value: <code class="docutils literal"><span class="pre">FIXME</span></code>.</li>
+<li><span class="jsontype">number[ 3 ]</span> <span class="jsonkey">momentCoefficients</span> (optional). Constant moment coefficients.</li>
 </ul>
 </div>
 <div class="toggle docutils container">
@@ -330,11 +330,11 @@
 <p><span class="arrow">Tabulated Coefficients Aerodynamics</span></p>
 </div>
 <ul>
-<li><p class="first"><span class="jsontype">path[3]</span> <span class="jsonkey">forceCoefficients</span> (mandatory). Paths to the files containing the values for each force coefficient as a function of the independent variables.</p>
+<li><p class="first"><span class="jsontype">path[ 3 ]</span> <span class="jsonkey">forceCoefficients</span> (mandatory). Paths to the files containing the values for each force coefficient as a function of the independent variables.</p>
 </li>
-<li><p class="first"><span class="jsontype">path[3]</span> <span class="jsonkey">momentCoefficients</span> (optional). Paths to the files containing the values for each moment coefficient as a function of the independent variables.</p>
+<li><p class="first"><span class="jsontype">path[ 3 ]</span> <span class="jsonkey">momentCoefficients</span> (optional). Paths to the files containing the values for each moment coefficient as a function of the independent variables.</p>
 </li>
-<li><p class="first"><span class="jsontype">number[]</span> <span class="jsonkey">independentVariableValues</span> (optional). Values of the independent variable, if not provided in the input files, when only one independent variable is used.</p>
+<li><p class="first"><span class="jsontype">number[ ]</span> <span class="jsonkey">independentVariableValues</span> (optional). Values of the independent variable, if not provided in the input files, when only one independent variable is used.</p>
 </li>
 <li><p class="first"><span class="jsontype">object</span> <span class="jsonkey">interpolator</span> (optional). Settings to be used for creating the one-dimensional interpolator of data, when only one independent variable is used.</p>
 <blockquote>
@@ -346,6 +346,7 @@
 <li><span class="jsontype">string</span> <span class="jsonkey">type</span> (mandatory). Possible values: <code class="docutils literal"><span class="pre">&quot;linear&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;cubicSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;lagrange&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;hermiteSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;piecewiseConstant&quot;</span></code>.</li>
 <li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
 <li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Boundary handling method, in case the independent variable is outside the specified range. Possible values: <code class="docutils literal"><span class="pre">&quot;throwException&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValue&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValueWithWarning&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolateWithWarning&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>.</li>
 </ul>
 <div class="toggle docutils container">
 <div class="header docutils container">
@@ -353,7 +354,9 @@
 </div>
 <ul class="simple">
 <li><span class="jsontype">number</span> <span class="jsonkey">order</span> (mandatory). Order of the Lagrange interpolator.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</li>
+<li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">lagrangeBoundaryHandling</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</li>
 </ul>
 </div>
 </div>
@@ -381,7 +384,8 @@
 <li><span class="jsontype">number</span> <span class="jsonkey">densityScaleHeight</span> (mandatory). Scale height for density profile of atmosphere.</li>
 <li><span class="jsontype">number</span> <span class="jsonkey">constantTemperature</span> (mandatory). Constant atmospheric temperature.</li>
 <li><span class="jsontype">number</span> <span class="jsonkey">densityAtZeroAltitude</span> (mandatory). Atmospheric density at ground level.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">specificGasConstant</span> (mandatory). Specific gas constant for (constant) atmospheric chemical composition.</li>
+<li><span class="jsontype">number</span> <span class="jsonkey">specificGasConstant</span> (optional). Specific gas constant for (constant) atmospheric chemical composition. Default value: 287.</li>
+<li><span class="jsontype">number</span> <span class="jsonkey">ratioOfSpecificHeats</span> (optional). Ratio of specific heats for (constant) atmospheric chemical composition. Default value: 1.4.</li>
 </ul>
 </div>
 <div class="toggle docutils container">
@@ -389,7 +393,12 @@
 <p><span class="arrow">Tabulated Atmosphere</span></p>
 </div>
 <ul class="simple">
-<li><span class="jsontype">path</span> <span class="jsonkey">file</span> (mandatory). File containing atmospheric properties, file should contain four columns of atmospheric data with altitude, density, pressure and temperature, respectively.</li>
+<li><span class="jsontype">map</span> <span class="jsonkey">file</span> (mandatory). Map of files containing atmospheric properties, the map should contain as many files as independent variables and each file should contain as many dimensions as dependent variables.</li>
+<li><span class="jsontype">string[ ]</span> <span class="jsonkey">independentVariablesNames</span> (mandatory). Names of independent variables included in the tabulated atmosphere. Possible values: <code class="docutils literal"><span class="pre">&quot;altitude&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;longitude&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;latitude&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;time&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;altitude&quot;</span></code>.</li>
+<li><span class="jsontype">string[ ]</span> <span class="jsonkey">dependentVariablesNames</span> (mandatory). Names of dependent variables included in the tabulated atmosphere. Possible values: <code class="docutils literal"><span class="pre">&quot;density&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;pressure&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;temperature&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;gasConstant&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;specificHeatRatio&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;molarMass&quot;</span></code>. Default values: <code class="docutils literal"><span class="pre">&quot;density&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;pressure&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;temperature&quot;</span></code>.</li>
+<li><span class="jsontype">number</span> <span class="jsonkey">specificGasConstant</span> (optional). Specific gas constant for (constant) atmospheric chemical composition. Default value: 287.</li>
+<li><span class="jsontype">number</span> <span class="jsonkey">ratioOfSpecificHeats</span> (optional). Ratio of specific heats for (constant) atmospheric chemical composition. Default value: 1.4.</li>
+<li><span class="jsontype">string[ ]</span> <span class="jsonkey">boundaryHandling</span> (optional). Boundary handling methods, in case an independent variable is outside the specified range. Possible values: <code class="docutils literal"><span class="pre">&quot;throwException&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValue&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValueWithWarning&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolateWithWarning&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;boundaryValue&quot;</span></code>.</li>
 </ul>
 </div>
 <div class="toggle docutils container">
@@ -419,7 +428,7 @@
 <p><span class="arrow">Constant Ephemeris</span></p>
 </div>
 <ul class="simple">
-<li><span class="jsontype">number[6]</span> <span class="jsonkey">constantState</span> (mandatory). Constant Cartesian state.</li>
+<li><span class="jsontype">number[ 6 ]</span> <span class="jsonkey">constantState</span> (mandatory). Constant Cartesian state.</li>
 </ul>
 </div>
 <div class="toggle docutils container">
@@ -427,7 +436,7 @@
 <p><span class="arrow">Kepler Ephemeris</span></p>
 </div>
 <ul class="simple">
-<li><span class="jsontype">number[6]</span> <span class="jsonkey">initialStateInKeplerianElements</span> (mandatory). Initial Keplerian state.</li>
+<li><span class="jsontype">number[ 6 ]</span> <span class="jsonkey">initialStateInKeplerianElements</span> (mandatory). Initial Keplerian state.</li>
 <li><span class="jsontype">number</span> <span class="jsonkey">epochOfInitialState</span> (mandatory). Initial epoch from which propagation of Kepler orbit is performed.</li>
 <li><span class="jsontype">number</span> <span class="jsonkey">centralBodyGravitationalParameter</span> (mandatory). Gravitational parameter of central body about which the Kepler orbit is defined.</li>
 <li><span class="jsontype">number</span> <span class="jsonkey">rootFinderAbsoluteTolerance</span> (optional). Convergence tolerance for root finder used to convert mean to eccentric anomaly. Default value: <code class="docutils literal"><span class="pre">200.0</span> <span class="pre">*</span> <span class="pre">std::numeric_limits&lt;</span> <span class="pre">double</span> <span class="pre">&gt;::epsilon(</span> <span class="pre">)</span></code>.</li>
@@ -474,6 +483,7 @@
 <li><span class="jsontype">string</span> <span class="jsonkey">type</span> (mandatory). Possible values: <code class="docutils literal"><span class="pre">&quot;linear&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;cubicSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;lagrange&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;hermiteSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;piecewiseConstant&quot;</span></code>.</li>
 <li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
 <li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Boundary handling method, in case the independent variable is outside the specified range. Possible values: <code class="docutils literal"><span class="pre">&quot;throwException&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValue&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValueWithWarning&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolateWithWarning&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>.</li>
 </ul>
 <div class="toggle docutils container">
 <div class="header docutils container">
@@ -481,7 +491,9 @@
 </div>
 <ul class="simple">
 <li><span class="jsontype">number</span> <span class="jsonkey">order</span> (mandatory). Order of the Lagrange interpolator.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</li>
+<li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">lagrangeBoundaryHandling</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</li>
 </ul>
 </div>
 </div>
@@ -550,15 +562,15 @@
 <ul class="simple">
 <li><span class="jsontype">number</span> <span class="jsonkey">gravitationalParameter</span> (mandatory). Value of the associated gravitational parameter.</li>
 <li><span class="jsontype">number</span> <span class="jsonkey">referenceRadius</span> (mandatory). Value of the associated reference radius.</li>
-<li><span class="jsontype">number[][]</span> <span class="jsonkey">cosineCoefficients</span> (mandatory). Matrix containing the cosine spherical harmonic coefficients (geodesy-normalised). Rows correspond to degrees and columns to orders.</li>
-<li><span class="jsontype">number[][]</span> <span class="jsonkey">sineCoefficients</span> (mandatory). Matrix containing the sine spherical harmonic coefficients (geodesy-normalised). Rows correspond to degrees and columns to orders.</li>
+<li><span class="jsontype">number[ ][ ]</span> <span class="jsonkey">cosineCoefficients</span> (mandatory). Matrix containing the cosine spherical harmonic coefficients (geodesy-normalised). Rows correspond to degrees and columns to orders.</li>
+<li><span class="jsontype">number[ ][ ]</span> <span class="jsonkey">sineCoefficients</span> (mandatory). Matrix containing the sine spherical harmonic coefficients (geodesy-normalised). Rows correspond to degrees and columns to orders.</li>
 <li><span class="jsontype">string</span> <span class="jsonkey">associatedReferenceFrame</span> (mandatory). Identifier of the associated reference frame, e.g. <code class="docutils literal"><span class="pre">IAU_Earth</span></code>.</li>
 </ul>
 </div>
 </div>
 </div></blockquote>
 </li>
-<li><p class="first"><span class="jsontype">object[]</span> <span class="jsonkey">gravityFieldVariation</span> (optional). Used to provide a list of gravity field variation settings.</p>
+<li><p class="first"><span class="jsontype">object[ ]</span> <span class="jsonkey">gravityFieldVariation</span> (optional). Used to provide a list of gravity field variation settings.</p>
 <blockquote>
 <div><div class="toggle docutils container">
 <div class="header docutils container">
@@ -572,9 +584,9 @@
 <p><span class="arrow">Basic Solid Body Gravity Field Variation</span></p>
 </div>
 <ul>
-<li><p class="first"><span class="jsontype">string[]</span> <span class="jsonkey">deformingBodies</span> (mandatory). List with the names of the bodies causing tidal deformation.</p>
+<li><p class="first"><span class="jsontype">string[ ]</span> <span class="jsonkey">deformingBodies</span> (mandatory). List with the names of the bodies causing tidal deformation.</p>
 </li>
-<li><p class="first"><span class="jsontype">string[][]</span> <span class="jsonkey">loveNumbers</span> (mandatory). List of Love numbers for the deformed body. Each element is a complex number, which in JSON is represented as a string. For instance, <code class="docutils literal"><span class="pre">2</span> <span class="pre">-</span> <span class="pre">0.5i</span></code> is written as <code class="docutils literal"><span class="pre">&quot;(2,-0.5)&quot;</span></code>.</p>
+<li><p class="first"><span class="jsontype">string[ ][ ]</span> <span class="jsonkey">loveNumbers</span> (mandatory). List of Love numbers for the deformed body. Each element is a complex number, which in JSON is represented as a string. For instance, <code class="docutils literal"><span class="pre">2</span> <span class="pre">-</span> <span class="pre">0.5i</span></code> is written as <code class="docutils literal"><span class="pre">&quot;(2,-0.5)&quot;</span></code>.</p>
 </li>
 <li><p class="first"><span class="jsontype">number</span> <span class="jsonkey">referenceRadius</span> (mandatory). Reference (typically equatorial) radius of the body being deformed.</p>
 </li>
@@ -601,6 +613,7 @@
 <li><span class="jsontype">string</span> <span class="jsonkey">type</span> (mandatory). Possible values: <code class="docutils literal"><span class="pre">&quot;linear&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;cubicSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;lagrange&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;hermiteSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;piecewiseConstant&quot;</span></code>.</li>
 <li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
 <li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Boundary handling method, in case the independent variable is outside the specified range. Possible values: <code class="docutils literal"><span class="pre">&quot;throwException&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValue&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValueWithWarning&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolateWithWarning&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>.</li>
 </ul>
 <div class="toggle docutils container">
 <div class="header docutils container">
@@ -608,7 +621,9 @@
 </div>
 <ul class="simple">
 <li><span class="jsontype">number</span> <span class="jsonkey">order</span> (mandatory). Order of the Lagrange interpolator.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</li>
+<li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">lagrangeBoundaryHandling</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</li>
 </ul>
 </div>
 </div>
@@ -643,6 +658,7 @@
 <li><span class="jsontype">string</span> <span class="jsonkey">type</span> (mandatory). Possible values: <code class="docutils literal"><span class="pre">&quot;linear&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;cubicSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;lagrange&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;hermiteSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;piecewiseConstant&quot;</span></code>.</li>
 <li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
 <li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Boundary handling method, in case the independent variable is outside the specified range. Possible values: <code class="docutils literal"><span class="pre">&quot;throwException&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValue&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValueWithWarning&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolateWithWarning&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>.</li>
 </ul>
 <div class="toggle docutils container">
 <div class="header docutils container">
@@ -650,7 +666,9 @@
 </div>
 <ul class="simple">
 <li><span class="jsontype">number</span> <span class="jsonkey">order</span> (mandatory). Order of the Lagrange interpolator.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</li>
+<li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">lagrangeBoundaryHandling</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</li>
 </ul>
 </div>
 </div>
@@ -670,7 +688,7 @@
 <ul class="simple">
 <li><span class="jsontype">string</span> <span class="jsonkey">type</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;cannonBall&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cannonBall&quot;</span></code>.</li>
 <li><span class="jsontype">string</span> <span class="jsonkey">sourceBody</span> (optional). Name of the radiating body. If not provided, it will be retrieved from the key to which the radiation pressure object is assigned.</li>
-<li><span class="jsontype">string[]</span> <span class="jsonkey">occultingBodies</span> (optional). List with the names of the bodies causing (partial) occultation, if any.</li>
+<li><span class="jsontype">string[ ]</span> <span class="jsonkey">occultingBodies</span> (optional). List with the names of the bodies causing (partial) occultation, if any.</li>
 </ul>
 <div class="toggle docutils container">
 <div class="header docutils container">
@@ -702,7 +720,7 @@
 <ul class="simple">
 <li><span class="jsontype">number</span> <span class="jsonkey">initialTime</span> (mandatory). Time at which <span class="jsonkey">initialOrientation</span> represents the instantaneous rotation.</li>
 <li><span class="jsontype">number</span> <span class="jsonkey">rotationRate</span> (mandatory). Rotation rate of body about its local z-axis.</li>
-<li><span class="jsontype">number[3][3]</span> <span class="jsonkey">initialOrientation</span> (optional). Rotation from base to target frame at <span class="jsonkey">initialTime</span>. If not specified, will be computed using Spice.</li>
+<li><span class="jsontype">number[ 3 ][ 3 ]</span> <span class="jsonkey">initialOrientation</span> (optional). Rotation from base to target frame at <span class="jsonkey">initialTime</span>. If not specified, will be computed using Spice.</li>
 </ul>
 </div>
 <div class="toggle docutils container">
@@ -749,7 +767,7 @@
 </div>
 </div></blockquote>
 </li>
-<li><p class="first"><span class="jsontype">object[]</span> <span class="jsonkey">propagators</span> (mandatory). Used to define the propagator(s), sets the Tudat <a class="reference internal" href="../../../tudatFeatures/propagationSetup/propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> class.</p>
+<li><p class="first"><span class="jsontype">object[ ]</span> <span class="jsonkey">propagators</span> (mandatory). Used to define the propagator(s), sets the Tudat <a class="reference internal" href="../../../tudatFeatures/propagationSetup/propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> class.</p>
 <blockquote>
 <div><div class="toggle docutils container">
 <div class="header docutils container">
@@ -757,8 +775,8 @@
 </div>
 <ul class="simple">
 <li><span class="jsontype">string</span> <span class="jsonkey">integratedStateType</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;translational&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;mass&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;rotational&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;translational&quot;</span></code>.</li>
-<li><span class="jsontype">string[]</span> <span class="jsonkey">bodiesToPropagate</span> (mandatory). Names of the bodies to propagate.</li>
-<li><span class="jsontype">number[]</span> <span class="jsonkey">initialStates</span> (optional). Vector containing the concatenated initial states of all the bodies to be propagated. If not defined, it will be determined from the properties <span class="jsonkey">initialState</span>, <span class="jsonkey">mass</span> or <span class="jsonkey">rotationalState</span> of the bodies to be propagated. If all the bodies to propagate are celestial bodies and this property is not defined, the ephemeris at the initial epoch will be used.</li>
+<li><span class="jsontype">string[ ]</span> <span class="jsonkey">bodiesToPropagate</span> (mandatory). Names of the bodies to propagate.</li>
+<li><span class="jsontype">number[ ]</span> <span class="jsonkey">initialStates</span> (optional). Vector containing the concatenated initial states of all the bodies to be propagated. If not defined, it will be determined from the properties <span class="jsonkey">initialState</span>, <span class="jsonkey">mass</span> or <span class="jsonkey">rotationalState</span> of the bodies to be propagated. If all the bodies to propagate are celestial bodies and this property is not defined, the ephemeris at the initial epoch will be used.</li>
 </ul>
 <div class="toggle docutils container">
 <div class="header docutils container">
@@ -767,9 +785,9 @@
 <ul>
 <li><p class="first"><span class="jsontype">string</span> <span class="jsonkey">type</span> (optional). Type of the translational propagator to be used. Possible values: <code class="docutils literal"><span class="pre">&quot;cowell&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;encke&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;gaussKeplerian&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;gaussModifiedEquinoctial&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;unifiedStateModelQuaternions&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;unifiedStateModelModifiedRodriguesParameters&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;unifiedStateModelExponentialMap&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cowell&quot;</span></code>.</p>
 </li>
-<li><p class="first"><span class="jsontype">string[]</span> <span class="jsonkey">centralBodies</span> (mandatory). Names of the central bodies.</p>
+<li><p class="first"><span class="jsontype">string[ ]</span> <span class="jsonkey">centralBodies</span> (mandatory). Names of the central bodies.</p>
 </li>
-<li><p class="first"><span class="jsontype">object[]</span> <span class="jsonkey">accelerations</span> (mandatory). Map in which each object contains a map of acceleration lists. The keys of the outer map are the names of the bodies undergoing the accelerations, while the keys of the inner maps are the names of the bodies exerting the accelerations. For instance, <span class="jsonkey">accelerations.satellite.Earth</span> is read as: accelerations on satellite caused by Earth.</p>
+<li><p class="first"><span class="jsontype">object[ ]</span> <span class="jsonkey">accelerations</span> (mandatory). Map in which each object contains a map of acceleration lists. The keys of the outer map are the names of the bodies undergoing the accelerations, while the keys of the inner maps are the names of the bodies exerting the accelerations. For instance, <span class="jsonkey">accelerations.satellite.Earth</span> is read as: accelerations on satellite caused by Earth.</p>
 <blockquote>
 <div><div class="toggle docutils container">
 <div class="header docutils container">
@@ -843,7 +861,7 @@
 <ul class="simple">
 <li><span class="jsontype">number</span> <span class="jsonkey">constantMagnitude</span> (mandatory). Constant thrust magnitude that is to be used.</li>
 <li><span class="jsontype">number</span> <span class="jsonkey">specificImpulse</span> (mandatory). Constant specific impulse that is to be used.</li>
-<li><span class="jsontype">number[3]</span> <span class="jsonkey">bodyFixedDirection</span> (optional). Direction of thrust force in body-fixed frame. Default value: <code class="docutils literal"><span class="pre">[1,</span> <span class="pre">0,</span> <span class="pre">0]</span></code>.</li>
+<li><span class="jsontype">number[ 3 ]</span> <span class="jsonkey">bodyFixedDirection</span> (optional). Direction of thrust force in body-fixed frame. Default value: <code class="docutils literal"><span class="pre">[1,</span> <span class="pre">0,</span> <span class="pre">0]</span></code>.</li>
 </ul>
 </div>
 <div class="toggle docutils container">
@@ -880,9 +898,9 @@
 </div>
 <ul class="simple">
 <li><span class="jsontype">object</span> <span class="jsonkey">map</span> (mandatory if <span class="jsonkey">independentVariableValues</span>, <span class="jsonkey">dependentVariableValues</span> or <span class="jsonkey">file</span> undefined). Object containing the values of the dependent variable (scalar or vectorial) to be interpolated. The keys are the string representation of the values of the independent variable (scalar).</li>
-<li><span class="jsontype">number[]</span> <span class="jsonkey">independentVariableValues</span> (optional). List of values of the dependent variable (scalar).</li>
-<li><span class="jsontype">number[][]</span> <span class="jsonkey">dependentVariableValues</span> (optional). List of values of the independent variable (scalar or vectorial).</li>
-<li><span class="jsontype">number[][]</span> <span class="jsonkey">dependentVariableFirstDerivativeValues</span> (mandatory if the interpolator type is <code class="docutils literal"><span class="pre">&quot;hermiteSpline&quot;</span></code>). List of values of the first derivatives of the independent variable (scalar or vectorial).</li>
+<li><span class="jsontype">number[ ]</span> <span class="jsonkey">independentVariableValues</span> (optional). List of values of the dependent variable (scalar).</li>
+<li><span class="jsontype">number[ ][ ]</span> <span class="jsonkey">dependentVariableValues</span> (optional). List of values of the independent variable (scalar or vectorial).</li>
+<li><span class="jsontype">number[ ][ ]</span> <span class="jsonkey">dependentVariableFirstDerivativeValues</span> (mandatory if the interpolator type is <code class="docutils literal"><span class="pre">&quot;hermiteSpline&quot;</span></code>). List of values of the first derivatives of the independent variable (scalar or vectorial).</li>
 <li><span class="jsontype">path</span> <span class="jsonkey">file</span> (optional). Path to the file containing the data to be interpolated. Each line corresponds to a pair of dependent-independent values. The first column contains the values of the independent variables, while the second column (and subsequent columns for vectorial dependent variables) contains the values of the dependent variable. Empty characters (such as space or tabulator) can be used to separate values.</li>
 </ul>
 </div>
@@ -898,6 +916,7 @@
 <li><span class="jsontype">string</span> <span class="jsonkey">type</span> (mandatory). Possible values: <code class="docutils literal"><span class="pre">&quot;linear&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;cubicSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;lagrange&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;hermiteSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;piecewiseConstant&quot;</span></code>.</li>
 <li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
 <li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Boundary handling method, in case the independent variable is outside the specified range. Possible values: <code class="docutils literal"><span class="pre">&quot;throwException&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValue&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValueWithWarning&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolateWithWarning&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>.</li>
 </ul>
 <div class="toggle docutils container">
 <div class="header docutils container">
@@ -905,7 +924,9 @@
 </div>
 <ul class="simple">
 <li><span class="jsontype">number</span> <span class="jsonkey">order</span> (mandatory). Order of the Lagrange interpolator.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</li>
+<li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
+<li><span class="jsontype">string</span> <span class="jsonkey">lagrangeBoundaryHandling</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</li>
 </ul>
 </div>
 </div>
@@ -932,7 +953,7 @@
 <li><span class="jsontype">boolean</span> <span class="jsonkey">calculateLenseThirringCorrection</span> (optional). Whether the Lense-Thirring term is used. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
 <li><span class="jsontype">boolean</span> <span class="jsonkey">calculateDeSitterCorrection</span> (optional). Whether the de Sitter term is used. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
 <li><span class="jsontype">string</span> <span class="jsonkey">primaryBody</span> (mandatory). Name of primary body (e.g. Sun for acceleration acting on an Earth-orbiting satellite).</li>
-<li><span class="jsontype">number[3]</span> <span class="jsonkey">centralBodyAngularMomentum</span> (optional). Constant angular momentum of central body. Default value: <code class="docutils literal"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0]</span></code>.</li>
+<li><span class="jsontype">number[ 3 ]</span> <span class="jsonkey">centralBodyAngularMomentum</span> (optional). Constant angular momentum of central body. Default value: <code class="docutils literal"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0]</span></code>.</li>
 </ul>
 </div>
 <div class="toggle docutils container">
@@ -955,7 +976,7 @@
 <p><span class="arrow">Mass Propagator</span></p>
 </div>
 <ul>
-<li><p class="first"><span class="jsontype">object[]</span> <span class="jsonkey">massRateModels</span> (mandatory). Map of mass-rate model lists, with the keys being the names of the bodies they are associated to.</p>
+<li><p class="first"><span class="jsontype">object[ ]</span> <span class="jsonkey">massRateModels</span> (mandatory). Map of mass-rate model lists, with the keys being the names of the bodies they are associated to.</p>
 <blockquote>
 <div><div class="toggle docutils container">
 <div class="header docutils container">
@@ -985,7 +1006,7 @@
 <ul>
 <li><p class="first"><span class="jsontype">string</span> <span class="jsonkey">type</span> (optional). Type of the translational propagator to be used. Possible values: <code class="docutils literal"><span class="pre">&quot;quaternions&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;modifiedRodriguesParameters&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;exponentialMap&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;quaternions&quot;</span></code>.</p>
 </li>
-<li><p class="first"><span class="jsontype">object[]</span> <span class="jsonkey">torques</span> (mandatory). Map in which each object contains a map of torque lists. The keys of the outer map are the names of the bodies undergoing the torque, while the keys of the inner maps are the names of the bodies exerting the torque. For instance, <span class="jsonkey">torques.Earth.Moon</span> is read as: torque on Earth caused by the Moon.</p>
+<li><p class="first"><span class="jsontype">object[ ]</span> <span class="jsonkey">torques</span> (mandatory). Map in which each object contains a map of torque lists. The keys of the outer map are the names of the bodies undergoing the torque, while the keys of the inner maps are the names of the bodies exerting the torque. For instance, <span class="jsonkey">torques.Earth.Moon</span> is read as: torque on Earth caused by the Moon.</p>
 <blockquote>
 <div><div class="toggle docutils container">
 <div class="header docutils container">
@@ -1119,8 +1140,8 @@
 <p><span class="arrow">Spherical Harmonic Acceleration Terms Dependent Variable</span></p>
 </div>
 <ul class="simple">
-<li><span class="jsontype">int</span> <span class="jsonkey">maximumDegree</span> (mandatory). Value of the maximum degree of the spherical harmonics model, for which an acceleration has to be saved.</li>
-<li><span class="jsontype">int</span> <span class="jsonkey">maximumOrder</span> (mandatory). Value of the maximum order of the spherical harmonics model, for which an acceleration has to be saved.</li>
+<li><span class="jsontype">number</span> <span class="jsonkey">maximumDegree</span> (mandatory). Value of the maximum degree of the spherical harmonics model, for which an acceleration has to be saved.</li>
+<li><span class="jsontype">number</span> <span class="jsonkey">maximumOrder</span> (mandatory). Value of the maximum order of the spherical harmonics model, for which an acceleration has to be saved.</li>
 </ul>
 </div>
 <div class="toggle docutils container">
@@ -1139,8 +1160,8 @@
 <ul class="simple">
 <li><span class="jsontype">string</span> <span class="jsonkey">deformationType</span> (mandatory). Variable defining the type of gravity field variation. Possible values: <code class="docutils literal"><span class="pre">&quot;basicSolidBody&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;tabulatedVariation&quot;</span></code>.</li>
 <li><span class="jsontype">string</span> <span class="jsonkey">identifier</span> (optional). Variable denoting the identifier for gravity field variation.</li>
-<li><span class="jsontype">int</span> <span class="jsonkey">maximumDegree</span> (mandatory). Value of the maximum degree of the spherical harmonics model, for which an acceleration has to be saved.</li>
-<li><span class="jsontype">int</span> <span class="jsonkey">maximumOrder</span> (mandatory). Value of the maximum order of the spherical harmonics model, for which an acceleration has to be saved.</li>
+<li><span class="jsontype">number</span> <span class="jsonkey">maximumDegree</span> (mandatory). Value of the maximum degree of the spherical harmonics model, for which an acceleration has to be saved.</li>
+<li><span class="jsontype">number</span> <span class="jsonkey">maximumOrder</span> (mandatory). Value of the maximum order of the spherical harmonics model, for which an acceleration has to be saved.</li>
 </ul>
 </div>
 <div class="toggle docutils container">
@@ -1184,13 +1205,13 @@
 <p><span class="arrow">Multiple Termination Condition</span></p>
 </div>
 <ul class="simple">
-<li><span class="jsontype">object[]</span> <span class="jsonkey">anyOf</span> (mandatory if <span class="jsonkey">allOf</span> undefined). Object containing a list of single and/or multiple termination conditions. The propagation will terminate if any of the conditions is met.</li>
-<li><span class="jsontype">object[]</span> <span class="jsonkey">allOf</span> (mandatory if <span class="jsonkey">anyOf</span> undefined). Object containing a list of single and/or multiple termination conditions. The propagation will terminate only if all the conditions are met.</li>
+<li><span class="jsontype">object[ ]</span> <span class="jsonkey">anyOf</span> (mandatory if <span class="jsonkey">allOf</span> undefined). Object containing a list of single and/or multiple termination conditions. The propagation will terminate if any of the conditions is met.</li>
+<li><span class="jsontype">object[ ]</span> <span class="jsonkey">allOf</span> (mandatory if <span class="jsonkey">anyOf</span> undefined). Object containing a list of single and/or multiple termination conditions. The propagation will terminate only if all the conditions are met.</li>
 </ul>
 </div>
 </div></blockquote>
 </li>
-<li><p class="first"><span class="jsontype">object[]</span> <span class="jsonkey">export</span> (optional). Used to define the export settings. Each element represents an output file to which results will be saved.</p>
+<li><p class="first"><span class="jsontype">object[ ]</span> <span class="jsonkey">export</span> (optional). Used to define the export settings. Each element represents an output file to which results will be saved.</p>
 <blockquote>
 <div><div class="toggle docutils container">
 <div class="header docutils container">
@@ -1199,7 +1220,7 @@
 <ul>
 <li><p class="first"><span class="jsontype">path</span> <span class="jsonkey">file</span> (mandatory). Path to the file in which to save the results. The file will contain a matrix in which each row corresponds to an integration step and each column to the values of the variables in the same order as provided in <span class="jsonkey">variables</span>.</p>
 </li>
-<li><p class="first"><span class="jsontype">object[]</span> <span class="jsonkey">variables</span> (mandatory). List of variables that are going to be saved.</p>
+<li><p class="first"><span class="jsontype">object[ ]</span> <span class="jsonkey">variables</span> (mandatory). List of variables that are going to be saved.</p>
 <blockquote>
 <div><div class="toggle docutils container">
 <div class="header docutils container">
@@ -1232,8 +1253,8 @@
 <p><span class="arrow">Spherical Harmonic Acceleration Terms Dependent Variable</span></p>
 </div>
 <ul class="simple">
-<li><span class="jsontype">int</span> <span class="jsonkey">maximumDegree</span> (mandatory). Value of the maximum degree of the spherical harmonics model, for which an acceleration has to be saved.</li>
-<li><span class="jsontype">int</span> <span class="jsonkey">maximumOrder</span> (mandatory). Value of the maximum order of the spherical harmonics model, for which an acceleration has to be saved.</li>
+<li><span class="jsontype">number</span> <span class="jsonkey">maximumDegree</span> (mandatory). Value of the maximum degree of the spherical harmonics model, for which an acceleration has to be saved.</li>
+<li><span class="jsontype">number</span> <span class="jsonkey">maximumOrder</span> (mandatory). Value of the maximum order of the spherical harmonics model, for which an acceleration has to be saved.</li>
 </ul>
 </div>
 <div class="toggle docutils container">
@@ -1252,8 +1273,8 @@
 <ul class="simple">
 <li><span class="jsontype">string</span> <span class="jsonkey">deformationType</span> (mandatory). Variable defining the type of gravity field variation. Possible values: <code class="docutils literal"><span class="pre">&quot;basicSolidBody&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;tabulatedVariation&quot;</span></code>.</li>
 <li><span class="jsontype">string</span> <span class="jsonkey">identifier</span> (optional). Variable denoting the identifier for gravity field variation.</li>
-<li><span class="jsontype">int</span> <span class="jsonkey">maximumDegree</span> (mandatory). Value of the maximum degree of the spherical harmonics model, for which an acceleration has to be saved.</li>
-<li><span class="jsontype">int</span> <span class="jsonkey">maximumOrder</span> (mandatory). Value of the maximum order of the spherical harmonics model, for which an acceleration has to be saved.</li>
+<li><span class="jsontype">number</span> <span class="jsonkey">maximumDegree</span> (mandatory). Value of the maximum degree of the spherical harmonics model, for which an acceleration has to be saved.</li>
+<li><span class="jsontype">number</span> <span class="jsonkey">maximumOrder</span> (mandatory). Value of the maximum order of the spherical harmonics model, for which an acceleration has to be saved.</li>
 </ul>
 </div>
 <div class="toggle docutils container">
@@ -1331,10 +1352,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../customJsonApp.html" class="btn btn-neutral float-right" title="4. Writing Custom JSON-based Applications" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../../modularFiles.html" class="btn btn-neutral float-right" title="5. Modular Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../../tutorials/lifetimeMaximisationCPP/index.html" class="btn btn-neutral" title="2.5. Perturbed Earth-orbiting Satellite Lifetime Maximisation Using a Custom C++ Application" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../../tutorials/apolloCapsuleEntry/index.html" class="btn btn-neutral" title="3.5. Apollo Capsule Entry" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
