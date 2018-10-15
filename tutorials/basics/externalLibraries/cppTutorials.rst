@@ -1,7 +1,7 @@
 .. _cppTutorials:
 
-C++ Tutorials
-=============
+Selected C++ Aspects
+====================
 This page links to tutorials for C++ features commonly used within Tudat. It contains links to existing tutorials online and gives some code examples of its use within Tudat. 
 
 C++ basics
