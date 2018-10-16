@@ -39,6 +39,8 @@ Note that the last command in particular can take some time, depending on the sp
 
 Create a GitHub account
 ~~~~~~~~~~~~~~~~~~~~~~~
-For those users who want to push their Tudat code to Github (including students taking the AE4866 and AE4868 courses), the following steps Create a GitHub account `<https://github.com/join?source=header-home>`_ if you haven't done so yet. A GitHub account is completely free and provides you with hosting for your software projects. It also allows you to fork other repositories to create your own improved version of a piece of code.
+For those users who want to push their Tudat code to Github (including students taking the AE4866 and AE4868 courses), a Github account is required. Create an account `here: <https://github.com/join?source=header-home>`_ if you haven't done so yet. 
+
+A GitHub account is completely free and provides you with hosting for your software projects. It also allows you to fork other repositories to create your own improved version of a piece of code.
 
 As a student you can upgrade your free account to a personal account (normally $7/month). With a personal account you can have unlimited private repositories. Private repositories can be very helpful when developing new unreleased programs and/or writing your thesis. Applying for the free upgrade is easily done via `this <https://education.github.com/discount_requests/new>`_ link and tick boxes: Student and Individual account. Then enter the requested information.

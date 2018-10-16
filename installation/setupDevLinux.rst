@@ -47,4 +47,7 @@ Qt Creator
 
     Please follow the instructions given throughout the installer. Note that you can safely "Skip" creating an account. When you get to the component selection, you can deselect all optional components, save for Qt Creator. Once the installation is finished, you can run Qt Creator by typing /home/user/Qt/Tools/QtCreator/bin/qtcreator from the command-line or use your favourite application launcher.
 
+**Step 3: Check Settings**
+   Once Qt Creator is installed, you will need to verify that the various compilation settings have been defined correctly. Make sure to check ``Qt Creator Kits`` on the :ref:`verifyKitsAndCMake` page.
+
 You are now ready to download the Tudat bundle, use the navigation below to go to the next step.

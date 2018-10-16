@@ -1,7 +1,7 @@
 .. _configureTudatLibraries:
 
-Configure Tudat Libraries
-=========================
+Compile and Test Tudat Libraries
+================================
 
 To make use of the Tudat libraries, you need to compile them. Below we will guide you through this process. In case if any issues, open a Github issue explaining your problem, stating your operating system, compiler, and any output of the process you have that may help us to solve the issue.
 
@@ -165,9 +165,12 @@ To make use of the Tudat libraries, you need to compile them. Below we will guid
       15:16:48: The process "/usr/bin/make" exited normally.
       15:16:48: Elapsed time: 01:00.
 
-    If the output ends with ``100% tests passed, 0 tests failed``, all is well and you do not need to take any further action. After running the unit tests, make sure to remove the 'test' text that you've typed in the project tab. If any tests fail the reader is refered to :ref:`debuggingFailedUnitTests`. 
+   Depending on your exact compilation settings, and the speed of your system, running the unit tests may take anywhere from several to 30 minutes.
 
-    .. note:: After running the unit tests, make sure to remove the "test" text that you've typed in here, Qt will not compile the code as long as it is there.
+
+   If the output ends with ``100% tests passed, 0 tests failed``, all is well and you do not need to take any further action. After running the unit tests, make sure to remove the 'test' text that you've typed in the project tab. If any tests fail the reader is refered to :ref:`debuggingFailedUnitTests`. 
+
+    .. note:: After running the unit tests, make sure to remove the ``test`` text that you've typed in the ``Build Steps``, Qt will not compile the code as long as it is there.
 
    So, welcome to Tudat. You are now ready to run one of the many example applications that came bundled with Tudat, and get started on setting up your won application. The applications are explained in detail in the tutorials at Tutorials and Documentation. The next and last (optional) part explains you how to set-up a new application or add existing ones to your Tudat Bundle.
 
@@ -204,4 +207,4 @@ To make use of the Tudat libraries, you need to compile them. Below we will guid
       -2.41254
       -4.95063
       .../tudatBundle/tudatExampleApplications/satellitePropagatorExamples/bin/applications/application_SingleSatellitePropagator exited with code 0
-      
+      	

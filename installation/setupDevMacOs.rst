@@ -89,7 +89,8 @@ Qt Creator
     Specify your preferred installation directory (or leave it at default).
 
 **Step 5: Select components**
-    Click "Continue" until you get to the "Select Components" step. Here you get the option to select which parts of the Qt SDK you wish to install, shown below. Only QtCreator (default, can not be unchecked) from the Tools section is necessary.
+    Click "Continue" until you get to the "Select Components" step. Here you get the option to select which parts of the Qt SDK you wish to install, shown below. Only QtCreator (default, can not be unchecked) from the Tools section is necessary. Finish the installation.
 
-**Step 6: Complete installation**
+**Step 6: Check Settings**
+   Once Qt Creator is installed, you will need to verify that the various compilation settings have been defined correctly. Make sure to check ``Qt Creator Kits`` on the :ref:`verifyKitsAndCMake` page.
 

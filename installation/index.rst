@@ -12,7 +12,7 @@ Getting started with Tudat is a simple five-step process, so please follow this 
    setupDevEnvironment
    downloadTudatBundle/index
    configureTudatLibraries
-   setupNewApps
+   creatingNewApps
    troubleshooting/index
 
 
