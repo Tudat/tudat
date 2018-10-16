@@ -1,13 +1,11 @@
 .. _createNewApps:
 
-Creating Tudat Applications
-===========================
+Creating Tudat Applications - Git
+=================================
 
 Now that you've installed Tudat, you can run all of the example applications and unit tests at your leisure. On this page, we will describe how to create other Tudat applications, specifically tuned to your research/education project. There are two broad options for creating applications: pulling an existing application from Github (or elsewhere), or creating an application from scratch. Below, both are discussed. New applications are typically added to the ``tudatBundle/tudatApplications`` folder, which is empty by default.  
 
    .. note:: It is not the goal of this page to give a full-fledged introduction to repository management, git or Github. Much more details can be found online, for instance in the  `Resources to learn Git <https://try.github.io/>`_ `Github Help <https://help.github.com/>`_. This page is meant to serve as a starting point for using git with Tudat, using examples that are very close to a typical user's first Tudat experience.
-
-.. _gettingExistingApp:
 
 Getting an Existing Tudat Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -207,104 +205,6 @@ For some projects, you will want to start your own application repository from s
       git remote add origin https://github.com/UserName/MyNewTudatApplication.git
 
    You are now free to push your code to this repository.
-
-
-Writing your CMakeLists, and starting your code
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-   The above guides show you how to push, pull, commit, etc. using the git version control system. In this last part of the guide on how to set up new applications, we will discuss the basic aspects that the CMakeLists.txt for your application, and your C++ code, must adher to. Note that this part of the guide is primarilly relevant if you want to create your own application code from scratch. However, it will also provide insight into how/why to modify the ``CMakeLists.txt`` file for a project you've pulled from Github.
-
-   To make your life easier, we have created a ``TemplateApplication`` directory in the example applications. You can copy and past the ``CMakeLists.txt`` (see `file on Github <https://github.com/Tudat/tudatExampleApplications/blob/master/templateApplication/TemplateApplication/CMakeLists.txt>`_) file in this directory to your application. To adapt it to your specific needs, you will typically only need to make minimal modifications. Add the bottom of the ``CMakeLists.txt`` file, you'll see::
-
-      # Add helloWorld application.
-      add_executable(application_HelloWorld "${SRCROOT}/helloWorld.cpp")
-      setup_executable_target(application_HelloWorld "${SRCROOT}")
-      target_link_libraries(application_HelloWorld tudat_gravitation tudat_basic_astrodynamics ${Boost_LIBRARIES} )
-
-   These lines of CMake code add an application to your project, which can then be compiled and run (note that lines starting with ``#`` are treated as comments in CMake). In this case, it is the ``helloWorld.cpp`` file, located in the ``${SRCROOT}`` directory (which denotes the directory of the ``CMakeLists.txt`` file). 
-
-   .. note:: Any C++ application must contain one, and only one, ``int main`` function. The file containing this function may contain any number of additional function definitions.  
-
-   Often, it is only in these lines where you will modify the ``CMakeLists.txt`` file. As an example, say you want to add the code in the ``myNewTudatApplication.cpp`` file (located in the same directory as your ``CMakeLists.txt``), and compile into an executable named ``application_MyNewApplication``::
-
-      # Add helloWorld application.
-      add_executable(application_MyNewApplication "${SRCROOT}/myNewTudatApplication.cpp")
-      setup_executable_target(application_MyNewApplication "${SRCROOT}")
-      target_link_libraries(application_MyNewApplication ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES} )
-
-
-   Assuming you've already added your application to your tudat bundle CMakeLists file (see Step 4 of :ref:`gettingExistingApp`). Depending on the details of your application, the final line ``target_link_libraries`` may look slightly different. There are many options to change it, but for most Tudat applications it will be sufficient to use teh above line or::
-
-
-      target_link_libraries(application_MyNewApplication ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES} )
-
-   which is required if any of the state-estimation-related functionality is needed (variational equations propagation, observtion models, acceleration partials, orbit determination, *etc.*). If you don't need this functionality, using ``${TUDAT_PROPAGATION_LIBRARIES}`` can save some compilation time.
-
-   .. tip:: When you receive a compilation error with the words ``undefined reference to`` this is typically indicative of the ``target_link_libraries`` being set incorrectly.
-
-
-Adding more files to your application
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-   .. note:: This section assumes that you have already gained some basic knowledge and experience of (Tudat) code development
-
-   At some point in the development of your application, you may reach a point where you don't want to cram all your application code into a single file (like the ``myNewTudatApplication.cpp`` file in the application above), and you'll want to spread your code over multiple files, as we do in Tudat. Here, we'll show an example in which we want to add the code in the following files::
-
-      newFile1.cpp
-      newFile1.h
-      NewFolder/newFile2.cpp
-      NewFolder/newFile2.h
-      NewFolder/newFile2.cpp
-      NewFolder/newFile2.h
-
-   Unfortunately, it is not sufficient to add the correct ``#include`` statements in your code. Doing so, and not modifying the CMakeLists file, will result in the undefined reference error mentioned above. First, the following code must be added, just before your ``add_executable`` commands::
-
-      # Set the source files.
-      set(MY_NEW_APPLICATION_SOURCES
-        "${SRCROOT}$/newFile1.cpp"
-        "${SRCROOT}$/NewFolder/newFile2.cpp"
-        "${SRCROOT}$/NewFolder/newFile3.cpp"
-      )
-      
-      # Set the header files.
-      set(MY_NEW_APPLICATION_HEADERS
-        "${SRCROOT}$/newFile1.h"
-        "${SRCROOT}$/NewFolder/newFile2.h"
-        "${SRCROOT}$/NewFolder/newFile3.h"
-      )
-
-      # Add static libraries.
-      add_library(my_new_application_libration STATIC ${MY_NEW_APPLICATION_SOURCES} ${MY_NEW_APPLICATION_HEADERS})
-      setup_library_target(my_new_application_libration "${SRCROOT}{AERODYNAMICSDIR}")
-
-   This code will add the library ``my_new_application_libration`` to your project. This library will contain the compiled code of the ``MY_NEW_APPLICATION_SOURCES`` source and ``MY_NEW_APPLICATION_HEADERS`` header files. Now, the final step, to allow these six new files to be used in your application, is to update the ``target_link_libraries`` to::
-
-      target_link_libraries(application_MyNewApplication my_new_application_libration ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES} )
-
-   .. note:: The names chosen here for the new source/header files, library, *etc.* are for illustrative purposes only. Feel free to modify them as you see fit.
-
-   As a final we point, be aware that you may add any number of applications to your CMakeLists file (each with exactly one ``int main`` function. As an example, below is a selection of the ``SatellitePropagatorExamples`` CMakeLists.txt (slightly edited for readibility)::
-
-      # Add Galileo constellation application.
-      add_executable(application_GalileoConstellationSimulator "${SRCROOT}/galileoConstellationSimulator.cpp")
-      setup_executable_target(application_GalileoConstellationSimulator "${SRCROOT}")
-      target_link_libraries(application_GalileoConstellationSimulator ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES} )
-
-      # Add JSON-based Apollo propagation    
-      add_executable(application_ApolloEntryJSON "${SRCROOT}/apolloCapsuleEntryJSON.cpp")
-      setup_executable_target(application_ApolloEntryJSON "${SRCROOT}")
-      target_link_libraries(application_ApolloEntryJSON json_interface_library ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES} )
-
-      # Add simulated Earth orbiter simulated POD example
-      add_executable(application_EarthOrbiterStateEstimation "${SRCROOT}/earthOrbiterStateEstimation.cpp")
-      setup_executable_target(application_EarthOrbiterStateEstimation "${SRCROOT}")
-      target_link_libraries(application_EarthOrbiterStateEstimation ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES} )
-
-   adding three new applications to the project
- 
-
-
-
 
 
 
