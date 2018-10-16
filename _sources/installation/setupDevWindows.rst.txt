@@ -19,6 +19,17 @@ So, we are now going to walk through the process of installing CMake on your com
 **Step 3: Complete the installation**
     Finish the remainder of the installation. Leave the rest default (location and shortcuts).
 
+SmartGit
+~~~~~~~~
+
+**Step 1: Download SmartGit**
+    Download SmartGit for your operating system `here <http://www.syntevo.com/smartgit/>`_ . Note that for Linux the package might be available through your package manager, see Linux/Debian instructions. Note that SmartGit comes bundled with JRE (java runtime environment) on Windows and Mac OS X. On Linux you need to install ``jre-openjdk``.
+
+**Step 2: Install SmartGit**
+    The installation should be straight-forward and the default installation is fine.
+
+    .. note:: SmartGit is a GUI client for Git that was used in the past as the primary tool to retrieve the Tudat code. Even though we have moved to the use of a terminal, downloading SmartGit is required to prevent breaking the installation of Tudat (in particular the use of the ``tudat_shell.bat`` that you will encounter).
+
 Qt Creator & MinGW
 ~~~~~~~~~~~~~~~~~~
 Now we are going to walk through the process of installing Qt Creator on your computer. This will also install the MinGW, a Minimalist GNU Environment for Windows, containing (amongst others) GNU C++ compilers and Make programs.
@@ -37,16 +48,18 @@ Now we are going to walk through the process of installing Qt Creator on your co
 **Step 4: Select custom installation components**
     Click Next until you get to the Select Components step. Here you get the option to select which parts of the Qt SDK you wish to install, shown below. Only Qt Creator (default, can not be unchecked) and MinGW (latest version) from the Tools section are necessary. The debugger is recommended.
 
-    .. warning:: It is necessary to have MinGW 4.9.1 (or greater), and recommended to use MinGW 5.3.0 (or greater).
+    .. note:: It is necessary to have MinGW 4.9.1 (or greater), and recommended to use MinGW 5.3.0 (or greater).
 
 .. figure:: images/qtInstall.png
 
 
 **Step 5: Complete the installation**
-    Click Next to go to the License Agreement, where you find the license attached to the use of Qt. Scroll through it if you wish to know what you are accepting. Agree to the conditions and continue to the next step. You can choose to have shortcuts installed or not. Now you can click Install to start the installation. QtCreator and MinGW will be installed on your computer.
+   Click Next to go to the License Agreement, where you find the license attached to the use of Qt. Scroll through it if you wish to know what you are accepting. Agree to the conditions and continue to the next step. You can choose to have shortcuts installed or not. Now you can click Install to start the installation. QtCreator and MinGW will be installed on your computer.
 
 **Step 6: Configure Qt Creator**
-    Open Qt Creator and go to Tools/Options. Under the Build & Run section, choose the Kits tab and select Desktop. Please verify the following:
+   Open Qt Creator and go to Tools/Options. Under the Build & Run section, choose the Kits tab and select Desktop. Please verify the following:
+
+   .. warning:: Diligently check whether the three points below are correctly set in your Qt Creator. Typically, more than half of installation issues occur due to users incorrectly following this step.
 
    .. figure:: images/compilerCheck.png
 
@@ -54,7 +67,7 @@ Specifically:
 
     - The compiler is set to MinGW (4.9.1 or higher required, 5.3.0 or higher recommended), shown above, in red.
     - The CMake tool is present, shown above in blue. Note that the name of the CMake tool may be different than below. If no CMake options are available,  go to the CMake tab and click 'Add'. Navigate to the directory where you installed cmake, and select :literal:`.../CMake/bin/cmake.exe` as the CMake tool.
-    - The primary generator is MinGW and secondary generator is CodeBlocks, shown above in green.
+    - The primary generator is ``MinGW`` and secondary generator is ``CodeBlocks``, shown above in green.
 
 
 

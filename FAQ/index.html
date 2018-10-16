@@ -94,7 +94,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../started/index.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials and Documentation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">FAQ</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#compilation-and-installation">Compilation and installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-and-developing-tudat">Using and Developing Tudat</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../developerGuide/index.html">Developer Guide</a></li>
 </ul>
 
@@ -170,25 +174,48 @@
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><em>Q: I have problems with the installation of the Tudat bundle, how can I solve these problems?</em></dt>
-<dd>A: the <a class="reference internal" href="../installation/troubleshooting/index.html#troubleshootinginstallation"><span class="std std-ref">Troubleshooting</span></a> page contains several solutions to common errors that can occur during installation. If this does not help, a list of issues raised by users can be found <a class="reference external" href="https://github.com/Tudat/tudat/issues">here</a>. If this still does not contain a solution, a new issue can be made on <a class="reference external" href="https://github.com/Tudat/tudat/issues/new">github</a> so that the developers can help you.</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
 <dt><em>Q: I would like to use Tudat, but I don’t know how to code in C++. Can I still use it?</em></dt>
 <dd>A: The JSON interface, which can be used to access much of the orbit propagation tools in Tudat, can be used without any knowledge of C++. To use the full capabilities of Tudat, a little knowledge of C++ is necessary. You can learn <code class="docutils literal"><span class="pre">C++</span></code> from scratch using <a class="reference external" href="http://www.cplusplus.com/doc/tutorial/">this</a> page. Working through the example application tutorials that we provide will give you some insight into how to use C++ for Tudat specifically. If you have already used Matlab before, <a class="reference external" href="http://runge.math.smu.edu/Courses/Math6370_Spring13/Lec2.pdf">this</a> page lists the differences between the two languages. The same page exists for Python users, and can be found <a class="reference external" href="https://pdfs.semanticscholar.org/9ad1/030685050e949d1a3d6d92bababcbe075e07.pdf">here</a>.</dd>
 </dl>
 </li>
+</ul>
+</div></blockquote>
+<div class="section" id="compilation-and-installation">
+<span id="faqcompilationinstallation"></span><h2>Compilation and installation<a class="headerlink" href="#compilation-and-installation" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
 <li><dl class="first docutils">
 <dt><em>Q: I am on Windows and I would like to use the command line for git, how can I do this?</em></dt>
 <dd>A: A command line tool was developed for Tudat, you can find it in your tudat bundle under external/tools/tudat_shell. Within this tool you can use all the git commands.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><em>Q: Some of the unit test on Windows fail due to high RAM usage, how can I solve this?</em></dt>
-<dd>A: Turn the COMPILE_HIGH_ACCURACY_ESTIMATION_TESTS off in the Projects tab.</dd>
+<dt><em>Q: How can I run CMake again from Qt?</em></dt>
+<dd>A: In the Project Tree tab in Qt (on the left side of your screen) you can right-click on the top-level TudatBundle icon and select the “Run CMake” option. The output will be shown in the General Messages tab.</dd>
 </dl>
 </li>
+<li><dl class="first docutils">
+<dt><em>Q: Some of the unit test on Windows fail due to high RAM usage, how can I solve this?</em></dt>
+<dd>A: Turn the BUILD_EXTENDED_PRECISION_PROPAGATION_TOOLS off in the Projects tab.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>Q: How can I speed up the compilation of Tudat?</em></dt>
+<dd>A: There is the possibility to use multiple threads (cores) to compile C++ code. This feature generally works flawlessly on Mac or Linux, but not on Windows. A point of attention when using multi-thread compilation is RAM usage. A single thread can use up to 2-3 GB of RAM to compile certain applications (depending on your compiler). Depending on the robustness of your operating system, multi-core compilation can cause the RAM to be completely exhausted, freezing your system and forcing a hard reboot. To instruct the compiler to use <code class="docutils literal"><span class="pre">X</span></code> threads, add the command <code class="docutils literal"><span class="pre">-jX</span></code> (so <code class="docutils literal"><span class="pre">-j8</span></code> for 8 threads) to the Tool arguments (or additional arguments) line under Projects -&gt; Build -&gt; Build Steps.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>Q: I have problems with the installation of the Tudat bundle, how can I solve these problems?</em></dt>
+<dd>A: the <a class="reference internal" href="../installation/troubleshooting/index.html#troubleshootinginstallation"><span class="std std-ref">Troubleshooting</span></a> page contains several solutions to errors that can occur during installation (in addition to those listed here)s. If this does not help, a list of issues raised by users can be found <a class="reference external" href="https://github.com/Tudat/tudat/issues">here</a>. If this still does not contain a solution, a new issue can be made on <a class="reference external" href="https://github.com/Tudat/tudat/issues/new">github</a> so that the developers can help you.</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="using-and-developing-tudat">
+<h2>Using and Developing Tudat<a class="headerlink" href="#using-and-developing-tudat" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
 <li><dl class="first docutils">
 <dt><em>Q: I want to add some features to Tudat, can I do this, and if yes, how?</em></dt>
 <dd>A: You can always add features to Tudat. If you think that it can also be used by others, you can make a pull request to the tudat repository. The <a class="reference internal" href="../developerGuide/index.html#devguideindex"><span class="std std-ref">Developer Guide</span></a> page contains guides on how to develop extra features for Tudat.</dd>
@@ -202,11 +229,6 @@
 <li><dl class="first docutils">
 <dt><em>Q: How can I find the usages of a specific class/function/variable in the whole Tudat bundle?</em></dt>
 <dd>A: In Qt, you can right click on what you would like to find the usages of and select the “Find Usages” option.</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><em>Q: How can I run CMake again from Qt?</em></dt>
-<dd>A: In the Project Tree tab in Qt (on the left side of your screen) you can right-click on the top-level TudatBundle icon and select the “Run CMake” option. The output will be shown in the General Messages tab.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
@@ -241,6 +263,7 @@
 </li>
 </ul>
 </div></blockquote>
+</div>
 </div>
 
 
