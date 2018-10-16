@@ -5,7 +5,7 @@ Creating Tudat Applications
 
 Now that you've installed Tudat, you can run all of the example applications and unit tests at your leisure. On this page, we will describe how to create other Tudat applications, specifically tuned to your research/education project. There are two broad options for creating applications: pulling an existing application from Github (or elsewhere), or creating an application from scratch. Below, both are discussed. New applications are typically added to the ``tudatBundle/tudatApplications`` folder, which is empty by default.  
 
-   .. note:: It is not the goal of this page to give a full-fledged introduction to repository management, git or Github. Much more details can be found online, for instance in the `Github Documentation <https://help.github.com/>`_. This page is meant to serve as a starting point for using git with Tudat, using examples that are very close to a typical user's first Tudat experience.
+   .. note:: It is not the goal of this page to give a full-fledged introduction to repository management, git or Github. Much more details can be found online, for instance in the  `Resources to learn Git <https://try.github.io/>`_ `Github Help <https://help.github.com/>`_. This page is meant to serve as a starting point for using git with Tudat, using examples that are very close to a typical user's first Tudat experience.
 
 Getting an Existing Tudat Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -122,6 +122,63 @@ Pulling and Pushing Application Code
    This will push your code to the ``origin`` remote. The ``master`` term denotes the current branch you are working on. Branch management is beyond the scope of this tutorial, and you may safely ignore these issues for now.
 
    If you have set up your repository to be private, you will be prompted to enter your Github username and password. After a push is succesfull, you should see your changes on the Github page for your applications, available for everyone (in case it is public) or a selected few (in case it is private).
+
+Updating your local repository from Github
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   After following the above guide, you'll have created a git repository on your computer, based on some remote from Github. Typically, commits are regularly done to Github repositories, and it may happen that you want to update your local code with the modifications of the remote. For this example, we'll assume that there has been some modification of the ``upstream`` remote (at https://github.com/tudat/tudatAssignments), and that you want to update your local version of the code (both on your computer, and on your own Github page). 
+
+**Step 1: Committing any local changes**
+
+   Before pulling the latest code from Github, commit ay modifcations you've made, using the ``git add`` and ``git commit`` commands described above. Not doing so will cause the following error message when pulling::
+
+      error: Your local changes to the following files would be overwritten by merge:
+         file_name
+      Please, commit your changes or stash them before you can merge.
+      Aborting
+
+   This error is given as a safety measure, since pulling the latest version of the code may inadvertently, and irreversibly, overwrite your won changes.
+
+**Step 2: Fetching and Pulling the Remote**
+
+   The next step in updating the code is to type::
+
+      git fetch upstream
+
+   The ``fetch`` command does not update the code on your computer, but makes your local git repository aware of any changes make to a remote (the ``upstream`` in the above example). Next, you will ``pull`` the code from the ``upstream`` with the following command:
+
+      git pull upstream master
+
+   Note that we are still assuming that only the ``master`` branch is relevant for our current application. The ``pull`` command will have one of two possible outputs (assuming you've correctly performed step 1). Either no error is given, and the pull has been succesful, or there are conflicts with changes you've made, which will give the following error message::
+
+      Pull is not possible because you have unmerged files.
+      Please, fix them up in the work tree, and then use 'git add/rm <file>'
+      as appropriate to mark resolution, or use 'git commit -a'.
+ 
+   In case you get this message, go to step 3
+
+**Step 3: Solving Conflicts (if needed)**
+
+   As is often the case, changes you have committed on your own computer will not be compatible with changes that have been made to the remote you are pulling. The list of files with merge conflicts will be shown when using the ``git status`` command. The resulting merge conflicts are typically corrected manually, where the user decides how to update the code after a pull. A merge conflict will show up in your code as::
+
+      <<<<<<< HEAD
+      Remote modifications
+      =======
+      Your modifications
+      >>>>>>> master
+
+   Clearly, this code will not compile anymore. You can change this block to either::
+
+      Remote modifications
+
+   or
+
+      Your modifications
+
+   or something else entirely,as you see fit for the case ar hand. 
+
+   After correcting all conflicts, use the ``git add`` and ``git commit`` commands to commit your merged code.
+
 
 Creating a New Tudat Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

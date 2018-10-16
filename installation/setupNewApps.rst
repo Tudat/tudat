@@ -1,5 +1,7 @@
 .. _setupNewApps:
 
+   .. warning:: This page is due for removal, and to be replaced with the new :ref:`createNewApps` page.
+
 Setup New Applications
 ======================
 
