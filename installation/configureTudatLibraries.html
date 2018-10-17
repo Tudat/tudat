@@ -39,7 +39,7 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../index.html"/>
         <link rel="up" title="Installation Guide" href="index.html"/>
-        <link rel="next" title="4. Creating Tudat Applications - Git" href="creatingNewApps.html"/>
+        <link rel="next" title="4. Creating Tudat Applications" href="creatingNewApps.html"/>
         <link rel="prev" title="2. Download Tudat Bundle" href="downloadTudatBundle/index.html"/> 
 
   
@@ -97,9 +97,8 @@
 <li class="toctree-l2"><a class="reference internal" href="setupDevEnvironment.html">1. Setup Development Environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="downloadTudatBundle/index.html">2. Download Tudat Bundle</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">3. Compile and Test Tudat Libraries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="creatingNewApps.html">4. Creating Tudat Applications - Git</a></li>
-<li class="toctree-l2"><a class="reference internal" href="setupNewApps.html">5. Setup New Applications</a></li>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting/index.html">6. Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="creatingNewApps.html">4. Creating Tudat Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting/index.html">5. Troubleshooting</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials and Documentation</a></li>
@@ -288,7 +287,28 @@
 </div>
 <p class="last">Depending on your system, boost may or may not be downloaded and compiled by CMake (it typically is). Depending on the speed of your computer and internet connection, this may take anywhere from several to 30 minutes. You can safely ignore CMake warnings about unused variables, specifically manually-specified variables were not used by the project. In case an error occurs during this portion of the installation, copy the full contents of the <code class="docutils literal"><span class="pre">General</span> <span class="pre">Messages</span></code> tab from Qt (bottom of screen) into a text file and post this with your Github issue.</p>
 </dd>
-<dt><strong>Step 4 Build the libraries</strong></dt>
+</dl>
+<p><strong>Step 4: Updating the Settings (optional)</strong></p>
+<blockquote>
+<div><p>Before building the libraries, you can modify some of the CMake settings to suit your needs. If you are not sure what your needs are (yet), leave all settings as they are, and proceed to the following step. If you are installing Tudat for the AE4868 course, do not modify the settings. To change the CMake settings, go to Projects-&gt;Build-&gt;CMake, see screenshot below (note that it may look slightly different, depending on your Qt version/operating system):</p>
+<div class="figure">
+<img alt="../_images/cmakeSettings.png" src="../_images/cmakeSettings.png" />
+</div>
+<p>Below, we give some examples of changes that you may wish to make:</p>
+<blockquote>
+<div><ul class="simple">
+<li>If you do not plan on using the estimation (variational equations propagation, observation models, acceleration partials <em>etc.</em>), you can switch <code class="docutils literal"><span class="pre">BUILD_WITH_ESTIMATION_TOOLS</span></code> to <code class="docutils literal"><span class="pre">OFF</span></code>.</li>
+<li>If you plan on using extended precision (<em>e.g.</em> more than 16 significant digits) for either state or time representation, you should switch <code class="docutils literal"><span class="pre">BUILD_EXTENDED_PRECISION_PROPAGATION_TOOLS</span></code> to <code class="docutils literal"><span class="pre">ON</span></code>.</li>
+<li>If you plan to use the Pagmo toolbox for optimization, set <code class="docutils literal"><span class="pre">USE_PAGMO</span></code> to <code class="docutils literal"><span class="pre">ON</span></code>. Note that this will also trigger the compilation several example applications on how to use Pagmo with Tudat.</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can modify the CMake settings at any later point in time, but this may require a rebuild of a significant part of the libraries.</p>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt><strong>Step 5: Build the libraries</strong></dt>
 <dd><p class="first">Now all that remains to be done is to build the libraries. Typically, Tudat is compiled using a single core on your system. The compiler can be instructed to use multiple cores for compilation, check the FAQ <a class="reference internal" href="../FAQ/index.html#faqcompilationinstallation"><span class="std std-ref">Compilation and installation</span></a> for details.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -296,7 +316,7 @@
 </div>
 <p class="last">To compile all the libraries, simply click on the “hammer” build icon at the bottom-left of your screen (or use the menu <code class="docutils literal"><span class="pre">Build</span></code> at the top and select <code class="docutils literal"><span class="pre">Build</span> <span class="pre">all</span></code>). You will see a <code class="docutils literal"><span class="pre">Compile</span> <span class="pre">Output</span></code> console window pop-up, showing the status of the build process, as the compiler walks through all the project files, and generates the libraries that we need. The entire build process could take anywhere from 15 minutes (Linux/Mac modern workstation; 12 threads) to 3-8 hours (Windows; single core), depending on the specifications of your computer. Have patience! It will all work out in the end. Once the building is complete, you’re done! You have now successfully built Tudat and all required libraries on your computer.</p>
 </dd>
-<dt><strong>Step 5: Running the unit tests</strong></dt>
+<dt><strong>Step 6: Running the unit tests</strong></dt>
 <dd><p class="first">For each part of the code in Tudat, we have written unit tests, which are included in the repository. Before moving on with using Tudat, you should run all the unit tests to ensure that your installation is functioning as it should. To run all unit tests, go to the project tab, and go to the <code class="docutils literal"><span class="pre">Build</span> <span class="pre">Steps</span></code> block. Write “test” in the <code class="docutils literal"><span class="pre">Tool</span> <span class="pre">Arguments</span></code> (may be called <code class="docutils literal"><span class="pre">Additional</span> <span class="pre">Arguments</span></code>) line, as shown below.</p>
 <div class="figure">
 <img alt="../_images/testSettings.png" src="../_images/testSettings.png" />
@@ -350,13 +370,13 @@
 <p class="last">So, welcome to Tudat. You are now ready to run one of the many example applications that came bundled with Tudat, and get started on setting up your won application. The applications are explained in detail in the tutorials at Tutorials and Documentation. The next and last (optional) part explains you how to set-up a new application or add existing ones to your Tudat Bundle.</p>
 </dd>
 </dl>
-<p><strong>Step 6: Run An Application</strong></p>
+<p><strong>Step 7: Run An Application</strong></p>
 <blockquote>
 <div><p>Before moving on to using Tudat for the example applications (or your own application), modify the <code class="docutils literal"><span class="pre">Build</span> <span class="pre">Settings</span></code> to build only the current application. Now that the unit tests are built and run, there is no need to recompile everything everytime. Only the portions relevant for the specific application under consideration need to be compiled. See the screenshot below for the option to tick that enforces this behaviour.</p>
 <blockquote>
 <div><div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">When (re)running the unit tests, always first recompile the code with the targets set to <code class="docutils literal"><span class="pre">all</span></code></p>
+<p class="last">When (re)running the unit tests, always first recompile the code with the targets set to <code class="docutils literal"><span class="pre">all</span></code>. If there is no <code class="docutils literal"><span class="pre">all</span></code> tick box, uncheck all other boxes, it will automatically revert to <code class="docutils literal"><span class="pre">all</span></code> as default.</p>
 </div>
 </div></blockquote>
 <div class="figure">
@@ -398,7 +418,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="creatingNewApps.html" class="btn btn-neutral float-right" title="4. Creating Tudat Applications - Git" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="creatingNewApps.html" class="btn btn-neutral float-right" title="4. Creating Tudat Applications" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="downloadTudatBundle/index.html" class="btn btn-neutral" title="2. Download Tudat Bundle" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
