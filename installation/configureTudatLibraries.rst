@@ -115,14 +115,28 @@ To make use of the Tudat libraries, you need to compile them. Below we will guid
 
     Depending on your system, boost may or may not be downloaded and compiled by CMake (it typically is). Depending on the speed of your computer and internet connection, this may take anywhere from several to 30 minutes. You can safely ignore CMake warnings about unused variables, specifically manually-specified variables were not used by the project. In case an error occurs during this portion of the installation, copy the full contents of the ``General Messages`` tab from Qt (bottom of screen) into a text file and post this with your Github issue.
 
-**Step 4 Build the libraries**
+**Step 4: Updating the Settings (optional)**
+
+   Before building the libraries, you can modify some of the CMake settings to suit your needs. If you are not sure what your needs are (yet), leave all settings as they are, and proceed to the following step. If you are installing Tudat for the AE4868 course, do not modify the settings. To change the CMake settings, go to Projects->Build->CMake, see screenshot below (note that it may look slightly different, depending on your Qt version/operating system):
+
+   .. figure:: images/cmakeSettings.png
+
+   Below, we give some examples of changes that you may wish to make:
+
+      * If you do not plan on using the estimation (variational equations propagation, observation models, acceleration partials *etc.*), you can switch ``BUILD_WITH_ESTIMATION_TOOLS`` to ``OFF``.
+      * If you plan on using extended precision (*e.g.* more than 16 significant digits) for either state or time representation, you should switch ``BUILD_EXTENDED_PRECISION_PROPAGATION_TOOLS`` to ``ON``.
+      * If you plan to use the Pagmo toolbox for optimization, set ``USE_PAGMO`` to ``ON``. Note that this will also trigger the compilation several example applications on how to use Pagmo with Tudat.
+
+   .. note:: You can modify the CMake settings at any later point in time, but this may require a rebuild of a significant part of the libraries.
+
+**Step 5: Build the libraries**
     Now all that remains to be done is to build the libraries. Typically, Tudat is compiled using a single core on your system. The compiler can be instructed to use multiple cores for compilation, check the FAQ :ref:`faqCompilationInstallation` for details. 
 
     .. note:: When encountering a compilation error during multi-core compilation, try reinintializing the compilation (clicking the hammer again). If the same errors occurs, and you wish to open an issue, rerun with a SINGLE thread, and post the output that this produces. Multi-core compilation output can often be garbled, and difficult to interpret.
 
     To compile all the libraries, simply click on the "hammer" build icon at the bottom-left of your screen (or use the menu ``Build`` at the top and select ``Build all``). You will see a ``Compile Output`` console window pop-up, showing the status of the build process, as the compiler walks through all the project files, and generates the libraries that we need. The entire build process could take anywhere from 15 minutes (Linux/Mac modern workstation; 12 threads) to 3-8 hours (Windows; single core), depending on the specifications of your computer. Have patience! It will all work out in the end. Once the building is complete, you're done! You have now successfully built Tudat and all required libraries on your computer.
     
-**Step 5: Running the unit tests**
+**Step 6: Running the unit tests**
    For each part of the code in Tudat, we have written unit tests, which are included in the repository. Before moving on with using Tudat, you should run all the unit tests to ensure that your installation is functioning as it should. To run all unit tests, go to the project tab, and go to the ``Build Steps`` block. Write "test" in the ``Tool Arguments`` (may be called ``Additional Arguments``) line, as shown below.
 
    .. figure:: images/testSettings.png
@@ -174,11 +188,11 @@ To make use of the Tudat libraries, you need to compile them. Below we will guid
 
    So, welcome to Tudat. You are now ready to run one of the many example applications that came bundled with Tudat, and get started on setting up your won application. The applications are explained in detail in the tutorials at Tutorials and Documentation. The next and last (optional) part explains you how to set-up a new application or add existing ones to your Tudat Bundle.
 
-**Step 6: Run An Application**
+**Step 7: Run An Application**
 
    Before moving on to using Tudat for the example applications (or your own application), modify the ``Build Settings`` to build only the current application. Now that the unit tests are built and run, there is no need to recompile everything everytime. Only the portions relevant for the specific application under consideration need to be compiled. See the screenshot below for the option to tick that enforces this behaviour. 
 
-    .. note:: When (re)running the unit tests, always first recompile the code with the targets set to ``all``
+    .. note:: When (re)running the unit tests, always first recompile the code with the targets set to ``all``. If there is no ``all`` tick box, uncheck all other boxes, it will automatically revert to ``all`` as default.
 
    .. figure:: images/runSettings.png
 
@@ -207,4 +221,5 @@ To make use of the Tudat libraries, you need to compile them. Below we will guid
       -2.41254
       -4.95063
       .../tudatBundle/tudatExampleApplications/satellitePropagatorExamples/bin/applications/application_SingleSatellitePropagator exited with code 0
+
       	

@@ -17,7 +17,7 @@ Our recommended approach to download Tudat bundle is by using a terminal. Altern
 Cloning Tudat
 ~~~~~~~~~~~~~
 
-For Linux or Mac, the regular terminal can be used directly. Windows users are recommended to use the :literal:`tudat_shell.bat`, located in :literal:`tudatBundle/external/tools`. Running this script will open a Windows terminal, with the git, make and cmake commands available.
+For Linux or Mac, the regular terminal can be used directly. Windows users are recommended to use the :literal:`tudat_shell.bat`, located in :literal:`tudatBundle/external/tools`, `here <https://github.com/Tudat/tudatBundle/blob/master/external/tools/tudat_shell.bat>`_. Copy the contents into a plain text file, and save it as :literal:`tudat_shell.bat`.  Running this script will open a Windows terminal, with the git, make and cmake commands available.
 
 After opening a terminal, navigate to the directpry where you want to download tudatBundle. You can use the :literal:`ls` command to get a listing of the current directory. To navigate 'up' one level (from ::literal`..../directoryA/directoryB/` to ::literal`..../directoryA/`), use the :literal:`cd ..` command. For the inverse (from ::literal`..../directoryA/` to ::literal`..../directoryA/directoryB/`) use :literal:`cd directoryB`.
 

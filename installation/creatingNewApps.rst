@@ -34,9 +34,11 @@ Below, we discuss how to retrieve an application from an existing Github reposit
 
 **Step 3: Modify Repository Settings, and invite (a) collaborator(s) to (private) repository (optional)**
 
-   .. note:: IMPORTANT, when setting up a repository for use in the AE4866 or AE4868 courses, make sure to set the repository to private, and invite @dominicdirkx and @transferorbit.
+   Depending on the project you are working on, you may not want your code to be publicly available (yet). To keep the repository private, change the settings of your repository, as described `here <https://help.github.com/articles/making-a-public-repository-private/>`_.
 
-    Go to the ``Settings/Collaborators`` of the repository. Add other users that you want to invite to the repository.
+   If you have made your repository private, you can control who can view/modify your repository. To add other users to your repository, go to the ``Settings/Collaborators`` of the repository, and add other users that you want to invite.
+
+   .. warning:: IMPORTANT, when setting up a repository for use in the AE4866 or AE4868 courses, it is REQUIRED to set the repository to private, and invite @dominicdirkx and @transferorbit.
 
 
 **Step 4: Adding the application to your Tudat compilation**
@@ -173,7 +175,7 @@ Updating your local repository from Github
 
       Remote modifications
 
-   or
+   or::
 
       Your modifications
 
