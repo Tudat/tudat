@@ -147,40 +147,45 @@ To make use of the Tudat libraries, you need to compile them. Below we will guid
       15:15:48: Starting: "/usr/bin/make" test
       Running tests...
       Test project /home/dominicdirkx/Software/tudat/build-tudatBundle-Desktop-Default 
-      Start 1: test_Sofa
-      1/132 Test 1: test_Sofa ................................................ Passed 0.03 sec
-      Start 2: test_AerodynamicMomentAndAerodynamicForce
-      2/132 Test 2: test_AerodynamicMomentAndAerodynamicForce ................ Passed 0.22 sec
-      Start 3: test_AerodynamicsNamespace
-      3/132 Test 3: test_AerodynamicsNamespace ............................... Passed 0.00 sec
-      Start 4: test_AerodynamicCoefficientGenerator
-      4/132 Test 4: test_AerodynamicCoefficientGenerator ..................... Passed 0.03 sec
-      Start 5: test_ExponentialAtmosphere
-      5/132 Test 5: test_ExponentialAtmosphere ............................... Passed 0.00 sec
-      Start 6: test_TabulatedAtmosphere
-      6/132 Test 6: test_TabulatedAtmosphere ................................. Passed 0.04 sec
-      Start 7: test_TabulatedAerodynamicCoefficients
-      7/132 Test 7: test_TabulatedAerodynamicCoefficients .................... Passed 1.61 sec
-      Start 8: test_NRLMSISE00Atmosphere
-      8/132 Test 8: test_NRLMSISE00Atmosphere ................................ Passed 0.01 sec
-      Start 9: test_AstrodynamicsFunctions
-      9/132 Test 9: test_AstrodynamicsFunctions .............................. Passed 0.00 sec
-      Start 10: test_OrbitalElementConversions
+      Start   1: sofa-test
+      1/249 Test   #1: sofa-test ............................................................   Passed    0.01 sec
+            Start   2: test_AerodynamicMomentAndAerodynamicForce
+      2/249 Test   #2: test_AerodynamicMomentAndAerodynamicForce ............................   Passed    3.06 sec
+            Start   3: test_AerodynamicsNamespace
+      3/249 Test   #3: test_AerodynamicsNamespace ...........................................   Passed    0.00 sec
+            Start   4: test_AerodynamicCoefficientGenerator
+      4/249 Test   #4: test_AerodynamicCoefficientGenerator .................................   Passed    0.03 sec
+            Start   5: test_ExponentialAtmosphere
+      5/249 Test   #5: test_ExponentialAtmosphere ...........................................   Passed    0.00 sec
+            Start   6: test_CustomConstantTemperatureAtmosphere
+      6/249 Test   #6: test_CustomConstantTemperatureAtmosphere .............................   Passed    0.00 sec
+            Start   7: test_TabulatedAtmosphere
+      7/249 Test   #7: test_TabulatedAtmosphere .............................................   Passed   26.81 sec
+            Start   8: test_TabulatedAerodynamicCoefficients
+      8/249 Test   #8: test_TabulatedAerodynamicCoefficients ................................   Passed    1.37 sec
       ...
       ...
       ...
-      130/132 Test 130: test_SpiceInterface ...................................... Passed 0.05 sec
-      Start 131: test_EnvironmentSetup
-      131/132 Test 131: test_EnvironmentSetup .................................... Passed 2.90 sec
-      Start 132: test_AccelerationModelSetup
-      132/132 Test 132: test_AccelerationModelSetup .............................. Passed 0.16 sec
-      100% tests passed, 0 tests failed out of 132
-      Total Test time (real) = 59.57 sec
+      243/249 Test #243: test_JsonInterfaceTermination ........................................   Passed    0.02 sec
+              Start 244: test_JsonInterfaceThrust
+      244/249 Test #244: test_JsonInterfaceThrust .............................................   Passed    0.01 sec
+              Start 245: test_JsonInterfaceTorque
+      245/249 Test #245: test_JsonInterfaceTorque .............................................   Passed    0.00 sec
+              Start 246: test_JsonInterfaceVariable
+      246/249 Test #246: test_JsonInterfaceVariable ...........................................   Passed    0.01 sec
+              Start 247: test_JsonInterfaceObservation
+      247/249 Test #247: test_JsonInterfaceObservation ........................................   Passed    0.09 sec
+              Start 248: test_JsonInterfaceParameter
+      248/249 Test #248: test_JsonInterfaceParameter ..........................................   Passed    0.05 sec
+              Start 249: test_JsonInterfaceSimulationSingleSatelliteVariational
+      249/249 Test #249: test_JsonInterfaceSimulationSingleSatelliteVariational ...............   Passed    0.09 sec
+
+      100% tests passed, 0 tests failed out of 249
+      Total Test time (real) = 623.61 sec
       15:16:48: The process "/usr/bin/make" exited normally.
-      15:16:48: Elapsed time: 01:00.
 
-   Depending on your exact compilation settings, and the speed of your system, running the unit tests may take anywhere from several to 30 minutes.
 
+   Depending on your exact compilation settings, and the speed of your system, running the unit tests may take anywhere from several to 30 minutes. Also, depending on your settings, and version of the code, you will run a different number of unit tests.
 
    If the output ends with ``100% tests passed, 0 tests failed``, all is well and you do not need to take any further action. After running the unit tests, make sure to remove the 'test' text that you've typed in the project tab. If any tests fail the reader is refered to :ref:`debuggingFailedUnitTests`. 
 

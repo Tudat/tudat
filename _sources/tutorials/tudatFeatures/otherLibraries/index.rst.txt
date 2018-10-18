@@ -9,4 +9,3 @@ These pages of the wiki will help you build a strong knowledge basis to get star
 
    inputOutput
    spice
-   jsoncpp

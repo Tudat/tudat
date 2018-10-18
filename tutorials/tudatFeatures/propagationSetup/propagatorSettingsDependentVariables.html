@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>5.4. Propagator Settings: Dependent Variables &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>5.3. Propagator Settings: Dependent Variables &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -39,8 +39,8 @@
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
         <link rel="up" title="5. Simulator Set-Up" href="index.html"/>
-        <link rel="next" title="5.5. Propagator Settings: Conventional vs. Propagated Coordinates" href="propagatorSettingsCoordinates.html"/>
-        <link rel="prev" title="5.3. Propagator Settings: Termination Settings" href="propagatorSettingsTermination.html"/> 
+        <link rel="next" title="5.4. Propagator Settings: Termination Settings" href="propagatorSettingsTermination.html"/>
+        <link rel="prev" title="5.2. Propagator Settings: Basics" href="propagatorSettings.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -105,8 +105,8 @@
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">5. Simulator Set-Up</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="integratorSettings.html">5.1. Integrator Settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettings.html">5.2. Propagator Settings: Basics</a></li>
-<li class="toctree-l4"><a class="reference internal" href="propagatorSettingsTermination.html">5.3. Propagator Settings: Termination Settings</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">5.4. Propagator Settings: Dependent Variables</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">5.3. Propagator Settings: Dependent Variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="propagatorSettingsTermination.html">5.4. Propagator Settings: Termination Settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="propagatorSettingsCoordinates.html">5.5. Propagator Settings: Conventional vs. Propagated Coordinates</a></li>
 <li class="toctree-l4"><a class="reference internal" href="simulatorCreation.html">5.6. Performing State Propagation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="variationalSimulatorCreation.html">5.7. Performing Variational Equations Propagation</a></li>
@@ -175,7 +175,7 @@
         
           <li><a href="index.html">5. Simulator Set-Up</a> &raquo;</li>
         
-      <li>5.4. Propagator Settings: Dependent Variables</li>
+      <li>5.3. Propagator Settings: Dependent Variables</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -195,7 +195,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="propagator-settings-dependent-variables">
-<span id="tudatfeaturespropagatorsettingsdependentvariables"></span><h1>5.4. Propagator Settings: Dependent Variables<a class="headerlink" href="#propagator-settings-dependent-variables" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturespropagatorsettingsdependentvariables"></span><h1>5.3. Propagator Settings: Dependent Variables<a class="headerlink" href="#propagator-settings-dependent-variables" title="Permalink to this headline">¶</a></h1>
 <p>By default, the <a class="reference internal" href="simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> propagates the state of a body which uniquely defines its position and velocity. However, it is possible to define a number of dependent variables that are derived from such state. These dependent variables can be used as termination conditions as discussed in <a class="reference internal" href="propagatorSettingsTermination.html#tudatfeaturespropagatorsettingstermination"><span class="std std-ref">Propagator Settings: Termination Settings</span></a> or saved for further post-processing. This page describes the dependent variables currently available and how these are retrieved from Tudat.</p>
 <p>The general procedure consists of defining an object of class <a class="reference internal" href="#DependentVariableSaveSettings" title="DependentVariableSaveSettings"><code class="xref py py-class docutils literal"><span class="pre">DependentVariableSaveSettings</span></code></a>, and then feeding it to a derived class of <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a>.</p>
 <dl class="class">
@@ -220,7 +220,7 @@
 </dd></dl>
 
 <div class="section" id="saving-dependent-variables">
-<h2>5.4.1. Saving Dependent Variables<a class="headerlink" href="#saving-dependent-variables" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.1. Saving Dependent Variables<a class="headerlink" href="#saving-dependent-variables" title="Permalink to this headline">¶</a></h2>
 <p>The dependent variables are computed during the body propagation, thus the user must provide a list of dependent variables to save prior creating the <a class="reference internal" href="simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a>:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define list of dependent variables to save.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">dependentVariablesList</span><span class="p">;</span>
@@ -234,7 +234,7 @@
 <p>The details of the creation of the settings <a class="reference internal" href="#SingleDependentVariableSaveSettings" title="SingleDependentVariableSaveSettings"><code class="xref py py-class docutils literal"><span class="pre">SingleDependentVariableSaveSettings</span></code></a> object are discussed below.</p>
 </div>
 <div class="section" id="available-dependent-variables">
-<h2>5.4.2. Available Dependent Variables<a class="headerlink" href="#available-dependent-variables" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.2. Available Dependent Variables<a class="headerlink" href="#available-dependent-variables" title="Permalink to this headline">¶</a></h2>
 <p>Below, we provide a list of all dependent variables that can be saved using Tudat, with a link to the corresponding (derived class) of <a class="reference internal" href="#SingleDependentVariableSaveSettings" title="SingleDependentVariableSaveSettings"><code class="xref py py-class docutils literal"><span class="pre">SingleDependentVariableSaveSettings</span></code></a>, and associated input. In some cases, the requirements on the environment for a variable to be saved are not necesarilly intuitive. In those cases, we mention the requirements explicitly.</p>
 <blockquote>
 <div><ul>
@@ -351,7 +351,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="setting-up-dependent-variables">
-<h2>5.4.3. Setting Up Dependent Variables<a class="headerlink" href="#setting-up-dependent-variables" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.3. Setting Up Dependent Variables<a class="headerlink" href="#setting-up-dependent-variables" title="Permalink to this headline">¶</a></h2>
 <p>The framework discussed in the previous section explains how the <code class="docutils literal"><span class="pre">dependentVariablesList</span></code> is populated and passed to the <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a>. The goal of this section is to list the available dependent variables and to explain how these are pushed to the <code class="docutils literal"><span class="pre">dependentVariablesList</span></code>.</p>
 <dl class="class">
 <dt id="SingleDependentVariableSaveSettings">
@@ -750,10 +750,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="propagatorSettingsCoordinates.html" class="btn btn-neutral float-right" title="5.5. Propagator Settings: Conventional vs. Propagated Coordinates" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="propagatorSettingsTermination.html" class="btn btn-neutral float-right" title="5.4. Propagator Settings: Termination Settings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="propagatorSettingsTermination.html" class="btn btn-neutral" title="5.3. Propagator Settings: Termination Settings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="propagatorSettings.html" class="btn btn-neutral" title="5.2. Propagator Settings: Basics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
