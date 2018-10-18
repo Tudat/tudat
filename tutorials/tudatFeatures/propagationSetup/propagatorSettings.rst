@@ -10,9 +10,12 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
    Base class from which the other settings classes described below are derived.
 
+Single-arc Propagation
+~~~~~~~~~~~~~~~~~~~~~~
+
 .. class:: SingleArcPropagatorSettings
 
-   Derived class of :class:`PropagatorSettings`. Base class from which the other single-arc settings classes described below are derived. Settings object for a specific type (e.g. translational, rotational, etc.) are always derived from this class. A list of single-arc settings can be passed to a :literal:`MultiArcPropagatorSettings` to perform multi-arc propagation.
+   Derived class of :class:`PropagatorSettings`. Base class from which the other single-arc settings classes described below are derived. Settings object for a specific type (e.g. translational, rotational, etc.) are always derived from this class. This class (or in essence one of its derived classes) is used as input to the :literal:`SingleArcDynamicsSimulator`. A list of single-arc settings can be passed to a :literal:`MultiArcPropagatorSettings` to perform multi-arc propagation (see below).
 
 .. class:: TranslationalStatePropagatorSettings
 
@@ -290,6 +293,9 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
    
    .. Warning:: When using the :class:`MultiTypePropagatorSettings` derived class note that the :literal:`dependentVariablesToSave` need to be passed in this constructor and not inside the :literal:`propagatorSettingsMap` since these will be ignored. 
 
+Multi- and Hybrid-arc Propagation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 .. class:: MultiArcPropagatorSettings
 
     This class is meant to be used together with a :class:`MultiArcDynamicsSimulator`. This allows the numerical propagation to be performed in an arc-wise manner. Dynamical model settings may be defined differently per arc. 
@@ -307,7 +313,25 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
    - ``transferInitialStateInformationPerArc``
 
-      ``bool`` allows only a single initial state to be defined: that for the first arc. When this variable is true, the initial state for arc 2 is taken from interpolating arc 1 at the arc 2 start time. This allows a continuous state to be set, while still using the multi-arc interface (for instance for a first estimate when doing multi-arc propagation).
+      ``bool`` If set to true (default is false), only a single initial state is used: that for the first arc. When this variable is true, the initial state for arc 2 is taken by interpolating the arc 1 state results at the arc 2 start time. This allows a continuous state to be set, while still using the multi-arc interface (for instance for a first estimate when doing multi-arc propagation). If set to false, the initial states from each entry of the :literal:`singleArcSettings` vector will be used.
+
+.. class:: HybridArcPropagatorSettings
+
+    This class is meant to be used together with a :class:`HybridArcDynamicsSimulator` (see this class description for more details on model implementation). This allows the numerical propagation to be performed, with any number of states propagated in a single arc, and any other states propagated in a multi-arc state. The results of the single-arc propagation are automatically used for the subsequent multi-arc propagation. A typical application is the propagation of a planetary orbiter (multi-arc) and the planet it is orbiting (single-arc). 
+
+   .. code-block:: cpp
+
+      HybridArcPropagatorSettings< StateScalarType >( singleArcPropagatorSettings, multiArcPropagatorSettings )
+
+   where:
+
+   - ``singleArcPropagatorSettings``
+
+      :class:`SingleArcPropagatorSettings` Settings to be used for the single-arc propagation.
+
+   - ``multiArcPropagatorSettings``
+
+      :class:`MultiArcPropagatorSettings` Settings to be used for the multi-arc propagation.
 
 .. tip:: Please beware that all the classes belonging to Tudat libraries are declared above without their namespace. To get the code working please make use of the appropriate :literal:`#include` and :literal:`using` statements.
 

@@ -7,7 +7,11 @@ Propagating the dynamics, using the settings discussed in previous wiki pages, i
 
 - Single-arc dynamics simulator, by using :class:`SingleArcDynamicsSimulator`. For most Tudat applications, this will be the preferred option (if you're not sure which one you need, it's probably this one).
 - Multi-arc dynamics simulator, by using :class:`MultiArcDynamicsSimulator`.
-- Hybrid dynamics simulator, by using :class:`HybridArcDynamicsSimulator` (under development).
+- Hybrid-arc (combination of single- and multi-arc) dynamics simulator, by using :class:`HybridArcDynamicsSimulator`.
+
+As discussed below, the state may be propagated directly upon the creation of one of these objects, or at a later time (depending on the input that is used.)
+
+.. warning:: It is important to ensure that the propagator settings are compatible with the dynamics simulator type selected. Otherwise it will result in an exception being thrown during run-time.
 
 These are implemented in derived classes and are discussed below. 
 
@@ -45,13 +49,34 @@ These are implemented in derived classes and are discussed below.
 
       Template argument used to set the precision of the time, :literal:`double` by default. For some application where a high precision is required this can be changed to e.g. :class:`Time` (see :ref:`tudatFeaturesTimeStateTemplates`). 
 
+By default, the equations of motion are integrated once the object is created. This can be changed by adding additional arguments to the cosntructors of the :class:`DynamicsSimulator`, as shown below for the :class:`SingleArcDynamicsSimulator`:
+
+.. code-block:: cpp
+
+    // Create simulation object and propagate dynamics.
+    SingleArcDynamicsSimulator< StateScalarType, TimeType >dynamicsSimulator( 
+       bodyMap, integratorSettings, propagatorSettings, areEquationsOfMotionToBeIntegrated, 
+       clearNumericalSolutions, setIntegratedResult, printNumberOfFunctionEvaluations );
+
+where:
+
+- :literal:`areEquationsOfMotionToBeIntegrated`
+    Boolean to denote whether equations of motion should be integrated immediately at the end of the contructor or not (default true).
+- :literal:`clearNumericalSolutions`
+    Boolean to determine whether to clear the raw numerical solution member variables after propagation and resetting ephemerides (default false for :class:`SingleArcDynamicsSimulation`, and true for :class:`MultiArcDynamicsSimulation` and :class:`HybridArcDynamicsSimulation`).
+- :literal:`setIntegratedResult`
+    Boolean to determine whether to automatically use the integrated results to set ephemerides (default false for :class:`SingleArcDynamicsSimulation`, and true for :class:`MultiArcDynamicsSimulation` and :class:`HybridArcDynamicsSimulation`).
+- :literal:`printNumberOfFunctionEvaluations`
+    Boolean to toggle the printing of number of function evaluations at the end of propagation (default false).
+
 .. class:: MultiArcDynamicsSimulator
    
    This derived class allows the numerical propagation to be performed in an arc-wise manner. It is constructed using:
 
    .. code-block:: cpp
    
-    MultiArcDynamicsSimulator( bodyMap, integratorSettings, propagatorSettings, arcStartTimes );
+    MultiArcDynamicsSimulator( bodyMap, integratorSettings, propagatorSettings, arcStartTimes,
+                               areEquationsOfMotionToBeIntegrated, clearNumericalSolutions, setIntegratedResult );
 
    where:
 
@@ -67,7 +92,8 @@ The following, alternative, constructor allows you to specify different integrat
 
     .. code-block:: cpp
    
-      MultiArcDynamicsSimulator( bodyMap, integratorSettingsList, propagatorSettings, arcStartTimes );
+      MultiArcDynamicsSimulator( bodyMap, integratorSettingsList, propagatorSettings, arcStartTimes,
+                               areEquationsOfMotionToBeIntegrated, clearNumericalSolutions, setIntegratedResult );
 
   
    - :literal:`integratorSettingsList`
@@ -75,36 +101,31 @@ The following, alternative, constructor allows you to specify different integrat
       :class:`std::vector< std::shared_ptr< IntegratorSettings > >` is the list (same size as number of arcs) with the settings of the integrator used, per arc.
 
 
-.. class:: HybridDynamicsSimulator
+.. class:: HybridArcDynamicsSimulator
 
    Allows some bodies to be propagated in a single arc, and some in a multi-arc fashion. This has the strict requirement that the single-arc bodies’ dynamics does not depend on the multi-arc bodies. For instance, the multi-arc bodies are typically spacecraft and the single-arc bodies solar system bodies. The vehicles do not exert an acceleration on the planets, but the planets exert accelerations on the spacecraft. When using hybrid-arc propagation, the single-arc bodies are first propagated, followed by the multi-arc bodies. 
 
-   .. note:: This feature is under development, and therefore not yet available in the current version of Tudat. 
-      
+ .. code-block:: cpp
+   
+    HybridArcDynamicsSimulator( bodyMap, integratorSettings, propagatorSettings, arcStartTimes,
+                               areEquationsOfMotionToBeIntegrated, clearNumericalSolutions, setIntegratedResult );
 
-By default, the equations of motion are integrated once the object is created. This can be changed by adding additional arguments to the cosntructors of the :class:`DynamicsSimulator`, as shown below for the :class:`SingleArcDynamicsSimulator`:
+   where:
 
-.. code-block:: cpp
+ - :literal:`propagatorSettings`
 
-    // Create simulation object and propagate dynamics.
-    SingleArcDynamicsSimulator< > dynamicsSimulator( bodyMap, integratorSettings, propagatorSettings, areEquationsOfMotionToBeIntegrated, clearNumericalSolutions, setIntegratedResult, printNumberOfFunctionEvaluations );
+      :class:`HybridArcPropagatorSettings`, contains the settings that defines how the orbit is propagated, as described in :ref:`tudatFeaturesPropagatorSettings`. 
 
-where:
-
-- :literal:`areEquationsOfMotionToBeIntegrated`
-    Boolean to denote whether equations of motion should be integrated immediately at the end of the contructor or not (default true).
-- :literal:`clearNumericalSolutions`
-    Boolean to determine whether to clear the raw numerical solution member variables after propagation and resetting ephemerides (default false).
-- :literal:`setIntegratedResult`
-    Boolean to determine whether to automatically use the integrated results to set ephemerides (default false).
-- :literal:`printNumberOfFunctionEvaluations`
-    Boolean to toggle the printing of number of function evaluations at the end of propagation (default false).
-
-.. warning:: It is important to ensure that the propagator settings are compatible with the dynamics simulator type selected. Otherwise it will result in an exception being thrown during run-time.
 
 Retrieving the Propagation History
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Once the :class:`DynamicsSimulator` object has been created and the equations of motion have been integrated, the propagation history of the selected bodies is stored within the :class:`DynamicsSimulator`. To make use of it, such history needs to be retrieved and saved to a file. The :class:`DynamicsSimulator` offers a few different options to extract results, based on what you have input in the simulation. First of all, you can access the history of the propagated states for each object you have simulated:
+Once the :class:`DynamicsSimulator` object has been created and the equations of motion have been integrated, the propagation history of the selected bodies is stored within the :class:`DynamicsSimulator`, unless the :literal:`clearNumericalSolutions` variable has been set to true. Note that this is the **default** for multi- and hybrid-arc propagation. 
+
+To make use of it, such history needs to be retrieved and saved to a file. The :class:`SingleDynamicsSimulator` offers a few different options to extract results, based on what you have input in the simulation. All propagation history is stored as a :literal:`std::map< double, Eigen::VectorXd >` (assuming you are using standard :literal:`TimeType` and :literal:`StateScalarType`).
+
+.. note:: All examples given below are valid for the single-arc propagation only. The corresponding functions of the multi- and hybird-arc models produce a :literal:`std::vector< std::map< ..., ... > >`, instead of the :literal:`std::map< ..., ... >` output used below.
+
+First of all, you can access the history of the propagated states for each object you have simulated:
 
    - **Extracting the state history in the conventional coordinates**
 
