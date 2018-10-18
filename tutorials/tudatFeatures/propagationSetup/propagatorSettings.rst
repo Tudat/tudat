@@ -12,7 +12,7 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
 .. class:: SingleArcPropagatorSettings
 
-   Derived class of :PropagatorSettings:`PropagatorSettings`. Base class from which the other single-arc settings classes described below are derived. Settings object for a specific type (e.g. translational, rotational, etc.) are always derived from this class. A list of single-arc settings may be passed to a :literal:`MultiArcPropagatorSettings` for multi-arc propagation.
+   Derived class of :class:`PropagatorSettings`. Base class from which the other single-arc settings classes described below are derived. Settings object for a specific type (e.g. translational, rotational, etc.) are always derived from this class. A list of single-arc settings can be passed to a :literal:`MultiArcPropagatorSettings` to perform multi-arc propagation.
 
 .. class:: TranslationalStatePropagatorSettings
 
@@ -256,7 +256,8 @@ Similarly to the :class:`IntegratorSettings` discussed in :ref:`tudatFeaturesInt
 
 .. class:: MultiTypePropagatorSettings
 
-    This class is used to propagate multiple types of :class:`PropagatorSettings` concurrently. The constructor of this class is overloaded depending on how the list of propagator settings is passed:
+    This class is used to propagate multiple types of :class:`PropagatorSettings` concurrently, for instance a translational-rotational dynamics, translational and mass dynamics (spacecraft under thrust) *etc*. Note that the types of dynamics need not apply to the same body, you may for instance propagate the translational state and mass of a spacecraft concurrently with the rotational state of the Earth.
+    The constructor of this class is overloaded depending on how the list of propagator settings is passed (with the former being typical)	:
 
     .. method:: Using an std::vector
 

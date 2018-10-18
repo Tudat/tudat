@@ -1,6 +1,6 @@
 .. _tudatFeaturesFrameworkTorqueModelSetup:    
 
-Rotational Model Set-up
+Torque Model Set-up
 =======================
 The setup of the rotational state is similar to the set-up of the translational acceleration framework.
 

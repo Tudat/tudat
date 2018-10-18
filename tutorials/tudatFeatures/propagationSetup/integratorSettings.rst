@@ -33,13 +33,13 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
       :literal:`TimeType` that defines the fixed step-size to be used either by the :literal:`euler` or the :literal:`rungeKutta4` numerical integrator. 
 
-.. class:: RungeKuttaVariableStepSizeSettingsScalarTolerances
+.. class:: RungeKuttaVariableStepSizeSettings
    
    This class is used to define the settings for the Runge-Kutta variable step-size integration methods, where the error tolerances are defined as a scalar (i.e., each state element has the same tolerance). The constructor for this derived class is:
 
    .. code-block:: cpp
    
-      RungeKuttaVariableStepSizeSettingsScalarTolerances< TimeType >(
+      RungeKuttaVariableStepSizeSettings< TimeType >(
             simulationStartEpoch,
             initialTimeStep,
             coefficientSet,
@@ -107,7 +107,9 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
       Minimum decrease factor in time step in subsequent iterations. The default value is 0.1.
 
-.. note:: You can also access the :class:`RungeKuttaVariableStepSizeSettingsScalarTolerances` class by using the alias :class:`RungeKuttaVariableStepSizeSettings`, which is compatible with the previous definition of the Runge-Kutta variable step-size integrator.
+.. class:: RungeKuttaVariableStepSizeSettingsScalarTolerances
+
+.. note:: The :class:`RungeKuttaVariableStepSizeSettings` class is actually a shorthand for the alias :class:`RungeKuttaVariableStepSizeSettingsScalarTolerances`, for compatibility with the previous definition of the Runge-Kutta variable step-size integrator.
 
 .. class:: RungeKuttaVariableStepSizeSettingsVectorTolerances
    
