@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>4.4. Aerodynamic Guidance &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>2.4. Aerodynamic Guidance &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -38,9 +38,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="4. Setting up State Derivative Models" href="index.html"/>
-        <link rel="next" title="4.5. Thrust Guidance" href="thrustModels.html"/>
-        <link rel="prev" title="4.3. Mass Rate Model Set-up" href="massModel.html"/> 
+        <link rel="up" title="2. Setting up State Derivative Models" href="index.html"/>
+        <link rel="next" title="2.5. Thrust Guidance" href="thrustModels.html"/>
+        <link rel="prev" title="2.3. Mass Rate Model Set-up" href="massModel.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -98,19 +98,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">4. Setting up State Derivative Models</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="frameworkAcceleration.html">4.1. Acceleration Model Set-up</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rotModel.html">4.2. Rotational Model Set-up</a></li>
-<li class="toctree-l4"><a class="reference internal" href="massModel.html">4.3. Mass Rate Model Set-up</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">4.4. Aerodynamic Guidance</a></li>
-<li class="toctree-l4"><a class="reference internal" href="thrustModels.html">4.5. Thrust Guidance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">1. Environment Set-up</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">2. Setting up State Derivative Models</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="frameworkAcceleration.html">2.1. Acceleration Model Set-up</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rotModel.html">2.2. Torque Model Set-up</a></li>
+<li class="toctree-l4"><a class="reference internal" href="massModel.html">2.3. Mass Rate Model Set-up</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">2.4. Aerodynamic Guidance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="thrustModels.html">2.5. Thrust Guidance</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Simulator Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">6. Estimation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
@@ -170,9 +170,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">4. Setting up State Derivative Models</a> &raquo;</li>
+          <li><a href="index.html">2. Setting up State Derivative Models</a> &raquo;</li>
         
-      <li>4.4. Aerodynamic Guidance</li>
+      <li>2.4. Aerodynamic Guidance</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -192,14 +192,14 @@
            <div itemprop="articleBody">
             
   <div class="section" id="aerodynamic-guidance">
-<span id="tudatfeaturesaerodynamicguidance"></span><h1>4.4. Aerodynamic Guidance<a class="headerlink" href="#aerodynamic-guidance" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturesaerodynamicguidance"></span><h1>2.4. Aerodynamic Guidance<a class="headerlink" href="#aerodynamic-guidance" title="Permalink to this headline">¶</a></h1>
 <p>When including aerodynamics in the orbit propagation, it may often be desirable to modify the aerodynamic properties of the vehicle as a function of the current environment. This is the case for ascent and entry for instance. Also, control surface deflections may be needed to modify the vehicle’s behaviour. Both options are included in Tudat, and the interfaces are described below.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">In applications were no aerodynamic guidance is used, the angle of attack, sideslip angle and bank angle are all implicitly set to zero.</p>
 </div>
 <div class="section" id="vehicle-orientation">
-<h2>4.4.1. Vehicle orientation<a class="headerlink" href="#vehicle-orientation" title="Permalink to this headline">¶</a></h2>
+<h2>2.4.1. Vehicle orientation<a class="headerlink" href="#vehicle-orientation" title="Permalink to this headline">¶</a></h2>
 <p>Although rotational motion can be propagated in Tudat (see <a class="reference internal" href="../propagationSetup/propagatorSettings.html#RotationalStatePropagatorSettings" title="RotationalStatePropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">RotationalStatePropagatorSettings</span></code></a>), sometime the user simply wants to impose this rotational motion on the vehicle.</p>
 <p>For aerodynamics, the vehicle orientation is typically described by the angle of attack, angle of sideslip and bank angle, which is also the approach we take in Tudat. There is a single interface in Tudat through which the functions describing these angles are fed to the trajectory propagation:</p>
 <dl class="class">
@@ -225,7 +225,7 @@
 </dd></dl>
 
 <div class="section" id="manual-angle-functions">
-<h3>4.4.1.1. Manual angle functions<a class="headerlink" href="#manual-angle-functions" title="Permalink to this headline">¶</a></h3>
+<h3>2.4.1.1. Manual angle functions<a class="headerlink" href="#manual-angle-functions" title="Permalink to this headline">¶</a></h3>
 <p>To manually set the body orientation as constant angles, the&nbsp;<code class="docutils literal"><span class="pre">setOrientationAngleFunctions</span></code>&nbsp;function is called directly, as is done in the above example. Note that if you need a definition of aerodynamic angles that varies with time, a specific&nbsp;<a class="reference internal" href="#AerodynamicGuidance" title="AerodynamicGuidance"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicGuidance</span></code></a>&nbsp;derived class should be implemented or one of the predefined orientation functions should be used. In general, the manual definition of the angles is done as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">constantAngleOfAttack</span> <span class="o">=</span> <span class="mf">30.0</span> <span class="o">*</span> <span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span> <span class="o">/</span> <span class="mf">180.0</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">constantSideslipAngle</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span> <span class="o">/</span> <span class="mf">180.0</span><span class="p">;</span>
@@ -238,7 +238,7 @@
 <p>By using this code, the vehicle will fly at 30 degree angle of attack, 2 degree sideslip angle and -70 degree bank angle during the full propagation.</p>
 </div>
 <div class="section" id="predefined-guidance-law">
-<h3>4.4.1.2. Predefined guidance law<a class="headerlink" href="#predefined-guidance-law" title="Permalink to this headline">¶</a></h3>
+<h3>2.4.1.2. Predefined guidance law<a class="headerlink" href="#predefined-guidance-law" title="Permalink to this headline">¶</a></h3>
 <p>Presently, only a single predefined guidance law is implemented in Tudat: imposing pitch-trim. When using this setting, the sideslip and bank angles are set to zero, while the angle of attack is chosen such that the pitch moment coefficient is exactly zero. It is set by using:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">aerodynamics</span><span class="o">::</span><span class="n">TrimOrientationCalculator</span> <span class="o">&gt;</span> <span class="n">trimCalculator</span> <span class="o">=</span> <span class="n">setTrimmedConditions</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
@@ -250,7 +250,7 @@
 <p>will work equally well. The&nbsp;<code class="xref py py-class docutils literal"><span class="pre">TrimOrientationCalculator</span></code>&nbsp;is returned by the function to keep the object through which the computations are performed available to the user.</p>
 </div>
 <div class="section" id="user-defined-aerodynamic-orientation">
-<h3>4.4.1.3. User-defined aerodynamic orientation<a class="headerlink" href="#user-defined-aerodynamic-orientation" title="Permalink to this headline">¶</a></h3>
+<h3>2.4.1.3. User-defined aerodynamic orientation<a class="headerlink" href="#user-defined-aerodynamic-orientation" title="Permalink to this headline">¶</a></h3>
 <p>For a general description of the vehicle orientation, a custom-defined function is typically required, to fit the needs to the mission/simulation under consideration. To facilitate this process, we have defined a virtual base class called&nbsp;<a class="reference internal" href="#AerodynamicGuidance" title="AerodynamicGuidance"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicGuidance</span></code></a>.</p>
 <dl class="class">
 <dt id="AerodynamicGuidance">
@@ -401,7 +401,7 @@
 <p>Although this guidance profile is still not very realistic for full numerical simulations, it does show the manner in which the interface is to be set up for a more realistic approach.</p>
 </div>
 <div class="section" id="using-the-environment-models">
-<h3>4.4.1.4. Using the environment models<a class="headerlink" href="#using-the-environment-models" title="Permalink to this headline">¶</a></h3>
+<h3>2.4.1.4. Using the environment models<a class="headerlink" href="#using-the-environment-models" title="Permalink to this headline">¶</a></h3>
 <p>In computing your aerodynamic guidance commands, you will likely need to use a number of physical quantities from your environment, as is the case with the example above, where the altitude is used. Below, a list is given with the way in which to retrieve some variables that are typical in aerodynamic guidance:</p>
 <blockquote>
 <div><ul class="simple">
@@ -446,7 +446,7 @@
 </div>
 </div>
 <div class="section" id="control-surface-deflections">
-<h2>4.4.2. Control surface deflections<a class="headerlink" href="#control-surface-deflections" title="Permalink to this headline">¶</a></h2>
+<h2>2.4.2. Control surface deflections<a class="headerlink" href="#control-surface-deflections" title="Permalink to this headline">¶</a></h2>
 <p>For a realistic vehicle entry/ascent trajectory propagation, it will often be necessary to include control surface deflections in the numerical propagation. How to load/define the aerodynamic influence of control surfaces is discussed at the end of this page.</p>
 <p>To use the control surface increments, the control surface deflections have to be set, either to a constant value before stating the propagation, or every time step by a user-defined guidance system. In each case, the control surface deflections are stored in a&nbsp;<code class="xref py py-class docutils literal"><span class="pre">VehicleSystems</span></code>&nbsp;object, which is a member of a&nbsp;<a class="reference internal" href="../environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object. The vehicle systems represent a collection of all physical (hardware) properties of a vehicle including the control surface deflections and properties. Presently, the only quantities that are stored for the control surfaces are the current deflection.</p>
 <div class="admonition tip">
@@ -552,10 +552,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="thrustModels.html" class="btn btn-neutral float-right" title="4.5. Thrust Guidance" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="thrustModels.html" class="btn btn-neutral float-right" title="2.5. Thrust Guidance" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="massModel.html" class="btn btn-neutral" title="4.3. Mass Rate Model Set-up" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="massModel.html" class="btn btn-neutral" title="2.3. Mass Rate Model Set-up" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

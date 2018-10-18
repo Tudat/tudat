@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>6.1. Setting up the link ends &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>4.1. Setting up the link ends &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -38,9 +38,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="6. Estimation Set-Up" href="index.html"/>
-        <link rel="next" title="6.2. Setting up Observation Models" href="observationModelSetup.html"/>
-        <link rel="prev" title="6. Estimation Set-Up" href="index.html"/> 
+        <link rel="up" title="4. Estimation Set-Up" href="index.html"/>
+        <link rel="next" title="4.2. Setting up Observation Models" href="observationModelSetup.html"/>
+        <link rel="prev" title="4. Estimation Set-Up" href="index.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -98,19 +98,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Setting up State Derivative Models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Simulator Set-Up</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">6. Estimation Set-Up</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">6.1. Setting up the link ends</a></li>
-<li class="toctree-l4"><a class="reference internal" href="observationModelSetup.html">6.2. Setting up Observation Models</a></li>
-<li class="toctree-l4"><a class="reference internal" href="observationSimulation.html">6.3. Simulating Observations</a></li>
-<li class="toctree-l4"><a class="reference internal" href="parameterEstimationSettings.html">6.4. Setting Up Estimated Parameters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="estimationExecution.html">6.5. Parameter Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">1. Environment Set-up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">2. Setting up State Derivative Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">4. Estimation Set-Up</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">4.1. Setting up the link ends</a></li>
+<li class="toctree-l4"><a class="reference internal" href="observationModelSetup.html">4.2. Setting up Observation Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="observationSimulation.html">4.3. Simulating Observations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="parameterEstimationSettings.html">4.4. Setting Up Estimated Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="estimationExecution.html">4.5. Parameter Estimation</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
@@ -170,9 +170,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">6. Estimation Set-Up</a> &raquo;</li>
+          <li><a href="index.html">4. Estimation Set-Up</a> &raquo;</li>
         
-      <li>6.1. Setting up the link ends</li>
+      <li>4.1. Setting up the link ends</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -192,10 +192,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="setting-up-the-link-ends">
-<span id="linkendsetup"></span><h1>6.1. Setting up the link ends<a class="headerlink" href="#setting-up-the-link-ends" title="Permalink to this headline">¶</a></h1>
+<span id="linkendsetup"></span><h1>4.1. Setting up the link ends<a class="headerlink" href="#setting-up-the-link-ends" title="Permalink to this headline">¶</a></h1>
 <p>In Tudat, an observation model is referred to a number of link ends. For a one-way range model, for instance, a receiver and transmitter are required, both of which are termed a ‘link end’. An <code class="docutils literal"><span class="pre">enum</span></code> termed <code class="docutils literal"><span class="pre">LinkEndType</span></code> is available that lists all the possible kinds of link ends. A full list of observation models, as well as the link ends that they require, is given on the page on <a class="reference internal" href="observationModelSetup.html#observationmodelsetup"><span class="std std-ref">Setting up Observation Models</span></a>.</p>
 <div class="section" id="ground-station-creation">
-<span id="groundstationcreation"></span><h2>6.1.1. Ground Station Creation<a class="headerlink" href="#ground-station-creation" title="Permalink to this headline">¶</a></h2>
+<span id="groundstationcreation"></span><h2>4.1.1. Ground Station Creation<a class="headerlink" href="#ground-station-creation" title="Permalink to this headline">¶</a></h2>
 <p>Often, you will need to define the positions of ground stations on celestial bodies to/from which observations are made. Presently, the position of a ground station is fixed in the body-fixed frame of the body on which it is located, but modifications to allow a time-varying position (due to tides, continental drift, <em>etc.</em>) are planned.</p>
 <p>With the present setup, you must provide only the name and position (as an <code class="docutils literal"><span class="pre">Eigen::Vector3d</span></code>) of the ground station to create it. The position may be defined in several coordinate systems, defined by an enum of <code class="docutils literal"><span class="pre">PositionElementTypes</span></code>:</p>
 <ul class="simple">
@@ -220,7 +220,7 @@
 <p>Which will create a ground station named <code class="docutils literal"><span class="pre">&quot;Graz&quot;</span></code> on the body <code class="docutils literal"><span class="pre">earth</span></code> at the given position.</p>
 </div>
 <div class="section" id="creating-a-set-of-link-ends">
-<h2>6.1.2. Creating a Set of Link Ends<a class="headerlink" href="#creating-a-set-of-link-ends" title="Permalink to this headline">¶</a></h2>
+<h2>4.1.2. Creating a Set of Link Ends<a class="headerlink" href="#creating-a-set-of-link-ends" title="Permalink to this headline">¶</a></h2>
 <p>A set of link ends used for a given observable are stored in a <code class="docutils literal"><span class="pre">LinkEnds</span></code> type, which is a <code class="docutils literal"><span class="pre">typedef</span></code> for <code class="docutils literal"><span class="pre">std::map&lt;</span> <span class="pre">LinkEndType,</span> <span class="pre">std::pair&lt;</span> <span class="pre">std::string,</span> <span class="pre">std::string</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code>. As you can see, the map value is a pair of strings. The first entry of the string is the body on which the link end is placed, the second entry the reference point on this body (typically the ground station). In the case where the second entry is empty (as is often the case for spacecraft), the body’s center of mass is used. An example of defining link ends is given below:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">LinkEnds</span> <span class="n">oneWayLinkEnds</span><span class="p">;</span>
 <span class="n">oneWayLinkEnds</span><span class="p">[</span> <span class="n">transmitter</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;Graz&quot;</span> <span class="p">);</span>
@@ -256,10 +256,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="observationModelSetup.html" class="btn btn-neutral float-right" title="6.2. Setting up Observation Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="observationModelSetup.html" class="btn btn-neutral float-right" title="4.2. Setting up Observation Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="6. Estimation Set-Up" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="4. Estimation Set-Up" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>4.5. Thrust Guidance &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>2.5. Thrust Guidance &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -38,9 +38,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="4. Setting up State Derivative Models" href="index.html"/>
-        <link rel="next" title="5. Simulator Set-Up" href="../propagationSetup/index.html"/>
-        <link rel="prev" title="4.4. Aerodynamic Guidance" href="aerodynamicGuidance.html"/> 
+        <link rel="up" title="2. Setting up State Derivative Models" href="index.html"/>
+        <link rel="next" title="3. Simulator Set-Up" href="../propagationSetup/index.html"/>
+        <link rel="prev" title="2.4. Aerodynamic Guidance" href="aerodynamicGuidance.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -98,19 +98,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">4. Setting up State Derivative Models</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="frameworkAcceleration.html">4.1. Acceleration Model Set-up</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rotModel.html">4.2. Rotational Model Set-up</a></li>
-<li class="toctree-l4"><a class="reference internal" href="massModel.html">4.3. Mass Rate Model Set-up</a></li>
-<li class="toctree-l4"><a class="reference internal" href="aerodynamicGuidance.html">4.4. Aerodynamic Guidance</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">4.5. Thrust Guidance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">1. Environment Set-up</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">2. Setting up State Derivative Models</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="frameworkAcceleration.html">2.1. Acceleration Model Set-up</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rotModel.html">2.2. Torque Model Set-up</a></li>
+<li class="toctree-l4"><a class="reference internal" href="massModel.html">2.3. Mass Rate Model Set-up</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aerodynamicGuidance.html">2.4. Aerodynamic Guidance</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">2.5. Thrust Guidance</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Simulator Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">6. Estimation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
@@ -170,9 +170,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">4. Setting up State Derivative Models</a> &raquo;</li>
+          <li><a href="index.html">2. Setting up State Derivative Models</a> &raquo;</li>
         
-      <li>4.5. Thrust Guidance</li>
+      <li>2.5. Thrust Guidance</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -192,7 +192,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="thrust-guidance">
-<span id="tudatfeaturesthrustmodels"></span><h1>4.5. Thrust Guidance<a class="headerlink" href="#thrust-guidance" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturesthrustmodels"></span><h1>2.5. Thrust Guidance<a class="headerlink" href="#thrust-guidance" title="Permalink to this headline">¶</a></h1>
 <p>This page deals with the inclusion of a thrust force into the dynamical model. Note that when using thrust, it may often be desirable to include the mass in the state vector. A good example of incorporating mass propagation is given in <a class="reference internal" href="../../applicationWalkthroughs/useOfThrustThrustForceAlongVelocityVector.html#walkthroughsuseofthrustthrustforcealongvelocityvector"><span class="std std-ref">Use of Thrust: Thrust Force Along Velocity Vector</span></a>. Details of combining mass and state propagation can be found on the <a class="reference internal" href="../propagationSetup/propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a> page.</p>
 <p>In Tudat, we define the thrust force by two separate types of settings (which may or may not be linked):</p>
 <blockquote>
@@ -217,7 +217,7 @@
 </dd></dl>
 
 <div class="section" id="thrust-direction">
-<h2>4.5.1. Thrust direction<a class="headerlink" href="#thrust-direction" title="Permalink to this headline">¶</a></h2>
+<h2>2.5.1. Thrust direction<a class="headerlink" href="#thrust-direction" title="Permalink to this headline">¶</a></h2>
 <p>For the direction of the thrust, there are presently four available types of guidance. As is done for the acceleration models, some of the types of thrust direction require a specific derived class of <a class="reference internal" href="#ThrustDirectionGuidanceSettings" title="ThrustDirectionGuidanceSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustDirectionGuidanceSettings</span></code></a>, while others are defined purely by their type.</p>
 <dl class="class">
 <dt id="ThrustDirectionGuidanceSettings">
@@ -339,7 +339,7 @@
 
 </div>
 <div class="section" id="thrust-magnitude">
-<h2>4.5.2. Thrust magnitude<a class="headerlink" href="#thrust-magnitude" title="Permalink to this headline">¶</a></h2>
+<h2>2.5.2. Thrust magnitude<a class="headerlink" href="#thrust-magnitude" title="Permalink to this headline">¶</a></h2>
 <p>To define the thrust magnitude, there are presently three available types of settings, each with its own dedicated derived class of <a class="reference internal" href="#ThrustMagnitudeSettings" title="ThrustMagnitudeSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustMagnitudeSettings</span></code></a>. We note that presently, the definition of the thrust direction in the body-fixed frame is also defined through these derived classes. In essence, the <a class="reference internal" href="#ThrustMagnitudeSettings" title="ThrustMagnitudeSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustMagnitudeSettings</span></code></a> defines all local (to the vehicle systems) settings for the thrust, while <a class="reference internal" href="#ThrustDirectionGuidanceSettings" title="ThrustDirectionGuidanceSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustDirectionGuidanceSettings</span></code></a> defines how the full vehicle must orient itself in space for the required thrust direction to be achieved. At present, there is no direct option for thrust-vector control (i.e. modifying the thrust direction in the body-fixed frame). If your application requires such functionality, please contact the Tudat support team. The following thrust magnitude settings are available:</p>
 <dl class="class">
 <dt id="ThrustMagnitudeSettings">
@@ -427,10 +427,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../propagationSetup/index.html" class="btn btn-neutral float-right" title="5. Simulator Set-Up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../propagationSetup/index.html" class="btn btn-neutral float-right" title="3. Simulator Set-Up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="aerodynamicGuidance.html" class="btn btn-neutral" title="4.4. Aerodynamic Guidance" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="aerodynamicGuidance.html" class="btn btn-neutral" title="2.4. Aerodynamic Guidance" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

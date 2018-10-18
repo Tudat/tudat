@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>6.5. Parameter Estimation &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>4.5. Parameter Estimation &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -38,9 +38,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="6. Estimation Set-Up" href="index.html"/>
-        <link rel="next" title="7. Other Libraries" href="../otherLibraries/index.html"/>
-        <link rel="prev" title="6.4. Setting Up Estimated Parameters" href="parameterEstimationSettings.html"/> 
+        <link rel="up" title="4. Estimation Set-Up" href="index.html"/>
+        <link rel="next" title="5. Basic Astrodynamics Tools" href="../astroTools/index.html"/>
+        <link rel="prev" title="4.4. Setting Up Estimated Parameters" href="parameterEstimationSettings.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -98,19 +98,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Setting up State Derivative Models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Simulator Set-Up</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">6. Estimation Set-Up</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="linkEndSetup.html">6.1. Setting up the link ends</a></li>
-<li class="toctree-l4"><a class="reference internal" href="observationModelSetup.html">6.2. Setting up Observation Models</a></li>
-<li class="toctree-l4"><a class="reference internal" href="observationSimulation.html">6.3. Simulating Observations</a></li>
-<li class="toctree-l4"><a class="reference internal" href="parameterEstimationSettings.html">6.4. Setting Up Estimated Parameters</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">6.5. Parameter Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">1. Environment Set-up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">2. Setting up State Derivative Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">4. Estimation Set-Up</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="linkEndSetup.html">4.1. Setting up the link ends</a></li>
+<li class="toctree-l4"><a class="reference internal" href="observationModelSetup.html">4.2. Setting up Observation Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="observationSimulation.html">4.3. Simulating Observations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="parameterEstimationSettings.html">4.4. Setting Up Estimated Parameters</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">4.5. Parameter Estimation</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
@@ -170,9 +170,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">6. Estimation Set-Up</a> &raquo;</li>
+          <li><a href="index.html">4. Estimation Set-Up</a> &raquo;</li>
         
-      <li>6.5. Parameter Estimation</li>
+      <li>4.5. Parameter Estimation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -192,9 +192,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="parameter-estimation">
-<span id="estimationexecution"></span><h1>6.5. Parameter Estimation<a class="headerlink" href="#parameter-estimation" title="Permalink to this headline">¶</a></h1>
+<span id="estimationexecution"></span><h1>4.5. Parameter Estimation<a class="headerlink" href="#parameter-estimation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="creating-the-estimation-object">
-<span id="estimationobjectcreation"></span><h2>6.5.1. Creating the estimation object<a class="headerlink" href="#creating-the-estimation-object" title="Permalink to this headline">¶</a></h2>
+<span id="estimationobjectcreation"></span><h2>4.5.1. Creating the estimation object<a class="headerlink" href="#creating-the-estimation-object" title="Permalink to this headline">¶</a></h2>
 <p>The estimation of orbits and physical parameters in Tudat is done through the use of an <a class="reference internal" href="#OrbitDeterminationManager" title="OrbitDeterminationManager"><code class="xref py py-class docutils literal"><span class="pre">OrbitDeterminationManager</span></code></a> object. This object is created once for a given set of estimated parameters, and may be (re-)used to reset and/or estimate parameters from a given set of data.</p>
 <dl class="class">
 <dt id="OrbitDeterminationManager">
@@ -250,7 +250,7 @@
 </ul>
 </div>
 <div class="section" id="defining-estimation-input">
-<span id="estimationinput"></span><h2>6.5.2. Defining estimation input<a class="headerlink" href="#defining-estimation-input" title="Permalink to this headline">¶</a></h2>
+<span id="estimationinput"></span><h2>4.5.2. Defining estimation input<a class="headerlink" href="#defining-estimation-input" title="Permalink to this headline">¶</a></h2>
 <p>The input to the estimation consists of several parts. Firstly, the input data, weights, <em>etc.</em> need to be defined, which is done through the <code class="docutils literal"><span class="pre">PodInput</span></code> class.</p>
 <dl class="class">
 <dt id="PodInput">
@@ -275,7 +275,7 @@
 </div>
 </div>
 <div class="section" id="estimation-output">
-<span id="estimationoutput"></span><h2>6.5.3. Estimation output<a class="headerlink" href="#estimation-output" title="Permalink to this headline">¶</a></h2>
+<span id="estimationoutput"></span><h2>4.5.3. Estimation output<a class="headerlink" href="#estimation-output" title="Permalink to this headline">¶</a></h2>
 <p>When performing the estimation, the code rescales the values of all parameters <span class="math">\(p\)</span>, where we denote the scaled parameters as <span class="math">\(\tilde{h}\)</span>, so that all partials <span class="math">\(\partial h/\partial\tilde{p}\)</span> w.r.t. lie in the range <span class="math">\([-1,1]\)</span>. To provide transparency, it is the covariance and partial derivative matrix of these scaled parameters that is saved to the <code class="docutils literal"><span class="pre">PodOutput</span></code> object. However, the following functions allow you to retrieve the information w.r.t. the <em>unscaled</em> parameters:</p>
 <ul class="simple">
 <li>Inverse covariance, obtained using the <code class="docutils literal"><span class="pre">getUnnormalizedInverseCovarianceMatrix</span></code> function.</li>
@@ -296,10 +296,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../otherLibraries/index.html" class="btn btn-neutral float-right" title="7. Other Libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../astroTools/index.html" class="btn btn-neutral float-right" title="5. Basic Astrodynamics Tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="parameterEstimationSettings.html" class="btn btn-neutral" title="6.4. Setting Up Estimated Parameters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="parameterEstimationSettings.html" class="btn btn-neutral" title="4.4. Setting Up Estimated Parameters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

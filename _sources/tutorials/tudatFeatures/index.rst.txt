@@ -155,14 +155,25 @@ These pages of the wiki provide further details about critical libraries necessa
       }
    }
 
+
+In the example code given on the following pages, namespaces are typically omitted for the sake of brevity. To find the namespace that a given class or function is defined in, search for this class/function in the `Doxygen documentation<https://doxygen.tudat.tudelft.nl>`_. Below is an example screenshot for the Doxygen page of the :class:`MultiArcDynamicsSimulator` class, which is in the :literal:`tudat::propagators` namespace (red box).
+
+      .. figure:: images/doxygenNameSpace.png
+
+To find the file that you need to ::literal:`#include`, follow the link in the blue box shown above, which leads to the following. Here, it can be seen that, to use this code, the :literal:`Tudat/SimulationSetup/PropagationSetup/dynamicsSimulator.h` file needs to be included.
+
+      .. figure:: images/doxygenFiles.png
+   
+Feature documentation for the various Tudat tools are given in the pages below. For new users, we recommend that you start with the :ref:`walkthroughsIndex`.
+
 .. toctree::
    :numbered:
    :maxdepth: 2
 
-   astroTools/index
-   mathTools/index
    environmentSetup/index
    accelerationSetup/index
    propagationSetup/index
    estimationSetup/index
+   astroTools/index
+   mathTools/index
    otherLibraries/index

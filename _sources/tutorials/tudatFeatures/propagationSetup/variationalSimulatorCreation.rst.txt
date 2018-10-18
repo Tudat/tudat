@@ -93,7 +93,7 @@ These are implemented in derived classes and are discussed below. Note that thes
                                           integrateDynamicalAndVariationalEquationsConcurrently,
                                           variationalOnlyIntegratorSettings, 
                                           clearNumericalSolution,
-                                          integrateEquationsOnCreation ) )
+                                          integrateEquationsOnCreation ) );
 
    where:
 
@@ -101,11 +101,21 @@ These are implemented in derived classes and are discussed below. Note that thes
 
       :literal:`std::vector< double >` contains the times at which the separate arcs start.
 
-.. class:: HybridVariationalEquationsSolver
+.. class:: HybridArcVariationalEquationsSolver
 
-   Allows some bodies to be propagated in a single arc, and some in a multi-arc fashion. This has the strict requirement that the single-arc bodies’ dynamics does not depend on the multi-arc bodies. For instance, the multi-arc bodies are typically spacecraft and the single-arc bodies solar system bodies. The vehicles do not exert an acceleration on the planets, but the planets exert accelerations on the spacecraft. When using hybrid-arc propagation, the single-arc bodies are first propagated, followed by the multi-arc bodies. 
+   Allows some bodies to be propagated in a single arc, and some in a multi-arc fashion. See :class:`HybridArcDynamicsSimulator` for model details. It is constructed using:
 
-   .. note:: This feature is under development, and therefore not yet available in the current version of Tudat. 
+   .. code-block:: cpp
+   
+      HybridArcVariationalEquationsSolver( bodyMap, 
+                                          integratorSettings, 
+                                          propagatorSettings, 
+                                          parametersToEstimate, 
+                                          arcStartTimes,
+                                          integrateDynamicalAndVariationalEquationsConcurrently,
+                                          clearNumericalSolution,
+                                          integrateEquationsOnCreation ) );
+
       
 
 Retrieving the variational equation history

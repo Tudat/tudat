@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3.3. The Environment During Propagation &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>1.3. The Environment During Propagation &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -38,9 +38,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="3. Environment Set-up" href="index.html"/>
-        <link rel="next" title="3.4. Tabulated Atmosphere Settings" href="tabulatedAtmosphere.html"/>
-        <link rel="prev" title="3.2. Available Settings for the Environment Models" href="availableSettings.html"/> 
+        <link rel="up" title="1. Environment Set-up" href="index.html"/>
+        <link rel="next" title="1.4. Tabulated Atmosphere Settings" href="tabulatedAtmosphere.html"/>
+        <link rel="prev" title="1.2. Available Settings for the Environment Models" href="availableSettings.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -98,19 +98,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">3. Environment Set-up</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="setup.html">3.1. Setting up the Environment</a></li>
-<li class="toctree-l4"><a class="reference internal" href="availableSettings.html">3.2. Available Settings for the Environment Models</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">3.3. The Environment During Propagation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphere.html">3.4. Tabulated Atmosphere Settings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="aerodynamicCoefficients.html">3.5. Aerodynamic Coefficients</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">1. Environment Set-up</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="setup.html">1.1. Setting up the Environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="availableSettings.html">1.2. Available Settings for the Environment Models</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">1.3. The Environment During Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphere.html">1.4. Tabulated Atmosphere Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aerodynamicCoefficients.html">1.5. Aerodynamic Coefficients</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Setting up State Derivative Models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Simulator Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">6. Estimation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">2. Setting up State Derivative Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
@@ -170,9 +170,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">3. Environment Set-up</a> &raquo;</li>
+          <li><a href="index.html">1. Environment Set-up</a> &raquo;</li>
         
-      <li>3.3. The Environment During Propagation</li>
+      <li>1.3. The Environment During Propagation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -192,7 +192,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="the-environment-during-propagation">
-<h1>3.3. The Environment During Propagation<a class="headerlink" href="#the-environment-during-propagation" title="Permalink to this headline">¶</a></h1>
+<h1>1.3. The Environment During Propagation<a class="headerlink" href="#the-environment-during-propagation" title="Permalink to this headline">¶</a></h1>
 <p>Each&nbsp;<a class="reference internal" href="setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object and its constituent members is updated to the current state and time automatically during the numerical propagation. We stress that only those models that are relevant for a given propagation are updated every time step (this is handled automatically, without user intervention). Some time-dependent properties of the body are set in the environment models themselves. Others are updated and stored directly in the&nbsp;<a class="reference internal" href="setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object. Below is a full list of (possibly) time varying environment models, and how to retrieve them from a Body object during propagation.</p>
 <p><strong>The current translational state</strong></p>
 <blockquote>
@@ -240,10 +240,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="tabulatedAtmosphere.html" class="btn btn-neutral float-right" title="3.4. Tabulated Atmosphere Settings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tabulatedAtmosphere.html" class="btn btn-neutral float-right" title="1.4. Tabulated Atmosphere Settings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="availableSettings.html" class="btn btn-neutral" title="3.2. Available Settings for the Environment Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="availableSettings.html" class="btn btn-neutral" title="1.2. Available Settings for the Environment Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>4.1. Acceleration Model Set-up &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>2.1. Acceleration Model Set-up &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -38,9 +38,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="4. Setting up State Derivative Models" href="index.html"/>
-        <link rel="next" title="4.2. Rotational Model Set-up" href="rotModel.html"/>
-        <link rel="prev" title="4. Setting up State Derivative Models" href="index.html"/> 
+        <link rel="up" title="2. Setting up State Derivative Models" href="index.html"/>
+        <link rel="next" title="2.2. Torque Model Set-up" href="rotModel.html"/>
+        <link rel="prev" title="2. Setting up State Derivative Models" href="index.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -98,19 +98,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">4. Setting up State Derivative Models</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">4.1. Acceleration Model Set-up</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rotModel.html">4.2. Rotational Model Set-up</a></li>
-<li class="toctree-l4"><a class="reference internal" href="massModel.html">4.3. Mass Rate Model Set-up</a></li>
-<li class="toctree-l4"><a class="reference internal" href="aerodynamicGuidance.html">4.4. Aerodynamic Guidance</a></li>
-<li class="toctree-l4"><a class="reference internal" href="thrustModels.html">4.5. Thrust Guidance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">1. Environment Set-up</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">2. Setting up State Derivative Models</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">2.1. Acceleration Model Set-up</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rotModel.html">2.2. Torque Model Set-up</a></li>
+<li class="toctree-l4"><a class="reference internal" href="massModel.html">2.3. Mass Rate Model Set-up</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aerodynamicGuidance.html">2.4. Aerodynamic Guidance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="thrustModels.html">2.5. Thrust Guidance</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Simulator Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">6. Estimation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
@@ -170,9 +170,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">4. Setting up State Derivative Models</a> &raquo;</li>
+          <li><a href="index.html">2. Setting up State Derivative Models</a> &raquo;</li>
         
-      <li>4.1. Acceleration Model Set-up</li>
+      <li>2.1. Acceleration Model Set-up</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -192,10 +192,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="acceleration-model-set-up">
-<span id="tudatfeaturesframeworkaccelerations"></span><h1>4.1. Acceleration Model Set-up<a class="headerlink" href="#acceleration-model-set-up" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturesframeworkaccelerations"></span><h1>2.1. Acceleration Model Set-up<a class="headerlink" href="#acceleration-model-set-up" title="Permalink to this headline">¶</a></h1>
 <p>Below is a schemaric overview of the various acceleration options in Tudat, and the top-level architecture for how to set up acceleration models.</p>
 <div class="section" id="acceleration-settings">
-<h2>4.1.1. Acceleration settings<a class="headerlink" href="#acceleration-settings" title="Permalink to this headline">¶</a></h2>
+<h2>2.1.1. Acceleration settings<a class="headerlink" href="#acceleration-settings" title="Permalink to this headline">¶</a></h2>
 <p>The settings for accelerations are defined and stored by the user in a <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a>.</p>
 <dl class="class">
 <dt id="SelectedAccelerationMap">
@@ -376,7 +376,7 @@
 <p>For this example, the second option is of course a bit ‘non-standard’. However, for cases where entire planetary systems are propagated, such an approach is typically taken (for certain applications, the numerically propagated body must also have a particular ephemeris member object, as discussed in <a class="reference internal" href="../propagationSetup/propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>).</p>
 </div>
 <div class="section" id="available-acceleration-models">
-<h2>4.1.2. Available acceleration models<a class="headerlink" href="#available-acceleration-models" title="Permalink to this headline">¶</a></h2>
+<h2>2.1.2. Available acceleration models<a class="headerlink" href="#available-acceleration-models" title="Permalink to this headline">¶</a></h2>
 <p>As stated above, the <code class="docutils literal"><span class="pre">createAccelerationModelsMap</span></code> function uses your environment and settings for the accelerations to automatically retrieve and put together all functions used to calculate the accelerations during each function evaluation of the numerical scheme. For reference, we first provide a bried list of available acceleration models:</p>
 <ul class="simple">
 <li>Point-mass gravity (central of third-body)</li>
@@ -593,10 +593,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="rotModel.html" class="btn btn-neutral float-right" title="4.2. Rotational Model Set-up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="rotModel.html" class="btn btn-neutral float-right" title="2.2. Torque Model Set-up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="4. Setting up State Derivative Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="2. Setting up State Derivative Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

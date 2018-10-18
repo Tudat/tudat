@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>6.3. Simulating Observations &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>4.3. Simulating Observations &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -38,9 +38,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="6. Estimation Set-Up" href="index.html"/>
-        <link rel="next" title="6.4. Setting Up Estimated Parameters" href="parameterEstimationSettings.html"/>
-        <link rel="prev" title="6.2. Setting up Observation Models" href="observationModelSetup.html"/> 
+        <link rel="up" title="4. Estimation Set-Up" href="index.html"/>
+        <link rel="next" title="4.4. Setting Up Estimated Parameters" href="parameterEstimationSettings.html"/>
+        <link rel="prev" title="4.2. Setting up Observation Models" href="observationModelSetup.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -98,19 +98,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Setting up State Derivative Models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Simulator Set-Up</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">6. Estimation Set-Up</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="linkEndSetup.html">6.1. Setting up the link ends</a></li>
-<li class="toctree-l4"><a class="reference internal" href="observationModelSetup.html">6.2. Setting up Observation Models</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">6.3. Simulating Observations</a></li>
-<li class="toctree-l4"><a class="reference internal" href="parameterEstimationSettings.html">6.4. Setting Up Estimated Parameters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="estimationExecution.html">6.5. Parameter Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">1. Environment Set-up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">2. Setting up State Derivative Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">4. Estimation Set-Up</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="linkEndSetup.html">4.1. Setting up the link ends</a></li>
+<li class="toctree-l4"><a class="reference internal" href="observationModelSetup.html">4.2. Setting up Observation Models</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">4.3. Simulating Observations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="parameterEstimationSettings.html">4.4. Setting Up Estimated Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="estimationExecution.html">4.5. Parameter Estimation</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
@@ -170,9 +170,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">6. Estimation Set-Up</a> &raquo;</li>
+          <li><a href="index.html">4. Estimation Set-Up</a> &raquo;</li>
         
-      <li>6.3. Simulating Observations</li>
+      <li>4.3. Simulating Observations</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -192,9 +192,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="simulating-observations">
-<span id="observationsimulation"></span><h1>6.3. Simulating Observations<a class="headerlink" href="#simulating-observations" title="Permalink to this headline">¶</a></h1>
+<span id="observationsimulation"></span><h1>4.3. Simulating Observations<a class="headerlink" href="#simulating-observations" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="creating-the-observation-simulator">
-<span id="creatingobservationsimulators"></span><h2>6.3.1. Creating the Observation Simulator<a class="headerlink" href="#creating-the-observation-simulator" title="Permalink to this headline">¶</a></h2>
+<span id="creatingobservationsimulators"></span><h2>4.3.1. Creating the Observation Simulator<a class="headerlink" href="#creating-the-observation-simulator" title="Permalink to this headline">¶</a></h2>
 <p>In Tudat, a set of observations are simulated using the <code class="xref py py-class docutils literal"><span class="pre">ObservationSimulatorBase</span></code> class. An object of this class is used to simulate observations of a single type, for any number of <code class="xref py py-class docutils literal"><span class="pre">LinkEnds</span></code>. The <code class="xref py py-class docutils literal"><span class="pre">ObservationSimulatorBase</span></code> has, like many of the classes in Tudat a number of template arguments, one for the scalar type of the observable and one for the time type. Note that the state scalar used in numerical propagation should be equal to the scalar type of the observable to make full use of the functionality.</p>
 <p>There are two ways in which to obtain <code class="xref py py-class docutils literal"><span class="pre">ObservationSimulatorBase</span></code> objects:</p>
 <ul>
@@ -231,7 +231,7 @@
 <p>In either case, this provides you with an object of type <code class="docutils literal"><span class="pre">ObservationSimulatorBase</span></code>.</p>
 </div>
 <div class="section" id="observation-simulation-settings">
-<h2>6.3.2. Observation Simulation Settings<a class="headerlink" href="#observation-simulation-settings" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.2. Observation Simulation Settings<a class="headerlink" href="#observation-simulation-settings" title="Permalink to this headline">¶</a></h2>
 <p>The times at which observations are simulated may be defined directly by the user, or they may depend on some scheduling algorithm, which is then used to determine the observation times. The final observation times are determined by a combination of <code class="xref py py-class docutils literal"><span class="pre">ObservationSimulationTimeSettings</span></code> objects and <code class="docutils literal"><span class="pre">ObservationViabilitySettings</span></code> objects. The former allows you to define observation times directly, or an observation schedule algorithm. The latter defines constraints that must be met for an observation to be possible. The viability settings are discussed on the page <a class="reference internal" href="#observationviability"><span class="std std-ref">Observation Viability Setttings</span></a>.</p>
 <p>Each type of observation settings is defined by a dedicated derived class of <code class="xref py py-class docutils literal"><span class="pre">ObservationSimulationTimeSettings</span></code>. This class has a <code class="docutils literal"><span class="pre">TimeType</span></code> argument, which is discussed in more detail <span class="xref std std-ref">tudatTemplatingStateTime</span>. The following classes are presently available:</p>
 <dl class="class">
@@ -260,7 +260,7 @@
 
 </div>
 <div class="section" id="observation-viability-setttings">
-<span id="observationviability"></span><h2>6.3.3. Observation Viability Setttings<a class="headerlink" href="#observation-viability-setttings" title="Permalink to this headline">¶</a></h2>
+<span id="observationviability"></span><h2>4.3.3. Observation Viability Setttings<a class="headerlink" href="#observation-viability-setttings" title="Permalink to this headline">¶</a></h2>
 <p>In many cases, you will not have the list of observation times <em>a priori</em>. Instead, the observation times could be a function of the states of the link ends, and depend on a number of constraints that must be satisfied for an observation to be possible. The constraints defined in Tudat are listed in the <code class="docutils literal"><span class="pre">ObservationViabilityType</span></code> enum, which can take the following values:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">minimum_elevation_angle</span></code>: Minimum elevation angle at a ground station: target must be at least a certain elevation above the horizon.</li>
@@ -340,7 +340,7 @@
 <p>Where <code class="docutils literal"><span class="pre">PerObservableObservationViabilityCalculatorList</span></code> is a typedef for <code class="docutils literal"><span class="pre">std::map&lt;</span> <span class="pre">ObservableType,</span> <span class="pre">std::map&lt;</span> <span class="pre">LinkEnds,</span> <span class="pre">std::vector&lt;</span> <span class="pre">std::shared_ptr&lt;</span> <span class="pre">ObservationViabilityCalculator</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code>, which is a list of viability calculators for each set of link ends and observable type.</p>
 </div>
 <div class="section" id="observation-noise">
-<span id="observationnoise"></span><h2>6.3.4. Observation Noise<a class="headerlink" href="#observation-noise" title="Permalink to this headline">¶</a></h2>
+<span id="observationnoise"></span><h2>4.3.4. Observation Noise<a class="headerlink" href="#observation-noise" title="Permalink to this headline">¶</a></h2>
 <p>In addition to the observation biases (see <a class="reference internal" href="observationModelSetup.html#observationbiases"><span class="std std-ref">Observation Biases</span></a>), which are part of the observation model and typically deterministic, stochastic noise may be added to the observations when simulating them.</p>
 <p>The interface for observation noise is made general, allowing both time-correlated and time-uncorrelated noise to be added: a function of type <code class="docutils literal"><span class="pre">std::function&lt;</span> <span class="pre">double(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> must be created. Here, the function input is the current time, and the output the noise value. You are free to define this function in any way you like. Refer to the documentation of <code class="docutils literal"><span class="pre">std::function</span></code> and <code class="docutils literal"><span class="pre">std::bind</span></code> (see <a class="reference internal" href="../../basics/externalLibraries/utility.html#externalutility"><span class="std std-ref">Dynamic Memory and Function Objects</span></a>).</p>
 <p>In typical basic simulation studies, time-uncorrelated white noise is used. To easily add this type of noise, you can make use of the Tudat interface to boost probability distributions/random number generation (see <a class="reference internal" href="../mathTools/probabilityDistributions.html#tudatfeaturesprobabilitydistributions"><span class="std std-ref">Probability Distributions</span></a>). As an example, the following will generate a function which generates which noise with a mean of 0.005 and a standard deviationof 0.003.</p>
@@ -359,7 +359,7 @@
 <p>You may use a similar approach to use any of the boost distrbutions for noise. Note that the second step, in which the <code class="docutils literal"><span class="pre">evaluateFunctionWithoutInputArgumentDependency</span></code> is called, is needed for consistency with the observation noise interface.</p>
 </div>
 <div class="section" id="generating-the-observations">
-<span id="generatingobservations"></span><h2>6.3.5. Generating the observations<a class="headerlink" href="#generating-the-observations" title="Permalink to this headline">¶</a></h2>
+<span id="generatingobservations"></span><h2>4.3.5. Generating the observations<a class="headerlink" href="#generating-the-observations" title="Permalink to this headline">¶</a></h2>
 <p>Before discussing in detail how to generate simulated observations, we need to define the manner in which these observations are return. Presently, they are stored in the following complicated data type:</p>
 <p><code class="docutils literal"><span class="pre">std::map&lt;</span> <span class="pre">ObservableType,</span> <span class="pre">std::map&lt;</span> <span class="pre">LinkEnds,</span> <span class="pre">std::pair&lt;</span> <span class="pre">Eigen::Matrix&lt;</span> <span class="pre">ObservationScalarType,</span> <span class="pre">Eigen::Dynamic,</span> <span class="pre">1</span> <span class="pre">&gt;,</span> <span class="pre">std::pair&lt;</span> <span class="pre">std::vector&lt;</span> <span class="pre">TimeType</span> <span class="pre">&gt;,</span> <span class="pre">LinkEndType</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code></p>
 <p>The first part of this type :literal:<a href="#id1"><span class="problematic" id="id2">`</span></a>std::map&lt; ObservableType, std::map&lt; LinkEnds, … ` denotes that a separate set of observations is generated for each requested observable type and set of link ends. For each of these, the simulated data is stored in the following data type:</p>
@@ -435,10 +435,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="parameterEstimationSettings.html" class="btn btn-neutral float-right" title="6.4. Setting Up Estimated Parameters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="parameterEstimationSettings.html" class="btn btn-neutral float-right" title="4.4. Setting Up Estimated Parameters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="observationModelSetup.html" class="btn btn-neutral" title="6.2. Setting up Observation Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="observationModelSetup.html" class="btn btn-neutral" title="4.2. Setting up Observation Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1.3. Trajectory Design &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>5.3. Trajectory Design &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -38,9 +38,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="1. Basic Astrodynamics Tools" href="index.html"/>
-        <link rel="next" title="2. Basic Mathematics Tools" href="../mathTools/index.html"/>
-        <link rel="prev" title="1.2. Mission Segments" href="missionSegments.html"/> 
+        <link rel="up" title="5. Basic Astrodynamics Tools" href="index.html"/>
+        <link rel="next" title="6. Basic Mathematics Tools" href="../mathTools/index.html"/>
+        <link rel="prev" title="5.2. Mission Segments" href="missionSegments.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -98,17 +98,17 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">1. Basic Astrodynamics Tools</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="framestateTransformations.html">1.1. Frame/State Transformations</a></li>
-<li class="toctree-l4"><a class="reference internal" href="missionSegments.html">1.2. Mission Segments</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">1.3. Trajectory Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">1. Environment Set-up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">2. Setting up State Derivative Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">5. Basic Astrodynamics Tools</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="framestateTransformations.html">5.1. Frame/State Transformations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="missionSegments.html">5.2. Mission Segments</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">5.3. Trajectory Design</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">2. Basic Mathematics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Setting up State Derivative Models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Simulator Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">6. Estimation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
@@ -168,9 +168,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">1. Basic Astrodynamics Tools</a> &raquo;</li>
+          <li><a href="index.html">5. Basic Astrodynamics Tools</a> &raquo;</li>
         
-      <li>1.3. Trajectory Design</li>
+      <li>5.3. Trajectory Design</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -190,7 +190,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="trajectory-design">
-<span id="tudatfeaturestrajectorydesign"></span><h1>1.3. Trajectory Design<a class="headerlink" href="#trajectory-design" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturestrajectorydesign"></span><h1>5.3. Trajectory Design<a class="headerlink" href="#trajectory-design" title="Permalink to this headline">¶</a></h1>
 <p>This code allows the user to build up a trajectory for an interplanetary spacecraft using gravity assists (GA) and deep space maneuvers (DSM). The code is based off the work done <a class="reference external" href="https://repository.tudelft.nl/islandora/object/uuid%3A02468c77-5c64-4df8-9a24-1ed7ad9d1408?collection=education">here</a>, users who wish to have more detail on the subject and/or would like to see several applications of this code are referred to this <a class="reference external" href="https://repository.tudelft.nl/islandora/object/uuid%3A02468c77-5c64-4df8-9a24-1ed7ad9d1408?collection=education">thesis</a>.</p>
 <p>The user can build a trajectory by defining the departure planet, the sequence of planets visited, the leg types of the mission, the defining variables of those legs, and the final capture planet. This code works especially well with the pagmo optimization code to generate optimal trajectories.</p>
 <p>The trajectories calculated here are based on several assumptions. They are as follows:</p>
@@ -205,7 +205,7 @@
 </div></blockquote>
 <p>If the trajectory design code is used, these assumptions need to be taken into account.</p>
 <div class="section" id="trajectory-models">
-<h2>1.3.1. Trajectory Models<a class="headerlink" href="#trajectory-models" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.1. Trajectory Models<a class="headerlink" href="#trajectory-models" title="Permalink to this headline">¶</a></h2>
 <p>Each trajectory is built up from different legs. Each leg can be either a departure leg, swing-by leg, or a capture leg. Each trajectory has to stat with a departure leg and end with a capture leg. The departure and swing-by legscan be divided into 3 different types. These 3 different types are: Multiple Gravity Assist (MGA), Multiple Gravity Assist with 1 Deep Space Maneuver per leg using Velocity Formulation (MGA-1DSM-VF), and Multiple Gravity Assist with 1 Deep Space Maneuver per leg using Position Formulation (MGA-1DSM-PF). The differences between the VM and PM can be found <a class="reference external" href="https://repository.tudelft.nl/islandora/object/uuid%3A02468c77-5c64-4df8-9a24-1ed7ad9d1408?collection=education">here</a>. Each combination of leg and type is discussed below  .</p>
 <blockquote>
 <div><ul>
@@ -250,7 +250,7 @@ left again.</p>
 <p>Each leg has the option to return the <span class="math">\(\Delta\)</span> V of the leg (<code class="docutils literal"><span class="pre">CalculateLeg</span></code>), the location and size of all the maneuvers (<code class="docutils literal"><span class="pre">Maneuvers</span></code>), and the position of the spacecraft at specified intervals during the trajectory (<code class="docutils literal"><span class="pre">IntermediatePoints</span></code>). The code works by concatenating these legs and thereby forming a trajectory, for which several properties (time of flight, <span class="math">\(\Delta\)</span> V, etc.) can be calculated. The next section will explain how a user can build the interplanetary trajectory using the <code class="docutils literal"><span class="pre">Trajectory</span></code> class.</p>
 </div>
 <div class="section" id="trajectory-calculation">
-<h2>1.3.2. Trajectory Calculation<a class="headerlink" href="#trajectory-calculation" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.2. Trajectory Calculation<a class="headerlink" href="#trajectory-calculation" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="xref py py-class docutils literal"><span class="pre">trajectory</span></code> class takes the settings for the full trajectory, and calculates the total <span class="math">\(\Delta\)</span> V, the time-of-flight, the location of the vehicle over time, and the time and location of the different maneuvers. The class is defined as follows:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Trajectory</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">numberOfLegs</span><span class="p">,</span>
             <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">int</span> <span class="o">&gt;&amp;</span> <span class="n">legTypeVector</span><span class="p">,</span>
@@ -391,10 +391,10 @@ left again.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../mathTools/index.html" class="btn btn-neutral float-right" title="2. Basic Mathematics Tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../mathTools/index.html" class="btn btn-neutral float-right" title="6. Basic Mathematics Tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="missionSegments.html" class="btn btn-neutral" title="1.2. Mission Segments" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="missionSegments.html" class="btn btn-neutral" title="5.2. Mission Segments" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

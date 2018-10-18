@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2.4. Filters &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>6.4. Filters &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -38,9 +38,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="2. Basic Mathematics Tools" href="index.html"/>
-        <link rel="next" title="3. Environment Set-up" href="../environmentSetup/index.html"/>
-        <link rel="prev" title="2.3. Probability Distributions" href="probabilityDistributions.html"/> 
+        <link rel="up" title="6. Basic Mathematics Tools" href="index.html"/>
+        <link rel="next" title="7. Other Libraries" href="../otherLibraries/index.html"/>
+        <link rel="prev" title="6.3. Probability Distributions" href="probabilityDistributions.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -98,18 +98,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">1. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">2. Basic Mathematics Tools</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="interpolators.html">2.1. Interpolators</a></li>
-<li class="toctree-l4"><a class="reference internal" href="integrators.html">2.2. Integrators</a></li>
-<li class="toctree-l4"><a class="reference internal" href="probabilityDistributions.html">2.3. Probability Distributions</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">2.4. Filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">1. Environment Set-up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">2. Setting up State Derivative Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6. Basic Mathematics Tools</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="interpolators.html">6.1. Interpolators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="integrators.html">6.2. Integrators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="probabilityDistributions.html">6.3. Probability Distributions</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.4. Filters</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">3. Environment Set-up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">4. Setting up State Derivative Models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">5. Simulator Set-Up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">6. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
@@ -169,9 +169,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">2. Basic Mathematics Tools</a> &raquo;</li>
+          <li><a href="index.html">6. Basic Mathematics Tools</a> &raquo;</li>
         
-      <li>2.4. Filters</li>
+      <li>6.4. Filters</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -191,7 +191,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="filters">
-<span id="tudatfeaturesfilters"></span><h1>2.4. Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturesfilters"></span><h1>6.4. Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h1>
 <p>Filters, in astrodynamics, are generally used to estimate the state of a system, based on a model description and measurement data. Tudat provides a few filters, based on the Kalman filter concept, that you can use for these or any other purpose you see fit. The filtering techinques currently offered in Tudat are:</p>
 <blockquote>
 <div><ul class="simple">
@@ -210,7 +210,7 @@
 </div></blockquote>
 <p>On this page, you will find a description of how to create a Kalman filter object, either based on the linear, extended, or unscented principle. In general, you will notice that the creation of a filter, requires the input of two template arguments. These are called <code class="docutils literal"><span class="pre">IndependentVariableType</span></code> and <code class="docutils literal"><span class="pre">DependentVariableType</span></code>, and they respectively denote the type (i.e., <code class="docutils literal"><span class="pre">double</span></code>, <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code>, etc.) for the independent variable (usually time) and the dependent variables. Note that the dependent variable is internally defined as an <code class="docutils literal"><span class="pre">Eigen::Matrix&lt;</span> <span class="pre">DependentVariableType,</span> <span class="pre">Eigen::Dynamic,</span> <span class="pre">1</span> <span class="pre">&gt;</span></code> object (which corresponds to a vector of unspecified length).</p>
 <div class="section" id="linear-kalman-filter">
-<h2>2.4.1. Linear Kalman Filter<a class="headerlink" href="#linear-kalman-filter" title="Permalink to this headline">¶</a></h2>
+<h2>6.4.1. Linear Kalman Filter<a class="headerlink" href="#linear-kalman-filter" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="LinearKalmanFilter">
 <em class="property">class </em><code class="descname">LinearKalmanFilter</code><a class="headerlink" href="#LinearKalmanFilter" title="Permalink to this definition">¶</a></dt>
@@ -250,7 +250,7 @@
 
 </div>
 <div class="section" id="extended-kalman-filter">
-<h2>2.4.2. Extended Kalman Filter<a class="headerlink" href="#extended-kalman-filter" title="Permalink to this headline">¶</a></h2>
+<h2>6.4.2. Extended Kalman Filter<a class="headerlink" href="#extended-kalman-filter" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="ExtendedKalmanFilter">
 <em class="property">class </em><code class="descname">ExtendedKalmanFilter</code><a class="headerlink" href="#ExtendedKalmanFilter" title="Permalink to this definition">¶</a></dt>
@@ -309,7 +309,7 @@
 
 </div>
 <div class="section" id="unscented-kalman-filter">
-<h2>2.4.3. Unscented Kalman Filter<a class="headerlink" href="#unscented-kalman-filter" title="Permalink to this headline">¶</a></h2>
+<h2>6.4.3. Unscented Kalman Filter<a class="headerlink" href="#unscented-kalman-filter" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="UnscentedKalmanFilter">
 <em class="property">class </em><code class="descname">UnscentedKalmanFilter</code><a class="headerlink" href="#UnscentedKalmanFilter" title="Permalink to this definition">¶</a></dt>
@@ -402,7 +402,7 @@
 
 </div>
 <div class="section" id="using-a-kalman-filter-object">
-<h2>2.4.4. Using a Kalman Filter Object<a class="headerlink" href="#using-a-kalman-filter-object" title="Permalink to this headline">¶</a></h2>
+<h2>6.4.4. Using a Kalman Filter Object<a class="headerlink" href="#using-a-kalman-filter-object" title="Permalink to this headline">¶</a></h2>
 <p>To use the filters after their creation, you will need to update the system with the data corresponding to the new time step. This can be done by using the function <code class="docutils literal"><span class="pre">updateFilter</span></code>, which takes one inputs:</p>
 <blockquote>
 <div><ul class="simple">
@@ -418,7 +418,7 @@
 <p>These are the only major steps that you will need to take to keep the filter running. At the end of the estimation process, however, you can retrieve, however, retireve the history of the estimated states and covariance matrices by using the functions <code class="docutils literal"><span class="pre">getEstimatedStateHistory</span></code> and <code class="docutils literal"><span class="pre">getEstimatedCovarianceHistory</span></code>, respectively.</p>
 </div>
 <div class="section" id="adding-a-control-input">
-<span id="tudatfeaturesfilterscontrolsystem"></span><h2>2.4.5. Adding a Control Input<a class="headerlink" href="#adding-a-control-input" title="Permalink to this headline">¶</a></h2>
+<span id="tudatfeaturesfilterscontrolsystem"></span><h2>6.4.5. Adding a Control Input<a class="headerlink" href="#adding-a-control-input" title="Permalink to this headline">¶</a></h2>
 <p>It may be that for your application, your system needs to be controlled. This can be achieved by creating a control system (<code class="xref py py-class docutils literal"><span class="pre">ControlSystem</span></code>, or <code class="xref py py-class docutils literal"><span class="pre">ControlWrapper</span></code> in the unit tests), that provides the state function (and possibly the state Jacobian) with the current commanded vector.</p>
 <p>The way this is done is by adding an extra input to the state function, i.e.,</p>
 <blockquote>
@@ -457,10 +457,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../environmentSetup/index.html" class="btn btn-neutral float-right" title="3. Environment Set-up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../otherLibraries/index.html" class="btn btn-neutral float-right" title="7. Other Libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="probabilityDistributions.html" class="btn btn-neutral" title="2.3. Probability Distributions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="probabilityDistributions.html" class="btn btn-neutral" title="6.3. Probability Distributions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
