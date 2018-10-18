@@ -18,7 +18,7 @@ Additional information/concepts include basic C++ tutorials, the use iterators a
 
    externalLibraries/eigen
    externalLibraries/eigenExamples
-   externalLibraries/boost
    externalLibraries/utility
    externalLibraries/utilityExamples
    externalLibraries/cppTutorials
+   externalLibraries/boost
