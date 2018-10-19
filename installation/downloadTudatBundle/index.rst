@@ -17,7 +17,9 @@ Our recommended approach to download Tudat bundle is by using a terminal. Altern
 Cloning Tudat
 ~~~~~~~~~~~~~
 
-For Linux or Mac, the regular terminal can be used directly. Windows users are recommended to use the :literal:`tudat_shell.bat`, located in :literal:`tudatBundle/external/tools`, `here <https://github.com/Tudat/tudatBundle/blob/master/external/tools/tudat_shell.bat>`_. Copy the contents into a plain text file, and save it as :literal:`tudat_shell.bat`.  Running this script will open a Windows terminal, with the git, make and cmake commands available.
+For **Linux or Mac**, the regular terminal can be used directly. For Linux, you can use the command :literal:`ctrl + alt + T`, whereas for Mac, you can simply search for Terminal via spotlight (invoked with :literal:`⌘ + space`).
+
+**Windows** users are recommended to use the :literal:`tudat_shell.bat`, located in :literal:`tudatBundle/external/tools`, `here <https://github.com/Tudat/tudatBundle/blob/master/external/tools/tudat_shell.bat>`_. Copy the contents into a plain text file, and save it as :literal:`tudat_shell.bat`.  Running this script will open a Windows terminal, with the git, make and cmake commands available.
 
 After opening a terminal, navigate to the directpry where you want to download tudatBundle. You can use the :literal:`ls` command to get a listing of the current directory. To navigate 'up' one level (from :literal:`..../directoryA/directoryB/` to :literal:`..../directoryA/`), use the :literal:`cd ..` command. For the inverse (from :literal:`..../directoryA/` to :literal:`..../directoryA/directoryB/`) use :literal:`cd directoryB`.
 
@@ -25,10 +27,9 @@ After opening a terminal, navigate to the directpry where you want to download t
 
 In the directory where tudatBundle is to be downloaded, enter the command::
 
-
     git clone https://github.com/tudat/tudatBundle.git
 
-This will download the basic folder structure of the tudat bundle. Once the process is complete, use the following commands::
+This will download the basic folder structure of the Tudat bundle. Once the process is complete, use the following commands::
 
     cd tudatBundle
     git submodule update --init --recursive
@@ -37,9 +38,10 @@ Note that the last command in particular can take some time, depending on the sp
 
   .. note:: This whole process is known to be decidedly slower on Windows than on Mac/Linux. 
 
-Create a GitHub account
+Create a GitHub Account
 ~~~~~~~~~~~~~~~~~~~~~~~
-For those users who want to push their Tudat code to Github (including students taking the AE4866 and AE4868 courses), a Github account is required. Create an account `here: <https://github.com/join?source=header-home>`_ if you haven't done so yet. 
+
+For those users who want to push their Tudat code to Github (including students taking the AE4866 and AE4868 courses), a Github account is required. Create an account `here <https://github.com/join?source=header-home>`_, if you haven't done so yet. 
 
 A GitHub account is completely free and provides you with hosting for your software projects. It also allows you to fork other repositories to create your own improved version of a piece of code.
 

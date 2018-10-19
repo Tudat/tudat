@@ -13,7 +13,7 @@ This page will give some answers to frequently asked questions about Tudat. If y
 	
 .. _faqCompilationInstallation:
 
-Compilation and installation
+Compilation and Installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	- *Q: I am on Windows and I would like to use the command line for git, how can I do this?*
@@ -29,11 +29,14 @@ Compilation and installation
 	   A: There is the possibility to use multiple threads (cores) to compile C++ code. This feature generally works flawlessly on Mac or Linux, but not on Windows. A point of attention when using multi-thread compilation is RAM usage. A single thread can use up to 2-3 GB of RAM to compile certain applications (depending on your compiler). Depending on the robustness of your operating system, multi-core compilation can cause the RAM to be completely exhausted, freezing your system and forcing a hard reboot. To instruct the compiler to use ``X`` threads, add the command ``-jX`` (so ``-j8`` for 8 threads) to the Tool arguments (or additional arguments) line under Projects -> Build -> Build Steps.
 
 	- *Q: I have problems with the installation of the Tudat bundle, how can I solve these problems?* 
-	   A: the :ref:`troubleshootingInstallation` page contains several solutions to errors that can occur during installation (in addition to those listed here)s. If this does not help, a list of issues raised by users can be found `here <https://github.com/Tudat/tudat/issues>`_. If this still does not contain a solution, a new issue can be made on `github <https://github.com/Tudat/tudat/issues/new>`_ so that the developers can help you.
+	   A: The :ref:`troubleshootingInstallation` page contains several solutions to errors that can occur during installation (in addition to those listed here)s. If this does not help, a list of issues raised by users can be found `here <https://github.com/Tudat/tudat/issues>`_. If this still does not contain a solution, a new issue can be made on `github <https://github.com/Tudat/tudat/issues/new>`_ so that the developers can help you.
+
+	- *Q: My application fails due to* ``undefined reference to ...``, *or* ``Undefined symbols for architecture x86_64``, *what am I doing wrong?* 
+	   A: These issues are generally related to a missing library in the :literal:`CMakeLists.txt` of the application you are using. See :ref:`writingCMakeLists` for more details.
 
 
 Using and Developing Tudat
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 	- *Q: I want to add some features to Tudat, can I do this, and if yes, how?*
