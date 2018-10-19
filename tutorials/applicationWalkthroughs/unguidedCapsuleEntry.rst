@@ -2,7 +2,7 @@
 
 Un-guided Capsule Entry
 =======================
-The example described on this page is that of Apollo on a re-entry trajectory towards the surface of Earth. The code for this tutorial is given on Github, and is also located in your tudat bundle at::
+The example described on this page is that of Apollo on a re-entry trajectory towards the surface of Earth. The code for this tutorial is given on Github, and is also located in your Tudat bundle at::
 
    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/apolloCapsuleEntry.cpp
 

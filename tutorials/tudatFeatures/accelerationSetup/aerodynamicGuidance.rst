@@ -157,7 +157,7 @@ The example of aerodynamic guidance given above is not very representative, of c
 
    - :literal:`getAerodynamicCoefficientInterface` Returns the object of type :class:`AerodynamicCoefficientInterface` responsible for computing and updating the aerodynamic coefficients.
 
-   - :literal:`getAerodynamicCoefficientIndependentVariables` Returns the current list of independent variables of teh aerodynamic coefficients. For instance, if the coefficients depend on Mach number, angle of attack and sideslip angle, this function returns a vector containing these three variables (in order).
+   - :literal:`getAerodynamicCoefficientIndependentVariables` Returns the current list of independent variables of the aerodynamic coefficients. For instance, if the coefficients depend on Mach number, angle of attack and sideslip angle, this function returns a vector containing these three variables (in order).
 
 An example of an implementation of an aerodynamic guidance class is given and discussed below.
 

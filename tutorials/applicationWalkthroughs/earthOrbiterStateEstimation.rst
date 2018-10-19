@@ -5,7 +5,7 @@ Orbit Determination and Parameter Estimation
 
 In the previous tutorial (see :ref:`earthOrbiterBasicStateEstimation`) we introduced the basic features of orbit determination, including simulating observables, defining parameters and performing the estimation. However, various features were not discussed, and a number of assumption were unrealistic. In this tutorial, we discuss a more comprehensive example of orbit determination.
 
-The code for this tutorial is given on Github, and is also located in your tudat bundle at::
+The code for this tutorial is given on Github, and is also located in your Tudat bundle at::
 
    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/earthOrbiterStateEstimation.cpp
 

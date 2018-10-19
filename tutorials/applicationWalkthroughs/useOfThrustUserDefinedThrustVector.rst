@@ -2,7 +2,7 @@
 
 Use of Thrust: User-defined Thrust Vector
 =========================================
-In the previous tutorial, we discussed how to include thrust in a simulation, separately specifying the direction and magnitude of the thrust force. Alternatively, you may want to impose the thrust vector (direction and magnitude in some reference frame) as a function of time explicitly. In this tutorial, we will look at which Tudat interfaces you can use to accomplish this. The code for this tutorial is given on Github, and is also located in your tudat bundle at::
+In the previous tutorial, we discussed how to include thrust in a simulation, separately specifying the direction and magnitude of the thrust force. Alternatively, you may want to impose the thrust vector (direction and magnitude in some reference frame) as a function of time explicitly. In this tutorial, we will look at which Tudat interfaces you can use to accomplish this. The code for this tutorial is given on Github, and is also located in your Tudat bundle at::
 
    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/thrustAccelerationFromFileExample.cpp
 

@@ -49,7 +49,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'TU Delft Astrodynamic Toolbox'
-copyright = u'2017, Delft University of Technology'
+copyright = u'2018, Delft University of Technology'
 author = u'Delft University of Technology'
 
 # The version info for the project you're documenting, acts as replacement for

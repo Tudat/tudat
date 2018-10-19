@@ -5,7 +5,7 @@ Creating Tudat Applications
 
 Now that you've installed Tudat, you can run all of the example applications and unit tests at your leisure. On this page, we will describe how to create other Tudat applications, specifically tuned to your research/education project. There are two broad options for creating applications: pulling an existing application from Github (or elsewhere), or creating an application from scratch. Below, both are discussed. New applications are typically added to the ``tudatBundle/tudatApplications`` folder, which is empty by default.  
 
-   .. note:: It is not the goal of this page to give a full-fledged introduction to repository management, git or Github. Much more details can be found online, for instance in the  `Resources to learn Git <https://try.github.io/>`_ `Github Help <https://help.github.com/>`_. This page is meant to serve as a starting point for using git with Tudat, using examples that are very close to a typical user's first Tudat experience.
+   .. note:: It is not the goal of this page to give a full-fledged introduction to repository management, git or Github. Much more details can be found online, for instance in the `Resources to learn Git <https://try.github.io/>`_ or `Github Help <https://help.github.com/>`_. This page is meant to serve as a starting point for using git with Tudat and using examples that are very close to a typical user's first Tudat experience.
 
 .. _gettingExistingApp:
 
@@ -16,13 +16,11 @@ Below, we discuss how to retrieve an application from an existing Github reposit
 
 **Step 1: Fork the application on Github**
 
-   The first step in the workflow of retrieving an application is to "fork" it. Forking means that you will create a copy on your own Github page, which is identical to the original. The reason to do so is that, typically, you will *not* have permission to modify the original repository, and have to save any modifications you make under your own account. To do so, first make sure you're logged into Github, and then go the repository page for the application you want to retrieve, and click the "fork" button at the top (see screenshot).
+   The first step in the workflow of retrieving an application is to "fork" it. Forking means that you will create a copy on your own Github page, which is identical to the original. The reason why we do this is that, typically, you will *not* have permission to modify the original repository, and have to save any modifications you make under your own account. To do so, first make sure you are logged into Github, and then go the repository page for the application you want to retrieve, and click the "fork" button at the top (see screenshot below).
 
    .. figure:: images/forkingExample.png
 
-
    After doing so, you will have created your own local version of the ``tudatAssignments`` repository.
-
 
 **Step 2: Clone the application to your system**
 
@@ -38,8 +36,7 @@ Below, we discuss how to retrieve an application from an existing Github reposit
 
    If you have made your repository private, you can control who can view/modify your repository. To add other users to your repository, go to the ``Settings/Collaborators`` of the repository, and add other users that you want to invite.
 
-   .. warning:: IMPORTANT, when setting up a repository for use in the AE4866 or AE4868 courses, it is REQUIRED to set the repository to private, and invite @dominicdirkx and @transferorbit.
-
+      .. warning:: IMPORTANT! When setting up a repository for use in the AE4866 or AE4868 courses, it is **required** to set the repository to private, and invite :literal:`@dominicdirkx` and :literal:`@transferorbit`.
 
 **Step 4: Adding the application to your Tudat compilation**
 
@@ -52,11 +49,11 @@ Below, we discuss how to retrieve an application from an existing Github reposit
 Pulling and Pushing Application Code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Now, we are ready to discuss two distinct but related aspects of developing your code: retrieving modifications from the original repository, called pulling (here: ``https://github.com/tudat/tudatAssignments.git``) and uploading your modifications to your own repository, called pushing (here: ``https://github.com/YourName/tudatAssignments.git``).
+Now, we are ready to discuss two distinct but related aspects of developing your code: retrieving modifications from the original repository, called pulling (here: ``https://github.com/tudat/tudatAssignments.git``) and uploading your modifications to your own repository, called pushing (here: ``https://github.com/YourName/tudatAssignments.git``).
 
 **Step 1: Setting up your remotes**
 
-   In git, a ``remote`` is an address of an external repository (in this case on Github). You can set any number of remotes you like for a given repository. You can view all your remotes for a given Git repository by using the::
+   In git, a ``remote`` is an address of an external repository (in this case on Github). You can set any number of remotes you like for a given repository. You can view all your remotes for a given Git repository by using the ::
 
       git remote -v
 
@@ -80,7 +77,7 @@ Pulling and Pushing Application Code
 
    Before you can push changes to your Github account, you must first ``commit`` (save) these changes locally on your computer. A commit provides a snapshot of the current version of the code, to which you can return at later points in time.
 
-   .. tip:: When finishing a part of the code to your own satisfaction, or making clear progress in your work: commit your code. This does not override any old or later commits, but will provide a way to go back to your current version of the code.
+   .. tip:: When finishing a part of the code to your own satisfaction, or making clear progress in your work, commit your code. This does not override any old or later commits, but will provide a way to go back to your current version of the code.
 
    The first step in making commits is usually to check what has changed w.r.t. the previous commit. To check this, type the command::
 
@@ -96,7 +93,7 @@ Pulling and Pushing Application Code
 
       git add . 
 
-   For the example given above, this will result in:
+   For the example given above, this will result in (after running ``git status`` again):
 
    .. figure:: images/gitAddExample.png
    
@@ -113,7 +110,7 @@ Pulling and Pushing Application Code
 
    Now, committing your code is done by::
 
-      git commit -m"Your commit text here"
+      git commit -m "Your commit text here"
 
    The text between the quotes will show up in your commit log, and should ideally describe the current state of your code: which changes have you made since the last commit?
   
@@ -127,21 +124,23 @@ Pulling and Pushing Application Code
 
    If you have set up your repository to be private, you will be prompted to enter your Github username and password. After a push is succesfull, you should see your changes on the Github page for your applications, available for everyone (in case it is public) or a selected few (in case it is private).
 
-Updating your local repository from Github
+Updating Your Local Repository from Github
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   After following the above guide, you'll have created a git repository on your computer, based on some remote from Github. Typically, commits are regularly done to Github repositories, and it may happen that you want to update your local code with the modifications of the remote. For this example, we'll assume that there has been some modification of the ``upstream`` remote (at https://github.com/tudat/tudatAssignments), and that you want to update your local version of the code (both on your computer, and on your own Github page). 
+After following the above guide, you'll have created a git repository on your computer, based on some remote from Github. Typically, commits are regularly done to Github repositories, and it may happen that you want to update your local code with the modifications of the remote. For this example, we'll assume that there has been some modification of the ``upstream`` remote (i.e., at ``https://github.com/tudat/tudatAssignments``), and that you want to update your local version of the code (both on your computer, and on your own Github page). 
 
 **Step 1: Committing any local changes**
 
-   Before pulling the latest code from Github, commit ay modifcations you've made, using the ``git add`` and ``git commit`` commands described above. Not doing so will cause the following error message when pulling::
+   Before pulling the latest code from Github, commit any modifcations you have made, using the ``git add`` and ``git commit`` commands described above. Not doing so will cause the following error message when pulling::
 
       error: Your local changes to the following files would be overwritten by merge:
          file_name
       Please, commit your changes or stash them before you can merge.
       Aborting
 
-   This error is given as a safety measure, since pulling the latest version of the code may inadvertently, and irreversibly, overwrite your won changes.
+   This error is given as a safety measure, since pulling the latest version of the code may inadvertently, and irreversibly, overwrite your own changes. 
+
+   .. note:: In case it is your intention to overwrite the changes you have made locally, you can use the command ``git reset --hard``. Note however, that this step is **irreversible**!
 
 **Step 2: Fetching and Pulling the Remote**
 
@@ -153,13 +152,13 @@ Updating your local repository from Github
 
       git pull upstream master
 
-   Note that we are still assuming that only the ``master`` branch is relevant for our current application. The ``pull`` command will have one of two possible outputs (assuming you've correctly performed step 1). Either no error is given, and the pull has been succesful, or there are conflicts with changes you've made, which will give the following error message::
+   Note that we are still assuming that only the ``master`` branch is relevant for our current application. The ``pull`` command will have one of two possible outputs (assuming you have correctly performed step 1). Either no error is given, and the pull has been succesful, or there are conflicts with changes you have made, which will give the following error message::
 
       Pull is not possible because you have unmerged files.
       Please, fix them up in the work tree, and then use 'git add/rm <file>'
       as appropriate to mark resolution, or use 'git commit -a'.
  
-   In case you get this message, go to step 3
+   In case you get this message, go to step 3.
 
 **Step 3: Solving Conflicts (if needed)**
 
@@ -179,26 +178,24 @@ Updating your local repository from Github
 
       Your modifications
 
-   or something else entirely,as you see fit for the case ar hand. 
+   or something else entirely, as you see fit for the case at hand. 
 
    After correcting all conflicts, use the ``git add`` and ``git commit`` commands to commit your merged code.
-
 
 Creating a New Tudat Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For some projects, you will want to start your own application repository from scratch. Here, we briefly explain how to set this up, while details of teh code itself (e.g. CMake settings) are discussed on the page :ref:`setupNewApps`.
-
+For some projects, you will want to start your own application repository from scratch. Here, we briefly explain how to set this up, while details of the code itself (e.g., CMake settings) are discussed in the following sections.
 
 **Step 1: Initializing the repository**
 
-   To create a new git repository, use the terminal to navigate to teh directory of this new repository and type::
+   To create a new git repository, use the terminal to navigate to the directory of this new repository and type::
 
       git init
 
    This will create a new, empty, repository in the current directory. Using the same ``git add`` and ``git commit`` commands as above, you can add files to the repository as you see fit. 
 
-   Before (or after) doing so, you can add a ``.gitignore`` file to your repository (see Tudat repository for a typical example). This file can contain a list of files, directories, file extensions, etc. that git will normally *ignore* when using the ``git status`` or ``git add``. For example, you may want to keep ``.dat`` files, or a ``bin/`` directory outside of your repository. As an example, the ``tudatApplications`` directory is in the ``.gitignore`` list of ``tudatBundle``, as application commits are not added to the bundle repository.
+   Before (or after) doing so, you can add a ``.gitignore`` file to your repository (see Tudat repository for a typical example). This file can contain a list of files, directories, file extensions, etc., that git will normally *ignore* when using the ``git status`` or ``git add`` commands. For example, you may want to keep ``.dat`` files, or a ``bin/`` directory outside of your repository. As an example, the ``tudatApplications`` directory is in the ``.gitignore`` list of ``tudatBundle``, as application commits are not added to the bundle repository.
 
 **Step 2: Creating a Github Repository**
 
@@ -210,117 +207,94 @@ For some projects, you will want to start your own application repository from s
 
    You are now free to push your code to this repository.
 
+.. _writingCMakeLists:
 
-Writing your CMakeLists, and starting your code
+Writing Your CMakeLists, and Starting Your Code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   The above guides show you how to push, pull, commit, etc. using the git version control system. In this last part of the guide on how to set up new applications, we will discuss the basic aspects that the CMakeLists.txt for your application, and your C++ code, must adher to. Note that this part of the guide is primarilly relevant if you want to create your own application code from scratch. However, it will also provide insight into how/why to modify the ``CMakeLists.txt`` file for a project you've pulled from Github.
+The above guides show you how to push, pull, commit, etc., using the git version control system. In this last part of the guide on how to set up new applications, we will discuss the basic aspects that the ``CMakeLists.txt`` for your application, and your C++ code, must adhere to. Note that this part of the guide is primarilly relevant if you want to create your own application code from scratch. However, it will also provide insight into how/why to modify the ``CMakeLists.txt`` file for a project you've pulled from Github.
 
-   To make your life easier, we have created a ``TemplateApplication`` directory in the example applications. You can copy and past the ``CMakeLists.txt`` (see `file on Github <https://github.com/Tudat/tudatExampleApplications/blob/master/templateApplication/TemplateApplication/CMakeLists.txt>`_) file in this directory to your application. To adapt it to your specific needs, you will typically only need to make minimal modifications. Add the bottom of the ``CMakeLists.txt`` file, you'll see::
+To make your life easier, we have created a ``TemplateApplication`` directory in the example applications. You can copy and past the ``CMakeLists.txt`` file (see `file on Github <https://github.com/Tudat/tudatExampleApplications/blob/master/templateApplication/TemplateApplication/CMakeLists.txt>`_) in this directory to your application. To adapt it to your specific needs, you will typically only need to make minimal modifications. Add the bottom of the ``CMakeLists.txt`` file, you'll see::
 
-      # Add helloWorld application.
-      add_executable(application_HelloWorld "${SRCROOT}/helloWorld.cpp")
-      setup_executable_target(application_HelloWorld "${SRCROOT}")
-      target_link_libraries(application_HelloWorld tudat_gravitation tudat_basic_astrodynamics ${Boost_LIBRARIES} )
+   # Add helloWorld application.
+   add_executable(application_HelloWorld "${SRCROOT}/helloWorld.cpp")
+   setup_executable_target(application_HelloWorld "${SRCROOT}")
+   target_link_libraries(application_HelloWorld tudat_gravitation tudat_basic_astrodynamics ${Boost_LIBRARIES} )
 
-   These lines of CMake code add an application to your project, which can then be compiled and run (note that lines starting with ``#`` are treated as comments in CMake). In this case, it is the ``helloWorld.cpp`` file, located in the ``${SRCROOT}`` directory (which denotes the directory of the ``CMakeLists.txt`` file). 
+These lines of CMake code add an application to your project, which can then be compiled and run (note that lines starting with ``#`` are treated as comments in CMake). In this case, it is the ``helloWorld.cpp`` file, located in the ``${SRCROOT}`` directory (which denotes the directory of the ``CMakeLists.txt`` file).
 
-   .. note:: Any C++ application must contain one, and only one, ``int main`` function. The file containing this function may contain any number of additional function definitions.  
+.. note:: Any C++ application must contain one, and only one, ``int main`` function. The file containing this function may contain any number of additional function definitions.
 
-   Often, it is only in these lines where you will modify the ``CMakeLists.txt`` file. As an example, say you want to add the code in the ``myNewTudatApplication.cpp`` file (located in the same directory as your ``CMakeLists.txt``), and compile into an executable named ``application_MyNewApplication``::
+Often, it is only in these lines where you will modify the ``CMakeLists.txt`` file. As an example, say you want to add the code in the ``myNewTudatApplication.cpp`` file (located in the same directory as your ``CMakeLists.txt``), and compile into an executable named ``application_MyNewApplication``::
 
-      # Add helloWorld application.
-      add_executable(application_MyNewApplication "${SRCROOT}/myNewTudatApplication.cpp")
-      setup_executable_target(application_MyNewApplication "${SRCROOT}")
-      target_link_libraries(application_MyNewApplication ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES} )
+   # Add myNewApplication application.
+   add_executable(application_MyNewApplication "${SRCROOT}/myNewTudatApplication.cpp")
+   setup_executable_target(application_MyNewApplication "${SRCROOT}")
+   target_link_libraries(application_MyNewApplication ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES} )
 
+assuming you have already added your application to your Tudat bundle CMakeLists file (see Step 4 of :ref:`gettingExistingApp`). Depending on the details of your application, the final line ``target_link_libraries`` may look slightly different. There are many options to change it, but for most Tudat applications it will be sufficient to use the above line, or::
 
-   Assuming you've already added your application to your tudat bundle CMakeLists file (see Step 4 of :ref:`gettingExistingApp`). Depending on the details of your application, the final line ``target_link_libraries`` may look slightly different. There are many options to change it, but for most Tudat applications it will be sufficient to use teh above line or::
+   target_link_libraries(application_MyNewApplication ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES} )
 
+which is required if any of the state-estimation-related functionalities are needed (variational equations propagation, observtion models, acceleration partials, orbit determination, etc.). If you don't need this functionality, using ``${TUDAT_PROPAGATION_LIBRARIES}`` can save some compilation time.
 
-      target_link_libraries(application_MyNewApplication ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES} )
+.. tip:: When you receive a compilation error with the words ``undefined reference to ...``, or ``Undefined symbols for architecture x86_64``, this is typically indicative of the ``target_link_libraries`` being set incorrectly.
 
-   which is required if any of the state-estimation-related functionality is needed (variational equations propagation, observtion models, acceleration partials, orbit determination, *etc.*). If you don't need this functionality, using ``${TUDAT_PROPAGATION_LIBRARIES}`` can save some compilation time.
-
-   .. tip:: When you receive a compilation error with the words ``undefined reference to`` this is typically indicative of the ``target_link_libraries`` being set incorrectly.
-
-
-Adding more files to your application
+Adding More Files to Your Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   .. note:: This section assumes that you have already gained some basic knowledge and experience of (Tudat) code development
+.. note:: This section assumes that you have already gained some basic knowledge and experience of (Tudat) code development.
 
-   At some point in the development of your application, you may reach a point where you don't want to cram all your application code into a single file (like the ``myNewTudatApplication.cpp`` file in the application above), and you'll want to spread your code over multiple files, as we do in Tudat. Here, we'll show an example in which we want to add the code in the following files::
+At some point in the development of your application, you may reach a point where you don't want to cram all your application code into a single file (like the ``myNewTudatApplication.cpp`` file in the application above), and you'll want to spread your code over multiple files, as we do in Tudat. Here, we'll show an example in which we want to add the code in the following files::
 
-      newFile1.cpp
-      newFile1.h
-      NewFolder/newFile2.cpp
-      NewFolder/newFile2.h
-      NewFolder/newFile2.cpp
-      NewFolder/newFile2.h
+   newFile1.cpp
+   newFile1.h
+   NewFolder/newFile2.cpp
+   NewFolder/newFile2.h
+   NewFolder/newFile2.cpp
+   NewFolder/newFile2.h
 
-   Unfortunately, it is not sufficient to add the correct ``#include`` statements in your code. Doing so, and not modifying the CMakeLists file, will result in the undefined reference error mentioned above. First, the following code must be added, just before your ``add_executable`` commands::
+Unfortunately, it is not sufficient to add the correct ``#include`` statements in your code. Doing so, and not modifying the CMakeLists file, will result in the undefined reference error mentioned above. First, the following code must be added, just before your ``add_executable`` commands::
 
-      # Set the source files.
-      set(MY_NEW_APPLICATION_SOURCES
-        "${SRCROOT}$/newFile1.cpp"
-        "${SRCROOT}$/NewFolder/newFile2.cpp"
-        "${SRCROOT}$/NewFolder/newFile3.cpp"
-      )
-      
-      # Set the header files.
-      set(MY_NEW_APPLICATION_HEADERS
-        "${SRCROOT}$/newFile1.h"
-        "${SRCROOT}$/NewFolder/newFile2.h"
-        "${SRCROOT}$/NewFolder/newFile3.h"
-      )
+   # Set the source files.
+   set(MY_NEW_APPLICATION_SOURCES
+     "${SRCROOT}$/newFile1.cpp"
+     "${SRCROOT}$/NewFolder/newFile2.cpp"
+     "${SRCROOT}$/NewFolder/newFile3.cpp"
+   )
+   
+   # Set the header files.
+   set(MY_NEW_APPLICATION_HEADERS
+     "${SRCROOT}$/newFile1.h"
+     "${SRCROOT}$/NewFolder/newFile2.h"
+     "${SRCROOT}$/NewFolder/newFile3.h"
+   )
 
-      # Add static libraries.
-      add_library(my_new_application_libration STATIC ${MY_NEW_APPLICATION_SOURCES} ${MY_NEW_APPLICATION_HEADERS})
-      setup_library_target(my_new_application_libration "${SRCROOT}{AERODYNAMICSDIR}")
+   # Add static libraries.
+   add_library(my_new_application_libration STATIC ${MY_NEW_APPLICATION_SOURCES} ${MY_NEW_APPLICATION_HEADERS})
+   setup_library_target(my_new_application_libration "${SRCROOT}{AERODYNAMICSDIR}")
 
-   This code will add the library ``my_new_application_libration`` to your project. This library will contain the compiled code of the ``MY_NEW_APPLICATION_SOURCES`` source and ``MY_NEW_APPLICATION_HEADERS`` header files. Now, the final step, to allow these six new files to be used in your application, is to update the ``target_link_libraries`` to::
+This code will add the library ``my_new_application_libration`` to your project. This library will contain the compiled code of the ``MY_NEW_APPLICATION_SOURCES`` source and ``MY_NEW_APPLICATION_HEADERS`` header files. Now, the final step, to allow these six new files to be used in your application, is to update the ``target_link_libraries`` to::
 
-      target_link_libraries(application_MyNewApplication my_new_application_libration ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES} )
+   target_link_libraries(application_MyNewApplication my_new_application_libration ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES} )
 
-   .. note:: The names chosen here for the new source/header files, library, *etc.* are for illustrative purposes only. Feel free to modify them as you see fit.
+.. note:: The names chosen here for the new source/header files, library, etc., are for illustrative purposes only. Feel free to modify them as you see fit.
 
-   As a final we point, be aware that you may add any number of applications to your CMakeLists file (each with exactly one ``int main`` function. As an example, below is a selection of the ``SatellitePropagatorExamples`` CMakeLists.txt (slightly edited for readibility)::
+As a final point, be aware that you may add any number of applications to your CMakeLists file (each with exactly one ``int main`` function. As an example, below is a selection of the ``SatellitePropagatorExamples`` CMakeLists.txt (slightly edited for readibility)::
 
-      # Add Galileo constellation application.
-      add_executable(application_GalileoConstellationSimulator "${SRCROOT}/galileoConstellationSimulator.cpp")
-      setup_executable_target(application_GalileoConstellationSimulator "${SRCROOT}")
-      target_link_libraries(application_GalileoConstellationSimulator ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES} )
+   # Add Galileo constellation application.
+   add_executable(application_GalileoConstellationSimulator "${SRCROOT}/galileoConstellationSimulator.cpp")
+   setup_executable_target(application_GalileoConstellationSimulator "${SRCROOT}")
+   target_link_libraries(application_GalileoConstellationSimulator ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES} )
 
-      # Add JSON-based Apollo propagation    
-      add_executable(application_ApolloEntryJSON "${SRCROOT}/apolloCapsuleEntryJSON.cpp")
-      setup_executable_target(application_ApolloEntryJSON "${SRCROOT}")
-      target_link_libraries(application_ApolloEntryJSON json_interface_library ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES} )
+   # Add JSON-based Apollo propagation    
+   add_executable(application_ApolloEntryJSON "${SRCROOT}/apolloCapsuleEntryJSON.cpp")
+   setup_executable_target(application_ApolloEntryJSON "${SRCROOT}")
+   target_link_libraries(application_ApolloEntryJSON json_interface_library ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES} )
 
-      # Add simulated Earth orbiter simulated POD example
-      add_executable(application_EarthOrbiterStateEstimation "${SRCROOT}/earthOrbiterStateEstimation.cpp")
-      setup_executable_target(application_EarthOrbiterStateEstimation "${SRCROOT}")
-      target_link_libraries(application_EarthOrbiterStateEstimation ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES} )
+   # Add simulated Earth orbiter simulated POD example
+   add_executable(application_EarthOrbiterStateEstimation "${SRCROOT}/earthOrbiterStateEstimation.cpp")
+   setup_executable_target(application_EarthOrbiterStateEstimation "${SRCROOT}")
+   target_link_libraries(application_EarthOrbiterStateEstimation ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES} )
 
-   adding three new applications to the project
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+In the same folder, three separate applications have been added.
