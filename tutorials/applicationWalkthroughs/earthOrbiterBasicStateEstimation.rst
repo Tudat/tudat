@@ -5,7 +5,7 @@ Orbit Determination and Parameter Estimation (Basic)
 
 In all previous tutorials, we were only concerned with the propagation of orbits, and the analysis of the numerical results. In this tutorial, we will show how to simulate tracking observables, and use these observations to estimate the state of a spacecraft, as well as a variety of physical parameters of the environment. The estimation framework in Tudat has a broad variety of features, and we only cover the basic aspects here. A tutorial of more extensive features is given on the page :ref:`earthOrbiterStateEstimation`.
 
-The code for this tutorial is given on Github, and is also located in your tudat bundle at::
+The code for this tutorial is given on Github, and is also located in your Tudat bundle at::
 
    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/earthOrbiterBasicStateEstimation.cpp
 

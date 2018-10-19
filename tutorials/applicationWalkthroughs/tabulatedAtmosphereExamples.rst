@@ -1,13 +1,13 @@
 .. _walkthroughsTabulatedAtmosphere:
 
-The code for this tutorial is given on Github, and is also located in your tudat bundle at::
-
-   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/tabulatedAtmosphereUsage.cpp
-
 Tabulated Atmosphere Usage
 ==========================
 
-In the example application folder you will find an example called :literal:`tabulatedAtmosphereUsage.cpp`, which can be run by selecting the executable :literal:`application_TabulatedAtmosphereUsage`. If you run this simple script as is, its output should look something like this: ::
+In the example application folder you will find an example called :literal:`tabulatedAtmosphereUsage.cpp`, which can be run by selecting the executable :literal:`application_TabulatedAtmosphereUsage`. You can also find the code for this tutorial on Github, and in your Tudat bundle at::
+
+   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/tabulatedAtmosphereUsage.cpp
+
+If you run this simple script as is, its output should look something like this: ::
 
    Example 1. ----------------------------------------------------------------------- 
    Altitude: 0 km. Density: 7.61788e-05 kg/m^3. Speed of sound: 205.817 m/s.

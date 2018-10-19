@@ -14,7 +14,7 @@ where :math:`\mathbf{x}` is the propagated state, :math:`\mathbf{p}` the vector 
 
 .. note:: In some literature, the sensitivity matrix is not defined separately, but the state transition matrix :math:`\Phi(t,t_{0})` is defined as :math:`\frac{\partial[\mathbf{x}(t);\text{ }\mathbf{p}]}{\partial[\mathbf{x}(t_{0};\text{ }\mathbf{p}])}`
 
-The code for this tutorial is given on Github, and is also located in your tudat bundle at::
+The code for this tutorial is given on Github, and is also located in your Tudat bundle at::
 
     tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/variationalEquationsPropagatorExample.cpp
 

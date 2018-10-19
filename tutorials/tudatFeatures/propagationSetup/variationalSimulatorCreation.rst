@@ -134,7 +134,7 @@ If the variational equations propagation history needs to be saved, the followin
           
 Where the state transition and sensitivity matrix are storeed separately. Saving the results to a file is done in the same manner as for the dynamics. Note however, that the matrix entries of the maps in the above are spread out over a single row in the output file. The concatenation of the matrix entries is done row by row. 
 
-The state propagation history can also be retrieved from teh object, as follows:
+The state propagation history can also be retrieved from the object, as follows:
 
 .. code-block:: cpp
 

@@ -183,12 +183,12 @@ Updating your local repository from Github
 Creating a New Tudat Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For some projects, you will want to start your own application repository from scratch. Here, we briefly explain how to set this up, while details of teh code itself (e.g. CMake settings) are discussed on the page :ref:`setupNewApps`.
+For some projects, you will want to start your own application repository from scratch. Here, we briefly explain how to set this up, while details of the code itself (e.g. CMake settings) are discussed on the page :ref:`setupNewApps`.
 
 
 **Step 1: Initializing the repository**
 
-   To create a new git repository, use the terminal to navigate to teh directory of this new repository and type::
+   To create a new git repository, use the terminal to navigate to the directory of this new repository and type::
 
       git init
 
@@ -205,20 +205,3 @@ For some projects, you will want to start your own application repository from s
       git remote add origin https://github.com/UserName/MyNewTudatApplication.git
 
    You are now free to push your code to this repository.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

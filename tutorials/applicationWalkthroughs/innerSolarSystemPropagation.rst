@@ -2,7 +2,7 @@
 
 Inner Solar System Propagation
 ==============================
-The example described on this page aims to simulate the dynamics of the main celestial bodies in the inner solar system. The code for this tutorial is given on Github, and is also located in your tudat bundle at::
+The example described on this page aims to simulate the dynamics of the main celestial bodies in the inner solar system. The code for this tutorial is given on Github, and is also located in your Tudat bundle at::
 
    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/innerSolarSystemPropagation.cpp
 

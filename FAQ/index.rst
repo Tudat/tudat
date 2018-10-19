@@ -17,7 +17,7 @@ Compilation and installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	- *Q: I am on Windows and I would like to use the command line for git, how can I do this?*
-	   A: A command line tool was developed for Tudat, you can find it in your tudat bundle under external/tools/tudat_shell. Within this tool you can use all the git commands.
+	   A: A command line tool was developed for Tudat, you can find it in your Tudat bundle under external/tools/tudat_shell. Within this tool you can use all the git commands.
 
 	- *Q: How can I run CMake again from Qt?*
 	   A: In the Project Tree tab in Qt (on the left side of your screen) you can right-click on the top-level TudatBundle icon and select the "Run CMake" option. The output will be shown in the General Messages tab.
