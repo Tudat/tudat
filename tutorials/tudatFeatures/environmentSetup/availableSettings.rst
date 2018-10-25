@@ -10,7 +10,8 @@ if you want to use a central gravity field with the gravitational parameter take
 
 .. code-block:: cpp
 
-    bodySettings[ "Earth" ]->gravityFieldSettings = std::make_shared< SphericalHarmonicsGravityFieldSettings >( gravitationalParameter, referenceRadius, cosineCoefficients, sineCoefficients, associatedReferenceFrame ); 
+    bodySettings[ "Earth" ]->gravityFieldSettings = std::make_shared< SphericalHarmonicsGravityFieldSettings >( 
+       gravitationalParameter, referenceRadius, normalizedCosineCoefficients, normalizedSineCoefficients, associatedReferenceFrame ); 
 
 To find out which input arguments must be provided to create a specific settings class, have a look at the documentation in the code (written above the code for the constructor of the settings class you are interested in). Below, we give examples of each type of environment model setting.
 
@@ -252,12 +253,15 @@ Gravity field model
 
        double gravitationalParameter = ...
        double referenceRadius = ...
-       Eigen::MatrixXd cosineCoefficients =  // NOTE: entry (i,j) denotes coefficient at degree i and order j
-       Eigen::MatrixXd sineCoefficients =  // NOTE: entry (i,j) denotes coefficient at degree i and order j
+       Eigen::MatrixXd normalizedCosineCoefficients =  // NOTE: entry (i,j) denotes coefficient at degree i and order j
+       Eigen::MatrixXd normalizedSineCoefficients =  // NOTE: entry (i,j) denotes coefficient at degree i and order j
        std::string associatedReferenceFrame = ...
-       bodySettings[ "Earth" ]->gravityFieldSettings = std::make_shared< SphericalHarmonicsGravityFieldSettings >( gravitationalParameter, referenceRadius, cosineCoefficients, sineCoefficients, associatedReferenceFrame ); 
+       bodySettings[ "Earth" ]->gravityFieldSettings = std::make_shared< SphericalHarmonicsGravityFieldSettings >( 
+          gravitationalParameter, referenceRadius, normalizedCosineCoefficients, normalizedSineCoefficients, associatedReferenceFrame ); 
 
    The :literal:`associatedReferenceFrame` reference frame must presently be the same frame as the target frame of the body's rotation model (see below). It represents the frame to which the spherical harmonic field is fixed.
+
+   .. warning:: Spherical harmonic coefficients used for this environment model must ALWAYS be fully normalized 
 
 Rotational model
 ****************
@@ -344,7 +348,7 @@ Body shape model
        double bodyRadius = 6378.0E3;
        bodySettings[ "Earth" ]->shapeModelSettings = std::make_shared< SphericalBodyShapeSettings >( bodyRadius ); 
 
-.. method:: Spherical shape from SPice
+.. method:: Spherical shape from Spice
 
    Model defining a body shape as a perfect sphere, with the sphere radius retrieved from Spice. No derived class of :class:`BodyShapeSettings` base class required, created by passing ``spherical_spice`` as argument to base class constructor.
 
