@@ -1,9 +1,5 @@
 .. _walkthroughsPropagatorTypesComparison:
 
-The code for this tutorial is given on Github, and is also located in your tudat bundle at::
-
-   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/propagatorTypesComparison.cpp
-
 Comparison of Propagator Types
 ==============================
 
@@ -18,6 +14,10 @@ As was introduced in :ref:`tudatFeaturesPropagatorSettings`, in Tudat one can ch
    - Unified state model with exponential map
 
 With this example application, we propagate a quasi-circular orbit around Earth with each of the propagators above for 10 days, and examine their performance (in terms of RMS error w.r.t. a more accurate reference, time and function evaluations). The comparison is done for both a variable and a constant step-size integration method. 
+
+The code for this tutorial is given on Github, and is also located in your Tudat bundle at::
+
+   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/propagatorTypesComparison.cpp
 
 Initial Conditions
 ~~~~~~~~~~~~~~~~~~

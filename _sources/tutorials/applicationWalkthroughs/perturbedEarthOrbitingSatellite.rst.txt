@@ -2,7 +2,7 @@
 
 Perturbed Earth-orbiting Satellite
 ==================================
-The example described on this page is that of Asterix, a single satellite that is orbiting the Earth. The code for this tutorial is given on Github, and is also located in your tudat bundle at::
+The example described on this page is that of Asterix, a single satellite that is orbiting the Earth. The code for this tutorial is given on Github, and is also located in your Tudat bundle at::
 
    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/singlePerturbedSatellitePropagator.cpp
 

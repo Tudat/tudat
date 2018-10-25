@@ -1,13 +1,13 @@
 .. _walkthroughsFiltering:
 
-The code for this tutorial is given on Github, and is also located in your tudat bundle at::
-
-   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/filterExample.cpp
-
 Kalman Filter for State Estimation
 ==================================
 
 In this example application, you will learn how to set up and use a Kalman filter object. In particular, this tutorial focuses only on the extended (EKF) and unscented (UKF) Kalman filters.
+
+The code for this tutorial is given on Github, and is also located in your Tudat bundle at::
+
+   tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/filterExample.cpp
 
 Problem Description
 ~~~~~~~~~~~~~~~~~~~

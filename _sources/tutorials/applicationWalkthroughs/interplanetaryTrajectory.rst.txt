@@ -5,7 +5,7 @@ MGA Trajectory Design
 
 This tutorial will focus on the trajectory design tool that is included in Tudat. This tool allows the definition of a multiple gravity assist (MGA) trajectory using a patched conics approach.
 
-The code for this tutorial is given on Github, and is also located in your tudat bundle at: ::
+The code for this tutorial is given on Github, and is also located in your Tudat bundle at: ::
 
    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/interplanetaryTrajectoryDesign.cpp
 

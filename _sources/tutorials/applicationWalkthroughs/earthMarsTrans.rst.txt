@@ -2,7 +2,7 @@
 
 (multi-objective) Earth Mars Transfer
 =====================================
-The examples described in this tutorial will cover a direct transfer from Earth to Mars using a Lambert targeter. The code for this tutorial is given on Github, and is also located in your tudat bundle at:
+The examples described in this tutorial will cover a direct transfer from Earth to Mars using a Lambert targeter. The code for this tutorial is given on Github, and is also located in your Tudat bundle at:
 
    tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/earthMarsTransferExample.cpp
 

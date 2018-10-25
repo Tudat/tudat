@@ -95,7 +95,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials and Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">1. Environment Set-up</a><ul class="current">
@@ -114,6 +113,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../jsonInterface/index.html">JSON Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../matlabInterface/index.html">MATLAB Interface</a></li>
 <li class="toctree-l2"><a class="reference external" href="http://doxygen.tudat.tudelft.nl">Doxygen</a></li>
@@ -198,7 +198,8 @@
 </pre></div>
 </div>
 <p>if you want to use a central gravity field with the gravitational parameter taken from Spice: no information is needed except the type of gravity field model that is created. On the other hand, if you want to use a spherical harmonic gravity field, you need to specify additional parameters yourself, which is done by using the specific derived class:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicsGravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">gravitationalParameter</span><span class="p">,</span> <span class="n">referenceRadius</span><span class="p">,</span> <span class="n">cosineCoefficients</span><span class="p">,</span> <span class="n">sineCoefficients</span><span class="p">,</span> <span class="n">associatedReferenceFrame</span> <span class="p">);</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicsGravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+   <span class="n">gravitationalParameter</span><span class="p">,</span> <span class="n">referenceRadius</span><span class="p">,</span> <span class="n">normalizedCosineCoefficients</span><span class="p">,</span> <span class="n">normalizedSineCoefficients</span><span class="p">,</span> <span class="n">associatedReferenceFrame</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>To find out which input arguments must be provided to create a specific settings class, have a look at the documentation in the code (written above the code for the constructor of the settings class you are interested in). Below, we give examples of each type of environment model setting.</p>
@@ -492,13 +493,18 @@
 <dd><p>Gravity field model as a spherical harmonic expansion.</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">gravitationalParameter</span> <span class="o">=</span> <span class="p">...</span>
 <span class="kt">double</span> <span class="n">referenceRadius</span> <span class="o">=</span> <span class="p">...</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">cosineCoefficients</span> <span class="o">=</span>  <span class="c1">// NOTE: entry (i,j) denotes coefficient at degree i and order j</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">sineCoefficients</span> <span class="o">=</span>  <span class="c1">// NOTE: entry (i,j) denotes coefficient at degree i and order j</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">normalizedCosineCoefficients</span> <span class="o">=</span>  <span class="c1">// NOTE: entry (i,j) denotes coefficient at degree i and order j</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">normalizedSineCoefficients</span> <span class="o">=</span>  <span class="c1">// NOTE: entry (i,j) denotes coefficient at degree i and order j</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">associatedReferenceFrame</span> <span class="o">=</span> <span class="p">...</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicsGravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">gravitationalParameter</span><span class="p">,</span> <span class="n">referenceRadius</span><span class="p">,</span> <span class="n">cosineCoefficients</span><span class="p">,</span> <span class="n">sineCoefficients</span><span class="p">,</span> <span class="n">associatedReferenceFrame</span> <span class="p">);</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicsGravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+   <span class="n">gravitationalParameter</span><span class="p">,</span> <span class="n">referenceRadius</span><span class="p">,</span> <span class="n">normalizedCosineCoefficients</span><span class="p">,</span> <span class="n">normalizedSineCoefficients</span><span class="p">,</span> <span class="n">associatedReferenceFrame</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">associatedReferenceFrame</span></code> reference frame must presently be the same frame as the target frame of the body’s rotation model (see below). It represents the frame to which the spherical harmonic field is fixed.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Spherical harmonic coefficients used for this environment model must ALWAYS be fully normalized</p>
+</div>
 </dd></dl>
 
 </div>
@@ -600,7 +606,7 @@
 
 <dl class="method">
 <dt>
-<code class="descname">Spherical shape from SPice</code></dt>
+<code class="descname">Spherical shape from Spice</code></dt>
 <dd><p>Model defining a body shape as a perfect sphere, with the sphere radius retrieved from Spice. No derived class of <a class="reference internal" href="#BodyShapeSettings" title="BodyShapeSettings"><code class="xref py py-class docutils literal"><span class="pre">BodyShapeSettings</span></code></a> base class required, created by passing <code class="docutils literal"><span class="pre">spherical_spice</span></code> as argument to base class constructor.</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">BodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">spherical_spice</span> <span class="p">);</span>
 </pre></div>
@@ -747,7 +753,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Delft University of Technology.
+        &copy; Copyright 2018, Delft University of Technology.
 
     </p>
   </div>

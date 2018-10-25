@@ -2,7 +2,7 @@
 
 Use of Thrust: Thrust Force Along Velocity Vector
 =================================================
-This example focuses on the inclusion of a thrust force in Tudat. The code for this tutorial is given on Github, and is also located in your tudat bundle at::
+This example focuses on the inclusion of a thrust force in Tudat. The code for this tutorial is given on Github, and is also located in your Tudat bundle at::
 
    tudatBundle/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/thrustAlongVelocityVectorExample.cpp
 
