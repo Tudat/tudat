@@ -46,9 +46,9 @@ Now we are going to walk through the process of installing Qt Creator on your co
    Do not install in Program Files, instead install Qt in your C:/ directory (or D:/ ...). Do not install it in the Program Files (x86) directory (or any directory with spaces), since this is know to cause issues later on.
 
 **Step 4: Select custom installation components**
-    Click Next until you get to the Select Components step. Here you get the option to select which parts of the Qt SDK you wish to install, shown below. Only Qt Creator (default, can not be unchecked) and MinGW (latest version) from the Tools section are necessary. The debugger is recommended.
+    Click Next until you get to the Select Components step. Here you get the option to select which parts of the Qt SDK you wish to install, shown below. Only Qt Creator (default, can not be unchecked) and MinGW (64-bit, 7.3.0) from the Tools section are necessary. The debugger is recommended.
 
-    .. note:: It is necessary to have MinGW 4.9.1 (or greater), and recommended to use MinGW 5.3.0 (or greater).
+    .. note:: It is highly recommended to have the 64-bit version of MinGW (7.3.0 when installing Qt creator). If your system does not support 64 bits, you can use the 5.3.0 MingW, but some code features may not be supported.
 
 .. figure:: images/qtInstall.png
 
@@ -65,7 +65,7 @@ Now we are going to walk through the process of installing Qt Creator on your co
 
 Specifically:
 
-    - The compiler is set to MinGW (4.9.1 or higher required, 5.3.0 or higher recommended), shown above, in red.
+    - The compiler is set to MinGW (7.3.0 highly recommended), shown above, in red.
     - The CMake tool is present, shown above in blue. Note that the name of the CMake tool may be different than below. If no CMake options are available,  go to the CMake tab and click 'Add'. Navigate to the directory where you installed cmake, and select :literal:`.../CMake/bin/cmake.exe` as the CMake tool.
     - The primary generator is ``MinGW`` and secondary generator is ``CodeBlocks``, shown above in green.
 
