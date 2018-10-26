@@ -113,10 +113,23 @@ To make use of the Tudat libraries, you need to compile them. Below we will guid
         -- Generating done
         -- Build files have been written to: /home/dominicdirkx/Software/tudatClean/build-tudatBundle-Desktop-Default
 
-    Depending on your system, boost may or may not be downloaded and compiled by CMake (it typically is). Depending on the speed of your computer and internet connection, this may take anywhere from several to 30 minutes. You can safely ignore CMake warnings about unused variables, specifically manually-specified variables were not used by the project. In case an error occurs during this portion of the installation, copy the full contents of the ``General Messages`` tab from Qt (bottom of screen) into a text file and post this with your Github issue.
+    Depending on your system, boost may or may not be downloaded and compiled by CMake (it typically is). Depending on the speed of your computer and internet connection, this may take anywhere from several to 30 minutes. You can safely **ignore CMake warnings** about unused variables, specifically manually-specified variables were not used by the project, and warnings about relative paths, such as the one below::
+
+      CMake Warning (dev) in tudat/Tudat/Astrodynamics/OrbitDetermination/RotationalDynamicsPartials/CMakeLists.txt:
+        Policy CMP0081 is not set: Relative paths not allowed in LINK_DIRECTORIES
+        target property.  Run "cmake --help-policy CMP0081" for policy details.
+        Use the cmake_policy command to set the policy and suppress this warning.
+
+        Found relative path while evaluating link directories of
+        "tudat_torque_partials":
+
+          "SOFA_BASE_PATH-NOTFOUND/../lib"
+
+      This warning is for project developers.  Use -Wno-dev to suppress it.
+
+    In case an **error occurs** during this portion of the installation, copy the full contents of the ``General Messages`` tab from Qt (bottom of screen) into a text file and post this with your Github issue.
 
 **Step 4: Updating the Settings (optional)**
-
    Before building the libraries, you can modify some of the CMake settings to suit your needs. If you are not sure what your needs are (yet), leave all settings as they are, and proceed to the following step. If you are installing Tudat for the AE4868 course, do not modify the settings. To change the CMake settings, go to Projects->Build->CMake, see screenshot below (note that it may look slightly different, depending on your Qt version/operating system):
 
    .. figure:: images/cmakeSettings.png
@@ -183,7 +196,6 @@ To make use of the Tudat libraries, you need to compile them. Below we will guid
       100% tests passed, 0 tests failed out of 249
       Total Test time (real) = 623.61 sec
       15:16:48: The process "/usr/bin/make" exited normally.
-
 
    Depending on your exact compilation settings, and the speed of your system, running the unit tests may take anywhere from several to 30 minutes. Also, depending on your settings, and version of the code, you will run a different number of unit tests.
 

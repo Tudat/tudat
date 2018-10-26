@@ -82,13 +82,13 @@ Verify Build & Run options
    2. Verify settings:
 
       - Generator:
-         - Unix Makefiles on Linux or Mac OS X
+         - Unix Makefiles on Linux or macOS
          - MinGW Makefiles on Windows
       - Extra generator: CodeBlocks
       - Device type: Desktop
       - Compiler C/C++
          - MinGW >= 5.3.0
-         - GCC or Clang on Linux or Mac OS X
+         - GCC or Clang on Linux or macOS
          - C compiler should be non-empty, it is needed for certain libraries.
 
    It should look like:

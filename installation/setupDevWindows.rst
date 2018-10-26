@@ -23,7 +23,7 @@ SmartGit
 ~~~~~~~~
 
 **Step 1: Download SmartGit**
-    Download SmartGit for your operating system `here <http://www.syntevo.com/smartgit/>`_ . Note that for Linux the package might be available through your package manager, see Linux/Debian instructions. Note that SmartGit comes bundled with JRE (java runtime environment) on Windows and Mac OS X. On Linux you need to install ``jre-openjdk``.
+    Download SmartGit for your operating system `here <http://www.syntevo.com/smartgit/>`_ . Note that for Linux the package might be available through your package manager, see Linux/Debian instructions. Note that SmartGit comes bundled with JRE (java runtime environment) on Windows and macOS. On Linux you need to install ``jre-openjdk``.
 
 **Step 2: Install SmartGit**
     The installation should be straight-forward and the default installation is fine.
@@ -52,23 +52,22 @@ Now we are going to walk through the process of installing Qt Creator on your co
 
 .. figure:: images/qtInstall.png
 
-
 **Step 5: Complete the installation**
    Click Next to go to the License Agreement, where you find the license attached to the use of Qt. Scroll through it if you wish to know what you are accepting. Agree to the conditions and continue to the next step. You can choose to have shortcuts installed or not. Now you can click Install to start the installation. QtCreator and MinGW will be installed on your computer.
 
 **Step 6: Configure Qt Creator**
-   Open Qt Creator and go to Tools/Options. Under the Build & Run section, choose the Kits tab and select Desktop. Please verify the following:
+   Open Qt Creator and go to Tools/Options. Under the *Kits* section, choose the *Kits* tab and select *Desktop*. Please verify the following:
 
    .. warning:: Diligently check whether the three points below are correctly set in your Qt Creator. Typically, more than half of installation issues occur due to users incorrectly following this step.
 
    .. figure:: images/compilerCheck.png
+
+   .. note:: The image above refers to Qt version 4.4.1, whereas the latest version (at the time of writing, October 2018) is 4.7.2. In the newest version the *Kits* and *Build & Run* sections are separate.
 
 Specifically:
 
     - The compiler is set to MinGW (4.9.1 or higher required, 5.3.0 or higher recommended), shown above, in red.
     - The CMake tool is present, shown above in blue. Note that the name of the CMake tool may be different than below. If no CMake options are available,  go to the CMake tab and click 'Add'. Navigate to the directory where you installed cmake, and select :literal:`.../CMake/bin/cmake.exe` as the CMake tool.
     - The primary generator is ``MinGW`` and secondary generator is ``CodeBlocks``, shown above in green.
-
-
 
 The next step is to download the Tudat bundle. Click next to go there.
