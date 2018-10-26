@@ -78,7 +78,7 @@ Verify Build & Run options
 
 - QtCreator Kits
 
-   1. Open QtCreator, go to ``Preferences/Options``, select the ``Build & Run`` section and switch to the ``Kits`` tab
+   1. Open QtCreator, go to ``Preferences/Options``, select the ``Kits`` tab (on older versions of Qt, choose the ``Build & Run`` -> ``Kit``):
    2. Verify settings:
 
       - Generator:
@@ -87,7 +87,7 @@ Verify Build & Run options
       - Extra generator: CodeBlocks
       - Device type: Desktop
       - Compiler C/C++
-         - MinGW >= 5.3.0
+         - MinGW >= 7.3.0 
          - GCC or Clang on Linux or Mac OS X
          - C compiler should be non-empty, it is needed for certain libraries.
 
