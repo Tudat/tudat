@@ -57,7 +57,7 @@ Now we are going to walk through the process of installing Qt Creator on your co
    Click Next to go to the License Agreement, where you find the license attached to the use of Qt. Scroll through it if you wish to know what you are accepting. Agree to the conditions and continue to the next step. You can choose to have shortcuts installed or not. Now you can click Install to start the installation. QtCreator and MinGW will be installed on your computer.
 
 **Step 6: Configure Qt Creator**
-   Open Qt Creator and go to Tools/Options. Under the Build & Run section, choose the Kits tab and select Desktop. Please verify the following:
+   Open Qt Creator and go to Tools/Options. Choose the Kits tab and select Desktop (on older versions of Qt, choose Build&Run -> Kits). Please verify the following:
 
    .. warning:: Diligently check whether the three points below are correctly set in your Qt Creator. Typically, more than half of installation issues occur due to users incorrectly following this step.
 
