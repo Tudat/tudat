@@ -275,6 +275,10 @@
 </div></blockquote>
 </li>
 </ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When using the <a class="reference internal" href="#CustomThrustDirectionSettings" title="CustomThrustDirectionSettings"><code class="xref py py-class docutils literal"><span class="pre">CustomThrustDirectionSettings</span></code></a>, the inertial to body-fixed rotation cannot be unambiguously defined. If you require this rotation (for instance when you also incorporate aerodynamic forces), use the <a class="reference internal" href="#CustomThrustOrientationSettings" title="CustomThrustOrientationSettings"><code class="xref py py-class docutils literal"><span class="pre">CustomThrustOrientationSettings</span></code></a> class instead.</p>
+</div>
 <p>As a possible example of how to use this function:</p>
 <blockquote>
 <div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">myThrustFunction</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">time</span><span class="p">,</span> <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span> <span class="p">)</span>
@@ -370,16 +374,17 @@
 <div>This model defines a thrust force and specific impulse that can vary with time. It requires the following settings as input:</div></blockquote>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">FromFunctionThrustMagnitudeSettings</span><span class="p">(</span>
          <span class="n">thrustMagnitudeFunction</span><span class="p">,</span> <span class="n">specificImpulseFunction</span><span class="p">,</span>
-         <span class="n">isEngineOnFunction</span><span class="p">,</span> <span class="n">bodyFixedThrustDirection</span> <span class="p">);</span>
+         <span class="n">isEngineOnFunction</span><span class="p">,</span> <span class="n">bodyFixedThrustDirection</span><span class="p">,</span> <span class="n">customUpdateFunction</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">thrustMagnitudeFunction</span></code> Thrust magnitude to use (in Newtons), as a function of time as a function of time, defined by an <cite>std::function&lt; double( const double ) &gt;</cite></li>
-<li><code class="docutils literal"><span class="pre">specificImpulseFunction</span></code> Specific impulse to use for the thrust as a function of time, defined by an <cite>std::function&lt; double( const double ) &gt;</cite>. This quantity is used when applying a mass rate model in the propagation the vehicle dynamics, relating the thrust to the mass decrease of the vehicle.</li>
-<li><code class="docutils literal"><span class="pre">isEngineOnFunction</span></code> Boolean defining whether the thrust should be engaged at all, as a function of time (e.g. thrust is 0 N if it returns false), defined by an <cite>std::function&lt; bool( const double ) &gt;</cite>. By default this function always returns true.</li>
-<li><code class="docutils literal"><span class="pre">bodyFixedThrustDirection</span></code> Body-fixed thrust direction (positive x-direction by default) as an <code class="docutils literal"><span class="pre">Eigen::Vector3d</span></code>. Note that this should be a unit-vector, and represents the direction opposite to the nozzle direction.</li>
+<li><code class="docutils literal"><span class="pre">thrustMagnitudeFunction</span></code> Thrust magnitude to use (in Newtons), as a function of time as a function of time, defined by a <code class="docutils literal"><span class="pre">std::function&lt;</span> <span class="pre">double(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code>. See below for an example on how to</li>
+<li><code class="docutils literal"><span class="pre">specificImpulseFunction</span></code> Specific impulse to use for the thrust as a function of time, defined by a <code class="docutils literal"><span class="pre">std::function&lt;</span> <span class="pre">double(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code>. This quantity is used when applying a mass rate model in the propagation the vehicle dynamics, relating the thrust to the mass decrease of the vehicle.</li>
+<li><code class="docutils literal"><span class="pre">isEngineOnFunction</span></code> Boolean defining whether the thrust should be engaged at all, as a function of time (e.g. thrust is 0 N if it returns false), defined by an <code class="docutils literal"><span class="pre">std::function&lt;</span> <span class="pre">bool(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code>. By default this function always returns true.</li>
+<li><code class="docutils literal"><span class="pre">bodyFixedThrustDirection</span></code> Body-fixed thrust direction (positive x-direction by default) as a <code class="docutils literal"><span class="pre">std::function&lt;</span> <span class="pre">Eigen::Vector3d(</span> <span class="pre">)</span> <span class="pre">&gt;</span></code>. Note that this function should be a unit-vector, and represents the direction opposite to the nozzle direction. This setting can be used to incorporate thrust-vector control (TVC) into the thrust.</li>
+<li><code class="docutils literal"><span class="pre">customUpdateFunction</span></code> Function that updates any relevant aspects of the environment/system models, as a <code class="docutils literal"><span class="pre">std::function&lt;</span> <span class="pre">void(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span></code>, which is called before retrieving the thrust magnitude, specific impulse, and body-fixed thrust direction. By default, no such function is used</li>
 </ul>
 <p>Note that if you wish to use a constant value (as opposed to the <code class="docutils literal"><span class="pre">std::function</span></code> expression) for any or all of the first three arguments, you can use lambda expression. For instance, for a variable thrust magnitude, but constant specific impulse of 300 s, you can use:</p>
 <blockquote>
@@ -388,7 +393,75 @@
 </pre></div>
 </div>
 </div></blockquote>
-<p>Where the last two arguments (isEngineOnFunction and bodyFixedThrustDirection) are omitted and therefore are set to their default values.</p>
+<p>Where the last two arguments (<code class="docutils literal"><span class="pre">isEngineOnFunction</span></code> and <code class="docutils literal"><span class="pre">bodyFixedThrustDirection</span></code>) are omitted and therefore are set to their default values.</p>
+<p>Below, we give a simple example of a class that can be used to incorporate TVC into your models. It uses a toy model, in which the thrust vector is rotated along the body-fixed y-axis, with a llinear rate in time.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TVCGuidance</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+
+<span class="n">TVCGuidance</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">initialAngle</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">angleRate</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">referenceTime</span> <span class="p">)</span><span class="o">:</span>
+   <span class="n">initialAngle_</span><span class="p">(</span> <span class="n">initialAngle</span> <span class="p">),</span> <span class="n">angleRate_</span><span class="p">(</span> <span class="n">angleRate</span> <span class="p">),</span> <span class="n">referenceTime_</span><span class="p">(</span> <span class="n">referenceTime</span> <span class="p">){</span> <span class="p">}</span>
+
+<span class="o">~</span><span class="n">TVCGuidance</span><span class="p">(</span> <span class="p">){</span> <span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">updateGuidance</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">currentTime</span> <span class="p">)</span>
+<span class="p">{</span>
+
+   <span class="c1">// Implement your guidance model here, using your specific algorithm</span>
+   <span class="kt">double</span> <span class="n">currentThrustAngle</span> <span class="o">=</span> <span class="n">initialAngle_</span> <span class="o">+</span> <span class="n">angleRate_</span> <span class="o">*</span> <span class="p">(</span> <span class="n">currentTime</span> <span class="o">-</span> <span class="n">referenceTime</span> <span class="p">);</span>
+   <span class="n">bodyFixedThrustDirection_</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">cos</span><span class="p">(</span> <span class="n">currentThrustAngle</span> <span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">sin</span><span class="p">(</span> <span class="n">currentThrustAngle</span> <span class="p">);</span>
+
+   <span class="c1">// Ensure that direction is a unit vector</span>
+   <span class="n">bodyFixedThrustDirection_</span><span class="p">.</span><span class="n">normalize</span><span class="p">(</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">getBodyFixedThrustDirection</span><span class="p">(</span> <span class="p">)</span>
+<span class="p">{</span>
+   <span class="k">return</span> <span class="n">bodyFixedThrustDirection_</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">protected</span><span class="o">:</span>
+
+   <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">bodyFixedThrustDirection_</span><span class="p">;</span>
+
+   <span class="kt">double</span> <span class="n">initialAngle_</span><span class="p">;</span>
+
+   <span class="kt">double</span> <span class="n">angleRate_</span><span class="p">;</span>
+
+   <span class="kt">double</span> <span class="n">referenceTime_</span><span class="p">;</span>
+
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>A real guidance model will likely depend on the current environment, and will therefore often have a <span class="xref std std-ref">NamedBodyMap</span> as an input to its constructor.</p>
+<p>The <a class="reference internal" href="#ThrustMagnitudeSettings" title="ThrustMagnitudeSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustMagnitudeSettings</span></code></a> are then created as follows, with an initial thrust angle of -0.01 radians (at t=86400 s since J2000) and an angle rate 1.0E-6 radians per second:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create TVC guidance object</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TVCGuidance</span> <span class="o">&gt;</span> <span class="n">tvcGuidance</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TVCGuidance</span> <span class="o">&gt;</span><span class="p">(</span>
+   <span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">1.0E-6</span><span class="p">,</span> <span class="mf">86400.0</span> <span class="p">);</span>
+
+<span class="c1">// Retrieve required functions from TVC object</span>
+<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">void</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">updateFunction</span> <span class="o">=</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">TVCGuidance</span><span class="o">::</span><span class="n">updateGuidance</span><span class="p">,</span> <span class="n">tvcGuidance</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">thrustDirectionFunction</span> <span class="o">=</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">TVCGuidance</span><span class="o">::</span><span class="n">getBodyFixedThrustDirection</span> <span class="p">);</span>
+
+<span class="c1">// Create thrust magnitude settings, with constant thrust magnitude and specific impulse</span>
+<span class="kt">double</span> <span class="n">thrustMagnitude</span> <span class="o">=</span> <span class="mf">1.0E3</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">specificImpulse</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustMagnitudeSettings</span> <span class="o">&gt;</span> <span class="n">thrustMagnitudeSettings</span> <span class="o">=</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">FromFunctionThrustMagnitudeSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+      <span class="p">[</span> <span class="o">=</span> <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="n">thrustMagnitude</span><span class="p">;</span> <span class="p">},</span>
+      <span class="p">[</span> <span class="o">=</span> <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="n">specificImpulse</span><span class="p">;</span> <span class="p">},</span>
+      <span class="p">[</span> <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">},</span>
+      <span class="n">thrustDirectionFunction</span><span class="p">,</span>
+      <span class="n">updateFunction</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Note that we use a constant thrust magnitude (1 kN) and specific impulse (300 s) here, and focus the example on showing how to incorporate variable body-fixed thrust direction. If so desired, the above could also be used for variable thrust mangitude/specific impulse, by modifying any guidance class(es).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can combined thrust and aerodynamic guidance, by implementing any required thrust guidance functions into your own custom derived class of <a class="reference internal" href="aerodynamicGuidance.html#AerodynamicGuidance" title="AerodynamicGuidance"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicGuidance</span></code></a></p>
+</div>
 <dl class="class">
 <dt id="FromBodyThrustMagnitudeSettings">
 <em class="property">class </em><code class="descname">FromBodyThrustMagnitudeSettings</code><a class="headerlink" href="#FromBodyThrustMagnitudeSettings" title="Permalink to this definition">¶</a></dt>

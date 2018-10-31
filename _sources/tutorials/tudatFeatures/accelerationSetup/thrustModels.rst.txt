@@ -72,6 +72,8 @@ For the direction of the thrust, there are presently four available types of gui
 
         A :literal:`std::function< Eigen::Vector3d( const double ) >` returning a the thrust direction in the inertial frame as an ``Eigen::Vector3d`` (which should be of unit norm!) as a function of a ``double`` (representing time). Details on how to create such an :literal:`std::function` are given on :ref:`externalUtilityExamples`. 
 
+.. warning:: When using the :class:`CustomThrustDirectionSettings`, the inertial to body-fixed rotation cannot be unambiguously defined. If you require this rotation (for instance when you also incorporate aerodynamic forces), use the :class:`CustomThrustOrientationSettings` class instead.
+
 As a possible example of how to use this function:
 
    .. code-block:: cpp
@@ -156,15 +158,17 @@ To define the thrust magnitude, there are presently three available types of set
 
    FromFunctionThrustMagnitudeSettings(
             thrustMagnitudeFunction, specificImpulseFunction,
-            isEngineOnFunction, bodyFixedThrustDirection );
+            isEngineOnFunction, bodyFixedThrustDirection, customUpdateFunction );
     
-- :literal:`thrustMagnitudeFunction` Thrust magnitude to use (in Newtons), as a function of time as a function of time, defined by an `std::function< double( const double ) >` 
+- :literal:`thrustMagnitudeFunction` Thrust magnitude to use (in Newtons), as a function of time as a function of time, defined by a ``std::function< double( const double ) >``. See below for an example on how to 
 
-- :literal:`specificImpulseFunction` Specific impulse to use for the thrust as a function of time, defined by an `std::function< double( const double ) >`. This quantity is used when applying a mass rate model in the propagation the vehicle dynamics, relating the thrust to the mass decrease of the vehicle.
+- :literal:`specificImpulseFunction` Specific impulse to use for the thrust as a function of time, defined by a ``std::function< double( const double ) >``. This quantity is used when applying a mass rate model in the propagation the vehicle dynamics, relating the thrust to the mass decrease of the vehicle.
 
-- :literal:`isEngineOnFunction` Boolean defining whether the thrust should be engaged at all, as a function of time (e.g. thrust is 0 N if it returns false), defined by an `std::function< bool( const double ) >`. By default this function always returns true.
+- :literal:`isEngineOnFunction` Boolean defining whether the thrust should be engaged at all, as a function of time (e.g. thrust is 0 N if it returns false), defined by an ``std::function< bool( const double ) >``. By default this function always returns true.
 
-- :literal:`bodyFixedThrustDirection` Body-fixed thrust direction (positive x-direction by default) as an ``Eigen::Vector3d``. Note that this should be a unit-vector, and represents the direction opposite to the nozzle direction.
+- :literal:`bodyFixedThrustDirection` Body-fixed thrust direction (positive x-direction by default) as a ``std::function< Eigen::Vector3d( ) >``. Note that this function should be a unit-vector, and represents the direction opposite to the nozzle direction. This setting can be used to incorporate thrust-vector control (TVC) into the thrust.
+
+- :literal:`customUpdateFunction` Function that updates any relevant aspects of the environment/system models, as a ``std::function< void( const double )``, which is called before retrieving the thrust magnitude, specific impulse, and body-fixed thrust direction. By default, no such function is used
 
 Note that if you wish to use a constant value (as opposed to the :literal:`std::function` expression) for any or all of the first three arguments, you can use lambda expression. For instance, for a variable thrust magnitude, but constant specific impulse of 300 s, you can use:
 
@@ -173,7 +177,79 @@ Note that if you wish to use a constant value (as opposed to the :literal:`std::
    FromFunctionThrustMagnitudeSettings(
             thrustMagnitudeFunction, []( const double ){ return 300; } );
 
-Where the last two arguments (isEngineOnFunction and bodyFixedThrustDirection) are omitted and therefore are set to their default values.
+Where the last two arguments (``isEngineOnFunction`` and ``bodyFixedThrustDirection``) are omitted and therefore are set to their default values.
+
+Below, we give a simple example of a class that can be used to incorporate TVC into your models. It uses a toy model, in which the thrust vector is rotated along the body-fixed y-axis, with a llinear rate in time. 
+
+.. code-block:: cpp
+
+   class TVCGuidance
+   {
+   public:
+
+   TVCGuidance( const double initialAngle, const double angleRate, const double referenceTime ):
+      initialAngle_( initialAngle ), angleRate_( angleRate ), referenceTime_( referenceTime ){ }
+
+   ~TVCGuidance( ){ }
+
+   void updateGuidance( const double currentTime )
+   {
+
+      // Implement your guidance model here, using your specific algorithm
+      double currentThrustAngle = initialAngle_ + angleRate_ * ( currentTime - referenceTime );
+      bodyFixedThrustDirection_ << std::cos( currentThrustAngle ), 0.0, std::sin( currentThrustAngle );
+    
+      // Ensure that direction is a unit vector
+      bodyFixedThrustDirection_.normalize( );
+   }
+
+   Eigen::Vector3d getBodyFixedThrustDirection( )
+   {
+      return bodyFixedThrustDirection_;
+   }
+
+   protected:
+
+      Eigen::Vector3d bodyFixedThrustDirection_;
+
+      double initialAngle_;
+
+      double angleRate_;
+
+      double referenceTime_;
+
+   };
+
+A real guidance model will likely depend on the current environment, and will therefore often have a :ref:`NamedBodyMap` as an input to its constructor.
+
+The :class:`ThrustMagnitudeSettings` are then created as follows, with an initial thrust angle of -0.01 radians (at t=86400 s since J2000) and an angle rate 1.0E-6 radians per second:
+
+.. code-block:: cpp
+
+   // Create TVC guidance object
+   std::shared_ptr< TVCGuidance > tvcGuidance = std::make_shared< TVCGuidance >( 
+      -0.01, 1.0E-6, 86400.0 );
+   
+   // Retrieve required functions from TVC object 
+   std::function< void( const double ) > updateFunction = 
+      std::bind( &TVCGuidance::updateGuidance, tvcGuidance, std::placeholders::_1 );
+   std::function< Eigen::Vector3d( ) > thrustDirectionFunction = 
+      std::bind( &TVCGuidance::getBodyFixedThrustDirection );
+
+   // Create thrust magnitude settings, with constant thrust magnitude and specific impulse
+   double thrustMagnitude = 1.0E3;
+   double specificImpulse = 300;
+   std::shared_ptr< ThrustMagnitudeSettings > thrustMagnitudeSettings =
+      std::make_shared< FromFunctionThrustMagnitudeSettings >( 
+         [ = ]( const double ){ return thrustMagnitude; },
+         [ = ]( const double ){ return specificImpulse; },
+         [ ]( const double ){ return true; },
+         thrustDirectionFunction,
+         updateFunction );
+
+Note that we use a constant thrust magnitude (1 kN) and specific impulse (300 s) here, and focus the example on showing how to incorporate variable body-fixed thrust direction. If so desired, the above could also be used for variable thrust mangitude/specific impulse, by modifying any guidance class(es).
+
+.. note :: You can combined thrust and aerodynamic guidance, by implementing any required thrust guidance functions into your own custom derived class of :class:`AerodynamicGuidance`
 
 .. class:: FromBodyThrustMagnitudeSettings
 
