@@ -3,5 +3,6 @@
 .. role:: jsonkey
 .. role:: arrow
 
-- :jsontype:`number` :jsonkey:`maximumDegree` (mandatory). Value of the maximum degree of the spherical harmonics model, for which an acceleration has to be saved.
-- :jsontype:`number` :jsonkey:`maximumOrder` (mandatory). Value of the maximum order of the spherical harmonics model, for which an acceleration has to be saved.
+- :jsontype:`string` :jsonkey:`bodyExertingAcceleration` (mandatory). Name of body exerting acceleration.
+- :jsontype:`number[ ][ ]` :jsonkey:`componentIndices` (mandatory). List of indices for degree/order that is to be saved. For instance, when saving the degree/order terms 0/0, 2/0 and 2/2, use ``"componentIndices": [ [ 0, 0 ], [ 2, 0 ], [ 2, 2 ] ]``
+
