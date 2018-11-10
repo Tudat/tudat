@@ -12,15 +12,35 @@ Now that you've installed Tudat, you can run all of the example applications and
 Getting an Existing Tudat Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Below, we discuss how to retrieve an application from an existing Github repository, how to retrieve any updates that may come available after you've downloaded it, and how to send the code to your own Github account. As an example, we will use the ``tudatAssignments`` repository.
+Below, we discuss how to retrieve an application from an existing Github repository, how to retrieve any updates that may come available after you've downloaded it, and how to send the code to your own Github account. As an example, we will use the ``tudatAssignments`` repository. Depending on whether your repository is to be public or private, follow Step 1a, or Step 1b.
 
-**Step 1: Fork the application on Github**
+      .. warning:: IMPORTANT! When setting up a repository for use in the AE4866 or AE4868 courses, it is **required** to set the repository to private (and follow step 1b, not 1a).
 
-   The first step in the workflow of retrieving an application is to "fork" it. Forking means that you will create a copy on your own Github page, which is identical to the original. The reason why we do this is that, typically, you will *not* have permission to modify the original repository, and have to save any modifications you make under your own account. To do so, first make sure you are logged into Github, and then go the repository page for the application you want to retrieve, and click the "fork" button at the top (see screenshot below).
+**Step 1a (for a public repository): Fork the code on Github**
+
+   The first step in the workflow of retrieving a public application is to "fork" it. Forking means that you will create a copy on your own Github page, which is identical to the original. The reason why we do this is that, typically, you will *not* have permission to modify the original repository, and have to save any modifications you make under your own account. To do so, first make sure you are logged into Github, and then go the repository page for the application you want to retrieve, and click the "fork" button at the top (see screenshot below).
 
    .. figure:: images/forkingExample.png
 
    After doing so, you will have created your own local version of the ``tudatAssignments`` repository.
+
+**Step 1b (for a private repository): Import the code on Github**
+
+   The first step in the workflow of retrieving a private application is create an empty new Repository, by going to ``https://github.com/YourName`` (fill in your own name), and clicking ``New`` under ``Repositories`` (see screenshot below):
+
+   .. figure:: images/newRepository.png
+
+   Type a name for your repository (make sure it is descriptive, so not ``NumAstroAssignment``, but, for instance, ``NumericalAstrodynamics2018Assignment``), and set the repository to **private** (see screenshot below). 
+
+   .. figure:: images/newRepositoryPrivate.png
+
+   You may, but need not, write a repository description. Click ``Create repository``. 
+
+   On the bottom of page you are redirected to, click ``Import Code``. Fill in the name of the repository from which you want to retrieve code (for instance ``https://github.com/Tudat/tudatAssignments``), and click ``Begin Import``. Once the import is successfully completed, you will receive an e-mail, with a link to your new, private, repository.
+
+   For a private repository, you can control who can view/modify your repository. To add other users to your repository, go to the ``Settings/Collaborators`` of the repository, and add other users that you want to invite.
+
+      .. warning:: IMPORTANT! When setting up a repository for use in the AE4866 or AE4868 courses, invite :literal:`@dominicdirkx` and :literal:`@transferorbit`. For these courses, it is prohibited to invite your fellow students to a private repository for an individual assignment.
 
 **Step 2: Clone the application to your system**
 
@@ -30,15 +50,8 @@ Below, we discuss how to retrieve an application from an existing Github reposit
 
    where ``YourName`` should be replaced with your Github account name (so that it corresponds to the URL to where you've forked the repository).
 
-**Step 3: Modify Repository Settings, and invite (a) collaborator(s) to (private) repository (optional)**
 
-   Depending on the project you are working on, you may not want your code to be publicly available (yet). To keep the repository private, change the settings of your repository, as described `here <https://help.github.com/articles/making-a-public-repository-private/>`_.
-
-   If you have made your repository private, you can control who can view/modify your repository. To add other users to your repository, go to the ``Settings/Collaborators`` of the repository, and add other users that you want to invite.
-
-      .. warning:: IMPORTANT! When setting up a repository for use in the AE4866 or AE4868 courses, it is **required** to set the repository to private, and invite :literal:`@dominicdirkx` and :literal:`@transferorbit`.
-
-**Step 4: Adding the application to your Tudat compilation**
+**Step 3: Adding the application to your Tudat compilation**
 
    Open the top-level ``tudatBundle/CMakeLists.txt`` and add the directory to the bottom of the file using the folder where you've just cloned the repository to::
 
