@@ -119,6 +119,20 @@ Downloading/compiling boost
    |MinGW 5.3         |      ✗       |       ✓      |        ✓     |
    +------------------+--------------+--------------+--------------+
 
+
+- Boost download has failed
+
+   The following error might sometimes occur when trying to download Boost::
+
+      Downloading boost 1.64.0 to C:/tudatBundle/boost/build
+      [download 100% complete]
+      CMake Error at external/CMake/add_boost.cmake:214 (file):
+        file DOWNLOAD HASH mismatch
+         
+   This error is likely to be due to an issue originating from the Boost server itself. It will usually be solved by waiting some time and re-running the configuration process (which will make a new attempt to download Boost).
+   
+   If it does not solve the error, then please check your anti-virus settings which might block the Boost download on Windows machines.
+
 - Boost build failed
    - Go to the ``tudatBundle/boost/stage/lib`` folder and verify all the libraries you require are present.
    - Make note of all files in this folder.

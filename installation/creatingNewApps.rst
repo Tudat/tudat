@@ -86,6 +86,26 @@ Now, we are ready to discuss two distinct but related aspects of developing your
       upstream	https://github.com/tudat/tudatAssignments (fetch)
       upstream	https://github.com/tudat/tudatAssignments (push)
 
+   If it is the first time you use git on your computer, you are required to identify yourself. This can be done with the following commands::
+
+      git config --global user.name "Your name"
+      git config --global user.mail "you@example.com"
+
+   If you forget to do so, you will encounter the following error message when trying to commit your code (see next step), asking you to enter the two lines of code above::
+
+      Fatal: unable to auto-detect email address 
+
+      *** Please tell me who you are.
+
+      Run
+
+         git config --global user.email "you@example.com"
+         git config --global user.name "Your name"
+
+      to set your account's default identity.
+      Omit --global to set the identity only in this repository.
+
+
 **Step 2: Making local commits**
 
    Before you can push changes to your Github account, you must first ``commit`` (save) these changes locally on your computer. A commit provides a snapshot of the current version of the code, to which you can return at later points in time.
