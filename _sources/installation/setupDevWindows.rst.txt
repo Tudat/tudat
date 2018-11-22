@@ -4,6 +4,8 @@ Install on Windows
 ------------------
 This section of the guide refers to the installation of the IDE under Windows. These instructions should work for all versions of Windows from XP to Windows 10.
 
+    .. note:: Please make sure your user account name on Windows does not contain any non-latin character. This is known to generate errors during compilation. If your user account contains such non-latin characters, create another account and download everything in it.
+
 CMake
 ~~~~~
 So, we are now going to walk through the process of installing CMake on your computer, after which we will install Qt Creator, which comes bundled with the compiler and related tools. We use CMake to manage software project(s), and to instruct your compiler how to generate and link libraries.
