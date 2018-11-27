@@ -18,3 +18,4 @@
 - :jsontype:`boolean` :jsonkey:`onlyInitialStep` (optional). Whether to save only the values corresponding to the initial integration step. Does not override :jsonkey:`onlyFinalStep`. Default value: :literal:`false`.
 - :jsontype:`boolean` :jsonkey:`onlyFinalStep` (optional). Whether to save only the values corresponding to the final integration step. Does not override :jsonkey:`onlyInitialStep`. Default value: :literal:`false`.
 - :jsontype:`number` :jsonkey:`numericalPrecision` (optional). Maximum number of significant digits to be used for decimal numbers. Default value: :literal:`15`.
+- :jsontype:`number` :jsonkey:`printVariableIndicesToTerminal` (optional). Boolean that defines whether indices at which in output vector, at which variables are saved, will be printed to the terminal Default value: :literal:`false`.
