@@ -189,10 +189,15 @@ Compilation/linking of code
      
   This error (or something similar) can occur (on Windows) if your compiler is in a directory containing a space (and possibly other non-standard character). Make sure that Qt and your compiler are installed in a directory like ``C:/Qt``, ``C:/mingw``, etc. Avoid the ``C:/Program Files`` directory.
 
-
--  ``libbacktrace could not find executable to open``
-
+- ``libbacktrace could not find executable to open``
    This error is due to multi-core compilation on Windows. Restarting the compile process fixes the issue (multiple restarts could be required), or compile with a singly thread.
+
+- ``unlink .../libcspice.a: Permission denied``::
+
+   mingw32-make.exe[2]: *** Deleting file 'C:/tudatBundle/cspice/lib/libcspice.a'
+   mingw32-make.exe[2]: unlink: C:/tudatBundle/cspice/lib/libcspice.a: Permission denied
+
+  This error may occur on Windows machines due to anti-virus settings blocking the Tudat compilation. You might want to check those settings and modify them, so that your anti-virus does not interfere with the building of Tudat. This should prevent the issue from happening. Please be aware that the modification of your anti-virus settings is your own responsibility.
 
 
 .. _debuggingFailedUnitTests:
