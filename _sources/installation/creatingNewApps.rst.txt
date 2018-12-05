@@ -88,8 +88,8 @@ Now, we are ready to discuss two distinct but related aspects of developing your
 
    If it is the first time you use git on your computer, you are required to identify yourself. This can be done with the following commands::
 
+      git config --global user.email "you@example.com"
       git config --global user.name "Your name"
-      git config --global user.mail "you@example.com"
 
    If you forget to do so, you will encounter the following error message when trying to commit your code (see next step), asking you to enter the two lines of code above::
 

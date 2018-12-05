@@ -57,15 +57,15 @@ Below, we provide a list of all dependent variables that can be saved using Tuda
 
    - **Local temperature** in atmosphere of body exerting aerodynamic acceleration (at position of body undergoing acceleration). Requires an aerodynamic acceleration to be acting on the vehicle. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`local_temperature_dependent_variable` as :literal:`variableType`.
 
-   - **Local dynamic pressure** felt by the vehicle based on the current velocity and atmospheric conditions, i.e., computed with :math:`\frac{1}{2} \rho V^2`. Requires an aerodynamic acceleration to be acting on the vehicle. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`local_temperature_dependent_variable` as :literal:`variableType`.
+   - **Local dynamic pressure** felt by the vehicle based on the current velocity and atmospheric conditions, i.e., computed with :math:`\frac{1}{2} \rho V^2`. Requires an aerodynamic acceleration to be acting on the vehicle. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`local_dynamic_pressure_dependent_variable` as :literal:`variableType`.
 
-   - **Local aerodynamic heat rate** felt by the vehicle based on the current velocity and atmospheric conditions, i.e., computed with :math:`\frac{1}{2} \rho V^3`. Requires an aerodynamic acceleration to be acting on the vehicle. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`local_temperature_dependent_variable` as :literal:`variableType`.
+   - **Local aerodynamic heat rate** felt by the vehicle based on the current velocity and atmospheric conditions, i.e., computed with :math:`\frac{1}{2} \rho V^3`. Requires an aerodynamic acceleration to be acting on the vehicle. Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`local_aerodynamic_heat_rate_dependent_variable` as :literal:`variableType`.
 
    - **Relative speed** (scalar velocity) of body w.r.t. a second body (between centers of mass). Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`relative_speed_dependent_variable` as :literal:`variableType`.
 
    - **Relative velocity** of body w.r.t. a second body (between centers of mass). Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`relative_velocity_dependent_variable` as :literal:`variableType`.
 
-   - **Relative distance** of body from a second body (between centers of mass). Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`relative_position_dependent_variable` as :literal:`variableType`.
+   - **Relative distance** of body from a second body (between centers of mass). Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`relative_distance_dependent_variable` as :literal:`variableType`.
 
    - **Relative position** of body w.r.t. a second body (between centers of mass). Defined by creating a :class:`SingleDependentVariableSaveSettings` object with input :literal:`relative_position_dependent_variable` as :literal:`variableType`.
 
