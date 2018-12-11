@@ -4,7 +4,7 @@
 .. role:: arrow
 
 - :jsontype:`string` :jsonkey:`coefficientsType` (optional). Possible values: :literal:`"constant"`, :literal:`"tabulated"`. Default value: :literal:`"constant"`.
-- :jsontype:`number` :jsonkey:`referenceArea` (optional). Reference area with which aerodynamic forces and moments are non-dimensionalized. If not specified, it will be retrieved from the body's :jsonkey:`referenceArea` key.
+- :jsontype:`number` :jsonkey:`referenceArea` (optional). Reference area with which aerodynamic forces and moments are non-dimensionalized. If not specified, it will be retrieved from the body's :jsonkey:`referenceArea` key. Note that the reference area has to be defined at least once, either at the body level or in the aerodynamics settings. The definition of the reference area is optional only if it has already been defined in the body’s keys
 - :jsontype:`number` :jsonkey:`referenceLength` (mandatory if moment coefficients provided). Reference length with which aerodynamic moments are non-dimensionalized.
 - :jsontype:`number` :jsonkey:`lateralReferenceLength` (mandatory if moment coefficients provided). Lateral reference length with which aerodynamic moments are non-dimensionalized.
 - :jsontype:`number` :jsonkey:`momentReferencePoint` (mandatory if moment coefficients provided). Point w.r.t. which the arm of the moment on a vehicle panel is determined.
