@@ -62,10 +62,6 @@ Using and Developing Tudat
 
 	- *Q: How can I repress the output of the :literal:`dependentVariableSettings`?*
 	   A: Set the second argument of the class to false/0.
-
-	- *Q: When making a Pagmo problem with a propagation step in it, the optimization stops after a while due to high RAM usage, how can I fix this?*
-	   A: Put some variables (especially the creation of the :literal:`bodyMap`) in the constructor of the problem. This will make sure that some vectors will not grow unnecesarily large after several generations.
-
 	
 
 	
