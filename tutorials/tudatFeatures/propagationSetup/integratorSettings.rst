@@ -19,7 +19,7 @@ As the name suggests, the integrator settings tell the dynamics simulator how to
 
    - :literal:`TimeType`
    
-      Template argument used to set the precision of the time, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal:`long double`. 
+      Template argument used to set the precision of the time, in general :literal:`double` is used. For some application where a high precision is required, :literal:`tudat::Time` can be used and cast to :literal:`long double`. 
 
    - :literal:`integratorType`
 
