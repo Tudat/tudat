@@ -40,7 +40,7 @@ Single-arc Propagation
 
         - :literal:`StateScalarType`
    
-            Template argument used to set the precision of the state, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal`long double`. 
+            Template argument used to set the precision of the state, in general :literal:`double` is used. For some application where a high precision is required this can be changed to e.g. :literal:`long double`. 
         
         - :literal:`centralBodies`
 
@@ -80,7 +80,7 @@ Single-arc Propagation
 
         - :literal:`dependentVariablesToSave`
 
-        - :literal:`std::shared_ptr< DependentVariableSaveSettings >` that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved. See the tutorial on :class:`DependentVariableSaveSettings` for more details on this class. Note that the literal:`dependentVariablesToSave` may be left unspecified, in which case no dependent variables are saved, so:
+            :literal:`std::shared_ptr< DependentVariableSaveSettings >` that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved. See the tutorial on :class:`DependentVariableSaveSettings` for more details on this class. Note that the :literal:`dependentVariablesToSave` may be left unspecified, in which case no dependent variables are saved, so:
 
         .. code-block:: cpp
 
@@ -194,6 +194,15 @@ Single-arc Propagation
 
             :literal:`Eigen::Matrix< StateScalarType, Eigen::Dynamic, 1 >` passed by reference that associates an initial body mass to each body with mass to be propagated.
 
+        - :literal:`terminationSettings`
+
+            :literal:`std::shared_ptr< PropagationTerminationSettings >` that defines the termination settings of the propagation. See the tutorial on :class:`PropagationTerminationSettings` for more details on this class.
+
+        - :literal:`dependentVariablesToSave`
+
+            :literal:`std::shared_ptr< DependentVariableSaveSettings >` that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved. See the tutorial on :class:`DependentVariableSaveSettings` for more details on this class.
+
+
     .. method:: Various mass-rate models per body
 
         .. code-block:: cpp
@@ -291,7 +300,7 @@ Single-arc Propagation
             :literal:`std::map< IntegratedStateType, std::vector< std::shared_ptr< PropagatorSettings< StateScalarType > > > >` where each element contains a pointer to a :class:`PropagatorSettings` class. This class requires a sorted list :class:`PropagatorSettings` derived classes.
 
    
-   .. Warning:: When using the :class:`MultiTypePropagatorSettings` derived class note that the :literal:`dependentVariablesToSave` need to be passed in this constructor and not inside the :literal:`propagatorSettingsMap` since these will be ignored. 
+   .. Warning:: When using the :class:`MultiTypePropagatorSettings` derived class note that the :literal:`dependentVariablesToSave` need to be passed in this constructor and not inside the :literal:`propagatorSettingsMap` since these will be ignored. The same applies to the termination settings. They have to be defined in this constructor, as those provided inside the :literal:`propagatorSettingsMap` are disregarded as well. 
 
 Multi- and Hybrid-arc Propagation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
