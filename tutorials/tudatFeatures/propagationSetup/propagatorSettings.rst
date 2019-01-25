@@ -58,6 +58,17 @@ Single-arc Propagation
 
             :literal:`Eigen::Matrix< StateScalarType, Eigen::Dynamic, 1 >` that stores the states of the bodies to propagate with respect to their central bodies. 
 
+
+            .. note:: The state variables contained in :literal:`initialBodyStates` are ordered with respect to the elements of :literal:`centralBodies` and :literal:`bodiesToIntegrate`. Please take a look at the following pseudocode:
+
+                .. code-block:: cpp
+
+                    centralBodies = { Sun , Earth , Moon }
+                    bodiesToIntegrate = { Earth , Moon }
+                    initialBodyStates = { xEarthWrtSun , yEarthWrtSun , zEarthWrtSun , uEarthWrtSun , vEarthWrtSun , wEarthWrtSun , 
+                                      xMoonWrtEarth , yMoonWrtEarth , zMoonWrtEarth , uMoonWrtEarth , vMoonWrtEarth , wMoonWrtEarth }
+
+
         - :literal:`endTime`
 
             :literal:`double` that defines the end-time of the simulation.
@@ -90,15 +101,6 @@ Single-arc Propagation
                                                                    initialBodyStates,
                                                                    endTime,
                                                                    propagator )
-
-        .. note:: The state variables contained in :literal:`initialBodyStates` are ordered with respect to the elements of :literal:`centralBodies` and :literal:`bodiesToIntegrate`. Please take a look at the following pseudocode:
-
-            .. code-block:: cpp
-
-                centralBodies = { Sun , Earth , Moon }
-                bodiesToIntegrate = { Earth , Moon }
-                initialBodyStates = { xEarthWrtSun , yEarthWrtSun , zEarthWrtSun , uEarthWrtSun , vEarthWrtSun , wEarthWrtSun , 
-                                      xMoonWrtEarth , yMoonWrtEarth , zMoonWrtEarth , uMoonWrtEarth , vMoonWrtEarth , wMoonWrtEarth }
             
 
     .. method:: With user-defined termination settings
