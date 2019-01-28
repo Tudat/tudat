@@ -51,7 +51,18 @@ The integrator settings to be used for the propagation of the full dynamics are 
             std::make_shared < numerical_integrators::IntegratorSettings < > >
             ( numerical_integrators::rungeKutta4, initialTime, fixedStepSize ); 
 
-The initial state of the spacecraft before being propagating in the 
+Finally, the initial state of the spacecraft to be propagated is defined, in inertial cartesian coordinates:
+
+.. code-block:: cpp
+   
+   // Define initial state of the spacecraft.
+   Eigen::Vector6d initialState;
+   initialState[0] = 2.991957413820000e+10;
+   initialState[1] = 1.295555563704656e+11;
+   initialState[2] = 0.0;
+   initialState[3] = -2.579433850734350e+04;
+   initialState[4] = 5.956947312313238e+03;
+   initialState[5] = 0.0;
 
 The results obtained with the CR3BP analytical solution and those provided by the propagation of the full dynamics problem are calculated by calling the function :literal:`propagateCR3BPAndFullDynamicsProblem`. This function fills the maps which are provided as inputs with the state history of the spacecraft calculated from the CR3BP solution and from the full problem propagation, respectively.
 
@@ -70,5 +81,30 @@ To directly retrieve the state difference between the CR3BP solution and the res
                 bodiesToPropagate, centralBodies,bodyMap, bodiesCR3BP );
 
 As the body map and acceleration map have here been defined in such a way that they actually fullfil the CR3BP assumptions, no significant state differences are expected between the CR3BP and the full propagation results.
+
+
+Perturbed case
+~~~~~~~~~~~~~~
+
+The previous example has been developed in the ideal case in which the full dynamics problem actually corresponds to the CR3BP and respects its assumptions. However, for real-world applications, such a simple dynamical model is rather unrealistic and the CR3BP solution is actually an approximate solution for which the results of the full problem propagation can significantly differ. In the following example, a more complex and realistic model is considered. 
+
+First of all, the orbits of the two main orbits are neither perfectly circular nor their orbital periods about their barycentre are equal. Instead of this simplified model for their orbits, use can be made of the default settings, which include more realistic ephemerides and gravity fields.
+
+.. code-block:: cpp
+
+   // Define body settings and create the body map.
+
+
+Additionally, the accelerations experienced by the spacecraft usually do not restrict themselves to point-mass gravitational attractions from the two main bodies. A more complete set of accelerations can be defined for the spacecraft, as it is done below.
+
+.. code-block:: cpp
+
+   // Define the acceleration model for the spacecraft to be propagated.
+
+
+The integrator settings and spacecraft initial time remain the same with respect to those of the ideal case. The calculation of the CR3BP solution and of the results of the full problem propagation are obtained similarly to what was done in the previous example. The difference in cartesian state between the simplified CR3BP solution and the propagation results as a function of time are plotted below.
+
+
+
 
 
