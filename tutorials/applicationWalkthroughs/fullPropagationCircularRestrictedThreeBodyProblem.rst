@@ -9,7 +9,7 @@ The example described on this page focuses on the comparison of the results obta
 As a reminder, the circular restricted three body problem relies on the following assumptions: 
     - The two main bodies are in co-rotating circular orbits about their barycentre. They are referred to as the primary and secondary in the following.
     - The mass of the third body is neglected with respect to the masses of the two main bodies.
-    - The only perturbations acting on each of the main bodies is the gravitational attraction of the other main body while the massless body experiences the gravitational attractions of the main bodies.
+    - The only perturbations acting on the massless body are the point-mass gravitational accelerations exerted by the two main bodies.
 
 
 Ideal case corresponding to the assumptions of the circular restricted three-body problem
