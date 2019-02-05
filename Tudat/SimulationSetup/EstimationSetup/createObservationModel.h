@@ -22,6 +22,7 @@
 #include "Tudat/SimulationSetup/EstimationSetup/createLightTimeCorrection.h"
 #include "Tudat/Astrodynamics/ObservationModels/nWayRangeObservationModel.h"
 #include "Tudat/Astrodynamics/ObservationModels/oneWayRangeObservationModel.h"
+#include "Tudat/Astrodynamics/ObservationModels/altimetryCrossoverObservationModel.h"
 #include "Tudat/Astrodynamics/ObservationModels/oneWayDopplerObservationModel.h"
 #include "Tudat/Astrodynamics/ObservationModels/twoWayDopplerObservationModel.h"
 #include "Tudat/Astrodynamics/ObservationModels/oneWayDifferencedRangeRateObservationModel.h"
@@ -473,6 +474,27 @@ public:
 
 };
 
+class AltimetryCrossoverObservationSettings: public ObservationSettings
+{
+public:
+
+    AltimetryCrossoverObservationSettings(
+            const std::map< double, double >& crossoverTimes,
+            const std::string& centralBody,
+            const std::shared_ptr< ObservationBiasSettings > biasSettings = nullptr ):
+        ObservationSettings( altimetry_crossover, nullptr, biasSettings ), crossoverTimes_( crossoverTimes ),
+        centralBody_( centralBody ) { }
+
+    //! Destructor
+    ~AltimetryCrossoverObservationSettings( ){ }
+
+    std::map< double, double > crossoverTimes_;
+
+    std::string centralBody_;
+
+};
+
+
 //! Function to create the proper time rate calculator for use in one-way Doppler
 /*!
  *  Function to create the proper time rate calculator for use in one-way Doppler
@@ -521,8 +543,8 @@ std::shared_ptr< DopplerProperTimeRateInterface > createOneWayDopplerProperTimeC
                 // Retrieve gravitational parameter
                 std::function< double( ) > gravitationalParameterFunction =
                         std::bind( &gravitation::GravityFieldModel::getGravitationalParameter,
-                                     bodyMap.at( directFirstOrderDopplerProperTimeRateSettings->centralBodyName_ )->
-                                     getGravityFieldModel( ) );
+                                   bodyMap.at( directFirstOrderDopplerProperTimeRateSettings->centralBodyName_ )->
+                                   getGravityFieldModel( ) );
 
                 // Create calculation object.
                 LinkEndId referencePointId =
@@ -1128,7 +1150,76 @@ public:
                         observationBias );
             break;
         }
+        case altimetry_crossover:
+        {
+            // Check consistency input.
+            if( linkEnds.size( ) != 2 )
+            {
+                std::string errorMessage =
+                        "Error when making 1 way range model, " +
+                        std::to_string( linkEnds.size( ) ) + " link ends found";
+                throw std::runtime_error( errorMessage );
+            }
+            if( linkEnds.count( first_arc_body ) == 0 )
+            {
+                throw std::runtime_error( "Error when making altimetry crossover body, no first-arc body found" );
+            }
+            if( linkEnds.count( second_arc_body ) == 0 )
+            {
+                throw std::runtime_error( "Error when making altimetry crossover body, no second-arc body found" );
+            }
 
+            std::shared_ptr< AltimetryCrossoverObservationSettings > altimetryCrossoverObservationSettings =
+                    std::dynamic_pointer_cast< AltimetryCrossoverObservationSettings >( observationSettings );
+            if( altimetryCrossoverObservationSettings == nullptr )
+            {
+                throw std::runtime_error( "Error when making altimetry crossover body, input settings are inconsistent" );
+            }
+
+            std::shared_ptr< ObservationBias< 1 > > observationBias;
+            if( observationSettings->biasSettings_ != nullptr )
+            {
+                observationBias =
+                        createObservationBiasCalculator(
+                            linkEnds, observationSettings->observableType_, observationSettings->biasSettings_,bodyMap );
+            }
+
+
+            std::shared_ptr< ephemerides::Ephemeris > firstArcBodyEphemeris =
+                    bodyMap.at( linkEnds.at( first_arc_body ).first )->getEphemeris( );
+            if( firstArcBodyEphemeris->getReferenceFrameOrigin( ) != altimetryCrossoverObservationSettings->centralBody_ )
+            {
+                throw std::runtime_error(
+                            "Error when making altimetry crossover body, ephemeris origin for " +
+                            linkEnds.at( first_arc_body ).first + " is not " + altimetryCrossoverObservationSettings->centralBody_ );
+            }
+
+            std::shared_ptr< ephemerides::Ephemeris > secondArcBodyEphemeris =
+                    bodyMap.at( linkEnds.at( second_arc_body ).first )->getEphemeris( );
+            if( secondArcBodyEphemeris->getReferenceFrameOrigin( ) != altimetryCrossoverObservationSettings->centralBody_ )
+            {
+                throw std::runtime_error(
+                            "Error when making altimetry crossover body, ephemeris origin for " +
+                            linkEnds.at( second_arc_body ).first + " is not " + altimetryCrossoverObservationSettings->centralBody_ );
+            }
+
+
+            std::function< Eigen::Matrix< ObservationScalarType, 6, 1 >( const TimeType ) > firstArcBodyStateFunction =
+                    std::bind( &ephemerides::Ephemeris::getTemplatedStateFromEphemeris< ObservationScalarType, TimeType >,
+                               firstArcBodyEphemeris, std::placeholders::_1 );
+            std::function< Eigen::Matrix< ObservationScalarType, 6, 1 >( const TimeType ) > secondArcBodyStateFunction =
+                    std::bind( &ephemerides::Ephemeris::getTemplatedStateFromEphemeris< ObservationScalarType, TimeType >,
+                               secondArcBodyEphemeris, std::placeholders::_1 );
+
+            // Create observation model
+            observationModel = std::make_shared< AltimetryCrossoverObservationModel<
+                    ObservationScalarType, TimeType > >(
+                        firstArcBodyStateFunction, secondArcBodyStateFunction,
+                        altimetryCrossoverObservationSettings->centralBody_,
+                        altimetryCrossoverObservationSettings->crossoverTimes_, observationBias );
+
+            break;
+        }
         default:
             std::string errorMessage = "Error, observable " + std::to_string(
                         observationSettings->observableType_ ) +
@@ -1283,8 +1374,8 @@ public:
             observationModel = std::make_shared< PositionObservationModel<
                     ObservationScalarType, TimeType > >(
                         std::bind( &simulation_setup::Body::getStateInBaseFrameFromEphemeris<
-                                     ObservationScalarType, TimeType >,
-                                     bodyMap.at( linkEnds.at( observed_body ).first ), std::placeholders::_1 ),
+                                   ObservationScalarType, TimeType >,
+                                   bodyMap.at( linkEnds.at( observed_body ).first ), std::placeholders::_1 ),
                         observationBias );
 
             break;

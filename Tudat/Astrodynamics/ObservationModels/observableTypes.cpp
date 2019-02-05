@@ -76,6 +76,9 @@ std::string getObservableName( const ObservableType observableType, const int nu
     case euler_angle_313_observable:
         observableName = "EulerAngle313";
         break;
+    case altimetry_crossover:
+        observableName = "AltimetryCrossover";
+        break;
     default:
         std::string errorMessage =
                 "Error, could not find observable type " + std::to_string( observableType ) +
@@ -119,6 +122,10 @@ ObservableType getObservableType( const std::string& observableName )
     {
         observableType = euler_angle_313_observable;
     }
+    else if( observableName == "AltimetryCrossover" )
+    {
+        observableType = altimetry_crossover;
+    }
     else
     {
         std::string errorMessage =
@@ -159,6 +166,9 @@ int getObservableSize( const ObservableType observableType )
         break;
     case euler_angle_313_observable:
         observableSize = 3;
+        break;
+    case altimetry_crossover:
+        observableSize = 1;
         break;
     default:
        std::string errorMessage = "Error, did not recognize observable " + std::to_string( observableType )
@@ -314,7 +324,23 @@ std::vector< int > getLinkEndIndicesForLinkEndTypeAtObservable(
             linkEndIndices.push_back( 2 * linkEndIndex );
         }
         break;
-
+    case altimetry_crossover:
+        switch( linkEndType )
+        {
+        case first_arc_body:
+            linkEndIndices.push_back( 0 );
+            break;
+        case second_arc_body:
+            linkEndIndices.push_back( 1 );
+            break;
+        default:
+            std::string errorMessage =
+                    "Error, could not find link end type index for link end " +
+                    std::to_string( linkEndType ) + " of observable " +
+                    std::to_string( observableType );
+            throw std::runtime_error( errorMessage );
+        }
+        break;
     default:
         std::string errorMessage =
                 "Error, could not find link end type index for link end types of observable " +

@@ -36,7 +36,9 @@ enum LinkEndType
     reflector3 = 3,
     reflector4 = 4,
     receiver = 5,
-    observed_body = 6
+    observed_body = 6,
+    first_arc_body = 7,
+    second_arc_body = 8
 };
 
 //! Typedef for the identifier of a given link-end (body and reference points)
