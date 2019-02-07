@@ -23,6 +23,8 @@
 #include "Tudat/SimulationSetup/EstimationSetup/createDifferencedOneWayRangeRatePartials.h"
 #include "Tudat/SimulationSetup/EstimationSetup/createNWayRangePartials.h"
 #include "Tudat/SimulationSetup/EstimationSetup/createEulerAngleObservationPartials.h"
+#include "Tudat/SimulationSetup/EstimationSetup/createAltimeterCrossoverPartials.h"
+
 namespace tudat
 {
 
@@ -151,6 +153,10 @@ PerLinkEndPerLightTimeSolutionCorrections getLightTimeCorrectionsList(
                 break;
             }
             case observation_models::euler_angle_313_observable:
+            {
+                break;
+            }
+            case observation_models::altimetry_crossover:
             {
                 break;
             }
@@ -305,6 +311,11 @@ public:
             break;
         case observation_models::n_way_range:
             observationPartialList = createNWayRangePartials< ObservationScalarType >(
+                        utilities::createVectorFromMapKeys( observationModelList ), bodyMap, parametersToEstimate,
+                        getLightTimeCorrectionsList( observationModelList ) );
+            break;
+        case observation_models::altimetry_crossover:
+            observationPartialList = createAltimeterCrossoverPartials< ObservationScalarType >(
                         utilities::createVectorFromMapKeys( observationModelList ), bodyMap, parametersToEstimate,
                         getLightTimeCorrectionsList( observationModelList ) );
             break;
