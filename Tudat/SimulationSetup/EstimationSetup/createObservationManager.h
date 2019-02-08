@@ -398,6 +398,11 @@ std::shared_ptr< ObservationManagerBase< ObservationScalarType, TimeType > > cre
                     observableType, settingsPerLinkEnds, bodyMap, parametersToEstimate,
                     stateTransitionMatrixInterface );
         break;
+    case altimetry_crossover:
+        observationManager = createObservationManager< 1, ObservationScalarType, TimeType >(
+                    observableType, settingsPerLinkEnds, bodyMap, parametersToEstimate,
+                    stateTransitionMatrixInterface );
+        break;
     default:
         throw std::runtime_error(
                     "Error when making observation manager, could not identify observable type " +

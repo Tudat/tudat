@@ -18,6 +18,7 @@ set(OBSERVATION_PARTIALS_SOURCES
   "${SRCROOT}${OBSERVATIONPARTIALSDIR}/differencedOneWayRangeRatePartial.cpp"
   "${SRCROOT}${OBSERVATIONPARTIALSDIR}/oneWayDopplerPartial.cpp"
   "${SRCROOT}${OBSERVATIONPARTIALSDIR}/observationPartial.cpp"
+  "${SRCROOT}${OBSERVATIONPARTIALSDIR}/altimeterCrossoverPartial.cpp"
   "${SRCROOT}${LIGHTTIMECORRECTIONPARTIALSDIR}/lightTimeCorrectionPartial.cpp"
   "${SRCROOT}${LIGHTTIMECORRECTIONPARTIALSDIR}/firstOrderRelativisticLightTimeCorrectionPartial.cpp"
 )
@@ -34,6 +35,7 @@ set(OBSERVATION_PARTIALS_HEADERS
   "${SRCROOT}${OBSERVATIONPARTIALSDIR}/twoWayDopplerPartial.h"
   "${SRCROOT}${OBSERVATIONPARTIALSDIR}/observationPartial.h"
   "${SRCROOT}${OBSERVATIONPARTIALSDIR}/eulerAngleObservablePartials.h"
+  "${SRCROOT}${OBSERVATIONPARTIALSDIR}/altimeterCrossoverPartial.h"
   "${SRCROOT}${LIGHTTIMECORRECTIONPARTIALSDIR}/lightTimeCorrectionPartial.h"
   "${SRCROOT}${LIGHTTIMECORRECTIONPARTIALSDIR}/firstOrderRelativisticLightTimeCorrectionPartial.h"
 )
