@@ -236,7 +236,7 @@
 <ul>
 <li><p class="first"><code class="docutils literal"><span class="pre">StateScalarType</span></code></p>
 <blockquote>
-<div><p>Template argument used to set the precision of the state, in general <code class="docutils literal"><span class="pre">double</span></code> is used. For some application where a high precision is required this can be changed to e.g. :literal`long double`.</p>
+<div><p>Template argument used to set the precision of the state, in general <code class="docutils literal"><span class="pre">double</span></code> is used. For some application where a high precision is required this can be changed to e.g. <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code>.</p>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">centralBodies</span></code></p>
@@ -257,6 +257,16 @@
 <li><p class="first"><code class="docutils literal"><span class="pre">initialBodyStates</span></code></p>
 <blockquote>
 <div><p><code class="docutils literal"><span class="pre">Eigen::Matrix&lt;</span> <span class="pre">StateScalarType,</span> <span class="pre">Eigen::Dynamic,</span> <span class="pre">1</span> <span class="pre">&gt;</span></code> that stores the states of the bodies to propagate with respect to their central bodies.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The state variables contained in <code class="docutils literal"><span class="pre">initialBodyStates</span></code> are ordered with respect to the elements of <code class="docutils literal"><span class="pre">centralBodies</span></code> and <code class="docutils literal"><span class="pre">bodiesToIntegrate</span></code>. Please take a look at the following pseudocode:</p>
+<div class="last highlight-cpp"><div class="highlight"><pre><span></span><span class="n">centralBodies</span> <span class="o">=</span> <span class="p">{</span> <span class="n">Sun</span> <span class="p">,</span> <span class="n">Earth</span> <span class="p">,</span> <span class="n">Moon</span> <span class="p">}</span>
+<span class="n">bodiesToIntegrate</span> <span class="o">=</span> <span class="p">{</span> <span class="n">Earth</span> <span class="p">,</span> <span class="n">Moon</span> <span class="p">}</span>
+<span class="n">initialBodyStates</span> <span class="o">=</span> <span class="p">{</span> <span class="n">xEarthWrtSun</span> <span class="p">,</span> <span class="n">yEarthWrtSun</span> <span class="p">,</span> <span class="n">zEarthWrtSun</span> <span class="p">,</span> <span class="n">uEarthWrtSun</span> <span class="p">,</span> <span class="n">vEarthWrtSun</span> <span class="p">,</span> <span class="n">wEarthWrtSun</span> <span class="p">,</span>
+                  <span class="n">xMoonWrtEarth</span> <span class="p">,</span> <span class="n">yMoonWrtEarth</span> <span class="p">,</span> <span class="n">zMoonWrtEarth</span> <span class="p">,</span> <span class="n">uMoonWrtEarth</span> <span class="p">,</span> <span class="n">vMoonWrtEarth</span> <span class="p">,</span> <span class="n">wMoonWrtEarth</span> <span class="p">}</span>
+</pre></div>
+</div>
+</div>
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">endTime</span></code></p>
@@ -286,8 +296,9 @@
 </div></blockquote>
 </li>
 <li><p class="first"><code class="docutils literal"><span class="pre">dependentVariablesToSave</span></code></p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">DependentVariableSaveSettings</span> <span class="pre">&gt;</span></code> that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved. See the tutorial on <a class="reference internal" href="propagatorSettingsDependentVariables.html#DependentVariableSaveSettings" title="DependentVariableSaveSettings"><code class="xref py py-class docutils literal"><span class="pre">DependentVariableSaveSettings</span></code></a> for more details on this class. Note that the literal:<cite>dependentVariablesToSave</cite> may be left unspecified, in which case no dependent variables are saved, so:</p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">DependentVariableSaveSettings</span> <span class="pre">&gt;</span></code> that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved. See the tutorial on <a class="reference internal" href="propagatorSettingsDependentVariables.html#DependentVariableSaveSettings" title="DependentVariableSaveSettings"><code class="xref py py-class docutils literal"><span class="pre">DependentVariableSaveSettings</span></code></a> for more details on this class. Note that the <code class="docutils literal"><span class="pre">dependentVariablesToSave</span></code> may be left unspecified, in which case no dependent variables are saved, so:</p>
+</div></blockquote>
 </li>
 </ul>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span><span class="n">StateScalarType</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span>
@@ -297,16 +308,6 @@
                                                        <span class="n">endTime</span><span class="p">,</span>
                                                        <span class="n">propagator</span> <span class="p">)</span>
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>The state variables contained in <code class="docutils literal"><span class="pre">initialBodyStates</span></code> are ordered with respect to the elements of <code class="docutils literal"><span class="pre">centralBodies</span></code> and <code class="docutils literal"><span class="pre">bodiesToIntegrate</span></code>. Please take a look at the following pseudocode:</p>
-<div class="last highlight-cpp"><div class="highlight"><pre><span></span><span class="n">centralBodies</span> <span class="o">=</span> <span class="p">{</span> <span class="n">Sun</span> <span class="p">,</span> <span class="n">Earth</span> <span class="p">,</span> <span class="n">Moon</span> <span class="p">}</span>
-<span class="n">bodiesToIntegrate</span> <span class="o">=</span> <span class="p">{</span> <span class="n">Earth</span> <span class="p">,</span> <span class="n">Moon</span> <span class="p">}</span>
-<span class="n">initialBodyStates</span> <span class="o">=</span> <span class="p">{</span> <span class="n">xEarthWrtSun</span> <span class="p">,</span> <span class="n">yEarthWrtSun</span> <span class="p">,</span> <span class="n">zEarthWrtSun</span> <span class="p">,</span> <span class="n">uEarthWrtSun</span> <span class="p">,</span> <span class="n">vEarthWrtSun</span> <span class="p">,</span> <span class="n">wEarthWrtSun</span> <span class="p">,</span>
-                      <span class="n">xMoonWrtEarth</span> <span class="p">,</span> <span class="n">yMoonWrtEarth</span> <span class="p">,</span> <span class="n">zMoonWrtEarth</span> <span class="p">,</span> <span class="n">uMoonWrtEarth</span> <span class="p">,</span> <span class="n">vMoonWrtEarth</span> <span class="p">,</span> <span class="n">wMoonWrtEarth</span> <span class="p">}</span>
-</pre></div>
-</div>
 </div>
 </dd></dl>
 
@@ -422,6 +423,16 @@
 <li><p class="first"><code class="docutils literal"><span class="pre">initialBodyMasses</span></code></p>
 <blockquote>
 <div><p><code class="docutils literal"><span class="pre">Eigen::Matrix&lt;</span> <span class="pre">StateScalarType,</span> <span class="pre">Eigen::Dynamic,</span> <span class="pre">1</span> <span class="pre">&gt;</span></code> passed by reference that associates an initial body mass to each body with mass to be propagated.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">terminationSettings</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">PropagationTerminationSettings</span> <span class="pre">&gt;</span></code> that defines the termination settings of the propagation. See the tutorial on <a class="reference internal" href="propagatorSettingsTermination.html#PropagationTerminationSettings" title="PropagationTerminationSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagationTerminationSettings</span></code></a> for more details on this class.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">dependentVariablesToSave</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">DependentVariableSaveSettings</span> <span class="pre">&gt;</span></code> that presents a list of the dependent variables to save during propagation. How this is exactly done is explained below. By default, an empty list is used and no dependent variable is saved. See the tutorial on <a class="reference internal" href="propagatorSettingsDependentVariables.html#DependentVariableSaveSettings" title="DependentVariableSaveSettings"><code class="xref py py-class docutils literal"><span class="pre">DependentVariableSaveSettings</span></code></a> for more details on this class.</p>
 </div></blockquote>
 </li>
 </ul>
@@ -553,7 +564,7 @@ The constructor of this class is overloaded depending on how the list of propaga
 </div></blockquote>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">When using the <a class="reference internal" href="#MultiTypePropagatorSettings" title="MultiTypePropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">MultiTypePropagatorSettings</span></code></a> derived class note that the <code class="docutils literal"><span class="pre">dependentVariablesToSave</span></code> need to be passed in this constructor and not inside the <code class="docutils literal"><span class="pre">propagatorSettingsMap</span></code> since these will be ignored.</p>
+<p class="last">When using the <a class="reference internal" href="#MultiTypePropagatorSettings" title="MultiTypePropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">MultiTypePropagatorSettings</span></code></a> derived class note that the <code class="docutils literal"><span class="pre">dependentVariablesToSave</span></code> need to be passed in this constructor and not inside the <code class="docutils literal"><span class="pre">propagatorSettingsMap</span></code> since these will be ignored. The same applies to the termination settings. They have to be defined in this constructor, as those provided inside the <code class="docutils literal"><span class="pre">propagatorSettingsMap</span></code> are disregarded as well.</p>
 </div>
 </dd></dl>
 

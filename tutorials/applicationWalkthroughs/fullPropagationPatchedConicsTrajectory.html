@@ -1,0 +1,447 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>15. Full propagation of a patched conics trajectory &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
+        <link rel="up" title="Application Tutorials" href="index.html"/>
+        <link rel="next" title="1. Himmelblau Optimization" href="himmelblau.html"/>
+        <link rel="prev" title="14. Full propagation of the CR3BP" href="fullPropagationCR3BP.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorials and Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Tutorials</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html#tudat-example-application-tutorials">Tudat Example Application Tutorials</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="unperturbedEarthOrbitingSatellite.html">1. Unperturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="perturbedEarthOrbitingSatellite.html">2. Perturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unguidedCapsuleEntry.html">3. Un-guided Capsule Entry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="innerSolarSystemPropagation.html">4. Inner Solar System Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="useOfThrustThrustForceAlongVelocityVector.html">5. Use of Thrust: Thrust Force Along Velocity Vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="useOfThrustUserDefinedThrustVector.html">6. Use of Thrust: User-defined Thrust Vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphereExamples.html">7. Tabulated Atmosphere Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="propagatorTypesComparison.html">8. Comparison of Propagator Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="filterExample.html">9. Kalman Filter for State Estimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variationalEquationsPropagation.html">10. Variational Equations Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">11. Orbit Determination and Parameter Estimation (Basic)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthOrbiterStateEstimation.html">12. Orbit Determination and Parameter Estimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interplanetaryTrajectory.html">13. MGA Trajectory Design</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fullPropagationCR3BP.html">14. Full propagation of the CR3BP</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">15. Full propagation of a patched conics trajectory</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#pagmo-optimization-tutorials">Pagmo Optimization Tutorials</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tudatFeatures/index.html">Tudat Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/index.html">Tudat Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jsonInterface/index.html">JSON Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference external" href="http://doxygen.tudat.tudelft.nl">Doxygen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tutorials and Documentation</a> &raquo;</li>
+        
+          <li><a href="index.html">Application Tutorials</a> &raquo;</li>
+        
+      <li>15. Full propagation of a patched conics trajectory</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tutorials/applicationWalkthroughs/fullPropagationPatchedConicsTrajectory.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="full-propagation-of-a-patched-conics-trajectory">
+<span id="walkthroughsfullpropagationpatchedconicstrajectory"></span><h1>15. Full propagation of a patched conics trajectory<a class="headerlink" href="#full-propagation-of-a-patched-conics-trajectory" title="Permalink to this headline">¶</a></h1>
+<p>This example addresses the difference between the trajectory of a spacecraft obtained from the patched conics solution and after propagating the full dynamics problem. The code for this tutorial is available on GitHub, and is also located in the Tudat bundle at:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">fullPropagationPatchedConicsTrajectory</span><span class="o">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
+<p>The patched conics trajectory is based on the assumption that the spacecraft to be propagated is only affected by the point-mass gravitational acceleration exerted by the central body of the trajectory. This simplifying assumption is however never true in real-world applications and the results obtained after propagating the full dynamics problem thus differ from the patched conics trajectory.</p>
+<p>This example is based on the Messenger trajectory example already described in the <a class="reference internal" href="interplanetaryTrajectory.html#interplanetarytrajectorydesign"><span class="std std-ref">MGA Trajectory Design</span></a> application. For further details about the way this trajectory is calculated, the reader is referred to this tutorial.</p>
+<div class="section" id="ideal-case-corresponding-to-the-patched-conics-trajectory-assumptions">
+<h2>15.1. Ideal case corresponding to the patched conics trajectory assumptions<a class="headerlink" href="#ideal-case-corresponding-to-the-patched-conics-trajectory-assumptions" title="Permalink to this headline">¶</a></h2>
+<p>The first part of this example focuses on the case in which the full dynamics problem actually respects the assumptions of the patched conics approach.</p>
+<p>The type and number of legs are defined in the exact same way as it is done in the interplanetary design example, and so are the characteristics of the trajectory (transfer bodies, central body, trajectory variables vector, minimum periapasis radii vector, semi-major axes and eccentricities at departure and arrival). Their definition will thus not be further described here.</p>
+<p>The integrator settings have to be selected before the propagation of the spacecraft trajectory can be performed:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define integrator settings.</span>
+<span class="kt">double</span> <span class="n">initialTime</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">fixedStepSize</span> <span class="o">=</span> <span class="mf">100.0</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">numerical_integrators</span><span class="o">::</span><span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">integratorSettings</span> <span class="o">=</span>
+         <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span> <span class="o">&lt;</span> <span class="n">numerical_integrators</span><span class="o">::</span><span class="n">IntegratorSettings</span> <span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="p">(</span> <span class="n">numerical_integrators</span><span class="o">::</span><span class="n">rungeKutta4</span><span class="p">,</span> <span class="n">initialTime</span><span class="p">,</span> <span class="n">fixedStepSize</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The environment in which the trajectory is to be calculated is then defined. First, the body map corresponding to the trajectory problem has to be created. The function <code class="docutils literal"><span class="pre">setupBodyMapFromUserDefinedEphemeridesForPatchedConicsTrajectory</span></code> directly sets up a body map which fulfills the assumptions of the patched conics approach. The body map is built from the gravitational parameters and ephemerides provided as inputs for the transfer bodies. In a similar way, the accelerations acting on the spacecraft along the trajectory are defined with the function <code class="docutils literal"><span class="pre">setupAccelerationMapPatchedConicsTrajectory</span></code> which automatically returns an <code class="docutils literal"><span class="pre">accelerationMap</span></code> object corresponding to the patched conics assumptions.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create body map.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">gravitationalParametersTransferBodies</span><span class="p">;</span>
+<span class="n">gravitationalParametersTransferBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mf">3.9860119e14</span> <span class="p">);</span>
+<span class="n">gravitationalParametersTransferBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mf">3.9860119e14</span> <span class="p">);</span>
+<span class="n">gravitationalParametersTransferBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mf">3.24860e14</span> <span class="p">);</span>
+<span class="n">gravitationalParametersTransferBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mf">3.24860e14</span> <span class="p">);</span>
+<span class="n">gravitationalParametersTransferBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mf">2.2321e13</span> <span class="p">);</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">EphemerisPointer</span> <span class="o">&gt;</span> <span class="n">ephemerisVectorTransferBodies</span><span class="p">;</span>
+<span class="n">ephemerisVectorTransferBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span><span class="o">&gt;</span><span class="p">(</span>
+             <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">earthMoonBarycenter</span><span class="p">)</span> <span class="p">)</span> <span class="p">;</span>
+<span class="n">ephemerisVectorTransferBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span><span class="o">&gt;</span><span class="p">(</span>
+             <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">earthMoonBarycenter</span><span class="p">)</span> <span class="p">)</span> <span class="p">;</span>
+<span class="n">ephemerisVectorTransferBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span><span class="o">&gt;</span><span class="p">(</span>
+             <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">venus</span><span class="p">)</span> <span class="p">);</span>
+<span class="n">ephemerisVectorTransferBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span><span class="o">&gt;</span><span class="p">(</span>
+             <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">venus</span><span class="p">)</span> <span class="p">);</span>
+<span class="n">ephemerisVectorTransferBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span><span class="o">&gt;</span><span class="p">(</span>
+             <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">mercury</span><span class="p">)</span> <span class="p">);</span>
+
+<span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">propagators</span><span class="o">::</span><span class="n">setupBodyMapFromUserDefinedEphemeridesForPatchedConicsTrajectory</span><span class="p">(</span>
+         <span class="n">centralBody</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bodyToPropagate</span><span class="p">,</span> <span class="n">transferBodyTrajectory</span><span class="p">,</span>
+         <span class="n">ephemerisVectorTransferBodies</span><span class="p">,</span> <span class="n">gravitationalParametersTransferBodies</span><span class="p">);</span>
+
+
+<span class="c1">// Create acceleration map.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span> <span class="o">&gt;</span> <span class="n">accelerationMap</span> <span class="o">=</span> <span class="n">propagators</span><span class="o">::</span><span class="n">setupAccelerationMapPatchedConicsTrajectory</span><span class="p">(</span>
+             <span class="n">transferBodyTrajectory</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">centralBody</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bodyToPropagate</span><span class="p">,</span> <span class="n">bodyMap</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Finally, the patched conics solution and the propagation results of the full dynamics problem are provided jointly by the function <code class="docutils literal"><span class="pre">fullPropagationPatchedConicsTrajectory</span></code>. This function does not return any variable but fills the maps <code class="docutils literal"><span class="pre">patchedConicsResultForEachLeg</span></code> and <code class="docutils literal"><span class="pre">fullProblemResultForEachLeg</span></code> (provided as inputs) with the results of the patched conics method and the full problem propagation respectively. These two maps are constructed in the same way: the first element is the number of the leg to be considered and the second element is the state history of the spacecraft along this leg, either obtained from the patched conics solution or the full problem propagation. The propagation of the full dynamics problem starts at the halved time of flight of each leg, ie the difference of the full problem with respect to the patched conics trajectory is equal to zero at half of the time of flight. Then the full dynamics problem is propagated forward and backward along the leg, until the spacecraft respectively reaches the arrival and departure bodies.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Calculate the patched conics solution and the propagation results of the associated full dynamics problem for each leg.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">int</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">patchedConicsTrajectory</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">int</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">fullProblemTrajectory</span><span class="p">;</span>
+
+<span class="n">propagators</span><span class="o">::</span><span class="n">fullPropagationPatchedConicsTrajectory</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationMap</span><span class="p">,</span> <span class="n">transferBodyTrajectory</span><span class="p">,</span> <span class="n">centralBody</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bodyToPropagate</span><span class="p">,</span>
+         <span class="n">legTypeVector</span><span class="p">,</span> <span class="n">variableVector</span><span class="p">,</span> <span class="n">minimumPericenterRadii</span><span class="p">,</span> <span class="n">semiMajorAxes</span><span class="p">,</span> <span class="n">eccentricities</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">patchedConicsTrajectory</span><span class="p">,</span> <span class="n">fullProblemTrajectory</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>The input variables of the function <code class="docutils literal"><span class="pre">fullPropagationPatchedConicsTrajectory</span></code> are the following ones:</dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">bodyMap</span></code> Body map defining the environment of the spacecraft trajectory.</li>
+<li><code class="docutils literal"><span class="pre">accelerationMap</span></code> Vector of acceleration maps (one for each leg) defining the different accelerations exerted on the spacecraft in the full dynamics problem.</li>
+<li><code class="docutils literal"><span class="pre">transferBodyOrder</span></code> List of the names of the different bodies involved in the trajectory in the same order as they are visited by the spacecraft.</li>
+<li><code class="docutils literal"><span class="pre">centralBody</span></code> Name of the central body of the trajectory.</li>
+<li><code class="docutils literal"><span class="pre">bodyToPropagate</span></code> Name of the body to be propagated.</li>
+<li><code class="docutils literal"><span class="pre">legTypeVector</span></code> Vector defining the type of each leg.</li>
+<li><code class="docutils literal"><span class="pre">trajectoryVariableVector</span></code> Vector containing the different parameters which characterise each leg of the trajectory. More information about this vector is provided in the <a class="reference internal" href="interplanetaryTrajectory.html#interplanetarytrajectorydesign"><span class="std std-ref">MGA Trajectory Design</span></a> application.</li>
+<li><code class="docutils literal"><span class="pre">semiMajorAxesVector</span></code> Vector containing the semi-major axes of the parking orbits around the departure and capture bodies.</li>
+<li><code class="docutils literal"><span class="pre">eccentricityVector</span></code> Vector containing the eccentricities of the parking orbits around the departure and capture bodies.</li>
+<li><code class="docutils literal"><span class="pre">integratorSettings</span></code> Integrator settings to be used for the propagation of the full dynamics problem.</li>
+<li><code class="docutils literal"><span class="pre">patchedConicsResultForEachLeg</span></code> Map containing the patched conics results (its structure has already been described above).</li>
+<li><code class="docutils literal"><span class="pre">fullProblemResultsForEachLeg</span></code> Map containing the full problem propagation results (its structure is similar to that of <code class="docutils literal"><span class="pre">patchedConicsResultsForEachLeg</span></code>)</li>
+<li><code class="docutils literal"><span class="pre">terminationSphereOfInfluence</span></code> Boolean denoting whether the propagation stops at the exact location (false) or at the sphere of influence (true) of the departure and arrival bodies of each leg.</li>
+<li><code class="docutils literal"><span class="pre">dependentVariablesToSave</span></code> Vector of dependent variables to be saved during the propagation of the full problem. They can be different from one leg to another (optional).</li>
+<li><code class="docutils literal"><span class="pre">propagator</span></code> Type of propagator for the full problem propagation (optional).</li>
+</ul>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If a leg includes a DSM, then it is divided into two smaller sub-legs: the first one goes from the departure body of the leg to the DSM location and the second one from the DSM to the arrival body of the leg. For each sub-leg defined this way, the propagation of the full problem is performed independently, starting from half of the time of flight of each sub-leg.</p>
+</div>
+<p>The difference in cartesian state between the full problem and the patched conics approach at departure and arrival of each leg can also be directly retrieved by calling the function <code class="docutils literal"><span class="pre">getDifferenceFullProblemWrtPatchedConicsTrajectory</span></code> which returns a map whose first element is the number of the leg and the second element is a pair of vector containing the state difference for this leg at departure and arrival respectively.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Compute difference between patched conics trajectory and full problem at departure and at arrival for each leg.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">int</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">differenceStateArrivalAndDeparturePerLeg</span> <span class="o">=</span>
+         <span class="n">propagators</span><span class="o">::</span><span class="n">getDifferenceFullProblemWrtPatchedConicsTrajectory</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationMap</span><span class="p">,</span> <span class="n">transferBodyTrajectory</span><span class="p">,</span>
+             <span class="n">centralBody</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bodyToPropagate</span><span class="p">,</span> <span class="n">legTypeVector</span><span class="p">,</span> <span class="n">variableVector</span><span class="p">,</span> <span class="n">minimumPericenterRadii</span><span class="p">,</span> <span class="n">semiMajorAxes</span><span class="p">,</span> <span class="n">eccentricities</span><span class="p">,</span>
+             <span class="n">integratorSettings</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Because the dynamical model used to define the full problem has been chosen to exactly correspond to the assumptions of the patched conics method, the differences in state along the trajectory are expected to be extremely low. Indeed, the trajectory obtained from the full problem propagation is similar to the patched conics trajectory presented in the <a class="reference internal" href="interplanetaryTrajectory.html#interplanetarytrajectorydesign"><span class="std std-ref">MGA Trajectory Design</span></a> application. Below are provided the spacecraft trajectory resulting from the full problem propagation and the difference in state between this trajectory and the patched conics one. The dashed black curves represent the orbit of the Earth, Venus and Mars going from the outermost to the innermost. Black dots represent planet encounters while the red dots correspond to DSM locations. Each leg is represented in one colour but is divided into two smaller sub-legs because of the DSM they include, as it can be seen from the plot representing the position differences.</p>
+<div class="figure">
+<img alt="../../_images/fullProblemTrajectoryIdealCase.png" src="../../_images/fullProblemTrajectoryIdealCase.png" />
+</div>
+<div class="figure">
+<img alt="../../_images/differenceFullProblemPatchedConicsIdealCase.png" src="../../_images/differenceFullProblemPatchedConicsIdealCase.png" />
+</div>
+</div>
+<div class="section" id="perturbed-case">
+<h2>15.2. Perturbed case<a class="headerlink" href="#perturbed-case" title="Permalink to this headline">¶</a></h2>
+<p>The first part of this tutorial has focused on the ideal case in which the dynamical model used to define the full problem corresponds to the assumptions made in the patched conics approach. This is why no significant differences were observed between the patched conics solution and the results of the full problem propagation. However, these simplifying assumptions might not be realistic and more complete models can be applied to investigate the influence of more complex dynamics on a spacecraft trajectory.</p>
+<p>The characteristics of the trajectory and the initial state of the spacecraft do not have to be modified compared to the previous example. However, the set of accelerations acting on the spacecraft now include additional perturbations and is no longer restricted to point-mass gravitational acceleration exerted by the central body. In this example, the point-mass accelerations exerted by all the bodies involved in the trajectory have been taken into account as well.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define accelerations acting on the spacecraft.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodyToPropagateAccelerations</span><span class="p">;</span>
+<span class="n">bodyToPropagateAccelerations</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                                             <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">bodyToPropagateAccelerations</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                                             <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">bodyToPropagateAccelerations</span><span class="p">[</span> <span class="s">&quot;Venus&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                                             <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">bodyToPropagateAccelerations</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                                             <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">bodyToPropagateAccelerations</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                                             <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
+
+<span class="n">simulation_setup</span><span class="o">::</span><span class="n">SelectedAccelerationMap</span> <span class="n">accelerationMapPerturbedCase</span><span class="p">;</span>
+<span class="n">accelerationMapPerturbedCase</span><span class="p">[</span> <span class="s">&quot;spacecraft&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">bodyToPropagateAccelerations</span><span class="p">;</span>
+
+
+<span class="c1">// Create the acceleration map.</span>
+<span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span> <span class="n">accelerationModelMapPerturbedCase</span> <span class="o">=</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">createAccelerationModelsMap</span><span class="p">(</span>
+             <span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationMapPerturbedCase</span><span class="p">,</span> <span class="p">{</span><span class="n">bodyToPropagate</span><span class="p">},</span> <span class="p">{</span><span class="n">centralBody</span><span class="p">}</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Again, the function <code class="docutils literal"><span class="pre">fullPropagationPatchedConicsTrajectory</span></code> is used to retrieve the state history of the spacecraft for each leg, for both the patched conics solution and the full problem propagation.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Calculate the patched conics trajectory and propagate the full dynamics problem jointly.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">int</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">patchedConicsTrajectoryPerturbedCase</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">int</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">fullProblemTrajectoryPerturbedCase</span><span class="p">;</span>
+
+<span class="n">propagators</span><span class="o">::</span><span class="n">fullPropagationPatchedConicsTrajectory</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationModelMapPerturbedCase</span><span class="p">,</span>
+         <span class="n">transferBodyTrajectory</span><span class="p">,</span> <span class="n">centralBody</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bodyToPropagate</span><span class="p">,</span> <span class="n">legTypeVector</span><span class="p">,</span> <span class="n">variableVector</span><span class="p">,</span> <span class="n">minimumPericenterRadii</span><span class="p">,</span>
+         <span class="n">semiMajorAxes</span><span class="p">,</span> <span class="n">eccentricities</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">patchedConicsTrajectoryPerturbedCase</span><span class="p">,</span>
+         <span class="n">fullProblemTrajectoryPerturbedCase</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+
+<span class="c1">// Compute difference between patched conics trajectory and full problem at departure and at arrival for each leg.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">int</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">differenceStatePerturbedCase</span> <span class="o">=</span>
+         <span class="n">propagators</span><span class="o">::</span><span class="n">getDifferenceFullProblemWrtPatchedConicsTrajectory</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationModelMapPerturbedCase</span><span class="p">,</span> <span class="n">transferBodyTrajectory</span><span class="p">,</span>
+             <span class="n">centralBody</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bodyToPropagate</span><span class="p">,</span> <span class="n">legTypeVector</span><span class="p">,</span> <span class="n">variableVector</span><span class="p">,</span> <span class="n">minimumPericenterRadii</span><span class="p">,</span> <span class="n">semiMajorAxes</span><span class="p">,</span> <span class="n">eccentricities</span><span class="p">,</span>
+             <span class="n">integratorSettings</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>When a more complex dynamical model is applied, the differences in cartesian state between the patched conics trajectory and the full problem results become significant. In this example, the addition of the gravitational atttraction exerted by the transfer bodies has such a dramatic impact on the spacecraft motion that most of the legs of the patched conics trajectory blow up. The plot below represents the patched conics trajectory in full line and the corresponding full problem results are plotted in dashed line. Only the first two legs of the trajectory are represented for the sake of clarity. Finally, the position differences are also plotted for the whole trajectory, highlighting the strong effect of the perturbations.</p>
+<div class="figure">
+<img alt="../../_images/fullProblemTrajectoryPerturbedCase.png" src="../../_images/fullProblemTrajectoryPerturbedCase.png" />
+</div>
+<div class="figure">
+<img alt="../../_images/differenceFullProblemPatchedConicsPerturbedCase.png" src="../../_images/differenceFullProblemPatchedConicsPerturbedCase.png" />
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="himmelblau.html" class="btn btn-neutral float-right" title="1. Himmelblau Optimization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="fullPropagationCR3BP.html" class="btn btn-neutral" title="14. Full propagation of the CR3BP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,437 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>14. Full propagation of the CR3BP &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
+        <link rel="up" title="Application Tutorials" href="index.html"/>
+        <link rel="next" title="15. Full propagation of a patched conics trajectory" href="fullPropagationPatchedConicsTrajectory.html"/>
+        <link rel="prev" title="13. MGA Trajectory Design" href="interplanetaryTrajectory.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorials and Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Application Tutorials</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html#tudat-example-application-tutorials">Tudat Example Application Tutorials</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="unperturbedEarthOrbitingSatellite.html">1. Unperturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="perturbedEarthOrbitingSatellite.html">2. Perturbed Earth-orbiting Satellite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unguidedCapsuleEntry.html">3. Un-guided Capsule Entry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="innerSolarSystemPropagation.html">4. Inner Solar System Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="useOfThrustThrustForceAlongVelocityVector.html">5. Use of Thrust: Thrust Force Along Velocity Vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="useOfThrustUserDefinedThrustVector.html">6. Use of Thrust: User-defined Thrust Vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tabulatedAtmosphereExamples.html">7. Tabulated Atmosphere Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="propagatorTypesComparison.html">8. Comparison of Propagator Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="filterExample.html">9. Kalman Filter for State Estimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variationalEquationsPropagation.html">10. Variational Equations Propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">11. Orbit Determination and Parameter Estimation (Basic)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="earthOrbiterStateEstimation.html">12. Orbit Determination and Parameter Estimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interplanetaryTrajectory.html">13. MGA Trajectory Design</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">14. Full propagation of the CR3BP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fullPropagationPatchedConicsTrajectory.html">15. Full propagation of a patched conics trajectory</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#pagmo-optimization-tutorials">Pagmo Optimization Tutorials</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tudatFeatures/index.html">Tudat Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/index.html">Tudat Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jsonInterface/index.html">JSON Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference external" href="http://doxygen.tudat.tudelft.nl">Doxygen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tutorials and Documentation</a> &raquo;</li>
+        
+          <li><a href="index.html">Application Tutorials</a> &raquo;</li>
+        
+      <li>14. Full propagation of the CR3BP</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tutorials/applicationWalkthroughs/fullPropagationCR3BP.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="full-propagation-of-the-cr3bp">
+<span id="walkthroughsfullpropagationcr3bp"></span><h1>14. Full propagation of the CR3BP<a class="headerlink" href="#full-propagation-of-the-cr3bp" title="Permalink to this headline">¶</a></h1>
+<p>The example described on this page focuses on the comparison of the results obtained with the circular restricted three body problem (CR3BP) with those provided by the propagation of the full dynamics problem. The code for this tutorial is available on GitHub, and is located in the Tudat bundle at:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">fullPropagationCircularRestrictedThreeBodyProblem</span><span class="o">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>As a reminder, the CR3BP relies on the following assumptions:</dt>
+<dd><ul class="first last simple">
+<li>The two main bodies are in co-rotating circular orbits about their barycentre. They are referred to as the primary and secondary in the following.</li>
+<li>The mass of the third body is neglected with respect to the masses of the two main bodies.</li>
+<li>The only perturbations acting on the massless body are the point-mass gravitational accelerations exerted by the two main bodies.</li>
+</ul>
+</dd>
+</dl>
+<p>However, this model never exactly holds in reality. It is therefore necessary to investigate how much the full dynamics problem differs from this simplified formation.
+This tutorial takes the propagation of a horseshoe orbit around the L3 point of the Sun-Jupiter system as an example for comparing the CR3BP and full dynamics problem.</p>
+<div class="section" id="ideal-case-corresponding-to-the-assumptions-of-the-cr3bp">
+<h2>14.1. Ideal case corresponding to the assumptions of the CR3BP<a class="headerlink" href="#ideal-case-corresponding-to-the-assumptions-of-the-cr3bp" title="Permalink to this headline">¶</a></h2>
+<p>First, the initial state of the spacecraft to be propagated is defined, in inertial cartesian coordinates. It corresponds to the initial conditions of a horseshoe orbit around the L3 point of the Sun-Jupiter system (B. Taylor, D. (1981). Horseshoe periodic orbits in the restricted problem of three bodies for a sun-Jupiter mass ratio. Astronomy and Astrophysics. 103. 288-294.).</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Global characteristics of the problem</span>
+<span class="kt">double</span> <span class="n">distanceSunJupiter</span> <span class="o">=</span> <span class="mf">778.0e9</span><span class="p">;</span>
+
+<span class="c1">// Initialise the spacecraft state</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">initialState</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span>
+<span class="n">initialState</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span> <span class="mf">7.992e11</span><span class="p">;</span>
+<span class="n">initialState</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">1.29e4</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The integrator settings to be used for the propagation of the full dynamics are then specified:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create integrator settings.</span>
+<span class="kt">double</span> <span class="n">initialTime</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="n">fixedStepSize</span> <span class="o">=</span> <span class="mf">100000.0</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">numerical_integrators</span><span class="o">::</span><span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">integratorSettings</span> <span class="o">=</span>
+         <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span> <span class="o">&lt;</span> <span class="n">numerical_integrators</span><span class="o">::</span><span class="n">IntegratorSettings</span> <span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
+         <span class="p">(</span> <span class="n">numerical_integrators</span><span class="o">::</span><span class="n">rungeKutta4</span><span class="p">,</span> <span class="n">initialTime</span><span class="p">,</span> <span class="n">fixedStepSize</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Before propagating the full dynamics problem and calculating the CR3BP solution, the environment also  needs to be set up. To this end, the function <code class="docutils literal"><span class="pre">setupBodyMapCR3BP</span></code> which automatically defines the body map corresponding to the CR3BP assumptions can be used. It takes as inputs the distance between the primary and secondary bodies and the names of the three bodies involved in the problem. Their ephemerides and gravity fields are directly defined in such a way that they respect the CR3BP assumptions.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create body map.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesCR3BP</span><span class="p">;</span>
+<span class="n">bodiesCR3BP</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Sun&quot;</span> <span class="p">);</span>
+<span class="n">bodiesCR3BP</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">);</span>
+
+<span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">propagators</span><span class="o">::</span><span class="n">setupBodyMapCR3BP</span><span class="p">(</span>
+             <span class="n">distanceSunJupiter</span><span class="p">,</span> <span class="s">&quot;Sun&quot;</span><span class="p">,</span> <span class="s">&quot;Jupiter&quot;</span><span class="p">,</span> <span class="s">&quot;Spacecraft&quot;</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>In this problem, the Sun (primary body) and Jupiter (secondary body) are the co-rotating, main bodies of the CR3BP while the spacecraft is the third, massless body.</p>
+<p>The accelerations which are exerted on the spacecraft also have to be defined. In a similar way to what was done for the body map, the function <code class="docutils literal"><span class="pre">setupAccelerationMapCR3BP</span></code> directly returns a <code class="docutils literal"><span class="pre">accelerationMap</span></code> object which contains the accelerations corresponding to the CR3BP assumptions (point-mass gravitational attraction from the main bodies only).</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define propagator settings variables.</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToPropagate</span><span class="p">;</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodies</span><span class="p">;</span>
+ <span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Spacecraft&quot;</span> <span class="p">);</span>
+ <span class="n">centralBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;SSB&quot;</span> <span class="p">);</span>
+
+ <span class="c1">// Create acceleration map.</span>
+ <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span> <span class="n">accelerationModelMap</span> <span class="o">=</span> <span class="n">propagators</span><span class="o">::</span><span class="n">setupAccelerationMapCR3BP</span><span class="p">(</span>
+             <span class="s">&quot;Sun&quot;</span><span class="p">,</span> <span class="s">&quot;Jupiter&quot;</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="mi">0</span> <span class="p">),</span> <span class="n">centralBodies</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="mi">0</span> <span class="p">),</span> <span class="n">bodyMap</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>The results obtained from the CR3BP solution and those provided by the propagation of the full dynamics problem are calculated by calling the function <code class="docutils literal"><span class="pre">propagateCR3BPAndFullDynamicsProblem</span></code>. This function fills the maps <code class="docutils literal"><span class="pre">directPropagationResult</span></code> and <code class="docutils literal"><span class="pre">cr3bpPropagationResult</span></code> provided as inputs with the state history of the spacecraft calculated from the CR3BP solution and from the full problem propagation respectively.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Calculate the difference between CR3BP and full problem.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&gt;</span> <span class="n">fullPropagation</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&gt;</span> <span class="n">cr3bpPropagation</span><span class="p">;</span>
+
+<span class="n">propagators</span><span class="o">::</span><span class="n">propagateCR3BPAndFullDynamicsProblem</span><span class="p">(</span><span class="n">initialTime</span><span class="p">,</span> <span class="n">finalTime</span><span class="p">,</span> <span class="n">initialState</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">accelerationModelMap</span><span class="p">,</span>
+                                                  <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">centralBodies</span><span class="p">,</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">bodiesCR3BP</span><span class="p">,</span> <span class="n">fullPropagation</span><span class="p">,</span>
+                                                  <span class="n">cr3bpPropagation</span><span class="p">);</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>More precisely, the function <code class="docutils literal"><span class="pre">propagateCR3BPAndFullDynamicsProblem</span></code> takes the following variables as input parameters:</dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">initialTime</span></code> Initial time of the propagation, given in seconds.</li>
+<li><code class="docutils literal"><span class="pre">finalTime</span></code> Time at which the propagation of the full problem and calculation of the CR3BP stop, provided in seconds.</li>
+<li><code class="docutils literal"><span class="pre">initialState</span></code> Initial state of the body to be propagated within the CR3BP and full dynamics problem (given in cartesian coordinates).</li>
+<li><code class="docutils literal"><span class="pre">integratorSettings</span></code> Integrator settings to be used for the propagation.</li>
+<li><code class="docutils literal"><span class="pre">accelerationModelMap</span></code> Map of the accelerations to be taken into account in the propagation of the full dynamics problem.</li>
+<li><code class="docutils literal"><span class="pre">bodyToPropagate</span></code> Name of the body to be propagated.</li>
+<li><code class="docutils literal"><span class="pre">centralBody</span></code> Name of the central body of the CR3BP (ie barycenter of the primary and secondary bodies).</li>
+<li><code class="docutils literal"><span class="pre">bodyMap</span></code> Body map defining the environment of the full dynamics problem.</li>
+<li><code class="docutils literal"><span class="pre">bodiesCR3BP</span></code> Vector containing the names of the co-rotating primary and secondary bodies which define the CR3BP.</li>
+</ul>
+</dd>
+</dl>
+<p>To directly retrieve the state difference between the CR3BP solution and the result of the full problem propagation, the function <code class="docutils literal"><span class="pre">getFinalStateDifferenceFullPropagationWrtCR3BP</span></code> can be used and returns the difference in cartesian state at the required final time between the two computational methods.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">stateDifference</span> <span class="o">=</span> <span class="n">propagators</span><span class="o">::</span><span class="n">getFinalStateDifferenceFullPropagationWrtCR3BP</span><span class="p">(</span>
+             <span class="n">initialTime</span><span class="p">,</span> <span class="n">finalTime</span><span class="p">,</span> <span class="n">initialState</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">accelerationModelMap</span><span class="p">,</span>
+             <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">centralBodies</span><span class="p">,</span><span class="n">bodyMap</span><span class="p">,</span> <span class="n">bodiesCR3BP</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>As the body map and acceleration map have here been defined in such a way that they actually fulfill the CR3BP assumptions, no significant state differences are expected between the CR3BP and the full problem propagation results. Below are first provided the spacecraft trajectories obtained from both the CR3BP solution and from the full problem propagation. The differences between the two orbits are actually so small compared to the Sun-Jupiter distance that the two orbits are not distinguishable from this plot. A second plot gives the position difference between the CR3BP and full propagation as a function of time.</p>
+<div class="figure">
+<img alt="../../_images/horseshoeOrbit.png" src="../../_images/horseshoeOrbit.png" />
+</div>
+<div class="figure">
+<img alt="../../_images/differenceCR3BPfullProblem.png" src="../../_images/differenceCR3BPfullProblem.png" />
+</div>
+</div>
+<div class="section" id="perturbed-case">
+<h2>14.2. Perturbed case<a class="headerlink" href="#perturbed-case" title="Permalink to this headline">¶</a></h2>
+<p>The previous example has been developed in the ideal case in which the full dynamics problem actually corresponds to the CR3BP and respects its assumptions. However, for real-world applications, such a simple dynamical model is rather unrealistic and the CR3BP solution is actually an approximate solution from which the results of the full problem propagation can significantly differ. In the following example, a more complex and realistic model is considered.</p>
+<p>First of all, the orbits of the two main bodies are neither perfectly circular nor their orbital periods about their barycentre are equal. Instead of this simplified model for their orbits, use can be made of the default settings, which include more realistic ephemerides and gravity fields. In this example, these default settings are used for Jupiter. However, the ephemeris of the Sun is defined as a constant ephemeris ensuring that the Sun, Jupiter and the Sun-Jupiter barycenter (whose position is fixed to the frame origin) are aligned at the beginning of the propagation. This Sun ephemeris is not realistic but is used here to guarantee initial alignment and highlight the effect of the ephemeris choice on the spacecraft orbit.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create body map.</span>
+<span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span> <span class="n">bodyMapPerturbedCase</span><span class="p">;</span>
+
+<span class="n">bodyMapPerturbedCase</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">bodyMapPerturbedCase</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setEphemeris</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span><span class="o">&gt;</span><span class="p">(</span>
+                     <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">jupiter</span><span class="p">)</span> <span class="p">);</span>
+<span class="n">bodyMapPerturbedCase</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setGravityFieldModel</span><span class="p">(</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">createGravityFieldModel</span><span class="p">(</span>
+               <span class="n">simulation_setup</span><span class="o">::</span><span class="n">getDefaultGravityFieldSettings</span><span class="p">(</span><span class="s">&quot;Jupiter&quot;</span><span class="p">,</span> <span class="n">TUDAT_NAN</span><span class="p">,</span> <span class="n">TUDAT_NAN</span><span class="p">),</span> <span class="s">&quot;Jupiter&quot;</span><span class="p">));</span>
+
+
+<span class="c1">// Ensure that the Sun and Jupiter are initially aligned.</span>
+<span class="kt">double</span> <span class="n">distanceJupiterBarycenterPerturbedCase</span> <span class="o">=</span> <span class="n">bodyMapPerturbedCase</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">getEphemeris</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getCartesianState</span><span class="p">(</span><span class="n">initialTime</span><span class="p">).</span><span class="n">segment</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">norm</span><span class="p">();</span>
+<span class="kt">double</span> <span class="n">distanceBarycenterSunPerturbedCase</span> <span class="o">=</span> <span class="n">distanceSunJupiter</span> <span class="o">-</span> <span class="n">distanceJupiterBarycenterPerturbedCase</span><span class="p">;</span>
+
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">initialPositionSun</span><span class="p">;</span>
+<span class="n">initialPositionSun</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span> <span class="n">distanceBarycenterSunPerturbedCase</span> <span class="o">/</span> <span class="n">distanceJupiterBarycenterPerturbedCase</span> <span class="p">)</span> <span class="o">*</span> <span class="n">bodyMapPerturbedCase</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span> <span class="o">-&gt;</span><span class="n">getEphemeris</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getCartesianState</span><span class="p">(</span><span class="n">initialTime</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+<span class="n">initialPositionSun</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span> <span class="n">distanceBarycenterSunPerturbedCase</span> <span class="o">/</span> <span class="n">distanceJupiterBarycenterPerturbedCase</span> <span class="p">)</span> <span class="o">*</span> <span class="n">bodyMapPerturbedCase</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">getEphemeris</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getCartesianState</span><span class="p">(</span><span class="n">initialTime</span><span class="p">)[</span><span class="mi">1</span><span class="p">];</span>
+<span class="n">initialPositionSun</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">bodyMapPerturbedCase</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">getEphemeris</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getCartesianState</span><span class="p">(</span><span class="n">initialTime</span><span class="p">)[</span><span class="mi">2</span><span class="p">];</span>
+
+<span class="c1">// Define ephemeris for the Sun.</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">initialStateSun</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span>
+<span class="n">initialStateSun</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="n">initialPositionSun</span><span class="p">;</span>
+
+<span class="n">bodyMapPerturbedCase</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">bodyMapPerturbedCase</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setEphemeris</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ConstantEphemeris</span><span class="o">&gt;</span> <span class="p">(</span>
+                                                  <span class="n">initialStateSun</span><span class="p">,</span> <span class="n">frameOrigin</span><span class="p">,</span> <span class="n">frameOrientation</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">bodyMapPerturbedCase</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setGravityFieldModel</span><span class="p">(</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">createGravityFieldModel</span><span class="p">(</span>
+               <span class="n">simulation_setup</span><span class="o">::</span><span class="n">getDefaultGravityFieldSettings</span><span class="p">(</span><span class="s">&quot;Sun&quot;</span><span class="p">,</span> <span class="n">TUDAT_NAN</span><span class="p">,</span> <span class="n">TUDAT_NAN</span><span class="p">),</span> <span class="s">&quot;Sun&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The calculation of the CR3BP solution and of the results of the full problem propagation are obtained similarly to what was done in the previous example. Taking into account more complex models for the environment and more accelerations for the spacecraft leads the results of the full propagation to differ from those of the CR3BP solution. The trajectory of the spacecraft in the two cases as well as the difference in cartesian state between the simplified CR3BP solution and the propagation results as a function of time are plotted below.</p>
+<div class="figure">
+<img alt="../../_images/horseshoeOrbitPerturbedCase.png" src="../../_images/horseshoeOrbitPerturbedCase.png" />
+</div>
+<div class="figure">
+<img alt="../../_images/differenceCR3BPfullProblemPerturbedCase.png" src="../../_images/differenceCR3BPfullProblemPerturbedCase.png" />
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="fullPropagationPatchedConicsTrajectory.html" class="btn btn-neutral float-right" title="15. Full propagation of a patched conics trajectory" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="interplanetaryTrajectory.html" class="btn btn-neutral" title="13. MGA Trajectory Design" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>
