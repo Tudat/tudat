@@ -164,9 +164,8 @@ Again, the function :literal:`fullPropagationPatchedConicsTrajectory` is used to
                 integratorSettings, false );
 
 
-When a more complex dynamical model is applied, the differences in cartesian state between the patched conics trajectory and the full problem results become significant. In this example, the addition of the gravitational atttraction exerted by the transfer bodies has such a dramatic impact on the spacecraft motion that most of the legs of the patched conics trajectory blow up. The plot below represents the patched conics trajectory in full line and the corresponding full problem results are plotted in dashed line. Only the first two legs of the trajectory are represented for the sake of clarity. Finally, the position differences are also plotted for the whole trajectory, highlighting the strong effect of the perturbations.
+When a more complex dynamical model is applied, the differences in cartesian state between the patched conics trajectory and the full problem results become significant. In this example, the addition of the gravitational atttraction exerted by the transfer bodies has such a dramatic impact on the spacecraft motion that most of the legs of the patched conics trajectory blow up. The plot below represents the differences in position between the patched conics trajectory and the full problem result for the whole trajectory, highlighting the strong effect of the perturbations.
 
 
-.. figure:: images/fullProblemTrajectoryPerturbedCase.png
 .. figure:: images/differenceFullProblemPatchedConicsPerturbedCase.png
 
