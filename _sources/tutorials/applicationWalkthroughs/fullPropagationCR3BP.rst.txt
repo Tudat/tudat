@@ -106,50 +106,51 @@ As the body map and acceleration map have here been defined in such a way that t
 .. figure:: images/horseshoeOrbit.png
 .. figure:: images/differenceCR3BPfullProblem.png
 
+The difference between the CR3BP and numerical solution remains small (200 m after 350 years of propagation), with the difference most likely due to different integration errors between the two cases.
 
 Perturbed case
 ~~~~~~~~~~~~~~
 
-The previous example has been developed in the ideal case in which the full dynamics problem actually corresponds to the CR3BP and respects its assumptions. However, for real-world applications, such a simple dynamical model is rather unrealistic and the CR3BP solution is actually an approximate solution from which the results of the full problem propagation can significantly differ. In the following example, a more complex and realistic model is considered. 
+The previous example has been developed in the ideal case in which the full dynamics problem actually corresponds to the CR3BP and respects its assumptions. However, for real-world applications, such a simple dynamical model is rather unrealistic. The CR3BP solution is an approximate solution from which the results of the full problem propagation can significantly differ. In the following example, a more complex and realistic model is considered. 
 
-First of all, the orbits of the two main bodies are neither perfectly circular nor their orbital periods about their barycentre are equal. Instead of this simplified model for their orbits, use can be made of the default settings, which include more realistic ephemerides and gravity fields. In this example, these default settings are used for Jupiter. However, the ephemeris of the Sun is defined as a constant ephemeris ensuring that the Sun, Jupiter and the Sun-Jupiter barycenter (whose position is fixed to the frame origin) are aligned at the beginning of the propagation. This Sun ephemeris is not realistic but is used here to guarantee initial alignment and highlight the effect of the ephemeris choice on the spacecraft orbit.
+First of all, the orbits of the two main bodies are neither perfectly circular nor their orbital periods about their barycentre are equal. Instead of this simplified model for their orbits, use can be made of the default settings, which include more realistic ephemerides and gravity fields. In addition, extra perturbations due to thrid-bodies and no-gravitational forces, will perturb the solution away from the idealized CR3BP solution. In this example, we will only consider the latter modification, by adding the third-body perturbations due to Earth, Mars, Venus and Saturn.
 
 .. code-block:: cpp
 
-   // Create body map.
-   simulation_setup::NamedBodyMap bodyMapPerturbedCase;
+	NamedBodyMap perturbedBodyMap;
+        std::vector< std::string > additionalBodies = { "Earth", "Mars", "Venus", "Saturn" };
+        for( unsigned int i = 0; i < additionalBodies.size( ); i++ )
+        {
 
-   bodyMapPerturbedCase[ "Jupiter" ] = std::make_shared< simulation_setup::Body >( );
-   bodyMapPerturbedCase[ "Jupiter" ]->setEphemeris( std::make_shared< ephemerides::ApproximatePlanetPositions>(
-                        ephemerides::ApproximatePlanetPositionsBase::BodiesWithEphemerisData::jupiter) );
-   bodyMapPerturbedCase[ "Jupiter" ]->setGravityFieldModel( simulation_setup::createGravityFieldModel(
-                  simulation_setup::getDefaultGravityFieldSettings("Jupiter", TUDAT_NAN, TUDAT_NAN), "Jupiter"));
+            perturbedBodyMap[ additionalBodies.at( i ) ] = std::make_shared< Body >( );
+            perturbedBodyMap[ additionalBodies.at( i ) ]->setEphemeris(
+                        std::make_shared< ephemerides::ApproximatePlanetPositions>(
+                                additionalBodies.at( i ) ) );
+            perturbedBodyMap[ additionalBodies.at( i ) ]->setGravityFieldModel(
+                        createGravityFieldModel(
+                            std::make_shared< CentralGravityFieldSettings >(
+                                spice_interface::getBodyGravitationalParameter(
+                                    additionalBodies.at( i ) ) ), additionalBodies.at( i ) ) );
+        }
 
+Where we have created body objects for each of these perturbers, with a simplified ephemeris, and a point-mass gravity model. The ephemeris and gravity field of the Sun and Jupiter are copied from the ideal case:
 
-   // Ensure that the Sun and Jupiter are initially aligned.
-   double distanceJupiterBarycenterPerturbedCase = bodyMapPerturbedCase[ "Jupiter" ]->getEphemeris()->getCartesianState(initialTime).segment(0,3).norm();
-   double distanceBarycenterSunPerturbedCase = distanceSunJupiter - distanceJupiterBarycenterPerturbedCase;
+.. code-block:: cpp
 
-   Eigen::Vector3d initialPositionSun;
-   initialPositionSun[0] = -( distanceBarycenterSunPerturbedCase / distanceJupiterBarycenterPerturbedCase ) * bodyMapPerturbedCase[ "Jupiter" ] ->getEphemeris()->getCartesianState(initialTime)[0];
-   initialPositionSun[1] = -( distanceBarycenterSunPerturbedCase / distanceJupiterBarycenterPerturbedCase ) * bodyMapPerturbedCase[ "Jupiter" ]->getEphemeris()->getCartesianState(initialTime)[1];
-   initialPositionSun[2] = bodyMapPerturbedCase[ "Jupiter" ]->getEphemeris()->getCartesianState(initialTime)[2];
+        perturbedBodyMap[ "Sun" ] = idealBodyMap[ "Sun" ];
+        perturbedBodyMap[ "Jupiter" ] = idealBodyMap[ "Jupiter" ]; 
 
-   // Define ephemeris for the Sun.
-   Eigen::Vector6d initialStateSun = Eigen::Vector6d::Zero();
-   initialStateSun.segment(0,3) = initialPositionSun;
-
-   bodyMapPerturbedCase[ "Sun" ] = std::make_shared< simulation_setup::Body >( );
-   bodyMapPerturbedCase[ "Sun" ]->setEphemeris( std::make_shared< ephemerides::ConstantEphemeris> (
-                                                     initialStateSun, frameOrigin, frameOrientation ) );
-   bodyMapPerturbedCase[ "Sun" ]->setGravityFieldModel( simulation_setup::createGravityFieldModel(
-                  simulation_setup::getDefaultGravityFieldSettings("Sun", TUDAT_NAN, TUDAT_NAN), "Sun"));
-
-
-The calculation of the CR3BP solution and of the results of the full problem propagation are obtained similarly to what was done in the previous example. Taking into account more complex models for the environment and more accelerations for the spacecraft leads the results of the full propagation to differ from those of the CR3BP solution. The trajectory of the spacecraft in the two cases as well as the difference in cartesian state between the simplified CR3BP solution and the propagation results as a function of time are plotted below.
+The calculation of the CR3BP solution and of the results of the full problem propagation are obtained similarly to what was done in the previous example. Taking into account the extra perturbations acting on spacecraft leads the results of the full propagation to differ from those of the CR3BP solution. The trajectory of the spacecraft in the two cases as well, as the difference in cartesian state between the simplified CR3BP solution and the propagation results as a function of time, are plotted below.
 
 .. figure:: images/horseshoeOrbitPerturbedCase.png
 .. figure:: images/differenceCR3BPfullProblemPerturbedCase.png
 
+Although the additional perturbations introduce a substantial difference in position, on the order of about 50 million km, it is clear that the spacecraft still follows the horshoe orbit relatively well. Below, the normalized in-plane coordinates of the perturbed case are shown:
 
+.. figure:: images/horseshoeOrbitPerturbedCaseTime.png
+
+
+Finally, we show the numerical solution of the CR3BP, as well as the perturbed full numerical solution, in unnormalized coordinates below. Note the different scale of the z-axis compared to the in-plane axes.
+
+.. figure:: images/horseshoeUnnormalized.png
 
