@@ -59,6 +59,11 @@ Tudat currently includes an automatic link with ESA's Pagmo2 toolbox. Numerous u
 
 The scope of this project is quite large, and we encourage interested students to identify specific aspects that they would like to focus on.
 
+SOCIS 2019 - Python Interface
+*****************************
+
+The main roadblock that people encounter in the use of Tudat, is the fact that all interfaces are presently in C++. The basic state propagation capabilities can be run through JSON files only (without looking at a single line of C++ code), but this interface does not cover nearly everything. A key modification that should be made to Tudat is the inclusion of an interface in a more accessible language: Python. Having a Python interface that is used to call functionality implemented in a language such as C++ is becoming standard practice (for instance, see Pagmo2), and is crucial for the future development and expansion of Tudat. Not only will it make the software easier to use, it will also reduce the support burden on the Tudat team, as general users will be able to use a Python interface much more self-sufficiently than a C++ interface. The format of the Python interface is to be defined in this project, and could be through Boost Python, Cython, or a different interface tool for Python/C++. This project will focus primarily on the setup and documentation of a generic interface between the Tudat functionality, and a Python front end. The Python interface should not be limited to functionality included through the JSON interface.
+
 SOCIS 2019 - Interplanetary Doppler Data Analysis
 *************************************************
 
