@@ -426,7 +426,7 @@ Adding a new estimatable parameter
 
 The list of estimatable parameters already available in Tudat is presented in :ref:`estimationSetup`. However, it is possible to add another parameter to this list of estimatable parameters if needed. This process requires to modify several files located in different directories and  will be described in details based on the examples of the two parameters :literal:`radiation_pressure_coefficient` and :literal:`rotation_pole_position`. 
 
-First of all, the name of the new estimatable parameter has to added to the list of the estimatable parameters available in Tudat, in the file :literal:`estimatableParameter.h`:
+First of all, the name of the new estimatable parameter has to be added to the list of the estimatable parameters available in Tudat, in the file :literal:`estimatableParameter.h`:
 
 .. code-block:: cpp
 
@@ -483,7 +483,7 @@ The type of the new estimatable parameter must then specified within the functio
    ...
    }
 
-Finally, depending on which estimatable parameter is to be added to the list of available parameters, the functions :literal:`isParameterDynamicalPropertyInitialState`, :literal:`isParameterRotationMatrixProperty`, :literal:`isParameterObservationLinkProperty` and :literal:`isParameterTidalProperty` might also need to be modified to take this new parameter into account. They return a boolean set to false as default value but a specific case has to added for the new parameter if it is related to either the initial state, a rotation matrix, an observation link or any tidal property. The parameter :literal:`radiation_pressure_coefficient` is neither related to the initial state nor a property of any rotation matrix, observation or tidal model. However, the parameter :literal:`rotation_pole_position` is linked to a rotation matrix so that the function :literal:`isParameterRotationMatrixProperty` includes a case switching the boolean to :literal:`true` for this parameter.
+Finally, depending on which estimatable parameter is to be added to the list of available parameters, the functions :literal:`isParameterDynamicalPropertyInitialState`, :literal:`isParameterRotationMatrixProperty`, :literal:`isParameterObservationLinkProperty` and :literal:`isParameterTidalProperty` might also need to be modified to take this new parameter into account. They usually return a boolean which is set to false as default value, but a specific case has to added for the new parameter if it is related to either the initial state, a rotation matrix, an observation link or any tidal property. The parameter :literal:`radiation_pressure_coefficient` is related to none of them but the parameter :literal:`rotation_pole_position` is linked to a rotation matrix so that the function :literal:`isParameterRotationMatrixProperty` includes a case switching the boolean to :literal:`true` for this parameter.
 
 .. code-block:: cpp
    
@@ -504,9 +504,7 @@ Once the new estimatable parameter has been defined and characterised, a corresp
 
       .../tudatBundle/tudat/Tudat/Astrodynamics/OrbitDetermination/EstimatableParameters/
 
-Each estimatable parameter class is defined in a similar way, usually from the base class :literal:`EstimatableParameter` and includes the definition of thee functions :literal:`getParameterValues`, :literal:`setParameterValue` and :literal:`getParameterSize`. Considering the parameter :literal:`radiation_pressure_coefficient`, the definition of its associated class :literal:`RadiationPressureCoefficient` is done as follows (in the file :literal:`radiationPressureCoefficient.h`).  The class :literal:`ConstantRotationalOrientation` is thus created identically (keeping in mind that the parameter :literal:`rotation_pole_position` is a :literal:`Eigen::VectorXd` whose size is 2 and not a double as it is the case for the radiation pressure coefficient).
-
-Focusing on the parameters :literal:`radiation_pressure_coefficient` and :literal:`rotation_pole_position` again, this is done as follows in two separate files (:literal:`radiationPressureCoefficient.h` and :literal:`constantRotationalOrientation.h`, respectively).
+Each estimatable parameter class is defined in a similar way, usually from the base class :literal:`EstimatableParameter` and includes the definition of thee functions :literal:`getParameterValues`, :literal:`setParameterValue` and :literal:`getParameterSize`. Considering the parameter :literal:`radiation_pressure_coefficient`, the definition of its associated class :literal:`RadiationPressureCoefficient` is done as follows (in the file :literal:`radiationPressureCoefficient.h`).
 
 .. code-block:: cpp
 
@@ -546,12 +544,11 @@ Focusing on the parameters :literal:`radiation_pressure_coefficient` and :litera
    };
 
 The class :literal:`ConstantRotationalOrientation` is created in a very similar way, in a file :literal:`constantRotationalOrientation.h`, keeping in mind that the parameter :literal:`rotation_pole_position` is a :literal:`Eigen::VectorXd` whose size is 2 and not a double as it is the case for the radiation pressure coefficient.
-In some cases, another class of estimatable parameter settings must be created as the base class :literal:`EstimatableParameter` is not detailed enough to fully describe some complex estimatable parameters, such as the :literal:`spheri`. 
+    
 
-Then, an interface object has to be created to estimate the new parameter. This is done in the file :literal:`createEstimatableParameters.cpp`, either within the function :literal:`createDoubleParameterToEstimate` if the estimatable parameter is of type :literal:`double` or within :literal:`createVectorParameterToEstimate` if it is a :literal:`Eigen::VectorXd` object. This interface object aims at checking if the parameter is properly defined and can thus be correctly estimated. Once these verifications (which vary from one estimatable parameter to another) have been conducted, the object from which the estimation will be performed is created.
+Then, an interface object has to be created to estimate the new parameter. This is done in the file :literal:`createEstimatableParameters.cpp`, either with the function :literal:`createDoubleParameterToEstimate` if the estimatable parameter is of type :literal:`double` or with :literal:`createVectorParameterToEstimate` if it is a :literal:`Eigen::VectorXd` object. These functions take as input an :literal:`EstimatableParameterSettings` object from which the settings of the parameter to be estimated are checked to ensure that it is properly defined and thus make the estimation possible. In some cases, the base class :literal:`EstimatableParameterSettings` is not detailed enough to give access to all the required properties of the estimatable parameter and a specific class has to be defined. As an example, the parameter :literal:`spherical_harmonics_cosine_coefficient_block` requires the definition of the estimatable parameter settings class called :literal:`SphericalHarmonicEstimatableParameterSettings` (defined in the file :literal:`estimatableParameterSettings.h`). This specific class especially manages the different combinations of degrees and orders of the spherical harmonic coefficients that have to be estimated.
 
-
-As an example, for the parameter :literal:`radiation_pressure_coefficient`, it is checked that only one single radiation pressure interface is defined before creating the parameter to be estimated and link it to this radiation pressure interface and to the propagated body. 
+Regarding the verification of the estimatable parameter settings, for the parameter :literal:`radiation_pressure_coefficient`, it is checked that only one single radiation pressure interface is defined before creating the parameter and linking it to this radiation pressure interface and to the propagated body. 
 
 .. code-block:: cpp
 
@@ -585,7 +582,6 @@ As an example, for the parameter :literal:`radiation_pressure_coefficient`, it i
     ...
    }
 
-
 Concerning the parameter :literal:`rotation_pole_position`, it must be verified that the rotation model is a simple rotational ephemeris for which the position of the rotation pole is indeed defined before creating the estimatable parameter.
 
 .. code-block:: cpp
@@ -613,7 +609,7 @@ Concerning the parameter :literal:`rotation_pole_position`, it must be verified 
      ...
      }
 
-To allow the parameter estimation to be conducted, partials of the cartesian state with respect to this parameter to be estimated have to be implemented in the file :literal:`createCartesianStatePartial.cpp`. These partials are defined within the functions :literal:`createCartesianStatePartialsWrtParameter` (two functions exist with two different input types, depending on the type of the parameter (:literal:`double` or :literal:`rotation_pole_position`) that is to be considered). Three cases have to be distinguished here. First, if the estimatable parameter has been identified as being a property of a rotation matrix, then the function :literal:`createCartesianStatePartialsWrtParameter` calls another function named :literal:`createRotationMatrixPartialsWrtParameter` and defined in :literal:`createCartesianStatePartial.cpp` too (again two functions with the same name exist for the two types of estimatable parameters). A specific case has to be added within this function for each parameter which is related to a rotation matrix. For the parameter:literal:`rotation_pole_position`, the following lines of code have been added to first check that the rotation model is consistent with the estimatable parameter (here that is a simple rotational model) and then to call a function that returns the required partials for this particular model.
+To allow the parameter estimation to be conducted, partials with respect to this parameter have to be implemented. They can either be cartesian state or acceleration partials. In the former case, the partials of the propagated body cartesian body with respect to the estimatable parameter have to be implemented in the file :literal:`createCartesianStatePartial.cpp`. These partials are defined within the functions :literal:`createCartesianStatePartialsWrtParameter` (two functions exist with two different input types, depending on the type of the parameter (:literal:`double` or :literal:`rotation_pole_position`) that is to be considered). Three cases have to be distinguished here. First, if the estimatable parameter has been identified as being a property of a rotation matrix, then the function :literal:`createCartesianStatePartialsWrtParameter` calls another function named :literal:`createRotationMatrixPartialsWrtParameter` and defined in :literal:`createCartesianStatePartial.cpp` too (again two functions with the same name exist for the two types of estimatable parameters). A specific case has to be added within this function for each parameter which is related to a rotation matrix. For the parameter :literal:`rotation_pole_position`, the following lines of code have been added to first check that the rotation model is consistent with the estimatable parameter (here that is a simple rotational model) and then to call a function that returns the required rotation matrix  partials for this particular model.
 
 .. code-block:: cpp
 
@@ -640,19 +636,52 @@ To allow the parameter estimation to be conducted, partials of the cartesian sta
 
 The class :literal:`RotationMatrixPartialWrtPoleOrientation` is to be defined in the file :literal:`rotationMatrixPartial.h` and must contain two internal functions :literal:`calculatePartialOfRotationMatrixToBaseFrameWrtParameter` and :literal:`calculatePartialOfRotationMatrixDerivativeToBaseFrameWrtParameter`. These functions return the rotation matrix and rotation matrix derivative partials respectively, with respect to the estimatable parameter. Specific functions to calculate these partials have to be added to the file :literal:`rotationMatrixPartial.cpp`. Regarding the parameter :literal:`rotation_pole_position`, these functions are :literal:`calculatePartialOfRotationMatrixFromLocalFrameWrtPoleOrientation` and :literal:`calculatePartialOfRotationMatrixDerivativeFromLocalFrameWrtPoleOrientation`, respectively.
 
-So far, we have only considered the case where the estimatable parameter is related to a rotation matrix. However, when it is not the case, the function :literal:`createCartesianStatePArtialsWrtParameter` is to be modified in a different way. A specific case has to be created for each parameter that is not a rotation matrix property. If the parameter has a direct impact on the cartesian state of the propagated body (eg :literal:`ground_station_position`), the partials of the cartesian state with respect to the parameters must be returned by the function :literal:`createCartesianStatePartialsWrtParameter`. 
+So far, we have only considered the case where the estimatable parameter is related to a rotation matrix. However, when it is not the case, the function :literal:`createCartesianStatePartialsWrtParameter` is to be modified in a different way. A specific case has to be created for each parameter that is not a rotation matrix property. If the parameter has a direct impact on the cartesian state of the propagated body (eg :literal:`ground_station_position`), the partials of the cartesian state with respect to the parameters must be directly returned by the function. 
 
-A last case arises when the estimatable parameter neither is  a rotation matrix property nor has a direct influence on the cartesian state of the propagated body but is rather a dynamical parameter and has an impact on some of the accelerations (such as the parameter :literal:`radiation_pressure_coefficient`). The function :literal:`createCartesianStatePartialsWrtParameter` does not return any partial then. In this particular case, the acceleration partials with respect to this parameter have to be specified. A class of partial acceleration has to be defined for each of those parameters, from the base class :literal:`AccelerationPartial`. Depending on the estimatable parameter that is considered, the acceleration partials might require the definition of some of the following functions inside the :literal:`accelerationPartial` class.
+A last case arises when the estimatable parameter neither is  a rotation matrix property nor has a direct influence on the cartesian state of the propagated body but is involved in one of the acceleration models. The function :literal:`createCartesianStatePartialsWrtParameter` does not return any partial in that case. The estimation of such a parameter then requires the use of acceleration partials with respect to this parameter. The acceleration partials are implemented in the files of the directory:
 
-   - :literal:`isStateDerivativeDependentOnIntegratedAdditionalStateTypes` Returns a boolean whose default value is false. To be defined if the state derivative depends on not only of a translational state but also of a different state type.
-   - :literal:`wrtPositionOfAcceleratedBody` To be defined if the acceleration depends on the position of the propagated body.
-   - :literal:`wrtVelocityOfAcceleratedBody` To be defined if the acceleration depends on the velocity of the propagated body.
-   - :literal:`wrtPositionOfAcceleratingBody` To be defined if the acceleration depends on the position of the body exerting the acceleration.
-   - :literal:`wrtVelocityOfAcceleratingBody` To be defined if the acceleration depends on the velocity of the body exerting the acceleration.
-   - :literal:`wrtPositionOfAdditionalBody` To be defined if the acceleration depends on the position an additional body, in addition to the accelerated and accelerating ones.
-   - :literal:`wrtVelocityOfAdditionalBody` To be defined if the acceleration depends on the velocity of an other body, in addition to the accelerated and accelerating ones.
-   - :literal:`wrtNonTranslationalStateOfAdditionalBody` To be defined if the acceleration depends on a non-translational state of an additional body.
-   - :literal:`isAccelerationPartialWrtAdditionalBodyNonnullptr` To be defined if the acceleration depends on an additional body.
+   .../tudatBundle/tudat/Tudat/Astrodynamics/OrbitDetermination/AccelerationPartials/
+
+For any estimatable parameter related to an acceleration model, one must define a function :literal:`getParameterPartialFunction` which is a method of its associated acceleration partial clas. This function provides the partial of the acceleration model with respect to the estimatable parameter. Looking at the parameter :literal:`radiation_pressure_coefficient` in particular, the acceleration partials are defined from the class :literal:`CannonBallRadiationPressurePartial` which is itself derived from the base class :literal:`AccelerationPartial`). This acceleration partials class is defined in the files :literal:`radiationPressureAccelerationPartial.h` and :literal:`radiationPressureAccelerationPartial.cpp`. Only the radiation pressure coefficient can be estimated for this acceleration model so that the function :literal:`getParameterPartialFunction` only contains a single specific case dedicated to this parameter. 
+
+.. code-block:: cpp
+
+   //! Function for setting up and retrieving a function returning a partial w.r.t. a double parameter.
+   std::pair< std::function< void( Eigen::MatrixXd& ) >, int > CannonBallRadiationPressurePartial::getParameterPartialFunction(
+        std::shared_ptr< estimatable_parameters::EstimatableParameter< double > > parameter )
+   {
+      std::function< void( Eigen::MatrixXd& ) > partialFunction;
+      int numberOfRows = 0;
+
+      // Check if parameter dependency exists.
+      if( parameter->getParameterName( ).second.first == acceleratedBody_ )
+      {
+         switch( parameter->getParameterName( ).first )
+         {
+            // Set function returning partial w.r.t. radiation pressure coefficient.
+            case estimatable_parameters::radiation_pressure_coefficient:
+
+               partialFunction = std::bind( &CannonBallRadiationPressurePartial::wrtRadiationPressureCoefficient, this, std::placeholders::_1 );
+               numberOfRows = 1;
+
+               break;
+            default:
+               break;
+          }
+       }
+       return std::make_pair( partialFunction, numberOfRows );
+    } 
 
 
- 
+The function :literal:`wrtRadiationPressureCoefficient` called in the piece of code above is also a method of the class :literal:`CannonBallRadiationPressurePartial` and is defined in the file :literal:`radiationPressureAccelerationPartial.h`. It directly returns the partial derivative of the radiation pressure acceleration model with respect to the radiation pressure coefficient, as follows:
+
+.. code-block:: cpp
+
+   void wrtRadiationPressureCoefficient( Eigen::MatrixXd& partial )
+   {
+        partial = computePartialOfCannonBallRadiationPressureAccelerationWrtRadiationPressureCoefficient(
+                    radiationPressureFunction_( ), areaFunction_( ), acceleratedBodyMassFunction_( ),
+                    ( sourceBodyState_( ) - acceleratedBodyState_( ) ).normalized( ) );
+   }
+
+
