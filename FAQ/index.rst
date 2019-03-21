@@ -34,6 +34,11 @@ Compilation and Installation
 	- *Q: My application fails due to* ``undefined reference to ...``, *or* ``Undefined symbols for architecture x86_64``, *what am I doing wrong?* 
 	   A: These issues are generally related to a missing library in the :literal:`CMakeLists.txt` of the application you are using. See :ref:`writingCMakeLists` for more details.
 
+        - *Q: I get a compilation error due to* ``no member named...``, *how can I fix it?* 
+           A: Such errors are usually caused by not including the file in which the element is defined or by not looking for it in the proper namespace. Check the :literal:`include` commands at the beginning of the file to make sure all the required files are there.
+
+        - *Q: How to find what is causing an error when the error output is not explicit enough?* 
+           A: In that case, having a close look at *where* the error (or warning) is generated in the Tudat code can be very insightful. To find it, copy/paste the error message in the *Search Results* tab in the Qt interface to identify where this message is generated among all the Tudat files. Be sure to setup the search settings in such a way that it will parse all the files from which the error is likely to originate. 
 
 Using and Developing Tudat
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
