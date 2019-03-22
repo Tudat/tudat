@@ -38,7 +38,7 @@ Compilation and Installation
            A: Such errors are usually caused by not including the file in which the element is defined or by not looking for it in the proper namespace. Check the :literal:`include` commands at the beginning of the file to make sure all the required files are there.
 
         - *Q: How to find what is causing an error when the error output is not explicit enough?* 
-           A: In that case, having a close look at *where* the error (or warning) is generated in the Tudat code can be very insightful. To find it, copy/paste the error message in the *Search Results* tab in the Qt interface to identify where this message is generated among all the Tudat files. Be sure to setup the search settings in such a way that it will parse all the files from which the error is likely to originate. 
+           A: In that case, having a close look at *where* the error (or warning) is generated in the Tudat code can be very insightful. To find it, copy/paste the error message in the *Search Results* tab in the Qt interface to identify where this message is generated among all the Tudat files. Be sure to setup the search settings in such a way that it will parse all the files from which the error is likely to originate (see :ref:`troubleshootingSearchingTudat` for more details). 
 
 Using and Developing Tudat
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -65,7 +65,7 @@ Using and Developing Tudat
 	- *Q: I get a CSpice error telling me it cannot load any more kernels when running a optimization application, how can I solve this?*
 	   A: Make sure that you are not loading the Spice kernels in the fitness function, but either in the constructor or somewhere else that will not be called upon by each time the fitness function is called.
 
-	- *Q: How can I repress the output of the :literal:`dependentVariableSettings`?*
+	- *Q: How can I repress the output of the* :literal:`dependentVariableSettings` *?*
 	   A: Set the second argument of the class to false/0.
 	
 
