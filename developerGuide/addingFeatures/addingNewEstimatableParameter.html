@@ -1,0 +1,544 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. Adding a New Estimatable Parameter &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
+        <link rel="up" title="Adding Features to Tudat" href="index.html"/>
+        <link rel="next" title="Qt Basics" href="../qtBasics/qtBasics.html"/>
+        <link rel="prev" title="4. Adding a New State Derivative Model" href="addingNewStateDerivativeModel.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials and Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ/index.html">FAQ</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Developer Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../githubBasics/githubBasics.html">Github Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updatingTudat/updatingTudat.html">Updating Tudat</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Adding Features to Tudat</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="addingDependentVariablesToSave.html">1. Adding Dependent Variables to Save</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addingNewEnvironmentModel.html">2. Adding a New Environment Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addingNewAccelerationModel.html">3. Adding a New Acceleration Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addingNewStateDerivativeModel.html">4. Adding a New State Derivative Model</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">5. Adding a New Estimatable Parameter</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#updating-the-list-of-estimatable-parameters">5.1. Updating the list of estimatable parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#creating-an-estimatableparameter-object">5.2. Creating an <code class="docutils literal"><span class="pre">EstimatableParameter</span></code> object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#implementing-the-partials-required-for-the-estimation">5.3. Implementing the partials required for the estimation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../qtBasics/qtBasics.html">Qt Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../applicationCMakeLists/applicationCMakeLists.html">Application CMakelists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extendingJSON/index.html">Extending the JSON Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extendingMATLAB/index.html">Extending the MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howToWriteTheWiki/howToWriteTheWiki.html">How to Write the Wiki</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../socis.html">SOCIS 2019</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Developer Guide</a> &raquo;</li>
+        
+          <li><a href="index.html">Adding Features to Tudat</a> &raquo;</li>
+        
+      <li>5. Adding a New Estimatable Parameter</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/developerGuide/addingFeatures/addingNewEstimatableParameter.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="adding-a-new-estimatable-parameter">
+<span id="addingnewestimatableparameter"></span><h1>5. Adding a New Estimatable Parameter<a class="headerlink" href="#adding-a-new-estimatable-parameter" title="Permalink to this headline">¶</a></h1>
+<p>The list of estimatable parameters already available in Tudat is presented in <a class="reference internal" href="../../tutorials/tudatFeatures/estimationSetup/parameterEstimationSettings.html#parameterestimationsettings"><span class="std std-ref">Setting Up Estimated Parameters</span></a>. However, it is possible to add another parameter to this list of estimatable parameters if needed. This process requires to modify several files located in different directories and  will be described in details based on the examples of the two parameters <code class="docutils literal"><span class="pre">radiation_pressure_coefficient</span></code> and <code class="docutils literal"><span class="pre">rotation_pole_position</span></code>.</p>
+<div class="section" id="updating-the-list-of-estimatable-parameters">
+<h2>5.1. Updating the list of estimatable parameters<a class="headerlink" href="#updating-the-list-of-estimatable-parameters" title="Permalink to this headline">¶</a></h2>
+<p>First of all, the name of the new estimatable parameter has to be added to the list of the estimatable parameters available in Tudat, in the file <code class="docutils literal"><span class="pre">estimatableParameter.h</span></code>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! List of parameters that can be estimated by the orbit determination code</span>
+<span class="k">enum</span> <span class="n">EstimatebleParametersEnum</span>
+<span class="p">{</span>
+   <span class="n">arc_wise_initial_body_state</span><span class="p">,</span>
+   <span class="n">initial_body_state</span><span class="p">,</span>
+   <span class="n">initial_rotational_body_state</span><span class="p">,</span>
+   <span class="n">gravitational_parameter</span><span class="p">,</span>
+   <span class="n">constant_drag_coefficient</span><span class="p">,</span>
+   <span class="n">radiation_pressure_coefficient</span><span class="p">,</span>
+   <span class="n">arc_wise_radiation_pressure_coefficient</span><span class="p">,</span>
+   <span class="n">spherical_harmonics_cosine_coefficient_block</span><span class="p">,</span>
+   <span class="n">spherical_harmonics_sine_coefficient_block</span><span class="p">,</span>
+   <span class="n">constant_rotation_rate</span><span class="p">,</span>
+   <span class="n">rotation_pole_position</span><span class="p">,</span>
+   <span class="n">constant_additive_observation_bias</span><span class="p">,</span>
+   <span class="p">...</span>
+   <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In addition to the file <code class="docutils literal"><span class="pre">estimatableParameters.h</span></code>, the file <code class="docutils literal"><span class="pre">estimatableParameters.cpp</span></code> also has to be modified. In particular, a short description of each estimatable parameter has to be provided in the function <code class="docutils literal"><span class="pre">getParameterTypeString</span></code>, as it is done in the following for the parameters <code class="docutils literal"><span class="pre">radiation_pressure_coefficient</span></code> and <code class="docutils literal"><span class="pre">rotation_pole_position</span></code>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">getParameterTypeString</span><span class="p">(</span> <span class="k">const</span> <span class="n">EstimatebleParametersEnum</span> <span class="n">parameterType</span> <span class="p">)</span>
+<span class="p">{</span>
+<span class="p">...</span>
+<span class="k">case</span> <span class="nl">radiation_pressure_coefficient</span><span class="p">:</span>
+     <span class="n">parameterDescription</span> <span class="o">=</span> <span class="s">&quot;radiation pressure coefficient &quot;</span><span class="p">;</span>
+     <span class="k">break</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="k">case</span> <span class="nl">rotation_pole_position</span><span class="p">:</span>
+     <span class="n">parameterDescription</span> <span class="o">=</span> <span class="s">&quot;pole position &quot;</span><span class="p">;</span>
+     <span class="k">break</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The type of the new estimatable parameter must then be specified within the function <code class="docutils literal"><span class="pre">isDoubleParameter</span></code> (still inside the file <code class="docutils literal"><span class="pre">estimatableParameters.cpp</span></code>). An estimatable parameter can either be a <code class="docutils literal"><span class="pre">double</span></code> or a <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code>, depending on whether the parameter is represented by a single or multiple floating-point values. Regarding the two examples which are considered here, the parameter <code class="docutils literal"><span class="pre">radiation_pressure_coefficient</span></code> is a <code class="docutils literal"><span class="pre">double</span></code> while the parameter <code class="docutils literal"><span class="pre">rotation_pole_position</span></code> is a <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code>, whose first element is the right ascension of the rotation pole and the second one its declination.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="nf">isDoubleParameter</span><span class="p">(</span> <span class="k">const</span> <span class="n">EstimatebleParametersEnum</span> <span class="n">parameterType</span> <span class="p">)</span>
+<span class="p">{</span>
+<span class="p">...</span>
+<span class="k">case</span> <span class="nl">radiation_pressure_coefficient</span><span class="p">:</span>
+     <span class="n">isDoubleParameter</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+     <span class="k">break</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="k">case</span> <span class="nl">rotation_pole_position</span><span class="p">:</span>
+     <span class="n">isDoubleParameter</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+     <span class="k">break</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Finally, depending on which estimatable parameter is to be added to the list of available parameters, the functions <code class="docutils literal"><span class="pre">isParameterDynamicalPropertyInitialState</span></code>, <code class="docutils literal"><span class="pre">isParameterRotationMatrixProperty</span></code>, <code class="docutils literal"><span class="pre">isParameterObservationLinkProperty</span></code> and <code class="docutils literal"><span class="pre">isParameterTidalProperty</span></code> may also need to be modified to take this new parameter into account (again in <code class="docutils literal"><span class="pre">estimatableParameters.cpp</span></code>). These function return a boolean which is set to false as default value, but needs to be set to true for specific types of parameters. Specifically, if the parameter represents an initial dynamical state (e.g. initial translational state), a property influencing rotation matrix (e.g. planetary rotation rate), an observation link (e.g. observation bias) or a property influencing tidal gravity field variations (e.g. Love numbers; tidal lags). For our examples, the parameter <code class="docutils literal"><span class="pre">radiation_pressure_coefficient</span></code> is related to none of them but the parameter <code class="docutils literal"><span class="pre">rotation_pole_position</span></code> is linked to a rotation matrix so that the function <code class="docutils literal"><span class="pre">isParameterRotationMatrixProperty</span></code> includes a case switching the boolean to <code class="docutils literal"><span class="pre">true</span></code> for this parameter.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="nf">isParameterRotationMatrixProperty</span><span class="p">(</span> <span class="k">const</span> <span class="n">EstimatebleParametersEnum</span> <span class="n">parameterType</span> <span class="p">)</span>
+<span class="p">{</span>
+   <span class="kt">bool</span> <span class="n">flag</span><span class="p">;</span>
+   <span class="k">switch</span><span class="p">(</span> <span class="n">parameterType</span> <span class="p">)</span>
+   <span class="p">{</span>
+   <span class="p">...</span>
+   <span class="k">case</span> <span class="nl">rotation_pole_position</span><span class="p">:</span>
+      <span class="n">flag</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+   <span class="p">}</span>
+   <span class="k">return</span> <span class="n">flag</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-an-estimatableparameter-object">
+<h2>5.2. Creating an <code class="docutils literal"><span class="pre">EstimatableParameter</span></code> object<a class="headerlink" href="#creating-an-estimatableparameter-object" title="Permalink to this headline">¶</a></h2>
+<p>Once the new estimatable parameter has been defined and characterised, a corresponding class is to be created to fully describe this parameter. This class is defined in a separate file which has to be created in the directory:</p>
+<blockquote>
+<div>…/tudatBundle/tudat/Tudat/Astrodynamics/OrbitDetermination/EstimatableParameters/</div></blockquote>
+<p>Each estimatable parameter class is defined in a similar way, usually from the base class <code class="docutils literal"><span class="pre">EstimatableParameter</span></code> and includes the definition of three functions <code class="docutils literal"><span class="pre">getParameterValues</span></code>, <code class="docutils literal"><span class="pre">setParameterValue</span></code> and <code class="docutils literal"><span class="pre">getParameterSize</span></code>. Considering the parameter <code class="docutils literal"><span class="pre">radiation_pressure_coefficient</span></code>, the definition of its associated class <code class="docutils literal"><span class="pre">RadiationPressureCoefficient</span></code> is done as follows (in the file <code class="docutils literal"><span class="pre">radiationPressureCoefficient.h</span></code>).</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RadiationPressureCoefficient</span><span class="o">:</span> <span class="k">public</span> <span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span>
+<span class="p">{</span>
+
+<span class="k">public</span><span class="o">:</span>
+<span class="c1">//! Constructor.</span>
+<span class="n">RadiationPressureCoefficient</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">electro_magnetism</span><span class="o">::</span><span class="n">RadiationPressureInterface</span> <span class="o">&gt;</span> <span class="n">radiationPressureInterface</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">associatedBody</span> <span class="p">)</span><span class="o">:</span>
+<span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">radiation_pressure_coefficient</span><span class="p">,</span> <span class="n">associatedBody</span> <span class="p">),</span> <span class="n">radiationPressureInterface_</span><span class="p">(</span> <span class="n">radiationPressureInterface</span> <span class="p">)</span>
+<span class="p">{</span> <span class="p">}</span>
+
+<span class="c1">//! Destructor.</span>
+<span class="o">~</span><span class="n">RadiationPressureCoefficient</span><span class="p">(</span> <span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+
+<span class="c1">//! Function to get the current value of the radiation pressure coefficient that is to be estimated.</span>
+<span class="kt">double</span> <span class="n">getParameterValue</span><span class="p">(</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">radiationPressureInterface_</span><span class="o">-&gt;</span><span class="n">getRadiationPressureCoefficient</span><span class="p">(</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">//! Function to reset the value of the radiation pressure coefficient that is to be estimated.</span>
+<span class="kt">void</span> <span class="n">setParameterValue</span><span class="p">(</span> <span class="kt">double</span> <span class="n">parameterValue</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">radiationPressureInterface_</span><span class="o">-&gt;</span><span class="n">resetRadiationPressureCoefficient</span><span class="p">(</span> <span class="n">parameterValue</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">//! Function to retrieve the size of the parameter.</span>
+<span class="kt">int</span> <span class="n">getParameterSize</span><span class="p">(</span> <span class="p">){</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="k">protected</span><span class="o">:</span>
+
+<span class="k">private</span><span class="o">:</span>
+
+<span class="c1">//! Object containing the radiation pressure coefficient to be estimated.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">electro_magnetism</span><span class="o">::</span><span class="n">RadiationPressureInterface</span> <span class="o">&gt;</span> <span class="n">radiationPressureInterface_</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>For the parameter <code class="docutils literal"><span class="pre">rotation_pole_position</span></code>, the class <code class="docutils literal"><span class="pre">ConstantRotationalOrientation</span></code> is created in a very similar way, in a file <code class="docutils literal"><span class="pre">constantRotationalOrientation.h</span></code>, keeping in mind that this parameter is a <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code> whose size is 2 and not a double as it is the case for the radiation pressure coefficient.</p>
+<p>To create the parameter class, a settins class and an associated ‘create’ function is needs. This is done in the file <code class="docutils literal"><span class="pre">createEstimatableParameters.cpp/.h</span></code>, either with the function <code class="docutils literal"><span class="pre">createDoubleParameterToEstimate</span></code> if the estimatable parameter is of type <code class="docutils literal"><span class="pre">double</span></code> or with <code class="docutils literal"><span class="pre">createVectorParameterToEstimate</span></code> if it is a <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code> object. These functions take an <a class="reference internal" href="../../tutorials/tudatFeatures/estimationSetup/parameterEstimationSettings.html#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal"><span class="pre">EstimatableParameterSettings</span></code></a> object as input. In the create function, the settings of the parameter to be estimated are checked to ensure that it is properly defined and thus make the estimation possible.</p>
+<p>The information defined in the the base class <a class="reference internal" href="../../tutorials/tudatFeatures/estimationSetup/parameterEstimationSettings.html#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal"><span class="pre">EstimatableParameterSettings</span></code></a> is:</p>
+<ul class="simple">
+<li>Type of estimated parameter (as an <code class="docutils literal"><span class="pre">EstimatebleParametersEnum</span></code>)</li>
+<li>The body associated with the parameter</li>
+<li>A secondary string identifier (e.g. ground station name for <code class="docutils literal"><span class="pre">ground_station_position</span></code>)</li>
+</ul>
+<p>In some cases, this base class is not detailed enough to give access to all the required properties of the estimatable parameter and a specific class has to be defined. As an example, the parameter <code class="docutils literal"><span class="pre">spherical_harmonics_cosine_coefficient_block</span></code> requires the definition of the estimatable parameter settings class called <code class="docutils literal"><span class="pre">SphericalHarmonicEstimatableParameterSettings</span></code> (defined in the file <code class="docutils literal"><span class="pre">estimatableParameterSettings.h</span></code>). This class manages the different combinations of degrees and orders of the spherical harmonic coefficients that have to be estimated.</p>
+<p>Regarding the verification of the estimatable parameter settings of <code class="docutils literal"><span class="pre">radiation_pressure_coefficient</span></code>, it is checked that only one single radiation pressure interface is defined before creating the parameter and linking it to this radiation pressure interface and to the propagated body.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">createDoubleParameterToEstimate</span><span class="p">(</span>
+     <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSettings</span> <span class="o">&gt;&amp;</span> <span class="n">doubleParameterName</span><span class="p">,</span>
+     <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="k">const</span> <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span><span class="o">&amp;</span> <span class="n">accelerationModelMap</span> <span class="p">)</span>
+<span class="p">{</span>
+<span class="p">...</span>
+<span class="k">case</span> <span class="nl">radiation_pressure_coefficient</span><span class="p">:</span>
+     <span class="p">{</span>
+         <span class="k">if</span><span class="p">(</span> <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRadiationPressureInterfaces</span><span class="p">(</span> <span class="p">).</span><span class="n">size</span><span class="p">(</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+         <span class="p">{</span>
+             <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;Error, no radiation pressure interfaces found in body &quot;</span> <span class="o">+</span>
+                     <span class="n">currentBodyName</span> <span class="o">+</span> <span class="s">&quot; when making Cr parameter.&quot;</span><span class="p">;</span>
+             <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="n">errorMessage</span> <span class="p">);</span>
+         <span class="p">}</span>
+         <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRadiationPressureInterfaces</span><span class="p">(</span> <span class="p">).</span><span class="n">size</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="p">)</span>
+             <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;Error, multiple radiation pressure interfaces found in body &quot;</span> <span class="o">+</span>
+         <span class="p">{</span>
+                     <span class="n">currentBodyName</span> <span class="o">+</span> <span class="s">&quot; when making Cr parameter.&quot;</span><span class="p">;</span>
+             <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="n">errorMessage</span> <span class="p">);</span>
+         <span class="p">}</span>
+         <span class="k">else</span>
+         <span class="p">{</span>
+             <span class="n">doubleParameterToEstimate</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">RadiationPressureCoefficient</span> <span class="o">&gt;</span><span class="p">(</span>
+                         <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRadiationPressureInterfaces</span><span class="p">(</span> <span class="p">).</span><span class="n">begin</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">,</span>
+                         <span class="n">currentBodyName</span> <span class="p">);</span>
+         <span class="p">}</span>
+         <span class="k">break</span><span class="p">;</span>
+     <span class="p">}</span>
+ <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Concerning the parameter <code class="docutils literal"><span class="pre">rotation_pole_position</span></code>, it must be verified that the rotation model is a simple rotational ephemeris for which the position of the rotation pole is indeed defined before creating the estimatable parameter.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">createVectorParameterToEstimate</span><span class="p">(</span>
+     <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSettings</span> <span class="o">&gt;&amp;</span> <span class="n">vectorParameterName</span><span class="p">,</span>
+     <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="k">const</span> <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span><span class="o">&amp;</span> <span class="n">accelerationModelMap</span> <span class="p">)</span>
+<span class="p">{</span>
+<span class="p">...</span>
+<span class="k">case</span> <span class="nl">rotation_pole_position</span><span class="p">:</span>
+         <span class="k">if</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">SimpleRotationalEphemeris</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span> <span class="o">==</span> <span class="k">nullptr</span> <span class="p">)</span>
+         <span class="p">{</span>
+             <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;Warning, no simple rotational ephemeris present in body &quot;</span> <span class="o">+</span> <span class="n">currentBodyName</span> <span class="o">+</span>
+                     <span class="s">&quot; when making constant rotation orientation parameter&quot;</span><span class="p">;</span>
+             <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="n">errorMessage</span> <span class="p">);</span>
+         <span class="p">}</span>
+         <span class="k">else</span>
+         <span class="p">{</span>
+             <span class="n">vectorParameterToEstimate</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantRotationalOrientation</span> <span class="o">&gt;</span>
+                     <span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">SimpleRotationalEphemeris</span> <span class="o">&gt;</span>
+                       <span class="p">(</span> <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span> <span class="p">)</span> <span class="p">),</span> <span class="n">currentBodyName</span> <span class="p">);</span>
+
+         <span class="p">}</span>
+         <span class="k">break</span><span class="p">;</span>
+  <span class="p">...</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+<p>Note that in both these cases, the <a class="reference internal" href="../../tutorials/tudatFeatures/estimationSetup/parameterEstimationSettings.html#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal"><span class="pre">EstimatableParameterSettings</span></code></a> class is sufficient to define the parameter fully, and no dedicated settings class is required.</p>
+</div>
+<div class="section" id="implementing-the-partials-required-for-the-estimation">
+<h2>5.3. Implementing the partials required for the estimation<a class="headerlink" href="#implementing-the-partials-required-for-the-estimation" title="Permalink to this headline">¶</a></h2>
+<p>To allow the parameter estimation to be conducted, partials with respect to this parameter have to be implemented. These derivatives have to be implemented to ‘tell’ the code how the parameters influence the observations and/or dynamics of a body.</p>
+<p>For partial derivatives of observations w.r.t. a parameter, the dependency of observation on parameter is typically a kinematic one, in the sense that a different current parameter value directly changes the observation. A typical example of this is the position of a ground station. This is opposed to parameters that influence the dynamics of a body, which influence the state of the spacecraft, which in turn influences the observation. Examples of such parameters are spherical harmonic coefficients and drag coefficients.</p>
+<p>Due to the kinematic nature of the observation partials, they are implemented as partials of the Cartesian state of the propagated body with respect to the estimatable parameter (which are then mapped to an observation partial for each observable by a dedicated class). These Cartesian state partials have to be implemented in the file <code class="docutils literal"><span class="pre">createCartesianStatePartial.cpp</span></code>, within the functions <code class="docutils literal"><span class="pre">createCartesianStatePartialsWrtParameter</span></code> (two functions exist with two different input types, depending on the type of the parameter (<code class="docutils literal"><span class="pre">double</span></code> or <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code>) that is to be considered).</p>
+<p>If the estimatable parameter has been identified as being a property of a rotation matrix, then the function <code class="docutils literal"><span class="pre">createCartesianStatePartialsWrtParameter</span></code> calls another function named <code class="docutils literal"><span class="pre">createRotationMatrixPartialsWrtParameter</span></code> and defined in <code class="docutils literal"><span class="pre">createCartesianStatePartial.cpp</span></code> too (again two functions with the same name exist for the two types of estimatable parameters: VectorXd and double parameters). A specific case has to be added within this function for each parameter which is related to a rotation matrix. For the parameter <code class="docutils literal"><span class="pre">rotation_pole_position</span></code>, the following lines of code have been added to first check that the rotation model is consistent with the estimatable parameter (here that is a simple rotational model) and then to call a function that returns the required rotation matrix  partials for this particular model.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RotationMatrixPartial</span> <span class="o">&gt;</span> <span class="n">createRotationMatrixPartialsWrtParameter</span><span class="p">(</span>
+      <span class="k">const</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span>
+      <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">estimatable_parameters</span><span class="o">::</span><span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">parameterToEstimate</span> <span class="p">)</span>
+
+<span class="p">{</span>
+   <span class="p">...</span>
+   <span class="k">case</span> <span class="n">estimatable_parameters</span><span class="o">::</span><span class="nl">rotation_pole_position</span><span class="p">:</span>
+      <span class="k">if</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">SimpleRotationalEphemeris</span> <span class="o">&gt;</span><span class="p">(</span>
+                  <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span> <span class="o">==</span> <span class="k">nullptr</span> <span class="p">)</span>
+      <span class="p">{</span>
+          <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;Warning, body&#39;s rotation model is not simple when making position w.r.t. pole position partial&quot;</span><span class="p">;</span>
+          <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="n">errorMessage</span> <span class="p">);</span>
+      <span class="p">}</span>
+      <span class="c1">// Create rotation matrix partial object</span>
+      <span class="n">rotationMatrixPartial</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">RotationMatrixPartialWrtPoleOrientation</span> <span class="o">&gt;</span><span class="p">(</span>
+                  <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">SimpleRotationalEphemeris</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span> <span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+
+ <span class="p">...</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+<p>The class <code class="docutils literal"><span class="pre">RotationMatrixPartialWrtPoleOrientation</span></code> used in the code above to define the <code class="docutils literal"><span class="pre">rotationMatrixPartial</span></code> variable is created in the file <code class="docutils literal"><span class="pre">rotationMatrixPartial.h</span></code> and must contain two internal functions <code class="docutils literal"><span class="pre">calculatePartialOfRotationMatrixToBaseFrameWrtParameter</span></code> and <code class="docutils literal"><span class="pre">calculatePartialOfRotationMatrixDerivativeToBaseFrameWrtParameter</span></code>. These functions return the rotation matrix and rotation matrix derivative partials respectively, with respect to the estimatable parameter. Specific functions to calculate these partials have to be added to the file <code class="docutils literal"><span class="pre">rotationMatrixPartial.cpp</span></code>. Regarding the parameter <code class="docutils literal"><span class="pre">rotation_pole_position</span></code>, these functions are <code class="docutils literal"><span class="pre">calculatePartialOfRotationMatrixFromLocalFrameWrtPoleOrientation</span></code> and <code class="docutils literal"><span class="pre">calculatePartialOfRotationMatrixDerivativeFromLocalFrameWrtPoleOrientation</span></code>, respectively.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When implementing a partial derivative of a rotation matrix, this will <em>automatically</em> also include the dynamic influence of a change in rotational parameter on a spherical harmonic acceleration.</p>
+</div>
+<p>So far, we have only considered the case where the estimatable parameter is related to a rotation matrix. However, when it is not the case, the function <code class="docutils literal"><span class="pre">createCartesianStatePartialsWrtParameter</span></code> is to be modified in a different way. A specific case has to be created for each parameter that is not a rotation matrix property. If the parameter has a direct impact on the Cartesian state of the propagated body (eg <code class="docutils literal"><span class="pre">ground_station_position</span></code>), the partials of the Cartesian state with respect to the parameters must be directly returned by the function.</p>
+<p>A last case arises when the estimatable parameter neither is  a rotation matrix property nor has a direct influence on the Cartesian state of the propagated body but is involved in one of the acceleration models. The function <code class="docutils literal"><span class="pre">createCartesianStatePartialsWrtParameter</span></code> does not return any partial in that case. Instead, the partial derivatives have to be implemented in existing acceleration partial classes.  The acceleration partials are implemented in the files of the directory:</p>
+<blockquote>
+<div>…/tudatBundle/tudat/Tudat/Astrodynamics/OrbitDetermination/AccelerationPartials/</div></blockquote>
+<p>When adding a new parameter, no new classes need to be defined. Instead, existing class(es) need to be update with teh new dependency of an acceleration on a parameter. For any estimatable parameter related to an acceleration model, one must define a function <code class="docutils literal"><span class="pre">getParameterPartialFunction</span></code> in the associated <code class="docutils literal"><span class="pre">AccelerationPartial</span></code> class, which is a method of its associated acceleration partial clas. This function provides the partial of the acceleration model with respect to the estimatable parameter. Looking at the parameter <code class="docutils literal"><span class="pre">radiation_pressure_coefficient</span></code> in particular, the acceleration partials are defined from the class <code class="docutils literal"><span class="pre">CannonBallRadiationPressurePartial</span></code> which is itself derived from the base class <code class="docutils literal"><span class="pre">AccelerationPartial</span></code>). This acceleration partials class is defined in the files <code class="docutils literal"><span class="pre">radiationPressureAccelerationPartial.h</span></code> and <code class="docutils literal"><span class="pre">radiationPressureAccelerationPartial.cpp</span></code>. Only the radiation pressure coefficient can be estimated for this acceleration model so that the function <code class="docutils literal"><span class="pre">getParameterPartialFunction</span></code> only contains a single specific case dedicated to this parameter.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Function for setting up and retrieving a function returning a partial w.r.t. a double parameter.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">void</span><span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span> <span class="p">)</span> <span class="o">&gt;</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&gt;</span> <span class="n">CannonBallRadiationPressurePartial</span><span class="o">::</span><span class="n">getParameterPartialFunction</span><span class="p">(</span>
+     <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">estimatable_parameters</span><span class="o">::</span><span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">parameter</span> <span class="p">)</span>
+<span class="p">{</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">void</span><span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">partialFunction</span><span class="p">;</span>
+   <span class="kt">int</span> <span class="n">numberOfRows</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+   <span class="c1">// Check if parameter dependency exists.</span>
+   <span class="k">if</span><span class="p">(</span> <span class="n">parameter</span><span class="o">-&gt;</span><span class="n">getParameterName</span><span class="p">(</span> <span class="p">).</span><span class="n">second</span><span class="p">.</span><span class="n">first</span> <span class="o">==</span> <span class="n">acceleratedBody_</span> <span class="p">)</span>
+   <span class="p">{</span>
+      <span class="k">switch</span><span class="p">(</span> <span class="n">parameter</span><span class="o">-&gt;</span><span class="n">getParameterName</span><span class="p">(</span> <span class="p">).</span><span class="n">first</span> <span class="p">)</span>
+      <span class="p">{</span>
+         <span class="c1">// Set function returning partial w.r.t. radiation pressure coefficient.</span>
+         <span class="k">case</span> <span class="n">estimatable_parameters</span><span class="o">::</span><span class="nl">radiation_pressure_coefficient</span><span class="p">:</span>
+
+            <span class="n">partialFunction</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">CannonBallRadiationPressurePartial</span><span class="o">::</span><span class="n">wrtRadiationPressureCoefficient</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span> <span class="p">);</span>
+            <span class="n">numberOfRows</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+            <span class="k">break</span><span class="p">;</span>
+         <span class="k">default</span><span class="o">:</span>
+            <span class="k">break</span><span class="p">;</span>
+       <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="n">partialFunction</span><span class="p">,</span> <span class="n">numberOfRows</span> <span class="p">);</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+<p>The function <code class="docutils literal"><span class="pre">wrtRadiationPressureCoefficient</span></code> called in the piece of code above is also a method of the class <code class="docutils literal"><span class="pre">CannonBallRadiationPressurePartial</span></code> and is defined in the file <code class="docutils literal"><span class="pre">radiationPressureAccelerationPartial.h</span></code>. It directly returns the partial derivative of the radiation pressure acceleration model with respect to the radiation pressure coefficient, as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="kt">void</span> <span class="n">wrtRadiationPressureCoefficient</span><span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span> <span class="n">partial</span> <span class="p">)</span>
+     <span class="n">partial</span> <span class="o">=</span> <span class="n">computePartialOfCannonBallRadiationPressureAccelerationWrtRadiationPressureCoefficient</span><span class="p">(</span>
+                 <span class="n">radiationPressureFunction_</span><span class="p">(</span> <span class="p">),</span> <span class="n">areaFunction_</span><span class="p">(</span> <span class="p">),</span> <span class="n">acceleratedBodyMassFunction_</span><span class="p">(</span> <span class="p">),</span>
+                 <span class="p">(</span> <span class="n">sourceBodyState_</span><span class="p">(</span> <span class="p">)</span> <span class="o">-</span> <span class="n">acceleratedBodyState_</span><span class="p">(</span> <span class="p">)</span> <span class="p">).</span><span class="n">normalized</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../qtBasics/qtBasics.html" class="btn btn-neutral float-right" title="Qt Basics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="addingNewStateDerivativeModel.html" class="btn btn-neutral" title="4. Adding a New State Derivative Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>

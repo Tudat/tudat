@@ -1,0 +1,416 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. Adding a New Acceleration Model &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
+        <link rel="up" title="Adding Features to Tudat" href="index.html"/>
+        <link rel="next" title="4. Adding a New State Derivative Model" href="addingNewStateDerivativeModel.html"/>
+        <link rel="prev" title="2. Adding a New Environment Model" href="addingNewEnvironmentModel.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials and Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ/index.html">FAQ</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Developer Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../githubBasics/githubBasics.html">Github Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updatingTudat/updatingTudat.html">Updating Tudat</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Adding Features to Tudat</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="addingDependentVariablesToSave.html">1. Adding Dependent Variables to Save</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addingNewEnvironmentModel.html">2. Adding a New Environment Model</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3. Adding a New Acceleration Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addingNewStateDerivativeModel.html">4. Adding a New State Derivative Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addingNewEstimatableParameter.html">5. Adding a New Estimatable Parameter</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../qtBasics/qtBasics.html">Qt Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../applicationCMakeLists/applicationCMakeLists.html">Application CMakelists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extendingJSON/index.html">Extending the JSON Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extendingMATLAB/index.html">Extending the MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howToWriteTheWiki/howToWriteTheWiki.html">How to Write the Wiki</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../socis.html">SOCIS 2019</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Developer Guide</a> &raquo;</li>
+        
+          <li><a href="index.html">Adding Features to Tudat</a> &raquo;</li>
+        
+      <li>3. Adding a New Acceleration Model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/developerGuide/addingFeatures/addingNewAccelerationModel.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="adding-a-new-acceleration-model">
+<span id="addingnewaccelerationmodel"></span><h1>3. Adding a New Acceleration Model<a class="headerlink" href="#adding-a-new-acceleration-model" title="Permalink to this headline">¶</a></h1>
+<p>For some applications, the various acceleration models in Tudat might not be sufficient. This guide will explain how acceleration models are set-up within Tudat, and how these models can be modified, or how to add a completely new model.</p>
+<p>Just as before, it is important to understand the framework of the acceleration models. This will be explained using an example, namely the aerodynamic acceleration model. The first time the acceleration models will be needed is in the user’s own code. An example of how this can be done is shown below:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define propagator settings variables.</span>
+<span class="n">SelectedAccelerationMap</span> <span class="n">accelerationMap</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToPropagate</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodies</span><span class="p">;</span>
+
+<span class="c1">// Define acceleration model settings.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">accelerationsOfWaverider</span><span class="p">;</span>
+<span class="n">accelerationsOfWaverider</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">aerodynamic</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">accelerationMap</span><span class="p">[</span>  <span class="s">&quot;Vehicle&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">accelerationsOfWaverider</span><span class="p">;</span>
+
+<span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">);</span>
+<span class="n">centralBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Mars&quot;</span> <span class="p">);</span>
+
+<span class="c1">// Create acceleration models</span>
+<span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span> <span class="n">accelerationModelMap</span> <span class="o">=</span> <span class="n">createAccelerationModelsMap</span><span class="p">(</span>
+<span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">centralBodies</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>The user will define a special map, with type <code class="docutils literal"><span class="pre">SelectedAccelerationMap</span></code> that works as follows: the first key defines the body exerting the acceleration, the second key the body undergoing the acceleration, and the value in the map is a vector of pointers to a type class called <code class="docutils literal"><span class="pre">AccelerationSettings</span></code>, which takes as input an <code class="docutils literal"><span class="pre">enum</span></code> called <code class="docutils literal"><span class="pre">AvailableAcceleration</span></code>, which lists all the available acceleration models. This map is then used as an input for the <code class="docutils literal"><span class="pre">createAccelerationModelsMap</span></code> function, which is a function that creates a special acceleration map that can be used as an input to the propagator settings.</p>
+<p>There are two functions, located in <code class="docutils literal"><span class="pre">CreateAccelerationModels.cpp</span></code>, called <code class="docutils literal"><span class="pre">createAccelerationModelsMap</span></code>. The function that is called will first order the map, and then return the value of the other function, which takes as input the ordered map, made in the first <code class="docutils literal"><span class="pre">createAccelerationModelsMap</span></code>. The second function looks as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Function to create a set of acceleration models from a map of bodies and acceleration model types.</span>
+<span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span> <span class="n">createAccelerationModelsMap</span><span class="p">(</span>
+       <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span>
+       <span class="k">const</span> <span class="n">SelectedAccelerationMap</span><span class="o">&amp;</span> <span class="n">selectedAccelerationPerBody</span><span class="p">,</span>
+       <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;&amp;</span> <span class="n">centralBodies</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="p">...</span>
+    <span class="p">...</span>
+    <span class="p">...</span>
+        <span class="n">currentAcceleration</span> <span class="o">=</span> <span class="n">createAccelerationModel</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">bodyUndergoingAcceleration</span> <span class="p">),</span>
+                                                           <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">bodyExertingAcceleration</span> <span class="p">),</span>
+                                                           <span class="n">accelerationsForBody</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">).</span><span class="n">second</span><span class="p">,</span>
+                                                           <span class="n">bodyUndergoingAcceleration</span><span class="p">,</span>
+                                                           <span class="n">bodyExertingAcceleration</span><span class="p">,</span>
+                                                           <span class="n">currentCentralBody</span><span class="p">,</span>
+                                                           <span class="n">currentCentralBodyName</span><span class="p">,</span>
+                                                           <span class="n">bodyMap</span> <span class="p">);</span>
+
+
+        <span class="c1">// Create acceleration model.</span>
+        <span class="n">mapOfAccelerationsForBody</span><span class="p">[</span> <span class="n">bodyExertingAcceleration</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span>
+                     <span class="n">currentAcceleration</span> <span class="p">);</span>
+
+    <span class="p">...</span>
+    <span class="p">...</span>
+    <span class="p">...</span>
+        <span class="c1">// Put acceleration models on current body in return map.</span>
+        <span class="n">accelerationModelMap</span><span class="p">[</span> <span class="n">bodyUndergoingAcceleration</span> <span class="p">]</span> <span class="o">=</span> <span class="n">mapOfAccelerationsForBody</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">accelerationModelMap</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This function does several checks if the right models are present, and then calls the <code class="docutils literal"><span class="pre">createAccelerationModel(</span> <span class="pre">)</span></code> function. This function is where the acceleration models are called and looks as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Function to create acceleration model object.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationModel</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">createAccelerationModel</span><span class="p">(</span>
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span> <span class="n">bodyUndergoingAcceleration</span><span class="p">,</span>
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span> <span class="n">bodyExertingAcceleration</span><span class="p">,</span>
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="n">accelerationSettings</span><span class="p">,</span>
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">nameOfBodyUndergoingAcceleration</span><span class="p">,</span>
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">nameOfBodyExertingAcceleration</span><span class="p">,</span>
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span> <span class="n">centralBody</span><span class="p">,</span>
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">nameOfCentralBody</span><span class="p">,</span>
+        <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Declare pointer to return object.</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationModel</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">accelerationModelPointer</span><span class="p">;</span>
+
+    <span class="c1">// Switch to call correct acceleration model type factory function.</span>
+    <span class="k">switch</span><span class="p">(</span> <span class="n">accelerationSettings</span><span class="o">-&gt;</span><span class="n">accelerationType_</span> <span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="p">...</span>
+    <span class="p">...</span>
+    <span class="k">case</span> <span class="nl">aerodynamic</span><span class="p">:</span>
+        <span class="n">accelerationModelPointer</span> <span class="o">=</span> <span class="n">createAerodynamicAcceleratioModel</span><span class="p">(</span>
+                    <span class="n">bodyUndergoingAcceleration</span><span class="p">,</span>
+                    <span class="n">bodyExertingAcceleration</span><span class="p">,</span>
+                    <span class="n">nameOfBodyUndergoingAcceleration</span><span class="p">,</span>
+                    <span class="n">nameOfBodyExertingAcceleration</span> <span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">...</span>
+    <span class="p">...</span>
+    <span class="p">...</span>
+    <span class="k">default</span><span class="o">:</span>
+        <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span>
+                    <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span> <span class="s">&quot;Error, acceleration model &quot;</span><span class="p">)</span> <span class="o">+</span>
+                    <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">accelerationSettings</span><span class="o">-&gt;</span><span class="n">accelerationType_</span> <span class="p">)</span> <span class="o">+</span>
+                    <span class="s">&quot; not recognized when making acceleration model of&quot;</span> <span class="o">+</span>
+                    <span class="n">nameOfBodyExertingAcceleration</span> <span class="o">+</span> <span class="s">&quot; on &quot;</span> <span class="o">+</span>
+                   <span class="n">nameOfBodyUndergoingAcceleration</span> <span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">accelerationModelPointer</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Ths function uses a switch statement on the <code class="docutils literal"><span class="pre">accelerationSettings-&gt;accelerationType_</span></code> (which was set by the user in the beginning), to determine which acceleration model needs to be called. The <code class="docutils literal"><span class="pre">createAerodynamicAcceleratioModel(</span> <span class="pre">)</span></code> then does several checks to determine if all the models that are used to calculate the aerodynamic force are present, after which it calls the constructor of the <code class="docutils literal"><span class="pre">AerodynamicAcceleration</span></code> class using the input values created in <code class="docutils literal"><span class="pre">createAerodynamicAcceleratioModel(</span> <span class="pre">)</span></code>. The structure of the <code class="docutils literal"><span class="pre">AerodynamicAcceleration</span></code> class, and how one can make a new acceleration model will be discussed in the next section.</p>
+<p>When making a new acceleration model, there are two things that need to be added first. The first one is a new class containing functions to calculate the accelerations acting on the respective body. It is important that this class is derived from the base class: <code class="docutils literal"><span class="pre">basic_astrodynamics::AccelerationModel&lt;</span> <span class="pre">dataType</span> <span class="pre">&gt;</span></code>, where <code class="docutils literal"><span class="pre">dataType</span></code> is the type of the acceleration variable. Furthermore, there are two functions that need to be present in the new acceleration model class:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">void</span> <span class="pre">updateMembers(const</span> <span class="pre">double</span> <span class="pre">currentTime</span> <span class="pre">=</span> <span class="pre">TUDAT_NAN)</span></code>. This function updates all the member variables to the current situation so they can be used by the other necessary function.</li>
+<li><code class="docutils literal"><span class="pre">dataType</span> <span class="pre">getAcceleration(</span> <span class="pre">)</span></code>. This function uses the recently updated member variables to calculate the acceleration acting on the body.</li>
+</ul>
+<p>For the case of the aerodynamic acceleration, these two functions look as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">getAcceleration</span><span class="p">(</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">computeAerodynamicAcceleration</span><span class="p">(</span>
+                <span class="mf">0.5</span> <span class="o">*</span> <span class="n">currentDensity_</span> <span class="o">*</span> <span class="n">currentAirspeed_</span> <span class="o">*</span> <span class="n">currentAirspeed_</span><span class="p">,</span>
+                <span class="n">currentReferenceArea_</span><span class="p">,</span> <span class="n">currentForceCoefficients_</span><span class="p">,</span> <span class="n">currentMass_</span> <span class="p">);</span>
+<span class="p">}</span>
+
+
+<span class="kt">void</span> <span class="n">updateMembers</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">currentTime</span> <span class="o">=</span> <span class="n">TUDAT_NAN</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="p">(</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">currentTime_</span> <span class="o">==</span> <span class="n">currentTime</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">currentForceCoefficients_</span> <span class="o">=</span> <span class="n">coefficientMultiplier_</span> <span class="o">*</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">coefficientFunction_</span><span class="p">(</span> <span class="p">);</span>
+        <span class="n">currentDensity_</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">densityFunction_</span><span class="p">(</span> <span class="p">);</span>
+        <span class="n">currentMass_</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">massFunction_</span><span class="p">(</span> <span class="p">);</span>
+        <span class="n">currentAirspeed_</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">airSpeedFunction_</span><span class="p">(</span> <span class="p">);</span>
+        <span class="n">currentReferenceArea_</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">referenceAreaFunction_</span><span class="p">(</span> <span class="p">);</span>
+
+        <span class="n">currentTime_</span> <span class="o">=</span> <span class="n">currentTime</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal"><span class="pre">computeAcceleration()</span></code> is a function that uses the well known lift, side, and drag acceleration equations to calculate the acceleration vector.</p>
+<p>The second piece of code that needs to be added is the new create function inside <code class="docutils literal"><span class="pre">createAccelerationModel.cpp</span></code>. This function should return a pointer to the respective acceleration class, and takes as input the various models needed for the calculation of the acceleration. The main goal of this function is to do some checks if the necessary models are present, and either throw an error, or initialize the model there. When this is done, it uses all the available models as input to the acceleration model, and returns a pointer to this class.</p>
+<p>Once the acceleration class is made, and the create function is in place, the acceleration model should be implemented into the acceleration framework. The first step for this is to add the a new model to the <code class="docutils literal"><span class="pre">AvailableAcceleration</span></code> enum. This name could be anything, as long as it relates to the actual acceleration model. Nothing has to be added to the <code class="docutils literal"><span class="pre">createAccelerationModelsMap</span></code>, however, the <code class="docutils literal"><span class="pre">createAccelerationModel</span></code> function has a switch statement that needs to be altered. This switch statement checks the <code class="docutils literal"><span class="pre">accelerationSettings</span></code> of the specific body to see which acceleration is acting on the body. When a new acceleration model is made, a new case should be made for the new model. This case should have the same name as the name added to the <code class="docutils literal"><span class="pre">AvailableAcceleration</span></code> enum. Inside this case, the variable <code class="docutils literal"><span class="pre">accelerationModelPointer</span></code> should be assigned to the create acceleration model function, which was made before. When this is done, the new acceleration model should be incorporated into the acceleration framework of tudat.</p>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="addingNewStateDerivativeModel.html" class="btn btn-neutral float-right" title="4. Adding a New State Derivative Model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="addingNewEnvironmentModel.html" class="btn btn-neutral" title="2. Adding a New Environment Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>

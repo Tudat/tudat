@@ -153,7 +153,7 @@ We illustrate these two options with some examples below.
         randomVariables2.push_back( randomNumberFunction( ) );
     }
 
-The above creates two vectors give a million doubles, distributed according to a normal distribution with mean of 1 and standard deviation of 3.2.
+The above creates two vectors give a million doubles, distributed according to an uniform distribution with mean of 1 and standard deviation of 3.2.
 
 .. note:: When creating a random variable generator you must also provide a 'seed' value, which initializes the generator. Fixing this value for a given means that the exact same set of random numbers will be generated everytime you run the program.
 

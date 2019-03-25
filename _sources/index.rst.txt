@@ -28,6 +28,10 @@ A detailed list containing the features and applications of Tudat is given here:
 
 Tudat has also been used extensively in research projects, a few of them are listed below:
 
+- `Propagation and estimation of the dynamical behaviour of gravitationally interacting rigid bodies <https://link.springer.com/article/10.1007/s10509-019-3521-4>`_, Dirkx, D., Mooij, E., & Root, B. Astrophysics and Space Science, 364(2), 2019, 37.
+- `Ariane 5 GTO debris mitigation using natural perturbations <https://www.sciencedirect.com/science/article/pii/S0273117718308792?dgcid=coauthor>`_, Pinardell Pons, A., and Noomen, R. Advances in Space Research (in press) 2019.
+- `Laser and radio tracking for planetary science missions—a comparison <https://link.springer.com/article/10.1007/s00190-018-1171-x>`_, Dirkx, D., Prochazka, I., Bauer, S., Visser, P., Noomen, R., Gurvits, L. I., & Vermeersen, B. Journal of Geodesy (in press), 2018
+- `Uncertainty propagation for statistical impact prediction of space debris <https://www.sciencedirect.com/science/article/pii/S0273117717307305>`_, Hoogendoorn, R., Mooij, E., and Geul, J., Advances in Space Research, 61(1), (2018, 167-181.
 - `On the contribution of PRIDE-JUICE to Jovian system ephemerides <https://www.sciencedirect.com/science/article/pii/S0032063317302301>`_, D. Dirkx, L.I. Gurvits, V. Lainey, G. Lari, A. Milani, G. Cimò, T.M. Bocanegra-Bahamon, P.N.A.M. Visser. Planetary and Space Science, Volume 147, 2017, Pages 14-27, ISSN 0032-0633.
 - `Dynamical modelling of the Galilean moons for the JUICE mission <https://www.sciencedirect.com/science/article/pii/S0032063316301143>`_, D. Dirkx, V. Lainey, L.I. Gurvits, P.N.A.M. Visser. Planetary and Space Science, Volume 134, 2016, Pages 82-95, ISSN 0032-0633.
 - `Demonstration of orbit determination for the Lunar Reconnaissance Orbiter using one-way laser ranging data <https://www.sciencedirect.com/science/article/pii/S0032063316300319>`_, S. Bauer, H. Hussmann, J. Oberst, D. Dirkx, D. Mao, G.A. Neumann, E. Mazarico, M.H. Torrence, J.F. McGarry, D.E. Smith, M.T. Zuber. Planetary and Space Science, Volume 129, 2016, Pages 32-46, ISSN 0032-0633.

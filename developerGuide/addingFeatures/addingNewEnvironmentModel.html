@@ -1,0 +1,376 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. Adding a New Environment Model &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
+        <link rel="up" title="Adding Features to Tudat" href="index.html"/>
+        <link rel="next" title="3. Adding a New Acceleration Model" href="addingNewAccelerationModel.html"/>
+        <link rel="prev" title="1. Adding Dependent Variables to Save" href="addingDependentVariablesToSave.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials and Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ/index.html">FAQ</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Developer Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../githubBasics/githubBasics.html">Github Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updatingTudat/updatingTudat.html">Updating Tudat</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Adding Features to Tudat</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="addingDependentVariablesToSave.html">1. Adding Dependent Variables to Save</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2. Adding a New Environment Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addingNewAccelerationModel.html">3. Adding a New Acceleration Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addingNewStateDerivativeModel.html">4. Adding a New State Derivative Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addingNewEstimatableParameter.html">5. Adding a New Estimatable Parameter</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../qtBasics/qtBasics.html">Qt Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../applicationCMakeLists/applicationCMakeLists.html">Application CMakelists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extendingJSON/index.html">Extending the JSON Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extendingMATLAB/index.html">Extending the MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howToWriteTheWiki/howToWriteTheWiki.html">How to Write the Wiki</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../socis.html">SOCIS 2019</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Developer Guide</a> &raquo;</li>
+        
+          <li><a href="index.html">Adding Features to Tudat</a> &raquo;</li>
+        
+      <li>2. Adding a New Environment Model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/developerGuide/addingFeatures/addingNewEnvironmentModel.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="adding-a-new-environment-model">
+<span id="addingnewenvironmentmodel"></span><h1>2. Adding a New Environment Model<a class="headerlink" href="#adding-a-new-environment-model" title="Permalink to this headline">¶</a></h1>
+<p>Tudat contains various pre-built environment models that users are able to implement in their simulations. However, for some applications, it might be necesarry to alter an exisiting environment model, or add a completely new one. This section will describe how a new environment model can be added to Tudat.</p>
+<p>First, it is important to understand how environment models are used in Tudat, this will give some insight in what needs to be added/changed if a new environment model is integrated into Tudat. For this tutorial, an existing environment model will be used as an example: the tabulated atmosphere model.</p>
+<p>A user will define a list of bodies to be used in the simulation, an example is given here:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define simulation body settings.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodySettings</span> <span class="o">=</span>
+        <span class="n">getDefaultBodySettings</span><span class="p">(</span> <span class="p">{</span> <span class="s">&quot;Mars&quot;</span> <span class="p">},</span> <span class="n">simulationStartEpoch</span> <span class="o">-</span> <span class="mf">10.0</span> <span class="o">*</span> <span class="n">fixedStepSize</span><span class="p">,</span>
+                                <span class="n">simulationEndEpoch</span> <span class="o">+</span> <span class="mf">10.0</span> <span class="o">*</span> <span class="n">fixedStepSize</span> <span class="p">);</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">ConstantEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+            <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">::</span><span class="n">Zero</span><span class="p">(</span> <span class="p">),</span> <span class="s">&quot;SSB&quot;</span><span class="p">,</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span><span class="o">-&gt;</span><span class="n">resetOriginalFrame</span><span class="p">(</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">atmosphereFile</span> <span class="o">=</span> <span class="p">...</span> <span class="p">;</span>
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TabulatedAtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">atmosphereFile</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">BodySettings</span></code> class contains a member variable called <code class="docutils literal"><span class="pre">atmosphereSettings</span></code> of type <code class="docutils literal"><span class="pre">AtmosphereSettings</span></code>. As can be seen in the last line of the example code above, this member variable is set to a <code class="docutils literal"><span class="pre">TabulatedAtmosphereSettings</span></code> by the user. This is a valid statement (eventhough <code class="docutils literal"><span class="pre">atmosphereSettings</span></code> is not of type <code class="docutils literal"><span class="pre">TabulatedAtmosphereSettings</span></code>) because <code class="docutils literal"><span class="pre">TabulatedAtmosphereSettings</span></code> is derived from the base class <code class="docutils literal"><span class="pre">AtmosphereSettings</span></code>. These concepts are called polymorphism and inheritance, and should be understood by the reader before continuing.</p>
+<p>When all the <code class="docutils literal"><span class="pre">bodySettings</span></code> are defined by the user, the following command will be executed:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">simulation_setup::createBodies()</span></code> will set all the environment models up to be used later in the simulation, and stores them in the variable <code class="docutils literal"><span class="pre">bodyMap</span></code>. If the <code class="docutils literal"><span class="pre">simulation_setup::createBodies()</span></code> is looked at, the following can be seen:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create atmosphere model objects for each body (if required).</span>
+<span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">).</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">bodyMap</span><span class="p">[</span> <span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">).</span><span class="n">first</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setAtmosphereModel</span><span class="p">(</span>
+                    <span class="n">createAtmosphereModel</span><span class="p">(</span> <span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">).</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span><span class="p">,</span>
+                                           <span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">).</span><span class="n">first</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal"><span class="pre">orderedBodySettings</span></code> is an ordered map of all the bodies. This code goes through all the bodies and checks if the bodies have an atmosphere model set or not. If not, the atmosphere model is set by the <code class="docutils literal"><span class="pre">setAtmosphereModel()</span></code> function, which takes as input a pointer to the atmosphereModel of the body. This pointer is returned by the function: <code class="docutils literal"><span class="pre">createAtmosphereModel()</span></code>, which creates the atmosphere model using the settings defined by the user in the variable <code class="docutils literal"><span class="pre">atmosphereSettings</span></code>. The <code class="docutils literal"><span class="pre">createAtmosphereModel()</span></code> looks as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">aerodynamics</span><span class="o">::</span><span class="n">AtmosphereModel</span> <span class="o">&gt;</span> <span class="n">createAtmosphereModel</span><span class="p">(</span>
+   <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AtmosphereSettings</span> <span class="o">&gt;</span> <span class="n">atmosphereSettings</span><span class="p">,</span>
+   <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">body</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">using</span> <span class="k">namespace</span> <span class="n">tudat</span><span class="o">::</span><span class="n">aerodynamics</span><span class="p">;</span>
+
+    <span class="c1">// Declare return object.</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AtmosphereModel</span> <span class="o">&gt;</span> <span class="n">atmosphereModel</span><span class="p">;</span>
+
+    <span class="c1">// Check which type of atmosphere model is to be created.</span>
+    <span class="k">switch</span><span class="p">(</span> <span class="n">atmosphereSettings</span><span class="o">-&gt;</span><span class="n">getAtmosphereType</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="p">{</span>
+    <span class="k">case</span> <span class="nl">exponential_atmosphere</span><span class="p">:</span>
+    <span class="p">{</span>
+        <span class="p">...</span>
+        <span class="p">...</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+    <span class="k">case</span> <span class="nl">tabulated_atmosphere</span><span class="p">:</span>
+    <span class="p">{</span>
+        <span class="c1">// Check whether settings for atmosphere are consistent with its type</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TabulatedAtmosphereSettings</span> <span class="o">&gt;</span> <span class="n">tabulatedAtmosphereSettings</span> <span class="o">=</span>
+                <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">TabulatedAtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">atmosphereSettings</span> <span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span> <span class="n">tabulatedAtmosphereSettings</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span>
+                        <span class="s">&quot;Error, expected tabulated atmosphere settings for body &quot;</span> <span class="o">+</span> <span class="n">body</span> <span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="c1">// Create and initialize tabulatedl atmosphere model.</span>
+            <span class="n">atmosphereModel</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TabulatedAtmosphere</span> <span class="o">&gt;</span><span class="p">(</span>
+                        <span class="n">tabulatedAtmosphereSettings</span><span class="o">-&gt;</span><span class="n">getAtmosphereFile</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">case</span> <span class="nl">nrlmsise00</span><span class="p">:</span>
+    <span class="p">{</span>
+        <span class="p">...</span>
+        <span class="p">...</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+    <span class="k">default</span><span class="o">:</span>
+        <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span>
+                    <span class="s">&quot;Error, did not recognize atmosphere model settings type &quot;</span> <span class="o">+</span>
+                    <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">atmosphereSettings</span><span class="o">-&gt;</span><span class="n">getAtmosphereType</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">atmosphereModel</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This function checks which atmosphere model is used by using a switch statement with the <code class="docutils literal"><span class="pre">atmosphereSettings-&gt;getAtmosphereType(</span> <span class="pre">)</span></code>. The three cases are defined using the enum <code class="docutils literal"><span class="pre">AtmosphereTypes</span></code> (located in <code class="docutils literal"><span class="pre">createAtmosphereModel.h</span></code>). In the case of the tabulated atmosphere, first a check is made if tabulated atmosphere setting are actually initialized. If they are, the <code class="docutils literal"><span class="pre">atmosphereModel</span></code> is set to a tabulated atmosphere using the settings from <code class="docutils literal"><span class="pre">atmosphereSettings</span></code>. It can be seen in the example code above that the variable <code class="docutils literal"><span class="pre">atmosphereModel</span></code> is of type <code class="docutils literal"><span class="pre">AtmosphereModel</span></code>, but it is set to a variable of type <code class="docutils literal"><span class="pre">TabulatedAtmosphere</span></code> in the tabulated atmosphere case. This is again valid due to the fact that the class <code class="docutils literal"><span class="pre">TabulatedAtmosphere</span></code> is derived from the base class <code class="docutils literal"><span class="pre">AtmosphereModel</span></code>.</p>
+<p>After the atmosphere model is set in the body map, it can be used whenever a certain quantity, e.g. the density or temperature, is needed by another part of the simulation. How these quantities are calculated is defined in the <code class="docutils literal"><span class="pre">TabulatedAtmosphere</span></code> class.</p>
+<p>Now that the creation of an environment model is understood, it can be discussed what should change in the Tudat code when something is added. There are two options when changing the code: the user can modify an existing environment model, or they can add a new model to an existing type of environment model. These type of modifications require different amount of changes made to Tudat and are thus explained seperately here:</p>
+<ul class="simple">
+<li><strong>Modify existing environment model:</strong> this option is the easiest as it only requires changes in the specific environment type files. If a function is added to an environment model, it is important to also include this function in the base class file of that specific environment model, with the virtual statement. For example, take the <code class="docutils literal"><span class="pre">getDensity()</span></code> function. This function is put in the file <code class="docutils literal"><span class="pre">AtmosphereModel.h</span></code> as a pure virtual function (don’t need a function definition), by putting a <code class="docutils literal"><span class="pre">=0</span></code> after the function definition and including the virtual statement. Now, in every derived class, this function should return something, depending on the implementation. If only something inside an already existing function needs to be changed, it (most of the time) shouldn’t be changed in all the derived classes. If a variable is added to the constructor of the class, it is important that all the cases that this class is called should be changed in the entire Tudat code to prevent errors (use the <code class="docutils literal"><span class="pre">find</span> <span class="pre">usages</span></code> option in Qt to find them).</li>
+<li><strong>Add a new environment model:</strong> this modification requires some extra changes to the framework of the environment model implementation. First, when the new model is made, make sure that it is derived from the base class, and that it contains some of the basic functions. Once the new model is made, a <code class="docutils literal"><span class="pre">Settings</span></code> class should be made in the same way as <code class="docutils literal"><span class="pre">TabulatedAtmosphereSettings</span></code>. This class should be added to the <code class="docutils literal"><span class="pre">create...</span></code> files, and should contain functions that store variables that are used to call the constructor of the corresponding class (again, make sure it is derived from the proper base class). Then, in the corresponding <code class="docutils literal"><span class="pre">.cpp</span></code> file, a new case for the new environment model should be added to the <code class="docutils literal"><span class="pre">create...</span></code> function, just as in the tabulated atmosphere example. Make sure that in the <code class="docutils literal"><span class="pre">getAtmosphereType(</span> <span class="pre">)</span></code> function, the name of the new model is also included. In the case statement, make sure to add checks, and throw runtime errors if they are violated. Another step that needs to be taken is to update the <code class="docutils literal"><span class="pre">createEnvironmentUpdater.cpp</span></code> file. This file includes several switch statements that need to have the new acceleration model in it. Use the existing code to determine how the new case should be made.</li>
+</ul>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="addingNewAccelerationModel.html" class="btn btn-neutral float-right" title="3. Adding a New Acceleration Model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="addingDependentVariablesToSave.html" class="btn btn-neutral" title="1. Adding Dependent Variables to Save" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>

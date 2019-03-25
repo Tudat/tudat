@@ -1,0 +1,348 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. Adding Dependent Variables to Save &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
+        <link rel="up" title="Adding Features to Tudat" href="index.html"/>
+        <link rel="next" title="2. Adding a New Environment Model" href="addingNewEnvironmentModel.html"/>
+        <link rel="prev" title="Adding Features to Tudat" href="index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials and Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ/index.html">FAQ</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Developer Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../githubBasics/githubBasics.html">Github Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updatingTudat/updatingTudat.html">Updating Tudat</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Adding Features to Tudat</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1. Adding Dependent Variables to Save</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addingNewEnvironmentModel.html">2. Adding a New Environment Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addingNewAccelerationModel.html">3. Adding a New Acceleration Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addingNewStateDerivativeModel.html">4. Adding a New State Derivative Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addingNewEstimatableParameter.html">5. Adding a New Estimatable Parameter</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../qtBasics/qtBasics.html">Qt Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../applicationCMakeLists/applicationCMakeLists.html">Application CMakelists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extendingJSON/index.html">Extending the JSON Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extendingMATLAB/index.html">Extending the MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howToWriteTheWiki/howToWriteTheWiki.html">How to Write the Wiki</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../socis.html">SOCIS 2019</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Developer Guide</a> &raquo;</li>
+        
+          <li><a href="index.html">Adding Features to Tudat</a> &raquo;</li>
+        
+      <li>1. Adding Dependent Variables to Save</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/developerGuide/addingFeatures/addingDependentVariablesToSave.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="adding-dependent-variables-to-save">
+<span id="addingdependentvariablestosave"></span><h1>1. Adding Dependent Variables to Save<a class="headerlink" href="#adding-dependent-variables-to-save" title="Permalink to this headline">¶</a></h1>
+<p>As the execution of the simulator happens “behind closed doors” in the <code class="docutils literal"><span class="pre">DynamicsSimulator</span></code> function, it can be non-trivial to retrieve the history of dependent variables. Luckily, as explained in <a class="reference internal" href="../../tutorials/tudatFeatures/propagationSetup/propagatorSettingsDependentVariables.html#tudatfeaturespropagatorsettingsdependentvariables"><span class="std std-ref">Propagator Settings: Dependent Variables</span></a>, it is possible to create a list of dependent variables and use it as an input to the propagation settings to be able to retrieve a history of these dependent variables after the simulation is done. A list of the available dependent variables is given in: <a class="reference internal" href="../../tutorials/tudatFeatures/propagationSetup/propagatorSettingsDependentVariables.html#tudatfeaturespropagatorsettingsdependentvariables"><span class="std std-ref">Propagator Settings: Dependent Variables</span></a>. It is possible that another dependent variable is needed by the user, which is not given in this list. This guide will show how a new dependent variable can be added to the code.</p>
+<p>To add a new dependent variable, four files will need to be changed, these are all located in the following directory:</p>
+<blockquote>
+<div>…/tudatBundle/tudat/Tudat/SimulationSetup/PropagationSetup/</div></blockquote>
+<p>For this guide, the <code class="docutils literal"><span class="pre">mach_number_dependent_variable</span></code> will be used as an example of how a dependent variable is implemented. Be aware that there are some slight differences between the implementation of the <code class="docutils literal"><span class="pre">mach_number_dependent_variable</span></code> and other variables, but this will be explained in the guide.</p>
+<p>The first addition needs to be made in the <code class="docutils literal"><span class="pre">propagationOutputSettings.h</span></code> file. Here, an <code class="docutils literal"><span class="pre">enum</span></code> called <code class="docutils literal"><span class="pre">PropagationDependentVariables</span></code> is given which shows the names of all the available dependent variables that can be saved. The list looks as follows;</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">PropagationDependentVariables</span>
+<span class="p">{</span>
+    <span class="n">mach_number_dependent_variable</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">altitude_dependent_variable</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">airspeed_dependent_variable</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="p">...</span>
+    <span class="p">...</span>
+    <span class="p">...</span>
+    <span class="n">body_fixed_groundspeed_based_velocity_variable</span> <span class="o">=</span> <span class="mi">31</span><span class="p">,</span>
+    <span class="n">keplerian_state_dependent_variable</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
+    <span class="n">modified_equinocial_state_dependent_variable</span> <span class="o">=</span> <span class="mi">33</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>The name of the new variable can thus be added to the end of the list, with a number assigned to it.</p>
+<p>The next addition needs to be made in the <code class="docutils literal"><span class="pre">propagationOutputSettings.cpp</span></code> file. In this file, a method is present called: <code class="docutils literal"><span class="pre">getDependentVariableName</span></code>. This method contains a switch statement which contains cases for all the different dependent variables. For a new variable, a new case must be made with the name that was added to the <code class="docutils literal"><span class="pre">PropagationDependentVariables</span></code> list. Inside the case, a string called <code class="docutils literal"><span class="pre">variableName</span></code> must be assigned with the name of the to be added variable. In the case of the mach number, it looks as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">case</span> <span class="nl">mach_number_dependent_variable</span><span class="p">:</span>
+    <span class="n">variableName</span> <span class="o">=</span> <span class="s">&quot;Mach number &quot;</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>It is important to remember that the case should be the same as the name given in <code class="docutils literal"><span class="pre">PropagationDependentVariables</span></code>, but the <code class="docutils literal"><span class="pre">variableName</span></code> can be chosen to the preference of the user.</p>
+<p>The third addition needs to be made in <code class="docutils literal"><span class="pre">propagationOutput.cpp</span></code>. Here a method called <code class="docutils literal"><span class="pre">getDependentVariableSize</span></code> is located. In this function, another switch statement is made with the same cases as before. Again a new case should be made for the new variable, but now, inside the case, another variable called <code class="docutils literal"><span class="pre">variableSize</span></code> should be changed to the size of the added variable. Thus this could be 1 for a <code class="docutils literal"><span class="pre">double</span></code>, or 3 for an <code class="docutils literal"><span class="pre">Eigen::Vector3d</span></code>. In the case of the mach number, it looks as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">case</span> <span class="nl">mach_number_dependent_variable</span><span class="p">:</span>
+    <span class="n">variableSize</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The final change should then be made to the <code class="docutils literal"><span class="pre">propagationOutput.h</span></code> file. In a method called <code class="docutils literal"><span class="pre">getDoubleDependentVariableFunction</span></code>, the actual calculation of the variable is done. Again, a switch stamentent in the same manner as before is made, with in every case the calculation of the variable. This method gets the <code class="docutils literal"><span class="pre">bodyMap</span></code> as input, thus methods available inside the <code class="docutils literal"><span class="pre">FlightConditions</span></code> could, for example, be used to calculate the dependent variable. For the new variable, a new case needs to be made in which a <code class="docutils literal"><span class="pre">std::function&lt;</span> <span class="pre">double(</span> <span class="pre">)&gt;</span></code> is returned. This function can take several variables as input and should return the dependent variable. The implementation for the mach number is given here:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span>  <span class="k">case</span> <span class="nl">mach_number_dependent_variable</span><span class="p">:</span>
+  <span class="p">{</span>
+      <span class="k">if</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">bodyWithProperty</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span> <span class="p">)</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="p">)</span>
+      <span class="p">{</span>
+          <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;Error, no flight conditions available when requesting Mach number output of &quot;</span> <span class="o">+</span>
+                  <span class="n">bodyWithProperty</span> <span class="o">+</span> <span class="s">&quot;w.r.t.&quot;</span> <span class="o">+</span> <span class="n">secondaryBody</span><span class="p">;</span>
+          <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="n">errorMessage</span> <span class="p">);</span>
+      <span class="p">}</span>
+
+      <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">functionToEvaluate</span> <span class="o">=</span>
+              <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">aerodynamics</span><span class="o">::</span><span class="n">computeMachNumber</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span> <span class="p">);</span>
+
+      <span class="c1">// Retrieve functions for airspeed and speed of sound.</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">firstInput</span> <span class="o">=</span>
+              <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">aerodynamics</span><span class="o">::</span><span class="n">FlightConditions</span><span class="o">::</span><span class="n">getCurrentAirspeed</span><span class="p">,</span>
+                           <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">bodyWithProperty</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">secondInput</span> <span class="o">=</span>
+              <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">aerodynamics</span><span class="o">::</span><span class="n">FlightConditions</span><span class="o">::</span><span class="n">getCurrentSpeedOfSound</span><span class="p">,</span>
+                           <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">bodyWithProperty</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
+
+
+      <span class="n">variableFunction</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">evaluateBivariateFunction</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">,</span>
+                                      <span class="n">functionToEvaluate</span><span class="p">,</span> <span class="n">firstInput</span><span class="p">,</span> <span class="n">secondInput</span> <span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the variable is a vector (or matrix) and not a double, the case should not be added to <code class="docutils literal"><span class="pre">getDoubleDependentVariableFunction</span></code>, but to: <code class="docutils literal"><span class="pre">getVectorDependentVariableFunction</span></code></p>
+<p>If this is all done, the dependent variable name can be added to the dependent variables save list.</p>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="addingNewEnvironmentModel.html" class="btn btn-neutral float-right" title="2. Adding a New Environment Model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Adding Features to Tudat" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>
