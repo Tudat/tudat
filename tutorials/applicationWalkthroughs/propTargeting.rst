@@ -26,10 +26,23 @@ The problem is set-up as follows:
     double altitudeOfApogee = 40000000.0;
     double altitudeOfTarget = 35000000.0;
     double longitudeOfTarget = 30.0; // In degrees
-    problem prob{PropagationTargetingProblem( altitudeOfPerigee, altitudeOfApogee, altitudeOfTarget,
-                  longitudeOfTarget, false ) };
 
-First, the Spice (ephemeris) kernels are loaded in to get an accurate ephemeris of all the bodies included in this example. Then the input to the problem is defined: the perigee and apogee of the targeter, and the altitude and longitude of the target. Then the problem is object is made in the same manner as was done in previous examples, using the :literal:`PropagationTargetingProblem(...)` as the UDP.
+    // Define list of dependent variables to save.
+    std::vector< std::shared_ptr< propagators::SingleDependentVariableSaveSettings > > dependentVariablesList;
+    dependentVariablesList.push_back( std::make_shared< propagators::SingleDependentVariableSaveSettings >(
+                                          propagators::altitude_dependent_variable, "Satellite", "Earth" ) );
+
+    // Create object with list of dependent variables.
+    std::shared_ptr< propagators::DependentVariableSaveSettings > dependentVariablesToSave =
+            std::make_shared< propagators::DependentVariableSaveSettings >( dependentVariablesList );
+
+
+    PropagationTargetingProblem targetingProblem( altitudeOfPerigee, altitudeOfApogee, altitudeOfTarget,
+                                                  longitudeOfTarget, dependentVariablesToSave, false );
+
+.. note:: The addition of a :literal:`std::shared_ptr< propagators::DependentVariableSaveSettings >` pointer as an input of the UDP constructor will allow the user to later save the values of some dependent variables from the propagation performed in the :literal:`fitness` function  (here the altitude of the spacecraft with respect to the Earth for this particular example). 
+
+First, the Spice (ephemeris) kernels are loaded in to get an accurate ephemeris of all the bodies included in this example. Then the input to the problem is defined: the perigee and apogee of the targeter, and the altitude and longitude of the target. Then the problem object is made in the same manner as was done in previous examples, using the :literal:`PropagationTargetingProblem(...)` as the UDP.
 
 .. warning:: Don't load the spice kernels inside the UDP! This will cause the kernels to be loaded each time the UDP is called, which will slow the application down, and result in an error by spice when a certain limit is reached.
 
@@ -110,7 +123,7 @@ After the constructor is setup, the next step is to define the target orbit usin
     initialKeplerElements, earthGravitationalParameter_ );
 
 
-The only acceleration models that are implemented are gravitational of nature. The propagator setting use the Cowell method and a RK4 integrator:
+The only acceleration models that are implemented are gravitational of nature. The propagator settings use the Cowell method and a RK4 integrator. The dependent variables that must be saved are also specified in the propagator settings:
 
 .. code-block:: cpp
 
@@ -141,7 +154,7 @@ The only acceleration models that are implemented are gravitational of nature. T
     //Setup propagator (cowell) and integrator (RK4 fixed stepsize)
     std::shared_ptr< TranslationalStatePropagatorSettings< double > > propagatorSettings =
             std::make_shared< TranslationalStatePropagatorSettings< double > >
-            ( centralBodies, accelerationModelMap, bodiesToPropagate, systemInitialState, simulationEndEpoch_ );
+            ( centralBodies, accelerationModelMap, bodiesToPropagate, systemInitialState, simulationEndEpoch_, cowell, dependentVariablesToSave_ );
     std::shared_ptr< IntegratorSettings< > > integratorSettings =
             std::make_shared< IntegratorSettings< > >
             ( rungeKutta4, simulationStartEpoch_, fixedStepSize );
@@ -151,14 +164,20 @@ The only acceleration models that are implemented are gravitational of nature. T
             bodyMap_, integratorSettings, propagatorSettings, true, false, false );
 
 
-After the simulation is defined, it is time to actually define the optimization part of this example: 
+Once the simulation is performed, its results must be retrieved and some of them stored. First, the results of the simulation are stored in a variable: :literal:`integrationResult`. Additionally, the state history of the spacecraft and the dependent variables are stored in the private attributes :literal:`previousStateHistory_` and :literal:`previousDependentVariablesHistory_` respectively. The same is done for the final values of both the spacecraft state and the dependent variables at the end of the propagation (stored in the attributes :literal:`previousFinalState_` and :literal:`previousDependentVariablesFinalValues_`). Storing the simulation results this way will allow the user to access them outside the :literal:`fitness` function and thus to save them in different files later.
 
 .. code-block:: cpp
 
     //Retrieve results
-    std::map< double, Eigen::VectorXd > integrationResult =
-            dynamicsSimulator.getEquationsOfMotionNumericalSolution( );
+    std::map< double, Eigen::VectorXd > integrationResult = dynamicsSimulator.getEquationsOfMotionNumericalSolution( );
+    previousStateHistory_ = dynamicsSimulator.getEquationsOfMotionNumericalSolution( );
+    previousFinalState_ = previousStateHistory_.rbegin( )->second;
+    previousDependentVariablesHistory_ = dynamicsSimulator.getDependentVariableHistory();
+    previousDependentVariablesFinalValues_ = previousDependentVariablesHistory_.rbegin()->second;
 
+After the simulation is defined and its results properly saved, it is time to actually define the optimization part of this example:
+ 
+.. code-block:: cpp
 
     //Find minimum distance from target
     Eigen::Vector3d separationFromTarget =
@@ -189,7 +208,7 @@ After the simulation is defined, it is time to actually define the optimization 
 
     return output;
 
-First, the results of the simulation are stored in a variable: :literal:`integrationResult`. Then the smalles distance and time of the smallest distance between the targeter and the target are intialized. These variables are needed in the for-loop that follows to determine the best results of the simulation. This result is then stored and used as the fitness value. 
+The smallest distance and time of the smallest distance between the targeter and the target are intialized. These variables are needed in the for-loop that follows to determine the best results of the simulation. This result is then stored and used as the fitness value. 
 
 Selecting the Algorithm
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -200,7 +219,7 @@ In this example, the de1220 algorithm is selected to optimize the trajectory:
     // Instantiate a pagmo algorithm
     algorithm algo{de1220( )};
 
-A grid-search is also performed, however, this is only done to compare the resuolts and it shall thus not be discussed here. 
+A grid-search is also performed, however, this is only done to compare the results and it shall thus not be discussed here. 
 
 Building the Island
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -232,6 +251,39 @@ Finally, the optimization is performed in the same manner as in :ref:`walkthroug
 
             std::cout<<i<<std::endl;
         }
+
+Save the final spacecraft state and required dependent variables in files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The definition of additional private attributes (:literal:`previousStateHistory_`, :literal:`previousFinalState_` , :literal:`previousDependentVariablesHistory_` and :literal:`previousDependentVariablesFinalValues_`) allows the user to access other variables that just the fitness value from the :literal:`fitness` function. In this particular example, the final state of the spacecraft at the end of the propagation and the final values of the dependent variables are saved in separate files. Saving these variables requires to recall the :literal:`fitness` function for each individual of the last population successively, so that the variables to be saved indeed correspond to each indidual, as it is done below.
+
+.. code-block:: cpp  
+
+   // Retrieve final Cartesian states for population in last generation, and save final states to a file.
+   std::vector<std::vector< double > > decisionVariables = isl.get_population( ).get_x( );
+   std::map< int, Eigen::VectorXd > finalStates;
+   for( unsigned int i = 0; i < decisionVariables.size( ); i++ )
+   {
+       targetingProblem.fitness( decisionVariables.at( i ) );
+       finalStates[ i ] = targetingProblem.getPreviousFinalState( );
+   }
+   tudat::input_output::writeDataMapToTextFile(
+              finalStates, "targetingFinalStates.dat", tudat_pagmo_applications::getOutputPath( ) );
+
+   // Retrieve final values of dependent variables for population in last generation, and save final dependent variables values to a file.
+   std::map< int, Eigen::VectorXd > dependentVariablesFinalValues;
+   for( unsigned int i = 0; i < decisionVariables.size( ); i++ )
+   {
+       targetingProblem.fitness( decisionVariables.at( i ) );
+       dependentVariablesFinalValues[ i ] = targetingProblem.getPreviousDependentVariablesFinalValues();
+   }
+   tudat::input_output::writeDataMapToTextFile(
+               dependentVariablesFinalValues, "targetingDependentVariablesFinalVariables.dat", tudat_pagmo_applications::getOutputPath( ) );
+
+
+.. warning::
+
+   It must be stressed out that retrieving such variables is only doable for the population of the last generation, due to the intrisic way PAGMO is implemented (the variables being overwriten from each generation to the next one).
 
 
 Perturbed Example
