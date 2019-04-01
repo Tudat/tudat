@@ -118,6 +118,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -205,11 +206,26 @@
 <span class="kt">double</span> <span class="n">altitudeOfApogee</span> <span class="o">=</span> <span class="mf">40000000.0</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">altitudeOfTarget</span> <span class="o">=</span> <span class="mf">35000000.0</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">longitudeOfTarget</span> <span class="o">=</span> <span class="mf">30.0</span><span class="p">;</span> <span class="c1">// In degrees</span>
-<span class="n">problem</span> <span class="n">prob</span><span class="p">{</span><span class="n">PropagationTargetingProblem</span><span class="p">(</span> <span class="n">altitudeOfPerigee</span><span class="p">,</span> <span class="n">altitudeOfApogee</span><span class="p">,</span> <span class="n">altitudeOfTarget</span><span class="p">,</span>
-              <span class="n">longitudeOfTarget</span><span class="p">,</span> <span class="nb">false</span> <span class="p">)</span> <span class="p">};</span>
+
+<span class="c1">// Define list of dependent variables to save.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">propagators</span><span class="o">::</span><span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">dependentVariablesList</span><span class="p">;</span>
+<span class="n">dependentVariablesList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">propagators</span><span class="o">::</span><span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+                                      <span class="n">propagators</span><span class="o">::</span><span class="n">altitude_dependent_variable</span><span class="p">,</span> <span class="s">&quot;Satellite&quot;</span><span class="p">,</span> <span class="s">&quot;Earth&quot;</span> <span class="p">)</span> <span class="p">);</span>
+
+<span class="c1">// Create object with list of dependent variables.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">propagators</span><span class="o">::</span><span class="n">DependentVariableSaveSettings</span> <span class="o">&gt;</span> <span class="n">dependentVariablesToSave</span> <span class="o">=</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">propagators</span><span class="o">::</span><span class="n">DependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">dependentVariablesList</span> <span class="p">);</span>
+
+
+<span class="n">PropagationTargetingProblem</span> <span class="nf">targetingProblem</span><span class="p">(</span> <span class="n">altitudeOfPerigee</span><span class="p">,</span> <span class="n">altitudeOfApogee</span><span class="p">,</span> <span class="n">altitudeOfTarget</span><span class="p">,</span>
+                                              <span class="n">longitudeOfTarget</span><span class="p">,</span> <span class="n">dependentVariablesToSave</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>First, the Spice (ephemeris) kernels are loaded in to get an accurate ephemeris of all the bodies included in this example. Then the input to the problem is defined: the perigee and apogee of the targeter, and the altitude and longitude of the target. Then the problem is object is made in the same manner as was done in previous examples, using the <code class="docutils literal"><span class="pre">PropagationTargetingProblem(...)</span></code> as the UDP.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The addition of a <code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">propagators::DependentVariableSaveSettings</span> <span class="pre">&gt;</span></code> pointer as an input of the UDP constructor will allow the user to later save the values of some dependent variables from the propagation performed in the <code class="docutils literal"><span class="pre">fitness</span></code> function  (here the altitude of the spacecraft with respect to the Earth for this particular example).</p>
+</div>
+<p>First, the Spice (ephemeris) kernels are loaded in to get an accurate ephemeris of all the bodies included in this example. Then the input to the problem is defined: the perigee and apogee of the targeter, and the altitude and longitude of the target. Then the problem object is made in the same manner as was done in previous examples, using the <code class="docutils literal"><span class="pre">PropagationTargetingProblem(...)</span></code> as the UDP.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">Don’t load the spice kernels inside the UDP! This will cause the kernels to be loaded each time the UDP is called, which will slow the application down, and result in an error by spice when a certain limit is reached.</p>
@@ -281,7 +297,7 @@
 <span class="n">initialKeplerElements</span><span class="p">,</span> <span class="n">earthGravitationalParameter_</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The only acceleration models that are implemented are gravitational of nature. The propagator setting use the Cowell method and a RK4 integrator:</p>
+<p>The only acceleration models that are implemented are gravitational of nature. The propagator settings use the Cowell method and a RK4 integrator. The dependent variables that must be saved are also specified in the propagator settings:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//Setup simulation. Simple Keplerian orbit (only central-gravity of Earth)</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToPropagate</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;Satellite&quot;</span> <span class="p">};</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodies</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;Earth&quot;</span> <span class="p">};</span>
@@ -309,7 +325,7 @@
 <span class="c1">//Setup propagator (cowell) and integrator (RK4 fixed stepsize)</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">propagatorSettings</span> <span class="o">=</span>
         <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
-        <span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span> <span class="n">accelerationModelMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">systemInitialState</span><span class="p">,</span> <span class="n">simulationEndEpoch_</span> <span class="p">);</span>
+        <span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span> <span class="n">accelerationModelMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">systemInitialState</span><span class="p">,</span> <span class="n">simulationEndEpoch_</span><span class="p">,</span> <span class="n">cowell</span><span class="p">,</span> <span class="n">dependentVariablesToSave_</span> <span class="p">);</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">integratorSettings</span> <span class="o">=</span>
         <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
         <span class="p">(</span> <span class="n">rungeKutta4</span><span class="p">,</span> <span class="n">simulationStartEpoch_</span><span class="p">,</span> <span class="n">fixedStepSize</span> <span class="p">);</span>
@@ -319,13 +335,17 @@
         <span class="n">bodyMap_</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>After the simulation is defined, it is time to actually define the optimization part of this example:</p>
+<p>Once the simulation is performed, its results must be retrieved and some of them stored. First, the results of the simulation are stored in a variable: <code class="docutils literal"><span class="pre">integrationResult</span></code>. Additionally, the state history of the spacecraft and the dependent variables are stored in the private attributes <code class="docutils literal"><span class="pre">previousStateHistory_</span></code> and <code class="docutils literal"><span class="pre">previousDependentVariablesHistory_</span></code> respectively. The same is done for the final values of both the spacecraft state and the dependent variables at the end of the propagation (stored in the attributes <code class="docutils literal"><span class="pre">previousFinalState_</span></code> and <code class="docutils literal"><span class="pre">previousDependentVariablesFinalValues_</span></code>). Storing the simulation results this way will allow the user to access them outside the <code class="docutils literal"><span class="pre">fitness</span></code> function and thus to save them in different files later.</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//Retrieve results</span>
-<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">integrationResult</span> <span class="o">=</span>
-        <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
-
-
-<span class="c1">//Find minimum distance from target</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">integrationResult</span> <span class="o">=</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">previousStateHistory_</span> <span class="o">=</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">previousFinalState_</span> <span class="o">=</span> <span class="n">previousStateHistory_</span><span class="p">.</span><span class="n">rbegin</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">;</span>
+<span class="n">previousDependentVariablesHistory_</span> <span class="o">=</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getDependentVariableHistory</span><span class="p">();</span>
+<span class="n">previousDependentVariablesFinalValues_</span> <span class="o">=</span> <span class="n">previousDependentVariablesHistory_</span><span class="p">.</span><span class="n">rbegin</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>After the simulation is defined and its results properly saved, it is time to actually define the optimization part of this example:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//Find minimum distance from target</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">separationFromTarget</span> <span class="o">=</span>
         <span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span><span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">AngleAxisd</span><span class="p">(</span>
                                 <span class="o">-</span><span class="n">earthRotationRate</span> <span class="o">*</span> <span class="n">integrationResult</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">first</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitZ</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="o">*</span>
@@ -355,7 +375,7 @@
 <span class="k">return</span> <span class="n">output</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>First, the results of the simulation are stored in a variable: <code class="docutils literal"><span class="pre">integrationResult</span></code>. Then the smalles distance and time of the smallest distance between the targeter and the target are intialized. These variables are needed in the for-loop that follows to determine the best results of the simulation. This result is then stored and used as the fitness value.</p>
+<p>The smallest distance and time of the smallest distance between the targeter and the target are intialized. These variables are needed in the for-loop that follows to determine the best results of the simulation. This result is then stored and used as the fitness value.</p>
 </div>
 <div class="section" id="selecting-the-algorithm">
 <h2>5.2. Selecting the Algorithm<a class="headerlink" href="#selecting-the-algorithm" title="Permalink to this headline">¶</a></h2>
@@ -364,7 +384,7 @@
 <span class="n">algorithm</span> <span class="n">algo</span><span class="p">{</span><span class="n">de1220</span><span class="p">(</span> <span class="p">)};</span>
 </pre></div>
 </div>
-<p>A grid-search is also performed, however, this is only done to compare the resuolts and it shall thus not be discussed here.</p>
+<p>A grid-search is also performed, however, this is only done to compare the results and it shall thus not be discussed here.</p>
 </div>
 <div class="section" id="building-the-island">
 <h2>5.3. Building the Island<a class="headerlink" href="#building-the-island" title="Permalink to this headline">¶</a></h2>
@@ -394,8 +414,38 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="save-the-final-spacecraft-state-and-required-dependent-variables-in-files">
+<h2>5.5. Save the final spacecraft state and required dependent variables in files<a class="headerlink" href="#save-the-final-spacecraft-state-and-required-dependent-variables-in-files" title="Permalink to this headline">¶</a></h2>
+<p>The definition of additional private attributes (<code class="docutils literal"><span class="pre">previousStateHistory_</span></code>, <code class="docutils literal"><span class="pre">previousFinalState_</span></code> , <code class="docutils literal"><span class="pre">previousDependentVariablesHistory_</span></code> and <code class="docutils literal"><span class="pre">previousDependentVariablesFinalValues_</span></code>) allows the user to access other variables that just the fitness value from the <code class="docutils literal"><span class="pre">fitness</span></code> function. In this particular example, the final state of the spacecraft at the end of the propagation and the final values of the dependent variables are saved in separate files. Saving these variables requires to recall the <code class="docutils literal"><span class="pre">fitness</span></code> function for each individual of the last population successively, so that the variables to be saved indeed correspond to each indidual, as it is done below.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Retrieve final Cartesian states for population in last generation, and save final states to a file.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">decisionVariables</span> <span class="o">=</span> <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span> <span class="p">).</span><span class="n">get_x</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">int</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">finalStates</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">decisionVariables</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">targetingProblem</span><span class="p">.</span><span class="n">fitness</span><span class="p">(</span> <span class="n">decisionVariables</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">finalStates</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">targetingProblem</span><span class="p">.</span><span class="n">getPreviousFinalState</span><span class="p">(</span> <span class="p">);</span>
+<span class="p">}</span>
+<span class="n">tudat</span><span class="o">::</span><span class="n">input_output</span><span class="o">::</span><span class="n">writeDataMapToTextFile</span><span class="p">(</span>
+           <span class="n">finalStates</span><span class="p">,</span> <span class="s">&quot;targetingFinalStates.dat&quot;</span><span class="p">,</span> <span class="n">tudat_pagmo_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
+
+<span class="c1">// Retrieve final values of dependent variables for population in last generation, and save final dependent variables values to a file.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">int</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">dependentVariablesFinalValues</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">decisionVariables</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">targetingProblem</span><span class="p">.</span><span class="n">fitness</span><span class="p">(</span> <span class="n">decisionVariables</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">dependentVariablesFinalValues</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">targetingProblem</span><span class="p">.</span><span class="n">getPreviousDependentVariablesFinalValues</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="n">tudat</span><span class="o">::</span><span class="n">input_output</span><span class="o">::</span><span class="n">writeDataMapToTextFile</span><span class="p">(</span>
+            <span class="n">dependentVariablesFinalValues</span><span class="p">,</span> <span class="s">&quot;targetingDependentVariablesFinalVariables.dat&quot;</span><span class="p">,</span> <span class="n">tudat_pagmo_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">It must be stressed out that retrieving such variables is only doable for the population of the last generation, due to the intrisic way PAGMO is implemented (the variables being overwriten from each generation to the next one).</p>
+</div>
+</div>
 <div class="section" id="perturbed-example">
-<h2>5.5. Perturbed Example<a class="headerlink" href="#perturbed-example" title="Permalink to this headline">¶</a></h2>
+<h2>5.6. Perturbed Example<a class="headerlink" href="#perturbed-example" title="Permalink to this headline">¶</a></h2>
 <p>In the second half of the example, the code is repeated, but with extended dynamics. This optimization problem is almost the same as the previous problem, but there are some differences due to the fact that the convergence of this problem is non-trivial.</p>
 <p>The first difference is the fact that when the UDP is initialized, a boolean variable in the constructor is set to <code class="docutils literal"><span class="pre">true</span></code>, namely: <code class="docutils literal"><span class="pre">useExtendedDynamics</span></code>. This variable will make sure that the third-body lunar and solar gravitational perturbation is included in the dynamics. The second difference is that the initial population is set to the final population of the previous problem. This will help with the convergence of this problem, and is shown below:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create an empty population for perturbed problem</span>
@@ -412,7 +462,7 @@
 <p>The most important thing to remember here is the fact that the population needs to be set in a for-loop, not just in one line. The rest of the example is fairly straightforward and is left to the reader to understand.</p>
 </div>
 <div class="section" id="results">
-<h2>5.6. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2>5.7. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p>The output of the application should look as follows (specific numbers could be different):</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span>Starting ...\tudatBundle.git\tudatExampleApplications\libraryExamples\bin\applications\application_PagmoPropagationTargetingExample.exe...
 
