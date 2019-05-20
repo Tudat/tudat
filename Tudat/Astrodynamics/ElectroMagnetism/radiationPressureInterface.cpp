@@ -25,20 +25,28 @@ namespace electro_magnetism
 double calculateRadiationPressure( const double sourcePower, const double distanceFromSource )
 {
     return sourcePower / ( 4.0 * mathematical_constants::PI * distanceFromSource *
-                           distanceFromSource * physical_constants::SPEED_OF_LIGHT );
+                          distanceFromSource * physical_constants::SPEED_OF_LIGHT );
 }
 
 //! Function to update the current value of the radiation pressure
 void RadiationPressureInterface::updateInterface(
-        const double currentTime )
+    const double currentTime )
 {
+
     currentTime_ = currentTime;
+
+
+    if ( (coneAngleFunction_ != NULL && clockAngleFunction_ != NULL ) ){
+        currentConeAngle_ = coneAngleFunction_();
+        currentClockAngle_ = clockAngleFunction_();
+
+    }
 
     // Calculate current radiation pressure
     currentSolarVector_ = sourcePositionFunction_( ) - targetPositionFunction_( );
     double distanceFromSource = currentSolarVector_.norm( );
     currentRadiationPressure_ = calculateRadiationPressure(
-                sourcePower_( ), distanceFromSource );
+        sourcePower_( ), distanceFromSource );
 
     // Calculate total shadowing due to occulting body; note that multiple concurrent
     // occultations are not completely correctly (prints warning).
@@ -47,8 +55,8 @@ void RadiationPressureInterface::updateInterface(
     for( unsigned int i = 0; i < occultingBodyPositions_.size( ); i++ )
     {
         currentShadowFunction *= mission_geometry::computeShadowFunction(
-                    sourcePositionFunction_( ), sourceRadius_, occultingBodyPositions_[ i ]( ),
-                    occultingBodyRadii_[ i ], targetPositionFunction_( ) );
+            sourcePositionFunction_( ), sourceRadius_, occultingBodyPositions_[ i ]( ),
+            occultingBodyRadii_[ i ], targetPositionFunction_( ) );
 
         if( currentShadowFunction != 1.0 && shadowFunction != 1.0 )
         {
@@ -60,7 +68,33 @@ void RadiationPressureInterface::updateInterface(
 
     currentRadiationPressure_ *= shadowFunction;
 
-    radiationPressureCoefficient_ = radiationPressureCoefficientFunction_( currentTime );
+
+    if( ( updateFunction_ != NULL ) && ( currentTime_ == currentTime_) )
+    {
+        updateFunction_( currentTime_ );
+    }
+
+
+    if (radiationPressureCoefficientFunction_!=NULL)
+    {
+        radiationPressureCoefficient_ = radiationPressureCoefficientFunction_( currentTime );
+
+    }
+
+    if (targetVelocityFunction_!=NULL)
+    {
+        currentUnitVelocityVector_ = (targetVelocityFunction_() - centralBodyVelocity_[0]()).normalized();
+        //        std::cout << "current central body (Earth) velocity" << std::endl; //error
+        //        std::cout << centralBodyVelocity_[0]() << std::endl;
+        //        std::cout << "current unit velocity vector" << std::endl; //error
+        //        std::cout << currentUnitVelocityVector_ << std::endl;
+        //        std::cout << "current sailcraft velocity vector" << std::endl; //verified
+        //        std::cout << targetVelocityFunction_() << std::endl;
+    }
+
+
+
+
 }
 
 } // namespace electro_magnetism

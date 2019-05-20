@@ -32,6 +32,11 @@ std::string getAccelerationModelName( const AvailableAcceleration accelerationTy
     case cannon_ball_radiation_pressure:
         accelerationName = "cannonball radiation pressure ";
         break;
+        //NEW PART FOR THESIS:
+    case solar_sail_acceleration:
+        accelerationName = "solar sail acceleration";
+        break;
+        //END OF NEW PART
     case spherical_harmonic_gravity:
         accelerationName = "spherical harmonic gravity ";
         break;
@@ -93,6 +98,11 @@ AvailableAcceleration getAccelerationModelType(
                  accelerationModel ) != nullptr )
     {
         accelerationType = cannon_ball_radiation_pressure;
+    }
+    else if ( std::dynamic_pointer_cast< SolarSailAcceleration >(
+                 accelerationModel) !=NULL )
+    {
+        accelerationType = solar_sail_acceleration;
     }
     else if( std::dynamic_pointer_cast< ThirdBodyCentralGravityAcceleration >(
                  accelerationModel ) != nullptr )

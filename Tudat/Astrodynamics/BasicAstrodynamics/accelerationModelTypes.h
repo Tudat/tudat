@@ -14,6 +14,7 @@
 
 
 #include "Tudat/Astrodynamics/ElectroMagnetism/cannonBallRadiationPressureAcceleration.h"
+#include "Tudat/Astrodynamics/ElectroMagnetism/solarSailAcceleration.h"
 #include "Tudat/Astrodynamics/Gravitation/centralGravityModel.h"
 #include "Tudat/Astrodynamics/Gravitation/sphericalHarmonicsGravityModel.h"
 #include "Tudat/Astrodynamics/Gravitation/mutualSphericalHarmonicGravityModel.h"
@@ -46,6 +47,7 @@ enum AvailableAcceleration
     central_gravity = point_mass_gravity,  // deprecated
     aerodynamic,
     cannon_ball_radiation_pressure,
+    solar_sail_acceleration, //ADDED FOR THESIS
     spherical_harmonic_gravity,
     mutual_spherical_harmonic_gravity,
     third_body_point_mass_gravity,

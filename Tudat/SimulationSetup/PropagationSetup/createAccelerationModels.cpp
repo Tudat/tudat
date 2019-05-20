@@ -9,6 +9,8 @@
  */
 
 #include <algorithm>
+#include <functional>
+#include <memory>
 
 #include <boost/make_shared.hpp>
 #include <boost/bind.hpp>
@@ -785,6 +787,50 @@ createCannonballRadiationPressureAcceleratioModel(
 
 }
 
+//! Function to create the solar sail radiation pressure acceleration model.
+std::shared_ptr< SolarSailAcceleration >
+createSolarSailAccelerationModel(
+    const std::shared_ptr< Body > bodyUndergoingAcceleration,
+    const std::shared_ptr< Body > bodyExertingAcceleration,
+    const std::shared_ptr< Body > centralBody,
+    const std::string& nameOfBodyUndergoingAcceleration,
+    const std::string& nameOfBodyExertingAcceleration )
+{
+    // Retrieve radiation pressure interface
+    if( bodyUndergoingAcceleration->getRadiationPressureInterfaces( ).count(
+            nameOfBodyExertingAcceleration ) == 0 )
+    {
+        throw std::runtime_error(
+            "Error when making radiation pressure, no radiation pressure interface found  in " +
+            nameOfBodyUndergoingAcceleration +
+            " for body " + nameOfBodyExertingAcceleration );
+    }
+    std::shared_ptr< RadiationPressureInterface > radiationPressureInterface =
+        bodyUndergoingAcceleration->getRadiationPressureInterfaces( ).at(
+            nameOfBodyExertingAcceleration );
+
+    // Create acceleration model.
+    return std::make_shared< SolarSailAcceleration >(
+        std::bind( &Body::getPosition, bodyExertingAcceleration ),
+        std::bind( &Body::getPosition, bodyUndergoingAcceleration ),
+        std::bind( &Body::getVelocity, bodyUndergoingAcceleration ),
+        std::bind( &Body::getVelocity, centralBody ),
+        std::bind( &RadiationPressureInterface::getCurrentRadiationPressure, radiationPressureInterface ),
+        std::bind( &RadiationPressureInterface::getCurrentConeAngle, radiationPressureInterface ),
+        std::bind( &RadiationPressureInterface::getCurrentClockAngle, radiationPressureInterface ),
+        std::bind( &RadiationPressureInterface::getFrontEmissivityCoefficient, radiationPressureInterface ),
+        std::bind( &RadiationPressureInterface::getBackEmissivityCoefficient, radiationPressureInterface ),
+        std::bind( &RadiationPressureInterface::getFrontLambertianCoefficient, radiationPressureInterface ),
+        std::bind( &RadiationPressureInterface::getBackLambertianCoefficient, radiationPressureInterface ),
+        std::bind( &RadiationPressureInterface::getReflectivityCoefficient, radiationPressureInterface ),
+        std::bind( &RadiationPressureInterface::getSpecularReflectionCoefficient, radiationPressureInterface ),
+        std::bind( &RadiationPressureInterface::getArea, radiationPressureInterface ),
+        std::bind( &Body::getBodyMass, bodyUndergoingAcceleration ) );
+
+}
+
+
+
 //! Function to create an orbiter relativistic correction acceleration model
 std::shared_ptr< relativity::RelativisticAccelerationCorrection > createRelativisticCorrectionAcceleration(
         const std::shared_ptr< Body > bodyUndergoingAcceleration,
@@ -1227,6 +1273,16 @@ std::shared_ptr< AccelerationModel< Eigen::Vector3d > > createAccelerationModel(
                     nameOfBodyUndergoingAcceleration,
                     nameOfBodyExertingAcceleration );
         break;
+        //NEW PART FOR THESIS:
+    case solar_sail_acceleration:
+        accelerationModelPointer = createSolarSailAccelerationModel(
+            bodyUndergoingAcceleration,
+            bodyExertingAcceleration,
+            centralBody,
+            nameOfBodyUndergoingAcceleration,
+            nameOfBodyExertingAcceleration );
+        break;
+        //END OF NEW PART
     case thrust_acceleration:
         accelerationModelPointer = createThrustAcceleratioModel(
                     accelerationSettings, bodyMap,
