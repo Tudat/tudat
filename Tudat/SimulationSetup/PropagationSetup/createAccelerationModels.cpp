@@ -1273,7 +1273,6 @@ std::shared_ptr< AccelerationModel< Eigen::Vector3d > > createAccelerationModel(
                     nameOfBodyUndergoingAcceleration,
                     nameOfBodyExertingAcceleration );
         break;
-        //NEW PART FOR THESIS:
     case solar_sail_acceleration:
         accelerationModelPointer = createSolarSailAccelerationModel(
             bodyUndergoingAcceleration,
@@ -1282,7 +1281,6 @@ std::shared_ptr< AccelerationModel< Eigen::Vector3d > > createAccelerationModel(
             nameOfBodyUndergoingAcceleration,
             nameOfBodyExertingAcceleration );
         break;
-        //END OF NEW PART
     case thrust_acceleration:
         accelerationModelPointer = createThrustAcceleratioModel(
                     accelerationSettings, bodyMap,

@@ -47,7 +47,7 @@ enum AvailableAcceleration
     central_gravity = point_mass_gravity,  // deprecated
     aerodynamic,
     cannon_ball_radiation_pressure,
-    solar_sail_acceleration, //ADDED FOR THESIS
+    solar_sail_acceleration,
     spherical_harmonic_gravity,
     mutual_spherical_harmonic_gravity,
     third_body_point_mass_gravity,

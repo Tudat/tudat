@@ -17,6 +17,7 @@
 #include <functional>
 
 #include "Tudat/Astrodynamics/BasicAstrodynamics/accelerationModel.h"
+#include "Tudat/Astrodynamics/ElectroMagnetism/solarSailAcceleration.h"
 #include "Tudat/Astrodynamics/Gravitation/centralGravityModel.h"
 #include "Tudat/SimulationSetup/EnvironmentSetup/body.h"
 #include "Tudat/Astrodynamics/Aerodynamics/aerodynamicAcceleration.h"
@@ -26,9 +27,6 @@
 #include "Tudat/Astrodynamics/BasicAstrodynamics/empiricalAcceleration.h"
 #include "Tudat/Astrodynamics/Ephemerides/frameManager.h"
 #include "Tudat/Astrodynamics/Gravitation/directTidalDissipationAcceleration.h"
-
-//new include for solar sail force model:
-#include "Tudat/Astrodynamics/ElectroMagnetism/solarSailAcceleration.h"
 
 namespace tudat
 {
@@ -312,14 +310,13 @@ createCannonballRadiationPressureAcceleratioModel(
         const std::string& nameOfBodyUndergoingAcceleration,
         const std::string& nameOfBodyExertingAcceleration );
 
-//Beginning of new part
-
 //! Function to create a non-ideal solar pressure radiation acceleration
 /*!
  * Function to create a non-ideal solar pressure radiation acceleration
  *  \param bodyUndergoingAcceleration Pointer to object of body that is being accelerated.
  *  \param bodyExertingAcceleration Pointer to object of body that is exerting the central gravity
  *  acceleration.
+ *  \param centralBody Pointer to object of central body.
  *  \param nameOfBodyUndergoingAcceleration Name of body that is being accelerated.
  *  \param nameOfBodyExertingAcceleration Name of body that is exerting the central gravity
  *   acceleration.

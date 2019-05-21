@@ -27,13 +27,12 @@ namespace simulation_setup
 
 //! Default values for radiation pressure.
 static const std::map< std::string, double > defaultRadiatedPowerValues =
-    { { "Sun",  3.839E26 } };
+{ { "Sun",  3.839E26 } };
 
 //! List of radiation pressure model types.
 enum RadiationPressureType
 {
     cannon_ball,
-    //NEW PART (added for thesis):
     solar_sail
 };
 
@@ -121,10 +120,10 @@ public:
      * \param occultingBodies List of bodies causing (partial) occultation.
      */
     CannonBallRadiationPressureInterfaceSettings(
-        const std::string& sourceBody, const double area, const double radiationPressureCoefficient,
-        const std::vector< std::string >& occultingBodies = std::vector< std::string >( ) ):
-          RadiationPressureInterfaceSettings( cannon_ball, sourceBody, occultingBodies ),
-          area_( area ), radiationPressureCoefficient_( radiationPressureCoefficient ){ }
+            const std::string& sourceBody, const double area, const double radiationPressureCoefficient,
+            const std::vector< std::string >& occultingBodies = std::vector< std::string >( ) ):
+        RadiationPressureInterfaceSettings( cannon_ball, sourceBody, occultingBodies ),
+        area_( area ), radiationPressureCoefficient_( radiationPressureCoefficient ){ }
 
     //! Function to return surface area that undergoes radiation pressure.
     /*!
@@ -157,7 +156,6 @@ private:
     double radiationPressureCoefficient_;
 };
 
-//NEW PART (for the thesis)
 //! Class providing settings for the creation of a cannonball radiation pressure interface
 class SolarSailRadiationInterfaceSettings: public RadiationPressureInterfaceSettings
 {
@@ -402,8 +400,8 @@ void getCentralBodiesInformation(
  *  \return Radiation pressure interface pointer of requested type and settings.
  */
 std::shared_ptr< electro_magnetism::RadiationPressureInterface > createRadiationPressureInterface(
-    const std::shared_ptr< RadiationPressureInterfaceSettings > radiationPressureInterfaceSettings,
-    const std::string& bodyName, const NamedBodyMap& bodyMap );
+        const std::shared_ptr< RadiationPressureInterfaceSettings > radiationPressureInterfaceSettings,
+        const std::string& bodyName, const NamedBodyMap& bodyMap );
 
 
 

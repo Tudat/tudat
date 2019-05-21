@@ -132,26 +132,26 @@ public:
      *  \param sourceRadius Radius of the source body (used for occultation calculations) (default 0).
      */
     RadiationPressureInterface(
-        const std::function< double( ) > sourcePower,
-        const std::function< Eigen::Vector3d( ) > sourcePositionFunction,
-        const std::function< Eigen::Vector3d( ) > targetPositionFunction,
-        const double radiationPressureCoefficient,
-        const double area,
-        const std::vector< std::function< Eigen::Vector3d( ) > > occultingBodyPositions =
+            const std::function< double( ) > sourcePower,
+            const std::function< Eigen::Vector3d( ) > sourcePositionFunction,
+            const std::function< Eigen::Vector3d( ) > targetPositionFunction,
+            const double radiationPressureCoefficient,
+            const double area,
+            const std::vector< std::function< Eigen::Vector3d( ) > > occultingBodyPositions =
             std::vector< std::function< Eigen::Vector3d( ) > >( ),
-        const std::vector< double > occultingBodyRadii = std::vector< double > ( ),
-        const double sourceRadius = 0.0 ):
-          sourcePower_( sourcePower ), sourcePositionFunction_( sourcePositionFunction ),
-          targetPositionFunction_( targetPositionFunction ),
-          radiationPressureCoefficient_( radiationPressureCoefficient ),
-          radiationPressureCoefficientFunction_( [ = ]( const double ){ return radiationPressureCoefficient; } ),
-          area_( area ),
-          occultingBodyPositions_( occultingBodyPositions ),
-          occultingBodyRadii_( occultingBodyRadii ),
-          sourceRadius_( sourceRadius ),
-          currentRadiationPressure_( TUDAT_NAN ),
-          currentSolarVector_( Eigen::Vector3d::Zero( ) ),
-          currentTime_( TUDAT_NAN ){ }
+            const std::vector< double > occultingBodyRadii = std::vector< double > ( ),
+            const double sourceRadius = 0.0 ):
+        sourcePower_( sourcePower ), sourcePositionFunction_( sourcePositionFunction ),
+        targetPositionFunction_( targetPositionFunction ),
+        radiationPressureCoefficient_( radiationPressureCoefficient ),
+        radiationPressureCoefficientFunction_( [ = ]( const double ){ return radiationPressureCoefficient; } ),
+        area_( area ),
+        occultingBodyPositions_( occultingBodyPositions ),
+        occultingBodyRadii_( occultingBodyRadii ),
+        sourceRadius_( sourceRadius ),
+        currentRadiationPressure_( TUDAT_NAN ),
+        currentSolarVector_( Eigen::Vector3d::Zero( ) ),
+        currentTime_( TUDAT_NAN ){ }
 
     //! Destructor
     virtual ~RadiationPressureInterface( ){ }
@@ -173,7 +173,6 @@ public:
     {
         return currentRadiationPressure_;
     }
-
 
     //! Function to return the current vector from the target to the source.
     /*!
@@ -366,7 +365,7 @@ public:
     void resetRadiationPressureCoefficientFunction(
         const std::function< double( const double ) > radiationPressureCoefficientFunction )
     {
-        radiationPressureCoefficientFunction_ = radiationPressureCoefficientFunction;
+            radiationPressureCoefficientFunction_ = radiationPressureCoefficientFunction;
     }
 
     //! Function to return the function returning the current total power (in W) emitted by the
@@ -517,9 +516,9 @@ protected:
 
     //! Current time of interface (i.e. time of last updateInterface call).
     double currentTime_;
-    };
+};
 
-    } // namespace electro_magnetism
-    } // namespace tudat
+} // namespace electro_magnetism
+} // namespace tudat
 
 #endif // TUDAT_RADIATIONPRESSUREINTERFACE_H
