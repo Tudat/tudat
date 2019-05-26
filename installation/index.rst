@@ -10,11 +10,10 @@ Getting started with Tudat is a simple five-step process, so please follow this 
    :maxdepth: 2
 
    setupDevEnvironment
-   setupLinuxServer
    downloadTudatBundle/index
    configureTudatLibraries
    creatingNewApps
-
+   setupLinuxServer
    troubleshooting/index
 
 
