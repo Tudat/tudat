@@ -204,8 +204,11 @@ As stated above, the :literal:`createAccelerationModelsMap` function uses your e
 - Spherical harmonic gravity (central of third-body)
 - Mutual spherical harmonic gravity (central of third-body)
 - Aerodynamic acceleration
-- Cannonball radiation pressure     
+- Cannonball radiation pressure
+- Panelled radiation pressure
+- Solar sailing acceleration     
 - Thrust acceleration
+- Quasi impulsive shot acceleration
 - Relativistic acceleration correction (IERS 2010 Conventions)
 - Empiricical accelerations (constant, sine and cosine of true anomaly components in RSW frame)
 - Tidal effect on natural satellites (Lainey et al., 2007, 2012)
@@ -318,6 +321,35 @@ Subsequently, we provide details on how to add settings for the model to the :cl
    - Radiation pressure model for body undergoing acceleration (from source equal to body exerting acceleration) (set by :class:`RadiationPressureInterfaceSettings`).
    - Current state of body undergoing and body emitting radiation
 
+.. method:: Panelled radiation pressure
+
+   No derived class of :class:`AccelerationSettings` required, accessed by feeding :literal:`panelled_radiation_pressure_acceleration` to the constructor. Added to :class:`SelectedAccelerationMap` as follows, for example of acceleration exerted on "Apollo" by "Sun":
+
+   .. code-block:: cpp
+
+      SelectedAccelerationMap accelerationSettings;
+      accelerationSettings[ "Apollo" ][ "Sun" ].push_back( std::make_shared< AccelerationSettings >( panelled_radiation_pressure_acceleration ) );
+
+   Requires the following environment models to be defined:
+
+   - Panelled radiation pressure model for body undergoing acceleration (from source equal to body exerting acceleration) (set by :class:`PanelledRadiationPressureInterfaceSettings`).
+   - Current state of body undergoing and body emitting radiation
+
+.. method:: Solar sailing acceleration
+
+   No derived class of :class:`AccelerationSettings` required, accessed by feeding :literal:`solar_sail_acceleration` to the constructor. Added to :class:`SelectedAccelerationMap` as follows, for example of acceleration exerted on "Apollo" by "Sun":
+
+   .. code-block:: cpp
+
+      SelectedAccelerationMap accelerationSettings;
+      accelerationSettings[ "Apollo" ][ "Sun" ].push_back( std::make_shared< AccelerationSettings >( solar_sail_acceleration ) );
+
+   Requires the following environment models to be defined:
+
+   - Solar sailing radiation pressure model for body undergoing acceleration (from source equal to body exerting acceleration) (set by :class:`SolarSailRadiationInterfaceSettings`).
+   - Current state of body undergoing and body emitting radiation
+
+
 .. class:: ThrustAccelerationSettings
 
    Used to define the resulting accerelations of a thrust force, requiring:
@@ -326,7 +358,35 @@ Subsequently, we provide details on how to add settings for the model to the :cl
    - Settings for both the direction and magnitude of the thrust force (set by :class:`ThrustMagnitudeSettings`). These models may in turn have additional environmental dependencies. 
    
 Setting up a thrust acceleration is discussed in more detail on the page :ref:`tudatFeaturesThrustModels`.
+
+.. class:: QuasiImpulsiveShotsAccelerationSettings
+
+   Used to define the resulting acceleration of a quasi-impulsive shot, requiring:
+
+   - Mass of the body undergoing acceleration.
+   - Settings for the characteristics of the quasi-impulsive shots (total duration, rise time, associated deltaVs), as well as the times at which they are applied.
+
+   .. code-block:: cpp
+
+     SelectedAccelerationMap accelerationSettings;
+     std::vector< double > thrustMidTimes = { 1.0 * 3600.0, 2.0 * 3600.0, 3.0 * 3600.0 };
+     std::vector< Eigen::Vector3d > deltaVValues = { 1.0E-3 * ( Eigen::Vector3d( ) << 0.3, -2.5, 3.4 ).finished( ),
+       1.0E-3 * ( Eigen::Vector3d( ) << 2.0, 5.9, -0.5 ).finished( ),
+       1.0E-3 * ( Eigen::Vector3d( ) << -1.6, 4.4, -5.8 ).finished( ) };
+     double totalManeuverTime = 90.0;
+     double maneuverRiseTime = 15.0;
+
+     accelerationSettings[ "Vehicle" ][ "Vehicle" ] = std::make_shared< QuasiImpulsiveShotsAccelerationSettings >( 
+       thrustMidTimes, deltaVValues, totalManeuverTime, maneuverRiseTime );
     
+
+where the input variables represent:
+
+    - Midtimes of the quasi-impulsive shots (assumed to be the time at which an ideal impulsive shot would have been applied).
+    - DeltaVs (threee-dimensional vectors) associated with the quasi-impulsive shots.
+    - Total duration of the quasi-impulsive shots (same value for each of them).
+    - Rise time, i.e. time required to reach the peak acceleration (same value for each impulsive shot).
+
 .. class:: RelativisticAccelerationCorrectionSettings
 
    A first-order (in :math:`1/c^{2}`) correction to the acceleration due to the influence of relativity. It implements the model of Chapter 10, Section 3 of the IERS 2010 Conventions. It requires a specific derived class of :class:`AccelerationSettings`. Added to :class:`SelectedAccelerationMap` as follows, for example that includes all three contributions (Schwarzschild, Lense-Thirring and de Sitter)
