@@ -49,13 +49,18 @@ When the tudatBundle download is completed, a folder :literal:`tudatBundle` has 
 	
 This step aims at updating the required modules and might take some time.
 
-Once all the previous steps are done, you might want to modify the default Tudat settings before building the whole Tudat code. This can be done by opening the :literal:`CMakeLists.txt` file directly located in the tudatBundle folder. This file can be opened with any available editor (:literal:`vim` and :literal:`nano` are the most common ones (both are available on the TU Delft server)). Typing either :literal:`vim CMakeLists.txt` or :literal:`nano CMakeLists.txt` respectively will open the file in the terminal. Depending on the settings you want, you might set the different options (namely :literal:`USE_CSPICE`, :literal:`USE_JSON`, :literal:`USE_NRLMSISE00`, :literal:`USE_SOFA`, :literal:`USE_PAGMO`, :literal:`USE_PYGMO`, :literal:`BUILD_WITH_ESTIMATION_TOOLS`) to either :literal:`ON` or :literal:`OFF`. As an example, the option :literal:`USE_PAGMO` is set to :literal:`OFF` by default but should be turned on if you are planning on using the PAGMO toolbox for optimisation. 
+Once all the previous steps are done, you might want to modify the default Tudat settings before building the whole Tudat code. Depending on the settings you want, you might set the different options (namely :literal:`USE_CSPICE`, :literal:`USE_JSON`, :literal:`USE_NRLMSISE00`, :literal:`USE_SOFA`, :literal:`USE_PAGMO`, :literal:`USE_PYGMO`, :literal:`BUILD_WITH_ESTIMATION_TOOLS`) to either :literal:`ON` or :literal:`OFF`. As an example, the option :literal:`USE_PAGMO` is set to :literal:`OFF` by default but should be turned on if you are planning on using the PAGMO toolbox for optimisation. This is done by typing the following command line::
 
-  .. warning:: As a general advice and if you do not need it in particular, please switch off the :literal:`USE_JSON` option on the TU Delft server. Indeed, it will most probably yield compilation issues because the version of the gcc compiler currently available on the server is not supported by the JSON interface. In case you really need the JSON interface, please contact the server administrator to discuss about installing more recent gcc versions.
+        cmake -DUSEPAGMO=ON
 
-If you have done any settings modification, and before building the Tudat code, make sure to check whether the file :literal:`CMakeCache.txt` exists in the tudatBundle directory. If so, please delete it (with the command :literal:`rm CMakeCache.txt`) to ensure that your settings changes will be effective when building the code.
 
-The tudatBundle libraries are now ready to be built. Just entering the command :literal:`make` in your terminal will initiate the compilation (make sure you are in the tudatBundle folder before doing it). This will build the Tudat code and might take a while (from several dozens of minutes up to several hours). The following output is expected to appear in your terminal::
+.. warning:: As a general advice and if you do not need it in particular, please switch off the :literal:`USE_JSON` option on the TU Delft server. Indeed, it will most probably yield compilation issues because the version of the gcc compiler currently available on the server is not supported by the JSON interface. In case you really need the JSON interface, please contact the server administrator to discuss about installing more recent gcc versions.
+
+The tudatBundle libraries are now ready to be built. Just entering the following command in your terminal will initiate the compilation (make sure you are in the :literal:`tudatBundle/` folder before doing it)::
+
+        cmake CMakeLists.txt
+
+This will build the Tudat code and might take a while (from several dozens of minutes up to several hours). The following output is expected to appear in your terminal::
 
         -- The C compiler identification is GNU 4.8.4
         -- The CXX compiler identification is GNU 4.8.4

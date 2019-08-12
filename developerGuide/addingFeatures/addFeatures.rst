@@ -424,7 +424,7 @@ When building the new model, it is advised to use a state derivative model that 
 Adding a New Estimatable Parameter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The list of estimatable parameters already available in Tudat is presented in :ref:`estimationSetup`. However, it is possible to add another parameter to this list of estimatable parameters if needed. This process requires to modify several files located in different directories and  will be described in details based on the examples of the two parameters :literal:`radiation_pressure_coefficient` and :literal:`rotation_pole_position`. 
+The list of estimatable parameters already available in Tudat is presented in :ref:`parameterEstimationSettings`. However, it is possible to add another parameter to this list of estimatable parameters if needed. This process requires to modify several files located in different directories and  will be described in details based on the examples of the two parameters :literal:`radiation_pressure_coefficient` and :literal:`rotation_pole_position`. 
 
 First of all, the name of the new estimatable parameter has to be added to the list of the estimatable parameters available in Tudat, in the file :literal:`estimatableParameter.h`:
 

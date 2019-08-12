@@ -48,7 +48,7 @@ Below a graphical representation of the acceleration setup, with the different m
 
 
       # general node settings 
-      node [shape = box, style = filled, width = 1.5, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+      node [shape = box, style = filled, width = 1.5, fixedsize = true, color = lightgrey, fontname = Times, fontsize = 9];
 
 
       # specific node color settings
@@ -125,7 +125,7 @@ Below a graphical representation of the acceleration setup, with the different m
 
 
      	# general node settings 
-     	node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+     	node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = Times, fontsize = 9];
 
 
    	"Object requiring \nadditional information" [ fillcolor = darkturquoise];
