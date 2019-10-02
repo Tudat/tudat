@@ -86,12 +86,16 @@ The different interpolator types are handled in a similar manner:
 		std::map< double, Eigen::Vector6d > stateDerivativeMap;
 		stateDerivativeMap = ....
 
+		// Load pair of default values for extrapolation (empty by default)
+		std::pair< DependentVariableType, DependentVariableType > defaultExtrapolationValues;
+		defaultExtrapolationValues = ...
+
 		// Create interpolator
 		std::shared_ptr< interpolators::InterpolatorSettings > interpolatorSettings =
 		 std::make_shared< interpolators::InterpolatorSettings >( hermite_spline_interpolator ) 
 		std::shared_ptr< OneDimensionalInterpolator< double, Eigen::Vector6d > > interpolator =
 			 interpolators::createOneDimensionalInterpolator(
-				 stateMap, interpolatorSettings, stateDerivativeMap );
+				 stateMap, interpolatorSettings, defaultExtrapolationValues, stateDerivativeMap );
 
 		// Interpolate
 		Eigen::Vector6d interpolatedResult = interpolator->interpolate( 0.0 );

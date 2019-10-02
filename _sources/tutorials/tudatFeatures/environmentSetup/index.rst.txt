@@ -17,7 +17,7 @@ On this page, we will give an overview of how the environment is represented in 
 
 
       # general node settings 
-      node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+      node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = Times, fontsize = 9];
 
 
       # specific node color settings
@@ -101,7 +101,7 @@ On this page, we will give an overview of how the environment is represented in 
 
 
      	# general node settings 
-     	node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+     	node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = Times, fontsize = 9];
 
 
    	"List of settings" [ fillcolor = lightcoral];

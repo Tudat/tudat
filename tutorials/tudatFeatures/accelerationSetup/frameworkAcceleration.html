@@ -122,6 +122,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -223,7 +224,7 @@
 </div>
 <p>We have defined a point-mass Earth gravity model and an aerodynamic acceleration due to Earth’s atmosphere to be used. In this example, we have only defined the type of the acceleration, without the need for any additional information. All required variables used on the computations of the accelerations are uniquely defined in the Apollo and Earth entries of the body map (provided that the required environment models have been set as discussed in <a class="reference internal" href="../environmentSetup/index.html#tudatfeaturesenvironmentindex"><span class="std std-ref">Environment Set-up</span></a>).</p>
 <p>Below a graphical representation of the acceleration setup, with the different model types and top-level architecture.</p>
-<object data="../../../_images/graphviz-c884630deceb02092f86f6cf7652335f9f564ac5.svg" type="image/svg+xml">
+<object data="../../../_images/graphviz-7d5d8b88c1298af7ad835d7efd9638ac0759dd97.svg" type="image/svg+xml">
             <p class="warning">digraph
 {
    # General diagram settings
@@ -233,7 +234,7 @@
 
 
    # general node settings
-   node [shape = box, style = filled, width = 1.5, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+   node [shape = box, style = filled, width = 1.5, fixedsize = true, color = lightgrey, fontname = Times, fontsize = 9];
 
 
    # specific node color settings
@@ -293,7 +294,7 @@
    &quot;Empirical&quot; [href = &quot;http://tudat.tudelft.nl/tutorials/tudatFeatures/accelerationSetup/frameworkAcceleration.html#EmpiricalAccelerationSettings&quot;, target = &quot;_top&quot;];
 
 }</p></object>
-<object data="../../../_images/graphviz-3c28fd20e3861e7965bedc388a54f8fc55de85cf.svg" type="image/svg+xml">
+<object data="../../../_images/graphviz-0c5a85cefcf74f501e10d689d910899e38b056a1.svg" type="image/svg+xml">
             <p class="warning">digraph
 {
    # General diagram settings
@@ -308,7 +309,7 @@
 
 
      # general node settings
-     node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+     node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = Times, fontsize = 9];
 
 
      &quot;Object requiring \nadditional information&quot; [ fillcolor = darkturquoise];
@@ -384,7 +385,10 @@
 <li>Mutual spherical harmonic gravity (central of third-body)</li>
 <li>Aerodynamic acceleration</li>
 <li>Cannonball radiation pressure</li>
+<li>Panelled radiation pressure</li>
+<li>Solar sailing acceleration</li>
 <li>Thrust acceleration</li>
+<li>Quasi impulsive shot acceleration</li>
 <li>Relativistic acceleration correction (IERS 2010 Conventions)</li>
 <li>Empiricical accelerations (constant, sine and cosine of true anomaly components in RSW frame)</li>
 <li>Tidal effect on natural satellites (Lainey et al., 2007, 2012)</li>
@@ -504,6 +508,36 @@
 </ul>
 </dd></dl>
 
+<dl class="method">
+<dt>
+<code class="descname">Panelled radiation pressure</code></dt>
+<dd><p>No derived class of <a class="reference internal" href="#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a> required, accessed by feeding <code class="docutils literal"><span class="pre">panelled_radiation_pressure_acceleration</span></code> to the constructor. Added to <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a> as follows, for example of acceleration exerted on “Apollo” by “Sun”:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettings</span><span class="p">;</span>
+<span class="n">accelerationSettings</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Sun&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">panelled_radiation_pressure_acceleration</span> <span class="p">)</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Requires the following environment models to be defined:</p>
+<ul class="simple">
+<li>Panelled radiation pressure model for body undergoing acceleration (from source equal to body exerting acceleration) (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#PanelledRadiationPressureInterfaceSettings" title="PanelledRadiationPressureInterfaceSettings"><code class="xref py py-class docutils literal"><span class="pre">PanelledRadiationPressureInterfaceSettings</span></code></a>).</li>
+<li>Current state of body undergoing and body emitting radiation</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">Solar sailing acceleration</code></dt>
+<dd><p>No derived class of <a class="reference internal" href="#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a> required, accessed by feeding <code class="docutils literal"><span class="pre">solar_sail_acceleration</span></code> to the constructor. Added to <a class="reference internal" href="#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a> as follows, for example of acceleration exerted on “Apollo” by “Sun”:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettings</span><span class="p">;</span>
+<span class="n">accelerationSettings</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Sun&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">solar_sail_acceleration</span> <span class="p">)</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Requires the following environment models to be defined:</p>
+<ul class="simple">
+<li>Solar sailing radiation pressure model for body undergoing acceleration (from source equal to body exerting acceleration) (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#SolarSailRadiationInterfaceSettings" title="SolarSailRadiationInterfaceSettings"><code class="xref py py-class docutils literal"><span class="pre">SolarSailRadiationInterfaceSettings</span></code></a>).</li>
+<li>Current state of body undergoing and body emitting radiation</li>
+</ul>
+</dd></dl>
+
 <dl class="class">
 <dt id="ThrustAccelerationSettings">
 <em class="property">class </em><code class="descname">ThrustAccelerationSettings</code><a class="headerlink" href="#ThrustAccelerationSettings" title="Permalink to this definition">¶</a></dt>
@@ -515,6 +549,37 @@
 </dd></dl>
 
 <p>Setting up a thrust acceleration is discussed in more detail on the page <a class="reference internal" href="thrustModels.html#tudatfeaturesthrustmodels"><span class="std std-ref">Thrust Guidance</span></a>.</p>
+<dl class="class">
+<dt id="QuasiImpulsiveShotsAccelerationSettings">
+<em class="property">class </em><code class="descname">QuasiImpulsiveShotsAccelerationSettings</code><a class="headerlink" href="#QuasiImpulsiveShotsAccelerationSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to define the resulting acceleration of a quasi-impulsive shot, requiring:</p>
+<ul class="simple">
+<li>Mass of the body undergoing acceleration.</li>
+<li>Settings for the characteristics of the quasi-impulsive shots (total duration, rise time, associated deltaVs), as well as the times at which they are applied.</li>
+</ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettings</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">thrustMidTimes</span> <span class="o">=</span> <span class="p">{</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="mf">3600.0</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="mf">3600.0</span><span class="p">,</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="mf">3600.0</span> <span class="p">};</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">deltaVValues</span> <span class="o">=</span> <span class="p">{</span> <span class="mf">1.0E-3</span> <span class="o">*</span> <span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">0.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.4</span> <span class="p">).</span><span class="n">finished</span><span class="p">(</span> <span class="p">),</span>
+  <span class="mf">1.0E-3</span> <span class="o">*</span> <span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">5.9</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span> <span class="p">).</span><span class="n">finished</span><span class="p">(</span> <span class="p">),</span>
+  <span class="mf">1.0E-3</span> <span class="o">*</span> <span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="o">-</span><span class="mf">1.6</span><span class="p">,</span> <span class="mf">4.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.8</span> <span class="p">).</span><span class="n">finished</span><span class="p">(</span> <span class="p">)</span> <span class="p">};</span>
+<span class="kt">double</span> <span class="n">totalManeuverTime</span> <span class="o">=</span> <span class="mf">90.0</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">maneuverRiseTime</span> <span class="o">=</span> <span class="mf">15.0</span><span class="p">;</span>
+
+<span class="n">accelerationSettings</span><span class="p">[</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">][</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">QuasiImpulsiveShotsAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+  <span class="n">thrustMidTimes</span><span class="p">,</span> <span class="n">deltaVValues</span><span class="p">,</span> <span class="n">totalManeuverTime</span><span class="p">,</span> <span class="n">maneuverRiseTime</span> <span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>where the input variables represent:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Midtimes of the quasi-impulsive shots (assumed to be the time at which an ideal impulsive shot would have been applied).</li>
+<li>DeltaVs (threee-dimensional vectors) associated with the quasi-impulsive shots.</li>
+<li>Total duration of the quasi-impulsive shots (same value for each of them).</li>
+<li>Rise time, i.e. time required to reach the peak acceleration (same value for each impulsive shot).</li>
+</ul>
+</div></blockquote>
 <dl class="class">
 <dt id="RelativisticAccelerationCorrectionSettings">
 <em class="property">class </em><code class="descname">RelativisticAccelerationCorrectionSettings</code><a class="headerlink" href="#RelativisticAccelerationCorrectionSettings" title="Permalink to this definition">¶</a></dt>

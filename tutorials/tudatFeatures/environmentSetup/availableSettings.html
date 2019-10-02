@@ -660,6 +660,76 @@
 </div>
 </dd></dl>
 
+<dl class="class">
+<dt id="PanelledRadiationPressureInterfaceSettings">
+<em class="property">class </em><code class="descname">PanelledRadiationPressureInterfaceSettings</code><a class="headerlink" href="#PanelledRadiationPressureInterfaceSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Properties for a panelled radiation pressure model, i.e. solar radiation pressure force derived from a so-called boxes-and-wings model.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">sourceBody</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">emissivities</span> <span class="o">=</span> <span class="p">{</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span> <span class="p">};</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">areas</span> <span class="o">=</span> <span class="p">{</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">2.3</span> <span class="p">};</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">diffusionCoefficients</span> <span class="o">=</span> <span class="p">{</span> <span class="mf">0.46</span><span class="p">,</span> <span class="mf">0.06</span><span class="p">,</span> <span class="mf">0.46</span><span class="p">,</span> <span class="mf">0.46</span> <span class="p">};</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">occultingBodies</span><span class="p">;</span>
+ <span class="n">occultingBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
+
+ <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">panelSurfaceNormals</span><span class="p">;</span>
+<span class="n">panelSurfaceNormals</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="p">[</span> <span class="o">=</span> <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitZ</span><span class="p">(</span> <span class="p">);</span> <span class="p">}</span> <span class="p">);</span>
+<span class="n">panelSurfaceNormals</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="p">[</span> <span class="o">=</span> <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="o">-</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitZ</span><span class="p">(</span> <span class="p">);</span> <span class="p">}</span> <span class="p">);</span>
+<span class="n">panelSurfaceNormals</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="p">[</span> <span class="o">=</span> <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitX</span><span class="p">(</span> <span class="p">);</span> <span class="p">}</span> <span class="p">);</span>
+<span class="n">panelSurfaceNormals</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="p">[</span> <span class="o">=</span> <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="o">-</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitX</span><span class="p">(</span> <span class="p">);</span> <span class="p">}</span> <span class="p">);</span>
+
+ <span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">radiationPressureSettings</span><span class="p">[</span> <span class="n">sourceBody</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">PanelledRadiationPressureInterfaceSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+     <span class="n">sourceBody</span><span class="p">,</span> <span class="n">emissivities</span><span class="p">,</span> <span class="n">areas</span><span class="p">,</span> <span class="n">diffusionCoefficients</span><span class="p">,</span> <span class="n">surfaceNormalsInBodyFixedFrameFunctions</span><span class="p">,</span> <span class="n">occultingBodies</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Creating panelled radiation pressure settings for radiation due to the Sun, acting on the “Vehicle” body, from the following input variables:</p>
+<ul class="simple">
+<li>Name of the source body of the radiation pressure.</li>
+<li>Vector containing the emissivities of the different panels.</li>
+<li>Vector containing the areas of the panels.</li>
+<li>Vector containing the diffusion coefficient of each panel.</li>
+<li>Vector containing the functions that return the normals of the panels surfaces, in body-fixed reference frame.</li>
+<li>Vector with the names of the occulting bodies.</li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="SolarSailRadiationInterfaceSettings">
+<em class="property">class </em><code class="descname">SolarSailRadiationInterfaceSettings</code><a class="headerlink" href="#SolarSailRadiationInterfaceSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Properties for a solar sail radiation pressure model, i.e. solar radiation pressure force derived from a solar sail characteristics and orientation.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">sourceBody</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">area</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">coneAngle</span> <span class="o">=</span> <span class="p">[</span> <span class="o">=</span> <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="mf">0.25</span><span class="p">;</span> <span class="p">};</span>
+<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">clockAngle</span> <span class="o">=</span> <span class="p">[</span> <span class="o">=</span>  <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="mf">0.2</span><span class="p">;</span> <span class="p">};</span>
+<span class="kt">double</span> <span class="n">frontEmissivityCoefficient</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">backEmissivityCoefficient</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">frontLambertianCoefficient</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">backLambertianCoefficient</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">reflectivityCoefficient</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">specularReflectionCoefficient</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">occultingBodies</span><span class="p">;</span> <span class="n">occultingBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">centralBody</span> <span class="o">=</span> <span class="s">&quot;Earth&quot;</span><span class="p">;</span>
+
+<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">radiationPressureSettings</span><span class="p">[</span> <span class="n">sourceBody</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SolarSailRadiationInterfaceSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">sourceBody</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="n">coneAngle</span><span class="p">,</span> <span class="n">clockAngle</span><span class="p">,</span> <span class="n">frontEmissivityCoefficient</span><span class="p">,</span> <span class="n">backEmissivityCoefficient</span><span class="p">,</span>
+    <span class="n">frontLambertianCoefficient</span><span class="p">,</span> <span class="n">backLambertianCoefficient</span><span class="p">,</span> <span class="n">reflectivityCoefficient</span><span class="p">,</span> <span class="n">specularReflectionCoefficient</span><span class="p">,</span> <span class="n">occultingBodies</span><span class="p">,</span> <span class="n">centralBody</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Creating solar sail radiation pressure settings for radiation due to the Sun, acting on the “Vehicle” body, where the occultations due to the Earth are taken into account. The input variables for the solar sail radiation pressure settings are:</p>
+<ul class="simple">
+<li>Name of the radiation pressure source body.</li>
+<li>Area of the solar sail.</li>
+<li>Function returning the cone angle of the solar sail as a function of time (in the above example, the cone angle function is constant).</li>
+<li>Function returning the clock angle of the solar sail as a function of time (in the above example, the clock angle function is constant).</li>
+<li>Emissivity coefficient of the front face of the solar sail.</li>
+<li>Emissivity coefficient of the back face of the solar sail.</li>
+<li>Lambertian coefficient of the front face of the solar sail.</li>
+<li>Lambertian coefficient of the back face of the solar sail.</li>
+<li>Reflectvity coefficient of the solar sail.</li>
+<li>Specular reflection coefficient of the solar sail.</li>
+<li>Vector with the names of the occulting bodies.</li>
+</ul>
+</dd></dl>
+
 </div>
 <div class="section" id="aerodynamic-coefficient-interface">
 <span id="aerodynamiccoefficientoptions"></span><h2>1.2.7. Aerodynamic coefficient interface<a class="headerlink" href="#aerodynamic-coefficient-interface" title="Permalink to this headline">¶</a></h2>

@@ -121,6 +121,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -285,12 +286,16 @@
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="n">stateDerivativeMap</span><span class="p">;</span>
 <span class="n">stateDerivativeMap</span> <span class="o">=</span> <span class="p">....</span>
 
+<span class="c1">// Load pair of default values for extrapolation (empty by default)</span>
+<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="n">DependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="n">defaultExtrapolationValues</span><span class="p">;</span>
+<span class="n">defaultExtrapolationValues</span> <span class="o">=</span> <span class="p">...</span>
+
 <span class="c1">// Create interpolator</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span> <span class="n">interpolatorSettings</span> <span class="o">=</span>
  <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">hermite_spline_interpolator</span> <span class="p">)</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneDimensionalInterpolator</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">interpolator</span> <span class="o">=</span>
          <span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span>
-                 <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span><span class="p">,</span> <span class="n">stateDerivativeMap</span> <span class="p">);</span>
+                 <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span><span class="p">,</span> <span class="n">defaultExtrapolationValues</span><span class="p">,</span> <span class="n">stateDerivativeMap</span> <span class="p">);</span>
 
 <span class="c1">// Interpolate</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span> <span class="mf">0.0</span> <span class="p">);</span>

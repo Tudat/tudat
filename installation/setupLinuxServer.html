@@ -1,0 +1,513 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. Tudat on a remote Linux server &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../index.html"/>
+        <link rel="up" title="Installation Guide" href="index.html"/>
+        <link rel="next" title="6. Troubleshooting" href="troubleshooting/index.html"/>
+        <link rel="prev" title="4. Creating Tudat Applications" href="creatingNewApps.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../started/index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="setupDevEnvironment.html">1. Setup Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="downloadTudatBundle/index.html">2. Download Tudat Bundle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configureTudatLibraries.html">3. Compile and Test Tudat Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="creatingNewApps.html">4. Creating Tudat Applications</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5. Tudat on a remote Linux server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#accessing-the-server">5.1. Accessing the server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-and-building-tudat-bundle">5.2. Installing and building Tudat Bundle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-tudat-applications-on-the-server">5.3. Running Tudat applications on the server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting/index.html">6. Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials and Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FAQ/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developerGuide/index.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../socis.html">SOCIS 2019</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Installation Guide</a> &raquo;</li>
+        
+      <li>5. Tudat on a remote Linux server</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/installation/setupLinuxServer.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tudat-on-a-remote-linux-server">
+<span id="setuplinuxserver"></span><h1>5. Tudat on a remote Linux server<a class="headerlink" href="#tudat-on-a-remote-linux-server" title="Permalink to this headline">¶</a></h1>
+<p>This section of the guide refers to the use of Tudat on a remote Linux server. Specific examples will be given with the TU Delft server (only accessible to TU Delft students and staff, please contact the server administrator to ask for server access). The global directions are however applicable to every server you may want to run Tudat on.</p>
+<div class="section" id="accessing-the-server">
+<h2>5.1. Accessing the server<a class="headerlink" href="#accessing-the-server" title="Permalink to this headline">¶</a></h2>
+<p>This section details how to access the server. Login to the server is usually done via SSH (secure shell).</p>
+<p>For <strong>Linux or Mac OS X</strong> environments, use the following commands from your terminal (the server adress for TU Delft server is AAAAAAA.tudelft.nl; please contact responsible staff member for server name, in case you are TU Delft staff or M.Sc. thesis student):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="o">-</span><span class="n">Y</span> <span class="o">&lt;</span><span class="n">userID</span><span class="o">&gt;</span><span class="nd">@serverAdress</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Adding <code class="docutils literal"><span class="pre">-Y</span></code> after the <code class="docutils literal"><span class="pre">ssh</span></code> command activates the interface that will allow you to open graphical softwares installed on the server on your local machine.</p>
+</div>
+<p>From a <strong>Windows</strong> machine, you have to follow a slightly different procedure as you will need an SSH client. One of the most commonly used SSH client is Putty, which you can download from <a class="reference external" href="https://www.putty.org">https://www.putty.org</a>. Once downloaded, run the installer (you can keep the default install options) and open it. Fill the tab <code class="docutils literal"><span class="pre">Session</span></code> as follows, with the adress of your server (HostName) and the port number you will use to access it, and then select the SSH option. The example below corresponds to the TU Delft server:</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../_images/puttySessionTab.PNG" src="../_images/puttySessionTab.PNG" />
+</div>
+</div></blockquote>
+<p>Then, you have to go to the <code class="docutils literal"><span class="pre">Data</span></code> tab under <code class="docutils literal"><span class="pre">Connection</span></code> and fill in your user account (in the figure below, the <code class="docutils literal"><span class="pre">Auto-login</span> <span class="pre">username</span></code> is to be replaced by your own user ID).</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../_images/puttyDataTab.PNG" src="../_images/puttyDataTab.PNG" />
+</div>
+</div></blockquote>
+<p>Finally, go to the <code class="docutils literal"><span class="pre">SSH</span></code> tab (still under <code class="docutils literal"><span class="pre">Connection</span></code>) and then into <code class="docutils literal"><span class="pre">X1</span></code> and tick <code class="docutils literal"><span class="pre">Enable</span> <span class="pre">X11</span> <span class="pre">forwarding</span></code>. Going back to the <code class="docutils literal"><span class="pre">Session</span></code> tab, enter a name for the connection and save. The configuration you have just set up is then saved. When you will later open Putty, simply double-clicking on the connection name you have chosen will directly initiate the connection.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you want to open graphical software from the server on your local Windows machine, you will also need to install a Xclient (for X11) (VcXsrv or Exceed are possible solutions).</p>
+</div>
+</div></blockquote>
+<p>To move files back and forth from the server, you will need a FTP client. The recommended one is FileZilla (you can download it from <a class="reference external" href="https://filezilla-project.org">https://filezilla-project.org</a>, and run the installer keeping the default options). Open FileZilla, and enter the hostname of your server, port number (same as before), user account and associated password and click <code class="docutils literal"><span class="pre">Quickconnect</span></code> (in the blanks highlighted in blue in the figure below). For later connections, note that you can directly click on the small arrow next to the <code class="docutils literal"><span class="pre">Quickconnect</span></code> button (in red below) and find your connection details already saved in the drop-down menu.</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../_images/fileZilla.png" src="../_images/fileZilla.png" />
+</div>
+</div></blockquote>
+<p>You can then simply drag-and-drop your files from the server (right column) to your local machine (left column) and vice-versa.</p>
+</div>
+<div class="section" id="installing-and-building-tudat-bundle">
+<h2>5.2. Installing and building Tudat Bundle<a class="headerlink" href="#installing-and-building-tudat-bundle" title="Permalink to this headline">¶</a></h2>
+<p>Most of the steps described below are very similar to the install guide for Linux environments (see <a class="reference internal" href="setupDevLinux.html#setupdevelopmentenvironmentlinux"><span class="std std-ref">Install on Linux</span></a>) but will be reminded here for the sake of completeness. Before installing Tudat, please make sure that all the required dependencies are installed on the server (see <span class="xref std std-ref">setupDevLinux</span> for more details on the Tudat development environment).</p>
+<p>Once logged in your server account, navigate to the folder in which you want to download the Tudat code. To print the content of the folder you are in, use the <code class="docutils literal"><span class="pre">ls</span></code> command. To navigate from your current folder to the ‘parent’ one, use <code class="docutils literal"><span class="pre">cd</span> <span class="pre">..</span></code> (so that if you are in <code class="docutils literal"><span class="pre">folder1/folder2/</span></code> and type <code class="docutils literal"><span class="pre">cd</span> <span class="pre">..</span></code>, you will end up in <code class="docutils literal"><span class="pre">folder1/</span></code>). On the contrary, use <code class="docutils literal"><span class="pre">cd</span> <span class="pre">folderName</span></code> to do the opposite (enter <code class="docutils literal"><span class="pre">cd</span> <span class="pre">folder2</span></code> to get to <code class="docutils literal"><span class="pre">folder1/folder2/</span></code> from <code class="docutils literal"><span class="pre">folder1/</span></code>). Once you are in your chosen folder, clone the tudatBundle repository with the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tudat</span><span class="o">/</span><span class="n">tudatBundle</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>When the tudatBundle download is completed, a folder <code class="docutils literal"><span class="pre">tudatBundle</span></code> has been created in your chosen directory (you can verify it by typing the <code class="docutils literal"><span class="pre">ls</span></code> command, as mentioned above). Go to this tudatBundle directory (<code class="docutils literal"><span class="pre">cd</span> <span class="pre">tudatBundle</span></code>) and enter the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">submodule</span> <span class="n">update</span> <span class="o">--</span><span class="n">init</span> <span class="o">--</span><span class="n">recursive</span>
+</pre></div>
+</div>
+<p>This step aims at updating the required modules and might take some time.</p>
+<p>Once all the previous steps are done, you might want to modify the default Tudat settings before building the whole Tudat code. Depending on the settings you want, you might set the different options (namely <code class="docutils literal"><span class="pre">USE_CSPICE</span></code>, <code class="docutils literal"><span class="pre">USE_JSON</span></code>, <code class="docutils literal"><span class="pre">USE_NRLMSISE00</span></code>, <code class="docutils literal"><span class="pre">USE_SOFA</span></code>, <code class="docutils literal"><span class="pre">USE_PAGMO</span></code>, <code class="docutils literal"><span class="pre">USE_PYGMO</span></code>, <code class="docutils literal"><span class="pre">BUILD_WITH_ESTIMATION_TOOLS</span></code>) to either <code class="docutils literal"><span class="pre">ON</span></code> or <code class="docutils literal"><span class="pre">OFF</span></code>. As an example, the option <code class="docutils literal"><span class="pre">USE_PAGMO</span></code> is set to <code class="docutils literal"><span class="pre">OFF</span></code> by default but should be turned on if you are planning on using the PAGMO toolbox for optimisation. This is done by typing the following command line:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="o">-</span><span class="n">DUSEPAGMO</span><span class="o">=</span><span class="n">ON</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">As a general advice and if you do not need it in particular, please switch off the <code class="docutils literal"><span class="pre">USE_JSON</span></code> option on the TU Delft server. Indeed, it will most probably yield compilation issues because the version of the gcc compiler currently available on the server is not supported by the JSON interface. In case you really need the JSON interface, please contact the server administrator to discuss about installing more recent gcc versions.</p>
+</div>
+<p>The tudatBundle libraries are now ready to be built. Just entering the following command in your terminal will initiate the compilation (make sure you are in the <code class="docutils literal"><span class="pre">tudatBundle/</span></code> folder before doing it):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="n">CMakeLists</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>This will build the Tudat code and might take a while (from several dozens of minutes up to several hours). The following output is expected to appear in your terminal:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>-- The C compiler identification is GNU 4.8.4
+-- The CXX compiler identification is GNU 4.8.4
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- /home/dominicdirkx/Software/tudatClean/tudatBundle/tudat/Tudat/External/CMake/
+-- /home/dominicdirkx/Software/tudatClean/tudatBundle
+-- BOOST: Using gnu.
+-- Downloading boost 1.60.0 to /home/dominicdirkx/Software/tudatClean/build-tudatBundle-Desktop-Default
+-- [download 0% complete]
+-- .......
+-- [download 100% complete]
+-- Extracting boost 1.60.0 to /home/dominicdirkx/Software/tudatClean/build-tudatBundle-Desktop-Default/boost_unzip
+-- Building b2 (bjam)
+-- ./bootstrap.sh;--with-toolset=gcc
+-- Build boost (note that this may take a while, please sit back)
+-- ./b2;link=static;threading=multi;runtime-link=shared;--build-dir=Build;stage;-d+2;--hash;--ignore-site-config;variant=release;cxxflags=-fPIC;cxxflags=-std=c++11;--layout=tagged;toolset=gcc;-sNO_BZIP2=1;--with-filesystem;--with-system;--with-thread;--with-regex;--with-date_time;--with-test
+-- Building CSpice from within TudatBundle.
+-- WARNING: building release version!
+-- JsonCpp Version: 1.6.5
+-- Building NRLMSISE00 from within TudatBundle.
+-- WARNING: building release version!
+-- Building Tudat from within TudatBundle.
+-- Tudat Relative path (wrt to project): /tudat/Tudat
+-- WARNING: building release version!
+-- Using gnucxx compiler.
+-- Performing Test CXX_SUPPORTS_CXX11
+-- Performing Test CXX_SUPPORTS_CXX11 - Success
+-- Found Eigen3: /usr/include/eigen3 (Required is at least version &quot;2.91.0&quot;)
+-- Boost version: 1.60.0
+-- Found the following Boost libraries:
+-- date_time
+-- system
+-- unit_test_framework
+-- filesystem
+-- regex
+-- SPICE disabled!
+-- NRLMSISE-00 disabled!
+-- Building SatellitePropagatorExamples from within TudatBundle.
+-- Relative path (wrt to project): /tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples
+-- WARNING: building release version!
+-- Using gnucxx compiler.
+-- Boost version: 1.60.0
+-- Found the following Boost libraries:
+-- thread
+-- date_time
+-- system
+-- unit_test_framework
+-- filesystem
+-- regex
+-- Found Tudat: /home/dominicdirkx/Software/tudatClean/tudatBundle/tudat/Tudat/.. (Required is at least version &quot;2.0&quot;)
+-- Building SpiceAndJSON from within TudatBundle.
+-- Relative path (wrt to project): /tudatExampleApplications/libraryExamples/SpiceAndJSON
+-- WARNING: building release version!
+-- Using gnucxx compiler.
+-- Boost version: 1.60.0
+-- Found the following Boost libraries:
+-- thread
+-- date_time
+-- system
+-- unit_test_framework
+-- filesystem
+-- regex
+-- Relative path to Tudat found: /tudat/Tudat
+-- SPICE_LIBRARIES: cspice
+-- Found SPICE: /home/dominicdirkx/Software/tudatClean/tudatBundle/cspice/include/../..
+-- JSONCPP_LIBRARIES: jsoncpp
+-- Found JSONCPP: /home/dominicdirkx/Software/tudatClean/tudatBundle/jsoncpp/include/json/../../include
+-- Building TemplateApplication from within TudatBundle.
+-- Relative path (wrt to project): /tudatExampleApplications/templateApplication/TemplateApplication
+-- WARNING: building release version!
+-- Using gnucxx compiler.
+-- Boost version: 1.60.0
+-- Found the following Boost libraries:
+-- thread
+-- date_time
+-- system
+-- unit_test_framework
+-- filesystem
+-- regex
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/dominicdirkx/Software/tudatClean/build-tudatBundle-Desktop-Default
+</pre></div>
+</div>
+<p>When the process is over, Tudat has been successfully build in your server account!
+The only remaining step is to run all the unit tests to ensure Tudat is working properly. It can be done from the tudatBundle directory by typing the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="o">--</span><span class="n">build</span> <span class="o">.</span> <span class="o">--</span><span class="n">target</span> <span class="nb">all</span> <span class="o">--</span> <span class="n">test</span>
+</pre></div>
+</div>
+<p>You should then be able to see the unit tests being run in your terminal, the output looking as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">15</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span> <span class="n">Running</span> <span class="n">steps</span> <span class="k">for</span> <span class="n">project</span> <span class="n">TudatBundle</span><span class="o">...</span>
+<span class="mi">15</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span> <span class="n">Starting</span><span class="p">:</span> <span class="s2">&quot;/usr/bin/make&quot;</span> <span class="n">test</span>
+<span class="n">Running</span> <span class="n">tests</span><span class="o">...</span>
+<span class="n">Test</span> <span class="n">project</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">dominicdirkx</span><span class="o">/</span><span class="n">Software</span><span class="o">/</span><span class="n">tudat</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">tudatBundle</span><span class="o">-</span><span class="n">Desktop</span><span class="o">-</span><span class="n">Default</span>
+<span class="n">Start</span>   <span class="mi">1</span><span class="p">:</span> <span class="n">sofa</span><span class="o">-</span><span class="n">test</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">249</span> <span class="n">Test</span>   <span class="c1">#1: sofa-test ............................................................   Passed    0.01 sec</span>
+      <span class="n">Start</span>   <span class="mi">2</span><span class="p">:</span> <span class="n">test_AerodynamicMomentAndAerodynamicForce</span>
+<span class="mi">2</span><span class="o">/</span><span class="mi">249</span> <span class="n">Test</span>   <span class="c1">#2: test_AerodynamicMomentAndAerodynamicForce ............................   Passed    3.06 sec</span>
+      <span class="n">Start</span>   <span class="mi">3</span><span class="p">:</span> <span class="n">test_AerodynamicsNamespace</span>
+<span class="mi">3</span><span class="o">/</span><span class="mi">249</span> <span class="n">Test</span>   <span class="c1">#3: test_AerodynamicsNamespace ...........................................   Passed    0.00 sec</span>
+      <span class="n">Start</span>   <span class="mi">4</span><span class="p">:</span> <span class="n">test_AerodynamicCoefficientGenerator</span>
+<span class="mi">4</span><span class="o">/</span><span class="mi">249</span> <span class="n">Test</span>   <span class="c1">#4: test_AerodynamicCoefficientGenerator .................................   Passed    0.03 sec</span>
+      <span class="n">Start</span>   <span class="mi">5</span><span class="p">:</span> <span class="n">test_ExponentialAtmosphere</span>
+<span class="mi">5</span><span class="o">/</span><span class="mi">249</span> <span class="n">Test</span>   <span class="c1">#5: test_ExponentialAtmosphere ...........................................   Passed    0.00 sec</span>
+      <span class="n">Start</span>   <span class="mi">6</span><span class="p">:</span> <span class="n">test_CustomConstantTemperatureAtmosphere</span>
+<span class="mi">6</span><span class="o">/</span><span class="mi">249</span> <span class="n">Test</span>   <span class="c1">#6: test_CustomConstantTemperatureAtmosphere .............................   Passed    0.00 sec</span>
+      <span class="n">Start</span>   <span class="mi">7</span><span class="p">:</span> <span class="n">test_TabulatedAtmosphere</span>
+<span class="mi">7</span><span class="o">/</span><span class="mi">249</span> <span class="n">Test</span>   <span class="c1">#7: test_TabulatedAtmosphere .............................................   Passed   26.81 sec</span>
+      <span class="n">Start</span>   <span class="mi">8</span><span class="p">:</span> <span class="n">test_TabulatedAerodynamicCoefficients</span>
+<span class="mi">8</span><span class="o">/</span><span class="mi">249</span> <span class="n">Test</span>   <span class="c1">#8: test_TabulatedAerodynamicCoefficients ................................   Passed    1.37 sec</span>
+<span class="o">...</span>
+<span class="o">...</span>
+<span class="o">...</span>
+<span class="mi">243</span><span class="o">/</span><span class="mi">249</span> <span class="n">Test</span> <span class="c1">#243: test_JsonInterfaceTermination ........................................   Passed    0.02 sec</span>
+        <span class="n">Start</span> <span class="mi">244</span><span class="p">:</span> <span class="n">test_JsonInterfaceThrust</span>
+<span class="mi">244</span><span class="o">/</span><span class="mi">249</span> <span class="n">Test</span> <span class="c1">#244: test_JsonInterfaceThrust .............................................   Passed    0.01 sec</span>
+        <span class="n">Start</span> <span class="mi">245</span><span class="p">:</span> <span class="n">test_JsonInterfaceTorque</span>
+<span class="mi">245</span><span class="o">/</span><span class="mi">249</span> <span class="n">Test</span> <span class="c1">#245: test_JsonInterfaceTorque .............................................   Passed    0.00 sec</span>
+        <span class="n">Start</span> <span class="mi">246</span><span class="p">:</span> <span class="n">test_JsonInterfaceVariable</span>
+<span class="mi">246</span><span class="o">/</span><span class="mi">249</span> <span class="n">Test</span> <span class="c1">#246: test_JsonInterfaceVariable ...........................................   Passed    0.01 sec</span>
+        <span class="n">Start</span> <span class="mi">247</span><span class="p">:</span> <span class="n">test_JsonInterfaceObservation</span>
+<span class="mi">247</span><span class="o">/</span><span class="mi">249</span> <span class="n">Test</span> <span class="c1">#247: test_JsonInterfaceObservation ........................................   Passed    0.09 sec</span>
+        <span class="n">Start</span> <span class="mi">248</span><span class="p">:</span> <span class="n">test_JsonInterfaceParameter</span>
+<span class="mi">248</span><span class="o">/</span><span class="mi">249</span> <span class="n">Test</span> <span class="c1">#248: test_JsonInterfaceParameter ..........................................   Passed    0.05 sec</span>
+        <span class="n">Start</span> <span class="mi">249</span><span class="p">:</span> <span class="n">test_JsonInterfaceSimulationSingleSatelliteVariational</span>
+<span class="mi">249</span><span class="o">/</span><span class="mi">249</span> <span class="n">Test</span> <span class="c1">#249: test_JsonInterfaceSimulationSingleSatelliteVariational ...............   Passed    0.09 sec</span>
+
+<span class="mi">100</span><span class="o">%</span> <span class="n">tests</span> <span class="n">passed</span><span class="p">,</span> <span class="mi">0</span> <span class="n">tests</span> <span class="n">failed</span> <span class="n">out</span> <span class="n">of</span> <span class="mi">249</span>
+<span class="n">Total</span> <span class="n">Test</span> <span class="n">time</span> <span class="p">(</span><span class="n">real</span><span class="p">)</span> <span class="o">=</span> <span class="mf">623.61</span> <span class="n">sec</span>
+<span class="mi">15</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span> <span class="n">The</span> <span class="n">process</span> <span class="s2">&quot;/usr/bin/make&quot;</span> <span class="n">exited</span> <span class="n">normally</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Depending on your compilation settings, this step can take from several minutes to more than one hour (the number of unit tests also depends on your settings). If the output ends with <code class="docutils literal"><span class="pre">100%</span> <span class="pre">tests</span> <span class="pre">passed,</span> <span class="pre">0</span> <span class="pre">tests</span> <span class="pre">failed</span></code>, everything worked out and you do not need to take any further action. If any tests fail the reader is refered to <a class="reference internal" href="troubleshooting/installationErrors.html#debuggingfailedunittests"><span class="std std-ref">Failed unit tests</span></a>.</p>
+</div>
+<div class="section" id="running-tudat-applications-on-the-server">
+<h2>5.3. Running Tudat applications on the server<a class="headerlink" href="#running-tudat-applications-on-the-server" title="Permalink to this headline">¶</a></h2>
+<p>You are now ready to play around with the sample applications already available in Tudat or to run your own applications on the server. The different applications can be accessed and run from the following folders, depending on the type of application.</p>
+<blockquote>
+<div><ul class="simple">
+<li>If you want to re-run an unit test independently, go to <code class="docutils literal"><span class="pre">tudatBundle/tudat/bin/unit_tests/</span></code>.</li>
+<li>If you want to run an example application, go to <code class="docutils literal"><span class="pre">tudatBundle/tudatExampleApplications/satellitePropagatorExamples/bin/applications/</span></code>.</li>
+<li>If you want to run an PAGMO optimisation application, go to <code class="docutils literal"><span class="pre">tudatBundle/tudatExampleApplications/libraryExamples/bin/applications/</span></code>.</li>
+</ul>
+</div></blockquote>
+<p>Once you are in the proper directory, use the <code class="docutils literal"><span class="pre">ls</span></code> command to get the list of all the built executables. Enter <code class="docutils literal"><span class="pre">./</span></code> directly followed by the name of your targeted executable to run it (<code class="docutils literal"><span class="pre">./executable_name</span></code>). The executable outputs will then appear in your terminal.</p>
+<p>It is of course also possible to write your own applications and run them on the server. The guidelines to write your application are presented in <a class="reference internal" href="creatingNewApps.html#createnewapps"><span class="std std-ref">Creating Tudat Applications</span></a>. As mentioned there, new applications are typically added to the <code class="docutils literal"><span class="pre">tudatBundle/tudatApplications/</span></code> folder. If so, then the executables created after building your new applications can be found in <code class="docutils literal"><span class="pre">tudatBundle/tudatApplications/bin/applications/</span></code> and run with the same <code class="docutils literal"><span class="pre">./</span></code> command which has been described above.
+For more details about getting a new application from an existing github repository or creating a totally new one, the reader is referred to <a class="reference internal" href="creatingNewApps.html#createnewapps"><span class="std std-ref">Creating Tudat Applications</span></a>.</p>
+<p>When you modify either an application file or some parts of the Tudat code, you need to redo the building process (with the command <code class="docutils literal"><span class="pre">make</span></code>, from the folder containing the files you have modified). This will automatically generate new executables corresponding to the updated version of the code.</p>
+<p>As previously mentioned, the application outputs appear in the terminal when running the associated executable. However, it might be advantageous to run the application in the background to be allowed to log out from the server while keeping your application running. Several options are possible here:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">If you have already run your application as described above (so with a simple <code class="docutils literal"><span class="pre">./executable_name</span></code> command) but want to put it in the background to be able to log out, then press <code class="docutils literal"><span class="pre">ctrl+Z</span></code> to pause it and enter the command <code class="docutils literal"><span class="pre">bg</span></code> to put it in the background. Then you can type <code class="docutils literal"><span class="pre">exit</span></code> to log out and your application will keep running.</p>
+</li>
+<li><p class="first">You can also directly start the process in the background by using the command <code class="docutils literal"><span class="pre">./executable_name</span> <span class="pre">&amp;</span></code>. However, if you do so, the application outputs will not be accessible. You can choose to store them in a log file so that you can still read them when the running is over. This can be done with the following command (<code class="docutils literal"><span class="pre">log_run_date</span></code> being the name of the log file):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">executable_name</span> <span class="o">&gt;</span> <span class="n">log_run_date</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span> <span class="o">&amp;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="troubleshooting/index.html" class="btn btn-neutral float-right" title="6. Troubleshooting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="creatingNewApps.html" class="btn btn-neutral" title="4. Creating Tudat Applications" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>

@@ -125,6 +125,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -195,7 +196,7 @@
   <div class="section" id="simulator-set-up">
 <span id="tudatfeaturessimulatorindex"></span><h1>3. Simulator Set-Up<a class="headerlink" href="#simulator-set-up" title="Permalink to this headline">¶</a></h1>
 <p>One of the core elements of the Tudat libraries is its simulator framework. The goal of this page is discuss the implementation of such framework as well as the numerous options available. The top-level framework of the simulator is shown below:</p>
-<object data="../../../_images/graphviz-5026ea38f6855abbea1c8e550cb90d858edef796.svg" type="image/svg+xml">
+<object data="../../../_images/graphviz-8fe92cf0473ebf085f374278b4e264712b279858.svg" type="image/svg+xml">
             <p class="warning">digraph
 {
    # General diagram settings
@@ -206,7 +207,7 @@
 
 
    # general node settings
-   node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+   node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = Times, fontsize = 9];
 
 
    # specific node color settings
@@ -284,31 +285,6 @@
    {rank = same; NamedBodyMap, DynamicsSimulator}
    MultiType -&gt; MultiArc [ltail = clusterSingleArcPropagatorSettings];
    Mass -&gt; Custom [style = invis];
-}</p></object>
-<object data="../../../_images/graphviz-8ee54f6bc863de6bba108d22944711b3d34e923b.svg" type="image/svg+xml">
-            <p class="warning">digraph
-{
-   # General diagram settings
-   rankdir = &quot;LR&quot;;
-   splines = ortho;
-   compound = true;
-
-   subgraph clusterLegend
-   {
-   rank = min;
-   style = dashed;
-
-
-     # general node settings
-     node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
-
-
-     &quot;Main block&quot; [fillcolor = lightgreen];
-     &quot;Optional input&quot; [style = dotted, fillcolor = lightgrey, color = black];
-     &quot;Input for \nmain block&quot; [fillcolor = lightblue];
-   Output [color = peachpuff];
-     &quot;Optional input&quot;-&gt; &quot;Input for \nmain block&quot; -&gt; &quot;Main block&quot; -&gt; &quot;Output&quot; [style = invis];
-   }
 }</p></object>
 <p>The top-element in such framework is the <a class="reference internal" href="simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a>, which is in charge of propagating the equations of motion using the environment and acceleration models discussed in <a class="reference internal" href="../environmentSetup/index.html#tudatfeaturesenvironmentindex"><span class="std std-ref">Environment Set-up</span></a> and <a class="reference internal" href="../accelerationSetup/index.html#tudatfeaturesaccelerationindex"><span class="std std-ref">Setting up State Derivative Models</span></a>, respectively. The orbit propation is done according to the specified <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> and the <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a>, which are discussed in detail in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a> and <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>.</p>
 <p>As shown in the figure above, there are various types of <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> and <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> depending on the particularities of the application at hand. For convenience, we list the types of dynamics that can be propagated, and their associated <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a>:</p>

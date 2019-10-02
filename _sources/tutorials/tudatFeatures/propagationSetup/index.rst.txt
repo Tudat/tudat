@@ -18,7 +18,7 @@ One of the core elements of the Tudat libraries is its simulator framework. The 
 
 
       # general node settings 
-      node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+      node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = Times, fontsize = 9];
 
 
       # specific node color settings
@@ -114,7 +114,7 @@ One of the core elements of the Tudat libraries is its simulator framework. The 
 
 
      	# general node settings 
-     	node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+     	node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = Times,serif, fontsize = 9];
 
 
    	"Main block" [fillcolor = lightgreen];
