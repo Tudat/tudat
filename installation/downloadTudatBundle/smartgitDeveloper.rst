@@ -8,7 +8,7 @@ Download using SmartGit (Developer)
 Setup SmartGit
 ~~~~~~~~~~~~~~~~~
 **Step 1.1: Download SmartGit**
-    Download SmartGit for your operating system `here <http://www.syntevo.com/smartgit/>`_ . Note that for Linux the package might be available through your package manager, see Linux/Debian instructions. Note that SmartGit comes bundled with JRE (java runtime environment) on Windows and Mac OS X. On Linux you need to install ``jre-openjdk``.
+    Download SmartGit for your operating system `here <http://www.syntevo.com/smartgit/>`_ . Note that for Linux the package might be available through your package manager, see Linux/Debian instructions. Note that SmartGit comes bundled with JRE (java runtime environment) on Windows and macOS. On Linux you need to install ``jre-openjdk``.
 
 **Step 1.2: Install SmartGit**
     The installation should be straight-forward and the default installation is fine.

@@ -48,7 +48,7 @@ This part of the installation guide will allow you to download the Tudat Bundle 
         Win + R
         cmd
 
-    Mac OS X::
+    macOS::
 
         Cmd + Space
         terminal

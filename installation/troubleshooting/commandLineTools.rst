@@ -27,7 +27,7 @@ Below are several tools and tricks that are essential for troubleshooting your i
 
             Win + R
 
-        Mac OS X::
+        macOS::
 
             Cmd + Space
             terminal
@@ -45,7 +45,7 @@ Below are several tools and tricks that are essential for troubleshooting your i
             cd \Users\John
             cd tudatBundle
 
-        Mac OS X::
+        macOS::
 
             cd /Users/John
             cd tudatBundle
@@ -62,7 +62,7 @@ Below are several tools and tricks that are essential for troubleshooting your i
         gcc -v > gcc_log.txt         (normal output to logfile, errors to screen) 
         gcc -v > gcc_log.txt 2>&1    (normal and error output to logfile)
 
-    Unfortunately while creating a log file you can not see the output as it is directed to the file instead of the screen. On Linux and OS X there is a command called tee, which does both::
+    Unfortunately while creating a log file you can not see the output as it is directed to the file instead of the screen. On Linux and macOS there is a command called tee, which does both::
 
         gcc -v | tee gcc_log.txt         (normal output to file and screen, errors screen only)
         gcc -v  2>&1 | tee gcc_log.txt   (normal and error output to logfile and screen, FREFERRED)
@@ -192,8 +192,8 @@ Please complete all checks and copy the output (even if a check seems succesfull
 
    **Solution B:** Make sure the software is added to the path.
 
-    - On both Windows and OS X, some software is not added to the path by default.
-    - Usually this is an option inside the installation (not for CMake under OS X), reinstalling and selecting this option should fix the issue.
+    - On both Windows and macOS, some software is not added to the path by default.
+    - Usually this is an option inside the installation (not for CMake under macOS), reinstalling and selecting this option should fix the issue.
     - If not you need to manually add the directory that contains the executables to you path, see instructions below.
 
 
