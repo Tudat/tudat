@@ -98,12 +98,14 @@
 <li class="toctree-l2"><a class="reference internal" href="downloadTudatBundle/index.html">2. Download Tudat Bundle</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">3. Compile and Test Tudat Libraries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="creatingNewApps.html">4. Creating Tudat Applications</a></li>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting/index.html">5. Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setupLinuxServer.html">5. Tudat on a remote Linux server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting/index.html">6. Troubleshooting</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials and Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developerGuide/index.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -285,12 +287,24 @@
 -- Build files have been written to: /home/dominicdirkx/Software/tudatClean/build-tudatBundle-Desktop-Default
 </pre></div>
 </div>
-<p class="last">Depending on your system, boost may or may not be downloaded and compiled by CMake (it typically is). Depending on the speed of your computer and internet connection, this may take anywhere from several to 30 minutes. You can safely ignore CMake warnings about unused variables, specifically manually-specified variables were not used by the project. In case an error occurs during this portion of the installation, copy the full contents of the <code class="docutils literal"><span class="pre">General</span> <span class="pre">Messages</span></code> tab from Qt (bottom of screen) into a text file and post this with your Github issue.</p>
+<p>Depending on your system, boost may or may not be downloaded and compiled by CMake (it typically is). Depending on the speed of your computer and internet connection, this may take anywhere from several to 30 minutes. You can safely <strong>ignore CMake warnings</strong> about unused variables, specifically manually-specified variables were not used by the project, and warnings about relative paths, such as the one below:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CMake</span> <span class="ne">Warning</span> <span class="p">(</span><span class="n">dev</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tudat</span><span class="o">/</span><span class="n">Tudat</span><span class="o">/</span><span class="n">Astrodynamics</span><span class="o">/</span><span class="n">OrbitDetermination</span><span class="o">/</span><span class="n">RotationalDynamicsPartials</span><span class="o">/</span><span class="n">CMakeLists</span><span class="o">.</span><span class="n">txt</span><span class="p">:</span>
+  <span class="n">Policy</span> <span class="n">CMP0081</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">:</span> <span class="n">Relative</span> <span class="n">paths</span> <span class="ow">not</span> <span class="n">allowed</span> <span class="ow">in</span> <span class="n">LINK_DIRECTORIES</span>
+  <span class="n">target</span> <span class="nb">property</span><span class="o">.</span>  <span class="n">Run</span> <span class="s2">&quot;cmake --help-policy CMP0081&quot;</span> <span class="k">for</span> <span class="n">policy</span> <span class="n">details</span><span class="o">.</span>
+  <span class="n">Use</span> <span class="n">the</span> <span class="n">cmake_policy</span> <span class="n">command</span> <span class="n">to</span> <span class="nb">set</span> <span class="n">the</span> <span class="n">policy</span> <span class="ow">and</span> <span class="n">suppress</span> <span class="n">this</span> <span class="n">warning</span><span class="o">.</span>
+
+  <span class="n">Found</span> <span class="n">relative</span> <span class="n">path</span> <span class="k">while</span> <span class="n">evaluating</span> <span class="n">link</span> <span class="n">directories</span> <span class="n">of</span>
+  <span class="s2">&quot;tudat_torque_partials&quot;</span><span class="p">:</span>
+
+    <span class="s2">&quot;SOFA_BASE_PATH-NOTFOUND/../lib&quot;</span>
+
+<span class="n">This</span> <span class="n">warning</span> <span class="ow">is</span> <span class="k">for</span> <span class="n">project</span> <span class="n">developers</span><span class="o">.</span>  <span class="n">Use</span> <span class="o">-</span><span class="n">Wno</span><span class="o">-</span><span class="n">dev</span> <span class="n">to</span> <span class="n">suppress</span> <span class="n">it</span><span class="o">.</span>
+</pre></div>
+</div>
+<p class="last">In case an <strong>error occurs</strong> during this portion of the installation, copy the full contents of the <code class="docutils literal"><span class="pre">General</span> <span class="pre">Messages</span></code> tab from Qt (bottom of screen) into a text file and post this with your Github issue.</p>
 </dd>
-</dl>
-<p><strong>Step 4: Updating the Settings (optional)</strong></p>
-<blockquote>
-<div><p>Before building the libraries, you can modify some of the CMake settings to suit your needs. If you are not sure what your needs are (yet), leave all settings as they are, and proceed to the following step. If you are installing Tudat for the AE4868 course, do not modify the settings. To change the CMake settings, go to Projects-&gt;Build-&gt;CMake, see screenshot below (note that it may look slightly different, depending on your Qt version/operating system):</p>
+<dt><strong>Step 4: Updating the Settings (optional)</strong></dt>
+<dd><p class="first">Before building the libraries, you can modify some of the CMake settings to suit your needs. If you are not sure what your needs are (yet), leave all settings as they are, and proceed to the following step. If you are installing Tudat for the AE4868 course, do not modify the settings. To change the CMake settings, go to Projects-&gt;Build-&gt;CMake, see screenshot below (note that it may look slightly different, depending on your Qt version/operating system):</p>
 <div class="figure">
 <img alt="../_images/cmakeSettings.png" src="../_images/cmakeSettings.png" />
 </div>
@@ -302,12 +316,11 @@
 <li>If you plan to use the Pagmo toolbox for optimization, set <code class="docutils literal"><span class="pre">USE_PAGMO</span></code> to <code class="docutils literal"><span class="pre">ON</span></code>. Note that this will also trigger the compilation several example applications on how to use Pagmo with Tudat.</li>
 </ul>
 </div></blockquote>
-<div class="admonition note">
+<div class="last admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">You can modify the CMake settings at any later point in time, but this may require a rebuild of a significant part of the libraries.</p>
 </div>
-</div></blockquote>
-<dl class="docutils">
+</dd>
 <dt><strong>Step 5: Build the libraries</strong></dt>
 <dd><p class="first">Now all that remains to be done is to build the libraries. Typically, Tudat is compiled using a single core on your system. The compiler can be instructed to use multiple cores for compilation, check the FAQ <a class="reference internal" href="../FAQ/index.html#faqcompilationinstallation"><span class="std std-ref">Compilation and Installation</span></a> for details.</p>
 <div class="admonition note">

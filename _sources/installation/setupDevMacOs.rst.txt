@@ -1,8 +1,8 @@
 .. _setupDevelopmentEnvironmentMacOs:
 
-Install on Mac OS X
+Install on macOS
 -------------------
-This section of the guide refers to the installation of the IDE under Mac OS. These instructions should work for all versions of Mac OS X. You may need to give the Administrator password when installing some programs, depending on your user settings.
+This section of the guide refers to the installation of the IDE under Mac OS. These instructions should work for all versions of macOS. You may need to give the Administrator password when installing some programs, depending on your user settings.
 
 CMake
 ~~~~~
