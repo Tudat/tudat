@@ -397,6 +397,74 @@ Radiation pressure interface
 
    .. note:: Occultations by multiple bodies are not yet supported. Please contact the Tudat suppport team if you wish to use multiple occultations.
 
+.. class:: PanelledRadiationPressureInterfaceSettings
+
+   Properties for a panelled radiation pressure model, i.e. solar radiation pressure force derived from a so-called boxes-and-wings model. 
+
+   .. code-block:: cpp
+
+       std::string sourceBody = "Sun";
+       std::vector< double > emissivities = { 0.1, 0.0, 0.1, 0.1 };
+       std::vector< double > areas = { 4.0, 6.0, 2.3, 2.3 };
+       std::vector< double > diffusionCoefficients = { 0.46, 0.06, 0.46, 0.46 };
+       std::vector< std::string > occultingBodies;
+       occultingBodies.push_back( "Earth" );
+
+       std::vector< std::function< Eigen::Vector3d( const double ) > > panelSurfaceNormals;
+      panelSurfaceNormals.push_back( [ = ]( const double ){ return Eigen::Vector3d::UnitZ( ); } );
+      panelSurfaceNormals.push_back( [ = ]( const double ){ return - Eigen::Vector3d::UnitZ( ); } );
+      panelSurfaceNormals.push_back( [ = ]( const double ){ return Eigen::Vector3d::UnitX( ); } );
+      panelSurfaceNormals.push_back( [ = ]( const double ){ return - Eigen::Vector3d::UnitX( ); } );
+
+       bodySettings[ "Vehicle" ]->radiationPressureSettings[ sourceBody ] = std::make_shared< PanelledRadiationPressureInterfaceSettings >(
+           sourceBody, emissivities, areas, diffusionCoefficients, surfaceNormalsInBodyFixedFrameFunctions, occultingBodies ); 
+
+   Creating panelled radiation pressure settings for radiation due to the Sun, acting on the "Vehicle" body, from the following input variables: 
+
+   - Name of the source body of the radiation pressure.
+   - Vector containing the emissivities of the different panels.
+   - Vector containing the areas of the panels.
+   - Vector containing the diffusion coefficient of each panel.
+   - Vector containing the functions that return the normals of the panels surfaces, in body-fixed reference frame.
+   - Vector with the names of the occulting bodies.
+
+.. class:: SolarSailRadiationInterfaceSettings
+
+   Properties for a solar sail radiation pressure model, i.e. solar radiation pressure force derived from a solar sail characteristics and orientation. 
+
+   .. code-block:: cpp
+
+       std::string sourceBody = "Sun";
+       double area = 2.0;
+       std::function< double( const double ) > coneAngle = [ = ]( const double ){ return 0.25; };
+       std::function< double( const double ) > clockAngle = [ =  ]( const double ){ return 0.2; };
+       double frontEmissivityCoefficient = 0.4;
+       double backEmissivityCoefficient = 0.4;
+       double frontLambertianCoefficient = 0.4;
+       double backLambertianCoefficient = 0.4;
+       double reflectivityCoefficient = 0.3;
+       double specularReflectionCoefficient = 1.0;
+       std::vector< std::string > occultingBodies; occultingBodies.push_back( "Earth" );
+       std::string& centralBody = "Earth";
+
+       bodySettings[ "Vehicle" ]->radiationPressureSettings[ sourceBody ] = std::make_shared< SolarSailRadiationInterfaceSettings >(
+           sourceBody, area, coneAngle, clockAngle, frontEmissivityCoefficient, backEmissivityCoefficient, 
+           frontLambertianCoefficient, backLambertianCoefficient, reflectivityCoefficient, specularReflectionCoefficient, occultingBodies, centralBody ); 
+
+   Creating solar sail radiation pressure settings for radiation due to the Sun, acting on the "Vehicle" body, where the occultations due to the Earth are taken into account. The input variables for the solar sail radiation pressure settings are:
+
+   - Name of the radiation pressure source body.
+   - Area of the solar sail.
+   - Function returning the cone angle of the solar sail as a function of time (in the above example, the cone angle function is constant).
+   - Function returning the clock angle of the solar sail as a function of time (in the above example, the clock angle function is constant).
+   - Emissivity coefficient of the front face of the solar sail.
+   - Emissivity coefficient of the back face of the solar sail.
+   - Lambertian coefficient of the front face of the solar sail.
+   - Lambertian coefficient of the back face of the solar sail.
+   - Reflectvity coefficient of the solar sail.
+   - Specular reflection coefficient of the solar sail.
+   - Vector with the names of the occulting bodies.
+
 .. _aerodynamicCoefficientOptions:
 
 Aerodynamic coefficient interface

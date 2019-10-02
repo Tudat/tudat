@@ -16,7 +16,7 @@ These pages of the wiki provide further details about critical libraries necessa
       
 
       # general node settings 
-      node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 8];
+      node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = Times, fontsize = 8];
 
 
       # specific node color settings
@@ -144,7 +144,7 @@ These pages of the wiki provide further details about critical libraries necessa
 
 
      	# general node settings 
-     	node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = FontAwesome, fontsize = 9];
+     	node [shape = box, style = filled, width = 1.25, fixedsize = true, color = lightgrey, fontname = Times, fontsize = 9];
 
 
    	"Main block" [fillcolor = lightgreen];
