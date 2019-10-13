@@ -168,12 +168,13 @@ Feature documentation for the various Tudat tools are given in the pages below. 
 
 .. toctree::
    :numbered:
-   :maxdepth: 2
+   :maxdepth: 3
 
    environmentSetup/index
    accelerationSetup/index
    propagationSetup/index
    estimationSetup/index
    astroTools/index
+   lowThrustTrajectoryDesign/index
    mathTools/index
    otherLibraries/index

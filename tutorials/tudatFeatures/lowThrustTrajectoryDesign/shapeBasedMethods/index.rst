@@ -1,0 +1,44 @@
+.. _tudatFeaturesShapeBasedMethodsIndex:
+
+Shape-Based Methods 
+===================
+
+Shape-based methods are used to provide a good preliminary design for a given trajectory, in an efficient way. To do so, they rely on analytical shaping of the trajectory: they assume the trajectory respects a certain shape (which can be fully described analytically), and the parameters defining this shape are then computed to ensure the trajectory respects some boundary conditions (states at departure and arrival, time of flight, ...). The analytical formulation reduces the computational load significantly, which is a major advantages of those shaping methods over the traditional direct and indirect methods.  
+
+All shape-based methods derive from the class :literal:`ShapeBasedMethodLeg`, described below.
+
+.. class:: ShapeBasedMethodLeg
+
+This is the base class used to derive the different shaping methods. It itself inherits from the base class LowThrustLeg. Each class inherited from ShapeBasedMethodLeg contains the following methods:
+
+	- :literal:`getInitialValueInpendentVariable`
+		Returns the initial value of the independent variable with respect to which the trajectory is calculated. Usually, time is the independent variable but several shaping methods use polar or azimuth angles.
+
+	- :literal:`getFinalValueInpendentVariable` 
+		Returns the final value of the independent variable.
+
+	- :literal:`computeCurrentThrustAccelerationVector` 
+		Returns the thrust acceleration vector at a given value of the independent variable.
+
+	- :literal:`getTrajectory` 
+		Fills a map with the state history of the spacecraft following the shape-based trajectory for a set of epochs provided as input.
+
+	- :literal:`computeCurrentThrust` 
+		Returns the thrust vector at a given value of the independent variable.
+
+	- :literal:`retrieveLowThrustAccelerationMap` 
+		Returns the acceleration map corresponding to the shape-based trajectory, including the low-thrust and the central body gravitational accelerations.
+
+	- :literal:`createLowThrustTranslationalStatePropagatorSettings` 
+		Creates appropriate propagator settings for the translational state. The propagation initiates at half of the time of flight and thus at the middle of the shape-based method leg. The spacecraft state is propagated backward until departure, and forward to arrival.
+
+Several shape-based methods have been implemented and inherit from this :literal:`ShapeBasedMethodLeg` base class.
+
+.. toctree::
+   :numbered:
+   :maxdepth: 2
+
+   hodographicShaping
+   sphericalShaping
+   	
+
