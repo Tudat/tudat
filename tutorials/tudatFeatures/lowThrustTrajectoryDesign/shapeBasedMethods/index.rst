@@ -17,21 +17,6 @@ This is the base class used to derive the different shaping methods. It itself i
 	- :literal:`getFinalValueInpendentVariable` 
 		Returns the final value of the independent variable.
 
-	- :literal:`computeCurrentThrustAccelerationVector` 
-		Returns the thrust acceleration vector at a given value of the independent variable.
-
-	- :literal:`getTrajectory` 
-		Fills a map with the state history of the spacecraft following the shape-based trajectory for a set of epochs provided as input.
-
-	- :literal:`computeCurrentThrust` 
-		Returns the thrust vector at a given value of the independent variable.
-
-	- :literal:`retrieveLowThrustAccelerationMap` 
-		Returns the acceleration map corresponding to the shape-based trajectory, including the low-thrust and the central body gravitational accelerations.
-
-	- :literal:`createLowThrustTranslationalStatePropagatorSettings` 
-		Creates appropriate propagator settings for the translational state. The propagation initiates at half of the time of flight and thus at the middle of the shape-based method leg. The spacecraft state is propagated backward until departure, and forward to arrival.
-
 Several shape-based methods have been implemented and inherit from this :literal:`ShapeBasedMethodLeg` base class.
 
 .. toctree::

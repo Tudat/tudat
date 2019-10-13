@@ -71,22 +71,9 @@ where the input parameters are:
 		
 	- :literal:`centralBody`
 		Name of the central body of the low-thrust trajectory.
-		
-	- :literal:`optimisationAlgorithm`
-		Pagmo optimisation algorithm to be used to solve the parametrised optimisation problem.
-		
-	- :literal:`numberOfGenerations`
-		Number of generations 
-	
-	- :literal:`numberOfIndividualsPerPopulation`
-		Number of individuals
-		
-	- :literal:`relativeToleranceConstraints`
-		:literal:`double` defining the relative tolerance of the optimisation algorithm with respect to the Sims-Flanagan problem constraints. Default value is arbitrarily set to 1.0e-6.
-		
-	- :literal:`initialGuessThrustModel`
-		:literal:`pair` object that provides an initial guess for the optimisation process. The first element is a function returning a thrust vector as function of time, and the second element is a :literal:`double` defining the design parameters maximum allowed variation from the initial guess (it is given in percentage and should therefore be constrained between 0 and 1). 
-			
+
+	- :literal:`optimisationSettings`
+		Settings for the Sims-Flanagan optimisation (includes algorithm to be used, number of generations, number of individuals per population, tolerance with respect to contraints, and possibly initial guess)			
 					
 		
 The :literal:`SimsFlanagan` class is directly derived from the base class :literal:`LowThrustLeg`, and all the methods contained in that base class are thus available from any :literal:`SimsFlanagan` object (see :ref:`tudatFeaturesLowThrustTrajectory` for more details). This includes, among others, the methods allowing the user to retrieve the trajectory, mass, thrust, and thrust acceleration history along the trajectory.
@@ -143,23 +130,6 @@ The input parameters of this class constructor are:
 			
 	- :literal:`centralBody`
 		Name of the central body of the low-thrust trajectory.
-		
-		
-The following methods can be called from any SimsFlanaganModel object:
-	
-	- :literal:`propagateForwardFromDepartureToMatchPoint`
-	
-	- :literal:`propagateBackwardFromArrivalToMatchPoint`		
-		
-	- :literal:`getStateAtMatchPointForwardPropagation`
-		
-	- :literal:`getStateAtMatchPointBackwardPropagation`
-			
-	- :literal:`getMassAtMatchPointForwardPropagation`
-		
-	- :literal:`getMassAtMatchPointBackwardPropagation`
-		
-	- :literal:`getTotalDeltaV`
 
 .. _tudatFeaturesSimsFlanaganInitialGuessFromShaping:
 

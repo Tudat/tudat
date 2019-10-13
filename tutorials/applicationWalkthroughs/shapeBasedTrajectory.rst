@@ -148,7 +148,7 @@ A similar process is repeated for the normal and axial components of the spacecr
             std::make_shared< PowerTimesTrigonometricFunctionHodographicShapingSettings >(
                 3.0, ( numberOfRevolutions + 0.5 ) * frequency, scaleFactor );
 
-    // Set components for the axial velocity function.
+    // Create components for the axial velocity composite function.
     std::vector< std::shared_ptr< shape_based_methods::BaseFunctionHodographicShaping > > axialVelocityFunctionComponents;
     axialVelocityFunctionComponents.push_back(
                 createBaseFunctionHodographicShaping( cosine, firstAxialVelocityBaseFunctionSettings ) );
@@ -190,7 +190,7 @@ The definition of a spherically shaped trajectory is much more straightforward t
 
 .. code-block:: cpp
 
-    // Define root finder settings (used to update the updated value of the free coefficient, so that it matches the required time of flight).
+    // Define root finder settings (used to update the value of the free coefficient, so that it matches the required time of flight).
     std::shared_ptr< root_finders::RootFinderSettings > rootFinderSettings =
             std::make_shared< root_finders::RootFinderSettings >( root_finders::bisection_root_finder, 1.0e-6, 30 );
 
@@ -271,7 +271,7 @@ The unperturbed problem (with central body gravitational acceleration and spacec
 Numerically propagate the perturbed problem
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The same is done using a different, more complete set of perturbing accelerations. The only difference is that the set of :literal:`PropagatorSettings` is defined differently, using the more completed of perturbing accelerations that have been defined previously (gravitational attractions from Earth, Mars and Jupiter, and solar radiation pressure). Otherwise, the code is strickly the same as the one used to propagate the unperturbed problem. 
+The same is done using a different, more complete set of perturbing accelerations. The only difference is that the set of :literal:`PropagatorSettings` is defined differently, using the more complete set of perturbing accelerations that have been defined previously (gravitational attractions from Earth, Mars and Jupiter, and solar radiation pressure). Otherwise, the code is strickly the same as the one used to propagate the unperturbed problem. 
 
 Results
 ~~~~~~~
@@ -280,7 +280,28 @@ The application output should look like:
 
 .. code-block:: cpp
 
-	
+	Starting C:\tudatBundle\tudatExampleApplications\satellitePropagatorExamples\bin\applications\application_ShapeBasedTrajectoryDesign.exe...
+	Dependent variables being saved, output vectors contain: 
+	Vector entry, Vector contents
+	Dependent variables being saved, output vectors contain: 
+	Vector entry, Vector contents
+	Dependent variables being saved, output vectors contain: 
+	Vector entry, Vector contents
+	Dependent variables being saved, output vectors contain: 
+	Vector entry, Vector contents
+	Dependent variables being saved, output vectors contain: 
+	Vector entry, Vector contents
+	Dependent variables being saved, output vectors contain: 
+	Vector entry, Vector contents
+	Dependent variables being saved, output vectors contain: 
+	Vector entry, Vector contents
+	Dependent variables being saved, output vectors contain: 
+	Vector entry, Vector contents
+	deltaV hodographic shaping: 21051.4
+
+	deltaV spherical shaping: 5698.9
+
+	C:/tudatBundle/tudatExampleApplications/satellitePropagatorExamples/bin/applications/application_ShapeBasedTrajectoryDesign.exe exited with code 0
 
 The results of the numerical propagation (for both the unperturbed and perturbed cases) obtained with the two different shape-based methods are presented in the plot below. The difference in position between the analytical solution (so shaped trajectory, by definition computed under simplifying assumptions) and the full propagation numerical solution is plotted. The fully perturbed trajectory is propagated from half of the time-of-flight, backwards until departure, and forwards until arrival. This explains why the difference between analytical and numerical solutions is always zero in the middle of the trajectory, and grows larger when getting closer to either departure or arrival, as the effects of the perturbing accelerations keep propagating and adding up to each other. 
 

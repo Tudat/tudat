@@ -74,23 +74,14 @@ where the input parameters are:
 			
 	- :literal:`integratorSettings`
 		Integrator settings to propagate the spacecraft trajectory.
-		
-	- :literal:`optimisationAlgorithm`
-		Pagmo optimisation algorithm to be used to solve the parametrised optimisation problem.
-		
-	- :literal:`numberOfGenerations`
-		Number of generations 
-		
-	- :literal:`numberOfIndividualsPerPopulation`
-		Number of individuals
-		
-	- :literal:`relativeToleranceConstraints`
-		:literal:`double` defining the relative tolerance of the optimisation algorithm with respect to the hybrid method problem constraints. Default value is arbitrarily set to 1.0e-6.
+
+	- :literal:`optimisationSettings`
+		Settings for the Sims-Flanagan optimisation (includes algorithm to be used, number of generations, number of individuals per population, tolerance with respect to contraints, and possibly initial guess)
 			
 					
 The :literal:`HybridMethod` class is directly derived from the base class :literal:`LowThrustLeg`, and all the methods contained in that base class are thus available from any :literal:`HybridMethod` object (see :ref:`tudatFeaturesLowThrustTrajectory` for more details). This includes, among others, the methods allowing the user to retrieve the trajectory, mass, thrust, and thrust acceleration history along the trajectory.
 		
-The constructor of the class :literal:`HybridMethod` automatically calls the method :literal:`performOptimisation`, which tries to find the solution to the optimisation problem as defined by the hybrid method, using the optimisation settings provided by the user. This method creates the structure :literal:`HybridMethodProblem`, which defines the corresponding optimisation problem. It thus saves the identified optimum in the literal:`hybridMethodLeg_` private variable, which can be retrieved from the (TO BE COMPLETED) method.
+The constructor of the class :literal:`HybridMethod` automatically calls the method :literal:`performOptimisation`, which tries to find the solution to the optimisation problem as defined by the hybrid method, using the optimisation settings provided by the user. This method creates the structure :literal:`HybridMethodProblem`, which defines the corresponding optimisation problem. It thus saves the identified optimum in the :literal:`hybridMethodLeg_` private variable, which can be retrieved from the (TO BE COMPLETED) method.
 
 
 Hybrid method trajectory model
@@ -152,11 +143,6 @@ The input parameters of this class constructor are:
 		Integrator settings to be used to propagate the spacecraft trajectory.
 		
 		
-The following methods can be called from any :literal:`HybridMethodModel` object:
-	
-	- :literal:`propagateTrajectory`
-		
-	- :literal:`computeDeltaV`
 
 
 
