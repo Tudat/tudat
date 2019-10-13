@@ -5,7 +5,7 @@ Hybrid Method
 
 The hybrid method implemented in TUDAT follows from the work done in the following theses by Boudestijn (2014) and Jimenez-Lluva (2018). It aims at combining the advantages of direct and indirect methods, while limiting their respective drawbacks.
 
-It makes use of the optimal control theory to reduce the set of free parameters compared to direct methods. As opposed to traditional indirect methods, the costates are not derived from analytical derivations solving the two-point-boundary-value-problem using the optimal control theory. A linear interpolation is assumed between the initial and final values of the Modified Equinoctial Elements costates, and those initial and final costate values are left as the only free parameters of the problem. The thrust profile along the low-thrust trajectory is defined  from the MEE costates guidance and magnitude models. 
+It makes use of the optimal control theory to reduce the set of free parameters compared to direct methods. As opposed to traditional indirect methods, the costates are not derived from analytical derivations solving the two-point-boundary-value-problem. A linear interpolation is assumed between the initial and final values of the Modified Equinoctial Elements (MEE) costates, and those initial and final costate values are left as the only free parameters of the problem. The thrust profile along the low-thrust trajectory is defined  from the MEE costates guidance and magnitude models. 
 
 The trajectory design problem is turned into a simplified optimisation problem, defined as follows:
 
@@ -16,7 +16,7 @@ The trajectory design problem is turned into a simplified optimisation problem, 
 		The state vector obtained at the end of the propagation should match with the targeted state at arrival.
 	
 	- **Design parameters**
-		Initial and final values of the Modified Equinoctial Elements costates.
+		Initial and final values of the MEE costates.
 	
 	
 Hybrid method optimisation problem
@@ -85,13 +85,10 @@ where the input parameters are:
 		Number of individuals
 		
 	- :literal:`relativeToleranceConstraints`
-		:literal:`double` defining the relative tolerance of the optimisation algorithm with respect to the Sims-Flanagan problem constraints. Default value is arbitrarily set to 1.0e-6.
-		
-	- :literal:`initialGuessThrustModel`
-		:literal:`pair` object that provides an initial guess for the optimisation, as described in (ADD REFERENCE). The first element is a function returning..., and the second element is a double defining the relative tolerance 
+		:literal:`double` defining the relative tolerance of the optimisation algorithm with respect to the hybrid method problem constraints. Default value is arbitrarily set to 1.0e-6.
 			
 					
-The :literal:`HybridMethod` class is directly derived from the base class :literal:`LowThrustLeg`, and all the methods contained in that base class are thus available from any :literal:`HybridMethod` object (see (TO BE COMPLETED) for more details). This includes, among others, the methods allowing the user to retrieve the trajectory, mass, thrust, and thrust acceleration history along the trajectory.
+The :literal:`HybridMethod` class is directly derived from the base class :literal:`LowThrustLeg`, and all the methods contained in that base class are thus available from any :literal:`HybridMethod` object (see :ref:`tudatFeaturesLowThrustTrajectory` for more details). This includes, among others, the methods allowing the user to retrieve the trajectory, mass, thrust, and thrust acceleration history along the trajectory.
 		
 The constructor of the class :literal:`HybridMethod` automatically calls the method :literal:`performOptimisation`, which tries to find the solution to the optimisation problem as defined by the hybrid method, using the optimisation settings provided by the user. This method creates the structure :literal:`HybridMethodProblem`, which defines the corresponding optimisation problem. It thus saves the identified optimum in the (TO BE COMPLETED) object, which can be retrieved from the (TO BE COMPLETED) method.
 
@@ -103,7 +100,7 @@ Addressing a trajectory design problem with the hybrid method described above re
 
 .. class:: HybridMethodModel
 
-This class models the low-thrust trajectory as described by the hybrid method. It simply propagates the trajectory assuming a simplified model with thrust and central body gravitational accelerations only. The thrust acceleration is derived from the optimal control theory, using a vector of costates functions returning the value of each costate as a function of time. The costate functions are directly derived from the linear interpolation between their initial and final values, which are provided by the user. This class does not solve the optimisation problem, but it defines the low-thrust trajectory corresponding to a given set of initial and final costate values. The class is defined as:
+This class models the low-thrust trajectory as described by the hybrid method. It simply propagates the trajectory assuming a simplified model with thrust and central body gravitational accelerations only. The thrust acceleration is derived from the optimal control theory, using a vector of costates functions which return the value of each costate as a function of time. The costate functions are directly derived from the linear interpolation between their initial and final values, which are provided by the user. This class does not solve the optimisation problem, but it defines the low-thrust trajectory corresponding to a given set of initial and final costate values. The class is defined as:
 	
 .. code-block:: cpp
 
@@ -128,10 +125,10 @@ The input parameters of this class constructor are:
 		State of the spacecraft at arrival.
 		
 	- :literal:`initialCoStates`
-		Vector containing the values of each of the Modified Equinoctial Elements costates at departure.
+		Vector containing the values of each of the MEE costates at departure.
 		
 	- :literal:`finalCoStates`
-		Vector containing the values of each of the Modified Equinoctial Elements costates at arrival.
+		Vector containing the values of each of the MEE costates at arrival.
 			
 	- :literal:`maximumThrust`
 		Maximum thrust magnitude. The thrust model used in the hybrid method based on the optimal control theory is defined as a so-called "bang-bang" thrust model: the magnitude of the thrust vector is equal to either 0 or the maximum thrust value.

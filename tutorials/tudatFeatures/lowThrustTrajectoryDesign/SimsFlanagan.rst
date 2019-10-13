@@ -9,7 +9,7 @@ The Sims-Flanagan method is the most commonly used direct method. It consists in
 		Minimisation of the deltaV required by the trajectory.
 
 	- **Constraints**
-		- The state vectors obtained with forward propagation from departure and backward propagation from arrival respectively should match at half of the time of flight.
+		- The state vectors obtained with respectively forward propagation from departure, and backward propagation from arrival should match at half of the time of flight.
 		- The thrust magnitude shall not exceed its maximum value (provided as input by the user).
 
 	- **Design parameters**
@@ -23,9 +23,10 @@ The Sims-Flanagan method has been implemented in the class :literal:`SimsFlanaga
 
 .. class:: SimsFlanagan
 
-This class creates the Sims-Flanagan problem and runs the associated optimisation problem. It inherits from the base class LowThrustLeg and is defined as follows:
+This class creates the Sims-Flanagan problem and runs the associated optimisation problem. It inherits from the base class :literal:`LowThrustLeg` and is defined as follows:
 
-.. code-block:: cpp	
+.. code-block:: cpp
+	
 	SimsFlanagan(
             const Eigen::Vector6d& stateAtDeparture,
             const Eigen::Vector6d& stateAtArrival,
@@ -84,13 +85,13 @@ where the input parameters are:
 		:literal:`double` defining the relative tolerance of the optimisation algorithm with respect to the Sims-Flanagan problem constraints. Default value is arbitrarily set to 1.0e-6.
 		
 	- :literal:`initialGuessThrustModel`
-		:literal:`pair` object that provides an initial guess for the optimisation, as described in (ADD REFERENCE). The first element is a function returning..., and the second element is a double defining the relative tolerance 
+		:literal:`pair` object that provides an initial guess for the optimisation process. The first element is a function returning a thrust vector as function of time, and the second element is a :literal:`double` defining the design parameters maximum allowed variation from the initial guess (it is given in percentage and should therefore be constrained between 0 and 1). 
 			
 					
 		
-The :literal:`SimsFlanagan` class is directly derived from the base class :literal:`LowThrustLeg`, and all the methods contained in that base class are thus available from any :literal:`SimsFlanagan` object (see (TO BE COMPLETED) for more details). This includes, among others, the methods allowing the user to retrieve the trajectory, mass, thrust, and thrust acceleration history along the trajectory.
+The :literal:`SimsFlanagan` class is directly derived from the base class :literal:`LowThrustLeg`, and all the methods contained in that base class are thus available from any :literal:`SimsFlanagan` object (see :ref:`tudatFeaturesLowThrustTrajectory` for more details). This includes, among others, the methods allowing the user to retrieve the trajectory, mass, thrust, and thrust acceleration history along the trajectory.
 		
-The constructor of the class :literal:`SimsFlanagan` automatically calls the method :literal:`performOptimisation`, which tries to find the solution to the Sims-Flanagan parametrised optimisation problem, using the optimisation settings provided by the user. This method creates an object of the class :literal:`SimsFlanaganProblem`, which defines the Sims-Flanagan optimisation problem so that it is compatible with the PAGMO library. The :literal:`performOptimisation` function thus runs the optimisation algorithm and saves the identified optimum in the (TO BE COMPLETED) object, which can be retrieved from the (TO BE COMPLETED) method.
+The constructor of the class :literal:`SimsFlanagan` automatically calls the method :literal:`performOptimisation`, which tries to find the solution to the Sims-Flanagan parametrised optimisation problem, using the optimisation settings provided by the user. This method creates an object of the class :literal:`SimsFlanaganProblem`, which defines the Sims-Flanagan optimisation problem so that it is compatible with the PAGMO library. The :literal:`performOptimisation` function thus runs the optimisation algorithm and saves the identified optimum in the (TO BE COMPLETED) object, which can be retrieved from the :literal:`getOptimalSimsFlanaganLeg` method.
 
 
 Sims-Flanagan trajectory model
@@ -100,7 +101,7 @@ Trying the solve the Sims-Flanagan parametrised optimisation problem, as present
 
 .. class:: SimsFlanaganModel
 
-This class models the low-thrust trajectory as described by the Sims-Flanagan: forward and backward propagation legs from departure and arrival respectively, matching at half of the time of flight, and low-thrust profile discretised as a succession of impulsive shots applied along the trajectory. This class does not solve the parametrised optimisation problem, but can simply propagate the trajectory defined by a set of user-defined impulsive shots. The class is defined as:
+This class models the low-thrust trajectory as described by the Sims-Flanagan method: forward and backward propagation legs from departure and arrival respectively, matching at half of the time of flight, and low-thrust profile discretised as a succession of impulsive shots applied along the trajectory. This class does not solve the parametrised optimisation problem, but can simply propagate the trajectory defined by a set of user-defined impulsive shots. The class is defined as:
 
 .. code-block::cpp
 	
@@ -132,7 +133,7 @@ The input parameters of this class constructor are:
 		Time of flight required for the trajectory.
 		
 	- :literal:`bodyMap`
-		Map of pointers to Body objects involved in the low-thrust trajectory.
+		Map of pointers to :literal:`Body` objects involved in the low-thrust trajectory.
 		
 	- :literal:`throttles`
 		Vector containing the thrust vectors (normalised with respect to the maximum thrust value) for each of the impulsive shots.
@@ -164,7 +165,7 @@ The following methods can be called from any SimsFlanaganModel object:
 Using shape-based trajectory as an initial guess
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It can be rather difficult to reach convergence when trying to solve the parametrised Sims-Flanagan optimisation problem. This is mostly due to the fact that the constant thrust vector of each of the trajectory segment can be aribitrarily chosen, so that the parameters search space is extremely large. This is why it is recommended to use a good initial guess as a starting point for the Sims-Flanagan trajectory design method. The shaping methods which have been implemented in Tudat are good candidates to compute good preliminary trajectory design in an efficient way. As the design parameters for the Sims-Flanagan method are the thrust vectors of the trajectory segments, the initial guess must be provided as a set of n thrust vectors, constant in magnitude and directions (n being the number of segments of the Sims-Flanagan trajectory). One can use the function :literal:`getInitialGuessFunctionFromShaping` to approximate a thrust profile delivered by a shaping method by a set of n successive, constant thrust vectors.
+It can be rather difficult to reach convergence when trying to solve the parametrised Sims-Flanagan optimisation problem. This is mostly due to the fact that the constant thrust vector of each of the trajectory segment can be arbitrarily chosen, so that the parameters search space is extremely large. This is why it is recommended to use a good initial guess as a starting point for the Sims-Flanagan trajectory design method. The shaping methods which have been implemented in Tudat are good candidates to compute a preliminary trajectory design in an efficient way. As the design parameters for the Sims-Flanagan method are the thrust vectors of the trajectory segments, the initial guess must be provided as a set of n thrust vectors, constant in magnitude and directions (n being the number of segments of the Sims-Flanagan trajectory). One can use the function :literal:`getInitialGuessFunctionFromShaping` to approximate a thrust profile delivered by a shaping method by a set of n successive, constant thrust vectors.
 
 .. code-block:: cpp
 

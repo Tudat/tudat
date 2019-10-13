@@ -3,27 +3,27 @@
 Low-Thrust Trajectories
 =======================
 
-This code allows to design a low-thrust trajectory, starting at a given departure state to reach a specified final state, in a given time-of-flight. The user can define the departure and arrival states as corresponding to the positions and velocities of existing celestial bodies, or they can be arbitrarily defined. 
-
-The current implementation of low-thrust trajectories does not include gravity assists, so that they are referred to as low-thrust trajectory "legs". Various low-thrust trajectory models have been implemented:
+This code allows to design a low-thrust trajectory, starting at a given departure state to reach a specified final state, in a given time-of-flight. The current implementation of low-thrust trajectories does not include gravity assists, so that they are referred to as low-thrust trajectory "legs". Various low-thrust trajectory models have been implemented:
 	
 	- **Direct methods:** 
-	They rely on discretisation to turn the problem into a parameter optimisation problem. One of the most commonly used direct method is the so-called Sims-Flanagan method, developed in (ADD REFERENCE). Direct methods are easy to implement, but are computationally demanding as they require optimisation of a large set of free parameters, and they are found hard to converge without a good initial guess.
+	They rely on discretisation to turn the problem into a parameter optimisation problem. One of the most commonly used direct method is the so-called Sims-Flanagan method, developed in Sims & Flanagan (2000) (Preliminary Design of Low-Thrust Interplanetary Missions). Direct methods are easy to implement, but are computationally demanding as they require optimisation of a large set of free parameters, and they are found hard to converge without a good initial guess.
 	
 
 	- **Hybrid methods:** 
-	Hybrid methods offer an interesting alternative to direct and indirect methods. Indirect methods are also a common approach to deal with low-thrust trajectory problems. They are based on the optimal control theory (costates) and require an analytical solution to the two-boundary problem, to ensure that the boundary and optimality conditions are fulfilled. The inherent complexity of the analytical derivations often leads to the need for simplifying the problem, which limits the accuracy of the solution. Modifying the dynamical model also implies to re-derive the analytical solution. Hybrid methods aim at combining the advantages of both direct and indirect methods, and limiting their drawbacks. The hybrid method developped by (ADD REFERENCE) and further improved by (ADD REFERENCE) has been implemented in TUDAT. 
+	Hybrid methods offer an interesting alternative to direct and indirect methods. Indirect methods are also a common approach to deal with low-thrust trajectory problems. They are based on the optimal control theory (costates) and require an analytical solution to the two-boundary problem, to ensure that the boundary and optimality conditions are fulfilled. The inherent complexity of the analytical derivations often leads to the need for simplifying the problem, which limits the accuracy of the solution. Modifying the dynamical model also implies to re-derive the analytical solution. Hybrid methods aim at combining the advantages of both direct and indirect methods, and limiting their drawbacks. The hybrid method developped in Boudestijn (2014) (Development of a low-thrust Earth-centered transfer optimizer for the preliminary mission design phase) and further improved in Jimenez-Lluva (2018) has been implemented in TUDAT. 
 
 	
 	- **Shape-based methods:** 
-	Shaping methods assume a certain shape for the low-thrust trajectory, and tune the parameters defining the trajectory shape so that the boundary conditions can be fulfilled. Their main advantage lies in their analytical formulation, which makes them extremely computationnally effective when compared to direct, indirect, or even hybrid methods. This allows for exploring a larger design space, reducing the chances to converge to a local optimum (which is one of the risks of using direct/indirect/hybrid methods), and thus to provide a good preliminary trajectory design. On the other hand, their accuracy is limited, due to the assumed trajectory shape and to the simplified dynamical model required to solve the problem analytically.
+	Shaping methods assume a certain shape for the low-thrust trajectory, and tune the parameters defining the trajectory shape so that the boundary conditions can be fulfilled. Their main advantage lies in their analytical formulation, which makes them extremely computationnally effective when compared to direct, indirect, or even hybrid methods. This allows for exploring a larger design space, reducing the chances to converge to a local optimum (which is one of the risks of using direct/indirect/hybrid methods). Shape-based methods can thus provide a good preliminary trajectory design. On the other hand, their accuracy is limited, due to the assumed trajectory shape and to the simplified dynamical model required to solve the problem analytically.
 
 
 The low-thrust trajectory methods currenly available are:
 
 	- Shape-based methods
+
 		- Hodographic shaping
 		- Spherical shaping
+
 	- Sims-Flanagan method
 	- Hybrid method
 
@@ -47,16 +47,16 @@ Base class for low-thrust trajectory leg. This class is defined as follows:
 where the input parameters are the following ones:
 	
 		- :literal:`stateAtDeparture`
-			State of the spacecraft at departure (one of the boundary conditions to be fulfilled).
+			State of the spacecraft at departure.
 			
 		- :literal:`stateAtArrival`
-			State of the spacecraft at arrival (one of the boundary conditions to be fulfilled).
+			State of the spacecraft at arrival.
 			
 		- :literal:`timeOfFlight`
-			Time of flight specified for the targeted low-thrust trajectory (one of the boundary conditions to be fulfilled).
+			Time of flight specified for the targeted low-thrust trajectory.
 			
 		- :literal:`bodyMap`
-			Map of pointers to body objects involved in the low-thrust trajectory.
+			Map of pointers to :literal:`Body` objects involved in the low-thrust trajectory.
 			
 		- :literal:`bodyToPropagate`
 			Name of the spacecraft to be propagated.
@@ -120,6 +120,7 @@ Each class derived from this base class contains the following methods:
 		- :literal:`createLowThrustTranslationalStatePropagatorSettings`
 			Returns pair of appropriate translational state propagator settings for the backward and forward propagations of the fully perturbed problem, to be used as input for the computeSemiAnalyticalAndFullPropagation method described above. 
 
+.. _tudatFeaturesSetUpLowThrustTrajectory:
 
 Setting up a low-thrust trajectory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -137,7 +138,7 @@ A :literal:`LowThrustTrajectoryObject` can be created using the settings class :
 	        const std::string& bodyToPropagate,
 	        const std::string& centralBody )
 
-Except for the :literal:`LowThrustLegSettings` object, this function takes the departure and arrival states, as well as the required time-of-flight, the names of the spacecraft and of the central body of the trajectory, and the body map defining the trajectory environment. Using this :literal:`createLowThrustLeg` function allows the user for switching easily from one trajectory type to another, while still addressing the same design problem.
+In addition to the :literal:`std::shared_ptr< LowThrustLegSettings >` object, this function takes as inputs the departure and arrival states, as well as the required time-of-flight, the names of the spacecraft and of the central body of the trajectory, and the body map defining the trajectory environment. Using this :literal:`createLowThrustLeg` function allows the user for switching easily from one trajectory type to another by modifying the :literal:`std::shared_ptr< LowThrustLegSettings >`, while still addressing the same design problem.
 
 .. class:: LowThrustLegSettings
 
@@ -145,7 +146,7 @@ This is the base class to create :literal:`LowThrustTrajectoryObject`. The low-t
 
 .. class:: HodographicShapingLegSettings
 
-This class defines the settings to construct a :literal:`HodographicShaping` object, which will provide a preliminary, hodographically shaped trajectory design. For more details about the hodographic shaping method, the reader is referred to (ADD REFERENCE). The definition of :literal:`HodographicShapingLegSettings` requires the user to specify the base functions to be used for the trajectory shaping, and the values of the free parameters,  if any.
+This class defines the settings to construct a :literal:`HodographicShaping` object, which will provide a preliminary, hodographically shaped trajectory design. For more details about the hodographic shaping method, the reader is referred to :ref:`tudatFeaturesHodographicShaping`). The definition of :literal:`HodographicShapingLegSettings` requires the user to specify the base functions to be used for the trajectory shaping, and the values of the free parameters,  if any.
 
 .. code-block:: cpp
 	
@@ -161,7 +162,7 @@ This class defines the settings to construct a :literal:`HodographicShaping` obj
 
 .. class:: SphericalShapingLegSettings
 
-This is the settings class for :literal:`SphericalShaping` object, which provides a spherically shaped trajectory (spherical shaping is described in more details in ADD REFERENCE). This shaping method only has one parameter which is not directly inferred from the satisfaction of departure and arrival boundary conditions. The value of this parameter is tuned until the targeted time-of-flight can be achieved. The :literal:`SphericalShapingLegSettings` settings class thus requires to specify the initial value for this free parameter, along with a :literal:`rootFinderSettings` object, to be used to find the free parameter value which will match the required time-of-flight.
+This is the settings class for :literal:`SphericalShaping` object, which provides a spherically shaped trajectory (spherical shaping is described in more details in :ref:`tudatFeaturesSphericalShaping`). This shaping method has only one parameter whose value is not directly deduced from the satisfaction of departure and arrival boundary conditions. The value of this parameter is tuned until the targeted time-of-flight can be achieved. The :literal:`SphericalShapingLegSettings` settings class thus requires to specify the initial value for this free parameter, along with a :literal:`rootFinderSettings` object, to be used to find the free parameter value which will match the required time-of-flight.
 
 .. code-block :: cpp
 
@@ -174,7 +175,7 @@ This is the settings class for :literal:`SphericalShaping` object, which provide
 
 .. class:: SimsFlanaganLegSettings
 
-This is the settings class for :literal:`SimsFlanaganLeg` object. Among other inputs, it requires the user to provide the number of segments into which the trajectory is to be subdivided, according to the Sims-Flanagan parametrisation method (more details here (ADD LINK) ). An :literal:`OptimisationSettings` object is also to be provided to solve the Sims-Flanagan parametrised optimisation problem.	
+This is the settings class for :literal:`SimsFlanaganLeg` object. Among other inputs, it requires the user to provide the number of segments into which the trajectory is to be subdivided, according to the Sims-Flanagan parametrisation method (more details here :ref:`tudatFeaturesSimsFlanagan`). An :literal:`OptimisationSettings` object is also to be provided to solve the Sims-Flanagan parametrised optimisation problem.	
 
 .. code-block:: cpp
 
@@ -187,7 +188,7 @@ This is the settings class for :literal:`SimsFlanaganLeg` object. Among other in
 
 .. class:: HybridMethodLegSettings
 
-This class defines the settings to construct a :literal:`HybridMethodLeg` object (more details about the hybrid method can be found in ADD REFERENCE). Among the different inputs of this settings class, an :literal:`OptimisationSettings` object must be provided to define the way the inherent hybrid method optimisation problem will be tackled.
+This class defines the settings to construct a :literal:`HybridMethodLeg` object (more details about the hybrid method can be found in :ref:`tudatFeaturesHybridMethod`). Among the different inputs of this settings class, an :literal:`OptimisationSettings` object must be provided to define the way the inherent hybrid method optimisation problem will be tackled.
 
 .. code-block:: cpp
 	

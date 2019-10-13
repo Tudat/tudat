@@ -3,7 +3,7 @@
 Low-Thrust Trajectory Design Module 
 ===================================
 
-These pages of the wiki will give you an overview of the low-thrust trajectory design module in Tudat, and provide you insights into how to use the different trajectory design methods which are part of it.
+These pages of the wiki will give you an overview of the low-thrust trajectory design module in Tudat, and provide you insights into how to set-up the different design methods which are part of it.
 
 .. toctree::
    :numbered:
