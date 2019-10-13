@@ -6,12 +6,12 @@ This tutorial describes how to tackle an Earth-Mars trajectory design problem us
 
    tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/SimsFlanaganTrajectoryExample.cpp
 
-As described in the documentation dedicated to the Sims-Flanagan method (ADD LINK), it is a direct method which turns the trajectory design problem into a parametrised optimisation problem. It is usually extremely to reach convergence without having a good initial guess for the targeted trajectory. In this tutorial, a hodographically shaped trajectory is first computed and used as a starting point to run the Sims-Flanagan optimisation problem. 
+As described in the documentation dedicated to the Sims-Flanagan method (:ref:`tudatFeaturesSimsFlanagan`), it is a direct method which turns the trajectory design problem into a parametrised optimisation problem. It is usually extremely difficult to reach convergence without having a good initial guess for the targeted trajectory. This is why, in this tutorial, a hodographically shaped trajectory is first computed and used as a starting point to run the Sims-Flanagan optimisation problem. 
 
-Set up the trajectory design problem  FOR THE GLORY OF THE BORZI!!!
+Set up the trajectory design problem  
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-First, the characteristic of the targeted transfer trajectory are defined (departure date, time-of-flight, and number of revolutions are specified).
+First, the characteristics of the targeted transfer trajectory are defined (departure date, time-of-flight, and number of revolutions are specified).
 
 .. code-block:: cpp
 
@@ -31,7 +31,7 @@ First, the characteristic of the targeted transfer trajectory are defined (depar
     Eigen::Vector6d cartesianStateDepartureBody = pointerToDepartureBodyEphemeris->getCartesianState( julianDate );
     Eigen::Vector6d cartesianStateArrivalBody = pointerToArrivalBodyEphemeris->getCartesianState( julianDate + timeOfFlight );
 
-The parameters defining the Sims-Flanagan method are then introduced. This includes many spacecraft-related parameters (initial mass, maximum allowable thrust magnitude, specific impulse), as well as the number of segments into which the trajectory is to be subdivided.
+The parameters defining the Sims-Flanagan method are then introduced. This includes spacecraft-related parameters (initial mass, maximum allowable thrust magnitude, specific impulse), as well as the number of segments into which the trajectory is to be subdivided.
 
 .. code-block:: cpp
 
@@ -46,8 +46,62 @@ The environment within which the trajectory is to be computed is defined similar
 Computing a shape-based preliminary design
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The lowest-order solution (no free parameter, see ADD LINK) of the Earth-Mars hodographically shaped transfer is computed. The same set of base functions as those used in the tutorials ADD LINK and ADD LINKS is used.
+The lowest-order solution (no free parameter, see the previous tutorial for more details (:ref:`walkthroughsHodographicShapingOptimisation`)) of the Earth-Mars hodographically shaped transfer is computed. The base functions for the hodographic shaping are defined as follows:
 
+.. code-block:: cpp
+
+    // Get recommended base functions for the radial velocity composite function.
+    std::shared_ptr< BaseFunctionHodographicShapingSettings > firstRadialVelocityBaseFunctionSettings =
+            std::make_shared< BaseFunctionHodographicShapingSettings >( );
+    std::shared_ptr< BaseFunctionHodographicShapingSettings > secondRadialVelocityBaseFunctionSettings =
+            std::make_shared< PowerFunctionHodographicShapingSettings >( 1.0, scaleFactor );
+    std::shared_ptr< BaseFunctionHodographicShapingSettings > thirdRadialVelocityBaseFunctionSettings =
+            std::make_shared< TrigonometricFunctionHodographicShapingSettings >( frequency );
+
+    // Create components of the radial velocity composite function.
+    std::vector< std::shared_ptr< BaseFunctionHodographicShaping > > radialVelocityFunctionComponents;
+    radialVelocityFunctionComponents.push_back(
+                createBaseFunctionHodographicShaping( constant, firstRadialVelocityBaseFunctionSettings ) );
+    radialVelocityFunctionComponents.push_back(
+                createBaseFunctionHodographicShaping( scaledPower, secondRadialVelocityBaseFunctionSettings ) );
+    radialVelocityFunctionComponents.push_back(
+                createBaseFunctionHodographicShaping( cosine, thirdRadialVelocityBaseFunctionSettings ) );
+
+    // Create base function settings for the components of the normal velocity composite function.
+    std::shared_ptr< BaseFunctionHodographicShapingSettings > firstNormalVelocityBaseFunctionSettings =
+            std::make_shared< BaseFunctionHodographicShapingSettings >( );
+    std::shared_ptr< BaseFunctionHodographicShapingSettings > secondNormalVelocityBaseFunctionSettings =
+            std::make_shared< PowerFunctionHodographicShapingSettings >( 1.0, scaleFactor );
+    std::shared_ptr< BaseFunctionHodographicShapingSettings > thirdNormalVelocityBaseFunctionSettings =
+            std::make_shared< TrigonometricFunctionHodographicShapingSettings >( frequency );
+
+    // Get recommended base functions for normal velocity composition function.
+    std::vector< std::shared_ptr< shape_based_methods::BaseFunctionHodographicShaping > > normalVelocityFunctionComponents;
+    normalVelocityFunctionComponents.push_back(
+                createBaseFunctionHodographicShaping( constant, firstNormalVelocityBaseFunctionSettings ) );
+    normalVelocityFunctionComponents.push_back(
+                createBaseFunctionHodographicShaping( scaledPower, secondNormalVelocityBaseFunctionSettings ) );
+    normalVelocityFunctionComponents.push_back(
+                createBaseFunctionHodographicShaping( cosine, thirdNormalVelocityBaseFunctionSettings ) );
+
+    // Create base function settings for the components of the axial velocity composite function.
+    std::shared_ptr< BaseFunctionHodographicShapingSettings > firstAxialVelocityBaseFunctionSettings =
+            std::make_shared< TrigonometricFunctionHodographicShapingSettings >( ( numberOfRevolutions + 0.5 ) * frequency );
+    std::shared_ptr< BaseFunctionHodographicShapingSettings > secondAxialVelocityBaseFunctionSettings =
+            std::make_shared< PowerTimesTrigonometricFunctionHodographicShapingSettings >
+            ( 3.0, ( numberOfRevolutions + 0.5 ) * frequency, scaleFactor );
+    std::shared_ptr< BaseFunctionHodographicShapingSettings > thirdAxialVelocityBaseFunctionSettings =
+            std::make_shared< PowerTimesTrigonometricFunctionHodographicShapingSettings >(
+                3.0, ( numberOfRevolutions + 0.5 ) * frequency, scaleFactor );
+
+    // Get recommended base functions for axial velocity composition function.
+    std::vector< std::shared_ptr< shape_based_methods::BaseFunctionHodographicShaping > > axialVelocityFunctionComponents;
+    axialVelocityFunctionComponents.push_back(
+                createBaseFunctionHodographicShaping( cosine, firstAxialVelocityBaseFunctionSettings ) );
+    axialVelocityFunctionComponents.push_back(
+                createBaseFunctionHodographicShaping( scaledPowerCosine, secondAxialVelocityBaseFunctionSettings ) );
+    axialVelocityFunctionComponents.push_back(
+                createBaseFunctionHodographicShaping( scaledPowerSine, thirdAxialVelocityBaseFunctionSettings ) );
 
 Once the shaped trajectory has been calculated, it is saved in a separate map, and so are the associated thrust, thrust acceleration, and mass profiles.
 
@@ -86,7 +140,7 @@ Once the shaped trajectory has been calculated, it is saved in a separate map, a
 Setting up a Sims-Flanagan optimisation problem
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Sims-Flanagan problem consists of a parametrised optimisation problem with thrust throttles as design parameters. The use of a shaped trajectory as an initial guess for Sims-Flanagan requires the derivation of a set of thrust throttles (one for each segment of the trajectory) from the thrust profile delivered by the shaping method. The function :literal:`getInitialGuessFunctionFromShaping`, which approximates the shaped thrust profile by a set of constant thrust segments (constant in both magnitude and direction) is used to this end (see ADD LINK for more details).
+The Sims-Flanagan problem consists of a parametrised optimisation problem with thrust throttles as design parameters. The use of a shaped trajectory as an initial guess for Sims-Flanagan requires the derivation of a set of thrust throttles (one for each segment of the trajectory) from the thrust profile delivered by the shaping method. The function :literal:`getInitialGuessFunctionFromShaping`, which approximates the shaped thrust profile by a set of constant thrust segments (constant in both magnitude and direction) is used to this end (see :literal:`tudatFeaturesSimsFlanaganInitialGuessFromShaping` for more details).
 
 .. code-block:: cpp
 
@@ -133,7 +187,7 @@ An :literal:`OptimisationSettings` object can then be defined from this thrust p
                 optimisationAlgorithm, 10, 1024, 1.0e-6, std::make_pair( initialGuessThrustFromShaping, 0.3 ) );
 
 
-The :literal:`SimsFlanagan` obect is finally created, and the corresponding trajctory, thrust,  thrust acceleration, and mass profiles are saved:
+The :literal:`SimsFlanagan` object is finally created, and the corresponding trajctory, thrust,  thrust acceleration, and mass profiles are saved:
 
 .. code-block:: cpp
 
@@ -167,7 +221,7 @@ The output of the application should look as follows:
         /tudatBundle/tudatExampleApplications/libraryExamples/bin/applications/application_PagmoSimsFlanaganTrajectoryExample.exe exited with code 0
 
 	
-The comparison between the hodographically shaped trajectory and the Sims-Flanagan results is provided in the plot below. The upper plots present the shaped trajectory design (and corresponding thrust, thrust acceleration, and mass profiles), along with the approximate Sims-Flanagan initial guess derived from that those shaping results. The middle plots represent the Sims-Flanagan results, obtained from that initial guess (they are superimposed with the shaping results). Finally, the bottom plots directly show the difference between hodographic shaping and Sims-Flanagan results.
+The comparison between the hodographically shaped trajectory and the Sims-Flanagan results is provided in the plot below. The upper plots present the shaped trajectory design (and corresponding thrust, thrust acceleration, and mass profiles), along with the approximate Sims-Flanagan initial guess derived from that the shaping method results. The middle plots represent the Sims-Flanagan results, obtained from that initial guess (they are superimposed with the shaping results). Finally, the bottom plots directly show the difference between hodographic shaping and Sims-Flanagan results.
 
 .. figure:: images/SimsFlanaganResults.png
 

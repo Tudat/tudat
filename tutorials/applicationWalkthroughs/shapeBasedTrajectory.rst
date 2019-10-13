@@ -16,9 +16,9 @@ The boundary conditions at departure and arrival for the targeted trajectory are
 
 .. code-block:: cpp
 
-    int numberOfRevolutions = 2;
+    int numberOfRevolutions = 1;
     double julianDateAtDeparture = 8174.5 * physical_constants::JULIAN_DAY;
-    double  timeOfFlight = 750.0 /*580.0 */* physical_constants::JULIAN_DAY;
+    double  timeOfFlight = 580.0 * physical_constants::JULIAN_DAY;
 
     // Ephemeris departure body.
     ephemerides::EphemerisPointer pointerToDepartureBodyEphemeris = std::make_shared< ephemerides::ApproximatePlanetPositions>(
@@ -33,7 +33,7 @@ The boundary conditions at departure and arrival for the targeted trajectory are
     Eigen::Vector6d cartesianStateAtArrival = pointerToArrivalBodyEphemeris->getCartesianState( julianDateAtDeparture + timeOfFlight );
 
 	
-The environment within the trajectory of the spacecraft is to be calculated is set up in a similar manner as in the previous tutorials: the required celestial bodies are created (from default body settings), along with a vehicle body. The ephemeris of the Sun (central body of the trajectory) is defined so that it stays at the Solar System Barycenter. 
+The environment within which the trajectory of the spacecraft is to be calculated is set up in a similar manner as in the previous tutorials: the required celestial bodies are created (from default body settings), along with a vehicle body. The ephemeris of the Sun (central body of the trajectory) is defined so that it stays at the Solar System Barycenter. 
 
 
 Set up the accelerations (unperturbed and perturbed cases)
@@ -70,18 +70,18 @@ Two different sets of accelerations are defined here:
 		                                             basic_astrodynamics::cannon_ball_radiation_pressure ) );
 
 
-The definition of additional perturbations will latter aim at quantifying the effects of the simplifying assumptions used in the shape-based trajectory design on the fully perturbed trajectory of the spacecraft.
+The definition of additional perturbations will later aim at quantifying the effects of the simplifying assumptions used in the shape-based trajectory design, when propagating the fully perturbed trajectory of the spacecraft.
 
 
 .. warning::
 	
-	The set of accelerations defined above are latter used to define appropriate :literal:`propagatorSettings` object for the numerical propagation. The function :literal:`computeSemiAnalyticalAndFullPropagation` which performs the propagation of the fuller perturbed problem takes a :literal:`propagatorSettings` object as input, but the set of accelerations used to define them must contain PERTURBING AACCELERATIONS only. So gravitational acceleration exerted by the central body and thrust acceleration should not be considered here, as they are already taken into account by the shaping method.
+	The set of accelerations defined above are later used to define appropriate :literal:`propagatorSettings` object for the numerical propagation. The function :literal:`computeSemiAnalyticalAndFullPropagation` which performs the propagation of the fully perturbed problem takes a :literal:`propagatorSettings` object as input, but the set of accelerations used to define them must contain **perturbing** accelerations only. So gravitational acceleration exerted by the central body and thrust acceleration should not be considered here, as they are already taken into account by the shaping method.
 
 
 Set up hodographic shaping
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Using hodographic shaping to design a low-thrust trajectory requires the definition of three different shaping functions, one for each of the cylindrical velocity components. The shaping functions are defined as a combination of so-called base functions. As described in the shape-based documentation (ADD REFERENCE), at three base functions must be defined for each velocity component, to ensure the boundary conditions are fulfilled.
+Using hodographic shaping to design a low-thrust trajectory requires the definition of three different shaping functions, one for each of the cylindrical velocity components. The shaping functions are defined as a combination of so-called base functions. As described in the hodographic shaping documentation (:ref:`tudatFeaturesHodographicShaping`), at least three base functions must be defined for each velocity component to ensure the boundary conditions are fulfilled.
 
 The frequency of any trigonometric-like base functions and the scale factor used are defined as follows (recommended values depend on the time-of-flight):
 
@@ -94,24 +94,20 @@ The settings for each of the radial velocity component base functions are then d
 
 .. code-block:: cpp
 
-	// Create base function settings for the components of the radial velocity composite function.
+    // Create base function settings for the components of the radial velocity composite function.
     std::shared_ptr< BaseFunctionHodographicShapingSettings > firstRadialVelocityBaseFunctionSettings =
             std::make_shared< BaseFunctionHodographicShapingSettings >( );
     std::shared_ptr< BaseFunctionHodographicShapingSettings > secondRadialVelocityBaseFunctionSettings =
             std::make_shared< PowerFunctionHodographicShapingSettings >( 1.0, scaleFactor );
     std::shared_ptr< BaseFunctionHodographicShapingSettings > thirdRadialVelocityBaseFunctionSettings =
             std::make_shared< PowerFunctionHodographicShapingSettings >( 2.0, scaleFactor );
-    std::shared_ptr< BaseFunctionHodographicShapingSettings > fourthRadialVelocityBaseFunctionSettings =
-            std::make_shared< PowerTimesTrigonometricFunctionHodographicShapingSettings >( 1.0, 0.5 * frequency, scaleFactor );
-    std::shared_ptr< BaseFunctionHodographicShapingSettings > fifthRadialVelocityBaseFunctionSettings =
-            std::make_shared< PowerTimesTrigonometricFunctionHodographicShapingSettings >( 1.0, 0.5 * frequency, scaleFactor );
 
 
 The function :literal:`createBaseFunctionHodographicShaping` can be called to create the corresponding base functions from the above-defined settings. The base functions defined that way are pushed to a :literal:`std::vector< std::shared_ptr< BaseFunctionHodographicShaping > >` object, which is latter used as an input parameter to create the :literal:`HodographicShaping` object.
 
 .. code-block:: cpp
 	
-	// Create components of the radial velocity composite function.
+    // Create components of the radial velocity composite function.
     std::vector< std::shared_ptr< BaseFunctionHodographicShaping > > radialVelocityFunctionComponents;
     radialVelocityFunctionComponents.push_back(
                 createBaseFunctionHodographicShaping( constant, firstRadialVelocityBaseFunctionSettings ) );
@@ -119,126 +115,96 @@ The function :literal:`createBaseFunctionHodographicShaping` can be called to cr
                 createBaseFunctionHodographicShaping( scaledPower, secondRadialVelocityBaseFunctionSettings ) );
     radialVelocityFunctionComponents.push_back(
                 createBaseFunctionHodographicShaping( scaledPower, thirdRadialVelocityBaseFunctionSettings ) );
-    radialVelocityFunctionComponents.push_back(
-                createBaseFunctionHodographicShaping( scaledPowerSine, fourthRadialVelocityBaseFunctionSettings ) );
-    radialVelocityFunctionComponents.push_back(
-                createBaseFunctionHodographicShaping( scaledPowerCosine, fifthRadialVelocityBaseFunctionSettings ) );
 
 
 A similar process is repeated for the normal and axial components of the spacecraft cylindrical velocity.
 
 .. code-block:: cpp
 
-	// Create base function settings for the components of the normal velocity composite function.
-        std::shared_ptr< BaseFunctionHodographicShapingSettings > firstNormalVelocityBaseFunctionSettings =
+    // Create base function settings for the components of the normal velocity composite function.
+    std::shared_ptr< BaseFunctionHodographicShapingSettings > firstNormalVelocityBaseFunctionSettings =
             std::make_shared< BaseFunctionHodographicShapingSettings >( );
-        std::shared_ptr< BaseFunctionHodographicShapingSettings > secondNormalVelocityBaseFunctionSettings =
+    std::shared_ptr< BaseFunctionHodographicShapingSettings > secondNormalVelocityBaseFunctionSettings =
             std::make_shared< PowerFunctionHodographicShapingSettings >( 1.0, scaleFactor );
-        std::shared_ptr< BaseFunctionHodographicShapingSettings > thirdNormalVelocityBaseFunctionSettings =
+    std::shared_ptr< BaseFunctionHodographicShapingSettings > thirdNormalVelocityBaseFunctionSettings =
             std::make_shared< PowerFunctionHodographicShapingSettings >( 2.0, scaleFactor );
-        std::shared_ptr< BaseFunctionHodographicShapingSettings > fourthNormalVelocityBaseFunctionSettings =
-            std::make_shared< PowerTimesTrigonometricFunctionHodographicShapingSettings >( 1.0, 0.5 * frequency, scaleFactor );
-        std::shared_ptr< BaseFunctionHodographicShapingSettings > fifthNormalVelocityBaseFunctionSettings =
-            std::make_shared< PowerTimesTrigonometricFunctionHodographicShapingSettings >( 1.0, 0.5 * frequency, scaleFactor );
 
-        // Create components of the normal velocity composite function.
-        std::vector< std::shared_ptr< shape_based_methods::BaseFunctionHodographicShaping > > normalVelocityFunctionComponents;
-        normalVelocityFunctionComponents.push_back(
+    // Create components of the normal velocity composite function.
+    std::vector< std::shared_ptr< shape_based_methods::BaseFunctionHodographicShaping > > normalVelocityFunctionComponents;
+    normalVelocityFunctionComponents.push_back(
                 createBaseFunctionHodographicShaping( constant, firstNormalVelocityBaseFunctionSettings ) );
-        normalVelocityFunctionComponents.push_back(
+    normalVelocityFunctionComponents.push_back(
                 createBaseFunctionHodographicShaping( scaledPower, secondNormalVelocityBaseFunctionSettings ) );
-        normalVelocityFunctionComponents.push_back(
+    normalVelocityFunctionComponents.push_back(
                 createBaseFunctionHodographicShaping( scaledPower, thirdNormalVelocityBaseFunctionSettings ) );
-        normalVelocityFunctionComponents.push_back(
-                createBaseFunctionHodographicShaping( scaledPowerSine, fourthNormalVelocityBaseFunctionSettings ) );
-        normalVelocityFunctionComponents.push_back(
-                createBaseFunctionHodographicShaping( scaledPowerCosine, fifthNormalVelocityBaseFunctionSettings ) );
 
-        // Create base function settings for the components of the axial velocity composite function.
-        std::shared_ptr< BaseFunctionHodographicShapingSettings > firstAxialVelocityBaseFunctionSettings =
+    // Create base function settings for the components of the axial velocity composite function.
+    std::shared_ptr< BaseFunctionHodographicShapingSettings > firstAxialVelocityBaseFunctionSettings =
             std::make_shared< TrigonometricFunctionHodographicShapingSettings >( ( numberOfRevolutions + 0.5 ) * frequency );
-        std::shared_ptr< BaseFunctionHodographicShapingSettings > secondAxialVelocityBaseFunctionSettings =
+    std::shared_ptr< BaseFunctionHodographicShapingSettings > secondAxialVelocityBaseFunctionSettings =
             std::make_shared< PowerTimesTrigonometricFunctionHodographicShapingSettings >
             ( 3.0, ( numberOfRevolutions + 0.5 ) * frequency, scaleFactor );
-        std::shared_ptr< BaseFunctionHodographicShapingSettings > thirdAxialVelocityBaseFunctionSettings =
+    std::shared_ptr< BaseFunctionHodographicShapingSettings > thirdAxialVelocityBaseFunctionSettings =
             std::make_shared< PowerTimesTrigonometricFunctionHodographicShapingSettings >(
                 3.0, ( numberOfRevolutions + 0.5 ) * frequency, scaleFactor );
-        std::shared_ptr< BaseFunctionHodographicShapingSettings > fourthAxialVelocityBaseFunctionSettings =
-            std::make_shared< PowerTimesTrigonometricFunctionHodographicShapingSettings >(
-                4.0, ( numberOfRevolutions + 0.5 ) * frequency, scaleFactor );
-        std::shared_ptr< BaseFunctionHodographicShapingSettings > fifthAxialVelocityBaseFunctionSettings =
-            std::make_shared< PowerTimesTrigonometricFunctionHodographicShapingSettings >(
-                4.0, ( numberOfRevolutions + 0.5 ) * frequency, scaleFactor );
 
-        // Set components for the axial velocity function.
-        std::vector< std::shared_ptr< shape_based_methods::BaseFunctionHodographicShaping > > axialVelocityFunctionComponents;
-        axialVelocityFunctionComponents.push_back(
+    // Set components for the axial velocity function.
+    std::vector< std::shared_ptr< shape_based_methods::BaseFunctionHodographicShaping > > axialVelocityFunctionComponents;
+    axialVelocityFunctionComponents.push_back(
                 createBaseFunctionHodographicShaping( cosine, firstAxialVelocityBaseFunctionSettings ) );
-        axialVelocityFunctionComponents.push_back(
+    axialVelocityFunctionComponents.push_back(
                 createBaseFunctionHodographicShaping( scaledPowerCosine, secondAxialVelocityBaseFunctionSettings ) );
-        axialVelocityFunctionComponents.push_back(
+    axialVelocityFunctionComponents.push_back(
                 createBaseFunctionHodographicShaping( scaledPowerSine, thirdAxialVelocityBaseFunctionSettings ) );
-        axialVelocityFunctionComponents.push_back(
-                createBaseFunctionHodographicShaping( scaledPowerCosine, fourthAxialVelocityBaseFunctionSettings ) );
-        axialVelocityFunctionComponents.push_back(
-                createBaseFunctionHodographicShaping( scaledPowerSine, fifthAxialVelocityBaseFunctionSettings ) );
 
 
-When more than three base functions are defined for each velocity shaping function, the weighting coefficients corresponding to the additional base functions are free parameters of the trajectory design problem. Their value are not derived from the trajectory requirements, but should rather be provided as inputs. 
+In hodographic shaping, the values of the free coefficients, if any, should be provided as inputs of the :literal:`HodographicShaping` object constructor. Here, only three base functions are provided per velocity component, which corresponds to the minimum required to satisfy the boundary conditions. So the free coefficients vectors are here just empty vectors. 
 
 .. code-block:: cpp
 
-	// Initialize free coefficients vector for radial velocity function.
-	Eigen::VectorXd freeCoefficientsRadialVelocityFunction = Eigen::VectorXd::Zero( 2 );
-        freeCoefficientsRadialVelocityFunction[ 0 ] = 500.0;
-        freeCoefficientsRadialVelocityFunction[ 1 ] = 500.0;
+    // Initialize free coefficients vector for radial velocity function (empty here, only 3 base functions).
+    Eigen::VectorXd freeCoefficientsRadialVelocityFunction = Eigen::VectorXd::Zero( 0 );
 
-        // Initialize free coefficients vector for normal velocity function.
-        Eigen::VectorXd freeCoefficientsNormalVelocityFunction = Eigen::VectorXd::Zero( 2 );
-        freeCoefficientsNormalVelocityFunction[ 0 ] = 500.0;
-        freeCoefficientsNormalVelocityFunction[ 1 ] = - 200.0;
+    // Initialize free coefficients vector for normal velocity function (empty here, only 3 base functions).
+    Eigen::VectorXd freeCoefficientsNormalVelocityFunction = Eigen::VectorXd::Zero( 0 );
 
-        // Initialize free coefficients vector for axial velocity function.
-        Eigen::VectorXd freeCoefficientsAxialVelocityFunction = Eigen::VectorXd::Zero( 2 );
-        freeCoefficientsAxialVelocityFunction[ 0 ] = 500.0;
-        freeCoefficientsAxialVelocityFunction[ 1 ] = 2000.0;
+    // Initialize free coefficients vector for axial velocity function (empty here, only 3 base functions).
+    Eigen::VectorXd freeCoefficientsAxialVelocityFunction = Eigen::VectorXd::Zero( 0 );
 
 Finally, the :literal:`HodographicShaping` object can be created:
 
 .. code-block:: cpp
 
-	// Create hodographic-shaping object with defined velocity functions and boundary conditions.
+    // Create hodographic-shaping object with defined velocity functions and boundary conditions.
     shape_based_methods::HodographicShaping hodographicShaping(
-                cartesianStateAtDeparture, cartesianStateAtArrival, timeOfFlight, 1, bodyMap, "Vehicle", "Sun",
+                cartesianStateAtDeparture, cartesianStateAtArrival, timeOfFlight, 1, bodyMap, "Borzi", "Sun",
                 radialVelocityFunctionComponents, normalVelocityFunctionComponents, axialVelocityFunctionComponents,
                 freeCoefficientsRadialVelocityFunction, freeCoefficientsNormalVelocityFunction, freeCoefficientsAxialVelocityFunction,
                 integratorSettings );
-
-    std::cout << "hodographic shaping deltaV: " << hodographicShaping.computeDeltaV() << "\n\n";
 
 
 Set up spherical shaping
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-The definition of a spherically shaped trajectory is much more straightforward than that of a hodographically shaped one. This is mostly due to the fact that the base functions used to map the spherical position of the spacecraft in spherical shaping are fixed, while those used in hodographic shaping can be selected by the user. Also, there is no free parameters in spherical shaping, so the shaping function is pre-defined and cannot be tuned by the user.   
+The definition of a spherically shaped trajectory is much more straightforward than that of a hodographically shaped one. This is mostly due to the fact that the base functions used to map the spherical position of the spacecraft in spherical shaping are fixed, while those used in hodographic shaping have to be selected by the user. Also, there is no free parameters in spherical shaping, so the shaping function is pre-defined and cannot be tuned by the user.   
 
 .. code-block:: cpp
 
-	// Define root finder settings (used to update the updated value of the free coefficient, so that it matches the required time of flight).
-        std::shared_ptr< root_finders::RootFinderSettings > rootFinderSettings =
-                std::make_shared< root_finders::RootFinderSettings >( root_finders::bisection_root_finder, 1.0e-6, 30 );
+    // Define root finder settings (used to update the updated value of the free coefficient, so that it matches the required time of flight).
+    std::shared_ptr< root_finders::RootFinderSettings > rootFinderSettings =
+            std::make_shared< root_finders::RootFinderSettings >( root_finders::bisection_root_finder, 1.0e-6, 30 );
 
     // Compute shaped trajectory.
     shape_based_methods::SphericalShaping sphericalShaping = shape_based_methods::SphericalShaping(
                 cartesianStateAtDeparture, cartesianStateAtArrival, timeOfFlight,
-                numberOfRevolutions, bodyMap, "Vehicle", "Sun", 0.000703,
-                rootFinderSettings, -1.0e-2 /*1.0e-6*/, 1.0e-2 /*1.0e-1*/, integratorSettings );
+                numberOfRevolutions, bodyMap, "Borzi", "Sun", 0.000703,
+                rootFinderSettings, 1.0e-6, 1.0e-1, integratorSettings );
 
 
 Retrieve trajectory, mass, thrust, and thrust acceleration profiles
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-From any :literal:`ShapeBasedMethodLeg` object, the trajectory of the spacecraft, along with the corresponding mass, thrust, and thrust acceleration profiles can be retrieved. This is done for both the hodographically and spherically shaped trajectories. The code used for hodographic shaping is reproduced below (and it is done for spherical shaping in exactly the same way).
+From any :literal:`ShapeBasedMethodLeg` object, the trajectory of the spacecraft, along with the corresponding mass, thrust, and thrust acceleration profiles can be retrieved. This is done here for both the hodographically and spherically shaped trajectories. The code used for hodographic shaping is reproduced below (and it is done for spherical shaping in exactly the same way).
 
 .. code-block:: cpp
 
@@ -268,7 +234,7 @@ The plot below presents the Earth-Mars trajectories obtained with both hodograph
 Numerically propagate the unperturbed problem
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The unperturbed problem (central body gravitational acceleration and spacecraft low-thrust acceleration as defined by the shaping method) is propagated numerically. To this end, the method :literal:`computeSemiAnalyticalAndFullPropagation` of the :literal:`ShapeBasedMethodLeg` is called and provides the analytical, shape-based trajectory, and the result of the numerically propagated trajectory.
+The unperturbed problem (with central body gravitational acceleration and spacecraft low-thrust acceleration as defined by the shaping method) is propagated numerically. To this end, the method :literal:`computeSemiAnalyticalAndFullPropagation` of the :literal:`ShapeBasedMethodLeg` is called and provides the analytical, shape-based trajectory, and the result of the numerically propagated trajectory.
 
 .. code-block:: cpp
 
@@ -305,18 +271,22 @@ The unperturbed problem (central body gravitational acceleration and spacecraft 
 Numerically propagate the perturbed problem
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The same is done using a different, more complete set of perturbing accelerations. The only difference is that the set of :literal:`PropagatorSettings` is defined differently, using the more completed of perturbing accelerations. Otherwise, the code is strickly the same as the one used to propagate the unperturbed problem. 
+The same is done using a different, more complete set of perturbing accelerations. The only difference is that the set of :literal:`PropagatorSettings` is defined differently, using the more completed of perturbing accelerations that have been defined previously (gravitational attractions from Earth, Mars and Jupiter, and solar radiation pressure). Otherwise, the code is strickly the same as the one used to propagate the unperturbed problem. 
 
 Results
 ~~~~~~~
 
-The application output should look like ...´
+The application output should look like:
 
-The results of the numerical propagation (for both the unperturbed and perturbed cases) obtained with the two different shape-based methods are presented in the plot below. The difference in position between the analytical solution (so shaped trajectory, by definition computed under simplifying assumptions) and the full propagation numerical solution is plotted. The fully perturbed trajectory is propagated from half of the time-of-flight, backwards until departure, and forwards until arrival. This explainsg why the difference between analytical and numerical solutions is always zero in the middle of the trajectory, and grows larger when getting closer to either departure or arrival, as the effects of the perturbing accelerations keep propagating and adding up to each other. 
+.. code-block:: cpp
+
+	
+
+The results of the numerical propagation (for both the unperturbed and perturbed cases) obtained with the two different shape-based methods are presented in the plot below. The difference in position between the analytical solution (so shaped trajectory, by definition computed under simplifying assumptions) and the full propagation numerical solution is plotted. The fully perturbed trajectory is propagated from half of the time-of-flight, backwards until departure, and forwards until arrival. This explains why the difference between analytical and numerical solutions is always zero in the middle of the trajectory, and grows larger when getting closer to either departure or arrival, as the effects of the perturbing accelerations keep propagating and adding up to each other. 
 
 .. figure:: images/analyticalVsPropagationShapingMethods.png
 
-In the unperturbed case, the analytical and numerical solutions are extremely similar. This is in agreement with the fact that no additional perturbing accelerations are considered in the numerical propagation of the problem, so that the observed differences are only due to integration errors. The fact that the difference between analytical and numerical results is (significantly) higher for spherical shaping can be explained by its independent variable which is not time, but azimuth angle. This requires an additional step to convert time to azimuth angle (and the other way around), compared to hodographic shaping. This conversion requires the use of an interpolator, and the higher differences are due to interpolation errors (which unfortunately build up along the propagation).
+In the unperturbed case, the analytical and numerical solutions are extremely similar. This is in agreement with the fact that no additional perturbing accelerations are considered in the numerical propagation of the problem, so that the observed differences are only due to integration errors. The fact that the difference between analytical and numerical results is (significantly) higher for spherical shaping can be explained by its independent variable which is not time, but azimuth angle. This requires an additional step to convert time to azimuth angle (and the other way around), compared to hodographic shaping. This conversion makes use of an interpolator, and the higher differences are due to interpolation errors (which unfortunately build up along the propagation).
 
 The perturbed case shows larger differences between the shape-based and the propagated trajectories, because of the perturbing accelerations which are introduced in the numerical propagation.
 

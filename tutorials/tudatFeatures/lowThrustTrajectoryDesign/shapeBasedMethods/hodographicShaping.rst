@@ -83,7 +83,7 @@ where the inputs are:
 Hodographic shaping base functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The constructor of the :literal:`HodographicShaping` class requires as inputs one vector of :literal:`BaseFunctionHodographicShaping` objects for each of the three velocity components. All the base functions to hodographically shape a trajectory are derived from the base class :literal:`BaseFunctionHodographicShaping`. The shaping functions for the three velocity components are not fixed in hodographic shaping, but rather are left to be selected by the user (to be chosen among a set of base functions). All these hodographic shaping base functions are defined in the classes defined below.  
+The constructor of the :literal:`HodographicShaping` class requires as inputs one vector of :literal:`BaseFunctionHodographicShaping` objects for each of the three velocity components. All the base functions to hodographically shape a trajectory are derived from the base class :literal:`BaseFunctionHodographicShaping`. The shaping functions for the three velocity components are not fixed in hodographic shaping, but rather are left to be selected by the user (to be chosen among a set of base functions). All these hodographic shaping base functions are defined in the classes presented below.  
 
 .. class:: BaseFunctionHodographicShaping
 
@@ -308,7 +308,7 @@ Class of settings for base functions defined by multiplying power functions with
 Optimising the hodographically shaped trajectory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 	 
-As explained before, hodographic shaping allows for a flexible number of base functions for each velocity component. Three base functions at least must be provided so that the boundary conditions can be satisfied, but a higher number of base functions can also be used, which turns into the creation of n-9 degrees of freedom (n being the total number of base functions provided, out of the three velocity components). The weighting coefficients for these additional base functions are free parameters and can be tuned to minimise the deltaV required by the shaped trajectory. This thus transforms the hodographically shaping problem into an optimisation problem where the best set of free parameters, leading to the minimum deltaV, is to be found.
+As explained before, hodographic shaping allows for a flexible number of base functions for each velocity component. Three base functions at least must be provided so that the boundary conditions can be satisfied, but a higher number of base functions can also be used, which turns into the creation of n-9 degrees of freedom (n being the total number of base functions provided, over the three velocity components). The weighting coefficients for these additional base functions are free parameters and can be tuned to minimise the deltaV required by the shaped trajectory. This thus transforms the hodographically shaping problem into an optimisation problem where the best set of free parameters, leading to the minimum deltaV, is to be found.
 
 A pre-defined optimisation problem compatible with the PAGMO library has been implemented to this end.
 

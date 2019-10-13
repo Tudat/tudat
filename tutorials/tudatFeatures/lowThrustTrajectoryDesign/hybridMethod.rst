@@ -3,9 +3,9 @@
 Hybrid Method
 =============
 
-The hybrid method implemented in TUDAT follows from the work done in the following theses by Boudestijn (2014) and Jimenez-Lluva (2018). It aims at combining the advantages of direct and indirect methods, while limiting their respective drawbacks.
+The hybrid method implemented in TUDAT follows from the work done in the theses by Boudestijn (2014) and Jimenez-Lluva (2018). It aims at combining the advantages of direct and indirect methods, while limiting their respective drawbacks.
 
-It makes use of the optimal control theory to reduce the set of free parameters compared to direct methods. As opposed to traditional indirect methods, the costates are not derived from analytical derivations solving the two-point-boundary-value-problem. A linear interpolation is assumed between the initial and final values of the Modified Equinoctial Elements (MEE) costates, and those initial and final costate values are left as the only free parameters of the problem. The thrust profile along the low-thrust trajectory is defined  from the MEE costates guidance and magnitude models. 
+It makes use of the optimal control theory to reduce the set of free parameters compared to direct methods. As opposed to traditional indirect methods, the costates are not derived from analytically solving the two-point-boundary-value-problem. A linear interpolation is assumed between the initial and final values of the Modified Equinoctial Elements (MEE) costates, and those initial and final costate values are left as the only free parameters of the problem. The thrust profile along the low-thrust trajectory is defined  from the MEE costates guidance and magnitude models. 
 
 The trajectory design problem is turned into a simplified optimisation problem, defined as follows:
 
@@ -90,7 +90,7 @@ where the input parameters are:
 					
 The :literal:`HybridMethod` class is directly derived from the base class :literal:`LowThrustLeg`, and all the methods contained in that base class are thus available from any :literal:`HybridMethod` object (see :ref:`tudatFeaturesLowThrustTrajectory` for more details). This includes, among others, the methods allowing the user to retrieve the trajectory, mass, thrust, and thrust acceleration history along the trajectory.
 		
-The constructor of the class :literal:`HybridMethod` automatically calls the method :literal:`performOptimisation`, which tries to find the solution to the optimisation problem as defined by the hybrid method, using the optimisation settings provided by the user. This method creates the structure :literal:`HybridMethodProblem`, which defines the corresponding optimisation problem. It thus saves the identified optimum in the (TO BE COMPLETED) object, which can be retrieved from the (TO BE COMPLETED) method.
+The constructor of the class :literal:`HybridMethod` automatically calls the method :literal:`performOptimisation`, which tries to find the solution to the optimisation problem as defined by the hybrid method, using the optimisation settings provided by the user. This method creates the structure :literal:`HybridMethodProblem`, which defines the corresponding optimisation problem. It thus saves the identified optimum in the literal:`hybridMethodLeg_` private variable, which can be retrieved from the (TO BE COMPLETED) method.
 
 
 Hybrid method trajectory model

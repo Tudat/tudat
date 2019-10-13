@@ -3,14 +3,14 @@
 Low-Thrust Trajectories
 =======================
 
-This code allows to design a low-thrust trajectory, starting at a given departure state to reach a specified final state, in a given time-of-flight. The current implementation of low-thrust trajectories does not include gravity assists, so that they are referred to as low-thrust trajectory "legs". Various low-thrust trajectory models have been implemented:
+This code allows to design a low-thrust trajectory, starting at a given departure state to reach a specified final state, in a given time-of-flight. The current implementation of low-thrust trajectories does not include gravity assists, so they are referred to as low-thrust trajectory "legs". Various low-thrust trajectory models have been implemented:
 	
 	- **Direct methods:** 
 	They rely on discretisation to turn the problem into a parameter optimisation problem. One of the most commonly used direct method is the so-called Sims-Flanagan method, developed in Sims & Flanagan (2000) (Preliminary Design of Low-Thrust Interplanetary Missions). Direct methods are easy to implement, but are computationally demanding as they require optimisation of a large set of free parameters, and they are found hard to converge without a good initial guess.
 	
 
 	- **Hybrid methods:** 
-	Hybrid methods offer an interesting alternative to direct and indirect methods. Indirect methods are also a common approach to deal with low-thrust trajectory problems. They are based on the optimal control theory (costates) and require an analytical solution to the two-boundary problem, to ensure that the boundary and optimality conditions are fulfilled. The inherent complexity of the analytical derivations often leads to the need for simplifying the problem, which limits the accuracy of the solution. Modifying the dynamical model also implies to re-derive the analytical solution. Hybrid methods aim at combining the advantages of both direct and indirect methods, and limiting their drawbacks. The hybrid method developped in Boudestijn (2014) (Development of a low-thrust Earth-centered transfer optimizer for the preliminary mission design phase) and further improved in Jimenez-Lluva (2018) has been implemented in TUDAT. 
+	Hybrid methods offer an interesting alternative to direct and indirect methods. Indirect methods are also a common approach to deal with low-thrust trajectory problems. They are based on the optimal control theory (costates) and require an analytical solution of the two-point-boundary problem, to ensure that the boundary and optimality conditions are fulfilled. The inherent complexity of the analytical derivations often leads to the need for simplifying the problem, which limits the accuracy of the solution. Modifying the dynamical model also implies to re-derive the analytical solution. Hybrid methods aim at combining the advantages of both direct and indirect methods, and limiting their drawbacks. The hybrid method developped in Boudestijn (2014) (Development of a low-thrust Earth-centered transfer optimizer for the preliminary mission design phase) and further improved in Jimenez-Lluva (2018) has been implemented in TUDAT. 
 
 	
 	- **Shape-based methods:** 
@@ -138,7 +138,7 @@ A :literal:`LowThrustTrajectoryObject` can be created using the settings class :
 	        const std::string& bodyToPropagate,
 	        const std::string& centralBody )
 
-In addition to the :literal:`std::shared_ptr< LowThrustLegSettings >` object, this function takes as inputs the departure and arrival states, as well as the required time-of-flight, the names of the spacecraft and of the central body of the trajectory, and the body map defining the trajectory environment. Using this :literal:`createLowThrustLeg` function allows the user for switching easily from one trajectory type to another by modifying the :literal:`std::shared_ptr< LowThrustLegSettings >`, while still addressing the same design problem.
+In addition to the :literal:`std::shared_ptr< LowThrustLegSettings >` object, this function takes as inputs the departure and arrival states, as well as the required time-of-flight, the names of the spacecraft and of the central body of the trajectory, and the body map defining the trajectory environment. Using this :literal:`createLowThrustLeg` function allows the user to switch easily from one trajectory type to another by modifying the :literal:`std::shared_ptr< LowThrustLegSettings >`, while still addressing the same design problem.
 
 .. class:: LowThrustLegSettings
 

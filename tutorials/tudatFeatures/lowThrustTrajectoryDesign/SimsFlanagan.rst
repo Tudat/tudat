@@ -91,7 +91,7 @@ where the input parameters are:
 		
 The :literal:`SimsFlanagan` class is directly derived from the base class :literal:`LowThrustLeg`, and all the methods contained in that base class are thus available from any :literal:`SimsFlanagan` object (see :ref:`tudatFeaturesLowThrustTrajectory` for more details). This includes, among others, the methods allowing the user to retrieve the trajectory, mass, thrust, and thrust acceleration history along the trajectory.
 		
-The constructor of the class :literal:`SimsFlanagan` automatically calls the method :literal:`performOptimisation`, which tries to find the solution to the Sims-Flanagan parametrised optimisation problem, using the optimisation settings provided by the user. This method creates an object of the class :literal:`SimsFlanaganProblem`, which defines the Sims-Flanagan optimisation problem so that it is compatible with the PAGMO library. The :literal:`performOptimisation` function thus runs the optimisation algorithm and saves the identified optimum in the (TO BE COMPLETED) object, which can be retrieved from the :literal:`getOptimalSimsFlanaganLeg` method.
+The constructor of the class :literal:`SimsFlanagan` automatically calls the method :literal:`performOptimisation`, which tries to find the solution to the Sims-Flanagan parametrised optimisation problem, using the optimisation settings provided by the user. This method creates an object of the class :literal:`SimsFlanaganProblem`, which defines the Sims-Flanagan optimisation problem so that it is compatible with the PAGMO library. The :literal:`performOptimisation` function then runs the optimisation algorithm and saves the identified optimum in the :literal:`simsFlanaganLeg_` private variable, which can be retrieved from the :literal:`getOptimalSimsFlanaganLeg` method.
 
 
 Sims-Flanagan trajectory model
@@ -161,6 +161,7 @@ The following methods can be called from any SimsFlanaganModel object:
 		
 	- :literal:`getTotalDeltaV`
 
+.. _tudatFeaturesSimsFlanaganInitialGuessFromShaping:
 
 Using shape-based trajectory as an initial guess
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
