@@ -35,6 +35,7 @@ Each example is discussed in detail on a separate page. Note that in the first e
    interplanetaryTrajectory
    fullPropagationCR3BP
    fullPropagationPatchedConicsTrajectory
+   shapeBasedTrajectory
 
    
 Pagmo Optimization Tutorials
@@ -50,3 +51,5 @@ In the same tudatExampleApplications library on your computer, you can find the 
    earthMarsTrans
    mgaTrans
    propTargeting
+   hodographicShapingTrajectoryOptimisation
+   SimsFlanaganTrajectoryDesign
