@@ -4,14 +4,16 @@ Install on Windows
 ------------------
 This section of the guide refers to the installation of the IDE under Windows. These instructions should work for all versions of Windows from XP to Windows 10.
 
-    .. note:: Please make sure your user account name on Windows does not contain any non-latin character. This is known to generate errors during compilation. If your user account contains such non-latin characters, create another account and download everything in it.
+.. note:: Please make sure your user account name on Windows does not contain any non-latin characters as this is known to generate errors during compilation. If your user account contains such non-latin characters, create another account and download everything in that one.
+
+.. note:: In the steps below it is assumed that you run a 64-bit version of Windows, also denoted as ``x64`` or ``x86_64`` in file names. All new hardware that is sold supports this architecture, but if you have an older computer (say, more than 9-10 years old), you might want to check if your version of Windows is 32 or 64 bit in the System information section in the Control Panel.
 
 CMake
 ~~~~~
 So, we are now going to walk through the process of installing CMake on your computer, after which we will install Qt Creator, which comes bundled with the compiler and related tools. We use CMake to manage software project(s), and to instruct your compiler how to generate and link libraries.
 
 **Step 1: Download CMake**
-    To download CMake, go to the `CMake website <https://cmake.org/download/>`_ and look for the Windows Installer ``cmake-[version]-win32-x86.msi`` at the top of table for Binary distributions. Click the link, and choose Run or Save (if available) in order to get the installer on your computer.
+    To download CMake, go to the `CMake website <https://cmake.org/download/>`_ and look for the Windows Installer ``cmake-[version]-win64-x64.msi`` at the top of table for Binary distributions. Click the link, and choose Run or Save (if available) in order to get the installer on your computer.
 
 **Step 2: Install CMake**
     If your installer does not run automatically once the download has been completed, go to your Downloads directory and start the installer by double-clicking on it. Click on Run if your operating system tells you it does not recognize the publisher. You now get to the welcome screen for the CMake installer. You will have to press Next and accept the License Agreement (if you choose) and Next again. Now you will get to the Install Options. Make sure to select either Add CMake to the system PATH for *all users* (preferred) or *current user* (alternatively).
@@ -25,7 +27,7 @@ SmartGit
 ~~~~~~~~
 
 **Step 1: Download SmartGit**
-    Download SmartGit for your operating system `here <http://www.syntevo.com/smartgit/>`_ . Note that for Linux the package might be available through your package manager, see Linux/Debian instructions. Note that SmartGit comes bundled with JRE (java runtime environment) on Windows and macOS. On Linux you need to install ``jre-openjdk``.
+    Download SmartGit for your operating system `here <http://www.syntevo.com/smartgit/>`_. Note that for Linux the package might be available through your package manager, see Linux/Debian instructions. Note that SmartGit comes bundled with JRE (java runtime environment) on Windows and macOS. On Linux you need to install ``jre-openjdk``.
 
 **Step 2: Install SmartGit**
     The installation should be straight-forward and the default installation is fine.
@@ -37,7 +39,7 @@ Qt Creator & MinGW
 Now we are going to walk through the process of installing Qt Creator on your computer. This will also install the MinGW, a Minimalist GNU Environment for Windows, containing (amongst others) GNU C++ compilers and Make programs.
 
 **Step 1: Download the installer**
-    To begin the installation, use the following link to download the installer for the Qt SDK: http://www.qt.io/download-open-source/ As before it is best to choose to Run the installer directly.
+    To begin the installation, use the following link to download the installer for the Qt SDK: http://www.qt.io/download-open-source/ As before, it is best to choose to Run the installer directly.
 
 **Step 2: Install Qt Creator**
     If you have selected Run, the installer should start automatically. If it does not start automatically, go to your downloads directory and start the installer by double-clicking on it.
@@ -45,12 +47,12 @@ Now we are going to walk through the process of installing Qt Creator on your co
     You will now see a welcome screen. You can "Skip" creating an account. Next the online installer will do some checks, this may take a few moments. You should get the option to specify the install directory, see the step below.
 
 **Step 3: Set installation directory**
-   Do not install in Program Files, instead install Qt in your C:/ directory (or D:/ ...). Do not install it in the Program Files (x86) directory (or any directory with spaces), since this is know to cause issues later on.
+   Do not install Qt in the Program Files folder, but instead in your C:/ directory (or D:/ ...). Do not install it in the Program Files (x86) directory (or any directory with spaces), since this is known to cause issues later on.
 
 **Step 4: Select custom installation components**
     Click Next until you get to the Select Components step. Here you get the option to select which parts of the Qt SDK you wish to install, shown below. Only Qt Creator (default, can not be unchecked) and MinGW (64-bit, 7.3.0) from the Tools section are necessary. The debugger is recommended.
 
-    .. note:: It is highly recommended to have the 64-bit version of MinGW (7.3.0 when installing Qt creator). If your system does not support 64 bits, you can use the 5.3.0 MingW, but some code features may not be supported.
+    .. note:: It is highly recommended to have the 64-bit version of MinGW (7.3.0 when installing Qt creator). If your system does not support 64 bits, you can use the 5.3.0 MingW, but some code features may not be supported. The 32 bits version is also known to cause memory allocation troubles when compiling large applications that use many Tudat, Boost, and Pagmo libraries.
 
 .. figure:: images/qtInstall.png
 
