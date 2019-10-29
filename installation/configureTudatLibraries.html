@@ -182,13 +182,11 @@
 <dt><strong>Step 1: Open Qt Creator</strong></dt>
 <dd>Launch the Qt Creator application that you installed. If any windows pop-up offering to help you get started, launch tutorials etc., hit Cancel. This should bring you into the editor.</dd>
 <dt><strong>Step 2: Open the project</strong></dt>
-<dd><blockquote class="first">
-<div><p>The next step is to open the CMake project of the tudatBundle. Click on <code class="docutils literal"><span class="pre">Open</span> <span class="pre">File</span> <span class="pre">or</span> <span class="pre">Project...</span></code> from the File drop-down menu. Navigate to where you extracted your Tudat Bundle, and navigate to the <code class="docutils literal"><span class="pre">tudatBundle</span></code> folder. Within this directory, you will see a file called <code class="docutils literal"><span class="pre">CMakeLists.txt</span></code>. This is the main project file for any CMake project. Click on <code class="docutils literal"><span class="pre">Open</span></code>, after selecting the CMakeLists.txt file.</p>
+<dd><p class="first">The next step is to open the CMake project of the tudatBundle. Click on <code class="docutils literal"><span class="pre">Open</span> <span class="pre">File</span> <span class="pre">or</span> <span class="pre">Project...</span></code> from the File drop-down menu. Navigate to where you extracted your Tudat Bundle, and navigate to the <code class="docutils literal"><span class="pre">tudatBundle</span></code> folder. Within this directory, you will see a file called <code class="docutils literal"><span class="pre">CMakeLists.txt</span></code>. This is the main project file for any CMake project. Click on <code class="docutils literal"><span class="pre">Open</span></code>, after selecting the CMakeLists.txt file.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Please note that you can safely ignore any git-related errors/warnings that Qt Creator throws. Example: Cannot run “git rev-parse –git-dir” in “C:tudatBundle”.</p>
 </div>
-</div></blockquote>
 <div class="last admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">If you are a Windows user, please check again whether your Tudat bundle folder is in the root directory of your hard drive (e.g. C:\tudatBundle), as explained in the previous part of the installation guide. If this is not the case, remove the bundle and clone it again, but now right under C:\ (or D:\, E:\, etc.). <strong>Failing to adhere to these instructions can cause errors further down the road and may cost you a lot of effort and time!</strong></p>
@@ -327,29 +325,28 @@
 </div>
 </dd>
 <dt><strong>Step 5: Build the libraries</strong></dt>
-<dd><p class="first">Now all that remains to be done is to build the libraries. Typically, Tudat is compiled using a single core on your system if you leave the settings on default, but considering that most computers nowadays feature dual, quad, or hexa core processors, <strong>it is highly recommended to switch on multi-core compilation</strong>.</p>
-<p>The latter is achieved as follows:</p>
+<dd><blockquote class="first">
+<div><p>Now all that remains to be done is to build the libraries. Typically, Tudat is compiled using a single core on your system if you leave the settings on default, but considering that most computers nowadays feature dual, quad, or hexa core processors, <strong>it is highly recommended to switch on multi-core compilation</strong>, as follows (see image below for a 12-core compilation):</p>
 <blockquote>
 <div><ul class="simple">
 <li>Open the <code class="docutils literal"><span class="pre">Project</span></code> tab;</li>
 <li>Under the list of project settings, you can see the section <code class="docutils literal"><span class="pre">Build</span> <span class="pre">Steps</span></code>. Click on <code class="docutils literal"><span class="pre">Details</span></code> next to the command line, which opens up a new panel.</li>
-<li>In this panel, put the following: <code class="docutils literal"><span class="pre">-jX</span></code> where you replace X with the number of <em>logical</em> cores (see the tip below) that you want to use for compilation.</li>
+<li>In this panel, put the following: <code class="docutils literal"><span class="pre">-jX</span></code> where you replace X with the number of <em>logical</em> cores that you want to use for compilation.</li>
 <li>You do not have to save the changes you just made; this is done for you automatically.</li>
 </ul>
 </div></blockquote>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">The number of <em>physical</em> cores usually does not correspond to the number of <em>logical</em> cores that the OS can use. For example, a quad core (4 core) CPU has 4 physical cores, but 8 logical cores. The difference comes from the exact implementation of the processor cores and is quite technical; if you want to know more about this, you can read about it <a class="reference external" href="https://superuser.com/questions/1105654/logical-vs-physical-cpu-performance">here</a>. You can usually find the number of available logical cores in the system info (Control panel on Windows).</p>
+</div></blockquote>
+<div class="figure">
+<img alt="../_images/multiCore.png" src="../_images/multiCore.png" />
 </div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">It is <strong>not recommended</strong> to use all cores for compilation. The exact number you can get away with depends on the amount of RAM installed in your system, and as a rule of thumb, every logical core can use 2.0-2.5 GB of memory. In case you use too many cores, your system might run out of resources and start ‘thrashing’. The latter refers to the situation where the physical RAM is completely exhausted, so that parts of it need to be put aside on your hard disk, which has a much slower speed than the RAM. You will experience this as the computer getting ‘stuck’ and becoming unresponsive.</p>
-</div>
-<div class="admonition note">
+<p>It is <strong>not recommended</strong> to use all cores for compilation. The exact number you can get away with depends on the amount of RAM in your system. As a rule of thumb, a logical core may use up to 2.0-2.5 GB of memory when compiling (but usually less). In case you use too many cores, your physical RAM may become completely exhausted. You will experience this as the computer becoming slow and unresponsive. If you are not sure, be conservative in the number of cores you use. On most systems <code class="docutils literal"><span class="pre">-j2</span></code> or <code class="docutils literal"><span class="pre">-j3</span></code> will be acceptable.</p>
+<p>To compile all the libraries, simply click on the ‘hammer’ build icon in the bottom-left corner of your screen (or use the menu <code class="docutils literal"><span class="pre">Build</span></code> at the top and select <code class="docutils literal"><span class="pre">Build</span> <span class="pre">all</span></code>). You will see a <code class="docutils literal"><span class="pre">Compile</span> <span class="pre">Output</span></code> console window pop-up, showing the status of the build process, as the compiler walks through all the project files, and generates the libraries that we need. Note that the compiler may produce some warnings (indicated by a yellow triangle under <code class="docutils literal"><span class="pre">Issues</span></code>), which you can safely ignore. A compiler error (indicated in red under <code class="docutils literal"><span class="pre">Issues</span></code>) means that the compilation cannot be finished succesfully. If this occurs, open an issue on Github, providing details on your system (compiler version, operating system), and the full <code class="docutils literal"><span class="pre">Compile</span> <span class="pre">output</span></code> copied into a text file.</p>
+<blockquote>
+<div><div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">When encountering a compilation error during multi-core compilation, try reinintializing the compilation (clicking the hammer again). If the same errors occurs, and you wish to open an issue, rerun with a SINGLE thread, and post the output that this produces. Multi-core compilation output can often be garbled, and difficult to interpret.</p>
 </div>
-<p>To compile all the libraries, simply click on the ‘hammer’ build icon in the bottom-left corner of your screen (or use the menu <code class="docutils literal"><span class="pre">Build</span></code> at the top and select <code class="docutils literal"><span class="pre">Build</span> <span class="pre">all</span></code>). You will see a <code class="docutils literal"><span class="pre">Compile</span> <span class="pre">Output</span></code> console window pop-up, showing the status of the build process, as the compiler walks through all the project files, and generates the libraries that we need. Note that the compiler may produce some warnings (indicated by a yellow triangle under <code class="docutils literal"><span class="pre">Issues</span></code>), which you can safely ignore. A compiler error (indicated in red under <code class="docutils literal"><span class="pre">Issues</span></code>) means that the compilation cannot be finished succesfully. If this occurs, open an issue on Github, providing details on your system (compiler version, operating system), and the full <code class="docutils literal"><span class="pre">Compile</span> <span class="pre">output</span></code> copied into a text file.</p>
+</div></blockquote>
 <p class="last">The entire build process could take anywhere from 15 minutes (Linux/Mac modern workstation; 12 threads) to 3-8 hours (Windows; single core), depending on the specifications of your computer. Have patience! It will all work out in the end. Once the build is complete, you’re done! You have now successfully built Tudat and all required libraries on your computer.</p>
 </dd>
 <dt><strong>Step 6: Running the unit tests</strong></dt>

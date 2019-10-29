@@ -8,12 +8,12 @@ To make use of the Tudat libraries, you need to compile them. Below we will guid
 .. note:: When attaching output, always put it into a text file, not a screenshot, making sure to copy all information in the ``Compile Output`` (if the error occurs during compilation) or the ``Application Output`` (if the error occurs when running an application).
 
 **Step 1: Open Qt Creator**
-    Launch the Qt Creator application that you installed. If any windows pop-up offering to help you get started, launch tutorials etc., hit Cancel. This should bring you into the editor.
+   Launch the Qt Creator application that you installed. If any windows pop-up offering to help you get started, launch tutorials etc., hit Cancel. This should bring you into the editor.
 
 **Step 2: Open the project**
-    The next step is to open the CMake project of the tudatBundle. Click on ``Open File or Project...`` from the File drop-down menu. Navigate to where you extracted your Tudat Bundle, and navigate to the ``tudatBundle`` folder. Within this directory, you will see a file called ``CMakeLists.txt``. This is the main project file for any CMake project. Click on ``Open``, after selecting the CMakeLists.txt file.
+   The next step is to open the CMake project of the tudatBundle. Click on ``Open File or Project...`` from the File drop-down menu. Navigate to where you extracted your Tudat Bundle, and navigate to the ``tudatBundle`` folder. Within this directory, you will see a file called ``CMakeLists.txt``. This is the main project file for any CMake project. Click on ``Open``, after selecting the CMakeLists.txt file.
 
-    .. note:: Please note that you can safely ignore any git-related errors/warnings that Qt Creator throws. Example: Cannot run "git rev-parse --git-dir" in "C:\tudatBundle".
+   .. note:: Please note that you can safely ignore any git-related errors/warnings that Qt Creator throws. Example: Cannot run "git rev-parse --git-dir" in "C:\tudatBundle".
 
    .. warning:: If you are a Windows user, please check again whether your Tudat bundle folder is in the root directory of your hard drive (e.g. C:\\tudatBundle), as explained in the previous part of the installation guide. If this is not the case, remove the bundle and clone it again, but now right under C:\\ (or D:\\, E:\\, etc.). **Failing to adhere to these instructions can cause errors further down the road and may cost you a lot of effort and time!**
 
@@ -146,25 +146,23 @@ To make use of the Tudat libraries, you need to compile them. Below we will guid
    .. note:: You can modify the CMake settings at any later point in time, but this may require a rebuild of a significant part of the libraries.
 
 **Step 5: Build the libraries**
-    Now all that remains to be done is to build the libraries. Typically, Tudat is compiled using a single core on your system if you leave the settings on default, but considering that most computers nowadays feature dual, quad, or hexa core processors, **it is highly recommended to switch on multi-core compilation**. 
-
-    The latter is achieved as follows:
+    Now all that remains to be done is to build the libraries. Typically, Tudat is compiled using a single core on your system if you leave the settings on default, but considering that most computers nowadays feature dual, quad, or hexa core processors, **it is highly recommended to switch on multi-core compilation**, as follows (see image below for a 12-core compilation):
 
       * Open the ``Project`` tab;
       * Under the list of project settings, you can see the section ``Build Steps``. Click on ``Details`` next to the command line, which opens up a new panel.
-      * In this panel, put the following: ``-jX`` where you replace X with the number of *logical* cores (see the tip below) that you want to use for compilation.
+      * In this panel, put the following: ``-jX`` where you replace X with the number of *logical* cores that you want to use for compilation.
       * You do not have to save the changes you just made; this is done for you automatically.
 
+   .. figure:: images/multiCore.png
 
-    .. tip:: The number of *physical* cores usually does not correspond to the number of *logical* cores that the OS can use. For example, a quad core (4 core) CPU has 4 physical cores, but 8 logical cores. The difference comes from the exact implementation of the processor cores and is quite technical; if you want to know more about this, you can read about it `here <https://superuser.com/questions/1105654/logical-vs-physical-cpu-performance>`_. You can usually find the number of available logical cores in the system info (Control panel on Windows).
+ 
+   It is **not recommended** to use all cores for compilation. The exact number you can get away with depends on the amount of RAM in your system. As a rule of thumb, a logical core may use up to 2.0-2.5 GB of memory when compiling (but usually less). In case you use too many cores, your physical RAM may become completely exhausted. You will experience this as the computer becoming slow and unresponsive. If you are not sure, be conservative in the number of cores you use. On most systems ``-j2`` or ``-j3`` will be acceptable.
 
-    .. warning:: It is **not recommended** to use all cores for compilation. The exact number you can get away with depends on the amount of RAM installed in your system, and as a rule of thumb, every logical core can use 2.0-2.5 GB of memory. In case you use too many cores, your system might run out of resources and start 'thrashing'. The latter refers to the situation where the physical RAM is completely exhausted, so that parts of it need to be put aside on your hard disk, which has a much slower speed than the RAM. You will experience this as the computer getting 'stuck' and becoming unresponsive.
+   To compile all the libraries, simply click on the 'hammer' build icon in the bottom-left corner of your screen (or use the menu ``Build`` at the top and select ``Build all``). You will see a ``Compile Output`` console window pop-up, showing the status of the build process, as the compiler walks through all the project files, and generates the libraries that we need. Note that the compiler may produce some warnings (indicated by a yellow triangle under ``Issues``), which you can safely ignore. A compiler error (indicated in red under ``Issues``) means that the compilation cannot be finished succesfully. If this occurs, open an issue on Github, providing details on your system (compiler version, operating system), and the full ``Compile output`` copied into a text file. 
 
     .. note:: When encountering a compilation error during multi-core compilation, try reinintializing the compilation (clicking the hammer again). If the same errors occurs, and you wish to open an issue, rerun with a SINGLE thread, and post the output that this produces. Multi-core compilation output can often be garbled, and difficult to interpret.
 
-    To compile all the libraries, simply click on the 'hammer' build icon in the bottom-left corner of your screen (or use the menu ``Build`` at the top and select ``Build all``). You will see a ``Compile Output`` console window pop-up, showing the status of the build process, as the compiler walks through all the project files, and generates the libraries that we need. Note that the compiler may produce some warnings (indicated by a yellow triangle under ``Issues``), which you can safely ignore. A compiler error (indicated in red under ``Issues``) means that the compilation cannot be finished succesfully. If this occurs, open an issue on Github, providing details on your system (compiler version, operating system), and the full ``Compile output`` copied into a text file. 
-
-    The entire build process could take anywhere from 15 minutes (Linux/Mac modern workstation; 12 threads) to 3-8 hours (Windows; single core), depending on the specifications of your computer. Have patience! It will all work out in the end. Once the build is complete, you're done! You have now successfully built Tudat and all required libraries on your computer.
+   The entire build process could take anywhere from 15 minutes (Linux/Mac modern workstation; 12 threads) to 3-8 hours (Windows; single core), depending on the specifications of your computer. Have patience! It will all work out in the end. Once the build is complete, you're done! You have now successfully built Tudat and all required libraries on your computer.
     
 **Step 6: Running the unit tests**
    For each part of the code in Tudat, we have written unit tests, which are included in the repository. Before moving on with using Tudat, you should run all the unit tests to ensure that your installation is functioning as it should. To run all unit tests, go to the project tab, and go to the ``Build Steps`` block. Write "test" in the ``Tool Arguments`` (may be called ``Additional Arguments``) line, as shown below. 
