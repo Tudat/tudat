@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>7.2. External Libraries: SPICE &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>8.2. External Libraries: SPICE &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -38,9 +38,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="7. Other Libraries" href="index.html"/>
+        <link rel="up" title="8. Other Libraries" href="index.html"/>
         <link rel="next" title="Tudat Basics" href="../../basics/index.html"/>
-        <link rel="prev" title="7.1. Input/Output" href="inputOutput.html"/> 
+        <link rel="prev" title="8.1. Input/Output" href="inputOutput.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -102,10 +102,11 @@
 <li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">7. Other Libraries</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="inputOutput.html">7.1. Input/Output</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">7.2. External Libraries: SPICE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">6. Low-Thrust Trajectory Design Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">7. Basic Mathematics Tools</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">8. Other Libraries</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="inputOutput.html">8.1. Input/Output</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">8.2. External Libraries: SPICE</a></li>
 </ul>
 </li>
 </ul>
@@ -168,9 +169,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">7. Other Libraries</a> &raquo;</li>
+          <li><a href="index.html">8. Other Libraries</a> &raquo;</li>
         
-      <li>7.2. External Libraries: SPICE</li>
+      <li>8.2. External Libraries: SPICE</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -190,14 +191,14 @@
            <div itemprop="articleBody">
             
   <div class="section" id="external-libraries-spice">
-<span id="tudatfeaturesspice"></span><h1>7.2. External Libraries: SPICE<a class="headerlink" href="#external-libraries-spice" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturesspice"></span><h1>8.2. External Libraries: SPICE<a class="headerlink" href="#external-libraries-spice" title="Permalink to this headline">¶</a></h1>
 <p>The Spice toolkit consists of various data sets, designated as kernels, which are provided by the NASA’s Navigation and Ancillary Information Facility (NAIF), at JPL. Those data include ephemerides of spacecraft, planets, asteroids, and comets, as well as some physical and dynamical characteristics of those bodies (e.g. size, shape, rotational state). The Spice library has been linked to Tudat, making it possible for the user to retrieve data from the Spice kernels. In particular, using ephemerides retrieved from Spice is an interesting solution to reduce the computational load with a limited loss of accuracy, instead of propagating the dynamics of all the bodies involved in the simulation.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">A detailed documentation of the Spice toolkit can be found here: <a class="reference external" href="https://naif.jpl.nasa.gov/naif/documentation.html">https://naif.jpl.nasa.gov/naif/documentation.html</a></p>
 </div>
 <div class="section" id="spice-interface">
-<h2>7.2.1. Spice interface<a class="headerlink" href="#spice-interface" title="Permalink to this headline">¶</a></h2>
+<h2>8.2.1. Spice interface<a class="headerlink" href="#spice-interface" title="Permalink to this headline">¶</a></h2>
 <p>The Spice interface allows for retrieving various data from the Spice library in Tudat. The available functions are the following ones:</p>
 <blockquote>
 <div><ul class="simple">
@@ -270,7 +271,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="spice-ephemerides">
-<h2>7.2.2. Spice ephemerides<a class="headerlink" href="#spice-ephemerides" title="Permalink to this headline">¶</a></h2>
+<h2>8.2.2. Spice ephemerides<a class="headerlink" href="#spice-ephemerides" title="Permalink to this headline">¶</a></h2>
 <p>One of the main advantages of the use of Spice in Tudat is the use of Spice ephemerides. It indeed allows for directly retrieving the states of some of the celestial bodies from the kernels, without having to propagte their dynamics. This can save a significant fraction of the total computational time, while not deteriorating the accuracy too severely.</p>
 <p>Two different classes have been implemented to generate ephemerides based on the Spice data.</p>
 <dl class="class">
@@ -289,7 +290,7 @@
 <p>The use of a <code class="docutils literal"><span class="pre">SpiceEphemeris</span></code> model requires to retrieve Spice data at each time step of the propagation, while it is possible to save some computational time by limiting the number of calls to the Spice data. The <code class="docutils literal"><span class="pre">InterpolatedSpiceEphemerisSettings</span></code> class of ephemeris settings can be used to this end. It specifies the settings required to retrieve the body state from Spice kernels at regular time intervals, and then create a <code class="docutils literal"><span class="pre">TabulatedCartesianEphemeris</span></code> ephemeris model, by interpolating the scattered Spice data which have just been retrieved (with a 8th Lagrange interpolator by default). In that case, calls to the Spice data occur outside of the propagation loop, before creating the ephemeris model, so that it can save some computational time. However, the time interval at which the Spice data are collected before generating the <code class="docutils literal"><span class="pre">TabulatedCartesianEphemeris</span></code> must be wisely chosen, as too sparse Spice data would deteriorate the ephemeris accuracy.</p>
 </div>
 <div class="section" id="commonly-encountered-errors">
-<h2>7.2.3. Commonly encountered errors<a class="headerlink" href="#commonly-encountered-errors" title="Permalink to this headline">¶</a></h2>
+<h2>8.2.3. Commonly encountered errors<a class="headerlink" href="#commonly-encountered-errors" title="Permalink to this headline">¶</a></h2>
 <p>When making use of the Spice interface, some errors regularly happen:</p>
 <blockquote>
 <div><ul class="simple">
@@ -378,7 +379,7 @@
         <a href="../../basics/index.html" class="btn btn-neutral float-right" title="Tudat Basics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="inputOutput.html" class="btn btn-neutral" title="7.1. Input/Output" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="inputOutput.html" class="btn btn-neutral" title="8.1. Input/Output" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

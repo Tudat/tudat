@@ -1,0 +1,622 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>6.1. Low-Thrust Trajectories &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
+        <link rel="up" title="6. Low-Thrust Trajectory Design Module" href="index.html"/>
+        <link rel="next" title="6.2. Sims-Flanagan Method" href="SimsFlanagan.html"/>
+        <link rel="prev" title="6. Low-Thrust Trajectory Design Module" href="index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials and Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Tudat Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../environmentSetup/index.html">1. Environment Set-up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accelerationSetup/index.html">2. Setting up State Derivative Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6. Low-Thrust Trajectory Design Module</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.1. Low-Thrust Trajectories</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SimsFlanagan.html">6.2. Sims-Flanagan Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hybridMethod.html">6.3. Hybrid Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shapeBasedMethods/index.html">Shape-Based Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">7. Basic Mathematics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">8. Other Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../jsonInterface/index.html">JSON Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference external" href="http://doxygen.tudat.tudelft.nl">Doxygen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../socis.html">SOCIS 2019</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Tutorials and Documentation</a> &raquo;</li>
+        
+          <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
+        
+          <li><a href="index.html">6. Low-Thrust Trajectory Design Module</a> &raquo;</li>
+        
+      <li>6.1. Low-Thrust Trajectories</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/tutorials/tudatFeatures/lowThrustTrajectoryDesign/lowThrustTrajectory.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="low-thrust-trajectories">
+<span id="tudatfeatureslowthrusttrajectory"></span><h1>6.1. Low-Thrust Trajectories<a class="headerlink" href="#low-thrust-trajectories" title="Permalink to this headline">¶</a></h1>
+<p>This code allows to design a low-thrust trajectory, starting at a given departure state to reach a specified final state, in a given time-of-flight. The current implementation of low-thrust trajectories does not include gravity assists, so they are referred to as low-thrust trajectory “legs”. Various low-thrust trajectory models have been implemented:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Direct methods:</strong></li>
+</ul>
+<p>They rely on discretisation to turn the problem into a parameter optimisation problem. One of the most commonly used direct method is the so-called Sims-Flanagan method, developed in Sims &amp; Flanagan (2000) (Preliminary Design of Low-Thrust Interplanetary Missions). Direct methods are easy to implement, but are computationally demanding as they require optimisation of a large set of free parameters, and they are found hard to converge without a good initial guess.</p>
+<ul class="simple">
+<li><strong>Hybrid methods:</strong></li>
+</ul>
+<p>Hybrid methods offer an interesting alternative to direct and indirect methods. Indirect methods are also a common approach to deal with low-thrust trajectory problems. They are based on the optimal control theory (costates) and require an analytical solution of the two-point-boundary problem, to ensure that the boundary and optimality conditions are fulfilled. The inherent complexity of the analytical derivations often leads to the need for simplifying the problem, which limits the accuracy of the solution. Modifying the dynamical model also implies to re-derive the analytical solution. Hybrid methods aim at combining the advantages of both direct and indirect methods, and limiting their drawbacks. The hybrid method developped in Boudestijn (2014) (Development of a low-thrust Earth-centered transfer optimizer for the preliminary mission design phase) and further improved in Jimenez-Lluva (2018) has been implemented in TUDAT.</p>
+<ul class="simple">
+<li><strong>Shape-based methods:</strong></li>
+</ul>
+<p>Shaping methods assume a certain shape for the low-thrust trajectory, and tune the parameters defining the trajectory shape so that the boundary conditions can be fulfilled. Their main advantage lies in their analytical formulation, which makes them extremely computationnally effective when compared to direct, indirect, or even hybrid methods. This allows for exploring a larger design space, reducing the chances to converge to a local optimum (which is one of the risks of using direct/indirect/hybrid methods). Shape-based methods can thus provide a good preliminary trajectory design. On the other hand, their accuracy is limited, due to the assumed trajectory shape and to the simplified dynamical model required to solve the problem analytically.</p>
+</div></blockquote>
+<p>The low-thrust trajectory methods currenly available are:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Shape-based methods</p>
+<blockquote>
+<div><ul class="simple">
+<li>Hodographic shaping</li>
+<li>Spherical shaping</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Sims-Flanagan method</p>
+</li>
+<li><p class="first">Hybrid method</p>
+</li>
+</ul>
+</div></blockquote>
+<div class="section" id="low-thrust-trajectory-leg">
+<h2>6.1.1. Low-Thrust trajectory leg<a class="headerlink" href="#low-thrust-trajectory-leg" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="LowThrustLeg">
+<em class="property">class </em><code class="descname">LowThrustLeg</code><a class="headerlink" href="#LowThrustLeg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Base class for low-thrust trajectory leg. This class is defined as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">LowThrustLeg</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">stateAtDeparture</span><span class="p">,</span>
+          <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">stateAtArrival</span><span class="p">,</span>
+          <span class="k">const</span> <span class="kt">double</span> <span class="n">timeOfFlight</span><span class="p">,</span>
+          <span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span>
+          <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">bodyToPropagate</span><span class="p">,</span>
+          <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">centralBody</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>where the input parameters are the following ones:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">stateAtDeparture</span></code></dt>
+<dd>State of the spacecraft at departure.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">stateAtArrival</span></code></dt>
+<dd>State of the spacecraft at arrival.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">timeOfFlight</span></code></dt>
+<dd>Time of flight specified for the targeted low-thrust trajectory.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">bodyMap</span></code></dt>
+<dd>Map of pointers to <code class="docutils literal"><span class="pre">Body</span></code> objects involved in the low-thrust trajectory.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">bodyToPropagate</span></code></dt>
+<dd>Name of the spacecraft to be propagated.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">centralBody</span></code></dt>
+<dd>Name of the central body of the low-thrust trajectory.</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>Each class derived from this base class contains the following methods:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">convertTimeToIndependentVariable</span></code></dt>
+<dd>Converts current time to the corresponding independent variable value, depending on what kind of low-thrust trajectory model is used.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">convertIndependentVariableToTime</span></code></dt>
+<dd>Converts current independent variable value to corresponding time, depending on what kind of low-thrust trajectory model is used.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">computeCurrentThrustAccelerationDirection</span></code></dt>
+<dd>Returns direction of the current low-thrust acceleration vector.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">computeCurrentThrustAccelerationMagnitude</span></code></dt>
+<dd>Returns magnitude of the current acceleration vector.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">computeCurrentStateVector</span></code></dt>
+<dd>Returns current state vector along the low-thrust trajectory.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">getTrajectory</span></code></dt>
+<dd>Returns trajectory map (by reference), filled with state history of the spacecraft at a given set of epochs, provided in an input vector.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">computeCurrentMass</span></code></dt>
+<dd>Returns current mass of the spacecraft.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">getMassProfile</span></code></dt>
+<dd>Returns map (by reference), filled with mass history of the spacecraft, at a given set of epochs provided in an input vector.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">getLowThrustAccelerationModel</span></code></dt>
+<dd>Returns the thrust acceleration model corresponding to the designed trajectory.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">retrieveLowThrustAccelerationMap</span></code></dt>
+<dd>Returns accelerations map corresponding to the low-thrust trajectory. This includes thrust acceleration and gravitational acceleration exerted by the central body of the trajectory.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">computeCurrentThrust</span></code></dt>
+<dd>Returns current thrust vector.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">getThrustProfile</span></code></dt>
+<dd>Returns map (by reference) filled with thrust history along the low-thrust trajectory for a set of epochs provided in an input vector.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">computeCurrentThrustAcceleration</span></code></dt>
+<dd>Returns current thrust acceleration vector.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">getThrustAccelerationProfile</span></code></dt>
+<dd>Returns map (by reference) filled with thrust acceleration history along the low-thrust trajectory for a set of epochs provided in an input vector.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">computeDeltaV</span></code></dt>
+<dd>Returns deltaV associated with the low-thrust trajectory.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">computeSemiAnalyticalAndFullPropagation</span></code></dt>
+<dd>Computes the analytical or semi-analytical low-thrust trajectory, and propagates the associated fully perturbed problem. The propagation starts at half of the time-of-flight and is performed backward until departure, and forward until arrival. Once the numerical propagation is over, the semi-analytical results are computed for the same set of epochs, to make direct comparison possible and assess the quality of the semi-analytical method. Both full propagation and semi-analytical results maps, as well as the dependent variables history maps are returned by reference.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">createLowThrustPropagatorSettings</span></code></dt>
+<dd>Returns pair of appropriate propagator settings for the backward and forward propagations of the fully perturbed problem, to be used as input for the computeSemiAnalyticalAndFullPropagation method described above. This function returns a multi-type propagator settings, including settings to propagate the translational state and the mass of the spacecraft.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">createLowThrustTranslationalStatePropagatorSettings</span></code></dt>
+<dd>Returns pair of appropriate translational state propagator settings for the backward and forward propagations of the fully perturbed problem, to be used as input for the computeSemiAnalyticalAndFullPropagation method described above.</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="setting-up-a-low-thrust-trajectory">
+<span id="tudatfeaturessetuplowthrusttrajectory"></span><h2>6.1.2. Setting up a low-thrust trajectory<a class="headerlink" href="#setting-up-a-low-thrust-trajectory" title="Permalink to this headline">¶</a></h2>
+<p>A <code class="docutils literal"><span class="pre">LowThrustTrajectoryObject</span></code> can be created using the settings class <code class="docutils literal"><span class="pre">LowThrustLegSettings</span></code>, using the function <code class="docutils literal"><span class="pre">createLowThrustLeg</span></code>.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">createLowThrustLeg</span><span class="p">(</span>
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">LowThrustLegSettings</span> <span class="o">&gt;&amp;</span> <span class="n">lowThrustLegSettings</span><span class="p">,</span>
+        <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">stateAtDeparture</span><span class="p">,</span>
+        <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">stateAtArrival</span><span class="p">,</span>
+        <span class="k">const</span> <span class="kt">double</span><span class="o">&amp;</span> <span class="n">timeOfFlight</span><span class="p">,</span>
+        <span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span>
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">bodyToPropagate</span><span class="p">,</span>
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">centralBody</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>In addition to the <code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">LowThrustLegSettings</span> <span class="pre">&gt;</span></code> object, this function takes as inputs the departure and arrival states, as well as the required time-of-flight, the names of the spacecraft and of the central body of the trajectory, and the body map defining the trajectory environment. Using this <code class="docutils literal"><span class="pre">createLowThrustLeg</span></code> function allows the user to switch easily from one trajectory type to another by modifying the <code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">LowThrustLegSettings</span> <span class="pre">&gt;</span></code>, while still addressing the same design problem.</p>
+<dl class="class">
+<dt id="LowThrustLegSettings">
+<em class="property">class </em><code class="descname">LowThrustLegSettings</code><a class="headerlink" href="#LowThrustLegSettings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This is the base class to create <code class="docutils literal"><span class="pre">LowThrustTrajectoryObject</span></code>. The low-thrust trajectory is constructed from the settings classes derived from this base class.</p>
+<dl class="class">
+<dt id="HodographicShapingLegSettings">
+<em class="property">class </em><code class="descname">HodographicShapingLegSettings</code><a class="headerlink" href="#HodographicShapingLegSettings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This class defines the settings to construct a <code class="docutils literal"><span class="pre">HodographicShaping</span></code> object, which will provide a preliminary, hodographically shaped trajectory design. For more details about the hodographic shaping method, the reader is referred to <a class="reference internal" href="shapeBasedMethods/hodographicShaping.html#tudatfeatureshodographicshaping"><span class="std std-ref">Hodographic shaping</span></a>). The definition of <code class="docutils literal"><span class="pre">HodographicShapingLegSettings</span></code> requires the user to specify the base functions to be used for the trajectory shaping, and the values of the free parameters,  if any.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">HodographicShapingLegSettings</span><span class="p">(</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">numberOfRevolutions</span><span class="p">,</span>
+    <span class="k">const</span> <span class="kt">double</span> <span class="n">centralBodyGravitationalParameter</span><span class="p">,</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">shape_based_methods</span><span class="o">::</span><span class="n">BaseFunctionHodographicShaping</span> <span class="o">&gt;</span> <span class="o">&gt;&amp;</span> <span class="n">radialVelocityFunctionComponents</span><span class="p">,</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">shape_based_methods</span><span class="o">::</span><span class="n">BaseFunctionHodographicShaping</span> <span class="o">&gt;</span> <span class="o">&gt;&amp;</span> <span class="n">normalVelocityFunctionComponents</span><span class="p">,</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">shape_based_methods</span><span class="o">::</span><span class="n">BaseFunctionHodographicShaping</span> <span class="o">&gt;</span> <span class="o">&gt;&amp;</span> <span class="n">axialVelocityFunctionComponents</span><span class="p">,</span>
+    <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">freeCoefficientsRadialVelocityFunction</span><span class="p">,</span>
+    <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">freeCoefficientsNormalVelocityFunction</span><span class="p">,</span>
+    <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">freeCoefficientsAxialVelocityFunction</span> <span class="p">)</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="SphericalShapingLegSettings">
+<em class="property">class </em><code class="descname">SphericalShapingLegSettings</code><a class="headerlink" href="#SphericalShapingLegSettings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This is the settings class for <code class="docutils literal"><span class="pre">SphericalShaping</span></code> object, which provides a spherically shaped trajectory (spherical shaping is described in more details in <a class="reference internal" href="shapeBasedMethods/sphericalShaping.html#tudatfeaturessphericalshaping"><span class="std std-ref">Spherical shaping</span></a>). This shaping method has only one parameter whose value is not directly deduced from the satisfaction of departure and arrival boundary conditions. The value of this parameter is tuned until the targeted time-of-flight can be achieved. The <code class="docutils literal"><span class="pre">SphericalShapingLegSettings</span></code> settings class thus requires to specify the initial value for this free parameter, along with a <code class="docutils literal"><span class="pre">rootFinderSettings</span></code> object, to be used to find the free parameter value which will match the required time-of-flight.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SphericalShapingLegSettings</span><span class="p">(</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">numberOfRevolutions</span><span class="p">,</span>
+    <span class="k">const</span> <span class="kt">double</span> <span class="n">centralBodyGravitationalParameter</span><span class="p">,</span>
+    <span class="k">const</span> <span class="kt">double</span> <span class="n">initialValueFreeCoefficient</span><span class="p">,</span>
+    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">root_finders</span><span class="o">::</span><span class="n">RootFinderSettings</span> <span class="o">&gt;&amp;</span> <span class="n">rootFinderSettings</span><span class="p">,</span>
+    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">boundsFreeCoefficient</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="n">TUDAT_NAN</span><span class="p">,</span> <span class="n">TUDAT_NAN</span> <span class="p">)</span> <span class="p">)</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="SimsFlanaganLegSettings">
+<em class="property">class </em><code class="descname">SimsFlanaganLegSettings</code><a class="headerlink" href="#SimsFlanaganLegSettings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This is the settings class for <code class="docutils literal"><span class="pre">SimsFlanaganLeg</span></code> object. Among other inputs, it requires the user to provide the number of segments into which the trajectory is to be subdivided, according to the Sims-Flanagan parametrisation method (more details here <a class="reference internal" href="SimsFlanagan.html#tudatfeaturessimsflanagan"><span class="std std-ref">Sims-Flanagan Method</span></a>). An <code class="docutils literal"><span class="pre">OptimisationSettings</span></code> object is also to be provided to solve the Sims-Flanagan parametrised optimisation problem.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SimsFlanaganLegSettings</span><span class="p">(</span>
+    <span class="k">const</span> <span class="kt">double</span> <span class="n">maximumThrust</span><span class="p">,</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">specificImpulseFunction</span><span class="p">,</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">numberOfSegments</span><span class="p">,</span>
+    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">centralBody</span><span class="p">,</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">transfer_trajectories</span><span class="o">::</span><span class="n">OptimisationSettings</span> <span class="o">&gt;</span> <span class="n">optimisationSettings</span> <span class="p">)</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="HybridMethodLegSettings">
+<em class="property">class </em><code class="descname">HybridMethodLegSettings</code><a class="headerlink" href="#HybridMethodLegSettings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This class defines the settings to construct a <code class="docutils literal"><span class="pre">HybridMethodLeg</span></code> object (more details about the hybrid method can be found in <a class="reference internal" href="hybridMethod.html#tudatfeatureshybridmethod"><span class="std std-ref">Hybrid Method</span></a>). Among the different inputs of this settings class, an <code class="docutils literal"><span class="pre">OptimisationSettings</span></code> object must be provided to define the way the inherent hybrid method optimisation problem will be tackled.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">HybridMethodLegSettings</span><span class="p">(</span>
+    <span class="k">const</span> <span class="kt">double</span> <span class="n">maximumThrust</span><span class="p">,</span>
+    <span class="k">const</span> <span class="kt">double</span> <span class="n">specificImpulse</span><span class="p">,</span>
+    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">centralBody</span><span class="p">,</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">numerical_integrators</span><span class="o">::</span><span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">integratorSettings</span><span class="p">,</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">transfer_trajectories</span><span class="o">::</span><span class="n">OptimisationSettings</span> <span class="o">&gt;</span> <span class="n">optimisationSettings</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="optimising-a-low-thrust-trajectory">
+<h2>6.1.3. Optimising a low-thrust trajectory<a class="headerlink" href="#optimising-a-low-thrust-trajectory" title="Permalink to this headline">¶</a></h2>
+<p>A pre-defined optimisation problem has been implemented, to allow the user to address a simple trajectory design optimisation problem, with limited coding effort. It tries to identify the best time-of-flight and/or departure date in order to minimize the deltaV required by the trajectory.</p>
+<p>The optimisation problem is defined in the class <code class="docutils literal"><span class="pre">TrajectoryOptimisationProblem</span></code>, which is implemented so that it is compatible with the PAGMO library.</p>
+<dl class="class">
+<dt id="TrajectoryOptimisationProblem">
+<em class="property">class </em><code class="descname">TrajectoryOptimisationProblem</code><a class="headerlink" href="#TrajectoryOptimisationProblem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This is the low-thrust trajectory optimisation class, defined as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">TrajectoryOptimisationProblem</span><span class="p">(</span>
+    <span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span><span class="p">,</span>
+    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">bodyToPropagate</span><span class="p">,</span>
+    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">centralBody</span><span class="p">,</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">departureStateFunction</span><span class="p">,</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">arrivalStateFunction</span><span class="p">,</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">departureTimeBounds</span><span class="p">,</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">timeOfFlightBounds</span><span class="p">,</span>
+    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">transfer_trajectories</span><span class="o">::</span><span class="n">LowThrustLegSettings</span> <span class="o">&gt;&amp;</span> <span class="n">lowThrustLegSettings</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>The input parameters are the following ones:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">bodyMap</span></code></dt>
+<dd>Map of pointers to <code class="docutils literal"><span class="pre">Body</span></code> objects defining the trajectory environment.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">bodyToPropagate</span></code></dt>
+<dd>Name of the spacecraft to be propagated.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">centralBody</span></code></dt>
+<dd>Name of the central body of the trajectory.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">departureStateFunction</span></code></dt>
+<dd>Function returning the state vector at departure, as a function of the departure date.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">arrivalStateFunction</span></code></dt>
+<dd>Function returning the state vector at arrival, as a function of the arrival date (defined as departure date + time-of-flight)</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">departureTimeBounds</span></code></dt>
+<dd><code class="docutils literal"><span class="pre">pair</span></code> object containing the lower and upper bounds for the departure date of the trajectory.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">timeOfFlightBounds</span></code></dt>
+<dd><code class="docutils literal"><span class="pre">pair</span></code> object containing the lower and upper bounds for the time-of-flight of the trajectory.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">LowThrustLegSettings</span></code></dt>
+<dd>Settings for the low-thrust trajectory to be designed.</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>The <code class="docutils literal"><span class="pre">fitness</span></code> function creates the relevant <code class="docutils literal"><span class="pre">LowThrustTrajectoryLeg</span></code> object out of the provided low-thrust leg settings. It then calculates the corresponding trajectory, and returns the associated deltaV.</p>
+<p>The <code class="docutils literal"><span class="pre">get_bounds</span></code> function simply returns the time-of-flight and departure bounds which are provided as inputs of the <code class="docutils literal"><span class="pre">TrajectoryOptimisationProblem</span></code> constructor.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="SimsFlanagan.html" class="btn btn-neutral float-right" title="6.2. Sims-Flanagan Method" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="6. Low-Thrust Trajectory Design Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>

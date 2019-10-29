@@ -173,24 +173,28 @@
             
   <div class="section" id="compile-and-test-tudat-libraries">
 <span id="configuretudatlibraries"></span><h1>3. Compile and Test Tudat Libraries<a class="headerlink" href="#compile-and-test-tudat-libraries" title="Permalink to this headline">¶</a></h1>
-<p>To make use of the Tudat libraries, you need to compile them. Below we will guide you through this process. In case if any issues, open a Github issue explaining your problem, stating your operating system, compiler, and any output of the process you have that may help us to solve the issue.</p>
-<blockquote>
-<div><div class="admonition note">
+<p>To make use of the Tudat libraries, you need to compile them. Below we will guide you through this process. In case you run into trouble while compiling, open a Github issue explaining your problem, stating your operating system, compiler, and any output of the process you have that may help us to solve the issue.</p>
+<div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">When attaching output, always put it into a text file, not a screenshot, making sure to copy all information in the <code class="docutils literal"><span class="pre">Compile</span> <span class="pre">Output</span></code> (if the error occurs during compilation) or the <code class="docutils literal"><span class="pre">Application</span> <span class="pre">Output</span></code> (if the error occurs when running an application).</p>
 </div>
-</div></blockquote>
 <dl class="docutils">
 <dt><strong>Step 1: Open Qt Creator</strong></dt>
 <dd>Launch the Qt Creator application that you installed. If any windows pop-up offering to help you get started, launch tutorials etc., hit Cancel. This should bring you into the editor.</dd>
 <dt><strong>Step 2: Open the project</strong></dt>
-<dd><p class="first">The next step is to open the CMake project of the tudatBundle. Click on <code class="docutils literal"><span class="pre">Open</span> <span class="pre">File</span> <span class="pre">or</span> <span class="pre">Project...</span></code> from the File drop-down menu. Navigate to where you extracted your Tudat Bundle, and navigate to the <code class="docutils literal"><span class="pre">tudatBundle</span></code> folder. Within this directory, you will see a file called <code class="docutils literal"><span class="pre">CMakeLists.txt</span></code>. This is the main project file for any CMake project. Click on <code class="docutils literal"><span class="pre">Open</span></code>, after selecting the CMakeLists.txt file.</p>
-<div class="last admonition note">
+<dd><blockquote class="first">
+<div><p>The next step is to open the CMake project of the tudatBundle. Click on <code class="docutils literal"><span class="pre">Open</span> <span class="pre">File</span> <span class="pre">or</span> <span class="pre">Project...</span></code> from the File drop-down menu. Navigate to where you extracted your Tudat Bundle, and navigate to the <code class="docutils literal"><span class="pre">tudatBundle</span></code> folder. Within this directory, you will see a file called <code class="docutils literal"><span class="pre">CMakeLists.txt</span></code>. This is the main project file for any CMake project. Click on <code class="docutils literal"><span class="pre">Open</span></code>, after selecting the CMakeLists.txt file.</p>
+<div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Please note that you can safely ignore any git-related errors/warnings that Qt Creator throws. Example: Cannot run “git rev-parse –git-dir” in “C:tudatBundle”.</p>
 </div>
+</div></blockquote>
+<div class="last admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If you are a Windows user, please check again whether your Tudat bundle folder is in the root directory of your hard drive (e.g. C:\tudatBundle), as explained in the previous part of the installation guide. If this is not the case, remove the bundle and clone it again, but now right under C:\ (or D:\, E:\, etc.). <strong>Failing to adhere to these instructions can cause errors further down the road and may cost you a lot of effort and time!</strong></p>
+</div>
 </dd>
-<dt><strong>Step 3: Condigure project</strong></dt>
+<dt><strong>Step 3: Configure project</strong></dt>
 <dd><p class="first">You will now get a ‘Configure Project’ screen. Leave all settings to default, and click <code class="docutils literal"><span class="pre">Configure</span> <span class="pre">Project</span></code>.</p>
 <p>The process of configuring the Tudat project and the required libraries will now be started. You will see output generated in the <code class="docutils literal"><span class="pre">General</span> <span class="pre">messages</span></code> box at the bottom of your screen, that will look something similar to:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>-- The C compiler identification is GNU 4.8.4
@@ -312,8 +316,9 @@
 <blockquote>
 <div><ul class="simple">
 <li>If you do not plan on using the estimation (variational equations propagation, observation models, acceleration partials <em>etc.</em>), you can switch <code class="docutils literal"><span class="pre">BUILD_WITH_ESTIMATION_TOOLS</span></code> to <code class="docutils literal"><span class="pre">OFF</span></code>.</li>
-<li>If you plan on using extended precision (<em>e.g.</em> more than 16 significant digits) for either state or time representation, you should switch <code class="docutils literal"><span class="pre">BUILD_EXTENDED_PRECISION_PROPAGATION_TOOLS</span></code> to <code class="docutils literal"><span class="pre">ON</span></code>.</li>
+<li>If you plan on using extended precision (i.e. more than 16 significant digits) for either state or time representation, you should switch <code class="docutils literal"><span class="pre">BUILD_EXTENDED_PRECISION_PROPAGATION_TOOLS</span></code> to <code class="docutils literal"><span class="pre">ON</span></code>.</li>
 <li>If you plan to use the Pagmo toolbox for optimization, set <code class="docutils literal"><span class="pre">USE_PAGMO</span></code> to <code class="docutils literal"><span class="pre">ON</span></code>. Note that this will also trigger the compilation several example applications on how to use Pagmo with Tudat.</li>
+<li>If you want to use Pagmo in combination with the NLopt toolbox for nonlinear optimization, set <code class="docutils literal"><span class="pre">USE_NLOPT</span></code> to <code class="docutils literal"><span class="pre">ON</span></code>, as well as the option <code class="docutils literal"><span class="pre">PAGMO_WITH_NLOPT</span></code>. The latter option enables the Pagmo-NLopt interface which allows for a consistent integration of NLopt within the convenient framework that Pagmo offers.</li>
 </ul>
 </div></blockquote>
 <div class="last admonition note">
@@ -322,18 +327,39 @@
 </div>
 </dd>
 <dt><strong>Step 5: Build the libraries</strong></dt>
-<dd><p class="first">Now all that remains to be done is to build the libraries. Typically, Tudat is compiled using a single core on your system. The compiler can be instructed to use multiple cores for compilation, check the FAQ <a class="reference internal" href="../FAQ/index.html#faqcompilationinstallation"><span class="std std-ref">Compilation and Installation</span></a> for details.</p>
+<dd><p class="first">Now all that remains to be done is to build the libraries. Typically, Tudat is compiled using a single core on your system if you leave the settings on default, but considering that most computers nowadays feature dual, quad, or hexa core processors, <strong>it is highly recommended to switch on multi-core compilation</strong>.</p>
+<p>The latter is achieved as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Open the <code class="docutils literal"><span class="pre">Project</span></code> tab;</li>
+<li>Under the list of project settings, you can see the section <code class="docutils literal"><span class="pre">Build</span> <span class="pre">Steps</span></code>. Click on <code class="docutils literal"><span class="pre">Details</span></code> next to the command line, which opens up a new panel.</li>
+<li>In this panel, put the following: <code class="docutils literal"><span class="pre">-jX</span></code> where you replace X with the number of <em>logical</em> cores (see the tip below) that you want to use for compilation.</li>
+<li>You do not have to save the changes you just made; this is done for you automatically.</li>
+</ul>
+</div></blockquote>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">The number of <em>physical</em> cores usually does not correspond to the number of <em>logical</em> cores that the OS can use. For example, a quad core (4 core) CPU has 4 physical cores, but 8 logical cores. The difference comes from the exact implementation of the processor cores and is quite technical; if you want to know more about this, you can read about it <a class="reference external" href="https://superuser.com/questions/1105654/logical-vs-physical-cpu-performance">here</a>. You can usually find the number of available logical cores in the system info (Control panel on Windows).</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">It is <strong>not recommended</strong> to use all cores for compilation. The exact number you can get away with depends on the amount of RAM installed in your system, and as a rule of thumb, every logical core can use 2.0-2.5 GB of memory. In case you use too many cores, your system might run out of resources and start ‘thrashing’. The latter refers to the situation where the physical RAM is completely exhausted, so that parts of it need to be put aside on your hard disk, which has a much slower speed than the RAM. You will experience this as the computer getting ‘stuck’ and becoming unresponsive.</p>
+</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">When encountering a compilation error during multi-core compilation, try reinintializing the compilation (clicking the hammer again). If the same errors occurs, and you wish to open an issue, rerun with a SINGLE thread, and post the output that this produces. Multi-core compilation output can often be garbled, and difficult to interpret.</p>
 </div>
-<p>To compile all the libraries, simply click on the “hammer” build icon at the bottom-left of your screen (or use the menu <code class="docutils literal"><span class="pre">Build</span></code> at the top and select <code class="docutils literal"><span class="pre">Build</span> <span class="pre">all</span></code>). You will see a <code class="docutils literal"><span class="pre">Compile</span> <span class="pre">Output</span></code> console window pop-up, showing the status of the build process, as the compiler walks through all the project files, and generates the libraries that we need. Note that the compiler may produce some warnings (indicated by a yellow triangle under <code class="docutils literal"><span class="pre">Issues</span></code>), which you can safely ignore. A compiler error (indicated in red under <code class="docutils literal"><span class="pre">Issues</span></code>) means that the compilation cannot be finished succesfully. If this occurs, open an issue on Github, providing details on your system (compiler version, operating system), and the full <code class="docutils literal"><span class="pre">Compile</span> <span class="pre">output</span></code> copied into a text file.</p>
-<p class="last">The entire build process could take anywhere from 15 minutes (Linux/Mac modern workstation; 12 threads) to 3-8 hours (Windows; single core), depending on the specifications of your computer. Have patience! It will all work out in the end. Once the building is complete, you’re done! You have now successfully built Tudat and all required libraries on your computer.</p>
+<p>To compile all the libraries, simply click on the ‘hammer’ build icon in the bottom-left corner of your screen (or use the menu <code class="docutils literal"><span class="pre">Build</span></code> at the top and select <code class="docutils literal"><span class="pre">Build</span> <span class="pre">all</span></code>). You will see a <code class="docutils literal"><span class="pre">Compile</span> <span class="pre">Output</span></code> console window pop-up, showing the status of the build process, as the compiler walks through all the project files, and generates the libraries that we need. Note that the compiler may produce some warnings (indicated by a yellow triangle under <code class="docutils literal"><span class="pre">Issues</span></code>), which you can safely ignore. A compiler error (indicated in red under <code class="docutils literal"><span class="pre">Issues</span></code>) means that the compilation cannot be finished succesfully. If this occurs, open an issue on Github, providing details on your system (compiler version, operating system), and the full <code class="docutils literal"><span class="pre">Compile</span> <span class="pre">output</span></code> copied into a text file.</p>
+<p class="last">The entire build process could take anywhere from 15 minutes (Linux/Mac modern workstation; 12 threads) to 3-8 hours (Windows; single core), depending on the specifications of your computer. Have patience! It will all work out in the end. Once the build is complete, you’re done! You have now successfully built Tudat and all required libraries on your computer.</p>
 </dd>
 <dt><strong>Step 6: Running the unit tests</strong></dt>
 <dd><p class="first">For each part of the code in Tudat, we have written unit tests, which are included in the repository. Before moving on with using Tudat, you should run all the unit tests to ensure that your installation is functioning as it should. To run all unit tests, go to the project tab, and go to the <code class="docutils literal"><span class="pre">Build</span> <span class="pre">Steps</span></code> block. Write “test” in the <code class="docutils literal"><span class="pre">Tool</span> <span class="pre">Arguments</span></code> (may be called <code class="docutils literal"><span class="pre">Additional</span> <span class="pre">Arguments</span></code>) line, as shown below.</p>
 <div class="figure">
 <img alt="../_images/testSettings.png" src="../_images/testSettings.png" />
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <code class="docutils literal"><span class="pre">-jX</span></code> option does not affect testing and can be safely left alone.</p>
 </div>
 <p>Now, go back to your code by clicking on the <code class="docutils literal"><span class="pre">Edit</span></code> tab, and click the <code class="docutils literal"><span class="pre">Compile</span></code> (hammer) button on the lower left. In the <code class="docutils literal"><span class="pre">Compile</span> <span class="pre">Output</span></code> console window at the bottom of your screen, you should see all the unit tests being run, with output as follows:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">15</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span> <span class="n">Running</span> <span class="n">steps</span> <span class="k">for</span> <span class="n">project</span> <span class="n">TudatBundle</span><span class="o">...</span>
@@ -379,30 +405,26 @@
 </pre></div>
 </div>
 <p>Depending on your exact compilation settings, and the speed of your system, running the unit tests may take anywhere from several to 30 minutes. Also, depending on your settings, and version of the code, you will run a different number of unit tests.</p>
-<p>If the output ends with <code class="docutils literal"><span class="pre">100%</span> <span class="pre">tests</span> <span class="pre">passed,</span> <span class="pre">0</span> <span class="pre">tests</span> <span class="pre">failed</span></code>, all is well and you do not need to take any further action. After running the unit tests, make sure to remove the ‘test’ text that you’ve typed in the project tab. If any tests fail the reader is refered to <a class="reference internal" href="troubleshooting/installationErrors.html#debuggingfailedunittests"><span class="std std-ref">Failed unit tests</span></a>.</p>
-<blockquote>
-<div><div class="admonition note">
+<p>If the output ends with <code class="docutils literal"><span class="pre">100%</span> <span class="pre">tests</span> <span class="pre">passed,</span> <span class="pre">0</span> <span class="pre">tests</span> <span class="pre">failed</span></code>, all is well and you do not need to take any further action. After running the unit tests, <strong>make sure to remove the ‘test’ text that you’ve typed in the project tab</strong>. If any tests fail the reader is refered to <a class="reference internal" href="troubleshooting/installationErrors.html#debuggingfailedunittests"><span class="std std-ref">Failed unit tests</span></a>.</p>
+<div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">After running the unit tests, make sure to remove the <code class="docutils literal"><span class="pre">test</span></code> text that you’ve typed in the <code class="docutils literal"><span class="pre">Build</span> <span class="pre">Steps</span></code>, Qt will not compile the code as long as it is there.</p>
+<p class="last">After running the unit tests, make sure to remove the <code class="docutils literal"><span class="pre">test</span></code> text that you’ve typed in the <code class="docutils literal"><span class="pre">Build</span> <span class="pre">Steps</span></code>; Qt will not compile the code as long as it is there.</p>
 </div>
-</div></blockquote>
-<p class="last">So, welcome to Tudat. You are now ready to run one of the many example applications that came bundled with Tudat, and get started on setting up your won application. The applications are explained in detail in the tutorials at Tutorials and Documentation. The next and last (optional) part explains you how to set-up a new application or add existing ones to your Tudat Bundle.</p>
+<p class="last">Welcome to Tudat! You are now ready to run one of the many example applications that came bundled with Tudat, and get started on setting up your won application. The applications are explained in detail in the tutorials at Tutorials and Documentation. The next and last (optional) part explains you how to set-up a new application or add existing ones to your Tudat Bundle.</p>
 </dd>
 </dl>
-<p><strong>Step 7: Run An Application</strong></p>
+<p><strong>Step 7: Run an application</strong></p>
 <blockquote>
 <div><p>Before moving on to using Tudat for the example applications (or your own application), modify the <code class="docutils literal"><span class="pre">Build</span> <span class="pre">Settings</span></code> to build only the current application. Now that the unit tests are built and run, there is no need to recompile everything everytime. Only the portions relevant for the specific application under consideration need to be compiled. See the screenshot below for the option to tick that enforces this behaviour.</p>
-<blockquote>
-<div><div class="admonition note">
+<div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">When (re)running the unit tests, always first recompile the code with the targets set to <code class="docutils literal"><span class="pre">all</span></code>. If there is no <code class="docutils literal"><span class="pre">all</span></code> tick box, uncheck all other boxes, it will automatically revert to <code class="docutils literal"><span class="pre">all</span></code> as default.</p>
 </div>
-</div></blockquote>
 <div class="figure">
 <img alt="../_images/runSettings.png" src="../_images/runSettings.png" />
 </div>
 <p>For your convenience, we have shipped some example applications for you to play around with. The structure of these applications is discussed in detail in the <a class="reference internal" href="../tutorials/applicationWalkthroughs/index.html#walkthroughsindex"><span class="std std-ref">Application Tutorials</span></a>.</p>
-<p>To select a specific application to run, click on the <code class="docutils literal"><span class="pre">Build</span> <span class="pre">and</span> <span class="pre">Run</span> <span class="pre">Settings</span></code> (computer) icon and select your application. For starters, select <code class="docutils literal"><span class="pre">application_SingleSatellitePropagator</span></code>. The exact contents and results of this simulation are show in the <a class="reference internal" href="../tutorials/applicationWalkthroughs/unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> tutorial By clicking the <code class="docutils literal"><span class="pre">Run</span></code> button (play icon in bottom left), the code will be compiled and the selected application will be executed. The output of your application is displayed in the <code class="docutils literal"><span class="pre">Application</span> <span class="pre">Output</span></code> box at the bottom of your screen. In addition, a folder ‘SimulationOutput’ will have been created in your <code class="docutils literal"><span class="pre">/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/</span></code> directory, containing the propagation output.</p>
+<p>To select a specific application to run, click on the <code class="docutils literal"><span class="pre">Build</span> <span class="pre">and</span> <span class="pre">Run</span> <span class="pre">Settings</span></code> (computer) icon and select your application. For starters, select <code class="docutils literal"><span class="pre">application_SingleSatellitePropagator</span></code>. The exact contents and results of this simulation are shown in the <a class="reference internal" href="../tutorials/applicationWalkthroughs/unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> tutorial By clicking the <code class="docutils literal"><span class="pre">Run</span></code> button (play icon in bottom left), the code will be compiled and the selected application will be executed. The output of your application is displayed in the <code class="docutils literal"><span class="pre">Application</span> <span class="pre">Output</span></code> box at the bottom of your screen. In addition, a folder ‘SimulationOutput’ will have been created in your <code class="docutils literal"><span class="pre">/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/</span></code> directory, containing the propagation output.</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Starting</span> <span class="p">...</span><span class="o">/</span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">applications</span><span class="o">/</span><span class="n">application_SingleSatellitePropagator</span><span class="p">...</span>
 <span class="n">Single</span> <span class="n">Earth</span><span class="o">-</span><span class="n">Orbiting</span> <span class="n">Satellite</span> <span class="n">Example</span><span class="p">.</span>
 <span class="n">The</span> <span class="n">initial</span> <span class="n">position</span> <span class="n">vector</span> <span class="n">of</span> <span class="n">Asterix</span> <span class="n">is</span> <span class="p">[</span><span class="n">km</span><span class="p">]</span><span class="o">:</span>

@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Shape-Based Methods &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../../index.html"/>
+        <link rel="up" title="6. Low-Thrust Trajectory Design Module" href="../index.html"/>
+        <link rel="next" title="1. Hodographic shaping" href="hodographicShaping.html"/>
+        <link rel="prev" title="6.3. Hybrid Method" href="../hybridMethod.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> TU Delft Astrodynamic Toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Start Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation/index.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">Tutorials and Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../applicationWalkthroughs/index.html">Application Tutorials</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">Tudat Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../environmentSetup/index.html">1. Environment Set-up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../accelerationSetup/index.html">2. Setting up State Derivative Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../propagationSetup/index.html">3. Simulator Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../estimationSetup/index.html">4. Estimation Set-Up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">6. Low-Thrust Trajectory Design Module</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../lowThrustTrajectory.html">6.1. Low-Thrust Trajectories</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../SimsFlanagan.html">6.2. Sims-Flanagan Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../hybridMethod.html">6.3. Hybrid Method</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Shape-Based Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../mathTools/index.html">7. Basic Mathematics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../otherLibraries/index.html">8. Other Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/index.html">Tudat Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jsonInterface/index.html">JSON Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../matlabInterface/index.html">MATLAB Interface</a></li>
+<li class="toctree-l2"><a class="reference external" href="http://doxygen.tudat.tudelft.nl">Doxygen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../FAQ/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developerGuide/index.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../socis.html">SOCIS 2019</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">TU Delft Astrodynamic Toolbox</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Tutorials and Documentation</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Tudat Libraries</a> &raquo;</li>
+        
+          <li><a href="../index.html">6. Low-Thrust Trajectory Design Module</a> &raquo;</li>
+        
+      <li>Shape-Based Methods</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/tutorials/tudatFeatures/lowThrustTrajectoryDesign/shapeBasedMethods/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="shape-based-methods">
+<span id="tudatfeaturesshapebasedmethodsindex"></span><h1>Shape-Based Methods<a class="headerlink" href="#shape-based-methods" title="Permalink to this headline">¶</a></h1>
+<p>Shape-based methods are used to provide a good preliminary design for a given trajectory, in an efficient way. To do so, they rely on analytical shaping of the trajectory: they assume the trajectory respects a certain shape (which can be fully described analytically), and the parameters defining this shape are then computed to ensure the trajectory satisfies some boundary conditions (states at departure and arrival, time of flight, …). The analytical formulation reduces the computational load significantly, which is a major advantages of those shaping methods over the traditional direct and indirect methods.</p>
+<p>All shape-based methods derive from the class <code class="docutils literal"><span class="pre">ShapeBasedMethodLeg</span></code>, described below.</p>
+<dl class="class">
+<dt id="ShapeBasedMethodLeg">
+<em class="property">class </em><code class="descname">ShapeBasedMethodLeg</code><a class="headerlink" href="#ShapeBasedMethodLeg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This is the base class used to derive the different shaping methods. It itself inherits from the base class LowThrustLeg. Each class inherited from <code class="docutils literal"><span class="pre">ShapeBasedMethodLeg</span></code> contains the following methods:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">getInitialValueInpendentVariable</span></code></dt>
+<dd>Returns the initial value of the independent variable with respect to which the trajectory is calculated. Usually, time is the independent variable but several shaping methods use polar or azimuth angles.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">getFinalValueInpendentVariable</span></code></dt>
+<dd>Returns the final value of the independent variable.</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>Several shape-based methods have been implemented and inherit from this <code class="docutils literal"><span class="pre">ShapeBasedMethodLeg</span></code> base class.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="hodographicShaping.html">1. Hodographic shaping</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hodographicShaping.html#setting-up-a-hodographically-shaped-trajectory">1.1. Setting up a hodographically shaped trajectory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hodographicShaping.html#hodographic-shaping-base-functions">1.2. Hodographic shaping base functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hodographicShaping.html#setting-up-the-hodographic-base-functions">1.3. Setting up the hodographic base functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hodographicShaping.html#optimising-the-hodographically-shaped-trajectory">1.4. Optimising the hodographically shaped trajectory</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sphericalShaping.html">2. Spherical shaping</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sphericalShaping.html#setting-up-a-spherically-shaped-trajectory">2.1. Setting up a spherically shaped trajectory</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="hodographicShaping.html" class="btn btn-neutral float-right" title="1. Hodographic shaping" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../hybridMethod.html" class="btn btn-neutral" title="6.3. Hybrid Method" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Delft University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header .arrow").click(function() {
+            $(this).closest('.toggle').children().not(".header").toggle(400);
+            $(this).toggleClass("open");
+            // $(this).html() == "More" ? $(this).html('Less') : $(this).html('More');
+        });
+        $(".showall").click(function() {
+            $(".toggle > *").show(400);
+            $(".toggle .header .arrow").addClass("open");
+        });
+        $(".hideall").click(function() {
+            $(".toggle > *").hide(400);
+            $(".toggle .header").show(400);
+            $(".toggle .header .arrow").removeClass("open");
+        });
+    });
+</script>
+
+
+</body>
+</html>

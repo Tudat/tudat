@@ -40,7 +40,7 @@
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
         <link rel="up" title="Tutorials and Documentation" href="../index.html"/>
         <link rel="next" title="1. Environment Set-up" href="environmentSetup/index.html"/>
-        <link rel="prev" title="5. Propagation Targeting" href="../applicationWalkthroughs/propTargeting.html"/> 
+        <link rel="prev" title="7. Sims-Flanagan Trajectory Optimisation" href="../applicationWalkthroughs/SimsFlanaganTrajectoryDesign.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -102,8 +102,9 @@
 <li class="toctree-l3"><a class="reference internal" href="propagationSetup/index.html">3. Simulator Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mathTools/index.html">6. Basic Mathematics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="otherLibraries/index.html">7. Other Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lowThrustTrajectoryDesign/index.html">6. Low-Thrust Trajectory Design Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mathTools/index.html">7. Basic Mathematics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="otherLibraries/index.html">8. Other Libraries</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/index.html">Tudat Basics</a></li>
@@ -346,56 +347,210 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="environmentSetup/index.html">1. Environment Set-up</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="environmentSetup/setup.html">1.1. Setting up the Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="environmentSetup/availableSettings.html">1.2. Available Settings for the Environment Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environmentSetup/setup.html">1.1. Setting up the Environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/setup.html#creating-the-environment-from-bodysettings">1.1.1. Creating the environment from&nbsp;<code class="docutils literal"><span class="pre">BodySettings</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/setup.html#manually-creating-the-environment">1.1.2. Manually creating the environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/setup.html#valid-time-range-of-environment">1.1.3. Valid Time-Range of Environment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="environmentSetup/availableSettings.html">1.2. Available Settings for the Environment Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/availableSettings.html#atmosphere-model">1.2.1. Atmosphere model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/availableSettings.html#ephemeris-model">1.2.2. Ephemeris model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/availableSettings.html#gravity-field-model">1.2.3. Gravity field model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/availableSettings.html#rotational-model">1.2.4. Rotational model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/availableSettings.html#body-shape-model">1.2.5. Body shape model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/availableSettings.html#radiation-pressure-interface">1.2.6. Radiation pressure interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/availableSettings.html#aerodynamic-coefficient-interface">1.2.7. Aerodynamic coefficient interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/availableSettings.html#time-variations-of-the-gravity-field">1.2.8. Time-variations of the gravity field</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="environmentSetup/duringPropagation.html">1.3. The Environment During Propagation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="environmentSetup/tabulatedAtmosphere.html">1.4. Tabulated Atmosphere Settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="environmentSetup/aerodynamicCoefficients.html">1.5. Aerodynamic Coefficients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environmentSetup/tabulatedAtmosphere.html">1.4. Tabulated Atmosphere Settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/tabulatedAtmosphere.html#general-tabulated-atmosphere">1.4.1. General Tabulated Atmosphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/tabulatedAtmosphere.html#altitude-dependent-tabulated-atmosphere">1.4.2. Altitude-dependent Tabulated Atmosphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/tabulatedAtmosphere.html#included-atmosphere-tables">1.4.3. Included Atmosphere Tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/tabulatedAtmosphere.html#writing-multi-dimensional-files">1.4.4. Writing Multi-dimensional Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/tabulatedAtmosphere.html#future-additions">1.4.5. Future Additions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="environmentSetup/aerodynamicCoefficients.html">1.5. Aerodynamic Coefficients</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/aerodynamicCoefficients.html#local-incliniation-methods">1.5.1. Local Incliniation Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/aerodynamicCoefficients.html#reading-aerodynamic-coefficients-from-files">1.5.2. Reading aerodynamic coefficients from Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="environmentSetup/aerodynamicCoefficients.html#custom-aerodynamic-coefficient-settings">1.5.3. Custom Aerodynamic Coefficient Settings</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="accelerationSetup/index.html">2. Setting up State Derivative Models</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="accelerationSetup/frameworkAcceleration.html">2.1. Acceleration Model Set-up</a></li>
-<li class="toctree-l2"><a class="reference internal" href="accelerationSetup/rotModel.html">2.2. Torque Model Set-up</a></li>
+<li class="toctree-l2"><a class="reference internal" href="accelerationSetup/frameworkAcceleration.html">2.1. Acceleration Model Set-up</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="accelerationSetup/frameworkAcceleration.html#acceleration-settings">2.1.1. Acceleration settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="accelerationSetup/frameworkAcceleration.html#available-acceleration-models">2.1.2. Available acceleration models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="accelerationSetup/rotModel.html">2.2. Torque Model Set-up</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="accelerationSetup/rotModel.html#available-models">2.2.1. Available Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="accelerationSetup/massModel.html">2.3. Mass Rate Model Set-up</a></li>
-<li class="toctree-l2"><a class="reference internal" href="accelerationSetup/aerodynamicGuidance.html">2.4. Aerodynamic Guidance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="accelerationSetup/thrustModels.html">2.5. Thrust Guidance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="accelerationSetup/aerodynamicGuidance.html">2.4. Aerodynamic Guidance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="accelerationSetup/aerodynamicGuidance.html#vehicle-orientation">2.4.1. Vehicle orientation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="accelerationSetup/aerodynamicGuidance.html#control-surface-deflections">2.4.2. Control surface deflections</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="accelerationSetup/thrustModels.html">2.5. Thrust Guidance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="accelerationSetup/thrustModels.html#thrust-direction">2.5.1. Thrust direction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="accelerationSetup/thrustModels.html#thrust-magnitude">2.5.2. Thrust magnitude</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="propagationSetup/index.html">3. Simulator Set-Up</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="propagationSetup/integratorSettings.html">3.1. Integrator Settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="propagationSetup/propagatorSettings.html">3.2. Propagator Settings: Basics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="propagationSetup/propagatorSettingsDependentVariables.html">3.3. Propagator Settings: Dependent Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="propagationSetup/propagatorSettings.html">3.2. Propagator Settings: Basics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="propagationSetup/propagatorSettings.html#single-arc-propagation">3.2.1. Single-arc Propagation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="propagationSetup/propagatorSettings.html#multi-and-hybrid-arc-propagation">3.2.2. Multi- and Hybrid-arc Propagation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="propagationSetup/propagatorSettingsDependentVariables.html">3.3. Propagator Settings: Dependent Variables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="propagationSetup/propagatorSettingsDependentVariables.html#saving-dependent-variables">3.3.1. Saving Dependent Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="propagationSetup/propagatorSettingsDependentVariables.html#available-dependent-variables">3.3.2. Available Dependent Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="propagationSetup/propagatorSettingsDependentVariables.html#setting-up-dependent-variables">3.3.3. Setting Up Dependent Variables</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="propagationSetup/propagatorSettingsTermination.html">3.4. Propagator Settings: Termination Settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="propagationSetup/propagatorSettingsCoordinates.html">3.5. Propagator Settings: Conventional vs. Propagated Coordinates</a></li>
-<li class="toctree-l2"><a class="reference internal" href="propagationSetup/simulatorCreation.html">3.6. Performing State Propagation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="propagationSetup/variationalSimulatorCreation.html">3.7. Performing Variational Equations Propagation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="propagationSetup/propagatorSettingsCoordinates.html">3.5. Propagator Settings: Conventional vs. Propagated Coordinates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="propagationSetup/propagatorSettingsCoordinates.html#important-to-keep-in-mind">3.5.1. Important To Keep In Mind</a></li>
+<li class="toctree-l3"><a class="reference internal" href="propagationSetup/propagatorSettingsCoordinates.html#propagated-coordinates-in-tudat">3.5.2. Propagated Coordinates in Tudat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="propagationSetup/simulatorCreation.html">3.6. Performing State Propagation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="propagationSetup/simulatorCreation.html#retrieving-the-propagation-history">3.6.1. Retrieving the Propagation History</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="propagationSetup/variationalSimulatorCreation.html">3.7. Performing Variational Equations Propagation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="propagationSetup/variationalSimulatorCreation.html#retrieving-the-variational-equation-history">3.7.1. Retrieving the variational equation history</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="propagationSetup/TimeStateTemplates.html">3.8. Time and State Templates</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="estimationSetup/index.html">4. Estimation Set-Up</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="estimationSetup/linkEndSetup.html">4.1. Setting up the link ends</a></li>
-<li class="toctree-l2"><a class="reference internal" href="estimationSetup/observationModelSetup.html">4.2. Setting up Observation Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="estimationSetup/observationSimulation.html">4.3. Simulating Observations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="estimationSetup/parameterEstimationSettings.html">4.4. Setting Up Estimated Parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="estimationSetup/estimationExecution.html">4.5. Parameter Estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimationSetup/linkEndSetup.html">4.1. Setting up the link ends</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="estimationSetup/linkEndSetup.html#ground-station-creation">4.1.1. Ground Station Creation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimationSetup/linkEndSetup.html#creating-a-set-of-link-ends">4.1.2. Creating a Set of Link Ends</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="estimationSetup/observationModelSetup.html">4.2. Setting up Observation Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="estimationSetup/observationModelSetup.html#observation-types">4.2.1. Observation Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimationSetup/observationModelSetup.html#observation-settings">4.2.2. Observation Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimationSetup/observationModelSetup.html#light-time-corrections">4.2.3. Light-time Corrections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimationSetup/observationModelSetup.html#observation-biases">4.2.4. Observation Biases</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="estimationSetup/observationSimulation.html">4.3. Simulating Observations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="estimationSetup/observationSimulation.html#creating-the-observation-simulator">4.3.1. Creating the Observation Simulator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimationSetup/observationSimulation.html#observation-simulation-settings">4.3.2. Observation Simulation Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimationSetup/observationSimulation.html#observation-viability-setttings">4.3.3. Observation Viability Setttings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimationSetup/observationSimulation.html#observation-noise">4.3.4. Observation Noise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimationSetup/observationSimulation.html#generating-the-observations">4.3.5. Generating the observations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="estimationSetup/parameterEstimationSettings.html">4.4. Setting Up Estimated Parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="estimationSetup/parameterEstimationSettings.html#parameter-architecture">4.4.1. Parameter Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimationSetup/parameterEstimationSettings.html#creating-estimated-parameters">4.4.2. Creating Estimated Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="estimationSetup/estimationExecution.html">4.5. Parameter Estimation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="estimationSetup/estimationExecution.html#creating-the-estimation-object">4.5.1. Creating the estimation object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimationSetup/estimationExecution.html#defining-estimation-input">4.5.2. Defining estimation input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimationSetup/estimationExecution.html#estimation-output">4.5.3. Estimation output</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="astroTools/index.html">5. Basic Astrodynamics Tools</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="astroTools/framestateTransformations.html">5.1. Frame/State Transformations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="astroTools/missionSegments.html">5.2. Mission Segments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="astroTools/trajectoryDesign.html">5.3. Trajectory Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="astroTools/framestateTransformations.html">5.1. Frame/State Transformations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="astroTools/framestateTransformations.html#state-type-conversions">5.1.1. State Type Conversions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="astroTools/framestateTransformations.html#frame-transformations">5.1.2. Frame Transformations</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mathTools/index.html">6. Basic Mathematics Tools</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mathTools/interpolators.html">6.1. Interpolators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mathTools/integrators.html">6.2. Integrators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mathTools/probabilityDistributions.html">6.3. Probability Distributions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mathTools/filters.html">6.4. Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="astroTools/missionSegments.html">5.2. Mission Segments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="astroTools/missionSegments.html#lambert-targeter">5.2.1. Lambert Targeter</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="otherLibraries/index.html">7. Other Libraries</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="otherLibraries/inputOutput.html">7.1. Input/Output</a></li>
-<li class="toctree-l2"><a class="reference internal" href="otherLibraries/spice.html">7.2. External Libraries: SPICE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="astroTools/trajectoryDesign.html">5.3. Trajectory Design</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="astroTools/trajectoryDesign.html#trajectory-models">5.3.1. Trajectory Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="astroTools/trajectoryDesign.html#trajectory-calculation">5.3.2. Trajectory Calculation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lowThrustTrajectoryDesign/index.html">6. Low-Thrust Trajectory Design Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lowThrustTrajectoryDesign/lowThrustTrajectory.html">6.1. Low-Thrust Trajectories</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lowThrustTrajectoryDesign/lowThrustTrajectory.html#low-thrust-trajectory-leg">6.1.1. Low-Thrust trajectory leg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lowThrustTrajectoryDesign/lowThrustTrajectory.html#setting-up-a-low-thrust-trajectory">6.1.2. Setting up a low-thrust trajectory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lowThrustTrajectoryDesign/lowThrustTrajectory.html#optimising-a-low-thrust-trajectory">6.1.3. Optimising a low-thrust trajectory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lowThrustTrajectoryDesign/SimsFlanagan.html">6.2. Sims-Flanagan Method</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lowThrustTrajectoryDesign/SimsFlanagan.html#sims-flanagan-optimisation-problem">6.2.1. Sims-Flanagan optimisation problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lowThrustTrajectoryDesign/SimsFlanagan.html#sims-flanagan-trajectory-model">6.2.2. Sims-Flanagan trajectory model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lowThrustTrajectoryDesign/SimsFlanagan.html#using-shape-based-trajectory-as-an-initial-guess">6.2.3. Using shape-based trajectory as an initial guess</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lowThrustTrajectoryDesign/hybridMethod.html">6.3. Hybrid Method</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lowThrustTrajectoryDesign/hybridMethod.html#hybrid-method-optimisation-problem">6.3.1. Hybrid method optimisation problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lowThrustTrajectoryDesign/hybridMethod.html#hybrid-method-trajectory-model">6.3.2. Hybrid method trajectory model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lowThrustTrajectoryDesign/shapeBasedMethods/index.html">Shape-Based Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lowThrustTrajectoryDesign/shapeBasedMethods/hodographicShaping.html">1. Hodographic shaping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lowThrustTrajectoryDesign/shapeBasedMethods/sphericalShaping.html">2. Spherical shaping</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mathTools/index.html">7. Basic Mathematics Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mathTools/interpolators.html">7.1. Interpolators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mathTools/interpolators.html#one-dimensional-interpolator-creation">7.1.1. One-dimensional Interpolator Creation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mathTools/interpolators.html#multi-dimensional-interpolator-creation">7.1.2. Multi-dimensional Interpolator Creation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mathTools/interpolators.html#interpolation-when-independent-variables-are-out-of-range">7.1.3. Interpolation When Independent Variables are Out-of-range</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mathTools/integrators.html">7.2. Integrators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mathTools/integrators.html#setting-up-a-numerical-integrator">7.2.1. Setting up a Numerical Integrator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mathTools/integrators.html#selecting-a-numerical-integrator">7.2.2. Selecting a Numerical Integrator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mathTools/integrators.html#using-a-numerical-integrator-to-propagate-an-orbit">7.2.3. Using a Numerical Integrator to Propagate an Orbit</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mathTools/probabilityDistributions.html">7.3. Probability Distributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mathTools/probabilityDistributions.html#implementation-of-a-probability-distribution">7.3.1. Implementation of a Probability Distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mathTools/probabilityDistributions.html#creating-probability-distributions">7.3.2. Creating Probability Distributions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mathTools/probabilityDistributions.html#generation-of-random-numbers">7.3.3. Generation of Random Numbers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mathTools/filters.html">7.4. Filters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mathTools/filters.html#linear-kalman-filter">7.4.1. Linear Kalman Filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mathTools/filters.html#extended-kalman-filter">7.4.2. Extended Kalman Filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mathTools/filters.html#unscented-kalman-filter">7.4.3. Unscented Kalman Filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mathTools/filters.html#using-a-kalman-filter-object">7.4.4. Using a Kalman Filter Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mathTools/filters.html#adding-a-control-input">7.4.5. Adding a Control Input</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="otherLibraries/index.html">8. Other Libraries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="otherLibraries/inputOutput.html">8.1. Input/Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="otherLibraries/inputOutput.html#available-methods">8.1.1. Available Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="otherLibraries/inputOutput.html#examples">8.1.2. Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="otherLibraries/spice.html">8.2. External Libraries: SPICE</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="otherLibraries/spice.html#spice-interface">8.2.1. Spice interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="otherLibraries/spice.html#spice-ephemerides">8.2.2. Spice ephemerides</a></li>
+<li class="toctree-l3"><a class="reference internal" href="otherLibraries/spice.html#commonly-encountered-errors">8.2.3. Commonly encountered errors</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -415,7 +570,7 @@
         <a href="environmentSetup/index.html" class="btn btn-neutral float-right" title="1. Environment Set-up" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../applicationWalkthroughs/propTargeting.html" class="btn btn-neutral" title="5. Propagation Targeting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../applicationWalkthroughs/SimsFlanaganTrajectoryDesign.html" class="btn btn-neutral" title="7. Sims-Flanagan Trajectory Optimisation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
