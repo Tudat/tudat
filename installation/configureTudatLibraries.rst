@@ -3,9 +3,9 @@
 Compile and Test Tudat Libraries
 ================================
 
-To make use of the Tudat libraries, you need to compile them. Below we will guide you through this process. In case if any issues, open a Github issue explaining your problem, stating your operating system, compiler, and any output of the process you have that may help us to solve the issue.
+To make use of the Tudat libraries, you need to compile them. Below we will guide you through this process. In case you run into trouble while compiling, open a Github issue explaining your problem, stating your operating system, compiler, and any output of the process you have that may help us to solve the issue.
 
-    .. note:: When attaching output, always put it into a text file, not a screenshot, making sure to copy all information in the ``Compile Output`` (if the error occurs during compilation) or the ``Application Output`` (if the error occurs when running an application).
+.. note:: When attaching output, always put it into a text file, not a screenshot, making sure to copy all information in the ``Compile Output`` (if the error occurs during compilation) or the ``Application Output`` (if the error occurs when running an application).
 
 **Step 1: Open Qt Creator**
     Launch the Qt Creator application that you installed. If any windows pop-up offering to help you get started, launch tutorials etc., hit Cancel. This should bring you into the editor.
@@ -15,7 +15,9 @@ To make use of the Tudat libraries, you need to compile them. Below we will guid
 
     .. note:: Please note that you can safely ignore any git-related errors/warnings that Qt Creator throws. Example: Cannot run "git rev-parse --git-dir" in "C:\tudatBundle".
 
-**Step 3: Condigure project**
+   .. warning:: If you are a Windows user, please check again whether your Tudat bundle folder is in the root directory of your hard drive (e.g. C:\\tudatBundle), as explained in the previous part of the installation guide. If this is not the case, remove the bundle and clone it again, but now right under C:\\ (or D:\\, E:\\, etc.). **Failing to adhere to these instructions can cause errors further down the road and may cost you a lot of effort and time!**
+
+**Step 3: Configure project**
     You will now get a 'Configure Project' screen. Leave all settings to default, and click ``Configure Project``. 
 
     The process of configuring the Tudat project and the required libraries will now be started. You will see output generated in the ``General messages`` box at the bottom of your screen, that will look something similar to::
@@ -137,24 +139,40 @@ To make use of the Tudat libraries, you need to compile them. Below we will guid
    Below, we give some examples of changes that you may wish to make:
 
       * If you do not plan on using the estimation (variational equations propagation, observation models, acceleration partials *etc.*), you can switch ``BUILD_WITH_ESTIMATION_TOOLS`` to ``OFF``.
-      * If you plan on using extended precision (*e.g.* more than 16 significant digits) for either state or time representation, you should switch ``BUILD_EXTENDED_PRECISION_PROPAGATION_TOOLS`` to ``ON``.
+      * If you plan on using extended precision (i.e. more than 16 significant digits) for either state or time representation, you should switch ``BUILD_EXTENDED_PRECISION_PROPAGATION_TOOLS`` to ``ON``.
       * If you plan to use the Pagmo toolbox for optimization, set ``USE_PAGMO`` to ``ON``. Note that this will also trigger the compilation several example applications on how to use Pagmo with Tudat.
+      * If you want to use Pagmo in combination with the NLopt toolbox for nonlinear optimization, set ``USE_NLOPT`` to ``ON``, as well as the option ``PAGMO_WITH_NLOPT``. The latter option enables the Pagmo-NLopt interface which allows for a consistent integration of NLopt within the convenient framework that Pagmo offers.
 
    .. note:: You can modify the CMake settings at any later point in time, but this may require a rebuild of a significant part of the libraries.
 
 **Step 5: Build the libraries**
-    Now all that remains to be done is to build the libraries. Typically, Tudat is compiled using a single core on your system. The compiler can be instructed to use multiple cores for compilation, check the FAQ :ref:`faqCompilationInstallation` for details. 
+    Now all that remains to be done is to build the libraries. Typically, Tudat is compiled using a single core on your system if you leave the settings on default, but considering that most computers nowadays feature dual, quad, or hexa core processors, **it is highly recommended to switch on multi-core compilation**. 
+
+    The latter is achieved as follows:
+
+      * Open the ``Project`` tab;
+      * Under the list of project settings, you can see the section ``Build Steps``. Click on ``Details`` next to the command line, which opens up a new panel.
+      * In this panel, put the following: ``-jX`` where you replace X with the number of *logical* cores (see the tip below) that you want to use for compilation.
+      * You do not have to save the changes you just made; this is done for you automatically.
+
+
+    .. tip:: The number of *physical* cores usually does not correspond to the number of *logical* cores that the OS can use. For example, a quad core (4 core) CPU has 4 physical cores, but 8 logical cores. The difference comes from the exact implementation of the processor cores and is quite technical; if you want to know more about this, you can read about it `here <https://superuser.com/questions/1105654/logical-vs-physical-cpu-performance>`_. You can usually find the number of available logical cores in the system info (Control panel on Windows).
+
+    .. warning:: It is **not recommended** to use all cores for compilation. The exact number you can get away with depends on the amount of RAM installed in your system, and as a rule of thumb, every logical core can use 2.0-2.5 GB of memory. In case you use too many cores, your system might run out of resources and start 'thrashing'. The latter refers to the situation where the physical RAM is completely exhausted, so that parts of it need to be put aside on your hard disk, which has a much slower speed than the RAM. You will experience this as the computer getting 'stuck' and becoming unresponsive.
 
     .. note:: When encountering a compilation error during multi-core compilation, try reinintializing the compilation (clicking the hammer again). If the same errors occurs, and you wish to open an issue, rerun with a SINGLE thread, and post the output that this produces. Multi-core compilation output can often be garbled, and difficult to interpret.
 
-    To compile all the libraries, simply click on the "hammer" build icon at the bottom-left of your screen (or use the menu ``Build`` at the top and select ``Build all``). You will see a ``Compile Output`` console window pop-up, showing the status of the build process, as the compiler walks through all the project files, and generates the libraries that we need. Note that the compiler may produce some warnings (indicated by a yellow triangle under ``Issues``), which you can safely ignore. A compiler error (indicated in red under ``Issues``) means that the compilation cannot be finished succesfully. If this occurs, open an issue on Github, providing details on your system (compiler version, operating system), and the full ``Compile output`` copied into a text file. 
+    To compile all the libraries, simply click on the 'hammer' build icon in the bottom-left corner of your screen (or use the menu ``Build`` at the top and select ``Build all``). You will see a ``Compile Output`` console window pop-up, showing the status of the build process, as the compiler walks through all the project files, and generates the libraries that we need. Note that the compiler may produce some warnings (indicated by a yellow triangle under ``Issues``), which you can safely ignore. A compiler error (indicated in red under ``Issues``) means that the compilation cannot be finished succesfully. If this occurs, open an issue on Github, providing details on your system (compiler version, operating system), and the full ``Compile output`` copied into a text file. 
 
-    The entire build process could take anywhere from 15 minutes (Linux/Mac modern workstation; 12 threads) to 3-8 hours (Windows; single core), depending on the specifications of your computer. Have patience! It will all work out in the end. Once the building is complete, you're done! You have now successfully built Tudat and all required libraries on your computer.
+    The entire build process could take anywhere from 15 minutes (Linux/Mac modern workstation; 12 threads) to 3-8 hours (Windows; single core), depending on the specifications of your computer. Have patience! It will all work out in the end. Once the build is complete, you're done! You have now successfully built Tudat and all required libraries on your computer.
     
 **Step 6: Running the unit tests**
-   For each part of the code in Tudat, we have written unit tests, which are included in the repository. Before moving on with using Tudat, you should run all the unit tests to ensure that your installation is functioning as it should. To run all unit tests, go to the project tab, and go to the ``Build Steps`` block. Write "test" in the ``Tool Arguments`` (may be called ``Additional Arguments``) line, as shown below.
+   For each part of the code in Tudat, we have written unit tests, which are included in the repository. Before moving on with using Tudat, you should run all the unit tests to ensure that your installation is functioning as it should. To run all unit tests, go to the project tab, and go to the ``Build Steps`` block. Write "test" in the ``Tool Arguments`` (may be called ``Additional Arguments``) line, as shown below. 
 
    .. figure:: images/testSettings.png
+
+   .. note:: The ``-jX`` option does not affect testing and can be safely left alone.
+
 
    Now, go back to your code by clicking on the ``Edit`` tab, and click the ``Compile`` (hammer) button on the lower left. In the ``Compile Output`` console window at the bottom of your screen, you should see all the unit tests being run, with output as follows::
 
@@ -201,23 +219,23 @@ To make use of the Tudat libraries, you need to compile them. Below we will guid
 
    Depending on your exact compilation settings, and the speed of your system, running the unit tests may take anywhere from several to 30 minutes. Also, depending on your settings, and version of the code, you will run a different number of unit tests.
 
-   If the output ends with ``100% tests passed, 0 tests failed``, all is well and you do not need to take any further action. After running the unit tests, make sure to remove the 'test' text that you've typed in the project tab. If any tests fail the reader is refered to :ref:`debuggingFailedUnitTests`. 
+   If the output ends with ``100% tests passed, 0 tests failed``, all is well and you do not need to take any further action. After running the unit tests, **make sure to remove the 'test' text that you've typed in the project tab**. If any tests fail the reader is refered to :ref:`debuggingFailedUnitTests`. 
 
-    .. note:: After running the unit tests, make sure to remove the ``test`` text that you've typed in the ``Build Steps``, Qt will not compile the code as long as it is there.
+   .. note:: After running the unit tests, make sure to remove the ``test`` text that you've typed in the ``Build Steps``; Qt will not compile the code as long as it is there.
 
-   So, welcome to Tudat. You are now ready to run one of the many example applications that came bundled with Tudat, and get started on setting up your won application. The applications are explained in detail in the tutorials at Tutorials and Documentation. The next and last (optional) part explains you how to set-up a new application or add existing ones to your Tudat Bundle.
+   Welcome to Tudat! You are now ready to run one of the many example applications that came bundled with Tudat, and get started on setting up your won application. The applications are explained in detail in the tutorials at Tutorials and Documentation. The next and last (optional) part explains you how to set-up a new application or add existing ones to your Tudat Bundle.
 
-**Step 7: Run An Application**
+**Step 7: Run an application**
 
    Before moving on to using Tudat for the example applications (or your own application), modify the ``Build Settings`` to build only the current application. Now that the unit tests are built and run, there is no need to recompile everything everytime. Only the portions relevant for the specific application under consideration need to be compiled. See the screenshot below for the option to tick that enforces this behaviour. 
 
-    .. note:: When (re)running the unit tests, always first recompile the code with the targets set to ``all``. If there is no ``all`` tick box, uncheck all other boxes, it will automatically revert to ``all`` as default.
+   .. note:: When (re)running the unit tests, always first recompile the code with the targets set to ``all``. If there is no ``all`` tick box, uncheck all other boxes, it will automatically revert to ``all`` as default.
 
    .. figure:: images/runSettings.png
 
    For your convenience, we have shipped some example applications for you to play around with. The structure of these applications is discussed in detail in the :ref:`walkthroughsIndex`. 
 
-   To select a specific application to run, click on the ``Build and Run Settings`` (computer) icon and select your application. For starters, select :literal:`application_SingleSatellitePropagator`. The exact contents and results of this simulation are show in the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` tutorial By clicking the ``Run`` button (play icon in bottom left), the code will be compiled and the selected application will be executed. The output of your application is displayed in the ``Application Output`` box at the bottom of your screen. In addition, a folder 'SimulationOutput' will have been created in your :literal:`/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/` directory, containing the propagation output.
+   To select a specific application to run, click on the ``Build and Run Settings`` (computer) icon and select your application. For starters, select :literal:`application_SingleSatellitePropagator`. The exact contents and results of this simulation are shown in the :ref:`walkthroughsUnperturbedEarthOrbitingSatellite` tutorial By clicking the ``Run`` button (play icon in bottom left), the code will be compiled and the selected application will be executed. The output of your application is displayed in the ``Application Output`` box at the bottom of your screen. In addition, a folder 'SimulationOutput' will have been created in your :literal:`/tudatExampleApplications/satellitePropagatorExamples/SatellitePropagatorExamples/` directory, containing the propagation output.
    
    .. code-block:: cpp
 

@@ -11,6 +11,7 @@ The next step in the installation guide is to download the Tudat Bundle. This is
 - json
 - nrlmsise-00
 - pagmo2
+- nlopt
 
 Our recommended approach to download Tudat bundle is by using a terminal. Alternatively, a git-client with a GUI (such as SmartGit) can be used. 
 
@@ -23,7 +24,7 @@ For **Linux or Mac**, the regular terminal can be used directly. For Linux, you 
 
 After opening a terminal, navigate to the directpry where you want to download tudatBundle. You can use the :literal:`ls` command to get a listing of the current directory. To navigate 'up' one level (from :literal:`..../directoryA/directoryB/` to :literal:`..../directoryA/`), use the :literal:`cd ..` command. For the inverse (from :literal:`..../directoryA/` to :literal:`..../directoryA/directoryB/`) use :literal:`cd directoryB`.
 
-  .. warning:: If you are working on a Windows system, it is highly recommended that you place the Tudat Bundle directly in your C:\ (or D:\, E:\, ... ) drive, as failing to do so has been know to cause compilation errors resulting from excesive path length. Mac and Linux users are nor constrained in where the place the bundle.
+.. warning:: If you are working on a Windows system, it is **highly recommended** that you place the Tudat Bundle directly in your C:\\ (or D:\\, E:\\, ... ) drive, as **failing to do so has been known to cause compilation errors** resulting from excessive path length. Mac and Linux users are not constrained in where to place the bundle.
 
 In the directory where tudatBundle is to be downloaded, enter the command::
 
@@ -36,7 +37,7 @@ This will download the basic folder structure of the Tudat bundle. Once the proc
 
 Note that the last command in particular can take some time, depending on the speed of your internet connection.
 
-  .. note:: This whole process is known to be decidedly slower on Windows than on Mac/Linux. 
+.. note:: This whole process is known to be decidedly slower on Windows than on Mac/Linux. 
 
 Create a GitHub Account
 ~~~~~~~~~~~~~~~~~~~~~~~
