@@ -24,9 +24,9 @@ For **Linux or Mac**, the regular terminal can be used directly. For Linux, you 
 
 After opening a terminal, navigate to the directpry where you want to download tudatBundle. You can use the :literal:`ls` command to get a listing of the current directory. To navigate 'up' one level (from :literal:`..../directoryA/directoryB/` to :literal:`..../directoryA/`), use the :literal:`cd ..` command. For the inverse (from :literal:`..../directoryA/` to :literal:`..../directoryA/directoryB/`) use :literal:`cd directoryB`.
 
-.. warning:: If you are working on a Windows system, it is **highly recommended** that you place the Tudat Bundle directly in your C:\\ (or D:\\, E:\\, ... ) drive, as **failing to do so has been known to cause compilation errors** resulting from excessive path length. Mac and Linux users are not constrained in where to place the bundle.
+.. warning:: If you are working on a Windows system, it is **highly recommended** that you place the Tudat Bundle directly in your C:\\ (or D:\\, E:\\, ... ) drive, as **failing to do so has been known to cause compilation errors**, requiring the installation to be redone. Mac and Linux users are not constrained in where to place the bundle.
 
-In the directory where tudatBundle is to be downloaded, enter the command::
+If you are a Windows user **make sure to follow the warning above**. In the directory where tudatBundle is to be downloaded, enter the command::
 
     git clone https://github.com/tudat/tudatBundle.git
 

@@ -7,7 +7,7 @@ The first step is to set up the Integrated Development Environment (IDE) that wi
 
 .. tip::
    
-   As the build system (CMake and GCC) used for Tudat is native in Linux, it is recommended to work with Tudat in a Linux environment, such as Ubuntu. This can speed up CMake parse times up to a factor of 10 and may also speed up the compilation process itself. Moreover, installation of the development environment is more straightforward on Linux as compared to Windows. If you do not want to give up on your Windows installation, you can still benefit from Linux by exploiting a dual boot configuration; instructions on how to do this can be found **here**.
+It is recommended to work with Tudat in a Unix-based environment, such as macOS or Ubuntu. This can speed up CMake parse times up to a factor of 10 and may also speed up the compilation process itself. Moreover, installation of the development environment is more straightforward compared to Windows. Tudat will work and install perfectly fine on Windows, but working with it, and especially developing it, will be less user-friendly. If you do not want to give up on your Windows installation, you can still benefit from Linux by exploiting a dual boot configuration; instructions on how to do this can be found **here**.
 
 .. toctree::
    :maxdepth: 1

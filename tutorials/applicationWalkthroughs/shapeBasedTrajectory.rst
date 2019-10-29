@@ -6,13 +6,13 @@ The example described in this tutorial presents the use of shape-based methods t
 
    tudatBundle/tudatExampleApplications/libraryExamples/satellitePropagatorExamples/shapeBasedTrajectoryDesign.cpp
 
-This tutorial presents how a good preliminary low-thrust trajectory can be obtained using various shape-based methods. The optimisation of the trajectory will not be addressed here, but this tutorial rather focuses on how to design a feasible trajectory for an Earth-Mars transfer which respects boundary conditions at departure and arrival, as well as the specified value of the time-of-flight.
+This tutorial presents how a preliminary low-thrust trajectory can be obtained using various shape-based methods. The optimisation of the trajectory will not be addressed here, but this tutorial rather focuses on how to design a feasible trajectory for an Earth-Mars transfer which respects boundary conditions at departure and arrival, as well as the specified value of the time-of-flight.
 
 Shaping methods use a simplified, unperturbed model to compute shaped trajectories. This tutorial also presents the numerical propagation of the fully perturbed problem, and compares the results with the analytical trajectory derived from the shape-based methods.
 
 Set up the problem
 ~~~~~~~~~~~~~~~~~~
-The boundary conditions at departure and arrival for the targeted trajectory are first defined, and the time-of-flight and expected number of revolutions are also specified. This describes the trajectory design problem that is to be tackled with shape-based methods.
+The boundary conditions of the problem, required Cartesian state and time at departure and arrival (or in this case the time-of-flight), are first defined  for the targeted trajectory. In addition, the expected number of revolutions are specified. This describes the trajectory design problem that is to be tackled with shape-based methods.
 
 .. code-block:: cpp
 
@@ -33,7 +33,7 @@ The boundary conditions at departure and arrival for the targeted trajectory are
     Eigen::Vector6d cartesianStateAtArrival = pointerToArrivalBodyEphemeris->getCartesianState( julianDateAtDeparture + timeOfFlight );
 
 	
-The environment within which the trajectory of the spacecraft is to be calculated is set up in a similar manner as in the previous tutorials: the required celestial bodies are created (from default body settings), along with a vehicle body. The ephemeris of the Sun (central body of the trajectory) is defined so that it stays at the Solar System Barycenter. 
+The environment within which the trajectory of the spacecraft is to be calculated is set up in a similar manner as in the previous tutorials: the required celestial bodies are created (from default body settings), along with a body object representing our vehicle. The ephemeris of the Sun (central body of the trajectory) is defined so that it stays at the Solar System Barycenter. 
 
 
 Set up the accelerations (unperturbed and perturbed cases)
