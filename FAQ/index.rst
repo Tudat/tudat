@@ -48,10 +48,16 @@ Using and Developing Tudat
 	   A: You can always add features to Tudat. If you think that it can also be used by others, you can make a pull request to the tudat repository. The :ref:`devGuideIndex` page contains guides on how to develop extra features for Tudat.
 
 	- *Q: How can I find the definition of a specific class/function/variable in Tudat?*
-	   A: In Qt, you can right click on what you would like to inspect and select the "Follow Symbol Under Cursor" option. 
+	   A: In Qt, you can right click on what you would like to inspect and select the "Follow Symbol Under Cursor" option. This will take you to the file in which that specific symbol is defined or merely *declared*. The latter is the case when you import e.g. a function declaration from a header file, while its definition is located in a .cpp file. To look for the corresponding file automatically, right click the symbol again (in the header), and then click on "Switch Header/Source".
 
 	- *Q: How can I find the usages of a specific class/function/variable in the whole Tudat bundle?*
 	   A: In Qt, you can right click on what you would like to find the usages of and select the "Find Usages" option. 
+
+	- *Q: How can I effectively find something throughout the whole Tudat bundle?*
+	   A: Just like in other applications, you can press :literal:`Ctrl + F` or click on "Edit" -> "Find/Replace" -> "Find/Replace" to open the search toolbar. This works perfect if you need to search in the current document, but if you would like to have the whole bundle as the search scope, click on "Advanced..." in the right corner of the Find/Replace toolbar. Set "Scope" to Files in File System (*not* to Project "Tudatbundle"). This setting allows for a search in *all* files that match the file pattern, not just the source and header files. Make sure that "Directory" is set to your Tudatbundle root directory, e.g. :literal:`/home/[user]/tudatBundle` on a Unix-like system. If you want to know more about regular expressions, which are used as search patterns, click `here <https://en.wikipedia.org/wiki/Regular_expression>`_.
+
+	- *Q: I cannot see all files in the Qt Creator file browser, how can I make them visible?*
+	   A: Qt Creater defaults to the "Projects" view of the built-in file browser. This only shows source and header files, as well as CMake scripts. JSON files are therefore invisible, so to be able to see those, click on the "Projects" button (located above the directory tree), and select "File System". The tree is now showing the root directory tree for your system (e.g. :literal:`/` on Unix-like systems and :literal:`C:\\` on Windows). To only show the Tudat bundle tree, click on "Computer" and select "TudatBundle".
 
 	- *Q: When running a Tudat propagation application, my application stops running but I don't know why. How can I find out?*
 	   A: The dynamics Simulator class has a function: :literal:`getPropagationTerminationReason`, which allows you to retrieve a pointer to the :literal:`PropagationTerminationDetails`. This object has a function called :literal:`getPropagationTerminationReason`, which returns the reason for termination of the propagation.
