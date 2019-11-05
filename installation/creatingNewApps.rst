@@ -12,7 +12,7 @@ Now that you've installed Tudat, you can run all of the example applications and
 Getting an Existing Tudat Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Below, we discuss how to retrieve an application from an existing Github repository, how to retrieve any updates that may come available after you've downloaded it, and how to send the code to your own Github account. As an example, we will use the ``tudatAssignments`` repository. Depending on whether your repository is to be public or private, follow Step 1a, or Step 1b.
+Below, we discuss how to retrieve an application from an existing Github repository, how to retrieve any updates that may come available after you've downloaded it, and how to send the code to your own Github account. As an example, we will use the ``NumericalAstrodynamicsAssignments_2019`` repository. Depending on whether your repository is to be public or private, follow Step 1a, or Step 1b.
 
       .. warning:: IMPORTANT! When setting up a repository for use in the AE4866 or AE4868 courses, it is **required** to set the repository to private (and follow step 1b, not 1a).
 
@@ -22,7 +22,7 @@ Below, we discuss how to retrieve an application from an existing Github reposit
 
    .. figure:: images/forkingExample.png
 
-   After doing so, you will have created your own local version of the ``tudatAssignments`` repository.
+   After doing so, you will have created your own local version of the ``NumericalAstrodynamicsAssignments_2019`` repository.
 
 **Step 1b (for a private repository): Import the code on Github**
 
@@ -30,13 +30,13 @@ Below, we discuss how to retrieve an application from an existing Github reposit
 
    .. figure:: images/newRepository.png
 
-   Type a name for your repository (make sure it is descriptive, so not ``NumAstroAssignment``, but, for instance, ``NumericalAstrodynamics2018Assignment``), and set the repository to **private** (see screenshot below). 
+   Type a name for your repository (make sure it is descriptive, so not ``NumAstroAssignment``, but, for instance, ``NumericalAstrodynamics2019_INSERT_NAME``), and set the repository to **private** (see screenshot below). 
 
    .. figure:: images/newRepositoryPrivate.png
 
    You may, but need not, write a repository description. Click ``Create repository``. 
 
-   On the bottom of page you are redirected to, click ``Import Code``. Fill in the name of the repository from which you want to retrieve code (for instance ``https://github.com/Tudat/tudatAssignments``), and click ``Begin Import``. Once the import is successfully completed, you will receive an e-mail, with a link to your new, private, repository.
+   On the bottom of page you are redirected to, click ``Import Code``. Fill in the name of the repository from which you want to retrieve code (for instance ``https://github.com/Tudat/NumericalAstrodynamicsAssignments_2019``), and click ``Begin Import``. Once the import is successfully completed, you will receive an e-mail, with a link to your new, private, repository.
 
    For a private repository, you can control who can view/modify your repository. To add other users to your repository, go to the ``Settings/Collaborators`` of the repository, and add other users that you want to invite.
 
@@ -46,7 +46,7 @@ Below, we discuss how to retrieve an application from an existing Github reposit
 
    Now, the next step is to create a version of the code on your computer, which is linked to your own Github page. Using the terminal (or the ``tudat_shell.bat`` program when using Windows), navigate to the ``tudatBundle/tudatApplications`` directory. Then, use the following command in the terminal::
 
-      git clone https://github.com/YourName/tudatAssignments.git
+      git clone https://github.com/YourName/NumericalAstrodynamicsAssignments_2019.git
 
    where ``YourName`` should be replaced with your Github account name (so that it corresponds to the URL to where you've forked the repository).
 
@@ -55,14 +55,14 @@ Below, we discuss how to retrieve an application from an existing Github reposit
 
    Open the top-level ``tudatBundle/CMakeLists.txt`` and add the directory to the bottom of the file using the folder where you've just cloned the repository to::
 
-      add_subdirectory( "${PROJECTROOT}/tudatApplications/tudatAssignments")
+      add_subdirectory( "${PROJECTROOT}/tudatApplications/NumericalAstrodynamicsAssignments_2019")
 
    When opening the tudatBundle project in Qt, you'll see your new application(s) added to the project tree, and the corresponding executable added to the list of applications you can run.
 
 Pulling and Pushing Application Code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now, we are ready to discuss two distinct but related aspects of developing your code: retrieving modifications from the original repository, called pulling (here: ``https://github.com/tudat/tudatAssignments.git``) and uploading your modifications to your own repository, called pushing (here: ``https://github.com/YourName/tudatAssignments.git``).
+Now, we are ready to discuss two distinct but related aspects of developing your code: retrieving modifications from the original repository, called pulling (here: ``https://github.com/tudat/NumericalAstrodynamicsAssignments_2019.git``) and uploading your modifications to your own repository, called pushing (here: ``https://github.com/YourName/NumericalAstrodynamicsAssignments_2019.git``).
 
 **Step 1: Setting up your remotes**
 
@@ -72,19 +72,19 @@ Now, we are ready to discuss two distinct but related aspects of developing your
 
    command in your terminal. Running this command will likely result in the output (for now, forget about the distinction between pull and fetch)::
 
-      origin	https://github.com/YourName/tudatAssignments (fetch)
-      origin	https://github.com/YourName/tudatAssignments (push)
+      origin	https://github.com/YourName/NumericalAstrodynamicsAssignments_2019 (fetch)
+      origin	https://github.com/YourName/NumericalAstrodynamicsAssignments_2019 (push)
  
-   Typically, you will have two: an ``origin`` and an ``upstream``, which is also the convention we'll stick to here. The ``origin`` remote is the one from where you've cloned the repository, in this case your own Github version of the ``tudatAssignments`` repository. This remote will have been set automatically when cloning the code. With the way the repository is set up, you are ready to update your own Github version of ``tudatAssignments``. To also retrieve new code from the original tudat repository, we need to add an additional remote, the ``upstream``. To do so, use the following terminal command::
+   Typically, you will have two: an ``origin`` and an ``upstream``, which is also the convention we'll stick to here. The ``origin`` remote is the one from where you've cloned the repository, in this case your own Github version of the ``NumericalAstrodynamicsAssignments_2019`` repository. This remote will have been set automatically when cloning the code. With the way the repository is set up, you are ready to update your own Github version of ``NumericalAstrodynamicsAssignments_2019``. To also retrieve new code from the original tudat repository, we need to add an additional remote, the ``upstream``. To do so, use the following terminal command::
 
-      git remote add upstream https://github.com/tudat/tudatAssignments.git
+      git remote add upstream https://github.com/tudat/NumericalAstrodynamicsAssignments_2019.git
 
    Rerunning the ``git remote -v`` command should now result in::
 
-      origin	https://github.com/YourName/tudatAssignments (fetch)
-      origin	https://github.com/YourName/tudatAssignments (push)
-      upstream	https://github.com/tudat/tudatAssignments (fetch)
-      upstream	https://github.com/tudat/tudatAssignments (push)
+      origin	https://github.com/YourName/NumericalAstrodynamicsAssignments_2019 (fetch)
+      origin	https://github.com/YourName/NumericalAstrodynamicsAssignments_2019 (push)
+      upstream	https://github.com/tudat/NumericalAstrodynamicsAssignments_2019 (fetch)
+      upstream	https://github.com/tudat/NumericalAstrodynamicsAssignments_2019 (push)
 
    If it is the first time you use git on your computer, you are required to identify yourself. This can be done with the following commands::
 
@@ -160,7 +160,7 @@ Now, we are ready to discuss two distinct but related aspects of developing your
 Updating Your Local Repository from Github
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-After following the above guide, you'll have created a git repository on your computer, based on some remote from Github. Typically, commits are regularly done to Github repositories, and it may happen that you want to update your local code with the modifications of the remote. For this example, we'll assume that there has been some modification of the ``upstream`` remote (i.e., at ``https://github.com/tudat/tudatAssignments``), and that you want to update your local version of the code (both on your computer, and on your own Github page). 
+After following the above guide, you'll have created a git repository on your computer, based on some remote from Github. Typically, commits are regularly done to Github repositories, and it may happen that you want to update your local code with the modifications of the remote. For this example, we'll assume that there has been some modification of the ``upstream`` remote (i.e., at ``https://github.com/tudat/NumericalAstrodynamicsAssignments_2019``), and that you want to update your local version of the code (both on your computer, and on your own Github page). 
 
 **Step 1: Committing any local changes**
 
