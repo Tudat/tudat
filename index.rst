@@ -18,12 +18,13 @@ A detailed list containing the features and applications of Tudat is given here:
 
 - Choices of various, fixed and variable step-size, integrators, including: Runge-Kutta 4, Runge-Kutta variable step-size (various orders), Bulirsch-Stoer, and Adams-Bashfort-Moulton. 
 - Propagation of the translational state, rotational state, mass, or any user defined state derivative function. With various options for the terminal conditions and dependent variables that are derived from the state.
-- Propagation of not only the state, but also the variational equations assosciated with the dynamics.
+- Propagation of not only the state, but also the variational equations assosciated with the dynamics, over a single arc, multiple arcs, or a combination.
 - Options to include environments of solar-system bodies in the simulation, e.g. gravity fields, atmosphere, orbits and rotations of various planets, and a radiation environment (for the calculation of radiation pressure).
 - Options to include acceleration models, e.g. point mass gravity, spherical harmonics gravity, aerodynamics, radiation pressure, and thrust.
 - Building of a custom made, or pre-defined, aerodynamic guidance model and/or thrust guidance model. 
 - Defining a vehicle to be used in the simulation, for which the mass, aerodynamic coefficients, reference area, orientation, and various other parameters can be defined by the user. 
-- Interfaces with JSON and MATLAB.
+- Preliminary mission design functionality, including Lambert targeters, patched conic multiple-gravity assist, shape-based low-thrust models, and more.
+- Interface to the orbit simulation functionality through JSON files
 - Extensive documentation and tutorials found on this website.
 
 Tudat has also been used extensively in research projects, a few of them are listed below:
