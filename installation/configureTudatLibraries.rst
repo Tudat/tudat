@@ -131,6 +131,10 @@ To make use of the Tudat libraries, you need to compile them. Below we will guid
 
     In case an **error occurs** during this portion of the installation, copy the full contents of the ``General Messages`` tab from Qt (bottom of screen) into a text file and post this with your Github issue.
 
+    Before moving on to the next step, check whether your 'build type' is set to ``Default`` or ``Release`` (see red highlight in screenshot below, taken from bottom right of Qt creator). Setting it to ``Debug`` is possible, but will lead to substantially longer runtime of your code
+
+   .. figure:: images/buildType.png
+
 **Step 4: Updating the Settings (optional)**
    Before building the libraries, you can modify some of the CMake settings to suit your needs. If you are not sure what your needs are (yet), leave all settings as they are, and proceed to the following step. If you are installing Tudat for the AE4868 course, do not modify the settings. To change the CMake settings, go to Projects->Build->CMake, see screenshot below (note that it may look slightly different, depending on your Qt version/operating system):
 
