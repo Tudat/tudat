@@ -2,21 +2,16 @@
 #
 #    tudat_add_test
 #
-#    This function builds a static library from a module description.
+#    This function facilitates defining a standardized tudat unit test
 #
 #    Usage:
 #        tudat_add_test(
-#            MODULE <string>
-#            MAIN <string>
-#            [ STACK_MAIN <string> ]
-#            [ STACK_MAX <string> ]
+#            TARGET <target_name>
+#            [ SOURCES <list> ]
+#            [ LINK_LIBRARIES <list> ]
 #            [ COMPILE_FLAGS <list> ]
 #            [ INCLUDES <list> ]
 #            [ DEPENDS <string> ]
-#            [ SOURCES <list> ]
-#            [ MODULE_CONFIG <list> ]
-#            [ EXTERNAL ]
-#            [ DYNAMIC ]
 #            )
 #
 #    Input:

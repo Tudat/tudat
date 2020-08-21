@@ -146,6 +146,7 @@ if(USE_CSPICE)
   tudat_add_test(
     TARGET test_GravityFieldVariations
     SOURCES "${GRAV_TEST_DIR}/unitTestGravityFieldVariations.cpp"
+    DEPENDS ${SPICE_LIBRARIES}
     LINK_LIBRARIES tudat_gravitation
                    tudat_interpolators
                    tudat_basic_mathematics
