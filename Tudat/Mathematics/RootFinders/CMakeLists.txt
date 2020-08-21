@@ -9,7 +9,7 @@
  #
 
 # Add header files.
-set(ROOTFINDERS_HEADERS 
+set(ROOTFINDERS_HEADERS
   "${SRCROOT}${MATHEMATICSDIR}/RootFinders/halleyRootFinder.h"
   "${SRCROOT}${MATHEMATICSDIR}/RootFinders/newtonRaphson.h"
   "${SRCROOT}${MATHEMATICSDIR}/RootFinders/rootFinder.h"
@@ -45,6 +45,7 @@ setup_tudat_library_target(tudat_root_finders "${SRCROOT}${MATHEMATICSDIR}/RootF
 set_target_properties(tudat_root_finders PROPERTIES LINKER_LANGUAGE CXX)
 
 # Add unit tests.
-add_executable(test_RootFinders ${ROOTFINDERS_TESTS})
-setup_custom_test_program(test_RootFinders "${SRCROOT}${MATHEMATICSDIR}/RootFinders")
-target_link_libraries(test_RootFinders tudat_root_finders ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_RootFinders
+  SOURCES  ${ROOTFINDERS_TESTS}
+  LINK_LIBRARIES tudat_root_finders ${Boost_LIBRARIES})

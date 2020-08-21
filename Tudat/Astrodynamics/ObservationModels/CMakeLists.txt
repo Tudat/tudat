@@ -53,49 +53,68 @@ set(OBSERVATION_MODELS_HEADERS
 add_library(tudat_observation_models STATIC ${OBSERVATION_MODELS_SOURCES} ${OBSERVATION_MODELS_HEADERS})
 setup_tudat_library_target(tudat_observation_models "${SRCROOT}${OBSERVATIONMODELSDIR}")
 
+# Add unit tests.
+set(OBSMDL_TEST_DIR "${SRCROOT}${OBSERVATIONMODELSDIR}/UnitTests")
 if(USE_CSPICE)
 
-    add_executable(test_LightTime "${SRCROOT}${OBSERVATIONMODELSDIR}/UnitTests/unitTestLightTimeSolution.cpp")
-    setup_custom_test_program(test_LightTime "${SRCROOT}${OBSERVATIONMODELSDIR}")
-    target_link_libraries(test_LightTime tudat_observation_models tudat_ephemerides tudat_basic_astrodynamics tudat_spice_interface ${SPICE_LIBRARIES} ${Boost_LIBRARIES})
+  tudat_add_test(
+    TARGET test_LightTime
+    SOURCES "${OBSMDL_TEST_DIR}/unitTestLightTimeSolution.cpp"
+    LINK_LIBRARIES tudat_observation_models
+                   tudat_ephemerides
+                   tudat_basic_astrodynamics
+                   tudat_spice_interface
+                   ${SPICE_LIBRARIES}
+                   ${Boost_LIBRARIES})
 
-    add_executable(test_AngularPositionModel "${SRCROOT}${OBSERVATIONMODELSDIR}/UnitTests/unitTestAngularPositionModel.cpp")
-    setup_custom_test_program(test_AngularPositionModel "${SRCROOT}${OBSERVATIONMODELSDIR}")
-    target_link_libraries(test_AngularPositionModel ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+  tudat_add_test(
+    TARGET test_AngularPositionModel
+    SOURCES "${OBSMDL_TEST_DIR}/unitTestAngularPositionModel.cpp"
+    LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
-    add_executable(test_OneWayRangeModel "${SRCROOT}${OBSERVATIONMODELSDIR}/UnitTests/unitTestOneWayRangeObservationModel.cpp")
-    setup_custom_test_program(test_OneWayRangeModel "${SRCROOT}${OBSERVATIONMODELSDIR}")
-    target_link_libraries(test_OneWayRangeModel ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+  tudat_add_test(
+    TARGET test_OneWayRangeModel
+    SOURCES "${OBSMDL_TEST_DIR}/unitTestOneWayRangeObservationModel.cpp"
+    LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
-    add_executable(test_OneWayDifferencedRangeModel "${SRCROOT}${OBSERVATIONMODELSDIR}/UnitTests/unitTestOneWayDifferencedRangeModel.cpp")
-    setup_custom_test_program(test_OneWayDifferencedRangeModel "${SRCROOT}${OBSERVATIONMODELSDIR}")
-    target_link_libraries(test_OneWayDifferencedRangeModel ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+  tudat_add_test(
+    TARGET test_OneWayDifferencedRangeModel
+    SOURCES "${OBSMDL_TEST_DIR}/unitTestOneWayDifferencedRangeModel.cpp"
+    LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
-    add_executable(test_DopplerModels "${SRCROOT}${OBSERVATIONMODELSDIR}/UnitTests/unitTestDopplerModels.cpp")
-    setup_custom_test_program(test_DopplerModels "${SRCROOT}${OBSERVATIONMODELSDIR}")
-    target_link_libraries(test_DopplerModels ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+  tudat_add_test(
+    TARGET test_DopplerModels
+    SOURCES "${OBSMDL_TEST_DIR}/unitTestDopplerModels.cpp"
+    LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
-    add_executable(test_PositionObservationModel "${SRCROOT}${OBSERVATIONMODELSDIR}/UnitTests/unitTestPositionObservationModel.cpp")
-    setup_custom_test_program(test_PositionObservationModel "${SRCROOT}${OBSERVATIONMODELSDIR}")
-    target_link_libraries(test_PositionObservationModel ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+  tudat_add_test(
+    TARGET test_PositionObservationModel
+    SOURCES "${OBSMDL_TEST_DIR}/unitTestPositionObservationModel.cpp"
+    LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
-    add_executable(test_EulerAngleObservationModel "${SRCROOT}${OBSERVATIONMODELSDIR}/UnitTests/unitTestEulerAngleObservationModel.cpp")
-    setup_custom_test_program(test_EulerAngleObservationModel "${SRCROOT}${OBSERVATIONMODELSDIR}")
-    target_link_libraries(test_EulerAngleObservationModel ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+  tudat_add_test(
+    TARGET test_EulerAngleObservationModel
+    SOURCES "${OBSMDL_TEST_DIR}/unitTestEulerAngleObservationModel.cpp"
+    LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
-    add_executable(test_VelocityObservationModel "${SRCROOT}${OBSERVATIONMODELSDIR}/UnitTests/unitTestVelocityObservationModel.cpp")
-    setup_custom_test_program(test_VelocityObservationModel "${SRCROOT}${OBSERVATIONMODELSDIR}")
-    target_link_libraries(test_VelocityObservationModel ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+  tudat_add_test(
+    TARGET test_VelocityObservationModel
+    SOURCES "${OBSMDL_TEST_DIR}/unitTestVelocityObservationModel.cpp"
+    LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
-    add_executable(test_ObservationNoiseSimulation "${SRCROOT}${OBSERVATIONMODELSDIR}/UnitTests/unitTestSimulatedObservationNoise.cpp")
-    setup_custom_test_program(test_ObservationNoiseSimulation "${SRCROOT}${OBSERVATIONMODELSDIR}")
-    target_link_libraries(test_ObservationNoiseSimulation ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+  tudat_add_test(
+    TARGET test_ObservationNoiseSimulation
+    SOURCES "${OBSMDL_TEST_DIR}/unitTestSimulatedObservationNoise.cpp"
+    LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
-    add_executable(test_NWayRangeObservationModel "${SRCROOT}${OBSERVATIONMODELSDIR}/UnitTests/unitTestNWayRangeObservationModel.cpp")
-    setup_custom_test_program(test_NWayRangeObservationModel "${SRCROOT}${OBSERVATIONMODELSDIR}")
-    target_link_libraries(test_NWayRangeObservationModel ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+  tudat_add_test(
+    TARGET test_NWayRangeObservationModel
+    SOURCES "${OBSMDL_TEST_DIR}/unitTestNWayRangeObservationModel.cpp"
+    LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
-    add_executable(test_ObservationViabilityCalculators "${SRCROOT}${OBSERVATIONMODELSDIR}/UnitTests/unitTestObservationViabilityCalculators.cpp")
-    setup_custom_test_program(test_ObservationViabilityCalculators "${SRCROOT}${OBSERVATIONMODELSDIR}")
-    target_link_libraries(test_ObservationViabilityCalculators ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+  tudat_add_test(
+    TARGET test_ObservationViabilityCalculators
+    SOURCES "${OBSMDL_TEST_DIR}/unitTestObservationViabilityCalculators.cpp"
+    LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+
 endif( )

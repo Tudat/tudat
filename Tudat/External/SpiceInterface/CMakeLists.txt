@@ -27,6 +27,14 @@ add_library(tudat_spice_interface STATIC ${SPICEINTERFACE_SOURCES} ${SPICEINTERF
 setup_tudat_library_target(tudat_spice_interface "${SRCROOT}${SPICEINTERFACEDIR}")
 
 # Add unit tests.
-add_executable(test_SpiceInterface "${SRCROOT}${EXTERNALDIR}/SpiceInterface/UnitTests/unitTestSpiceInterface.cpp")
-setup_custom_test_program(test_SpiceInterface "${SRCROOT}${EXTERNALDIR}/SpiceInterface")
-target_link_libraries(test_SpiceInterface tudat_ephemerides tudat_basic_mathematics tudat_spice_interface tudat_basic_astrodynamics ${SPICE_LIBRARIES} ${Boost_LIBRARIES})
+set(SPICEIF_TEST_DIR "${SRCROOT}${EXTERNALDIR}/SpiceInterface/UnitTests")
+
+tudat_add_test(
+  TARGET test_SpiceInterface
+  SOURCES "${SPICEIF_TEST_DIR}/unitTestSpiceInterface.cpp"
+  LINK_LIBRARIES tudat_ephemerides
+                 tudat_basic_mathematics
+                 tudat_spice_interface
+                 tudat_basic_astrodynamics
+                 ${SPICE_LIBRARIES}
+                 ${Boost_LIBRARIES})

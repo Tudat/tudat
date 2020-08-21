@@ -22,7 +22,7 @@ set(GEOMETRICSHAPES_SOURCES
 )
 
 # Add header files.
-set(GEOMETRICSHAPES_HEADERS 
+set(GEOMETRICSHAPES_HEADERS
   "${SRCROOT}${MATHEMATICSDIR}/GeometricShapes/capsule.h"
   "${SRCROOT}${MATHEMATICSDIR}/GeometricShapes/compositeSurfaceGeometry.h"
   "${SRCROOT}${MATHEMATICSDIR}/GeometricShapes/conicalFrustum.h"
@@ -40,6 +40,7 @@ add_library(tudat_geometric_shapes STATIC ${GEOMETRICSHAPES_SOURCES})
 setup_tudat_library_target(tudat_geometric_shapes "${SRCROOT}${MATHEMATICSDIR}/GeometricShapes")
 
 # Add unit tests.
-add_executable(test_LawgsSurfaceGeometry "${SRCROOT}${MATHEMATICSDIR}/GeometricShapes/UnitTests/unitTestLawgsSurfaceGeometry.cpp")
-setup_custom_test_program(test_LawgsSurfaceGeometry "${SRCROOT}${MATHEMATICSDIR}/GeometricShapes")
-target_link_libraries(test_LawgsSurfaceGeometry tudat_geometric_shapes tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_LawgsSurfaceGeometry
+  SOURCES "${SRCROOT}${MATHEMATICSDIR}/GeometricShapes/UnitTests/unitTestLawgsSurfaceGeometry.cpp"
+  LINK_LIBRARIES tudat_geometric_shapes tudat_basic_mathematics ${Boost_LIBRARIES})

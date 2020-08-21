@@ -30,6 +30,8 @@ set(PROPULSION_HEADERS
 add_library(tudat_propulsion STATIC ${PROPULSION_SOURCES} ${PROPULSION_HEADERS})
 setup_tudat_library_target(tudat_propulsion "${SRCROOT}${PROPULSIONDIR}")
 
-add_executable(test_ThrustAcceleration "${SRCROOT}${PROPULSIONDIR}/UnitTests/unitTestThrustAcceleration.cpp")
-setup_custom_test_program(test_ThrustAcceleration "${SRCROOT}${PROPULSIONDIR}")
-target_link_libraries(test_ThrustAcceleration ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+# Add unit tests.
+tudat_add_test(
+  TARGET test_ThrustAcceleration
+  SOURCES "${SRCROOT}${PROPULSIONDIR}/UnitTests/unitTestThrustAcceleration.cpp"
+  LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})

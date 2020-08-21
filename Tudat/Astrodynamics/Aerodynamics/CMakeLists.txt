@@ -58,59 +58,86 @@ if(USE_NRLMSISE00)
     "${SRCROOT}${AERODYNAMICSDIR}/nrlmsise00InputFunctions.h")
 endif( )
 
-# Add static libraries.
+# Add static libraries
 add_library(tudat_aerodynamics STATIC ${AERODYNAMICS_SOURCES} ${AERODYNAMICS_HEADERS})
 setup_tudat_library_target(tudat_aerodynamics "${SRCROOT}{AERODYNAMICSDIR}")
 
-# Add unit tests.
-add_executable(test_AerodynamicMomentAndAerodynamicForce "${SRCROOT}${AERODYNAMICSDIR}/UnitTests/unitTestAerodynamicMomentAndAerodynamicForce.cpp")
-setup_custom_test_program(test_AerodynamicMomentAndAerodynamicForce "${SRCROOT}${AERODYNAMICSDIR}")
-target_link_libraries(test_AerodynamicMomentAndAerodynamicForce ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+# Add unit tests
+set(AERO_TEST_DIR "${SRCROOT}${AERODYNAMICSDIR}/UnitTests")
 
-add_executable(test_AerodynamicsNamespace "${SRCROOT}${AERODYNAMICSDIR}/UnitTests/unitTestAerodynamicsNamespace.cpp")
-setup_custom_test_program(test_AerodynamicsNamespace "${SRCROOT}${AERODYNAMICSDIR}")
-target_link_libraries(test_AerodynamicsNamespace tudat_aerodynamics tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_AerodynamicMomentAndAerodynamicForce
+  SOURCES "${AERO_TEST_DIR}/unitTestAerodynamicMomentAndAerodynamicForce.cpp"
+  LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
 
-add_executable(test_AerodynamicCoefficientGenerator "${SRCROOT}${AERODYNAMICSDIR}/UnitTests/unitTestCoefficientGenerator.cpp")
-setup_custom_test_program(test_AerodynamicCoefficientGenerator "${SRCROOT}${AERODYNAMICSDIR}")
-target_link_libraries(test_AerodynamicCoefficientGenerator tudat_aerodynamics tudat_geometric_shapes tudat_interpolators tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_AerodynamicsNamespace
+  SOURCES "${AERO_TEST_DIR}/unitTestAerodynamicsNamespace.cpp"
+  LINK_LIBRARIES tudat_aerodynamics tudat_basic_mathematics ${Boost_LIBRARIES})
 
-add_executable(test_ExponentialAtmosphere "${SRCROOT}${AERODYNAMICSDIR}/UnitTests/unitTestExponentialAtmosphere.cpp")
-setup_custom_test_program(test_ExponentialAtmosphere "${SRCROOT}${AERODYNAMICSDIR}")
-target_link_libraries(test_ExponentialAtmosphere tudat_aerodynamics tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_AerodynamicCoefficientGenerator
+  SOURCES "${AERO_TEST_DIR}/unitTestCoefficientGenerator.cpp"
+  LINK_LIBRARIES tudat_aerodynamics tudat_geometric_shapes tudat_interpolators tudat_basic_mathematics ${Boost_LIBRARIES})
 
-add_executable(test_CustomConstantTemperatureAtmosphere "${SRCROOT}${AERODYNAMICSDIR}/UnitTests/unitTestCustomConstantTemperatureAtmosphere.cpp")
-setup_custom_test_program(test_CustomConstantTemperatureAtmosphere "${SRCROOT}${AERODYNAMICSDIR}")
-target_link_libraries(test_CustomConstantTemperatureAtmosphere tudat_aerodynamics tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_ExponentialAtmosphere
+  SOURCES "${AERO_TEST_DIR}/unitTestExponentialAtmosphere.cpp"
+  LINK_LIBRARIES tudat_aerodynamics tudat_basic_mathematics ${Boost_LIBRARIES})
 
-add_executable(test_TabulatedAtmosphere "${SRCROOT}${AERODYNAMICSDIR}/UnitTests/unitTestTabulatedAtmosphere.cpp")
-setup_custom_test_program(test_TabulatedAtmosphere "${SRCROOT}${AERODYNAMICSDIR}")
-target_link_libraries(test_TabulatedAtmosphere tudat_aerodynamics tudat_input_output tudat_interpolators
-    tudat_basic_mathematics tudat_basic_astrodynamics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_CustomConstantTemperatureAtmosphere
+  SOURCES "${AERO_TEST_DIR}/unitTestCustomConstantTemperatureAtmosphere.cpp"
+  LINK_LIBRARIES tudat_aerodynamics tudat_basic_mathematics ${Boost_LIBRARIES})
 
-add_executable(test_TabulatedAerodynamicCoefficients "${SRCROOT}${AERODYNAMICSDIR}/UnitTests/unitTestTabulatedAerodynamicCoefficients.cpp")
-setup_custom_test_program(test_TabulatedAerodynamicCoefficients "${SRCROOT}${AERODYNAMICSDIR}")
-target_link_libraries(test_TabulatedAerodynamicCoefficients ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_TabulatedAtmosphere
+  SOURCES "${AERO_TEST_DIR}/unitTestTabulatedAtmosphere.cpp"
+  LINK_LIBRARIES tudat_aerodynamics
+                 tudat_input_output
+                 tudat_interpolators
+                 tudat_basic_mathematics
+                 tudat_basic_astrodynamics
+                 ${Boost_LIBRARIES})
 
-add_executable(test_HeatTransfer "${SRCROOT}${AERODYNAMICSDIR}/UnitTests/unitTestHeatTransfer.cpp")
-setup_custom_test_program(test_HeatTransfer "${SRCROOT}${AERODYNAMICSDIR}")
-target_link_libraries(test_HeatTransfer tudat_aerodynamics tudat_root_finders tudat_basic_mathematics
-    tudat_basic_astrodynamics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_TabulatedAerodynamicCoefficients
+  SOURCES "${AERO_TEST_DIR}/unitTestTabulatedAerodynamicCoefficients.cpp"
+  LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
 
-add_executable(test_ControlSurfaceIncrements "${SRCROOT}${AERODYNAMICSDIR}/UnitTests/unitTestControlSurfaceIncrements.cpp")
-setup_custom_test_program(test_ControlSurfaceIncrements "${SRCROOT}${AERODYNAMICSDIR}")
-target_link_libraries(test_ControlSurfaceIncrements ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_HeatTransfer
+  SOURCES "${AERO_TEST_DIR}/unitTestHeatTransfer.cpp"
+  LINK_LIBRARIES tudat_aerodynamics
+                 tudat_root_finders
+                 tudat_basic_mathematics
+                 tudat_basic_astrodynamics
+                 ${Boost_LIBRARIES})
 
-add_executable(test_AerodynamicCoefficientsFromFile "${SRCROOT}${AERODYNAMICSDIR}/UnitTests/unitTestAerodynamicCoefficientsFromFile.cpp")
-setup_custom_test_program(test_AerodynamicCoefficientsFromFile "${SRCROOT}${AERODYNAMICSDIR}")
-target_link_libraries(test_AerodynamicCoefficientsFromFile ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_ControlSurfaceIncrements
+  SOURCES "${AERO_TEST_DIR}/unitTestControlSurfaceIncrements.cpp"
+  LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
 
-add_executable(test_WindModel "${SRCROOT}${AERODYNAMICSDIR}/UnitTests/unitTestWindModel.cpp")
-setup_custom_test_program(test_WindModel "${SRCROOT}${AERODYNAMICSDIR}")
-target_link_libraries(test_WindModel ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_AerodynamicCoefficientsFromFile
+  SOURCES "${AERO_TEST_DIR}/unitTestAerodynamicCoefficientsFromFile.cpp"
+  LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
+tudat_add_test(
+  TARGET test_WindModel
+  SOURCES "${AERO_TEST_DIR}/unitTestWindModel.cpp"
+  LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
 
 if(USE_NRLMSISE00)
-    add_executable(test_NRLMSISE00Atmosphere "${SRCROOT}${AERODYNAMICSDIR}/UnitTests/unitTestNRLMSISE00Atmosphere.cpp")
-    setup_custom_test_program(test_NRLMSISE00Atmosphere "${SRCROOT}${AERODYNAMICSDIR}")
-    target_link_libraries(test_NRLMSISE00Atmosphere tudat_aerodynamics tudat_interpolators tudat_basic_mathematics nrlmsise00 tudat_input_output tudat_basic_astrodynamics ${Boost_LIBRARIES})
+    tudat_add_test(
+      TARGET test_NRLMSISE00Atmosphere
+      SOURCES "${AERO_TEST_DIR}/unitTestNRLMSISE00Atmosphere.cpp"
+      LINK_LIBRARIES tudat_aerodynamics
+                     tudat_interpolators
+                     tudat_basic_mathematics
+                     nrlmsise00
+                     tudat_input_output
+                     tudat_basic_astrodynamics
+                     ${Boost_LIBRARIES})
 endif( )

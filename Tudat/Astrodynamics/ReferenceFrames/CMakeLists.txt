@@ -16,7 +16,7 @@ set(REFERENCEFRAMES_SOURCES
 )
 
 # Add header files.
-set(REFERENCEFRAMES_HEADERS 
+set(REFERENCEFRAMES_HEADERS
   "${SRCROOT}${REFERENCEFRAMESDIR}/referenceFrameTransformations.h"
   "${SRCROOT}${REFERENCEFRAMESDIR}/apparentAccelerationModel.h"
   "${SRCROOT}${REFERENCEFRAMESDIR}/aerodynamicAngleCalculator.h"
@@ -28,15 +28,34 @@ add_library(tudat_reference_frames STATIC ${REFERENCEFRAMES_SOURCES} ${REFERENCE
 setup_tudat_library_target(tudat_reference_frames "${SRCROOT}${REFERENCEFRAMESDIR}")
 
 # Add unit tests.
-add_executable(test_ReferenceFrameTransformations "${SRCROOT}${REFERENCEFRAMESDIR}/UnitTests/unitTestReferenceFrameTransformations.cpp")
-setup_custom_test_program(test_ReferenceFrameTransformations "${SRCROOT}${REFERENCEFRAMESDIR}")
-target_link_libraries(test_ReferenceFrameTransformations tudat_reference_frames ${Boost_LIBRARIES})
+set(REFFRAME_TEST_DIR "${SRCROOT}${REFERENCEFRAMESDIR}/UnitTests")
 
-add_executable(test_ApparentAccelerationModel "${SRCROOT}${REFERENCEFRAMESDIR}/UnitTests/unitTestApparentAccelerationModel.cpp")
-setup_custom_test_program(test_ApparentAccelerationModel "${SRCROOT}${REFERENCEFRAMESDIR}")
-target_link_libraries(test_ApparentAccelerationModel tudat_reference_frames tudat_basic_astrodynamics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_ReferenceFrameTransformations
+  SOURCES "${REFFRAME_TEST_DIR}/unitTestReferenceFrameTransformations.cpp"
+  LINK_LIBRARIES tudat_reference_frames ${Boost_LIBRARIES})
 
-add_executable(test_AerodynamicAngleCalculator "${SRCROOT}${REFERENCEFRAMESDIR}/UnitTests/unitTestAerodynamicAngleCalculator.cpp")
-setup_custom_test_program(test_AerodynamicAngleCalculator "${SRCROOT}${REFERENCEFRAMESDIR}")
-target_link_libraries(test_AerodynamicAngleCalculator tudat_environment_setup tudat_propagators tudat_aerodynamics tudat_geometric_shapes tudat_gravitation tudat_electro_magnetism tudat_propulsion tudat_ephemerides tudat_numerical_integrators tudat_reference_frames tudat_basic_astrodynamics tudat_input_output tudat_basic_mathematics tudat_spice_interface cspice ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_ApparentAccelerationModel
+  SOURCES "${REFFRAME_TEST_DIR}/unitTestApparentAccelerationModel.cpp"
+  LINK_LIBRARIES tudat_reference_frames tudat_basic_astrodynamics ${Boost_LIBRARIES})
+
+tudat_add_test(
+  TARGET test_AerodynamicAngleCalculator
+  SOURCES "${REFFRAME_TEST_DIR}/unitTestAerodynamicAngleCalculator.cpp"
+  LINK_LIBRARIES tudat_environment_setup
+                 tudat_propagators
+                 tudat_aerodynamics
+                 tudat_geometric_shapes
+                 tudat_gravitation
+                 tudat_electro_magnetism
+                 tudat_propulsion
+                 tudat_ephemerides
+                 tudat_numerical_integrators
+                 tudat_reference_frames
+                 tudat_basic_astrodynamics
+                 tudat_input_output
+                 tudat_basic_mathematics
+                 tudat_spice_interface cspice
+                 ${Boost_LIBRARIES})
 

@@ -35,24 +35,67 @@ set(EARTH_ORIENTATION_HEADERS
 add_library(tudat_earth_orientation STATIC ${EARTH_ORIENTATION_SOURCES} ${EARTH_ORIENTATION_HEADERS})
 setup_tudat_library_target(tudat_earth_orientation "${SRCROOT}${EARTHORIENTATIONDIR}")
 
-add_executable(test_EarthOrientationCalculator "${SRCROOT}${EARTHORIENTATIONDIR}/UnitTests/unitTestEarthOrientationCalculator.cpp")
-setup_custom_test_program(test_EarthOrientationCalculator "${SRCROOT}${ORBITDETERMINATIONDIR}")
-target_link_libraries(test_EarthOrientationCalculator tudat_earth_orientation tudat_spice_interface tudat_sofa_interface tudat_interpolators tudat_basic_astrodynamics tudat_basic_mathematics tudat_input_output tudat_input_output sofa cspice ${Boost_LIBRARIES})
+# Add unit tests.
+set(EO_TEST_DIR "${SRCROOT}${EARTHORIENTATIONDIR}/UnitTests")
 
-add_executable(test_EopReader "${SRCROOT}${EARTHORIENTATIONDIR}/UnitTests/unitTestEopReader.cpp")
-setup_custom_test_program(test_EopReader "${SRCROOT}${ORBITDETERMINATIONDIR}")
-target_link_libraries(test_EopReader tudat_earth_orientation tudat_sofa_interface tudat_interpolators tudat_basic_astrodynamics tudat_basic_mathematics tudat_input_output sofa ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_EarthOrientationCalculator
+  SOURCES "${EO_TEST_DIR}/unitTestEarthOrientationCalculator.cpp"
+  LINK_LIBRARIES tudat_earth_orientation
+                 tudat_spice_interface
+                 tudat_sofa_interface
+                 tudat_interpolators
+                 tudat_basic_astrodynamics
+                 tudat_basic_mathematics
+                 tudat_input_output
+                 tudat_input_output
+                 sofa cspice
+                 ${Boost_LIBRARIES})
 
-add_executable(test_PolarMotion "${SRCROOT}${EARTHORIENTATIONDIR}/UnitTests/unitTestPolarMotionCalculator.cpp")
-setup_custom_test_program(test_PolarMotion "${SRCROOT}${ORBITDETERMINATIONDIR}")
-target_link_libraries(test_PolarMotion tudat_earth_orientation tudat_sofa_interface tudat_interpolators tudat_basic_astrodynamics tudat_basic_mathematics tudat_input_output sofa ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_EopReader
+  SOURCES "${EO_TEST_DIR}/unitTestEopReader.cpp"
+  LINK_LIBRARIES tudat_earth_orientation
+                 tudat_sofa_interface
+                 tudat_interpolators
+                 tudat_basic_astrodynamics
+                 tudat_basic_mathematics
+                 tudat_input_output sofa
+                 ${Boost_LIBRARIES})
 
-add_executable(test_TimeScaleConverter "${SRCROOT}${EARTHORIENTATIONDIR}/UnitTests/unitTestTimeScaleConverter.cpp")
-setup_custom_test_program(test_TimeScaleConverter "${SRCROOT}${EARTHORIENTATIONDIR}")
-target_link_libraries(test_TimeScaleConverter tudat_earth_orientation tudat_sofa_interface tudat_interpolators tudat_basic_astrodynamics tudat_basic_mathematics tudat_input_output sofa ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_PolarMotion
+  SOURCES "${EO_TEST_DIR}/unitTestPolarMotionCalculator.cpp"
+  LINK_LIBRARIES tudat_earth_orientation
+                 tudat_sofa_interface
+                 tudat_interpolators
+                 tudat_basic_astrodynamics
+                 tudat_basic_mathematics
+                 tudat_input_output sofa
+                 ${Boost_LIBRARIES})
 
-add_executable(test_ShortPeriodEopCorrections "${SRCROOT}${EARTHORIENTATIONDIR}/UnitTests/unitTestShortPeriodEopCorrections.cpp")
-setup_custom_test_program(test_ShortPeriodEopCorrections "${SRCROOT}${EARTHORIENTATIONDIR}")
-target_link_libraries(test_ShortPeriodEopCorrections tudat_earth_orientation tudat_sofa_interface tudat_basic_astrodynamics tudat_basic_astrodynamics tudat_basic_mathematics tudat_input_output sofa ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_TimeScaleConverter
+  SOURCES "${EO_TEST_DIR}/unitTestTimeScaleConverter.cpp"
+  LINK_LIBRARIES tudat_earth_orientation
+                 tudat_sofa_interface
+                 tudat_interpolators
+                 tudat_basic_astrodynamics
+                 tudat_basic_mathematics
+                 tudat_input_output
+                 sofa
+                 ${Boost_LIBRARIES})
+
+tudat_add_test(
+  TARGET test_ShortPeriodEopCorrections
+  SOURCES "${EO_TEST_DIR}/unitTestShortPeriodEopCorrections.cpp"
+  LINK_LIBRARIES tudat_earth_orientation
+                 tudat_sofa_interface
+                 tudat_basic_astrodynamics
+                 tudat_basic_astrodynamics
+                 tudat_basic_mathematics
+                 tudat_input_output
+                 sofa
+                 ${Boost_LIBRARIES})
 
 

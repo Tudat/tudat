@@ -26,16 +26,25 @@ set(SOFAINTERFACE_HEADERS
 add_library(tudat_sofa_interface STATIC ${SOFAINTERFACE_SOURCES} ${SOFAINTERFACE_HEADERS})
 setup_tudat_library_target(tudat_sofa_interface "${SRCROOT}${SOFAINTERFACEDIR}")
 
-add_executable(test_SofaEarthOrientation "${SRCROOT}${EXTERNALDIR}/SofaInterface/UnitTests/unitTestSofaEarthOrientationInterface.cpp")
-setup_custom_test_program(test_SofaEarthOrientation "${SRCROOT}${EXTERNALDIR}/SofaInterface")
-target_link_libraries(test_SofaEarthOrientation tudat_sofa_interface tudat_basic_mathematics sofa ${Boost_LIBRARIES})
+# Add unit tests.
+set(SOFAIF_TEST_DIR "${SRCROOT}${EXTERNALDIR}/SofaInterface/UnitTests")
 
-add_executable(test_SofaFundamentalArguments "${SRCROOT}${EXTERNALDIR}/SofaInterface/UnitTests/unitTestFundamentalArguments.cpp")
-setup_custom_test_program(test_SofaFundamentalArguments "${SRCROOT}${EXTERNALDIR}/SofaInterface")
-target_link_libraries(test_SofaFundamentalArguments tudat_sofa_interface tudat_basic_astrodynamics sofa ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_SofaEarthOrientation
+  SOURCES "${SOFAIF_TEST_DIR}/unitTestSofaEarthOrientationInterface.cpp"
+  LINK_LIBRARIES tudat_sofa_interface tudat_basic_mathematics sofa ${Boost_LIBRARIES})
 
-add_executable(test_SofaTimeConversions "${SRCROOT}${EXTERNALDIR}/SofaInterface/UnitTests/unitTestSofaTimeConversions.cpp")
-setup_custom_test_program(test_SofaTimeConversions "${SRCROOT}${EXTERNALDIR}/SofaInterface")
-target_link_libraries(test_SofaTimeConversions tudat_basic_astrodynamics tudat_basic_mathematics tudat_sofa_interface sofa ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_SofaFundamentalArguments
+  SOURCES "${SOFAIF_TEST_DIR}/unitTestFundamentalArguments.cpp"
+  LINK_LIBRARIES tudat_sofa_interface tudat_basic_astrodynamics sofa ${Boost_LIBRARIES})
+
+tudat_add_test(
+  TARGET test_SofaTimeConversions
+  SOURCES "${SOFAIF_TEST_DIR}/unitTestSofaTimeConversions.cpp"
+  LINK_LIBRARIES tudat_basic_astrodynamics
+                 tudat_basic_mathematics
+                 tudat_sofa_interface sofa
+                 ${Boost_LIBRARIES})
 
 # End of file.
