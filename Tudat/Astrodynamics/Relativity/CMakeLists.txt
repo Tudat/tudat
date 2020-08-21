@@ -17,7 +17,7 @@ set(RELATIVITY_SOURCES
 )
 
 # Set the header files.
-set(RELATIVITY_HEADERS 
+set(RELATIVITY_HEADERS
   "${SRCROOT}${RELATIVITYDIR}/relativisticLightTimeCorrection.h"
   "${SRCROOT}${RELATIVITYDIR}/relativisticAccelerationCorrection.h"
   "${SRCROOT}${RELATIVITYDIR}/relativisticTimeConversion.h"
@@ -28,19 +28,22 @@ set(RELATIVITY_HEADERS
 add_library(tudat_relativity STATIC ${RELATIVITY_SOURCES} ${RELATIVITY_HEADERS})
 setup_tudat_library_target(tudat_relativity "${SRCROOT}${RELATIVITYDIR}")
 
+# Add unit tests.
+set(EINSTEIN_TEST_DIR "${SRCROOT}${RELATIVITYDIR}/UnitTests")
 if( BUILD_WITH_ESTIMATION_TOOLS )
-
-# Add unit tests
-add_executable(test_ShapiroTimeDelay "${SRCROOT}${RELATIVITYDIR}/UnitTests/unitTestShapiroTimeDelay.cpp")
-setup_custom_test_program(test_ShapiroTimeDelay "${SRCROOT}${RELATIVITYDIR}")
-target_link_libraries(test_ShapiroTimeDelay tudat_relativity tudat_gravitation tudat_observation_models tudat_ephemerides ${Boost_LIBRARIES})
-
+  tudat_add_test(
+    TARGET test_ShapiroTimeDelay
+    SOURCES "${EINSTEIN_TEST_DIR}/unitTestShapiroTimeDelay.cpp"
+    LINK_LIBRARIES tudat_relativity
+                   tudat_gravitation
+                   tudat_observation_models
+                   tudat_ephemerides
+                   ${Boost_LIBRARIES})
 endif( )
 
 if( BUILD_WITH_PROPAGATION_TESTS )
-
-add_executable(test_RelativisticAccelerationCorrection "${SRCROOT}${RELATIVITYDIR}/UnitTests/unitTestRelativisticAccelerationCorrection.cpp")
-setup_custom_test_program(test_RelativisticAccelerationCorrection "${SRCROOT}${RELATIVITYDIR}")
-target_link_libraries(test_RelativisticAccelerationCorrection ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
-
+  tudat_add_test(
+    TARGET test_RelativisticAccelerationCorrection
+    SOURCES "${EINSTEIN_TEST_DIR}/unitTestRelativisticAccelerationCorrection.cpp"
+    LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
 endif( )

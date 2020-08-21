@@ -20,14 +20,6 @@ macro(setup_library_target target_name CUSTOM_OUTPUT_PATH)
   install(TARGETS ${target_name} LIBRARY DESTINATION "${BINROOT}" ARCHIVE DESTINATION "${LIBROOT}")
 endmacro(setup_library_target)
 
-macro(setup_unit_test_executable_target target_name CUSTOM_OUTPUT_PATH)
-  if (NOT TUDAT_DISABLE_TESTS)
-    set_property(TARGET ${target_name} PROPERTY RUNTIME_OUTPUT_DIRECTORY "${BINROOT}/unit_tests")
-    get_property(CUSTOM_TEST_PROGRAM_NAME TARGET ${target_name} PROPERTY OUTPUT_NAME)
-    add_test("${target_name}" "${BINROOT}/unit_tests/${target_name}")
-  endif()	
-endmacro(setup_unit_test_executable_target)
-
 # Set the source files.
 set(SPACETRAJECTORIES_SOURCES
   "${SRCROOT}${TRAJECTORYDIR}/captureLeg.cpp"
@@ -43,7 +35,7 @@ set(SPACETRAJECTORIES_SOURCES
 )
 
 # Set the header files.
-set(SPACETRAJECTORIES_HEADERS 
+set(SPACETRAJECTORIES_HEADERS
   "${SRCROOT}${TRAJECTORYDIR}/captureLeg.h"
   "${SRCROOT}${TRAJECTORYDIR}/departureLeg.h"
   "${SRCROOT}${TRAJECTORYDIR}/departureLegMga.h"
@@ -65,41 +57,70 @@ add_library(tudat_trajectory_design STATIC ${SPACETRAJECTORIES_SOURCES} ${SPACET
 setup_tudat_library_target(tudat_trajectory_design "${SRCROOT}${TRAJECTORYDIR}")
 
 # Add unit tests.
-add_executable(test_CaptureLeg "${SRCROOT}${TRAJECTORYDIR}/UnitTests/unitTestCaptureLeg.cpp")
-setup_unit_test_executable_target(test_CaptureLeg "${SRCROOT}${TRAJECTORYDIR}")
-target_link_libraries(test_CaptureLeg tudat_trajectory_design tudat_mission_segments tudat_basic_mathematics ${Boost_LIBRARIES})
+set(TRAJDES_TEST_DIR "${SRCROOT}${TRAJECTORYDIR}/UnitTests")
 
-# Add unit tests.
-add_executable(test_DepartureLegMga "${SRCROOT}${TRAJECTORYDIR}/UnitTests/unitTestDepartureLegMga.cpp")
-setup_unit_test_executable_target(test_DepartureLegMga "${SRCROOT}${TRAJECTORYDIR}")
-target_link_libraries(test_DepartureLegMga tudat_trajectory_design tudat_mission_segments tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_CaptureLeg
+  SOURCES "${TRAJDES_TEST_DIR}/unitTestCaptureLeg.cpp"
+  LINK_LIBRARIES tudat_trajectory_design
+                 tudat_mission_segments
+                 tudat_basic_mathematics
+                 ${Boost_LIBRARIES})
 
-# Add unit tests.
-add_executable(test_DepartureLegMga1DsmPosition "${SRCROOT}${TRAJECTORYDIR}/UnitTests/unitTestDepartureLegMga1DsmPosition.cpp")
-setup_unit_test_executable_target(test_DepartureLegMga1DsmPosition "${SRCROOT}${TRAJECTORYDIR}")
-target_link_libraries(test_DepartureLegMga1DsmPosition tudat_trajectory_design tudat_mission_segments tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_DepartureLegMga
+  SOURCES "${TRAJDES_TEST_DIR}/unitTestDepartureLegMga.cpp"
+  LINK_LIBRARIES tudat_trajectory_design
+                 tudat_mission_segments
+                 tudat_basic_mathematics
+                 ${Boost_LIBRARIES})
 
-# Add unit tests.
-add_executable(test_DepartureLegMga1DsmVelocity "${SRCROOT}${TRAJECTORYDIR}/UnitTests/unitTestDepartureLegMga1DsmVelocity.cpp")
-setup_unit_test_executable_target(test_DepartureLegMga1DsmVelocity "${SRCROOT}${TRAJECTORYDIR}")
-target_link_libraries(test_DepartureLegMga1DsmVelocity tudat_trajectory_design tudat_mission_segments tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_DepartureLegMga1DsmPosition
+  SOURCES "${TRAJDES_TEST_DIR}/unitTestDepartureLegMga1DsmPosition.cpp"
+  LINK_LIBRARIES tudat_trajectory_design
+                 tudat_mission_segments
+                 tudat_basic_mathematics
+                 ${Boost_LIBRARIES})
 
-# Add unit tests.
-add_executable(test_SwingbyLegMga "${SRCROOT}${TRAJECTORYDIR}/UnitTests/unitTestSwingbyLegMga.cpp")
-setup_unit_test_executable_target(test_SwingbyLegMga "${SRCROOT}${TRAJECTORYDIR}")
-target_link_libraries(test_SwingbyLegMga tudat_trajectory_design tudat_mission_segments tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_DepartureLegMga1DsmVelocity
+  SOURCES "${TRAJDES_TEST_DIR}/unitTestDepartureLegMga1DsmVelocity.cpp"
+  LINK_LIBRARIES tudat_trajectory_design
+                 tudat_mission_segments
+                 tudat_basic_mathematics
+                 ${Boost_LIBRARIES})
 
-# Add unit tests.
-add_executable(test_SwingbyLegMga1DsmPosition "${SRCROOT}${TRAJECTORYDIR}/UnitTests/unitTestSwingbyLegMga1DsmPosition.cpp")
-setup_unit_test_executable_target(test_SwingbyLegMga1DsmPosition "${SRCROOT}${TRAJECTORYDIR}")
-target_link_libraries(test_SwingbyLegMga1DsmPosition tudat_trajectory_design tudat_mission_segments tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_SwingbyLegMga
+  SOURCES "${TRAJDES_TEST_DIR}/unitTestSwingbyLegMga.cpp"
+  LINK_LIBRARIES tudat_trajectory_design
+                 tudat_mission_segments
+                 tudat_basic_mathematics
+                 ${Boost_LIBRARIES})
 
-# Add unit tests.
-add_executable(test_SwingbyLegMga1DsmVelocity "${SRCROOT}${TRAJECTORYDIR}/UnitTests/unitTestSwingbyLegMga1DsmVelocity.cpp")
-setup_unit_test_executable_target(test_SwingbyLegMga1DsmVelocity "${SRCROOT}${TRAJECTORYDIR}")
-target_link_libraries(test_SwingbyLegMga1DsmVelocity tudat_trajectory_design tudat_mission_segments tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_SwingbyLegMga1DsmPosition
+  SOURCES "${TRAJDES_TEST_DIR}/unitTestSwingbyLegMga1DsmPosition.cpp"
+  LINK_LIBRARIES tudat_trajectory_design
+                 tudat_mission_segments
+                 tudat_basic_mathematics
+                 ${Boost_LIBRARIES})
 
-# Add unit tests.
-add_executable(test_Trajectory "${SRCROOT}${TRAJECTORYDIR}/UnitTests/unitTestTrajectory.cpp")
-setup_unit_test_executable_target(test_Trajectory "${SRCROOT}${TRAJECTORYDIR}")
-target_link_libraries(test_Trajectory tudat_trajectory_design tudat_mission_segments tudat_ephemerides tudat_basic_astrodynamics tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_SwingbyLegMga1DsmVelocity
+  SOURCES "${TRAJDES_TEST_DIR}/unitTestSwingbyLegMga1DsmVelocity.cpp"
+  LINK_LIBRARIES tudat_trajectory_design
+                 tudat_mission_segments
+                 tudat_basic_mathematics
+                 ${Boost_LIBRARIES})
+
+tudat_add_test(
+  TARGET test_Trajectory
+  SOURCES "${TRAJDES_TEST_DIR}/unitTestTrajectory.cpp"
+  LINK_LIBRARIES tudat_trajectory_design
+                 tudat_mission_segments
+                 tudat_ephemerides
+                 tudat_basic_astrodynamics
+                 tudat_basic_mathematics
+                 ${Boost_LIBRARIES})

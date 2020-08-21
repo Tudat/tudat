@@ -23,6 +23,7 @@ option(BUILD_WITH_PROPAGATION_TESTS "Build Tudat with unit tests involving long 
 
 option(TUDAT_DISABLE_TESTS "Whether to build Tudat's tests. Useful when including Tudat as a library inside other projects." OFF)
 
+
 # Load UserSettings.txt
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
  set(BUILD_STYLE "standalone")
@@ -68,19 +69,26 @@ if (NOT TUDAT_DISABLE_TESTS)
  enable_testing( )
 endif()
 
-# Set the global macros for setting up targets.
+# Set global macro for setting up target
 macro(setup_tudat_library_target target_name CUSTOM_OUTPUT_PATH)
  set_property(TARGET ${target_name} PROPERTY LIBRARY_OUTPUT_DIRECTORY "${LIBROOT}")
  set_property(TARGET ${target_name} PROPERTY ARCHIVE_OUTPUT_DIRECTORY "${LIBROOT}")
 endmacro(setup_tudat_library_target)
 
+# DEPRECATED: Set global macro for setting up tests
 macro(setup_custom_test_program target_name CUSTOM_OUTPUT_PATH)
+ message(WARNING "Macro 'setup_custom_test_program' has been deprecated; "
+                 "use 'tudat_add_test' instead.")
  if (NOT TUDAT_DISABLE_TESTS)
   set_property(TARGET ${target_name} PROPERTY RUNTIME_OUTPUT_DIRECTORY "${BINROOT}/unit_tests")
   get_property(CUSTOM_TEST_PROGRAM_NAME TARGET ${target_name} PROPERTY OUTPUT_NAME)
   add_test("${target_name}" "${BINROOT}/unit_tests/${target_name}")
  endif()
 endmacro(setup_custom_test_program)
+
+# DEPRECATED: use global function instead
+include(tudatParseFunctionArguments)
+include(tudatAddTest)
 
 # Set the main sub-directories.
 set(ASTRODYNAMICSDIR "/Astrodynamics")

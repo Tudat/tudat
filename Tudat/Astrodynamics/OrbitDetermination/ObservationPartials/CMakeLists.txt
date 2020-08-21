@@ -55,47 +55,80 @@ setup_tudat_library_target(tudat_observation_partials "${SRCROOT}{OBSERVATIONPAR
 add_library(tudat_observation_partials_test_functions STATIC ${OBSERVATION_PARTIALS_TEST_SOURCES} ${OBSERVATION_PARTIALS_TEST_HEADERS})
 setup_tudat_library_target(tudat_observation_partials "${SRCROOT}{OBSERVATIONPARTIALSDIR}/UnitTests")
 
-add_executable(test_OneWayRangePartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}/UnitTests/unitTestOneWayRangePartials.cpp")
-setup_custom_test_program(test_OneWayRangePartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}")
-target_link_libraries(test_OneWayRangePartials tudat_observation_partials_test_functions  ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+# Add unit tests.
+set(OBSPARTIALS_TEST_DIR "${SRCROOT}${OBSERVATIONPARTIALSDIR}/UnitTests")
 
+tudat_add_test(
+  TARGET test_OneWayRangePartials
+  SOURCES "${OBSPARTIALS_TEST_DIR}/unitTestOneWayRangePartials.cpp"
+  LINK_LIBRARIES tudat_observation_partials_test_functions
+                 ${TUDAT_ESTIMATION_LIBRARIES}
+                 ${Boost_LIBRARIES})
 
-add_executable(test_NWayRangePartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}/UnitTests/unitTestNWayRangePartials.cpp")
-setup_custom_test_program(test_NWayRangePartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}")
-target_link_libraries(test_NWayRangePartials tudat_observation_partials_test_functions  ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_NWayRangePartials
+  SOURCES "${OBSPARTIALS_TEST_DIR}/unitTestNWayRangePartials.cpp"
+  LINK_LIBRARIES tudat_observation_partials_test_functions
+                 ${TUDAT_ESTIMATION_LIBRARIES}
+                 ${Boost_LIBRARIES})
 
-add_executable(test_OneWayDifferencedRangePartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}/UnitTests/unitTestDifferencedOneWayRangePartials.cpp")
-setup_custom_test_program(test_OneWayDifferencedRangePartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}")
-target_link_libraries(test_OneWayDifferencedRangePartials tudat_observation_partials_test_functions  ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_OneWayDifferencedRangePartials
+  SOURCES "${OBSPARTIALS_TEST_DIR}/unitTestDifferencedOneWayRangePartials.cpp"
+  LINK_LIBRARIES tudat_observation_partials_test_functions
+                 ${TUDAT_ESTIMATION_LIBRARIES}
+                 ${Boost_LIBRARIES})
 
-add_executable(test_OneWayDopplerPartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}/UnitTests/unitTestOneWayDopplerPartials.cpp")
-setup_custom_test_program(test_OneWayDopplerPartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}")
-target_link_libraries(test_OneWayDopplerPartials tudat_observation_partials_test_functions  ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_OneWayDopplerPartials
+  SOURCES "${OBSPARTIALS_TEST_DIR}/unitTestOneWayDopplerPartials.cpp"
+  LINK_LIBRARIES tudat_observation_partials_test_functions
+                 ${TUDAT_ESTIMATION_LIBRARIES}
+                 ${Boost_LIBRARIES})
 
-add_executable(test_TwoWayDopplerPartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}/UnitTests/unitTestTwoWayDopplerPartials.cpp")
-setup_custom_test_program(test_TwoWayDopplerPartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}")
-target_link_libraries(test_TwoWayDopplerPartials tudat_observation_partials_test_functions  ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_TwoWayDopplerPartials
+  SOURCES "${OBSPARTIALS_TEST_DIR}/unitTestTwoWayDopplerPartials.cpp"
+  LINK_LIBRARIES tudat_observation_partials_test_functions
+                 ${TUDAT_ESTIMATION_LIBRARIES}
+                 ${Boost_LIBRARIES})
 
-add_executable(test_AngularPositionPartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}/UnitTests/unitTestAngularPositionPartials.cpp")
-setup_custom_test_program(test_AngularPositionPartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}")
-target_link_libraries(test_AngularPositionPartials tudat_observation_partials_test_functions  ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_AngularPositionPartials
+  SOURCES "${OBSPARTIALS_TEST_DIR}/unitTestAngularPositionPartials.cpp"
+  LINK_LIBRARIES tudat_observation_partials_test_functions
+                 ${TUDAT_ESTIMATION_LIBRARIES}
+                 ${Boost_LIBRARIES})
 
-add_executable(test_PositionPartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}/UnitTests/unitTestPositionPartials.cpp")
-setup_custom_test_program(test_PositionPartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}")
-target_link_libraries(test_PositionPartials tudat_observation_partials_test_functions ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_PositionPartials
+  SOURCES "${OBSPARTIALS_TEST_DIR}/unitTestPositionPartials.cpp"
+  LINK_LIBRARIES tudat_observation_partials_test_functions
+                 ${TUDAT_ESTIMATION_LIBRARIES}
+                 ${Boost_LIBRARIES})
 
-add_executable(test_EulerAngleObservationPartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}/UnitTests/unitTestEulerAngleObservationPartials.cpp")
-setup_custom_test_program(test_EulerAngleObservationPartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}")
-target_link_libraries(test_EulerAngleObservationPartials tudat_observation_partials_test_functions ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_EulerAngleObservationPartials
+  SOURCES "${OBSPARTIALS_TEST_DIR}/unitTestEulerAngleObservationPartials.cpp"
+  LINK_LIBRARIES tudat_observation_partials_test_functions
+                 ${TUDAT_ESTIMATION_LIBRARIES}
+                 ${Boost_LIBRARIES})
 
-add_executable(test_RotationMatrixPartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}/UnitTests/unitTestRotationMatrixPartials.cpp")
-setup_custom_test_program(test_RotationMatrixPartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}")
-target_link_libraries(test_RotationMatrixPartials ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_RotationMatrixPartials
+  SOURCES "${OBSPARTIALS_TEST_DIR}/unitTestRotationMatrixPartials.cpp"
+  LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
-add_executable(test_FullRotationPartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}/UnitTests/unitTestFullRotationPartials.cpp")
-setup_custom_test_program(test_FullRotationPartials "${SRCROOT}${OBSERVATIONPARTIALSDIR}")
-target_link_libraries(test_FullRotationPartials ${TUDAT_PROPAGATION_LIBRARIES} ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_FullRotationPartials
+  SOURCES "${OBSPARTIALS_TEST_DIR}/unitTestFullRotationPartials.cpp"
+  LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES}
+                 ${TUDAT_ESTIMATION_LIBRARIES}
+                 ${Boost_LIBRARIES})
 
-add_executable(test_LightTimePartials "${SRCROOT}${LIGHTTIMECORRECTIONPARTIALSDIR}/UnitTests/unitTestLightTimePartials.cpp")
-setup_custom_test_program(test_LightTimePartials "${SRCROOT}${LIGHTTIMECORRECTIONPARTIALSDIR}")
-target_link_libraries(test_LightTimePartials tudat_observation_partials_test_functions ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_LightTimePartials
+  SOURCES "${SRCROOT}${LIGHTTIMECORRECTIONPARTIALSDIR}/UnitTests/unitTestLightTimePartials.cpp"
+  LINK_LIBRARIES tudat_observation_partials_test_functions 
+                 ${TUDAT_ESTIMATION_LIBRARIES}
+                 ${Boost_LIBRARIES})

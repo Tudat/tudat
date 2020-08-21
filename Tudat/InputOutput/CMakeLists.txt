@@ -32,7 +32,7 @@ set(INPUTOUTPUT_SOURCES
 )
 
 # Add header files.
-set(INPUTOUTPUT_HEADERS 
+set(INPUTOUTPUT_HEADERS
   "${SRCROOT}${INPUTOUTPUTDIR}/basicInputOutput.h"
   "${SRCROOT}${INPUTOUTPUTDIR}/dictionaryComparer.h"
   "${SRCROOT}${INPUTOUTPUTDIR}/dictionaryEntry.h"
@@ -76,74 +76,97 @@ add_library(tudat_input_output STATIC ${INPUTOUTPUT_SOURCES} ${INPUTOUTPUT_HEADE
 setup_tudat_library_target(tudat_input_output "${SRCROOT}${INPUTOUTPUTDIR}")
 
 # Add unit tests.
-add_executable(test_MapTextFileReader "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestMapTextFileReader.cpp")
-setup_custom_test_program(test_MapTextFileReader "${SRCROOT}${INPUTOUTPUTDIR}")
-target_link_libraries(test_MapTextFileReader tudat_input_output tudat_basic_astrodynamics ${Boost_LIBRARIES})
+set(IO_TEST_DIR "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests")
 
-add_executable(test_MatrixTextFileReader "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestMatrixTextFileReader.cpp")
-setup_custom_test_program(test_MatrixTextFileReader "${SRCROOT}${INPUTOUTPUTDIR}")
-target_link_libraries(test_MatrixTextFileReader tudat_input_output tudat_basic_astrodynamics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_MapTextFileReader
+  SOURCES "${IO_TEST_DIR}/unitTestMapTextFileReader.cpp"
+  LINK_LIBRARIES tudat_input_output tudat_basic_astrodynamics ${Boost_LIBRARIES})
 
-add_executable(test_StreamFilters "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestStreamFilters.cpp")
-setup_custom_test_program(test_StreamFilters "${SRCROOT}${INPUTOUTPUTDIR}")
-target_link_libraries(test_StreamFilters tudat_input_output tudat_basic_astrodynamics ${Boost_LIBRARIES})
- 
-add_executable(test_BasicInputOutput "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestBasicInputOutput.cpp")
-setup_custom_test_program(test_BasicInputOutput "${SRCROOT}${INPUTOUTPUTDIR}")
-target_link_libraries(test_BasicInputOutput tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_MatrixTextFileReader
+  SOURCES "${IO_TEST_DIR}/unitTestMatrixTextFileReader.cpp"
+  LINK_LIBRARIES tudat_input_output tudat_basic_astrodynamics ${Boost_LIBRARIES})
 
-add_executable(test_ParsedDataVectorUtilities "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestParsedDataVectorUtilities.cpp")
-setup_custom_test_program(test_ParsedDataVectorUtilities "${SRCROOT}${INPUTOUTPUTDIR}")
-target_link_libraries(test_ParsedDataVectorUtilities tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_StreamFilters
+  SOURCES "${IO_TEST_DIR}/unitTestStreamFilters.cpp"
+  LINK_LIBRARIES tudat_input_output tudat_basic_astrodynamics ${Boost_LIBRARIES})
 
-add_executable(test_FieldValue "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestFieldValue.cpp")
-setup_custom_test_program(test_FieldValue "${SRCROOT}${INPUTOUTPUTDIR}")
-target_link_libraries(test_FieldValue tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_BasicInputOutput
+  SOURCES "${IO_TEST_DIR}/unitTestBasicInputOutput.cpp"
+  LINK_LIBRARIES tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_TextParser "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestTextParser.cpp")
-setup_custom_test_program(test_TextParser "${SRCROOT}${INPUTOUTPUTDIR}")
-target_link_libraries(test_TextParser tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_ParsedDataVectorUtilities
+  SOURCES "${IO_TEST_DIR}/unitTestParsedDataVectorUtilities.cpp"
+  LINK_LIBRARIES tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_MissileDatcomReader "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestMissileDatcomReader.cpp")
-setup_custom_test_program(test_MissileDatcomReader "${SRCROOT}${INPUTDIR}")
-target_link_libraries(test_MissileDatcomReader tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_FieldValue
+  SOURCES "${IO_TEST_DIR}/unitTestFieldValue.cpp"
+  LINK_LIBRARIES tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_MissileDatcomData "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestMissileDatcomData.cpp")
-setup_custom_test_program(test_MissileDatcomData "${SRCROOT}${INPUTDIR}")
-target_link_libraries(test_MissileDatcomData tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_TextParser
+  SOURCES "${IO_TEST_DIR}/unitTestTextParser.cpp"
+  LINK_LIBRARIES tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_DictionaryInputSystem "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestDictionaryInputSystem.cpp")
-setup_custom_test_program(test_DictionaryInputSystem "${SRCROOT}${INPUTDIR}")
-target_link_libraries(test_DictionaryInputSystem tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_MissileDatcomReader
+  SOURCES "${IO_TEST_DIR}/unitTestMissileDatcomReader.cpp"
+  LINK_LIBRARIES tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_Extractor "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestExtractor.cpp")
-setup_custom_test_program(test_Extractor "${SRCROOT}${INPUTOUTPUTDIR}")
-target_link_libraries(test_Extractor tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_MissileDatcomData
+  SOURCES "${IO_TEST_DIR}/unitTestMissileDatcomData.cpp"
+  LINK_LIBRARIES tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_FixedWidthParser "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestFixedWidthParser.cpp")
-setup_custom_test_program(test_FixedWidthParser "${SRCROOT}${INPUTOUTPUTDIR}")
-target_link_libraries(test_FixedWidthParser tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_DictionaryInputSystem
+  SOURCES "${IO_TEST_DIR}/unitTestDictionaryInputSystem.cpp"
+  LINK_LIBRARIES tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_SeparatedParser "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestSeparatedParser.cpp")
-setup_custom_test_program(test_SeparatedParser "${SRCROOT}${INPUTOUTPUTDIR}")
-target_link_libraries(test_SeparatedParser tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_Extractor
+  SOURCES "${IO_TEST_DIR}/unitTestExtractor.cpp"
+  LINK_LIBRARIES tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_LinearFieldTransform "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestLinearFieldTransform.cpp")
-setup_custom_test_program(test_LinearFieldTransform "${SRCROOT}${INPUTOUTPUTDIR}")
-target_link_libraries(test_LinearFieldTransform tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_FixedWidthParser
+  SOURCES "${IO_TEST_DIR}/unitTestFixedWidthParser.cpp"
+  LINK_LIBRARIES tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_SolarActivityData "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestSolarActivityData.cpp")
-setup_custom_test_program(test_SolarActivityData "${SRCROOT}${INPUTOUTPUTDIR}")
-target_link_libraries(test_SolarActivityData tudat_input_output tudat_basic_astrodynamics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_SeparatedParser
+  SOURCES "${IO_TEST_DIR}/unitTestSeparatedParser.cpp"
+  LINK_LIBRARIES tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_MultiArrayReader "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestMultiArrayReader.cpp")
-setup_custom_test_program(test_MultiArrayReader "${SRCROOT}${INPUTOUTPUTDIR}")
-target_link_libraries(test_MultiArrayReader tudat_input_output tudat_basic_astrodynamics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_LinearFieldTransform
+  SOURCES "${IO_TEST_DIR}/unitTestLinearFieldTransform.cpp"
+  LINK_LIBRARIES tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_MultiArrayWriter "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestMultiArrayWriter.cpp")
-setup_custom_test_program(test_MultiArrayWriter "${SRCROOT}${INPUTOUTPUTDIR}")
-target_link_libraries(test_MultiArrayWriter tudat_input_output tudat_basic_astrodynamics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_SolarActivityData
+  SOURCES "${IO_TEST_DIR}/unitTestSolarActivityData.cpp"
+  LINK_LIBRARIES tudat_input_output tudat_basic_astrodynamics ${Boost_LIBRARIES})
 
-add_executable(test_AerodynamicCoefficientReader "${SRCROOT}${INPUTOUTPUTDIR}/UnitTests/unitTestAerodynamicCoefficientReader.cpp" )
-setup_custom_test_program(test_AerodynamicCoefficientReader "${SRCROOT}${INPUTOUTPUTDIR}")
-target_link_libraries(test_AerodynamicCoefficientReader tudat_input_output tudat_basic_astrodynamics tudat_basics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_MultiArrayReader
+  SOURCES "${IO_TEST_DIR}/unitTestMultiArrayReader.cpp"
+  LINK_LIBRARIES tudat_input_output tudat_basic_astrodynamics ${Boost_LIBRARIES})
+
+tudat_add_test(
+  TARGET test_MultiArrayWriter
+  SOURCES "${IO_TEST_DIR}/unitTestMultiArrayWriter.cpp"
+  LINK_LIBRARIES tudat_input_output tudat_basic_astrodynamics ${Boost_LIBRARIES})
+
+tudat_add_test(
+  TARGET test_AerodynamicCoefficientReader
+  SOURCES "${IO_TEST_DIR}/unitTestAerodynamicCoefficientReader.cpp"
+  LINK_LIBRARIES tudat_input_output
+                 tudat_basic_astrodynamics
+                 tudat_basics
+                 ${Boost_LIBRARIES})

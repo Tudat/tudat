@@ -29,13 +29,12 @@ set(TORQUE_PARTIALS_HEADERS
 add_library(tudat_torque_partials STATIC ${TORQUE_PARTIALS_SOURCES} ${TORQUE_PARTIALS_HEADERS})
 setup_tudat_library_target(tudat_torque_partials "${SRCROOT}{TORQUEPARTIALSDIR}")
 
+# Add unit tests
 if(USE_CSPICE)
-
-    # Add unit tests
-    add_executable(test_TorquePartials "${SRCROOT}${TORQUEPARTIALSDIR}/UnitTests/unitTestTorquePartials.cpp")
-    setup_custom_test_program(test_TorquePartials "${SRCROOT}${TORQUEPARTIALSDIR}")
-    target_link_libraries(test_TorquePartials ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
-
+    tudat_add_test(
+      TARGET test_TorquePartials
+      SOURCES "${SRCROOT}${TORQUEPARTIALSDIR}/UnitTests/unitTestTorquePartials.cpp"
+      LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 endif( )
 
 

@@ -49,38 +49,49 @@ add_library(tudat_basic_mathematics STATIC ${BASICMATHEMATICS_SOURCES} ${BASICMA
 setup_tudat_library_target(tudat_basic_mathematics "${SRCROOT}${MATHEMATICSDIR}/BasicMathematics")
 
 # Add unit tests.
-add_executable(test_MathematicalConstants "${SRCROOT}${BASICMATHEMATICSDIR}/UnitTests/unitTestMathematicalConstants.cpp")
-setup_custom_test_program(test_MathematicalConstants "${SRCROOT}${MATHEMATICSDIR}/BasicMathematics")
-target_link_libraries(test_MathematicalConstants tudat_basic_mathematics ${Boost_LIBRARIES})
+set(BASIC_MATHS_TEST_DIR "${SRCROOT}${BASICMATHEMATICSDIR}/UnitTests")
 
-add_executable(test_LinearAlgebra "${SRCROOT}${BASICMATHEMATICSDIR}/UnitTests/unitTestLinearAlgebra.cpp")
-setup_custom_test_program(test_LinearAlgebra "${SRCROOT}${MATHEMATICSDIR}/BasicMathematics")
-target_link_libraries(test_LinearAlgebra tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_MathematicalConstants
+  SOURCES "${BASIC_MATHS_TEST_DIR}/unitTestMathematicalConstants.cpp"
+  LINK_LIBRARIES tudat_basic_mathematics ${Boost_LIBRARIES})
 
-add_executable(test_CoordinateConversions "${SRCROOT}${BASICMATHEMATICSDIR}/UnitTests/unitTestCoordinateConversions.cpp")
-setup_custom_test_program(test_CoordinateConversions "${SRCROOT}${MATHEMATICSDIR}/BasicMathematics")
-target_link_libraries(test_CoordinateConversions tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_LinearAlgebra
+  SOURCES "${BASIC_MATHS_TEST_DIR}/unitTestLinearAlgebra.cpp"
+  LINK_LIBRARIES tudat_basic_mathematics ${Boost_LIBRARIES})
 
-add_executable(test_NearestNeighbourSearch "${SRCROOT}${BASICMATHEMATICSDIR}/UnitTests/unitTestNearestNeighbourSearch.cpp")
-setup_custom_test_program(test_NearestNeighbourSearch "${SRCROOT}${MATHEMATICSDIR}/BasicMathematics")
-target_link_libraries(test_NearestNeighbourSearch tudat_input_output tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_CoordinateConversions
+  SOURCES "${BASIC_MATHS_TEST_DIR}/unitTestCoordinateConversions.cpp"
+  LINK_LIBRARIES tudat_basic_mathematics ${Boost_LIBRARIES})
 
-add_executable(test_NumericalDerivative "${SRCROOT}${BASICMATHEMATICSDIR}/UnitTests/unitTestNumericalDerivative.cpp")
-setup_custom_test_program(test_NumericalDerivative "${SRCROOT}${MATHEMATICSDIR}/BasicMathematics")
-target_link_libraries(test_NumericalDerivative tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_NearestNeighbourSearch
+  SOURCES "${BASIC_MATHS_TEST_DIR}/unitTestNearestNeighbourSearch.cpp"
+  LINK_LIBRARIES tudat_input_output tudat_basic_mathematics ${Boost_LIBRARIES})
 
-add_executable(test_LegendrePolynomials "${SRCROOT}${BASICMATHEMATICSDIR}/UnitTests/unitTestLegendrePolynomials.cpp")
-setup_custom_test_program(test_LegendrePolynomials "${SRCROOT}${MATHEMATICSDIR}/BasicMathematics")
-target_link_libraries(test_LegendrePolynomials tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_NumericalDerivative
+  SOURCES "${BASIC_MATHS_TEST_DIR}/unitTestNumericalDerivative.cpp"
+  LINK_LIBRARIES tudat_basic_mathematics ${Boost_LIBRARIES})
 
-add_executable(test_SphericalHarmonics "${SRCROOT}${BASICMATHEMATICSDIR}/UnitTests/unitTestSphericalHarmonics.cpp")
-setup_custom_test_program(test_SphericalHarmonics "${SRCROOT}${MATHEMATICSDIR}/BasicMathematics")
-target_link_libraries(test_SphericalHarmonics tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_LegendrePolynomials
+  SOURCES "${BASIC_MATHS_TEST_DIR}/unitTestLegendrePolynomials.cpp"
+  LINK_LIBRARIES tudat_basic_mathematics ${Boost_LIBRARIES})
 
-add_executable(test_RotationAboutArbitraryAxis "${SRCROOT}${BASICMATHEMATICSDIR}/UnitTests/unitTestRotationAboutArbitraryAxis.cpp")
-setup_custom_test_program(test_RotationAboutArbitraryAxis "${SRCROOT}${MATHEMATICSDIR}/BasicMathematics")
-target_link_libraries(test_RotationAboutArbitraryAxis tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_SphericalHarmonics
+  SOURCES "${BASIC_MATHS_TEST_DIR}/unitTestSphericalHarmonics.cpp"
+  LINK_LIBRARIES tudat_basic_mathematics ${Boost_LIBRARIES})
 
-add_executable(test_RotationPartials "${SRCROOT}${MATHEMATICSDIR}/BasicMathematics/UnitTests/unitTestRotationPartials.cpp")
-setup_custom_test_program(test_RotationPartials "${SRCROOT}${MATHEMATICSDIR}/BasicMathematics")
-target_link_libraries(test_RotationPartials tudat_reference_frames tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_RotationAboutArbitraryAxis
+  SOURCES "${BASIC_MATHS_TEST_DIR}/unitTestRotationAboutArbitraryAxis.cpp"
+  LINK_LIBRARIES tudat_basic_mathematics ${Boost_LIBRARIES})
+
+tudat_add_test(
+  TARGET test_RotationPartials
+  SOURCES "${BASIC_MATHS_TEST_DIR}/unitTestRotationPartials.cpp"
+  LINK_LIBRARIES tudat_reference_frames tudat_basic_mathematics ${Boost_LIBRARIES})

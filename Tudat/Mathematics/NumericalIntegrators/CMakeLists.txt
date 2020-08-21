@@ -23,7 +23,7 @@ set(NUMERICALINTEGRATORS_SOURCES
 )
 
 # Add header files.
-set(NUMERICALINTEGRATORS_HEADERS 
+set(NUMERICALINTEGRATORS_HEADERS
   "${SRCROOT}${NUMERICALINTEGRATORSDIR}/adamsBashforthMoultonIntegrator.h"
   "${SRCROOT}${NUMERICALINTEGRATORSDIR}/createNumericalIntegrator.h"
   "${SRCROOT}${NUMERICALINTEGRATORSDIR}/bulirschStoerVariableStepsizeIntegrator.h"
@@ -43,48 +43,59 @@ add_library(tudat_numerical_integrators STATIC ${NUMERICALINTEGRATORS_SOURCES} $
 setup_tudat_library_target(tudat_numerical_integrators "${SRCROOT}${NUMERICALINTEGRATORSDIR}")
 
 # Add unit tests.
+set(MATHS_DEINT_TEST_DIR "${SRCROOT}${NUMERICALINTEGRATORSDIR}/UnitTests")
 
-add_executable(test_AdamsBashforthMoultonIntegrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}/UnitTests/unitTestAdamsBashforthMoultonIntegrator.cpp")
-setup_custom_test_program(test_AdamsBashforthMoultonIntegrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}")
-target_link_libraries(test_AdamsBashforthMoultonIntegrator tudat_numerical_integrators tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_AdamsBashforthMoultonIntegrator
+  SOURCES "${MATHS_DEINT_TEST_DIR}/unitTestAdamsBashforthMoultonIntegrator.cpp"
+  LINK_LIBRARIES tudat_numerical_integrators tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_EulerIntegrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}/UnitTests/unitTestEulerIntegrator.cpp")
-setup_custom_test_program(test_EulerIntegrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}")
-target_link_libraries(test_EulerIntegrator tudat_numerical_integrators tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_EulerIntegrator
+  SOURCES "${MATHS_DEINT_TEST_DIR}/unitTestEulerIntegrator.cpp"
+  LINK_LIBRARIES tudat_numerical_integrators tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_NumericalIntegrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}/UnitTests/unitTestNumericalIntegrator.cpp")
-setup_custom_test_program(test_NumericalIntegrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}")
-target_link_libraries(test_NumericalIntegrator tudat_numerical_integrators ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_NumericalIntegrator
+  SOURCES "${MATHS_DEINT_TEST_DIR}/unitTestNumericalIntegrator.cpp"
+  LINK_LIBRARIES tudat_numerical_integrators ${Boost_LIBRARIES})
 
-add_executable(test_RungeKutta4Integrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}/UnitTests/unitTestRungeKutta4Integrator.cpp")
-setup_custom_test_program(test_RungeKutta4Integrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}")
-target_link_libraries(test_RungeKutta4Integrator tudat_numerical_integrators tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_RungeKutta4Integrator
+  SOURCES "${MATHS_DEINT_TEST_DIR}/unitTestRungeKutta4Integrator.cpp"
+  LINK_LIBRARIES tudat_numerical_integrators tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_RungeKuttaVariableStepSizeIntegrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}/UnitTests/unitTestRungeKuttaVariableStepSizeIntegrator.cpp")
-setup_custom_test_program(test_RungeKuttaVariableStepSizeIntegrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}")
-target_link_libraries(test_RungeKuttaVariableStepSizeIntegrator tudat_numerical_integrators ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_RungeKuttaVariableStepSizeIntegrator
+  SOURCES "${MATHS_DEINT_TEST_DIR}/unitTestRungeKuttaVariableStepSizeIntegrator.cpp"
+  LINK_LIBRARIES tudat_numerical_integrators ${Boost_LIBRARIES})
 
-add_executable(test_RungeKuttaCoefficients "${SRCROOT}${NUMERICALINTEGRATORSDIR}/UnitTests/unitTestRungeKuttaCoefficients.cpp")
-setup_custom_test_program(test_RungeKuttaCoefficients "${SRCROOT}${NUMERICALINTEGRATORSDIR}")
-target_link_libraries(test_RungeKuttaCoefficients tudat_numerical_integrators ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_RungeKuttaCoefficients
+  SOURCES "${MATHS_DEINT_TEST_DIR}/unitTestRungeKuttaCoefficients.cpp"
+  LINK_LIBRARIES tudat_numerical_integrators ${Boost_LIBRARIES})
 
-add_executable(test_RungeKuttaFehlberg45Integrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}/UnitTests/unitTestRungeKuttaFehlberg45Integrator.cpp")
-setup_custom_test_program(test_RungeKuttaFehlberg45Integrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}")
-target_link_libraries(test_RungeKuttaFehlberg45Integrator tudat_numerical_integrators tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_RungeKuttaFehlberg45Integrator
+  SOURCES "${MATHS_DEINT_TEST_DIR}/unitTestRungeKuttaFehlberg45Integrator.cpp"
+  LINK_LIBRARIES tudat_numerical_integrators tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_RungeKuttaFehlberg56Integrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}/UnitTests/unitTestRungeKuttaFehlberg56Integrator.cpp")
-setup_custom_test_program(test_RungeKuttaFehlberg56Integrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}")
-target_link_libraries(test_RungeKuttaFehlberg56Integrator tudat_numerical_integrators tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_RungeKuttaFehlberg56Integrator
+  SOURCES "${MATHS_DEINT_TEST_DIR}/unitTestRungeKuttaFehlberg56Integrator.cpp"
+  LINK_LIBRARIES tudat_numerical_integrators tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_RungeKuttaFehlberg78Integrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}/UnitTests/unitTestRungeKuttaFehlberg78Integrator.cpp")
-setup_custom_test_program(test_RungeKuttaFehlberg78Integrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}")
-target_link_libraries(test_RungeKuttaFehlberg78Integrator tudat_numerical_integrators tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_RungeKuttaFehlberg78Integrator
+  SOURCES "${MATHS_DEINT_TEST_DIR}/unitTestRungeKuttaFehlberg78Integrator.cpp"
+  LINK_LIBRARIES tudat_numerical_integrators tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_RungeKutta87DormandPrinceIntegrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}/UnitTests/unitTestRungeKutta87DormandPrinceIntegrator.cpp")
-setup_custom_test_program(test_RungeKutta87DormandPrinceIntegrator "${SRCROOT}${NUMERICALINTEGRATORSDIR}")
-target_link_libraries(test_RungeKutta87DormandPrinceIntegrator tudat_numerical_integrators tudat_input_output ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_RungeKutta87DormandPrinceIntegrator
+  SOURCES "${MATHS_DEINT_TEST_DIR}/unitTestRungeKutta87DormandPrinceIntegrator.cpp"
+  LINK_LIBRARIES tudat_numerical_integrators tudat_input_output ${Boost_LIBRARIES})
 
-add_executable(test_BulirschStoerVariableStepSizeIntegrator "${SRCROOT}${MATHEMATICSDIR}/NumericalIntegrators/UnitTests/unitTestBulirschStoerVariableStepSizeIntegrator.cpp")
-setup_custom_test_program(test_BulirschStoerVariableStepSizeIntegrator "${SRCROOT}${MATHEMATICSDIR}/NumericalIntegrators")
-target_link_libraries(test_BulirschStoerVariableStepSizeIntegrator tudat_numerical_integrators tudat_input_output ${Boost_LIBRARIES})
-
+tudat_add_test(
+  TARGET test_BulirschStoerVariableStepSizeIntegrator
+  SOURCES "${MATHS_DEINT_TEST_DIR}/unitTestBulirschStoerVariableStepSizeIntegrator.cpp"
+  LINK_LIBRARIES tudat_numerical_integrators tudat_input_output ${Boost_LIBRARIES})

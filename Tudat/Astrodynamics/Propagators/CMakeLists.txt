@@ -69,128 +69,176 @@ setup_tudat_library_target(tudat_propagators "${SRCROOT}${PROPAGATORSDIR}")
 include(tudatLinkLibraries)
 
 # Add unit tests.
-add_executable(test_CentralBodyData "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestCentralBodyData.cpp")
-setup_custom_test_program(test_CentralBodyData "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_CentralBodyData tudat_propagators tudat_basic_mathematics ${Boost_LIBRARIES})
+set(PROPAGATORS_TEST_DIR "${SRCROOT}${PROPAGATORSDIR}/UnitTests")
+
+tudat_add_test(
+  TARGET test_CentralBodyData
+  SOURCES "${PROPAGATORS_TEST_DIR}/unitTestCentralBodyData.cpp"
+  LINK_LIBRARIES tudat_propagators tudat_basic_mathematics ${Boost_LIBRARIES})
 
 if(USE_CSPICE)
 
-if( BUILD_WITH_PROPAGATION_TESTS )
+  if( BUILD_WITH_PROPAGATION_TESTS )
 
-add_executable(test_CowellStateDerivative "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestCowellStateDerivative.cpp")
-setup_custom_test_program(test_CowellStateDerivative "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_CowellStateDerivative ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+    tudat_add_test(
+      TARGET test_CowellStateDerivative
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestCowellStateDerivative.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
 
-add_executable(test_EnckeStateDerivative "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestEnckeStateDerivative.cpp")
-setup_custom_test_program(test_EnckeStateDerivative "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_EnckeStateDerivative ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+    tudat_add_test(
+      TARGET test_EnckeStateDerivative
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestEnckeStateDerivative.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
 
-add_executable(test_GaussStateDerivative "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestGaussStateDerivative.cpp")
-setup_custom_test_program(test_GaussStateDerivative "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_GaussStateDerivative ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+    tudat_add_test(
+      TARGET test_GaussStateDerivative
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestGaussStateDerivative.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
 
-add_executable(test_UnifiedStateModelStateDerivative "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestUnifiedStateModelStateDerivative.cpp")
-setup_custom_test_program(test_UnifiedStateModelStateDerivative "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_UnifiedStateModelStateDerivative ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+    tudat_add_test(
+      TARGET test_UnifiedStateModelStateDerivative
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestUnifiedStateModelStateDerivative.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
 
-if( BUILD_WITH_ESTIMATION_TOOLS )
-add_executable(test_SequentialVariationEquationIntegration "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestSequentialVariationalEquationIntegration.cpp")
-setup_custom_test_program(test_SequentialVariationEquationIntegration "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_SequentialVariationEquationIntegration ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+    if( BUILD_WITH_ESTIMATION_TOOLS )
 
-add_executable(test_VariationalEquations "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestVariationalEquationPropagation.cpp")
-setup_custom_test_program(test_VariationalEquations "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_VariationalEquations ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+      tudat_add_test(
+        TARGET test_SequentialVariationEquationIntegration
+        SOURCES "${PROPAGATORS_TEST_DIR}/unitTestSequentialVariationalEquationIntegration.cpp"
+        LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
-add_executable(test_MultiArcVariationalEquations "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestMultiArcVariationalEquationPropagation.cpp")
-setup_custom_test_program(test_MultiArcVariationalEquations "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_MultiArcVariationalEquations ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+      tudat_add_test(
+        TARGET test_VariationalEquations
+        SOURCES "${PROPAGATORS_TEST_DIR}/unitTestVariationalEquationPropagation.cpp"
+        LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
-add_executable(test_HybridArcVariationalEquations "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestHybridArcVariationalEquationPropagation.cpp")
-setup_custom_test_program(test_HybridArcVariationalEquations "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_HybridArcVariationalEquations ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+      tudat_add_test(
+        TARGET test_MultiArcVariationalEquations
+        SOURCES "${PROPAGATORS_TEST_DIR}/unitTestMultiArcVariationalEquationPropagation.cpp"
+        LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
+      tudat_add_test(
+        TARGET test_HybridArcVariationalEquations
+        SOURCES "${PROPAGATORS_TEST_DIR}/unitTestHybridArcVariationalEquationPropagation.cpp"
+        LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
-add_executable(test_DependentVariableOutput "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestDependentVariableOutput.cpp")
-setup_custom_test_program(test_DependentVariableOutput "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_DependentVariableOutput ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+      tudat_add_test(
+        TARGET test_DependentVariableOutput
+        SOURCES "${PROPAGATORS_TEST_DIR}/unitTestDependentVariableOutput.cpp"
+        LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+
+    endif( )
+
+    tudat_add_test(
+      TARGET test_EnvironmentModelComputations
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestEnvironmentUpdater.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
+    tudat_add_test(
+      TARGET test_BodyMassPropagation
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestBodyMassPropagation.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
+    tudat_add_test(
+      TARGET test_MultiTypeStatePropagation
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestMultiTypeStatePropagation.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
+    tudat_add_test(
+      TARGET test_StoppingConditions
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestStoppingConditions.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
+    tudat_add_test(
+      TARGET test_CustomStatePropagation
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestCustomStatePropagation.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
+    tudat_add_test(
+      TARGET test_MultiArcDynamics
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestMultiArcDynamics.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
+    tudat_add_test(
+      TARGET test_HybridArcDynamics
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestHybridArcDynamics.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
+    tudat_add_test(
+      TARGET test_PropagationTerminationReason
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestPropagationTerminationReason.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
+    tudat_add_test(
+      TARGET test_RotationalDynamicsPropagation
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestRotationalDynamicsPropagator.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
+    tudat_add_test(
+      TARGET test_CR3BPPropagation
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestCR3BPPropagation.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
+    tudat_add_test(
+      TARGET test_PropagationTerminationCheckOnFinalStep
+      SOURCES "${PROPAGATORS_TEST_DIR}/uniTestPropagationTerminationCheckOnFinalStep.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
+    tudat_add_test(
+      TARGET test_GlobalFrameOrigin
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestGlobalFrameOrigin.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
+    tudat_add_test(
+      TARGET test_ForwardBackwardIntegration
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestForwardsBackwardsIntegration.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
+    tudat_add_test(
+      TARGET test_ExactTermination
+      SOURCES "${PROPAGATORS_TEST_DIR}/unitTestExactTermination.cpp"
+      LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
+  endif( )
 
 endif( )
 
-add_executable(test_EnvironmentModelComputations "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestEnvironmentUpdater.cpp")
-setup_custom_test_program(test_EnvironmentModelComputations "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_EnvironmentModelComputations ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_StateDerivativeRestrictedThreeBodyProblem
+  SOURCES "${PROPAGATORS_TEST_DIR}/unitTestStateDerivativeCircularRestrictedThreeBodyProblem.cpp"
+  LINK_LIBRARIES tudat_mission_segments
+                 tudat_root_finders
+                 tudat_propagators
+                 tudat_numerical_integrators
+                 tudat_basic_astrodynamics
+                 tudat_input_output
+                 ${Boost_LIBRARIES})
 
-add_executable(test_BodyMassPropagation "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestBodyMassPropagation.cpp")
-setup_custom_test_program(test_BodyMassPropagation "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_BodyMassPropagation ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_FullPropagationRestrictedThreeBodyProblem
+  SOURCES "${PROPAGATORS_TEST_DIR}/unitTestFullPropagationCircularRestrictedThreeBodyProblem.cpp"
+  LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
 
-add_executable(test_MultiTypeStatePropagation "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestMultiTypeStatePropagation.cpp")
-setup_custom_test_program(test_MultiTypeStatePropagation "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_MultiTypeStatePropagation ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_FullPropagationLambertTargeter
+  SOURCES "${PROPAGATORS_TEST_DIR}/unitTestFullPropagationLambertTargeter.cpp"
+  LINK_LIBRARIES tudat_trajectory_design
+                 tudat_mission_segments
+                 tudat_ephemerides
+                 tudat_basic_astrodynamics
+                 tudat_basic_mathematics
+                 ${TUDAT_PROPAGATION_LIBRARIES}
+                 ${Boost_LIBRARIES})
 
-add_executable(test_StoppingConditions "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestStoppingConditions.cpp")
-setup_custom_test_program(test_StoppingConditions "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_StoppingConditions ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
-
-add_executable(test_CustomStatePropagation "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestCustomStatePropagation.cpp")
-setup_custom_test_program(test_CustomStatePropagation "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_CustomStatePropagation ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
-
-add_executable(test_MultiArcDynamics "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestMultiArcDynamics.cpp")
-setup_custom_test_program(test_MultiArcDynamics "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_MultiArcDynamics ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
-
-add_executable(test_HybridArcDynamics "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestHybridArcDynamics.cpp")
-setup_custom_test_program(test_HybridArcDynamics "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_HybridArcDynamics ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
-
-add_executable(test_PropagationTerminationReason "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestPropagationTerminationReason.cpp")
-setup_custom_test_program(test_PropagationTerminationReason "${SRCROOT}${PROPAGATORSDIR}/")
-target_link_libraries(test_PropagationTerminationReason ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
-
-add_executable(test_RotationalDynamicsPropagation "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestRotationalDynamicsPropagator.cpp")
-setup_custom_test_program(test_RotationalDynamicsPropagation "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_RotationalDynamicsPropagation ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
-
-add_executable(test_CR3BPPropagation "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestCR3BPPropagation.cpp")
-setup_custom_test_program(test_CR3BPPropagation "${SRCROOT}${PROPAGATORSDIR}/")
-target_link_libraries(test_CR3BPPropagation ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
-
-add_executable(test_PropagationTerminationCheckOnFinalStep "${SRCROOT}${PROPAGATORSDIR}/UnitTests/uniTestPropagationTerminationCheckOnFinalStep.cpp")
-setup_custom_test_program(test_PropagationTerminationCheckOnFinalStep "${SRCROOT}${PROPAGATORSDIR}/")
-target_link_libraries(test_PropagationTerminationCheckOnFinalStep ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
-
-add_executable(test_GlobalFrameOrigin "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestGlobalFrameOrigin.cpp")
-setup_custom_test_program(test_GlobalFrameOrigin "${SRCROOT}${PROPAGATORSDIR}/")
-target_link_libraries(test_GlobalFrameOrigin ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
-
-add_executable(test_ForwardBackwardIntegration "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestForwardsBackwardsIntegration.cpp")
-setup_custom_test_program(test_ForwardBackwardIntegration "${SRCROOT}${PROPAGATORSDIR}/")
-target_link_libraries(test_ForwardBackwardIntegration ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
-
-add_executable(test_ExactTermination "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestExactTermination.cpp")
-setup_custom_test_program(test_ExactTermination "${SRCROOT}${PROPAGATORSDIR}/")
-target_link_libraries(test_ExactTermination ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
-
-endif( )
-
-endif( )
-
-add_executable(test_StateDerivativeRestrictedThreeBodyProblem "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestStateDerivativeCircularRestrictedThreeBodyProblem.cpp")
-setup_custom_test_program(test_StateDerivativeRestrictedThreeBodyProblem "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_StateDerivativeRestrictedThreeBodyProblem tudat_mission_segments tudat_root_finders tudat_propagators tudat_numerical_integrators tudat_basic_astrodynamics tudat_input_output ${Boost_LIBRARIES})
-
-add_executable(test_FullPropagationRestrictedThreeBodyProblem "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestFullPropagationCircularRestrictedThreeBodyProblem.cpp")
-setup_custom_test_program(test_FullPropagationRestrictedThreeBodyProblem "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_FullPropagationRestrictedThreeBodyProblem ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
-
-add_executable(test_FullPropagationLambertTargeter "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestFullPropagationLambertTargeter.cpp")
-setup_custom_test_program(test_FullPropagationLambertTargeter "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_FullPropagationLambertTargeter tudat_trajectory_design tudat_mission_segments tudat_ephemerides tudat_basic_astrodynamics tudat_basic_mathematics ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
-
-add_executable(test_FullPropagationPatchedConicsTrajectory "${SRCROOT}${PROPAGATORSDIR}/UnitTests/unitTestFullPropagationPatchedConicsTrajectory.cpp")
-setup_custom_test_program(test_FullPropagationPatchedConicsTrajectory "${SRCROOT}${PROPAGATORSDIR}")
-target_link_libraries(test_FullPropagationPatchedConicsTrajectory tudat_trajectory_design tudat_mission_segments tudat_ephemerides tudat_basic_astrodynamics tudat_basic_mathematics ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_FullPropagationPatchedConicsTrajectory
+  SOURCES "${PROPAGATORS_TEST_DIR}/unitTestFullPropagationPatchedConicsTrajectory.cpp"
+  LINK_LIBRARIES tudat_trajectory_design
+                 tudat_mission_segments
+                 tudat_ephemerides
+                 tudat_basic_astrodynamics
+                 tudat_basic_mathematics
+                 ${TUDAT_PROPAGATION_LIBRARIES}
+                 ${Boost_LIBRARIES})
 
 

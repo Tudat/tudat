@@ -47,21 +47,24 @@ set(ACCELERATION_PARTIALS_HEADERS
 add_library(tudat_acceleration_partials STATIC ${ACCELERATION_PARTIALS_SOURCES} ${ACCELERATION_PARTIALS_HEADERS})
 setup_tudat_library_target(tudat_acceleration_partials "${SRCROOT}{ACCELERATIONPARTIALSDIR}")
 
+# Add unit tests
+set(ACCPARTIALS_TEST_DIR "${SRCROOT}${ACCELERATIONPARTIALSDIR}/UnitTests")
 if(USE_CSPICE)
 
-# Add unit tests
-add_executable(test_AccelerationPartials "${SRCROOT}${ACCELERATIONPARTIALSDIR}/UnitTests/unitTestAccelerationPartials.cpp")
-setup_custom_test_program(test_AccelerationPartials "${SRCROOT}${ACCELERATIONPARTIALSDIR}")
-target_link_libraries(test_AccelerationPartials ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+  tudat_add_test(
+    TARGET test_AccelerationPartials
+    SOURCES "${ACCPARTIALS_TEST_DIR}/unitTestAccelerationPartials.cpp"
+    LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
-# Add unit tests
-add_executable(test_SphericalHarmonicPartials "${SRCROOT}${ACCELERATIONPARTIALSDIR}/UnitTests/unitTestSphericalHarmonicPartials.cpp")
-setup_custom_test_program(test_SphericalHarmonicPartials "${SRCROOT}${ACCELERATIONPARTIALSDIR}")
-target_link_libraries(test_SphericalHarmonicPartials ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+  tudat_add_test(
+    TARGET test_SphericalHarmonicPartials
+    SOURCES "${ACCPARTIALS_TEST_DIR}/unitTestSphericalHarmonicPartials.cpp"
+    LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
-add_executable(test_MutualSphericalHarmonicPartials "${SRCROOT}${ACCELERATIONPARTIALSDIR}/UnitTests/unitTestMutualSphericalHarmonicPartials.cpp")
-setup_custom_test_program(test_MutualSphericalHarmonicPartials "${SRCROOT}${ACCELERATIONPARTIALSDIR}")
-target_link_libraries(test_MutualSphericalHarmonicPartials ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
+  tudat_add_test(
+    TARGET test_MutualSphericalHarmonicPartials
+    SOURCES "${ACCPARTIALS_TEST_DIR}/unitTestMutualSphericalHarmonicPartials.cpp"
+    LINK_LIBRARIES ${TUDAT_ESTIMATION_LIBRARIES} ${Boost_LIBRARIES})
 
 endif( )
 

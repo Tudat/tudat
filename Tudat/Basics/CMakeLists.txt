@@ -14,7 +14,7 @@ set(BASICSDIR_SOURCES
 )
 
 # Add header files.
-set(BASICSDIR_HEADERS 
+set(BASICSDIR_HEADERS
   "${SRCROOT}${BASICSDIR}/utilities.h"
   "${SRCROOT}${BASICSDIR}/testMacros.h"
   "${SRCROOT}${BASICSDIR}/utilityMacros.h"
@@ -34,12 +34,15 @@ set(BASICSDIR_UNITTESTS
 add_library(tudat_basics STATIC ${BASICSDIR_SOURCES} ${BASICSDIR_HEADERS})
 setup_tudat_library_target(tudat_basics "${SRCROOT}${BASICSDIR}")
 
-add_executable(test_TimeTypes "${SRCROOT}${BASICSDIR}/UnitTests/unitTestTimeTypes.cpp")
-setup_custom_test_program(test_TimeTypes "${SRCROOT}${BASICSDIR}")
-target_link_libraries(test_TimeTypes ${Boost_LIBRARIES})
+# Add unit tests.
+set(BASICS_TEST_DIR "${SRCROOT}${BASICSDIR}/UnitTests")
 
+tudat_add_test(
+  TARGET test_TimeTypes
+  SOURCES "${BASICS_TEST_DIR}/unitTestTimeTypes.cpp"
+  LINK_LIBRARIES ${Boost_LIBRARIES})
 
-add_executable(test_TudatTypeTraits "${SRCROOT}${BASICSDIR}/UnitTests/unitTestTudatTypeTraits.cpp")
-setup_custom_test_program(test_TudatTypeTraits "${SRCROOT}${BASICSDIR}")
-target_link_libraries(test_TudatTypeTraits tudat_basics ${Boost_LIBRARIES})
-
+tudat_add_test(
+  TARGET test_TudatTypeTraits
+  SOURCES "${BASICS_TEST_DIR}/unitTestTudatTypeTraits.cpp"
+  LINK_LIBRARIES tudat_basics ${Boost_LIBRARIES})

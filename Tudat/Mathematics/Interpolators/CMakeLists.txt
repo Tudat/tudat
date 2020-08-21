@@ -38,24 +38,46 @@ add_library(tudat_interpolators STATIC ${INTERPOLATORS_SOURCES} ${INTERPOLATORS_
 setup_tudat_library_target(tudat_interpolators "${SRCROOT}${MATHEMATICSDIR}/Interpolators")
 
 # Add unit tests.
-add_executable(test_CubicSplineInterpolator "${SRCROOT}${MATHEMATICSDIR}/Interpolators/UnitTests/unitTestCubicSplineInterpolator.cpp")
-setup_custom_test_program(test_CubicSplineInterpolator "${SRCROOT}${MATHEMATICSDIR}")
-target_link_libraries(test_CubicSplineInterpolator tudat_input_output tudat_interpolators tudat_basic_mathematics ${Boost_LIBRARIES})
+set(MATHS_INTERP_TEST_DIR "${SRCROOT}${MATHEMATICSDIR}/Interpolators/UnitTests")
 
-add_executable(test_HermiteCubicSplineInterpolator "${SRCROOT}${MATHEMATICSDIR}/Interpolators/UnitTests/unitTestHermiteCubicSplineInterpolator.cpp")
-setup_custom_test_program(test_HermiteCubicSplineInterpolator "${SRCROOT}${MATHEMATICSDIR}")
-target_link_libraries(test_HermiteCubicSplineInterpolator tudat_input_output tudat_interpolators tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_CubicSplineInterpolator
+  SOURCES "${MATHS_INTERP_TEST_DIR}/unitTestCubicSplineInterpolator.cpp"
+  LINK_LIBRARIES tudat_input_output
+                 tudat_interpolators
+                 tudat_basic_mathematics
+                 ${Boost_LIBRARIES})
 
-add_executable(test_LinearInterpolator "${SRCROOT}${MATHEMATICSDIR}/Interpolators/UnitTests/unitTestLinearInterpolator.cpp")
-setup_custom_test_program(test_LinearInterpolator "${SRCROOT}${MATHEMATICSDIR}")
-target_link_libraries(test_LinearInterpolator tudat_input_output tudat_interpolators tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_HermiteCubicSplineInterpolator
+  SOURCES "${MATHS_INTERP_TEST_DIR}/unitTestHermiteCubicSplineInterpolator.cpp"
+  LINK_LIBRARIES tudat_input_output
+                 tudat_interpolators
+                 tudat_basic_mathematics
+                 ${Boost_LIBRARIES})
 
-add_executable(test_MultiLinearInterpolator "${SRCROOT}${MATHEMATICSDIR}/Interpolators/UnitTests/unitTestMultiLinearInterpolator.cpp")
-setup_custom_test_program(test_MultiLinearInterpolator "${SRCROOT}${MATHEMATICSDIR}")
-target_link_libraries(test_MultiLinearInterpolator tudat_input_output tudat_interpolators tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_LinearInterpolator
+  SOURCES "${MATHS_INTERP_TEST_DIR}/unitTestLinearInterpolator.cpp"
+  LINK_LIBRARIES tudat_input_output
+                 tudat_interpolators
+                 tudat_basic_mathematics
+                 ${Boost_LIBRARIES})
 
-add_executable(test_LagrangeInterpolator "${SRCROOT}${MATHEMATICSDIR}/Interpolators/UnitTests/unitTestLagrangeInterpolators.cpp")
-setup_custom_test_program(test_LagrangeInterpolator "${SRCROOT}${MATHEMATICSDIR}")
-target_link_libraries(test_LagrangeInterpolator tudat_input_output tudat_interpolators tudat_basic_mathematics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_MultiLinearInterpolator
+  SOURCES "${MATHS_INTERP_TEST_DIR}/unitTestMultiLinearInterpolator.cpp"
+  LINK_LIBRARIES tudat_input_output
+                 tudat_interpolators
+                 tudat_basic_mathematics
+                 ${Boost_LIBRARIES})
+
+tudat_add_test(
+  TARGET test_LagrangeInterpolator
+  SOURCES "${MATHS_INTERP_TEST_DIR}/unitTestLagrangeInterpolators.cpp"
+  LINK_LIBRARIES tudat_input_output
+                 tudat_interpolators
+                 tudat_basic_mathematics
+                 ${Boost_LIBRARIES})
 
 

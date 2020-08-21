@@ -38,22 +38,29 @@ add_library(tudat_electro_magnetism STATIC ${ELECTROMAGNETISM_SOURCES} ${ELECTRO
 setup_tudat_library_target(tudat_electro_magnetism "${SRCROOT}${ELECTROMAGNETISMDIR}")
 
 # Add unit tests.
-add_executable(test_CannonBallRadiationPressureAccelerationAndForce "${SRCROOT}${ELECTROMAGNETISMDIR}/UnitTests/unitTestCannonBallRadiationPressureAccelerationAndForce.cpp")
-setup_custom_test_program(test_CannonBallRadiationPressureAccelerationAndForce "${SRCROOT}${ELECTROMAGNETISMDIR}")
-target_link_libraries(test_CannonBallRadiationPressureAccelerationAndForce tudat_electro_magnetism tudat_basic_astrodynamics ${Boost_LIBRARIES})
+set(EM_TEST_DIR "${SRCROOT}${ELECTROMAGNETISMDIR}/UnitTests")
 
-add_executable(test_LorentzStaticMagneticAccelerationAndForce "${SRCROOT}${ELECTROMAGNETISMDIR}/UnitTests/unitTestLorentzStaticMagneticAccelerationAndForce.cpp")
-setup_custom_test_program(test_LorentzStaticMagneticAccelerationAndForce "${SRCROOT}${ELECTROMAGNETISMDIR}")
-target_link_libraries(test_LorentzStaticMagneticAccelerationAndForce tudat_electro_magnetism tudat_basic_astrodynamics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_CannonBallRadiationPressureAccelerationAndForce
+  SOURCES "${EM_TEST_DIR}/unitTestCannonBallRadiationPressureAccelerationAndForce.cpp"
+  LINK_LIBRARIES tudat_electro_magnetism tudat_basic_astrodynamics ${Boost_LIBRARIES})
 
-add_executable(test_RadiationPressureInterface "${SRCROOT}${ELECTROMAGNETISMDIR}/UnitTests/unitTestRadiationPressureInterface.cpp")
-setup_custom_test_program(test_RadiationPressureInterface "${SRCROOT}${ELECTROMAGNETISMDIR}")
-target_link_libraries(test_RadiationPressureInterface tudat_electro_magnetism tudat_basic_astrodynamics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_LorentzStaticMagneticAccelerationAndForce
+  SOURCES "${EM_TEST_DIR}/unitTestLorentzStaticMagneticAccelerationAndForce.cpp"
+  LINK_LIBRARIES tudat_electro_magnetism tudat_basic_astrodynamics ${Boost_LIBRARIES})
 
-add_executable(test_PanelledRadiationPressure "${SRCROOT}${ELECTROMAGNETISMDIR}/UnitTests/unitTestPanelledRadiationPressure.cpp")
-setup_custom_test_program(test_PanelledRadiationPressure "${ELECTROMAGNETISMDIR}")
-target_link_libraries(test_PanelledRadiationPressure ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_RadiationPressureInterface
+  SOURCES "${EM_TEST_DIR}/unitTestRadiationPressureInterface.cpp"
+  LINK_LIBRARIES tudat_electro_magnetism tudat_basic_astrodynamics ${Boost_LIBRARIES})
 
-add_executable(test_SolarSailAccelerationAndForce "${SRCROOT}${ELECTROMAGNETISMDIR}/UnitTests/unitTestSolarSailAccelerationAndForce.cpp")
-setup_custom_test_program(test_SolarSailAccelerationAndForce "${SRCROOT}${ELECTROMAGNETISMDIR}")
-target_link_libraries(test_SolarSailAccelerationAndForce tudat_electro_magnetism tudat_basic_astrodynamics ${Boost_LIBRARIES})
+tudat_add_test(
+  TARGET test_PanelledRadiationPressure
+  SOURCES "${EM_TEST_DIR}/unitTestPanelledRadiationPressure.cpp"
+  LINK_LIBRARIES ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
+tudat_add_test(
+  TARGET test_SolarSailAccelerationAndForce
+  SOURCES "${EM_TEST_DIR}/unitTestSolarSailAccelerationAndForce.cpp"
+  LINK_LIBRARIES tudat_electro_magnetism tudat_basic_astrodynamics ${Boost_LIBRARIES})
