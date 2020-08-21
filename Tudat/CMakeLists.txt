@@ -9,6 +9,7 @@
 
 # Specify minimum CMake version required to compile Tudat.
 cmake_minimum_required( VERSION 2.6 )
+cmake_policy(SET CMP0048 NEW)
 
 # Specific Tudat project name.
 project( Tudat )
