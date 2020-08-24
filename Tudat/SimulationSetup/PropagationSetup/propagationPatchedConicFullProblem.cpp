@@ -569,7 +569,7 @@ void propagateKeplerianOrbitLegAndFullProblem(
     double halvedTimeOfFlight = timeOfFlight / 2.0;
 
     // Time at the end of the transfer
-    double finalTime = initialTime + timeOfFlight;
+    //double finalTime = initialTime + timeOfFlight;
 
     // Retrieve positions of departure and arrival bodies from ephemerides
     Eigen::Vector3d cartesianPositionAtDepartureForPatchedConics;
@@ -754,6 +754,7 @@ std::shared_ptr< propagators::PropagationTerminationSettings > getSingleLegPartS
                     distanceArrivalToCentralBodies, gravitationalParameterArrivalBody, gravitationalParameterCentralBody );
     }
 
+    /*
     double synodicPeriod;
     {
         // Calculate the synodic period.
@@ -784,6 +785,7 @@ std::shared_ptr< propagators::PropagationTerminationSettings > getSingleLegPartS
             synodicPeriod = basic_astrodynamics::computeSynodicPeriod( orbitalPeriodArrivalBody, orbitalPeriodDepartureBody );
         }
     }
+    */
 
 
     // Create total propagator termination settings.

@@ -332,7 +332,7 @@ BOOST_AUTO_TEST_CASE( wrongRequestMathematicalFunctions )
     }
 
     // Catch the expected runtime error, and set the boolean flag to false.
-    catch ( std::runtime_error )
+    catch ( const std::runtime_error& )
     {
         isFourthDerivativeInversePolynomial = false;
     }
@@ -349,7 +349,7 @@ BOOST_AUTO_TEST_CASE( wrongRequestMathematicalFunctions )
     }
 
     // Catch the expected runtime error, and set the boolean flag to false.
-    catch ( std::runtime_error )
+    catch ( const std::runtime_error& )
     {
         isDefiniteIntegralInversePolynomial = false;
     }
@@ -366,7 +366,7 @@ BOOST_AUTO_TEST_CASE( wrongRequestMathematicalFunctions )
     }
 
     // Catch the expected runtime error, and set the boolean flag to false.
-    catch ( std::runtime_error )
+    catch ( const std::runtime_error& )
     {
         isFourthDerivativeOscillatingFunction = false;
     }
@@ -383,7 +383,7 @@ BOOST_AUTO_TEST_CASE( wrongRequestMathematicalFunctions )
     }
 
     // Catch the expected runtime error, and set the boolean flag to false.
-    catch ( std::runtime_error )
+    catch ( const std::runtime_error& )
     {
         isDefiniteIntegralOscillatingFunction = false;
     }

@@ -481,7 +481,7 @@ std::shared_ptr< PropagationTerminationDetails > integrateEquationsFromIntegrato
 
     // Set initial time step and total integration time.
     TimeStepType timeStep = initialTimeStep;
-    TimeType previousTime = currentTime;
+    //TimeType previousTime = currentTime;
     TimeType previousPrintTime = TUDAT_NAN;
 
     int saveIndex = 0;
@@ -497,7 +497,7 @@ std::shared_ptr< PropagationTerminationDetails > integrateEquationsFromIntegrato
         {
             if( ( newState.allFinite( ) == true ) && ( !newState.hasNaN( ) ) )
             {
-                previousTime = currentTime;
+                //previousTime = currentTime;
 
                 // Perform integration step.
                 newState = integrator->performIntegrationStep( timeStep );

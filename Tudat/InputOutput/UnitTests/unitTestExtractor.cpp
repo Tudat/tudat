@@ -194,7 +194,7 @@ BOOST_AUTO_TEST_CASE( extractor_CheckRequiredFieldTypes )
     }
 
     // Catch the expected runtime error, and set the boolean flag to false.
-    catch ( std::runtime_error )
+    catch ( const std::runtime_error& )
     {
         areNameAndEpochFound = false;
     }
@@ -212,7 +212,7 @@ BOOST_AUTO_TEST_CASE( extractor_CheckRequiredFieldTypes )
     }
 
     // Catch the expected runtime error, and set the boolean flag to false.
-    catch ( std::runtime_error )
+    catch ( const std::runtime_error& )
     {
         areIdAndInclinationFound = false;
     }
@@ -230,7 +230,7 @@ BOOST_AUTO_TEST_CASE( extractor_CheckRequiredFieldTypes )
     }
 
     // Catch the expected runtime error, and set the boolean flag to false.
-    catch ( std::runtime_error )
+    catch ( const std::runtime_error& )
     {
         areNameAndIdFound = false;
     }

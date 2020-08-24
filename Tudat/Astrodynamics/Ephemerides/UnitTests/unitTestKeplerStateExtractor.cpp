@@ -297,7 +297,7 @@ BOOST_AUTO_TEST_CASE( keplerStateExtractor_MissingSemiMajorAxis )
     }
 
     // Catch the expected runtime error, and set the boolean flag to false.
-    catch ( std::runtime_error )
+    catch( const std::runtime_error& )
     {
         isSemiMajorAxisFound = false;
     }
@@ -375,7 +375,7 @@ BOOST_AUTO_TEST_CASE( keplerStateExtractor_MissingEccentricity )
     }
 
     // Catch the expected runtime error, and set the boolean flag to false.
-    catch ( std::runtime_error )
+    catch( const std::runtime_error& )
     {
         isEccentricityFound = false;
     }
@@ -453,7 +453,7 @@ BOOST_AUTO_TEST_CASE( keplerStateExtractor_MissingInclination )
     }
 
     // Catch the expected runtime error, and set the boolean flag to false.
-    catch ( std::runtime_error )
+    catch( const std::runtime_error& )
     {
         isInclinationFound = false;
     }
@@ -531,7 +531,7 @@ BOOST_AUTO_TEST_CASE( keplerStateExtractor_MissingLongitudeOfAscendingNode )
     }
 
     // Catch the expected runtime error, and set the boolean flag to false.
-    catch ( std::runtime_error )
+    catch( const std::runtime_error& )
     {
         isLongitudeOfAscendingNodeFound = false;
     }
@@ -609,7 +609,7 @@ BOOST_AUTO_TEST_CASE( keplerStateExtractor_MissingArgumentOfPeriapsis )
     }
 
     // Catch the expected runtime error, and set the boolean flag to false.
-    catch ( std::runtime_error )
+    catch( const std::runtime_error& )
     {
         isArgumentOfPeriapsisFound = false;
     }
@@ -687,7 +687,7 @@ BOOST_AUTO_TEST_CASE( keplerStateExtractor_MissingTrueOrMeanAnomaly )
     }
 
     // Catch the expected runtime error, and set the boolean flag to false.
-    catch ( std::runtime_error )
+    catch( const std::runtime_error& )
     {
         isTrueAnomalyFound = false;
     }

@@ -38,23 +38,23 @@ BOOST_AUTO_TEST_CASE( test2Dimensions )
 {
     // Create independent variable vector.
     std::vector< std::vector< double > > independentValues;
-    
+
     // Resize independent variable vector to two dimensions and assign values.
     independentValues.resize( 2 );
     for ( int i = 0; i < 5; i++ )
     {
         independentValues[ 0 ].push_back( 1950.0 + static_cast< double >( i ) * 10.0 );
     }
-    
+
     for ( int i = 0; i < 3; i++ )
     {
         independentValues[ 1 ].push_back( 10.0 + static_cast< double >( i ) * 10.0 );
     }
-    
+
     // Create two-dimensional array for dependent values.
     boost::multi_array< double, 2 > dependentValues;
     dependentValues.resize( boost::extents[ 5 ][ 3 ] );
-    
+
     dependentValues[ 0 ][ 0 ] = 150.697;
     dependentValues[ 0 ][ 1 ] = 199.592;
     dependentValues[ 0 ][ 2 ] = 187.625;
@@ -70,19 +70,19 @@ BOOST_AUTO_TEST_CASE( test2Dimensions )
     dependentValues[ 4 ][ 0 ] = 249.633;
     dependentValues[ 4 ][ 1 ] = 120.281;
     dependentValues[ 4 ][ 2 ] = 598.243;
-    
+
     // Initialize interpolator.
     interpolators::MultiLinearInterpolator< double, double, 2 > twoDimensionalInterpolator(
                 independentValues, dependentValues );
-    
+
     // Set interpolation target's independent values.
     std::vector< double > targetValue( 2 );
     targetValue[ 0 ] = 1975.0;
     targetValue[ 1 ] = 15.0;
-    
+
     // Declare interpolated dependent variable value and execute interpolation.
     const double interpolationResult = twoDimensionalInterpolator.interpolate( targetValue );
-    
+
     // Check if equal to MATLAB result up to machine precision.
     BOOST_CHECK_CLOSE_FRACTION( 190.62875, interpolationResult,
                                 std::numeric_limits< double >::epsilon( ) );
@@ -93,7 +93,7 @@ BOOST_AUTO_TEST_CASE( test4Dimensions )
 {
     // Create independent variable vector.
     std::vector< std::vector< double > > independentValues;
-    
+
     // Resize independent variable vector to two dimensions and assign values.
     independentValues.resize( 4 );
     for ( int i = 0; i < 11; i++ )
@@ -102,17 +102,17 @@ BOOST_AUTO_TEST_CASE( test4Dimensions )
         independentValues[ 1 ].push_back( -1.0 + static_cast< double >( i ) * 0.2 );
         independentValues[ 2 ].push_back( -1.0 + static_cast< double >( i ) * 0.2 );
     }
-    
+
     for ( int i = 0; i < 6; i++ )
     {
         independentValues[ 3 ].push_back( static_cast< double >( i ) * 2.0 );
     }
-    
+
     // Create four-dimensional array for dependent values based on analytical function
     // f = t*e^(-x^2 - y^2 - z^2 ).
     boost::multi_array< double, 4 > dependentValues;
     dependentValues.resize( boost::extents[ 11 ][ 11 ][ 11 ][ 6 ] );
-    
+
     for ( int i = 0; i < 11; i++ )
     {
         for ( int j = 0; j < 11; j++ )
@@ -130,21 +130,21 @@ BOOST_AUTO_TEST_CASE( test4Dimensions )
             }
         }
     }
-    
+
     // Initialize interpolator.
     interpolators::MultiLinearInterpolator< double, double, 4 > fourDimensionalInterpolator(
                 independentValues, dependentValues );
-    
+
     // Set interpolation target's independent values.
     std::vector< double > targetValue( 4 );
     targetValue[ 0 ] = -1.0;
     targetValue[ 1 ] = 0.1;
     targetValue[ 2 ] = 0.5;
     targetValue[ 3 ] = 7.0;
-    
+
     // Declare interpolated dependent variable value and execute interpolation.
     const double interpolationResult = fourDimensionalInterpolator.interpolate( targetValue );
-    
+
     // Check if equal to MATLAB result up to machine precision
     BOOST_CHECK_CLOSE_FRACTION( 1.956391733957447, interpolationResult,
                                 std::numeric_limits< double >::epsilon( ) );
@@ -154,26 +154,26 @@ BOOST_AUTO_TEST_CASE( test4Dimensions )
 BOOST_AUTO_TEST_CASE( test2DimensionsBoundaryCase )
 {
     using namespace tudat::interpolators;
-    
+
     // Create independent variable vector.
     std::vector< std::vector< double > > independentValues;
-    
+
     // Resize independent variable vector to two dimensions and assign values.
     independentValues.resize( 2 );
     for ( int i = 0; i < 5; i++ )
     {
         independentValues[ 0 ].push_back( 1950.0 + static_cast< double >( i ) * 10.0 );
     }
-    
+
     for ( int i = 0; i < 3; i++ )
     {
         independentValues[ 1 ].push_back( 10.0 + static_cast< double >( i ) * 10.0 );
     }
-    
+
     // Create two-dimensional array for dependent values.
     boost::multi_array< double, 2 > dependentValues;
     dependentValues.resize( boost::extents[ 5 ][ 3 ] );
-    
+
     dependentValues[ 0 ][ 0 ] = 150.697;
     dependentValues[ 0 ][ 1 ] = 199.592;
     dependentValues[ 0 ][ 2 ] = 187.625;
@@ -189,7 +189,7 @@ BOOST_AUTO_TEST_CASE( test2DimensionsBoundaryCase )
     dependentValues[ 4 ][ 0 ] = 249.633;
     dependentValues[ 4 ][ 1 ] = 120.281;
     dependentValues[ 4 ][ 2 ] = 598.243;
-    
+
     // Set interpolation target's independent values.
     std::vector< std::vector< double > > targetValue( 5 );
     targetValue[ 0 ].resize( 2 );
@@ -221,7 +221,7 @@ BOOST_AUTO_TEST_CASE( test2DimensionsBoundaryCase )
     extrapolationResults[ 2 ] = 226.973375;
     extrapolationResults[ 3 ] = 426.835875;
     extrapolationResults[ 4 ] = 105.17575;
-    
+
     // Loop over test cases and boundary handling methods.
     bool exceptionIsCaught;
     double interpolatedValue;
@@ -241,7 +241,7 @@ BOOST_AUTO_TEST_CASE( test2DimensionsBoundaryCase )
                 {
                     twoDimensionalInterpolator.interpolate( targetValue.at( j ) );
                 }
-                catch( std::runtime_error )
+                catch( const std::runtime_error& )
                 {
                     exceptionIsCaught = true;
                 }

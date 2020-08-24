@@ -16,7 +16,7 @@
  *      all Runge-Kutta-type integrators.
  *
  *      It should be noted that the getCurrentStateDerivatives() member function is not tested in a
- *      fully generic manner at the moment; the test is setup specifically based on the 
+ *      fully generic manner at the moment; the test is setup specifically based on the
  *      Runge-Kutta-Fehlberg 4(5) (RKF45) integrator. A more comprehensive test should be designed
  *      to ensure that the member function performs as desired regardless of the coefficient set
  *      chosen.
@@ -156,8 +156,8 @@ BOOST_AUTO_TEST_CASE( testMinimumStepSizeRuntimeError )
         }
 
         // Catch the expected runtime error, and set the boolean flag to true.
-        catch ( RungeKuttaVariableStepSizeIntegratorXd::MinimumStepSizeExceededError
-                minimumStepSizeExceededError )
+        catch ( const RungeKuttaVariableStepSizeIntegratorXd::MinimumStepSizeExceededError
+                &minimumStepSizeExceededError )
         {
             isMinimumStepSizeExceededForIntegrateTo = true;
             BOOST_CHECK_EQUAL( minimumStepSizeExceededError.minimumStepSize, 100.0 );
@@ -181,8 +181,8 @@ BOOST_AUTO_TEST_CASE( testMinimumStepSizeRuntimeError )
         }
 
         // Catch the expected runtime error, and set the boolean flag to true.
-        catch ( RungeKuttaVariableStepSizeIntegratorXd::MinimumStepSizeExceededError
-                minimumStepSizeExceededError )
+        catch ( const RungeKuttaVariableStepSizeIntegratorXd::MinimumStepSizeExceededError
+                &minimumStepSizeExceededError )
         {
             isMinimumStepSizeExceededForPerformIntegrationStep = true;
             BOOST_CHECK_EQUAL( minimumStepSizeExceededError.minimumStepSize, 100.0 );
@@ -200,8 +200,8 @@ BOOST_AUTO_TEST_CASE( testStateDerivativeRetrievalFunction )
     using namespace unit_tests::numerical_integrator_test_functions;
 
     // This test is based on the Runge-Kutta-Fehlberg 4(5) coefficient set, hence the test does not
-    // robustly ensure that the getCurrentStateDerivatives() works correctly for any given 
-    // coefficient set currently. This test is more of an preliminary check that the function 
+    // robustly ensure that the getCurrentStateDerivatives() works correctly for any given
+    // coefficient set currently. This test is more of an preliminary check that the function
     // performs as required, with the extrapolation that it is likely to perform consistently in
     // this manner for any Runge-Kutta-type coefficient set.
 
@@ -231,7 +231,7 @@ BOOST_AUTO_TEST_CASE( testStateDerivativeRetrievalFunction )
     // Retrieve state derivative values used in previous time step.
     std::vector< Eigen::VectorXd > stateDerivatives = integrator.getCurrentStateDerivatives( );
 
-    // Check size of state derivative vector. This test is specifically set up to test the for the 
+    // Check size of state derivative vector. This test is specifically set up to test the for the
     // number of stages in the RKF45 integrator.
     BOOST_CHECK_EQUAL( stateDerivatives.size( ), 6 );
 
