@@ -264,7 +264,7 @@ BOOST_AUTO_TEST_CASE( testIsOrbitRetrograde )
         calculatedIsOrbitRetrograde = isOrbitRetrograde( testKepler );
     }
     // Catch the expected runtime error, and set the boolean flag to true.
-    catch ( std::runtime_error )
+    catch( const std::runtime_error& )
     {
         isExceptionFound = true;
     }
@@ -278,7 +278,7 @@ BOOST_AUTO_TEST_CASE( testIsOrbitRetrograde )
         calculatedIsOrbitRetrograde = isOrbitRetrograde( testKepler( inclinationIndex ) );
     }
     // Catch the expected runtime error, and set the boolean flag to true.
-    catch ( std::runtime_error )
+    catch( const std::runtime_error& )
     {
         isExceptionFound = true;
     }
@@ -293,7 +293,7 @@ BOOST_AUTO_TEST_CASE( testIsOrbitRetrograde )
         calculatedIsOrbitRetrograde = isOrbitRetrograde( testKepler );
     }
     // Catch the expected runtime error, and set the boolean flag to true.
-    catch ( std::runtime_error )
+    catch( const std::runtime_error& )
     {
         isExceptionFound = true;
     }
@@ -307,7 +307,7 @@ BOOST_AUTO_TEST_CASE( testIsOrbitRetrograde )
         calculatedIsOrbitRetrograde = isOrbitRetrograde( testKepler( inclinationIndex ) );
     }
     // Catch the expected runtime error, and set the boolean flag to true.
-    catch ( std::runtime_error )
+    catch( const std::runtime_error& )
     {
         isExceptionFound = true;
     }

@@ -167,7 +167,7 @@ BOOST_AUTO_TEST_CASE( testconvertKeplerianToUnifiedStateModelModifiedRodriguesPa
                     convertKeplerianToUnifiedStateModelModifiedRodriguesParameterElements( keplerianElements,
                                                                  centralBodyGravitationalParameter );
         }
-        catch( std::runtime_error )
+        catch( const std::runtime_error& )
         {
             isExceptionFound = true;
         }
@@ -192,7 +192,7 @@ BOOST_AUTO_TEST_CASE( testconvertKeplerianToUnifiedStateModelModifiedRodriguesPa
                     convertKeplerianToUnifiedStateModelModifiedRodriguesParameterElements( keplerianElements,
                                                                  centralBodyGravitationalParameter );
         }
-        catch( std::runtime_error )
+        catch( const std::runtime_error& )
         {
             isExceptionFound = true;
         }
@@ -273,7 +273,7 @@ BOOST_AUTO_TEST_CASE( testconvertKeplerianToUnifiedStateModelModifiedRodriguesPa
                     ( keplerianElements, centralBodyGravitationalParameter );
         }
         // Catch the expected runtime error, and set the boolean flag to true.
-        catch ( std::runtime_error )
+        catch( const std::runtime_error& )
         {
             isExceptionFound = true;
         }
@@ -425,7 +425,7 @@ BOOST_AUTO_TEST_CASE( testconvertUnifiedStateModelModifiedRodriguesParametersToK
                                                                  centralBodyGravitationalParameter ),
                         centralBodyGravitationalParameter );
         }
-        catch( std::runtime_error )
+        catch( const std::runtime_error& )
         {
             isExceptionFound = true;
         }

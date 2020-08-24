@@ -104,7 +104,7 @@ BOOST_AUTO_TEST_CASE( testAerodynamicCoefficientGeneratorHypersonicLocalInclinat
     {
         coefficientInterface->getIndependentVariableName( 3 );
     }
-    catch ( std::runtime_error )
+    catch( const std::runtime_error& )
     {
         isVariableIndexTooHigh = 1;
     }

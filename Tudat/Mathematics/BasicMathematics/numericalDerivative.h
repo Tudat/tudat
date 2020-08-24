@@ -151,7 +151,7 @@ DependentVariableType computeCentralDifferenceFromFunction(
 
     IndependentVariableType perturbedInput;
     DependentVariableType perturbedOutput;
-    DependentVariableType numericalDerivative;
+    DependentVariableType numericalDerivative{};
 
     // Compute the numerical derivative.
     for ( std::map< int, double >::const_iterator coefficientIterator = coefficients.begin( );

@@ -308,7 +308,8 @@ BOOST_AUTO_TEST_CASE( testFromEngineThrustAcceleration )
 
         std::map< std::string, std::shared_ptr< basic_astrodynamics::MassRateModel > > massRateModels;
 
-        double totalMassRate, totalThrust;
+        double totalMassRate = 0.0,
+               totalThrust = 0.0;
         switch( i )
         {
         case 0:

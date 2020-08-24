@@ -43,7 +43,7 @@ double computeEquilibiumWallTemperature( const std::function< double( const doub
         wallTemperature = secant.execute(
                     equilibriumTemperatureFunction, equilibriumTemperatureFunction->getInitialGuess( ) );
     }
-    catch ( std::runtime_error )
+    catch( const std::runtime_error& )
     {
         try
         {
@@ -57,7 +57,7 @@ double computeEquilibiumWallTemperature( const std::function< double( const doub
         wallTemperature = bisection.execute(
                     equilibriumTemperatureFunction, equilibriumTemperatureFunction->getInitialGuess( ) );
         }
-        catch ( std::runtime_error )
+        catch( const std::runtime_error& )
         {
             throw std::runtime_error( "Error, could not find equilibrium wall temperature" );
         }

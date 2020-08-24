@@ -194,7 +194,7 @@ double gravityAssist( const double centralBodyGravitationalParameter,
             {
                 incomingEccentricity = rootFinder->execute( rootFunction, 1.0 + 1.0e-2 );
             }
-            catch(std::runtime_error)
+            catch( const std::runtime_error& )
             {
                 root_finders::RootFinderPointer rootFinder_temp
                   = std::make_shared< root_finders::Bisection >( 1.0e-12, 1000 ) ;
@@ -212,7 +212,7 @@ double gravityAssist( const double centralBodyGravitationalParameter,
             {
                 incomingEccentricity = rootFinder->execute( rootFunction, 1.0 + 1.0e-10 );
             }
-            catch(std::runtime_error)
+            catch ( const std::runtime_error& )
             {
                 root_finders::RootFinderPointer rootFinder_temp
                   = std::make_shared< root_finders::Bisection >( 1.0e-12, 1000 ) ;

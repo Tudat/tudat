@@ -235,7 +235,7 @@ void readCoefficientsFile(
                 }
                 numberOfIndependentVariables = std::stoi( vectorOfIndividualStrings.at( 0 ) );
                 isFirstLinePassed = true;
-            }            
+            }
             // If the file header is not passed, this should contain the independent variables
             else if ( !isHeaderPassed )
             {
@@ -387,7 +387,7 @@ int getNumberOfIndependentVariablesInCoefficientFile( const std::string& fileNam
             {
                 numberOfIndependentVariables = std::stod( vectorOfIndividualStrings.at( 0 ) );
             }
-            catch( std::runtime_error )
+            catch( const std::runtime_error& )
             {
                 throw std::runtime_error( "Error when reading coefficicent file size, input is inconsistent." );
             }

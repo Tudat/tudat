@@ -111,9 +111,9 @@ public:
 
         // Calculate k1-k4.
         StateDerivativeType k1, k2, k3, k4;
-        for ( unsigned int i = 1; i <= 4; i++ )
+        for ( unsigned int i = 1u; i <= 4u; i++ )
         {
-            IndependentVariableType time;
+            IndependentVariableType time = TUDAT_NAN;
             StateType state;
             switch ( i )
             {
