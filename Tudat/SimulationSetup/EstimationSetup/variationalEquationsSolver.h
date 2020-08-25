@@ -641,10 +641,12 @@ public:
                         getStateDerivativeModelMapFromVector( stateDerivativeModels ), bodyMap, parametersToEstimate );
 
             // Create simulation object for dynamics only.
+#if( BUILD_WITH_ESTIMATION_TOOLS )
             if( propagatorSettings_->getDependentVariablesToSave( ) != nullptr )
             {
                 propagatorSettings_->getDependentVariablesToSave( )->stateDerivativePartials_ = stateDerivativePartials;
             }
+#endif
 
             dynamicsSimulator_ = std::make_shared< SingleArcDynamicsSimulator< StateScalarType, TimeType > >(
                         bodyMap, integratorSettings, propagatorSettings_, false, clearNumericalSolution, setIntegratedResult, false,
