@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
 
@@ -165,7 +167,7 @@
         
           <li><a href="index.html">Troubleshooting</a> &raquo;</li>
         
-      <li>1. Debuggers</li>
+      <li><span class="section-number">1. </span>Debuggers</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -185,41 +187,41 @@
            <div itemprop="articleBody">
             
   <div class="section" id="debuggers">
-<span id="id1"></span><h1>1. Debuggers<a class="headerlink" href="#debuggers" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1><span class="section-number">1. </span>Debuggers<a class="headerlink" href="#debuggers" title="Permalink to this headline">¶</a></h1>
 <p>Debuggers are essential in finding the source of your problems. They are able to provide you with information about where in your code a problem occurs. Several debuggers are available two of which are discussed here.</p>
 <div class="section" id="debugging-in-qt">
-<h2>1.1. Debugging in Qt<a class="headerlink" href="#debugging-in-qt" title="Permalink to this headline">¶</a></h2>
-<p>This build in debugger is available on all platforms. It can be started from within Qt by selecting <code class="docutils literal"><span class="pre">Debug</span> <span class="pre">-&gt;</span> <span class="pre">Start</span> <span class="pre">Debugging</span> <span class="pre">-&gt;</span> <span class="pre">Start</span> <span class="pre">Debugging</span></code>.</p>
+<h2><span class="section-number">1.1. </span>Debugging in Qt<a class="headerlink" href="#debugging-in-qt" title="Permalink to this headline">¶</a></h2>
+<p>This build in debugger is available on all platforms. It can be started from within Qt by selecting <code class="docutils literal notranslate"><span class="pre">Debug</span> <span class="pre">-&gt;</span> <span class="pre">Start</span> <span class="pre">Debugging</span> <span class="pre">-&gt;</span> <span class="pre">Start</span> <span class="pre">Debugging</span></code>.</p>
 <p>In the debugger console the output of the debugger can be seen. This often gives information on where your problem arises. The following is an example of the output of the Qt built in debugger for an error occuring in the FlightConditions update function.</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/QtDebugger.png" src="../../_images/QtDebugger.png" />
 </div>
 </div>
 <div class="section" id="debugging-in-terminal">
-<h2>1.2. Debugging in Terminal<a class="headerlink" href="#debugging-in-terminal" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.2. </span>Debugging in Terminal<a class="headerlink" href="#debugging-in-terminal" title="Permalink to this headline">¶</a></h2>
 <p>On linux the debugger can be called from Terminal. It is installed by using (for debian-based distributions):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ sudo apt-get update
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get update
 $ sudo apt-get install gdb
 </pre></div>
 </div>
 <p>Then navigate to the folder with your application usually something like:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cd tudatBundle/tudatApplication/myApplicationsFolder/bin/applications/
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd tudatBundle/tudatApplication/myApplicationsFolder/bin/applications/
 </pre></div>
 </div>
 <p>Then run gdb with the following command:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ gdb ./myApplicationName
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ gdb ./myApplicationName
 </pre></div>
 </div>
 <p>Followed by:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">run</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">run</span>
 </pre></div>
 </div>
 <p>This will run the application and stops when it stumbles upon debugging symbols. If your application crashes the error can be traced back at this point by using:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">backtrace</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">backtrace</span>
 </pre></div>
 </div>
 <p>When applied to the same example as for the Qt build-in debugger, gdb provide the following output in the terminal:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>dominic@dominic-Precision-7510:~/Software/tudatBundle/tudatExampleApplications/satellitePropagatorExamples/bin/applications$ gdb ./application_ApolloEntry 
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>dominic@dominic-Precision-7510:~/Software/tudatBundle/tudatExampleApplications/satellitePropagatorExamples/bin/applications$ gdb ./application_ApolloEntry 
 GNU gdb (Ubuntu 7.11.1-0ubuntu1~16.5) 7.11.1
 Copyright (C) 2016 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;
@@ -275,8 +277,8 @@ Program received signal SIGABRT, Aborted.
 </div>
 </div>
 <div class="section" id="debugging-with-git">
-<h2>1.3. Debugging with Git<a class="headerlink" href="#debugging-with-git" title="Permalink to this headline">¶</a></h2>
-<p>You can also use Git to debug your code. In this case, rather than looking for a bug you have just introduced, you can use Git to pinpoint which commit introduced an error. The function you may want to you use, then is <code class="docutils literal"><span class="pre">git</span> <span class="pre">bisect</span></code>, which is very well explained <a class="reference external" href="https://git-scm.com/book/en/v2/Git-Tools-Debugging-with-Git#Binary-Search">here</a>.</p>
+<h2><span class="section-number">1.3. </span>Debugging with Git<a class="headerlink" href="#debugging-with-git" title="Permalink to this headline">¶</a></h2>
+<p>You can also use Git to debug your code. In this case, rather than looking for a bug you have just introduced, you can use Git to pinpoint which commit introduced an error. The function you may want to you use, then is <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">bisect</span></code>, which is very well explained <a class="reference external" href="https://git-scm.com/book/en/v2/Git-Tools-Debugging-with-Git#Binary-Search">here</a>.</p>
 </div>
 </div>
 
@@ -335,7 +337,8 @@ Program received signal SIGABRT, Aborted.
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

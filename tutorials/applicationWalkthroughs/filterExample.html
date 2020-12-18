@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
 
@@ -111,6 +113,9 @@
 <li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">11. Orbit Determination and Parameter Estimation (Basic)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="earthOrbiterStateEstimation.html">12. Orbit Determination and Parameter Estimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="interplanetaryTrajectory.html">13. MGA Trajectory Design</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fullPropagationCR3BP.html">14. Full propagation of the CR3BP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fullPropagationPatchedConicsTrajectory.html">15. Full propagation of a patched conics trajectory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shapeBasedTrajectory.html">16. Shape-Based Low-Thrust Trajectories</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="index.html#pagmo-optimization-tutorials">Pagmo Optimization Tutorials</a></li>
@@ -174,7 +179,7 @@
         
           <li><a href="index.html">Application Tutorials</a> &raquo;</li>
         
-      <li>9. Kalman Filter for State Estimation</li>
+      <li><span class="section-number">9. </span>Kalman Filter for State Estimation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -194,64 +199,65 @@
            <div itemprop="articleBody">
             
   <div class="section" id="kalman-filter-for-state-estimation">
-<span id="walkthroughsfiltering"></span><h1>9. Kalman Filter for State Estimation<a class="headerlink" href="#kalman-filter-for-state-estimation" title="Permalink to this headline">¶</a></h1>
+<span id="walkthroughsfiltering"></span><h1><span class="section-number">9. </span>Kalman Filter for State Estimation<a class="headerlink" href="#kalman-filter-for-state-estimation" title="Permalink to this headline">¶</a></h1>
 <p>In this example application, you will learn how to set up and use a Kalman filter object. In particular, this tutorial focuses only on the extended (EKF) and unscented (UKF) Kalman filters.</p>
 <p>The code for this tutorial is given on Github, and is also located in your Tudat bundle at:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">filterExample</span><span class="o">.</span><span class="n">cpp</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">filterExample</span><span class="o">.</span><span class="n">cpp</span>
 </pre></div>
 </div>
 <div class="section" id="problem-description">
-<h2>9.1. Problem Description<a class="headerlink" href="#problem-description" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.1. </span>Problem Description<a class="headerlink" href="#problem-description" title="Permalink to this headline">¶</a></h2>
 <p>The system we are trying to model is one of the examples given in:</p>
 <blockquote>
-<div>Zarchan, P. and Musoff, H., Fundamentals of Kalman Filtering: A Practical Approach, 3rd ed. American Institute of Aeronautics and Astronautics, 2013, vol. 232.</div></blockquote>
+<div><p>Zarchan, P. and Musoff, H., Fundamentals of Kalman Filtering: A Practical Approach, 3rd ed. American Institute of Aeronautics and Astronautics, 2013, vol. 232.</p>
+</div></blockquote>
 <p>and it represents a very simple case of a falling object, with the additional challenge of unknown ballistic coefficient. The job of the Kalman filter is then that of estimating the current position and velocity of the object, solely based on the measurement of position. Note that both position and velocity are expressed as scalars, and represent the first two entries of the state vector. The thrid and final entry is, as already mentioned, the ballistic coefficient.</p>
 <p>Clearly, this is an uncontrolled problem. However, for sake of completeness and to show its use, a control system object is added nonetheless. As you will notice by going through the code, this object always provides a control vector of zeros (and the control vector is not used in any of the equations).</p>
-<p>By looking at the code, you will also see that the filter settings and objects are created consecutively. This is a step that could, instead, have been done by directly creating a <a class="reference internal" href="../tudatFeatures/mathTools/filters.html#UnscentedKalmanFilter" title="UnscentedKalmanFilter"><code class="xref py py-class docutils literal"><span class="pre">UnscentedKalmanFilter</span></code></a> object. However, it is customary (in Tudat) for the user to input a set of settings, which are then used as input to another object (could be e.g., a navigation system), where the settings are converted to the filter itself. Thus, these two steps are taken just to show how it would be done in such a situation.</p>
+<p>By looking at the code, you will also see that the filter settings and objects are created consecutively. This is a step that could, instead, have been done by directly creating a <a class="reference internal" href="../tudatFeatures/mathTools/filters.html#UnscentedKalmanFilter" title="UnscentedKalmanFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnscentedKalmanFilter</span></code></a> object. However, it is customary (in Tudat) for the user to input a set of settings, which are then used as input to another object (could be e.g., a navigation system), where the settings are converted to the filter itself. Thus, these two steps are taken just to show how it would be done in such a situation.</p>
 </div>
 <div class="section" id="initial-conditions">
-<h2>9.2. Initial Conditions<a class="headerlink" href="#initial-conditions" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.2. </span>Initial Conditions<a class="headerlink" href="#initial-conditions" title="Permalink to this headline">¶</a></h2>
 <p>The initial conditions for this problem are given in the table below. Here, you can see the real (actual) initial conditions, and the conditions that are input in the filter (i.e., the estimated initial conditions). The job of the filter is to try to match these conditions over time.</p>
 <blockquote>
-<div><table border="1" class="docutils">
+<div><table class="docutils align-default">
 <colgroup>
-<col width="31%" />
-<col width="21%" />
-<col width="22%" />
-<col width="26%" />
+<col style="width: 31%" />
+<col style="width: 21%" />
+<col style="width: 22%" />
+<col style="width: 26%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">State Element</th>
-<th class="head">Actual</th>
-<th class="head">Estimated</th>
-<th class="head">Units</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>State Element</p></th>
+<th class="head"><p>Actual</p></th>
+<th class="head"><p>Estimated</p></th>
+<th class="head"><p>Units</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Position</td>
-<td>200000.0</td>
-<td>200025.0</td>
-<td>Ft</td>
+<tbody>
+<tr class="row-even"><td><p>Position</p></td>
+<td><p>200000.0</p></td>
+<td><p>200025.0</p></td>
+<td><p>Ft</p></td>
 </tr>
-<tr class="row-odd"><td>Velicity</td>
-<td>-6000.0</td>
-<td>-6150.0</td>
-<td>Ft/s</td>
+<tr class="row-odd"><td><p>Velicity</p></td>
+<td><p>-6000.0</p></td>
+<td><p>-6150.0</p></td>
+<td><p>Ft/s</p></td>
 </tr>
-<tr class="row-even"><td>Ballistic Coefficient</td>
-<td>500.0</td>
-<td>800.0</td>
-<td>Lb/Ft <span class="math">\({}^2\)</span></td>
+<tr class="row-even"><td><p>Ballistic Coefficient</p></td>
+<td><p>500.0</p></td>
+<td><p>800.0</p></td>
+<td><p>Lb/Ft <span class="math notranslate nohighlight">\({}^2\)</span></p></td>
 </tr>
 </tbody>
 </table>
 </div></blockquote>
-<p>Clearly, the intial estimate in position and velocity are quite close to the actual conditions, but the ballistic coefficient is rather different. You can try and change the estimated conditions to see how robust each filter is (although it is best to apply this technique to your own application, since each scenario can lead to different conclusions). You can also change (or tune) the system and measurement uncertainty matrices (usually referred to as <span class="math">\(Q\)</span> and <span class="math">\(R\)</span> in literature), to see how the behavior/convergence of the filter is affected.</p>
+<p>Clearly, the intial estimate in position and velocity are quite close to the actual conditions, but the ballistic coefficient is rather different. You can try and change the estimated conditions to see how robust each filter is (although it is best to apply this technique to your own application, since each scenario can lead to different conclusions). You can also change (or tune) the system and measurement uncertainty matrices (usually referred to as <span class="math notranslate nohighlight">\(Q\)</span> and <span class="math notranslate nohighlight">\(R\)</span> in literature), to see how the behavior/convergence of the filter is affected.</p>
 </div>
 <div class="section" id="results">
-<h2>9.3. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.3. </span>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p>If you run the application as is, the result should be similar to the ones shown below. Over 300 steps, the filter manages to converge very closely to the actual values of position, velocity and ballistic coefficient. Note, however, how the convergence in position is much quicker than the one in ballistic coefficient and much more stable than the one in velocity. This is simply related to the fact that position is the only state that is directly measured (and consequently, much less uncertain).</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/filterExample.png" src="../../_images/filterExample.png" />
 </div>
 </div>
@@ -312,7 +318,8 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

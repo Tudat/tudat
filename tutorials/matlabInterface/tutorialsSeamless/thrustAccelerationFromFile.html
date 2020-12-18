@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -193,11 +195,11 @@
   <div class="section" id="thrust-vector-read-from-tabulated-file">
 <span id="matlabinterface-tutorialsseamless-thrustaccelerationfromfile"></span><h1>Thrust vector read from tabulated file<a class="headerlink" href="#thrust-vector-read-from-tabulated-file" title="Permalink to this headline">¶</a></h1>
 <p>This tutorial describes how to propagate the orbit of a perturbed satellite about Earth which has a thrust force directed along the velocity vector using the MATLAB Interface, similar to the example <a class="reference internal" href="../../applicationWalkthroughs/useOfThrustUserDefinedThrustVector.html#walkthroughsuseofthrustuserdefinedthrustvector"><span class="std std-ref">Use of Thrust: User-defined Thrust Vector</span></a> written in C++. The code for this example can be found at:</p>
-<div class="highlight-txt"><div class="highlight"><pre><span></span>tudatBundle/matlabInterface/Examples/Seamless/thrustAccelerationFromFile.m
+<div class="highlight-txt notranslate"><div class="highlight"><pre><span></span>tudatBundle/matlabInterface/Examples/Seamless/thrustAccelerationFromFile.m
 </pre></div>
 </div>
-<p>This example is identical to the one described in <a class="reference internal" href="thrustAlongVelocityVector.html#matlabinterface-tutorialsseamless-thrustalongvelocityvector"><span class="std std-ref">Thrust force along velocity vector</span></a>, the only difference being that instead of creating the thrust force by defining its direction and (constant) magnitude, we provide the components of the thrust vector for several epochs using a tabulated file. This data is then interpolated and used to compute the thrust at each integration step. Thus, the set-up process is not repeated here. The only difference is the part of the code in which the <code class="xref py py-class docutils literal"><span class="pre">Thrust</span></code> object is created:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">thrust</span> <span class="p">=</span> <span class="n">Thrust</span><span class="p">();</span>
+<p>This example is identical to the one described in <a class="reference internal" href="thrustAlongVelocityVector.html#matlabinterface-tutorialsseamless-thrustalongvelocityvector"><span class="std std-ref">Thrust force along velocity vector</span></a>, the only difference being that instead of creating the thrust force by defining its direction and (constant) magnitude, we provide the components of the thrust vector for several epochs using a tabulated file. This data is then interpolated and used to compute the thrust at each integration step. Thus, the set-up process is not repeated here. The only difference is the part of the code in which the <code class="xref py py-class docutils literal notranslate"><span class="pre">Thrust</span></code> object is created:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">thrust</span> <span class="p">=</span> <span class="n">Thrust</span><span class="p">();</span>
 <span class="n">thrust</span><span class="p">.</span><span class="n">dataInterpolation</span><span class="p">.</span><span class="n">data</span> <span class="p">=</span> <span class="n">FromFileDataMap</span><span class="p">(</span><span class="s">&#39;thrustValues.txt&#39;</span><span class="p">);</span>
 <span class="n">thrust</span><span class="p">.</span><span class="n">dataInterpolation</span><span class="p">.</span><span class="n">interpolator</span><span class="p">.</span><span class="n">type</span> <span class="p">=</span> <span class="n">Interpolators</span><span class="p">.</span><span class="n">linear</span><span class="p">;</span>
 <span class="n">thrust</span><span class="p">.</span><span class="n">specificImpulse</span> <span class="p">=</span> <span class="mi">3000</span><span class="p">;</span>
@@ -208,8 +210,8 @@
 </div>
 <p>The file containing the thrust values looks like this:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">tudatBundle/matlabInterface/Examples/Seamless/thrustValues.txt</span></code></span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
-<div class="highlight-txt"><div class="highlight"><pre><span></span>0         0     0     5
+<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">tudatBundle/matlabInterface/Examples/Seamless/thrustValues.txt</span></code></span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-txt notranslate"><div class="highlight"><pre><span></span>0         0     0     5
 6068      0     1     5
 6097      1.0   0     5
 6097.5    0.8   0     5
@@ -225,23 +227,23 @@
 </div>
 <p>The first column contains the epochs at which the thrust vector changes, while the the columns 2 to 4 contain the components of the thrust in the LVLH frame at each epoch.</p>
 <p>After having defined all the setting needed for the propagation, we can write:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">run</span><span class="p">();</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">run</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>Now we can plot the temporal evolution of the altitude and mass of the body. We compute the altitude using the function <code class="docutils literal"><span class="pre">altitude</span></code> of the package <code class="docutils literal"><span class="pre">compute</span></code>, which takes as arguments a matrix of Cartesian states (retrieved from columns 2 to 7 of the numerical solution) and the body from which to retrieve the average radius. The mass is retrieved from the eighth column of the numerical solution matrix:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">dates</span> <span class="p">=</span> <span class="n">convert</span><span class="p">.</span><span class="n">epochToDate</span><span class="p">(</span><span class="n">simulation</span><span class="p">.</span><span class="n">results</span><span class="p">.</span><span class="n">numericalSolution</span><span class="p">(:,</span><span class="mi">1</span><span class="p">));</span>
+<p>Now we can plot the temporal evolution of the altitude and mass of the body. We compute the altitude using the function <code class="docutils literal notranslate"><span class="pre">altitude</span></code> of the package <code class="docutils literal notranslate"><span class="pre">compute</span></code>, which takes as arguments a matrix of Cartesian states (retrieved from columns 2 to 7 of the numerical solution) and the body from which to retrieve the average radius. The mass is retrieved from the eighth column of the numerical solution matrix:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">dates</span> <span class="p">=</span> <span class="n">convert</span><span class="p">.</span><span class="n">epochToDate</span><span class="p">(</span><span class="n">simulation</span><span class="p">.</span><span class="n">results</span><span class="p">.</span><span class="n">numericalSolution</span><span class="p">(:,</span><span class="mi">1</span><span class="p">));</span>
 <span class="n">h</span> <span class="p">=</span> <span class="n">compute</span><span class="p">.</span><span class="n">altitude</span><span class="p">(</span><span class="n">simulation</span><span class="p">.</span><span class="n">results</span><span class="p">.</span><span class="n">numericalSolution</span><span class="p">(:,</span><span class="mi">2</span><span class="p">:</span><span class="mi">7</span><span class="p">),</span><span class="n">Earth</span><span class="p">);</span>
 <span class="n">m</span> <span class="p">=</span> <span class="n">simulation</span><span class="p">.</span><span class="n">results</span><span class="p">.</span><span class="n">numericalSolution</span><span class="p">(:,</span><span class="mi">8</span><span class="p">);</span>
 
 <span class="n">figure</span><span class="p">;</span>
-<span class="n">grid</span> <span class="n">on</span><span class="p">;</span>
-<span class="n">hold</span> <span class="n">on</span><span class="p">;</span>
+<span class="n">grid</span> <span class="s">on</span><span class="p">;</span>
+<span class="n">hold</span> <span class="s">on</span><span class="p">;</span>
 
-<span class="n">yyaxis</span> <span class="n">left</span><span class="p">;</span>
+<span class="n">yyaxis</span> <span class="s">left</span><span class="p">;</span>
 <span class="n">semilogy</span><span class="p">(</span><span class="n">dates</span><span class="p">,</span><span class="n">h</span><span class="o">/</span><span class="mf">1e3</span><span class="p">);</span>
 <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Altitude [km]&#39;</span><span class="p">);</span>
 
-<span class="n">yyaxis</span> <span class="n">right</span><span class="p">;</span>
+<span class="n">yyaxis</span> <span class="s">right</span><span class="p">;</span>
 <span class="n">plot</span><span class="p">(</span><span class="n">dates</span><span class="p">,</span><span class="n">m</span><span class="p">);</span>
 <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Mass [kg]&#39;</span><span class="p">);</span>
 </pre></div>
@@ -304,7 +306,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

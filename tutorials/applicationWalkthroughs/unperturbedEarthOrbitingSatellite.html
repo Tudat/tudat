@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
 
@@ -111,6 +113,9 @@
 <li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">11. Orbit Determination and Parameter Estimation (Basic)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="earthOrbiterStateEstimation.html">12. Orbit Determination and Parameter Estimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="interplanetaryTrajectory.html">13. MGA Trajectory Design</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fullPropagationCR3BP.html">14. Full propagation of the CR3BP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fullPropagationPatchedConicsTrajectory.html">15. Full propagation of a patched conics trajectory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shapeBasedTrajectory.html">16. Shape-Based Low-Thrust Trajectories</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="index.html#pagmo-optimization-tutorials">Pagmo Optimization Tutorials</a></li>
@@ -174,7 +179,7 @@
         
           <li><a href="index.html">Application Tutorials</a> &raquo;</li>
         
-      <li>1. Unperturbed Earth-orbiting Satellite</li>
+      <li><span class="section-number">1. </span>Unperturbed Earth-orbiting Satellite</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -194,50 +199,51 @@
            <div itemprop="articleBody">
             
   <div class="section" id="unperturbed-earth-orbiting-satellite">
-<span id="walkthroughsunperturbedearthorbitingsatellite"></span><h1>1. Unperturbed Earth-orbiting Satellite<a class="headerlink" href="#unperturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
+<span id="walkthroughsunperturbedearthorbitingsatellite"></span><h1><span class="section-number">1. </span>Unperturbed Earth-orbiting Satellite<a class="headerlink" href="#unperturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
 <p>The example described on this page is that of Asterix, a single satellite that is orbiting the Earth. The code for this tutorial is given on Github, and is also located in your Tudat bundle at:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">singleSatellitePropagator</span><span class="o">.</span><span class="n">cpp</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">singleSatellitePropagator</span><span class="o">.</span><span class="n">cpp</span>
 </pre></div>
 </div>
 <p>For this example, we have the following problem statement:</p>
 <blockquote>
-<div><em>Given the position and velocity of the Asterix satellite at a certain point in time with respect to the Earth, what will its position and velocity be after a Julian day has passed?</em></div></blockquote>
+<div><p><em>Given the position and velocity of the Asterix satellite at a certain point in time with respect to the Earth, what will its position and velocity be after a Julian day has passed?</em></p>
+</div></blockquote>
 <p>There are a number of assumptions we can make in answering this question, which is often the case when translating a problem statement into a simulation. In our first tutorial, we will approximate the problem by the following:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The (initial) position and velocity of Asterix are given in the form of a Keplerian state vector.</li>
-<li>The Earth is modeled as a point mass, and the spacecraft is modeled as massless.</li>
-<li>All perturbations, such as solar radiation and third-body gravity,&nbsp;etc.&nbsp;are neglected.</li>
+<li><p>The (initial) position and velocity of Asterix are given in the form of a Keplerian state vector.</p></li>
+<li><p>The Earth is modeled as a point mass, and the spacecraft is modeled as massless.</p></li>
+<li><p>All perturbations, such as solar radiation and third-body gravity, etc. are neglected.</p></li>
 </ul>
 </div></blockquote>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">In a&nbsp;followup tutorial (see <a class="reference internal" href="perturbedEarthOrbitingSatellite.html#walkthroughsperturbedearthorbitingsatellite"><span class="std std-ref">Perturbed Earth-orbiting Satellite</span></a>), we will show how to extend the dynamical model of the spacecraft, slightly relaxing the last assumption.</p>
+<p class="admonition-title">Note</p>
+<p>In a followup tutorial (see <a class="reference internal" href="perturbedEarthOrbitingSatellite.html#walkthroughsperturbedearthorbitingsatellite"><span class="std std-ref">Perturbed Earth-orbiting Satellite</span></a>), we will show how to extend the dynamical model of the spacecraft, slightly relaxing the last assumption.</p>
 </div>
 <p>The main focus of this tutorial is to provide insight into the use of the Tudat library for your application. Using this test case, we will show how you can use some of the elements of the Tudat library, namely:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The transformation from Keplerian elements (provided) to Cartesian elements (required by propagator).</li>
-<li>The settings for the environment.</li>
-<li>The settings for the acceleration models.</li>
-<li>The settings for the state derivative model (propagator).</li>
-<li>The settings for the numerical integrator.</li>
-<li>The use of ‘create’ functions to parse these settings.</li>
+<li><p>The transformation from Keplerian elements (provided) to Cartesian elements (required by propagator).</p></li>
+<li><p>The settings for the environment.</p></li>
+<li><p>The settings for the acceleration models.</p></li>
+<li><p>The settings for the state derivative model (propagator).</p></li>
+<li><p>The settings for the numerical integrator.</p></li>
+<li><p>The use of ‘create’ functions to parse these settings.</p></li>
 </ul>
 </div></blockquote>
-<p>In particular, it will show you how these elements can work together to provide you with a powerful satellite propagator tool. It is not the intention to give you a C++ tutorial. Only the parts of the source code specific to Tudat will be discussed on this page. Detailed documentation on the&nbsp;environment models,&nbsp;acceleration models&nbsp;and&nbsp;propagators/integrators&nbsp;is available, but we recommend working through the tutorials here before delving into the details of all options that are available to you.</p>
+<p>In particular, it will show you how these elements can work together to provide you with a powerful satellite propagator tool. It is not the intention to give you a C++ tutorial. Only the parts of the source code specific to Tudat will be discussed on this page. Detailed documentation on the environment models, acceleration models and propagators/integrators is available, but we recommend working through the tutorials here before delving into the details of all options that are available to you.</p>
 <p>In Tudat, the environment, acceleration models and propagator are not created directly by the user. Instead, the user defines a number of ‘Settings’ objects that describe how the actual models are to be put together. These Settings objects are then passed to ‘create’ functions to build up the objects/data used in the simulations, and link them all together. In linking these objects together, information is automatically updated, and where necessary transformed and processed in the manner specified by the user in the Settings objects.</p>
 <div class="section" id="set-up-the-environment">
-<h2>1.1. Set Up the Environment<a class="headerlink" href="#set-up-the-environment" title="Permalink to this headline">¶</a></h2>
-<p>First we discuss the setup of the environment, which is stored in a list of&nbsp;<a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;objects, each of which represents either a natural celestial body, or a spacecraft (orbiter, entry vehicle, etc.). The entire environment (gravity fields, atmospheres, ephemerides, rotation models, etc.) are then defined as members of the corresponding&nbsp;<a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object. For this example, the only environment models we need are:</p>
+<h2><span class="section-number">1.1. </span>Set Up the Environment<a class="headerlink" href="#set-up-the-environment" title="Permalink to this headline">¶</a></h2>
+<p>First we discuss the setup of the environment, which is stored in a list of <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> objects, each of which represents either a natural celestial body, or a spacecraft (orbiter, entry vehicle, etc.). The entire environment (gravity fields, atmospheres, ephemerides, rotation models, etc.) are then defined as members of the corresponding <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> object. For this example, the only environment models we need are:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Earth gravity field (point-mass).</li>
-<li>Earth ephemeris model.</li>
+<li><p>Earth gravity field (point-mass).</p></li>
+<li><p>Earth ephemeris model.</p></li>
 </ul>
 </div></blockquote>
 <p>The block of code used to generate the environment that we require is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create body objects.</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create body objects.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToCreate</span><span class="p">;</span>
 <span class="n">bodiesToCreate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodySettings</span> <span class="o">=</span>
@@ -249,47 +255,47 @@
 <span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Creating an environment starts by creating the settings for all required environment models, which are stored in a list of&nbsp;<a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> objects. Each&nbsp;<a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>&nbsp;object has a list of objects for environment model settings, which are empty upon creation of the&nbsp;<a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>, and may be set by the user to their desired specifications. To save you the trouble of having to define all settings manually, we provide default options for the environment, many of which will often be sufficient for a given simulation. A list of all possible properties of the&nbsp;<a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a>, as well as the default settings, can be found&nbsp;<a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#tudatfeaturescreatingtheenvironment"><span class="std std-ref">here</span></a>. In our example, we only need environment models for the Earth, so we start by:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToCreate</span><span class="p">;</span>
+<p>Creating an environment starts by creating the settings for all required environment models, which are stored in a list of <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">BodySettings</span></code></a> objects. Each <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">BodySettings</span></code></a> object has a list of objects for environment model settings, which are empty upon creation of the <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">BodySettings</span></code></a>, and may be set by the user to their desired specifications. To save you the trouble of having to define all settings manually, we provide default options for the environment, many of which will often be sufficient for a given simulation. A list of all possible properties of the <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">BodySettings</span></code></a>, as well as the default settings, can be found <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#tudatfeaturescreatingtheenvironment"><span class="std std-ref">here</span></a>. In our example, we only need environment models for the Earth, so we start by:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToCreate</span><span class="p">;</span>
 <span class="n">bodiesToCreate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodySettings</span> <span class="o">=</span>
         <span class="n">getDefaultBodySettings</span><span class="p">(</span> <span class="n">bodiesToCreate</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>With the settings that are now stored in the&nbsp;<code class="docutils literal"><span class="pre">bodySettings</span></code>&nbsp;map, we could generate our environment and move on to the next step of the simulation. However, both to showcase one of the options of setting up the environment, and for numerical accuracy, we make one modification to the default ephemeris settings, defining the Earth to be fixed at the center of the Solar system:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<p>With the settings that are now stored in the <code class="docutils literal notranslate"><span class="pre">bodySettings</span></code> map, we could generate our environment and move on to the next step of the simulation. However, both to showcase one of the options of setting up the environment, and for numerical accuracy, we make one modification to the default ephemeris settings, defining the Earth to be fixed at the center of the Solar system:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
         <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">::</span><span class="n">Zero</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">By using this code, we ‘cheat’ a little bit, since we put the Earth in the main inertial frame for Tudat: the Solar System Barycenter (something that is done by default by the <a class="reference internal" href="../tudatFeatures/environmentSetup/availableSettings.html#ConstantEphemerisSettings" title="ConstantEphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">ConstantEphemerisSettings</span></code></a>, since the second argument is not specified). This approach should <strong>only</strong> be used when considering no third-body perturbations. Note that we could have used any ephemeris setting for the Earth (since we propagate our satellite w.r.t. the Earth origin) without changing anything in our dynamical model, but at a slight loss of numerical precision.</p>
+<p class="admonition-title">Warning</p>
+<p>By using this code, we ‘cheat’ a little bit, since we put the Earth in the main inertial frame for Tudat: the Solar System Barycenter (something that is done by default by the <a class="reference internal" href="../tudatFeatures/environmentSetup/availableSettings.html#ConstantEphemerisSettings" title="ConstantEphemerisSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstantEphemerisSettings</span></code></a>, since the second argument is not specified). This approach should <strong>only</strong> be used when considering no third-body perturbations. Note that we could have used any ephemeris setting for the Earth (since we propagate our satellite w.r.t. the Earth origin) without changing anything in our dynamical model, but at a slight loss of numerical precision.</p>
 </div>
-<p>Now, we have created the settings we need for the environment, and we can move on to creating the environment models themselves, which are stored in a set of&nbsp;<a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;objects. These <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;objects are stored in&nbsp;a <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a>, which is a&nbsp;<code class="docutils literal"><span class="pre">typedef</span></code>&nbsp;(shorthand name) for:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">Body</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
+<p>Now, we have created the settings we need for the environment, and we can move on to creating the environment models themselves, which are stored in a set of <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> objects. These <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> objects are stored in a <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">NamedBodyMap</span></code></a>, which is a <code class="docutils literal notranslate"><span class="pre">typedef</span></code> (shorthand name) for:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">Body</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>This&nbsp;<code class="docutils literal"><span class="pre">unordered_map</span></code>&nbsp;may be accessed as a regular&nbsp;map. The <code class="docutils literal"><span class="pre">std::string</span></code> keys represent the names of the bodies in the list, and the value <code class="docutils literal"><span class="pre">std::shared_ptr</span></code> the corresponding <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object containing all the environment models. With the settings of our ephemeris and gravity field, we now create the <code class="docutils literal"><span class="pre">bodyMap</span></code> by:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
+<p>This <code class="docutils literal notranslate"><span class="pre">unordered_map</span></code> may be accessed as a regular map. The <code class="docutils literal notranslate"><span class="pre">std::string</span></code> keys represent the names of the bodies in the list, and the value <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code> the corresponding <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> object containing all the environment models. With the settings of our ephemeris and gravity field, we now create the <code class="docutils literal notranslate"><span class="pre">bodyMap</span></code> by:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="create-the-vehicle">
-<h2>1.2. Create the Vehicle<a class="headerlink" href="#create-the-vehicle" title="Permalink to this headline">¶</a></h2>
-<p>Our environment is now missing only one aspect: the spacecraft. Our spacecraft (called Asterix) requires no specific properties, it merely needs to exist (its initial state is defined in a subsequent part of the example). Therefore, we can simply add the Asterix satellite to our environment by creating a new empty&nbsp;<a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a>&nbsp;object:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
+<h2><span class="section-number">1.2. </span>Create the Vehicle<a class="headerlink" href="#create-the-vehicle" title="Permalink to this headline">¶</a></h2>
+<p>Our environment is now missing only one aspect: the spacecraft. Our spacecraft (called Asterix) requires no specific properties, it merely needs to exist (its initial state is defined in a subsequent part of the example). Therefore, we can simply add the Asterix satellite to our environment by creating a new empty <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> object:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">Body</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Although not required in this simulation, it is good practice to call the following function following the complete setup of the <code class="docutils literal"><span class="pre">bodyMap</span></code>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">setGlobalFrameBodyEphemerides</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="s">&quot;SSB&quot;</span><span class="p">,</span> <span class="s">&quot;ECLIPJ2000&quot;</span> <span class="p">);</span>
+<p>Although not required in this simulation, it is good practice to call the following function following the complete setup of the <code class="docutils literal notranslate"><span class="pre">bodyMap</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">setGlobalFrameBodyEphemerides</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="s">&quot;SSB&quot;</span><span class="p">,</span> <span class="s">&quot;ECLIPJ2000&quot;</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>Calling this function will allow hierarchical ephemerides to be properly used in the simulation (i.e. orbiter ephemeris w.r.t. Moon, Moon w.r.t. Earth, Earth w.r.t. Sun, Sun w.r.t. barycenter).</p>
 </div>
 <div class="section" id="set-up-the-acceleration-odels">
-<h2>1.3. Set Up the Acceleration  odels<a class="headerlink" href="#set-up-the-acceleration-odels" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.3. </span>Set Up the Acceleration  odels<a class="headerlink" href="#set-up-the-acceleration-odels" title="Permalink to this headline">¶</a></h2>
 <p>To define the settings of the propagation of the orbit, we start by defining the required acceleration models. The block of code that performs the required operations is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define propagator settings variables.</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define propagator settings variables.</span>
 <span class="n">SelectedAccelerationMap</span> <span class="n">accelerationMap</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToPropagate</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodies</span><span class="p">;</span>
@@ -311,56 +317,56 @@
 <p>As with the environment models, there is no need to manually create the models. The user must only define the properties of the acceleration models that are desired, which are:</p>
 <blockquote>
 <div><ul class="simple">
-<li>List of bodies that are to be numerically propagated.</li>
-<li>Origin of reference frame in which they are to be propagated (may be different for each body). Note that propagation in Tudat is always done in a non-rotating reference frame, only the origin of the frames can be varied.</li>
-<li>A list of settings of the accelerations model(s) acting on the bodies in the simulation.</li>
+<li><p>List of bodies that are to be numerically propagated.</p></li>
+<li><p>Origin of reference frame in which they are to be propagated (may be different for each body). Note that propagation in Tudat is always done in a non-rotating reference frame, only the origin of the frames can be varied.</p></li>
+<li><p>A list of settings of the accelerations model(s) acting on the bodies in the simulation.</p></li>
 </ul>
 </div></blockquote>
 <p>These properties are to be defined in the following variables:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define propagator settings variables.</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define propagator settings variables.</span>
 <span class="n">SelectedAccelerationMap</span> <span class="n">accelerationMap</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToPropagate</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodies</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The list of propagated bodies and the reference frame origins (central bodies) are simply lists of strings, which for our case are:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">);</span>
 <span class="n">centralBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The settings for the accelerations require some more structure, though, and are stored in a&nbsp;<a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal"><span class="pre">SelectedAccelerationMap</span></code></a>. This is&nbsp;<code class="docutils literal"><span class="pre">typedef</span></code>&nbsp;for:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
+<p>The settings for the accelerations require some more structure, though, and are stored in a <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#SelectedAccelerationMap" title="SelectedAccelerationMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectedAccelerationMap</span></code></a>. This is <code class="docutils literal notranslate"><span class="pre">typedef</span></code> for:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>This is a double map (with twice a string as a key). The two levels correspond to the names of bodies undergoing an acceleration (first key), and those for bodies exerting an acceleration (second key). This allows any number of bodies to be propagated, undergoing any number (and type) of accelerations. Mutual acceleration between bodies being propagated, as is the case for Solar system dynamics for instance, is automatically handled by the code and requires no specific consideration.</p>
 <p>In our example, we have only a single point-mass acceleration due to Earth, acting on Asterix. We define the settings for the acceleration as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">accelerationsOfAsterix</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">accelerationsOfAsterix</span><span class="p">;</span>
 <span class="n">accelerationsOfAsterix</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
                                                  <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">central_gravity</span> <span class="p">)</span> <span class="p">);</span>
 <span class="n">accelerationMap</span><span class="p">[</span> <span class="s">&quot;Asterix&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">accelerationsOfAsterix</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>A single acceleration, of type <code class="docutils literal"><span class="pre">central_gravity</span></code> to be exerted by body <code class="docutils literal"><span class="pre">&quot;Earth&quot;</span></code> on body <code class="docutils literal"><span class="pre">&quot;Asterix&quot;</span></code> is now defined. The list of the actual acceleration models is now created by:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span> <span class="n">accelerationModelMap</span> <span class="o">=</span> <span class="n">createAccelerationModelsMap</span><span class="p">(</span>
+<p>A single acceleration, of type <code class="docutils literal notranslate"><span class="pre">central_gravity</span></code> to be exerted by body <code class="docutils literal notranslate"><span class="pre">&quot;Earth&quot;</span></code> on body <code class="docutils literal notranslate"><span class="pre">&quot;Asterix&quot;</span></code> is now defined. The list of the actual acceleration models is now created by:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span> <span class="n">accelerationModelMap</span> <span class="o">=</span> <span class="n">createAccelerationModelsMap</span><span class="p">(</span>
             <span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">centralBodies</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>which automatically links together all required objects and functions.</p>
 </div>
 <div class="section" id="set-up-the-propagation-settings">
-<h2>1.4. Set Up the Propagation Settings<a class="headerlink" href="#set-up-the-propagation-settings" title="Permalink to this headline">¶</a></h2>
-<p>Now that we have both our environment models and our acceleration model, we can create the full settings for the propagation. These settings are stored in a&nbsp;<a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a>&nbsp;object. For this example, we will only consider the propagation of translational dynamics, which is stored in the derived class&nbsp;<a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettings.html#TranslationalStatePropagatorSettings" title="TranslationalStatePropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">TranslationalStatePropagatorSettings</span></code></a>. The settings for the propagator are the following:</p>
+<h2><span class="section-number">1.4. </span>Set Up the Propagation Settings<a class="headerlink" href="#set-up-the-propagation-settings" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have both our environment models and our acceleration model, we can create the full settings for the propagation. These settings are stored in a <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropagatorSettings</span></code></a> object. For this example, we will only consider the propagation of translational dynamics, which is stored in the derived class <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettings.html#TranslationalStatePropagatorSettings" title="TranslationalStatePropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationalStatePropagatorSettings</span></code></a>. The settings for the propagator are the following:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The acceleration models.</li>
-<li>The list of bodies that are to be propagated.</li>
-<li>The origins w.r.t. which these bodies are to be propagated.</li>
-<li>The initial Cartesian state that is to be used.</li>
-<li>Termination conditions for the propagation (here, a fixed final time).</li>
+<li><p>The acceleration models.</p></li>
+<li><p>The list of bodies that are to be propagated.</p></li>
+<li><p>The origins w.r.t. which these bodies are to be propagated.</p></li>
+<li><p>The initial Cartesian state that is to be used.</p></li>
+<li><p>Termination conditions for the propagation (here, a fixed final time).</p></li>
 </ul>
 </div></blockquote>
 <p>The above settings are provided in the following block of code:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Set Keplerian elements for Asterix.</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Set Keplerian elements for Asterix.</span>
 <span class="n">Vector6d</span> <span class="n">asterixInitialStateInKeplerianElements</span><span class="p">;</span>
 <span class="n">asterixInitialStateInKeplerianElements</span><span class="p">(</span> <span class="n">semiMajorAxisIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">7500.0E3</span><span class="p">;</span>
 <span class="n">asterixInitialStateInKeplerianElements</span><span class="p">(</span> <span class="n">eccentricityIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
@@ -384,7 +390,7 @@
 </pre></div>
 </div>
 <p>If the body that is being propagated has a pre-existing ephemeris, the initial state may be retrieved automatically. In this example, however, we manually define our initial state from the Keplerian state:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Set Keplerian elements for Asterix.</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Set Keplerian elements for Asterix.</span>
 <span class="n">Vector6d</span> <span class="n">asterixInitialStateInKeplerianElements</span><span class="p">;</span>
 <span class="n">asterixInitialStateInKeplerianElements</span><span class="p">(</span> <span class="n">semiMajorAxisIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">7500.0E3</span><span class="p">;</span>
 <span class="n">asterixInitialStateInKeplerianElements</span><span class="p">(</span> <span class="n">eccentricityIndex</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
@@ -402,16 +408,16 @@
             <span class="n">earthGravitationalParameter</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Note that we use the Earth gravity field inside the <code class="docutils literal"><span class="pre">bodyMap</span></code> for the conversion from Keplerian to Cartesian coordinates. Now, we can create our propagator settings with:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create propagator settings.</span>
+<p>Note that we use the Earth gravity field inside the <code class="docutils literal notranslate"><span class="pre">bodyMap</span></code> for the conversion from Keplerian to Cartesian coordinates. Now, we can create our propagator settings with:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create propagator settings.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">propagatorSettings</span> <span class="o">=</span>
     <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
         <span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span> <span class="n">accelerationModelMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">systemInitialState</span><span class="p">,</span> <span class="n">simulationEndEpoch</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>where we have passed exactly the five aspects listed above as input to the&nbsp;<a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettings.html#TranslationalStatePropagatorSettings" title="TranslationalStatePropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">TranslationalStatePropagatorSettings</span></code></a>. If you have a look at the code for the&nbsp;<a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettings.html#TranslationalStatePropagatorSettings" title="TranslationalStatePropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">TranslationalStatePropagatorSettings</span></code></a>, you will notice that there are multiple constructors for the class, each with a number of additional input arguments (for which we use the default values). These more advanced options are discussed in following tutorials.</p>
-<p>A final piece of information needed to propagate the orbit is the settings object for the numerical integration. We use a Runge-Kutta 4 integrator, with a 10 second time step, starting the numerical integration at <span class="math">\(t = 0\)</span>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create numerical integrator settings.</span>
+<p>where we have passed exactly the five aspects listed above as input to the <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettings.html#TranslationalStatePropagatorSettings" title="TranslationalStatePropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationalStatePropagatorSettings</span></code></a>. If you have a look at the code for the <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettings.html#TranslationalStatePropagatorSettings" title="TranslationalStatePropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationalStatePropagatorSettings</span></code></a>, you will notice that there are multiple constructors for the class, each with a number of additional input arguments (for which we use the default values). These more advanced options are discussed in following tutorials.</p>
+<p>A final piece of information needed to propagate the orbit is the settings object for the numerical integration. We use a Runge-Kutta 4 integrator, with a 10 second time step, starting the numerical integration at <span class="math notranslate nohighlight">\(t = 0\)</span>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create numerical integrator settings.</span>
 <span class="kt">double</span> <span class="n">simulationStartEpoch</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
 <span class="k">const</span> <span class="kt">double</span> <span class="n">fixedStepSize</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">integratorSettings</span> <span class="o">=</span>
@@ -421,18 +427,18 @@
 </div>
 </div>
 <div class="section" id="perform-the-orbit-propagation">
-<h2>1.5. Perform the Orbit Propagation<a class="headerlink" href="#perform-the-orbit-propagation" title="Permalink to this headline">¶</a></h2>
-<p>Now, we have defined all the information needed to propagate the orbit of our satellite, which are stored in the&nbsp;<code class="docutils literal"><span class="pre">bodyMap</span></code>&nbsp;(environment),&nbsp;<code class="docutils literal"><span class="pre">propagatorSettings</span></code>&nbsp;(settings for the full state derivative model) and&nbsp;<code class="docutils literal"><span class="pre">integratorSettings</span></code>&nbsp;(settings on how to obtain the numerical solution). The propagation is done by an object of type (derived from)&nbsp;<a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="n">dynamicsSimulator</span><span class="p">(</span>
+<h2><span class="section-number">1.5. </span>Perform the Orbit Propagation<a class="headerlink" href="#perform-the-orbit-propagation" title="Permalink to this headline">¶</a></h2>
+<p>Now, we have defined all the information needed to propagate the orbit of our satellite, which are stored in the <code class="docutils literal notranslate"><span class="pre">bodyMap</span></code> (environment), <code class="docutils literal notranslate"><span class="pre">propagatorSettings</span></code> (settings for the full state derivative model) and <code class="docutils literal notranslate"><span class="pre">integratorSettings</span></code> (settings on how to obtain the numerical solution). The propagation is done by an object of type (derived from) <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="n">dynamicsSimulator</span><span class="p">(</span>
         <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>Upon creating this class, the numerical propagation is performed, and the output is stored in the class. Various options exist for parsing the output of the numerical propagation, which will be discussed in the next tutorials. The numerical solution of the orbit can be retrieved as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">integrationResult</span> <span class="o">=</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">integrationResult</span> <span class="o">=</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>where the retrieved result is a <code class="docutils literal"><span class="pre">std::map</span></code> where the key <code class="docutils literal"><span class="pre">double</span></code> is the time at each step in the integration, and the value, <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code>, is the corresponding Cartesian state of Asterix w.r.t. the Earth, in the ECLIPJ2000 reference frame. To analyze/plot your numerical results further using e.g. MATLAB, you can print the output to a text file as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Write satellite propagation history to file.</span>
+<p>where the retrieved result is a <code class="docutils literal notranslate"><span class="pre">std::map</span></code> where the key <code class="docutils literal notranslate"><span class="pre">double</span></code> is the time at each step in the integration, and the value, <code class="docutils literal notranslate"><span class="pre">Eigen::VectorXd</span></code>, is the corresponding Cartesian state of Asterix w.r.t. the Earth, in the ECLIPJ2000 reference frame. To analyze/plot your numerical results further using e.g. MATLAB, you can print the output to a text file as follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Write satellite propagation history to file.</span>
 <span class="n">input_output</span><span class="o">::</span><span class="n">writeDataMapToTextFile</span><span class="p">(</span> <span class="n">integrationResult</span><span class="p">,</span>
                                       <span class="s">&quot;singleSatellitePropagationHistory.dat&quot;</span><span class="p">,</span>
                                       <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span> <span class="p">),</span>
@@ -445,9 +451,9 @@
 <p>For more details about the input and output basics go to: <a class="reference internal" href="../tudatFeatures/otherLibraries/inputOutput.html#tudatfeaturesinputoutput"><span class="std std-ref">Input/Output</span></a>.</p>
 </div>
 <div class="section" id="results">
-<h2>1.6. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.6. </span>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p>The output of the program should look similar to the output below:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Starting</span> <span class="o">../</span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">applications</span><span class="o">/</span><span class="n">application_SingleSatellitePropagator</span><span class="o">...</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Starting</span> <span class="o">../</span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">applications</span><span class="o">/</span><span class="n">application_SingleSatellitePropagator</span><span class="o">...</span>
 <span class="n">Single</span> <span class="n">Earth</span><span class="o">-</span><span class="n">Orbiting</span> <span class="n">Satellite</span> <span class="n">Example</span><span class="o">.</span>
 <span class="n">The</span> <span class="n">initial</span> <span class="n">position</span> <span class="n">vector</span> <span class="n">of</span> <span class="n">Asterix</span> <span class="ow">is</span> <span class="p">[</span><span class="n">km</span><span class="p">]:</span>
 <span class="mf">7037.48</span>
@@ -526,7 +532,8 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

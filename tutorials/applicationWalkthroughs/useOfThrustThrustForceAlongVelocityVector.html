@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
 
@@ -111,6 +113,9 @@
 <li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">11. Orbit Determination and Parameter Estimation (Basic)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="earthOrbiterStateEstimation.html">12. Orbit Determination and Parameter Estimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="interplanetaryTrajectory.html">13. MGA Trajectory Design</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fullPropagationCR3BP.html">14. Full propagation of the CR3BP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fullPropagationPatchedConicsTrajectory.html">15. Full propagation of a patched conics trajectory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shapeBasedTrajectory.html">16. Shape-Based Low-Thrust Trajectories</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="index.html#pagmo-optimization-tutorials">Pagmo Optimization Tutorials</a></li>
@@ -174,7 +179,7 @@
         
           <li><a href="index.html">Application Tutorials</a> &raquo;</li>
         
-      <li>5. Use of Thrust: Thrust Force Along Velocity Vector</li>
+      <li><span class="section-number">5. </span>Use of Thrust: Thrust Force Along Velocity Vector</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -194,31 +199,31 @@
            <div itemprop="articleBody">
             
   <div class="section" id="use-of-thrust-thrust-force-along-velocity-vector">
-<span id="walkthroughsuseofthrustthrustforcealongvelocityvector"></span><h1>5. Use of Thrust: Thrust Force Along Velocity Vector<a class="headerlink" href="#use-of-thrust-thrust-force-along-velocity-vector" title="Permalink to this headline">¶</a></h1>
+<span id="walkthroughsuseofthrustthrustforcealongvelocityvector"></span><h1><span class="section-number">5. </span>Use of Thrust: Thrust Force Along Velocity Vector<a class="headerlink" href="#use-of-thrust-thrust-force-along-velocity-vector" title="Permalink to this headline">¶</a></h1>
 <p>This example focuses on the inclusion of a thrust force in Tudat. The code for this tutorial is given on Github, and is also located in your Tudat bundle at:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">thrustAlongVelocityVectorExample</span><span class="o">.</span><span class="n">cpp</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">thrustAlongVelocityVectorExample</span><span class="o">.</span><span class="n">cpp</span>
 </pre></div>
 </div>
 <p>Although thrust is in principle handled just like any other force in Tudat, you as a user have much more control over how this thrust behaves. In fact, optimizing the thrust profile is an important goal of many types of simulations. The addition of a thrust force requires the addition of the following blocks of code/information:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Definition of thrust direction/magnitude, in many cases as a function of time (or other variables).</li>
-<li>Definition of specific impulse, in some cases as a function of time (or other variables).</li>
-<li>Inclusion of vehicle mass in the state vector: using thrust decreases the mass of the spacecraft, which we propagate concurrently with the translational state.</li>
+<li><p>Definition of thrust direction/magnitude, in many cases as a function of time (or other variables).</p></li>
+<li><p>Definition of specific impulse, in some cases as a function of time (or other variables).</p></li>
+<li><p>Inclusion of vehicle mass in the state vector: using thrust decreases the mass of the spacecraft, which we propagate concurrently with the translational state.</p></li>
 </ul>
 </div></blockquote>
 <p>A list of options/details of the first two of these points is discussed here. For this example, we will only treat a single type of thrust model, for which:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The thrust force and specific impulse are constant.</li>
-<li>The direction of the thrust is always along (and in the same direction as) the vehicle’s Earth-centered velocity vector.</li>
+<li><p>The thrust force and specific impulse are constant.</p></li>
+<li><p>The direction of the thrust is always along (and in the same direction as) the vehicle’s Earth-centered velocity vector.</p></li>
 </ul>
 </div></blockquote>
 <p>We will not treat the entire source file for the simulation, as most of it is similar or identical to that discussed in detail in <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> and <a class="reference internal" href="perturbedEarthOrbitingSatellite.html#walkthroughsperturbedearthorbitingsatellite"><span class="std std-ref">Perturbed Earth-orbiting Satellite</span></a>.</p>
 <div class="section" id="adding-the-thrust-acceleration">
-<h2>5.1. Adding the Thrust Acceleration<a class="headerlink" href="#adding-the-thrust-acceleration" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.1. </span>Adding the Thrust Acceleration<a class="headerlink" href="#adding-the-thrust-acceleration" title="Permalink to this headline">¶</a></h2>
 <p>The first main difference w.r.t. the other examples is the use of a thrust acceleration. For this example, the full code required for this is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define thrust settings</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define thrust settings</span>
 <span class="kt">double</span> <span class="n">thrustMagnitude</span> <span class="o">=</span> <span class="mf">25.0</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">specificImpulse</span> <span class="o">=</span> <span class="mf">5000.0</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustDirectionGuidanceSettings</span> <span class="o">&gt;</span> <span class="n">thrustDirectionGuidanceSettings</span> <span class="o">=</span>
@@ -232,36 +237,36 @@
             <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ThrustAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">thrustDirectionGuidanceSettings</span><span class="p">,</span> <span class="n">thrustMagnitudeSettings</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>First, we define a constant thrust force of 25 N and specific impulse of 5000 s. For the interface of the thrust we use here, two blocks need to be defined before creating the <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a>, one providing settings for the direction, and one for the magnitude of the thrust force.</p>
-<p>The direction settings are defined by an object of type (derived from) <a class="reference internal" href="../tudatFeatures/accelerationSetup/thrustModels.html#ThrustDirectionGuidanceSettings" title="ThrustDirectionGuidanceSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustDirectionGuidanceSettings</span></code></a>. For this example, we use a derived class designed specifically to set the thrust in the direction of the vehicle velocity vector. Please go to <a class="reference internal" href="../tudatFeatures/accelerationSetup/thrustModels.html#tudatfeaturesthrustmodels"><span class="std std-ref">Thrust Guidance</span></a> for the other options for the direction settings:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustDirectionGuidanceSettings</span> <span class="o">&gt;</span> <span class="n">thrustDirectionGuidanceSettings</span> <span class="o">=</span>
+<p>First, we define a constant thrust force of 25 N and specific impulse of 5000 s. For the interface of the thrust we use here, two blocks need to be defined before creating the <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">AccelerationSettings</span></code></a>, one providing settings for the direction, and one for the magnitude of the thrust force.</p>
+<p>The direction settings are defined by an object of type (derived from) <a class="reference internal" href="../tudatFeatures/accelerationSetup/thrustModels.html#ThrustDirectionGuidanceSettings" title="ThrustDirectionGuidanceSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustDirectionGuidanceSettings</span></code></a>. For this example, we use a derived class designed specifically to set the thrust in the direction of the vehicle velocity vector. Please go to <a class="reference internal" href="../tudatFeatures/accelerationSetup/thrustModels.html#tudatfeaturesthrustmodels"><span class="std std-ref">Thrust Guidance</span></a> for the other options for the direction settings:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustDirectionGuidanceSettings</span> <span class="o">&gt;</span> <span class="n">thrustDirectionGuidanceSettings</span> <span class="o">=</span>
       <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ThrustDirectionFromStateGuidanceSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The three input arguments to the constructor of the <a class="reference internal" href="../tudatFeatures/accelerationSetup/thrustModels.html#ThrustDirectionFromStateGuidanceSettings" title="ThrustDirectionFromStateGuidanceSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustDirectionFromStateGuidanceSettings</span></code></a> represent:</p>
+<p>The three input arguments to the constructor of the <a class="reference internal" href="../tudatFeatures/accelerationSetup/thrustModels.html#ThrustDirectionFromStateGuidanceSettings" title="ThrustDirectionFromStateGuidanceSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustDirectionFromStateGuidanceSettings</span></code></a> represent:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The central body w.r.t. which the velocity is to be computed when setting the thrust direction. For instance, the propagation of a vehicle may be done w.r.t. the Sun, while the thrust direction is computed from the velocity w.r.t. the Earth.</li>
-<li>Whether the thrust is colinear with velocity (true) or position (false) w.r.t. the central body.</li>
-<li>Whether the thrust force is in the same direction (false), or opposite to the direction (true), of the state of the vehicle w.r.t. the central body.</li>
+<li><p>The central body w.r.t. which the velocity is to be computed when setting the thrust direction. For instance, the propagation of a vehicle may be done w.r.t. the Sun, while the thrust direction is computed from the velocity w.r.t. the Earth.</p></li>
+<li><p>Whether the thrust is colinear with velocity (true) or position (false) w.r.t. the central body.</p></li>
+<li><p>Whether the thrust force is in the same direction (false), or opposite to the direction (true), of the state of the vehicle w.r.t. the central body.</p></li>
 </ul>
 </div></blockquote>
-<p>We have set the thrust force to be in line and in the same direction as the velocity vector of the spacecraft w.r.t. the Earth. Defining the magnitude of the thrust (and specific impulse) is done through the dedicated derived class <a class="reference internal" href="../tudatFeatures/accelerationSetup/thrustModels.html#ConstantThrustMagnitudeSettings" title="ConstantThrustMagnitudeSettings"><code class="xref py py-class docutils literal"><span class="pre">ConstantThrustMagnitudeSettings</span></code></a>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustMagnitudeSettings</span> <span class="o">&gt;</span> <span class="n">thrustMagnitudeSettings</span> <span class="o">=</span>
+<p>We have set the thrust force to be in line and in the same direction as the velocity vector of the spacecraft w.r.t. the Earth. Defining the magnitude of the thrust (and specific impulse) is done through the dedicated derived class <a class="reference internal" href="../tudatFeatures/accelerationSetup/thrustModels.html#ConstantThrustMagnitudeSettings" title="ConstantThrustMagnitudeSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstantThrustMagnitudeSettings</span></code></a>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustMagnitudeSettings</span> <span class="o">&gt;</span> <span class="n">thrustMagnitudeSettings</span> <span class="o">=</span>
       <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantThrustMagnitudeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">thrustMagnitude</span><span class="p">,</span> <span class="n">specificImpulse</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>with the first and second arguments of the <a class="reference internal" href="../tudatFeatures/accelerationSetup/thrustModels.html#ConstantThrustMagnitudeSettings" title="ConstantThrustMagnitudeSettings"><code class="xref py py-class docutils literal"><span class="pre">ConstantThrustMagnitudeSettings</span></code></a> represent the constant thrust force and specific impulse. Now, the thrust acceleration settings are added to the <code class="docutils literal"><span class="pre">accelerationsOfVehicle</span></code> list as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">accelerationsOfVehicle</span><span class="p">[</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span>
+<p>with the first and second arguments of the <a class="reference internal" href="../tudatFeatures/accelerationSetup/thrustModels.html#ConstantThrustMagnitudeSettings" title="ConstantThrustMagnitudeSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstantThrustMagnitudeSettings</span></code></a> represent the constant thrust force and specific impulse. Now, the thrust acceleration settings are added to the <code class="docutils literal notranslate"><span class="pre">accelerationsOfVehicle</span></code> list as follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">accelerationsOfVehicle</span><span class="p">[</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span>
             <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ThrustAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">thrustDirectionGuidanceSettings</span><span class="p">,</span> <span class="n">thrustMagnitudeSettings</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>where you can see that defining a thrust acceleration requires a dedicated derived class of <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a>. This derived class <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#ThrustAccelerationSettings" title="ThrustAccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustAccelerationSettings</span></code></a> takes the settings for the magnitude and direction of the thrust force, which we just created, as input. A final point to remember when defining the <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#ThrustAccelerationSettings" title="ThrustAccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">ThrustAccelerationSettings</span></code></a> is that thrust is a force that the vehicle exerts on itself.</p>
+<p>where you can see that defining a thrust acceleration requires a dedicated derived class of <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">AccelerationSettings</span></code></a>. This derived class <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#ThrustAccelerationSettings" title="ThrustAccelerationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustAccelerationSettings</span></code></a> takes the settings for the magnitude and direction of the thrust force, which we just created, as input. A final point to remember when defining the <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#ThrustAccelerationSettings" title="ThrustAccelerationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustAccelerationSettings</span></code></a> is that thrust is a force that the vehicle exerts on itself.</p>
 </div>
 <div class="section" id="propagating-the-mass-and-the-orbit">
-<h2>5.2. Propagating the Mass and the Orbit<a class="headerlink" href="#propagating-the-mass-and-the-orbit" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.2. </span>Propagating the Mass and the Orbit<a class="headerlink" href="#propagating-the-mass-and-the-orbit" title="Permalink to this headline">¶</a></h2>
 <p>For consistent simulation results, the mass decrease as a result of the expelled propellant must be included in the simulation. Doing so requires a significant modification of the way in which the propagator settings are defined. The total block of code is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define propagation termination conditions (stop after 2 weeks).</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define propagation termination conditions (stop after 2 weeks).</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">PropagationTimeTerminationSettings</span> <span class="o">&gt;</span> <span class="n">terminationSettings</span> <span class="o">=</span>
       <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">propagators</span><span class="o">::</span><span class="n">PropagationTimeTerminationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mf">14.0</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span> <span class="p">);</span>
 
@@ -299,13 +304,13 @@
 </pre></div>
 </div>
 <p>The first line explicitly creates the object defining the termination conditions of the propagation.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">PropagationTimeTerminationSettings</span> <span class="o">&gt;</span> <span class="n">terminationSettings</span> <span class="o">=</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">PropagationTimeTerminationSettings</span> <span class="o">&gt;</span> <span class="n">terminationSettings</span> <span class="o">=</span>
       <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">propagators</span><span class="o">::</span><span class="n">PropagationTimeTerminationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mf">14.0</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>This is similar to the step we took in a previous example, but distinct from the first two examples, where we simply passed the final time variable as a double to the constructor of our propagation settings. Please go to <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettingsTermination.html#tudatfeaturespropagatorsettingstermination"><span class="std std-ref">Propagator Settings: Termination Settings</span></a> for further details on termination settings.</p>
-<p>In the next step, we create the propagation settings for the translational dynamics, in the same way as is done in the previous examples. To incorporate the change in vehicle mass, we need to create mass rate models, which are essentially the equivalent of accelelations for ‘mass dynamics’. They compute the time derivative of the mass at each time step. Defining the settings for these models is done by creating objects of class (derived from) <a class="reference internal" href="../tudatFeatures/accelerationSetup/massModel.html#MassRateModelSettings" title="MassRateModelSettings"><code class="xref py py-class docutils literal"><span class="pre">MassRateModelSettings</span></code></a>, analogously how acceleration settings are defined by <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal"><span class="pre">AccelerationSettings</span></code></a> objects. The following code is used to create the mass rate models:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create mass rate models</span>
+<p>In the next step, we create the propagation settings for the translational dynamics, in the same way as is done in the previous examples. To incorporate the change in vehicle mass, we need to create mass rate models, which are essentially the equivalent of accelelations for ‘mass dynamics’. They compute the time derivative of the mass at each time step. Defining the settings for these models is done by creating objects of class (derived from) <a class="reference internal" href="../tudatFeatures/accelerationSetup/massModel.html#MassRateModelSettings" title="MassRateModelSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">MassRateModelSettings</span></code></a>, analogously how acceleration settings are defined by <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">AccelerationSettings</span></code></a> objects. The following code is used to create the mass rate models:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create mass rate models</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">MassRateModelSettings</span> <span class="o">&gt;</span> <span class="n">massRateModelSettings</span> <span class="o">=</span>
       <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">FromThrustMassModelSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="nb">true</span> <span class="p">);</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">MassRateModel</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">massRateModels</span><span class="p">;</span>
@@ -313,18 +318,18 @@
           <span class="s">&quot;Vehicle&quot;</span><span class="p">,</span> <span class="n">massRateModelSettings</span><span class="p">,</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationModelMap</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>For our example, we want to derive the mass rate models from the thrust acceleration on <code class="docutils literal"><span class="pre">Vehicle</span></code>. To this end, our mass rate model settings are of type <a class="reference internal" href="../tudatFeatures/accelerationSetup/massModel.html#FromThrustMassModelSettings" title="FromThrustMassModelSettings"><code class="xref py py-class docutils literal"><span class="pre">FromThrustMassModelSettings</span></code></a>. Please go to <a class="reference internal" href="../tudatFeatures/accelerationSetup/massModel.html#tudatfeaturesframeworkmassratemodelsetup"><span class="std std-ref">Mass Rate Model Set-up</span></a> for the available mass rate model settings. You may wonder why we are passing the value true to the constructor of this class. This is done to specify that the mass rate model should include expelled propellant due to all thrust forces acting on the body (for this example this makes no difference, but may be relevant for more detailed simulations).</p>
-<p>The next step is to create the full settings for the propagation of the mass. Just like for the propagation of the dynamics, we create an object of a type (derived-from) <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a>. For mass rate, this type is <code class="xref py py-class docutils literal"><span class="pre">MassPropagatorSettings</span></code>. It requires as input:</p>
+<p>For our example, we want to derive the mass rate models from the thrust acceleration on <code class="docutils literal notranslate"><span class="pre">Vehicle</span></code>. To this end, our mass rate model settings are of type <a class="reference internal" href="../tudatFeatures/accelerationSetup/massModel.html#FromThrustMassModelSettings" title="FromThrustMassModelSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">FromThrustMassModelSettings</span></code></a>. Please go to <a class="reference internal" href="../tudatFeatures/accelerationSetup/massModel.html#tudatfeaturesframeworkmassratemodelsetup"><span class="std std-ref">Mass Rate Model Set-up</span></a> for the available mass rate model settings. You may wonder why we are passing the value true to the constructor of this class. This is done to specify that the mass rate model should include expelled propellant due to all thrust forces acting on the body (for this example this makes no difference, but may be relevant for more detailed simulations).</p>
+<p>The next step is to create the full settings for the propagation of the mass. Just like for the propagation of the dynamics, we create an object of a type (derived-from) <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropagatorSettings</span></code></a>. For mass rate, this type is <code class="xref py py-class docutils literal notranslate"><span class="pre">MassPropagatorSettings</span></code>. It requires as input:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>List of bodies for which the mass is to be propagated.</li>
-<li>Mass rate models for these bodies.</li>
-<li>The initial masses of the bodies (stored in a Eigen::VectorXd).</li>
-<li>Settings for when to terminate the propagation.</li>
+<li><p>List of bodies for which the mass is to be propagated.</p></li>
+<li><p>Mass rate models for these bodies.</p></li>
+<li><p>The initial masses of the bodies (stored in a Eigen::VectorXd).</p></li>
+<li><p>Settings for when to terminate the propagation.</p></li>
 </ol>
 </div></blockquote>
-<p>Below, you can see how these settings are passed to the <code class="xref py py-class docutils literal"><span class="pre">MassPropagatorSettings</span></code> constructor.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create settings for propagating the mass of the vehicle.</span>
+<p>Below, you can see how these settings are passed to the <code class="xref py py-class docutils literal notranslate"><span class="pre">MassPropagatorSettings</span></code> constructor.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create settings for propagating the mass of the vehicle.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesWithMassToPropagate</span><span class="p">;</span>
 <span class="n">bodiesWithMassToPropagate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">);</span>
 
@@ -337,7 +342,7 @@
 </pre></div>
 </div>
 <p>Our final step is to tell the software to propagate both the translational dynamics and body mass, which is achieved as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create list of propagation settings.</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create list of propagation settings.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">SingleArcPropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">propagatorSettingsVector</span><span class="p">;</span>
 <span class="n">propagatorSettingsVector</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">translationalPropagatorSettings</span> <span class="p">);</span>
 <span class="n">propagatorSettingsVector</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">massPropagatorSettings</span> <span class="p">);</span>
@@ -347,17 +352,17 @@
       <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">MultiTypePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">propagatorSettingsVector</span><span class="p">,</span> <span class="n">terminationSettings</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>As is discussed in more detail in <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#tudatfeaturessimulatorcreation"><span class="std std-ref">Performing State Propagation</span></a>, the <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> object, which contains settings for both translational dynamics and mass rate, can be passed to the <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#SingleArcDynamicsSimulator" title="SingleArcDynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">SingleArcDynamicsSimulator</span></code></a> in the exact same manner as was done in the previous examples.</p>
+<p>As is discussed in more detail in <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#tudatfeaturessimulatorcreation"><span class="std std-ref">Performing State Propagation</span></a>, the <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropagatorSettings</span></code></a> object, which contains settings for both translational dynamics and mass rate, can be passed to the <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#SingleArcDynamicsSimulator" title="SingleArcDynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleArcDynamicsSimulator</span></code></a> in the exact same manner as was done in the previous examples.</p>
 </div>
 <div class="section" id="results">
-<h2>5.3. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.3. </span>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p>Below, you see the resulting (in-plane) dynamics of the spacecraft and the mass of the vehicle as a function of time. The thrust force is along the velocity vector, constantly adding kinetic energy to the spacecraft. As a result, you can see the orbit slowly spiral outwards. Since the specific impulse and thrust force were both set to a constant value, the body mass decreases exactly linearly.</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/thrustAlongVelocityExampleResult.png" src="../../_images/thrustAlongVelocityExampleResult.png" />
 </div>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Open the figure in a new tab for more detail.</p>
+<p class="admonition-title">Tip</p>
+<p>Open the figure in a new tab for more detail.</p>
 </div>
 </div>
 </div>
@@ -417,7 +422,8 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

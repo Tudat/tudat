@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -109,6 +111,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">Low-Thrust Trajectory Design Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
@@ -170,9 +173,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">4. Estimation Set-Up</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">4. </span>Estimation Set-Up</a> &raquo;</li>
         
-      <li>4.1. Setting up the link ends</li>
+      <li><span class="section-number">4.1. </span>Setting up the link ends</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -192,19 +195,19 @@
            <div itemprop="articleBody">
             
   <div class="section" id="setting-up-the-link-ends">
-<span id="linkendsetup"></span><h1>4.1. Setting up the link ends<a class="headerlink" href="#setting-up-the-link-ends" title="Permalink to this headline">¶</a></h1>
-<p>In Tudat, an observation model is referred to a number of link ends. For a one-way range model, for instance, a receiver and transmitter are required, both of which are termed a ‘link end’. An <code class="docutils literal"><span class="pre">enum</span></code> termed <code class="docutils literal"><span class="pre">LinkEndType</span></code> is available that lists all the possible kinds of link ends. A full list of observation models, as well as the link ends that they require, is given on the page on <a class="reference internal" href="observationModelSetup.html#observationmodelsetup"><span class="std std-ref">Setting up Observation Models</span></a>.</p>
+<span id="linkendsetup"></span><h1><span class="section-number">4.1. </span>Setting up the link ends<a class="headerlink" href="#setting-up-the-link-ends" title="Permalink to this headline">¶</a></h1>
+<p>In Tudat, an observation model is referred to a number of link ends. For a one-way range model, for instance, a receiver and transmitter are required, both of which are termed a ‘link end’. An <code class="docutils literal notranslate"><span class="pre">enum</span></code> termed <code class="docutils literal notranslate"><span class="pre">LinkEndType</span></code> is available that lists all the possible kinds of link ends. A full list of observation models, as well as the link ends that they require, is given on the page on <a class="reference internal" href="observationModelSetup.html#observationmodelsetup"><span class="std std-ref">Setting up Observation Models</span></a>.</p>
 <div class="section" id="ground-station-creation">
-<span id="groundstationcreation"></span><h2>4.1.1. Ground Station Creation<a class="headerlink" href="#ground-station-creation" title="Permalink to this headline">¶</a></h2>
+<span id="groundstationcreation"></span><h2><span class="section-number">4.1.1. </span>Ground Station Creation<a class="headerlink" href="#ground-station-creation" title="Permalink to this headline">¶</a></h2>
 <p>Often, you will need to define the positions of ground stations on celestial bodies to/from which observations are made. Presently, the position of a ground station is fixed in the body-fixed frame of the body on which it is located, but modifications to allow a time-varying position (due to tides, continental drift, <em>etc.</em>) are planned.</p>
-<p>With the present setup, you must provide only the name and position (as an <code class="docutils literal"><span class="pre">Eigen::Vector3d</span></code>) of the ground station to create it. The position may be defined in several coordinate systems, defined by an enum of <code class="docutils literal"><span class="pre">PositionElementTypes</span></code>:</p>
+<p>With the present setup, you must provide only the name and position (as an <code class="docutils literal notranslate"><span class="pre">Eigen::Vector3d</span></code>) of the ground station to create it. The position may be defined in several coordinate systems, defined by an enum of <code class="docutils literal notranslate"><span class="pre">PositionElementTypes</span></code>:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">cartesian_position</span></code> For this type, the three entries of the position are simply the <em>x</em>, <em>y</em> and <em>z</em> components in the body-fixed frame.</li>
-<li><code class="docutils literal"><span class="pre">spherical_position</span></code> For this type, the three entries of the position are the distance from the body’s center of mass, and the geocentric latitude and longitude on the body (in that order).</li>
-<li><code class="docutils literal"><span class="pre">geodetic_position</span></code> For this type, the three entries of the position are the altitude (w.r.t. the body’s shape model), the geodetic latitude and the longitude (in that order).</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cartesian_position</span></code> For this type, the three entries of the position are simply the <em>x</em>, <em>y</em> and <em>z</em> components in the body-fixed frame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spherical_position</span></code> For this type, the three entries of the position are the distance from the body’s center of mass, and the geocentric latitude and longitude on the body (in that order).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geodetic_position</span></code> For this type, the three entries of the position are the altitude (w.r.t. the body’s shape model), the geodetic latitude and the longitude (in that order).</p></li>
 </ul>
 <p>Now, creating a ground station is done by:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span> <span class="n">earth</span> <span class="o">=</span> <span class="p">...;</span><span class="c1">// Define object for Earth</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span> <span class="n">earth</span> <span class="o">=</span> <span class="p">...;</span><span class="c1">// Define object for Earth</span>
 
 <span class="c1">// Define name of station</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">stationName</span> <span class="o">=</span> <span class="s">&quot;Graz&quot;</span><span class="p">;</span>
@@ -217,26 +220,26 @@
 <span class="n">createGroundStation</span><span class="p">(</span> <span class="n">earth</span><span class="p">,</span> <span class="n">stationName</span><span class="p">,</span> <span class="n">stationPosition</span><span class="p">,</span> <span class="n">positionType</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Which will create a ground station named <code class="docutils literal"><span class="pre">&quot;Graz&quot;</span></code> on the body <code class="docutils literal"><span class="pre">earth</span></code> at the given position.</p>
+<p>Which will create a ground station named <code class="docutils literal notranslate"><span class="pre">&quot;Graz&quot;</span></code> on the body <code class="docutils literal notranslate"><span class="pre">earth</span></code> at the given position.</p>
 </div>
 <div class="section" id="creating-a-set-of-link-ends">
-<h2>4.1.2. Creating a Set of Link Ends<a class="headerlink" href="#creating-a-set-of-link-ends" title="Permalink to this headline">¶</a></h2>
-<p>A set of link ends used for a given observable are stored in a <code class="docutils literal"><span class="pre">LinkEnds</span></code> type, which is a <code class="docutils literal"><span class="pre">typedef</span></code> for <code class="docutils literal"><span class="pre">std::map&lt;</span> <span class="pre">LinkEndType,</span> <span class="pre">std::pair&lt;</span> <span class="pre">std::string,</span> <span class="pre">std::string</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code>. As you can see, the map value is a pair of strings. The first entry of the string is the body on which the link end is placed, the second entry the reference point on this body (typically the ground station). In the case where the second entry is empty (as is often the case for spacecraft), the body’s center of mass is used. An example of defining link ends is given below:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">LinkEnds</span> <span class="n">oneWayLinkEnds</span><span class="p">;</span>
+<h2><span class="section-number">4.1.2. </span>Creating a Set of Link Ends<a class="headerlink" href="#creating-a-set-of-link-ends" title="Permalink to this headline">¶</a></h2>
+<p>A set of link ends used for a given observable are stored in a <code class="docutils literal notranslate"><span class="pre">LinkEnds</span></code> type, which is a <code class="docutils literal notranslate"><span class="pre">typedef</span></code> for <code class="docutils literal notranslate"><span class="pre">std::map&lt;</span> <span class="pre">LinkEndType,</span> <span class="pre">std::pair&lt;</span> <span class="pre">std::string,</span> <span class="pre">std::string</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code>. As you can see, the map value is a pair of strings. The first entry of the string is the body on which the link end is placed, the second entry the reference point on this body (typically the ground station). In the case where the second entry is empty (as is often the case for spacecraft), the body’s center of mass is used. An example of defining link ends is given below:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LinkEnds</span> <span class="n">oneWayLinkEnds</span><span class="p">;</span>
 <span class="n">oneWayLinkEnds</span><span class="p">[</span> <span class="n">transmitter</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;Graz&quot;</span> <span class="p">);</span>
 <span class="n">oneWayLinkEnds</span><span class="p">[</span> <span class="n">receiver</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;LRO&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>This defines a link for which the ground station termed Graz on the boy called Earth acts as transmitter, and the body called LRO is used as the receiver (in this case placed at the body’s center of mass).</p>
 <p>An example of link-ends for a two-way link from Graz to LRO and back to Graz is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">LinkEnds</span> <span class="n">twoWayLinkEnds</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LinkEnds</span> <span class="n">twoWayLinkEnds</span><span class="p">;</span>
 <span class="n">twoWayLinkEnds</span><span class="p">[</span> <span class="n">transmitter</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;Graz&quot;</span> <span class="p">);</span>
 <span class="n">twoWayLinkEnds</span><span class="p">[</span> <span class="n">reflector1</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;LRO&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span> <span class="p">);</span>
 <span class="n">twoWayLinkEnds</span><span class="p">[</span> <span class="n">receiver</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;Graz&quot;</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>Where the Graz station now acts as both transmitter and receiver. Similarly, the receiver may be different from the transmitter (in what is typically called a three-way observable in Deep Space tracking ), so:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">LinkEnds</span> <span class="n">twoWayLinkEnds</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LinkEnds</span> <span class="n">twoWayLinkEnds</span><span class="p">;</span>
 <span class="n">twoWayLinkEnds</span><span class="p">[</span> <span class="n">transmitter</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;Graz&quot;</span> <span class="p">);</span>
 <span class="n">twoWayLinkEnds</span><span class="p">[</span> <span class="n">reflector1</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;LRO&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span> <span class="p">);</span>
 <span class="n">twoWayLinkEnds</span><span class="p">[</span> <span class="n">receiver</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;Matera&quot;</span> <span class="p">);</span>
@@ -301,7 +304,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

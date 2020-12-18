@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
 
@@ -114,7 +116,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../howToWriteTheWiki/howToWriteTheWiki.html">How to Write the Wiki</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -163,7 +164,7 @@
         
           <li><a href="index.html">Adding Features to Tudat</a> &raquo;</li>
         
-      <li>4. Adding a New State Derivative Model</li>
+      <li><span class="section-number">4. </span>Adding a New State Derivative Model</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -183,10 +184,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="adding-a-new-state-derivative-model">
-<span id="addingnewstatederivativemodel"></span><h1>4. Adding a New State Derivative Model<a class="headerlink" href="#adding-a-new-state-derivative-model" title="Permalink to this headline">¶</a></h1>
+<span id="addingnewstatederivativemodel"></span><h1><span class="section-number">4. </span>Adding a New State Derivative Model<a class="headerlink" href="#adding-a-new-state-derivative-model" title="Permalink to this headline">¶</a></h1>
 <p>Another type of model which allows the user to add extra features to it, is the state derivative model. These models are used by the dynamics simulator to determine how the state equations are solved. Currently there are several available, e.g. cowell state derivative model, encke state derivate model, and more, but if a special model is needed for a certain application, the user can add this to tudat by following this guide.</p>
-<p>As before, this guide will start by looking at the framework of how the state derivative model is implemented. First, the state derivative model is chosen by the user from an enum called <code class="docutils literal"><span class="pre">TranslationalPropagatorType</span></code>, located in <code class="docutils literal"><span class="pre">nBodyStateDerivativeModel.h</span></code>. The model picked from this enum is then used as an input into the constructor of the <code class="docutils literal"><span class="pre">TranslationalPropagatorSettings</span></code>, where it is assigned to a specific member variable called: <code class="docutils literal"><span class="pre">propagator_</span></code>. The <code class="docutils literal"><span class="pre">TranslationalPropagatorSettings</span></code> is used as an input to the <code class="docutils literal"><span class="pre">SingleArcDynamicsSimulator</span></code>, where it will be used further. An example of this is shown below:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span> <span class="c1">// Create propagation settings.</span>
+<p>As before, this guide will start by looking at the framework of how the state derivative model is implemented. First, the state derivative model is chosen by the user from an enum called <code class="docutils literal notranslate"><span class="pre">TranslationalPropagatorType</span></code>, located in <code class="docutils literal notranslate"><span class="pre">nBodyStateDerivativeModel.h</span></code>. The model picked from this enum is then used as an input into the constructor of the <code class="docutils literal notranslate"><span class="pre">TranslationalPropagatorSettings</span></code>, where it is assigned to a specific member variable called: <code class="docutils literal notranslate"><span class="pre">propagator_</span></code>. The <code class="docutils literal notranslate"><span class="pre">TranslationalPropagatorSettings</span></code> is used as an input to the <code class="docutils literal notranslate"><span class="pre">SingleArcDynamicsSimulator</span></code>, where it will be used further. An example of this is shown below:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="c1">// Create propagation settings.</span>
  <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">propagatorSettings</span> <span class="o">=</span>
          <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
          <span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span> <span class="n">accelerationModelMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">systemInitialState</span><span class="p">,</span>
@@ -197,8 +198,8 @@
          <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Inside <code class="docutils literal"><span class="pre">SingleArcDynamicsSimulator</span></code>, the propagator settings are passed to various functions, but the state derivative model is only needed in <code class="docutils literal"><span class="pre">createStateDerivativeModels</span></code>. This function returns a vector of <code class="docutils literal"><span class="pre">SingleStateTypeDerivative</span></code>. If a hybrid state derivative model is used, this function will fill the vector with state derivative models. If not, this vector will only contain one state derivative model, created by the function (equally) called <code class="docutils literal"><span class="pre">createStateDerivativeModels</span></code>. This function checks what kind of state is propagated (translational, rotational, etc.) and creates the specific state derivative model. For example, for the translational state it will call the <code class="docutils literal"><span class="pre">createTranslationalStateDerivativeModel</span></code> function. This function looks as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span> <span class="k">template</span><span class="o">&lt;</span> <span class="k">typename</span> <span class="n">StateScalarType</span> <span class="o">=</span> <span class="kt">double</span><span class="p">,</span> <span class="k">typename</span> <span class="n">TimeType</span> <span class="o">=</span> <span class="kt">double</span> <span class="o">&gt;</span>
+<p>Inside <code class="docutils literal notranslate"><span class="pre">SingleArcDynamicsSimulator</span></code>, the propagator settings are passed to various functions, but the state derivative model is only needed in <code class="docutils literal notranslate"><span class="pre">createStateDerivativeModels</span></code>. This function returns a vector of <code class="docutils literal notranslate"><span class="pre">SingleStateTypeDerivative</span></code>. If a hybrid state derivative model is used, this function will fill the vector with state derivative models. If not, this vector will only contain one state derivative model, created by the function (equally) called <code class="docutils literal notranslate"><span class="pre">createStateDerivativeModels</span></code>. This function checks what kind of state is propagated (translational, rotational, etc.) and creates the specific state derivative model. For example, for the translational state it will call the <code class="docutils literal notranslate"><span class="pre">createTranslationalStateDerivativeModel</span></code> function. This function looks as follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="k">template</span><span class="o">&lt;</span> <span class="k">typename</span> <span class="n">StateScalarType</span> <span class="o">=</span> <span class="kt">double</span><span class="p">,</span> <span class="k">typename</span> <span class="n">TimeType</span> <span class="o">=</span> <span class="kt">double</span> <span class="o">&gt;</span>
  <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">SingleStateTypeDerivative</span><span class="o">&lt;</span> <span class="n">StateScalarType</span><span class="p">,</span> <span class="n">TimeType</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
  <span class="n">createTranslationalStateDerivativeModel</span><span class="p">(</span>
         <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="n">StateScalarType</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
@@ -240,12 +241,12 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This function is responsible for making the state derivate model based on the <code class="docutils literal"><span class="pre">TranslationalPropagatorType</span></code> variable decalred by the user, using a switch statement.</p>
-<p>When a new state derivative model is implemented in tudat, two additions need to be made to the framework (besides making the model itself). The first part is to add the name of the model to the enum: <code class="docutils literal"><span class="pre">TranslationalPropagatorType</span></code>. This will allow the user to pick this model and use it as an input to the translational propagator settings. The second step is to add this model to the switch statement in <code class="docutils literal"><span class="pre">createTranslationalStateDerivativeModel</span></code>. A new case should be made for the name added to the enum before, and in it, the variable <code class="docutils literal"><span class="pre">stateDerivativeModel</span></code> should be assigned to the new model.</p>
-<p>When building the new model, it is advised to use a state derivative model that is already available as an example for a place to start. The classes which contain these models are derived from the base class <code class="docutils literal"><span class="pre">NBodyStateDerivative</span></code>, and should contain a template for the <code class="docutils literal"><span class="pre">TimeType</span></code> that will be used. The <code class="docutils literal"><span class="pre">NBodyStateDerivative</span></code> class is again derived from another class called the <code class="docutils literal"><span class="pre">SingleStateTypeDerivative</span></code>. This class contains several pure virtual functions, which all should be added to the new model class in order for the new model to work. The specific names and input parameters of these functions can be found in the <code class="docutils literal"><span class="pre">SingleStateTypeDerivative</span></code> class. Once this is done, and the new model is implemented in the state derivative model framework, the new model should be available for the user.</p>
+<p>This function is responsible for making the state derivate model based on the <code class="docutils literal notranslate"><span class="pre">TranslationalPropagatorType</span></code> variable decalred by the user, using a switch statement.</p>
+<p>When a new state derivative model is implemented in tudat, two additions need to be made to the framework (besides making the model itself). The first part is to add the name of the model to the enum: <code class="docutils literal notranslate"><span class="pre">TranslationalPropagatorType</span></code>. This will allow the user to pick this model and use it as an input to the translational propagator settings. The second step is to add this model to the switch statement in <code class="docutils literal notranslate"><span class="pre">createTranslationalStateDerivativeModel</span></code>. A new case should be made for the name added to the enum before, and in it, the variable <code class="docutils literal notranslate"><span class="pre">stateDerivativeModel</span></code> should be assigned to the new model.</p>
+<p>When building the new model, it is advised to use a state derivative model that is already available as an example for a place to start. The classes which contain these models are derived from the base class <code class="docutils literal notranslate"><span class="pre">NBodyStateDerivative</span></code>, and should contain a template for the <code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that will be used. The <code class="docutils literal notranslate"><span class="pre">NBodyStateDerivative</span></code> class is again derived from another class called the <code class="docutils literal notranslate"><span class="pre">SingleStateTypeDerivative</span></code>. This class contains several pure virtual functions, which all should be added to the new model class in order for the new model to work. The specific names and input parameters of these functions can be found in the <code class="docutils literal notranslate"><span class="pre">SingleStateTypeDerivative</span></code> class. Once this is done, and the new model is implemented in the state derivative model framework, the new model should be available for the user.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Don’t forget to put the include statement in <code class="docutils literal"><span class="pre">createStateDerivativeModel.h</span></code> if the new class is made in a seperate file.</p>
+<p class="admonition-title">Note</p>
+<p>Don’t forget to put the include statement in <code class="docutils literal notranslate"><span class="pre">createStateDerivativeModel.h</span></code> if the new class is made in a seperate file.</p>
 </div>
 </div>
 
@@ -304,7 +305,8 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

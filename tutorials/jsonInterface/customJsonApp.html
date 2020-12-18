@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
 
@@ -162,7 +164,7 @@
         
           <li><a href="index.html">JSON Interface</a> &raquo;</li>
         
-      <li>2. Writing Custom JSON-based Applications</li>
+      <li><span class="section-number">2. </span>Writing Custom JSON-based Applications</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -182,9 +184,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="writing-custom-json-based-applications">
-<span id="jsoninterface-customjsonapp"></span><h1>2. Writing Custom JSON-based Applications<a class="headerlink" href="#writing-custom-json-based-applications" title="Permalink to this headline">¶</a></h1>
+<span id="jsoninterface-customjsonapp"></span><h1><span class="section-number">2. </span>Writing Custom JSON-based Applications<a class="headerlink" href="#writing-custom-json-based-applications" title="Permalink to this headline">¶</a></h1>
 <p>A simple JSON-based application contains just a few lines of code:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;Tudat/JsonInterface/jsonInterface.h&gt;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;Tudat/JsonInterface/jsonInterface.h&gt;</span><span class="cp"></span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span> <span class="p">)</span>
 <span class="p">{</span>
@@ -196,8 +198,8 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>which will always use the file <code class="xref py py-class docutils literal"><span class="pre">main.json</span></code> in the current working directory as input file. If one wants to be able to run the application using different input files, then the code becomes:</p>
-<div class="highlight-cpp"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>which will always use the file <code class="xref py py-class docutils literal notranslate"><span class="pre">main.json</span></code> in the current working directory as input file. If one wants to be able to run the application using different input files, then the code becomes:</p>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -220,26 +222,26 @@
 <span class="p">}</span>
 </pre></div>
 </td></tr></table></div>
-<p>which is basically the implementation of the <code class="docutils literal"><span class="pre">json_interface</span></code> application in <code class="xref py py-class docutils literal"><span class="pre">Tudat/JsonInterface/jsonInterface.cpp</span></code>.</p>
+<p>which is basically the implementation of the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> application in <code class="xref py py-class docutils literal notranslate"><span class="pre">Tudat/JsonInterface/jsonInterface.cpp</span></code>.</p>
 <p>The four basic steps in a JSON-based applications are:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Create a <code class="xref py py-class docutils literal"><span class="pre">JsonSimulationManager</span></code> object (line 6). This class takes two template arguments, the first being the type to be used for the independent variable (the epoch) and the second the scalar type for the state variable (position, velocity, mass, etc.). When these types are not specified, the default values (<code class="xref py py-class docutils literal"><span class="pre">double</span></code>) are used, i.e. <code class="docutils literal"><span class="pre">JsonSimulationManager&lt;</span> <span class="pre">&gt;</span></code> is equivalent to <code class="docutils literal"><span class="pre">JsonSimulationManager&lt;</span> <span class="pre">double,</span> <span class="pre">double</span> <span class="pre">&gt;</span></code>. The input argument is the absolute or relative path to a JSON file.</li>
+<li><p>Create a <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonSimulationManager</span></code> object (line 6). This class takes two template arguments, the first being the type to be used for the independent variable (the epoch) and the second the scalar type for the state variable (position, velocity, mass, etc.). When these types are not specified, the default values (<code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code>) are used, i.e. <code class="docutils literal notranslate"><span class="pre">JsonSimulationManager&lt;</span> <span class="pre">&gt;</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">JsonSimulationManager&lt;</span> <span class="pre">double,</span> <span class="pre">double</span> <span class="pre">&gt;</span></code>. The input argument is the absolute or relative path to a JSON file.</p></li>
 </ol>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">When creating a <code class="xref py py-class docutils literal"><span class="pre">JsonSimulationManager</span></code> using this constructor, the current working directory is set to the directory in which the specified file is located.</p>
+<p class="admonition-title">Note</p>
+<p>When creating a <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonSimulationManager</span></code> using this constructor, the current working directory is set to the directory in which the specified file is located.</p>
 </div>
 <ol class="arabic simple" start="2">
-<li>Set up the simulation (line 7). This uses the information contained in the JSON objects parsed from the specified input file to create all the settings objects necessary for the simulation (integrator, bodies, propagator, etc.).</li>
-<li>Run the propagation (line 8). In addition to integrating the equations of motion, calling the method <code class="docutils literal"><span class="pre">run</span></code> this will also check whether there are unused keys, print messages and/or generate a file with all the settings that are going be used depending on the settings specified in the key <span class="jsonkey">options</span> of the JSON object.</li>
-<li>Export the results (line 9). Calling the method <code class="docutils literal"><span class="pre">exportResults</span></code> will generate the output files with the requested results specified in the key <span class="jsonkey">export</span> of the JSON object.</li>
+<li><p>Set up the simulation (line 7). This uses the information contained in the JSON objects parsed from the specified input file to create all the settings objects necessary for the simulation (integrator, bodies, propagator, etc.).</p></li>
+<li><p>Run the propagation (line 8). In addition to integrating the equations of motion, calling the method <code class="docutils literal notranslate"><span class="pre">run</span></code> this will also check whether there are unused keys, print messages and/or generate a file with all the settings that are going be used depending on the settings specified in the key <span class="jsonkey">options</span> of the JSON object.</p></li>
+<li><p>Export the results (line 9). Calling the method <code class="docutils literal notranslate"><span class="pre">exportResults</span></code> will generate the output files with the requested results specified in the key <span class="jsonkey">export</span> of the JSON object.</p></li>
 </ol>
 </div></blockquote>
-<p>Since not all Tudat features are supported by the JSON interface, in some cases it will be necessary to perform some additional steps between step 2 and 3, i.e. the simulation will be first set up from a JSON file, then additional settings will be provided manually, and the the simulation will be run. Then, optionally, the results can be exported using the <code class="docutils literal"><span class="pre">exportResults</span></code> method. However, defining the additional settings between lines 7 and 8 does not always lead to the desired results, since step 2 is a complex process in which some variables depend on each another.</p>
+<p>Since not all Tudat features are supported by the JSON interface, in some cases it will be necessary to perform some additional steps between step 2 and 3, i.e. the simulation will be first set up from a JSON file, then additional settings will be provided manually, and the the simulation will be run. Then, optionally, the results can be exported using the <code class="docutils literal notranslate"><span class="pre">exportResults</span></code> method. However, defining the additional settings between lines 7 and 8 does not always lead to the desired results, since step 2 is a complex process in which some variables depend on each another.</p>
 <p>Imagine that the aerodynamic coefficients of the body to propagate are not specified in the JSON file because they will be provided manually in the C++ file. This may result in an error, since trying to set up a simulation in which one wants to save e.g. the aerodynamic drag on a body with no aerodynamic coefficients interface will result in an error, which is generated while setting up the simulation and not when actually running it. Using a placeholder aerodynamic coefficients interface in the JSON file (e.g. zero force coefficients), this will result in a successful simulation set up, but then, when one wants to reset the aerodynamic coefficients interface in the C++ application manually, it is necessary to reset also all objects that had been set up based on the placeholder coefficients (e.g. the vehicle’s flight conditions). This can be complex and is prone to leading to errors (sometimes run-time errors, sometimes successful simulations in which the results are wrong), so a different approach is followed when writing custom C++ applications.</p>
 <p>When setting up the simulation (step 2), the following virtual method is called:</p>
-<div class="highlight-cpp"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -262,16 +264,16 @@
 <span class="p">}</span>
 </pre></div>
 </td></tr></table></div>
-<p>Note that each of the methods called by this method is also virtual. This means that a derived class of <code class="xref py py-class docutils literal"><span class="pre">JsonSimulationManager</span></code> can be created if a custom implementation of any of these methods is needed. The method <code class="docutils literal"><span class="pre">updateSettingsFromJSONObject</span></code> is generally not overridden, as it is dangerous to modify the order in which each of the virtual methods is called. If one <em>does</em> want to modify this method, the following has to be taken into account:</p>
+<p>Note that each of the methods called by this method is also virtual. This means that a derived class of <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonSimulationManager</span></code> can be created if a custom implementation of any of these methods is needed. The method <code class="docutils literal notranslate"><span class="pre">updateSettingsFromJSONObject</span></code> is generally not overridden, as it is dangerous to modify the order in which each of the virtual methods is called. If one <em>does</em> want to modify this method, the following has to be taken into account:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The default implementation of <code class="docutils literal"><span class="pre">resetBodies</span></code> uses the integrator settings’ initial time to interpolate the ephemeris of celestial bodies if Spice is enabled and the key <span class="jsonkey">spice.preloadEpehemeris</span> is set to <code class="docutils literal"><span class="pre">true</span></code>.</li>
-<li>The default implementation of <code class="docutils literal"><span class="pre">resetPropagatorSettings</span></code> uses the integrator settings’ initial time to infer the initial state of the celestial bodies from their ephemeris, as well as some of the properties of other bodies (such as initial translational state or mass). Additionally, the variable to be computed are determined from the export settings.</li>
+<li><p>The default implementation of <code class="docutils literal notranslate"><span class="pre">resetBodies</span></code> uses the integrator settings’ initial time to interpolate the ephemeris of celestial bodies if Spice is enabled and the key <span class="jsonkey">spice.preloadEpehemeris</span> is set to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p></li>
+<li><p>The default implementation of <code class="docutils literal notranslate"><span class="pre">resetPropagatorSettings</span></code> uses the integrator settings’ initial time to infer the initial state of the celestial bodies from their ephemeris, as well as some of the properties of other bodies (such as initial translational state or mass). Additionally, the variable to be computed are determined from the export settings.</p></li>
 </ul>
 </div></blockquote>
-<p>In practice, this means that <code class="docutils literal"><span class="pre">resetBodies</span></code> must be called after <code class="docutils literal"><span class="pre">resetIntegratorSettings</span></code> and <code class="docutils literal"><span class="pre">resetSpice</span></code>, and <code class="docutils literal"><span class="pre">resetPropagatorSettings</span></code> must be called after <code class="docutils literal"><span class="pre">resetBodies</span></code> and <code class="docutils literal"><span class="pre">resetExportSettings</span></code>.</p>
-<p>Thus, to avoid undefined behaviour, rather than overriding the <code class="docutils literal"><span class="pre">updateSettings</span></code> method, one would override just some of the virtual methods called therein. It is recommended to call the original implementation inside the custom implementations of these methods, and then provide additional steps. For instance, before the <code class="docutils literal"><span class="pre">main</span></code> function:</p>
-<div class="highlight-cpp"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>In practice, this means that <code class="docutils literal notranslate"><span class="pre">resetBodies</span></code> must be called after <code class="docutils literal notranslate"><span class="pre">resetIntegratorSettings</span></code> and <code class="docutils literal notranslate"><span class="pre">resetSpice</span></code>, and <code class="docutils literal notranslate"><span class="pre">resetPropagatorSettings</span></code> must be called after <code class="docutils literal notranslate"><span class="pre">resetBodies</span></code> and <code class="docutils literal notranslate"><span class="pre">resetExportSettings</span></code>.</p>
+<p>Thus, to avoid undefined behaviour, rather than overriding the <code class="docutils literal notranslate"><span class="pre">updateSettings</span></code> method, one would override just some of the virtual methods called therein. It is recommended to call the original implementation inside the custom implementations of these methods, and then provide additional steps. For instance, before the <code class="docutils literal notranslate"><span class="pre">main</span></code> function:</p>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -306,12 +308,12 @@
 <span class="p">};</span>
 </pre></div>
 </td></tr></table></div>
-<p>Then, in the <code class="docutils literal"><span class="pre">main</span></code> function, we only need to change line 6 to:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">CustomJsonSimulationManager</span> <span class="nf">jsonSimulationManager</span><span class="p">(</span> <span class="n">inputPath</span> <span class="p">);</span>
+<p>Then, in the <code class="docutils literal notranslate"><span class="pre">main</span></code> function, we only need to change line 6 to:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CustomJsonSimulationManager</span> <span class="nf">jsonSimulationManager</span><span class="p">(</span> <span class="n">inputPath</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>If one wants to perform some operations on the results of the integration before exporting them, or does not want to export them to an output file, the call to the <code class="docutils literal"><span class="pre">exportResults</span></code> methods can be omitted, and the results can be retrieved from:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">stateHistory</span> <span class="o">=</span>
+<p>If one wants to perform some operations on the results of the integration before exporting them, or does not want to export them to an output file, the call to the <code class="docutils literal notranslate"><span class="pre">exportResults</span></code> methods can be omitted, and the results can be retrieved from:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">stateHistory</span> <span class="o">=</span>
     <span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">getDynamicsSimulator</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
 
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">dependentVariablesHistory</span> <span class="o">=</span>
@@ -376,7 +378,8 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

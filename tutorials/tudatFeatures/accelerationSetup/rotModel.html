@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -109,6 +111,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">Low-Thrust Trajectory Design Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
@@ -170,9 +173,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">2. Setting up State Derivative Models</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">2. </span>Setting up State Derivative Models</a> &raquo;</li>
         
-      <li>2.2. Torque Model Set-up</li>
+      <li><span class="section-number">2.2. </span>Torque Model Set-up</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -192,59 +195,59 @@
            <div itemprop="articleBody">
             
   <div class="section" id="torque-model-set-up">
-<span id="tudatfeaturesframeworktorquemodelsetup"></span><h1>2.2. Torque Model Set-up<a class="headerlink" href="#torque-model-set-up" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturesframeworktorquemodelsetup"></span><h1><span class="section-number">2.2. </span>Torque Model Set-up<a class="headerlink" href="#torque-model-set-up" title="Permalink to this headline">¶</a></h1>
 <p>The setup of the rotational state is similar to the set-up of the translational acceleration framework.</p>
-<p>The user can define the settings for the torque acting on a vehicle in the following variable: <code class="docutils literal"><span class="pre">SelectedTorqueMap</span></code>.</p>
-<dl class="class">
+<p>The user can define the settings for the torque acting on a vehicle in the following variable: <code class="docutils literal notranslate"><span class="pre">SelectedTorqueMap</span></code>.</p>
+<dl class="py class">
 <dt id="SelectedTorqueMap">
-<em class="property">class </em><code class="descname">SelectedTorqueMap</code><a class="headerlink" href="#SelectedTorqueMap" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a <code class="docutils literal"><span class="pre">typedef</span></code> for:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">torqueSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
+<em class="property">class </em><code class="sig-name descname">SelectedTorqueMap</code><a class="headerlink" href="#SelectedTorqueMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a <code class="docutils literal notranslate"><span class="pre">typedef</span></code> for:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">torqueSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>Just as in the translational acceleration setup, the first key is the body undergoing the torque, the second key is the body exerting the torque, and the third entry is a vector
-of <code class="docutils literal"><span class="pre">torqueSettings</span></code>. The available torque models are given in an <code class="docutils literal"><span class="pre">enum</span></code> called <code class="docutils literal"><span class="pre">AvailableTorque</span></code>. An example can be given using the Apollo capsule
+of <code class="docutils literal notranslate"><span class="pre">torqueSettings</span></code>. The available torque models are given in an <code class="docutils literal notranslate"><span class="pre">enum</span></code> called <code class="docutils literal notranslate"><span class="pre">AvailableTorque</span></code>. An example can be given using the Apollo capsule
 example:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedTorqueMap</span> <span class="n">selectedTorqueModelMap</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SelectedTorqueMap</span> <span class="n">selectedTorqueModelMap</span><span class="p">;</span>
 <span class="n">selectedTorqueModelMap</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TorqueSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">aerodynamic_torque</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Currently, there are only two options for the torque settings, both which are not derived classes of the <code class="docutils literal"><span class="pre">TorqueSettings</span></code> class, and do not need extra information. Thus both can be defined
+<p>Currently, there are only two options for the torque settings, both which are not derived classes of the <code class="docutils literal notranslate"><span class="pre">TorqueSettings</span></code> class, and do not need extra information. Thus both can be defined
 in a similar way.</p>
-<p>When all the settings of the torque acting on the body are defined, the <code class="docutils literal"><span class="pre">TorqueModelMap</span></code> can be created as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">TorqueModelMap</span> <span class="n">torqueModelMap</span> <span class="o">=</span> <span class="n">createTorqueModelsMap</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">selectedTorqueModelMap</span> <span class="p">)</span>
+<p>When all the settings of the torque acting on the body are defined, the <code class="docutils literal notranslate"><span class="pre">TorqueModelMap</span></code> can be created as follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TorqueModelMap</span> <span class="n">torqueModelMap</span> <span class="o">=</span> <span class="n">createTorqueModelsMap</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">selectedTorqueModelMap</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>This will create a map that can be used as an input to the <code class="docutils literal"><span class="pre">RotationalStatePropagatorSettings</span></code>.</p>
+<p>This will create a map that can be used as an input to the <code class="docutils literal notranslate"><span class="pre">RotationalStatePropagatorSettings</span></code>.</p>
 </dd></dl>
 
 <div class="section" id="available-models">
-<h2>2.2.1. Available Models<a class="headerlink" href="#available-models" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.2.1. </span>Available Models<a class="headerlink" href="#available-models" title="Permalink to this headline">¶</a></h2>
 <p>Currently, there are two torque models that can be used for the rotational state propagator:</p>
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">Second-order Gravitational Torque</code></dt>
+<code class="sig-name descname">Second-order Gravitational Torque</code></dt>
 <dd><p>Torque exerted by a point mass on a body with a degree two spherical harmonics mass distribution. A degree two spherical harmonics mass distribution can be represented by an inertia tensor, thus
 for this torque model, the body undergoing the torque needs to have an inertia tensor defined. The body exerting the torque only needs to have a point-mass gravitational model defined.</p>
-<p>The settings are created as follows, for a torque exerted by <code class="docutils literal"><span class="pre">&quot;Mars&quot;</span></code> on body <code class="docutils literal"><span class="pre">&quot;Phobos&quot;</span></code>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedTorqueMap</span> <span class="n">selectedTorqueModelMap</span><span class="p">;</span>
+<p>The settings are created as follows, for a torque exerted by <code class="docutils literal notranslate"><span class="pre">&quot;Mars&quot;</span></code> on body <code class="docutils literal notranslate"><span class="pre">&quot;Phobos&quot;</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SelectedTorqueMap</span> <span class="n">selectedTorqueModelMap</span><span class="p">;</span>
 <span class="n">selectedTorqueModelMap</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TorqueSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">second_order_gravitational_torque</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>Requires the following environment models to be defined:</p>
 <ul class="simple">
-<li>Gravity field (at least point-mass) for body exerting torque (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#GravityFieldSettings" title="GravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">GravityFieldSettings</span></code></a>).</li>
-<li>Inertia tensor of body undergoing torque.</li>
-<li>Current state of bodies undergoing and exerting torque, either from an Ephemeris model (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a>) or from the numerical propagation.</li>
+<li><p>Gravity field (at least point-mass) for body exerting torque (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#GravityFieldSettings" title="GravityFieldSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">GravityFieldSettings</span></code></a>).</p></li>
+<li><p>Inertia tensor of body undergoing torque.</p></li>
+<li><p>Current state of bodies undergoing and exerting torque, either from an Ephemeris model (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EphemerisSettings</span></code></a>) or from the numerical propagation.</p></li>
 </ul>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="SphericalHarmonicTorqueSettings">
-<em class="property">class </em><code class="descname">SphericalHarmonicTorqueSettings</code><a class="headerlink" href="#SphericalHarmonicTorqueSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">SphericalHarmonicTorqueSettings</code><a class="headerlink" href="#SphericalHarmonicTorqueSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Torque exerted by a point mass on a body with an arbitrary degree/order spherical harmonics mass distribution. The body exerting the torque only needs to have a gravitational model defined.</p>
-<p>The settings are created with the dedicated <code class="docutils literal"><span class="pre">SphericalHarmonicTorqueSettings</span></code> class. As an example, for a spherical harmonic torque, expanded to degree and order 8, exerted by <code class="docutils literal"><span class="pre">&quot;Mars&quot;</span></code> on body <code class="docutils literal"><span class="pre">&quot;Phobos&quot;</span></code>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedTorqueMap</span> <span class="n">selectedTorqueModelMap</span><span class="p">;</span>
+<p>The settings are created with the dedicated <code class="docutils literal notranslate"><span class="pre">SphericalHarmonicTorqueSettings</span></code> class. As an example, for a spherical harmonic torque, expanded to degree and order 8, exerted by <code class="docutils literal notranslate"><span class="pre">&quot;Mars&quot;</span></code> on body <code class="docutils literal notranslate"><span class="pre">&quot;Phobos&quot;</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SelectedTorqueMap</span> <span class="n">selectedTorqueModelMap</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">maximumDegree</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">maximumOrder</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
 <span class="n">selectedTorqueModelMap</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicTorqueSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">maximumDegree</span><span class="p">,</span> <span class="n">maximumOrder</span> <span class="p">)</span> <span class="p">);</span>
@@ -252,27 +255,27 @@ for this torque model, the body undergoing the torque needs to have an inertia t
 </div>
 <p>Requires the following environment models to be defined:</p>
 <ul class="simple">
-<li>Gravity field (at least point-mass) for body exerting torque (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#GravityFieldSettings" title="GravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">GravityFieldSettings</span></code></a>).</li>
-<li>Spherical harmonic gravity field for body undergoing torque (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#SphericalHarmonicsGravityFieldSettings" title="SphericalHarmonicsGravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicsGravityFieldSettings</span></code></a>)..</li>
-<li>Current state of bodies undergoing and exerting torque, either from an Ephemeris model (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a>) or from the numerical propagation.</li>
+<li><p>Gravity field (at least point-mass) for body exerting torque (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#GravityFieldSettings" title="GravityFieldSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">GravityFieldSettings</span></code></a>).</p></li>
+<li><p>Spherical harmonic gravity field for body undergoing torque (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#SphericalHarmonicsGravityFieldSettings" title="SphericalHarmonicsGravityFieldSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">SphericalHarmonicsGravityFieldSettings</span></code></a>)..</p></li>
+<li><p>Current state of bodies undergoing and exerting torque, either from an Ephemeris model (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EphemerisSettings</span></code></a>) or from the numerical propagation.</p></li>
 </ul>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">Aerodynamic Torque</code></dt>
+<code class="sig-name descname">Aerodynamic Torque</code></dt>
 <dd><p>Torque exerted by a body with an atmosphere model and shape model on another body. It is important that the body exerting the torque has an atmosphere model defined, and a shape model, if this is
-not the case, the torque cannot be calculated. Furthermore, the body undergoing the torque needs to have aerodynamic coefficient interface defined, and needs to have its moment coefficients defined. The settings are created as follows, for an aerodynamic torque exerted by <code class="docutils literal"><span class="pre">&quot;Earth&quot;</span></code> on body <code class="docutils literal"><span class="pre">&quot;Apollo&quot;</span></code>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SelectedTorqueMap</span> <span class="n">selectedTorqueModelMap</span><span class="p">;</span>
+not the case, the torque cannot be calculated. Furthermore, the body undergoing the torque needs to have aerodynamic coefficient interface defined, and needs to have its moment coefficients defined. The settings are created as follows, for an aerodynamic torque exerted by <code class="docutils literal notranslate"><span class="pre">&quot;Earth&quot;</span></code> on body <code class="docutils literal notranslate"><span class="pre">&quot;Apollo&quot;</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SelectedTorqueMap</span> <span class="n">selectedTorqueModelMap</span><span class="p">;</span>
 <span class="n">selectedTorqueModelMap</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TorqueSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">aerodynamic_torque</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>Requires the following environment models to be defined:</p>
 <ul class="simple">
-<li>Atmosphere model for body exerting torque (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#AtmosphereSettings" title="AtmosphereSettings"><code class="xref py py-class docutils literal"><span class="pre">AtmosphereSettings</span></code></a>).</li>
-<li>Shape model for body exerting torque (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#BodyShapeSettings" title="BodyShapeSettings"><code class="xref py py-class docutils literal"><span class="pre">BodyShapeSettings</span></code></a>).</li>
-<li>Aerodynamic coefficient interface for body undergoing torque (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientSettings</span></code></a>). NOTE: In the case that the aerodynamic coefficients are defined as a function of the vehicle orientation (e.g. angle of attack and sideslip angle), these angles can be manually or automatically defined.</li>
-<li>Current state of body undergoing torque and body with atmosphere.</li>
+<li><p>Atmosphere model for body exerting torque (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#AtmosphereSettings" title="AtmosphereSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">AtmosphereSettings</span></code></a>).</p></li>
+<li><p>Shape model for body exerting torque (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#BodyShapeSettings" title="BodyShapeSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">BodyShapeSettings</span></code></a>).</p></li>
+<li><p>Aerodynamic coefficient interface for body undergoing torque (set by <a class="reference internal" href="../environmentSetup/availableSettings.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">AerodynamicCoefficientSettings</span></code></a>). NOTE: In the case that the aerodynamic coefficients are defined as a function of the vehicle orientation (e.g. angle of attack and sideslip angle), these angles can be manually or automatically defined.</p></li>
+<li><p>Current state of body undergoing torque and body with atmosphere.</p></li>
 </ul>
 </dd></dl>
 
@@ -334,7 +337,8 @@ not the case, the torque cannot be calculated. Furthermore, the body undergoing 
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

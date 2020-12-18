@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shape-Based Methods &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>4. Shape-Based Methods &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
   
 
@@ -40,7 +42,7 @@
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../../index.html"/>
         <link rel="up" title="6. Low-Thrust Trajectory Design Module" href="../index.html"/>
         <link rel="next" title="1. Hodographic shaping" href="hodographicShaping.html"/>
-        <link rel="prev" title="6.3. Hybrid Method" href="../hybridMethod.html"/> 
+        <link rel="prev" title="3. Hybrid Method" href="../hybridMethod.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -103,14 +105,14 @@
 <li class="toctree-l3"><a class="reference internal" href="../../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="../index.html">6. Low-Thrust Trajectory Design Module</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="../lowThrustTrajectory.html">6.1. Low-Thrust Trajectories</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../SimsFlanagan.html">6.2. Sims-Flanagan Method</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hybridMethod.html">6.3. Hybrid Method</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">Shape-Based Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lowThrustTrajectory.html">1. Low-Thrust Trajectories</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../SimsFlanagan.html">2. Sims-Flanagan Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../hybridMethod.html">3. Hybrid Method</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">4. Shape-Based Methods</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../../mathTools/index.html">7. Basic Mathematics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../otherLibraries/index.html">8. Other Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mathTools/index.html">6. Basic Mathematics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/index.html">Tudat Basics</a></li>
@@ -122,7 +124,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developerGuide/index.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -171,9 +172,9 @@
         
           <li><a href="../../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="../index.html">6. Low-Thrust Trajectory Design Module</a> &raquo;</li>
+          <li><a href="../index.html"><span class="section-number">6. </span>Low-Thrust Trajectory Design Module</a> &raquo;</li>
         
-      <li>Shape-Based Methods</li>
+      <li><span class="section-number">4. </span>Shape-Based Methods</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -195,28 +196,28 @@
   <div class="section" id="shape-based-methods">
 <span id="tudatfeaturesshapebasedmethodsindex"></span><h1>Shape-Based Methods<a class="headerlink" href="#shape-based-methods" title="Permalink to this headline">¶</a></h1>
 <p>Shape-based methods are used to provide a good preliminary design for a given trajectory, in an efficient way. To do so, they rely on analytical shaping of the trajectory: they assume the trajectory respects a certain shape (which can be fully described analytically), and the parameters defining this shape are then computed to ensure the trajectory satisfies some boundary conditions (states at departure and arrival, time of flight, …). The analytical formulation reduces the computational load significantly, which is a major advantages of those shaping methods over the traditional direct and indirect methods.</p>
-<p>All shape-based methods derive from the class <code class="docutils literal"><span class="pre">ShapeBasedMethodLeg</span></code>, described below.</p>
-<dl class="class">
+<p>All shape-based methods derive from the class <code class="docutils literal notranslate"><span class="pre">ShapeBasedMethodLeg</span></code>, described below.</p>
+<dl class="py class">
 <dt id="ShapeBasedMethodLeg">
-<em class="property">class </em><code class="descname">ShapeBasedMethodLeg</code><a class="headerlink" href="#ShapeBasedMethodLeg" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ShapeBasedMethodLeg</code><a class="headerlink" href="#ShapeBasedMethodLeg" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<p>This is the base class used to derive the different shaping methods. It itself inherits from the base class LowThrustLeg. Each class inherited from <code class="docutils literal"><span class="pre">ShapeBasedMethodLeg</span></code> contains the following methods:</p>
+<p>This is the base class used to derive the different shaping methods. It itself inherits from the base class LowThrustLeg. Each class inherited from <code class="docutils literal notranslate"><span class="pre">ShapeBasedMethodLeg</span></code> contains the following methods:</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">getInitialValueInpendentVariable</span></code></dt>
-<dd>Returns the initial value of the independent variable with respect to which the trajectory is calculated. Usually, time is the independent variable but several shaping methods use polar or azimuth angles.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">getInitialValueInpendentVariable</span></code></dt><dd><p>Returns the initial value of the independent variable with respect to which the trajectory is calculated. Usually, time is the independent variable but several shaping methods use polar or azimuth angles.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">getFinalValueInpendentVariable</span></code></dt>
-<dd>Returns the final value of the independent variable.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">getFinalValueInpendentVariable</span></code></dt><dd><p>Returns the final value of the independent variable.</p>
+</dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
-<p>Several shape-based methods have been implemented and inherit from this <code class="docutils literal"><span class="pre">ShapeBasedMethodLeg</span></code> base class.</p>
+<p>Several shape-based methods have been implemented and inherit from this <code class="docutils literal notranslate"><span class="pre">ShapeBasedMethodLeg</span></code> base class.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="hodographicShaping.html">1. Hodographic shaping</a><ul>
@@ -247,7 +248,7 @@
         <a href="hodographicShaping.html" class="btn btn-neutral float-right" title="1. Hodographic shaping" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../hybridMethod.html" class="btn btn-neutral" title="6.3. Hybrid Method" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../hybridMethod.html" class="btn btn-neutral" title="3. Hybrid Method" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -289,7 +290,8 @@
       <script type="text/javascript" src="../../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
 
@@ -111,6 +113,9 @@
 <li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">11. Orbit Determination and Parameter Estimation (Basic)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="earthOrbiterStateEstimation.html">12. Orbit Determination and Parameter Estimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="interplanetaryTrajectory.html">13. MGA Trajectory Design</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fullPropagationCR3BP.html">14. Full propagation of the CR3BP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fullPropagationPatchedConicsTrajectory.html">15. Full propagation of a patched conics trajectory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shapeBasedTrajectory.html">16. Shape-Based Low-Thrust Trajectories</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="index.html#pagmo-optimization-tutorials">Pagmo Optimization Tutorials</a></li>
@@ -174,7 +179,7 @@
         
           <li><a href="index.html">Application Tutorials</a> &raquo;</li>
         
-      <li>8. Comparison of Propagator Types</li>
+      <li><span class="section-number">8. </span>Comparison of Propagator Types</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -194,155 +199,155 @@
            <div itemprop="articleBody">
             
   <div class="section" id="comparison-of-propagator-types">
-<span id="walkthroughspropagatortypescomparison"></span><h1>8. Comparison of Propagator Types<a class="headerlink" href="#comparison-of-propagator-types" title="Permalink to this headline">¶</a></h1>
+<span id="walkthroughspropagatortypescomparison"></span><h1><span class="section-number">8. </span>Comparison of Propagator Types<a class="headerlink" href="#comparison-of-propagator-types" title="Permalink to this headline">¶</a></h1>
 <p>As was introduced in <a class="reference internal" href="../tudatFeatures/propagationSetup/propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>, in Tudat one can choose from seven different propagation types, which are:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Cowell (Cartesian coordinates)</li>
-<li>Encke (Cartesian coordinates)</li>
-<li>Gauss planetary equations in Keplerian elements</li>
-<li>Gauss planetary equations in modified equinoctial elements</li>
-<li>Unified state model with quaternions</li>
-<li>Unified state model with modifed Rodrigues parameters</li>
-<li>Unified state model with exponential map</li>
+<li><p>Cowell (Cartesian coordinates)</p></li>
+<li><p>Encke (Cartesian coordinates)</p></li>
+<li><p>Gauss planetary equations in Keplerian elements</p></li>
+<li><p>Gauss planetary equations in modified equinoctial elements</p></li>
+<li><p>Unified state model with quaternions</p></li>
+<li><p>Unified state model with modifed Rodrigues parameters</p></li>
+<li><p>Unified state model with exponential map</p></li>
 </ul>
 </div></blockquote>
 <p>With this example application, we propagate a quasi-circular orbit around Earth with each of the propagators above for 10 days, and examine their performance (in terms of RMS error w.r.t. a more accurate reference, time and function evaluations). The comparison is done for both a variable and a constant step-size integration method.</p>
 <p>The code for this tutorial is given on Github, and is also located in your Tudat bundle at:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">propagatorTypesComparison</span><span class="o">.</span><span class="n">cpp</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">propagatorTypesComparison</span><span class="o">.</span><span class="n">cpp</span>
 </pre></div>
 </div>
 <div class="section" id="initial-conditions">
-<h2>8.1. Initial Conditions<a class="headerlink" href="#initial-conditions" title="Permalink to this headline">¶</a></h2>
-<p>The initial conditions (expressed in Keplerian elements) are defined in the table below, and the accelerations are listed thereafter. Note that you can also choose to propagate a simple Keplerian orbit, i.e., an orbit with no accelerations, other than the point mass gravity of the Earth. This is done by setting the variable <code class="docutils literal"><span class="pre">keplerOrbit</span></code> to <code class="docutils literal"><span class="pre">true</span></code>.</p>
+<h2><span class="section-number">8.1. </span>Initial Conditions<a class="headerlink" href="#initial-conditions" title="Permalink to this headline">¶</a></h2>
+<p>The initial conditions (expressed in Keplerian elements) are defined in the table below, and the accelerations are listed thereafter. Note that you can also choose to propagate a simple Keplerian orbit, i.e., an orbit with no accelerations, other than the point mass gravity of the Earth. This is done by setting the variable <code class="docutils literal notranslate"><span class="pre">keplerOrbit</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
 <blockquote>
-<div><table border="1" class="docutils">
+<div><table class="docutils align-default">
 <colgroup>
-<col width="64%" />
-<col width="18%" />
-<col width="18%" />
+<col style="width: 64%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Keplerian Element</th>
-<th class="head">Value</th>
-<th class="head">Unit</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Keplerian Element</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Unit</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Semi-major Axis</td>
-<td>6778.136</td>
-<td>km</td>
+<tbody>
+<tr class="row-even"><td><p>Semi-major Axis</p></td>
+<td><p>6778.136</p></td>
+<td><p>km</p></td>
 </tr>
-<tr class="row-odd"><td>Eccentricity</td>
-<td>0.003</td>
-<td>–</td>
+<tr class="row-odd"><td><p>Eccentricity</p></td>
+<td><p>0.003</p></td>
+<td><p>–</p></td>
 </tr>
-<tr class="row-even"><td>Inclination</td>
-<td>93.0</td>
-<td>deg</td>
+<tr class="row-even"><td><p>Inclination</p></td>
+<td><p>93.0</p></td>
+<td><p>deg</p></td>
 </tr>
-<tr class="row-odd"><td>Right Ascension of Ascending Node</td>
-<td>158.7</td>
-<td>deg</td>
+<tr class="row-odd"><td><p>Right Ascension of Ascending Node</p></td>
+<td><p>158.7</p></td>
+<td><p>deg</p></td>
 </tr>
-<tr class="row-even"><td>Argument of Periapsis</td>
-<td>23.4</td>
-<td>deg</td>
+<tr class="row-even"><td><p>Argument of Periapsis</p></td>
+<td><p>23.4</p></td>
+<td><p>deg</p></td>
 </tr>
-<tr class="row-odd"><td>True Anomaly</td>
-<td>0.0</td>
-<td>deg</td>
+<tr class="row-odd"><td><p>True Anomaly</p></td>
+<td><p>0.0</p></td>
+<td><p>deg</p></td>
 </tr>
 </tbody>
 </table>
 <ul class="simple">
-<li>Spherical harmonics gravity of the Earth (based on model <code class="docutils literal"><span class="pre">ggm02s</span></code>) with maximum degree and order 4</li>
-<li>Third body perturbations (modelled as point mass gravity) of Sun and Moon</li>
-<li>Aerodynamic acceleration based on the standard Earth exponential atmosphere model</li>
-<li>Solar radiation pressure</li>
+<li><p>Spherical harmonics gravity of the Earth (based on model <code class="docutils literal notranslate"><span class="pre">ggm02s</span></code>) with maximum degree and order 4</p></li>
+<li><p>Third body perturbations (modelled as point mass gravity) of Sun and Moon</p></li>
+<li><p>Aerodynamic acceleration based on the standard Earth exponential atmosphere model</p></li>
+<li><p>Solar radiation pressure</p></li>
 </ul>
 </div></blockquote>
 <p>You can find more details on the spacecraft (such as mass and aerodynamic properties) and on the simulation in the application file itself.</p>
 </div>
 <div class="section" id="integrator-settings">
-<h2>8.2. Integrator Settings<a class="headerlink" href="#integrator-settings" title="Permalink to this headline">¶</a></h2>
-<p>In <a class="reference internal" href="../tudatFeatures/propagationSetup/integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a> you learned about the format required for setting up an integrator, via the <a class="reference internal" href="../tudatFeatures/propagationSetup/integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> class. In this application we will focus only on two of the available integrators in Tudat.</p>
+<h2><span class="section-number">8.2. </span>Integrator Settings<a class="headerlink" href="#integrator-settings" title="Permalink to this headline">¶</a></h2>
+<p>In <a class="reference internal" href="../tudatFeatures/propagationSetup/integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a> you learned about the format required for setting up an integrator, via the <a class="reference internal" href="../tudatFeatures/propagationSetup/integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntegratorSettings</span></code></a> class. In this application we will focus only on two of the available integrators in Tudat.</p>
 <p>The first one is a <strong>variable step-size</strong> integrator. As you may already know, these types of integrators adapt the time step-size for the next integration step, by approximating the local and total integration error. Here we will only use the Runge-Kutta integrators, but Tudat also offers more other integrators and you should always make a trade-off on itegrators based on you mission requirements (for this example, we will only set up a simulation to make a trade-off in propagator type). The coefficient sets that use are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">rungeKuttaFehlberg56</span></code>: used for the nominal orbit simulation</li>
-<li><code class="docutils literal"><span class="pre">rungeKuttaFehlberg78</span></code>: used for the computation of the reference trajectory</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rungeKuttaFehlberg56</span></code>: used for the nominal orbit simulation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rungeKuttaFehlberg78</span></code>: used for the computation of the reference trajectory</p></li>
 </ul>
 </div></blockquote>
 <p>The following settings are used as default, but you can always change them by modifiying the value of the variable (which you can find at the beginning of the file).</p>
 <blockquote>
-<div><table border="1" class="docutils">
+<div><table class="docutils align-default">
 <colgroup>
-<col width="34%" />
-<col width="16%" />
-<col width="10%" />
-<col width="41%" />
+<col style="width: 34%" />
+<col style="width: 16%" />
+<col style="width: 10%" />
+<col style="width: 41%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Integrator Settings</th>
-<th class="head">Value</th>
-<th class="head">Unit</th>
-<th class="head">Variable Name</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Integrator Settings</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Unit</p></th>
+<th class="head"><p>Variable Name</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Relative Tolerances</td>
-<td><span class="math">\(10^{-12}\)</span></td>
-<td>–</td>
-<td><code class="docutils literal"><span class="pre">integrationRelativeTolerance</span></code></td>
+<tbody>
+<tr class="row-even"><td><p>Relative Tolerances</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{-12}\)</span></p></td>
+<td><p>–</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">integrationRelativeTolerance</span></code></p></td>
 </tr>
-<tr class="row-odd"><td>Absolute Tolerances</td>
-<td><span class="math">\(10^{-12}\)</span></td>
-<td>–</td>
-<td><code class="docutils literal"><span class="pre">integrationAbsoluteTolerance</span></code></td>
+<tr class="row-odd"><td><p>Absolute Tolerances</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{-12}\)</span></p></td>
+<td><p>–</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">integrationAbsoluteTolerance</span></code></p></td>
 </tr>
-<tr class="row-even"><td>Reference Tolerances</td>
-<td><span class="math">\(10^{-15}\)</span></td>
-<td>–</td>
-<td><code class="docutils literal"><span class="pre">integrationReferenceTolerance</span></code></td>
+<tr class="row-even"><td><p>Reference Tolerances</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{-15}\)</span></p></td>
+<td><p>–</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">integrationReferenceTolerance</span></code></p></td>
 </tr>
-<tr class="row-odd"><td>Constant Time Step</td>
-<td>5.0</td>
-<td>s</td>
-<td><code class="docutils literal"><span class="pre">integrationConstantTimeStepSize</span></code></td>
+<tr class="row-odd"><td><p>Constant Time Step</p></td>
+<td><p>5.0</p></td>
+<td><p>s</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">integrationConstantTimeStepSize</span></code></p></td>
 </tr>
 </tbody>
 </table>
 </div></blockquote>
 <p>The values above are rather arbitrary. As mentioned above for the integrator settings, the choice of tolerances and time steps highly depends on the accruacy requirements and environment of you mission.</p>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">In Tudat you can also set a tolerance for each of the elements in the state vector, by using the settings <a class="reference internal" href="../tudatFeatures/propagationSetup/integratorSettings.html#RungeKuttaVariableStepSizeSettingsVectorTolerances" title="RungeKuttaVariableStepSizeSettingsVectorTolerances"><code class="xref py py-class docutils literal"><span class="pre">RungeKuttaVariableStepSizeSettingsVectorTolerances</span></code></a> (only available for Runge-Kutta variable step size). For instance, while using the USM7 method (see <a class="reference internal" href="../tudatFeatures/astroTools/framestateTransformations.html#tudatfeaturesframestatetransformations"><span class="std std-ref">Frame/State Transformations</span></a> for a brief introduction to these propagation coordinates) you may want to set a separate tolerance for the velocity and the quaternion elements of the state, since their dynamics are quite different.</p>
+<p class="admonition-title">Tip</p>
+<p>In Tudat you can also set a tolerance for each of the elements in the state vector, by using the settings <a class="reference internal" href="../tudatFeatures/propagationSetup/integratorSettings.html#RungeKuttaVariableStepSizeSettingsVectorTolerances" title="RungeKuttaVariableStepSizeSettingsVectorTolerances"><code class="xref py py-class docutils literal notranslate"><span class="pre">RungeKuttaVariableStepSizeSettingsVectorTolerances</span></code></a> (only available for Runge-Kutta variable step size). For instance, while using the USM7 method (see <a class="reference internal" href="../tudatFeatures/astroTools/framestateTransformations.html#tudatfeaturesframestatetransformations"><span class="std std-ref">Frame/State Transformations</span></a> for a brief introduction to these propagation coordinates) you may want to set a separate tolerance for the velocity and the quaternion elements of the state, since their dynamics are quite different.</p>
 </div>
-<p>For the <strong>constant step-size</strong> method, <code class="docutils literal"><span class="pre">rungeKutta4</span></code> is the selected method. In the table above, you can also see the step-size chosen for this application.</p>
+<p>For the <strong>constant step-size</strong> method, <code class="docutils literal notranslate"><span class="pre">rungeKutta4</span></code> is the selected method. In the table above, you can also see the step-size chosen for this application.</p>
 </div>
 <div class="section" id="results-and-analysis">
-<h2>8.3. Results and Analysis<a class="headerlink" href="#results-and-analysis" title="Permalink to this headline">¶</a></h2>
-<p>Once you run the simulation in Tudat (select executable <code class="docutils literal"><span class="pre">application_PropagatorTypesComparison</span></code>), you can access the results by going to the folder <code class="docutils literal"><span class="pre">SimulationOutput/PropagatorTypesComparison</span></code>, you will find a text file for each of the propagator/integrator combinations. A preliminary MATLAB file for loading and plotting the results is available in <code class="docutils literal"><span class="pre">MatlabScripts</span></code>, under the name <code class="docutils literal"><span class="pre">propagatorTypesComparison.m</span></code>. You can use this file as a basis for your more in-depth analysis. You will find more detailed descriptions of the performance of the USM propagators w.r.t. Cowell in e.g.:</p>
+<h2><span class="section-number">8.3. </span>Results and Analysis<a class="headerlink" href="#results-and-analysis" title="Permalink to this headline">¶</a></h2>
+<p>Once you run the simulation in Tudat (select executable <code class="docutils literal notranslate"><span class="pre">application_PropagatorTypesComparison</span></code>), you can access the results by going to the folder <code class="docutils literal notranslate"><span class="pre">SimulationOutput/PropagatorTypesComparison</span></code>, you will find a text file for each of the propagator/integrator combinations. A preliminary MATLAB file for loading and plotting the results is available in <code class="docutils literal notranslate"><span class="pre">MatlabScripts</span></code>, under the name <code class="docutils literal notranslate"><span class="pre">propagatorTypesComparison.m</span></code>. You can use this file as a basis for your more in-depth analysis. You will find more detailed descriptions of the performance of the USM propagators w.r.t. Cowell in e.g.:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Vittaldev, V., “The Unified State Model,” Master Thesis, Delft University of Technology, May 2010.</li>
-<li>Vittaldev, V., Mooij, E., and Naeije, M., “Unified State Model Theory and Application in Astrodynamics,” Celestial Mechanics and Dynamical Astronomy, vol. 112, no. 3, pp. 253–282, February 2012.</li>
+<li><p>Vittaldev, V., “The Unified State Model,” Master Thesis, Delft University of Technology, May 2010.</p></li>
+<li><p>Vittaldev, V., Mooij, E., and Naeije, M., “Unified State Model Theory and Application in Astrodynamics,” Celestial Mechanics and Dynamical Astronomy, vol. 112, no. 3, pp. 253–282, February 2012.</p></li>
 </ul>
 </div></blockquote>
 <p>The only output of the MATLAB file is a plot, where the RMS error in position is plotted for each propagator and integrator, as a function of function evaluations for the variable step-size integrator and as a function of time for the constant step-size integrator. Below you see the figures that are output for when a Keplerian orbit is used, and for when the full acceleration list introduced earlier is added.</p>
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">Un-perturbed Orbit</code></dt>
-<dd><div class="figure">
+<code class="sig-name descname">Un-perturbed Orbit</code></dt>
+<dd><div class="figure align-default">
 <img alt="../../_images/propagatorTypesComparisonKepler.png" src="../../_images/propagatorTypesComparisonKepler.png" />
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">Perturbed Orbit</code></dt>
-<dd><div class="figure">
+<code class="sig-name descname">Perturbed Orbit</code></dt>
+<dd><div class="figure align-default">
 <img alt="../../_images/propagatorTypesComparison.png" src="../../_images/propagatorTypesComparison.png" />
 </div>
 </dd></dl>
@@ -406,7 +411,8 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

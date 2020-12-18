@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
   
 
@@ -38,9 +40,9 @@
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../../index.html"/>
-        <link rel="up" title="Shape-Based Methods" href="index.html"/>
+        <link rel="up" title="4. Shape-Based Methods" href="index.html"/>
         <link rel="next" title="2. Spherical shaping" href="sphericalShaping.html"/>
-        <link rel="prev" title="Shape-Based Methods" href="index.html"/> 
+        <link rel="prev" title="4. Shape-Based Methods" href="index.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -103,14 +105,14 @@
 <li class="toctree-l3"><a class="reference internal" href="../../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="../index.html">6. Low-Thrust Trajectory Design Module</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="../lowThrustTrajectory.html">6.1. Low-Thrust Trajectories</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../SimsFlanagan.html">6.2. Sims-Flanagan Method</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hybridMethod.html">6.3. Hybrid Method</a></li>
-<li class="toctree-l4 current"><a class="reference internal" href="index.html">Shape-Based Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lowThrustTrajectory.html">1. Low-Thrust Trajectories</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../SimsFlanagan.html">2. Sims-Flanagan Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../hybridMethod.html">3. Hybrid Method</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="index.html">4. Shape-Based Methods</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../../mathTools/index.html">7. Basic Mathematics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../otherLibraries/index.html">8. Other Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mathTools/index.html">6. Basic Mathematics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/index.html">Tudat Basics</a></li>
@@ -122,7 +124,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developerGuide/index.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -171,11 +172,11 @@
         
           <li><a href="../../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="../index.html">6. Low-Thrust Trajectory Design Module</a> &raquo;</li>
+          <li><a href="../index.html"><span class="section-number">6. </span>Low-Thrust Trajectory Design Module</a> &raquo;</li>
         
-          <li><a href="index.html">Shape-Based Methods</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">4. </span>Shape-Based Methods</a> &raquo;</li>
         
-      <li>1. Hodographic shaping</li>
+      <li><span class="section-number">1. </span>Hodographic shaping</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -195,19 +196,19 @@
            <div itemprop="articleBody">
             
   <div class="section" id="hodographic-shaping">
-<span id="tudatfeatureshodographicshaping"></span><h1>1. Hodographic shaping<a class="headerlink" href="#hodographic-shaping" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeatureshodographicshaping"></span><h1><span class="section-number">1. </span>Hodographic shaping<a class="headerlink" href="#hodographic-shaping" title="Permalink to this headline">¶</a></h1>
 <p>The hodographic shape-based method shapes the velocity of the spacecraft using cylindrical coordinates. Two different implementations of this shaping method exists, one using time as independent variable, and the other using polar angle. The first one has been implemented here.
 This shaping method relies on the combination of integrable and differentiable base functions to shape the spacecraft velocity. The contribution of each of those base functions is weighted by a coefficient. Three base functions per velocity component at least are required so that their associated coefficients can be chosen to ensure the boundary conditions are fulfilled. The addition of any other base function, and thus of so-called free coefficients, introduces an extra degree of freedom in the problem, making it possible to optimise the shape-based trajectory to minimise the required deltaV.</p>
 <div class="section" id="setting-up-a-hodographically-shaped-trajectory">
-<h2>1.1. Setting up a hodographically shaped trajectory<a class="headerlink" href="#setting-up-a-hodographically-shaped-trajectory" title="Permalink to this headline">¶</a></h2>
-<p>A low-thrust trajectory designed by hodographic shaping can be created with the <code class="docutils literal"><span class="pre">HodographicShaping</span></code> class, which inherits from the base class <code class="docutils literal"><span class="pre">ShapeBasedMethodLeg</span></code>. A settings class for hodographic shaping has also been implemented (<code class="docutils literal"><span class="pre">HodographicShapingLegSettings</span></code>, see <a class="reference internal" href="../lowThrustTrajectory.html#tudatfeaturessetuplowthrusttrajectory"><span class="std std-ref">Setting up a low-thrust trajectory</span></a> for more details) to construct <code class="docutils literal"><span class="pre">HodographicShaping</span></code> objects more easily.</p>
-<dl class="class">
+<h2><span class="section-number">1.1. </span>Setting up a hodographically shaped trajectory<a class="headerlink" href="#setting-up-a-hodographically-shaped-trajectory" title="Permalink to this headline">¶</a></h2>
+<p>A low-thrust trajectory designed by hodographic shaping can be created with the <code class="docutils literal notranslate"><span class="pre">HodographicShaping</span></code> class, which inherits from the base class <code class="docutils literal notranslate"><span class="pre">ShapeBasedMethodLeg</span></code>. A settings class for hodographic shaping has also been implemented (<code class="docutils literal notranslate"><span class="pre">HodographicShapingLegSettings</span></code>, see <a class="reference internal" href="../lowThrustTrajectory.html#tudatfeaturessetuplowthrusttrajectory"><span class="std std-ref">Setting up a low-thrust trajectory</span></a> for more details) to construct <code class="docutils literal notranslate"><span class="pre">HodographicShaping</span></code> objects more easily.</p>
+<dl class="py class">
 <dt id="HodographicShaping">
-<em class="property">class </em><code class="descname">HodographicShaping</code><a class="headerlink" href="#HodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">HodographicShaping</code><a class="headerlink" href="#HodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<p>The <code class="docutils literal"><span class="pre">HodographicShaping</span></code> class is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">HodographicShaping</span><span class="p">(</span>
+<p>The <code class="docutils literal notranslate"><span class="pre">HodographicShaping</span></code> class is defined as follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HodographicShaping</span><span class="p">(</span>
       <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">initialState</span><span class="p">,</span>
       <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">finalState</span><span class="p">,</span>
       <span class="k">const</span> <span class="kt">double</span> <span class="n">timeOfFlight</span><span class="p">,</span>
@@ -228,331 +229,331 @@ This shaping method relies on the combination of integrable and differentiable b
 <p>where the inputs are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">initialState</span></code></dt>
-<dd>State of the spacecraft at departure.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">initialState</span></code></dt><dd><p>State of the spacecraft at departure.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">finalState</span></code></dt>
-<dd>State of the spacecraft at arrival.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">finalState</span></code></dt><dd><p>State of the spacecraft at arrival.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">timeOfFlight</span></code></dt>
-<dd>Time of flight required for the shape-based trajectory (boundary condition automatically fulfilled from the way the hodographic shaping is implemented).</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">timeOfFlight</span></code></dt><dd><p>Time of flight required for the shape-based trajectory (boundary condition automatically fulfilled from the way the hodographic shaping is implemented).</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">numberOfRevolutions</span></code></dt>
-<dd>Required number of revolutions before the spacecraft reaches its final state.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">numberOfRevolutions</span></code></dt><dd><p>Required number of revolutions before the spacecraft reaches its final state.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">bodyMap</span></code></dt>
-<dd>Map of pointers to <code class="docutils literal"><span class="pre">Body</span></code> objects involved in the low-thrust trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">bodyMap</span></code></dt><dd><p>Map of pointers to <code class="docutils literal notranslate"><span class="pre">Body</span></code> objects involved in the low-thrust trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">bodyToPropagate</span></code></dt>
-<dd>Name of the spacecraft to be propagated.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">bodyToPropagate</span></code></dt><dd><p>Name of the spacecraft to be propagated.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">centralBody</span></code></dt>
-<dd>Name of the central body of the low-thrust trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">centralBody</span></code></dt><dd><p>Name of the central body of the low-thrust trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">radialVelocityFunctionComponents</span></code></dt>
-<dd>Vector of <code class="docutils literal"><span class="pre">BaseFunctionHodographicShaping</span></code> objects, containing the definition of the base functions used to shape the radial velocity of the spacecraft during the low-thrust trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">radialVelocityFunctionComponents</span></code></dt><dd><p>Vector of <code class="docutils literal notranslate"><span class="pre">BaseFunctionHodographicShaping</span></code> objects, containing the definition of the base functions used to shape the radial velocity of the spacecraft during the low-thrust trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">normalVelocityFunctionComponents</span></code></dt>
-<dd>Vector of <code class="docutils literal"><span class="pre">BaseFunctionHodographicShaping</span></code> objects, used to shape the normal velocity of the spacecraft during the low-thrust trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">normalVelocityFunctionComponents</span></code></dt><dd><p>Vector of <code class="docutils literal notranslate"><span class="pre">BaseFunctionHodographicShaping</span></code> objects, used to shape the normal velocity of the spacecraft during the low-thrust trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">axialVelocityFunctionComponents</span></code></dt>
-<dd>Vector of <code class="docutils literal"><span class="pre">BaseFunctionHodographicShaping</span></code> objects, used to shape the axial velocity of the spacecraft during the low-thrust trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">axialVelocityFunctionComponents</span></code></dt><dd><p>Vector of <code class="docutils literal notranslate"><span class="pre">BaseFunctionHodographicShaping</span></code> objects, used to shape the axial velocity of the spacecraft during the low-thrust trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">freeCoefficientsRadialVelocityFunction</span></code></dt>
-<dd>Vector of free coefficients for the radial velocity function (weighting coefficients for the additional base functions (any base function starting from the fourth one, if more than 3 base functions are provided in <code class="docutils literal"><span class="pre">radialVelocityFunctionComponents</span></code>)).</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">freeCoefficientsRadialVelocityFunction</span></code></dt><dd><p>Vector of free coefficients for the radial velocity function (weighting coefficients for the additional base functions (any base function starting from the fourth one, if more than 3 base functions are provided in <code class="docutils literal notranslate"><span class="pre">radialVelocityFunctionComponents</span></code>)).</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">freeCoefficientsNormalVelocityFunction</span></code></dt>
-<dd>Vector of free coefficients for the normal velocity function (weighting coefficients for the additional base functions (any base function starting from the fourth one, if more than 3 base functions are provided in <code class="docutils literal"><span class="pre">normalVelocityFunctionComponents</span></code>)).</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">freeCoefficientsNormalVelocityFunction</span></code></dt><dd><p>Vector of free coefficients for the normal velocity function (weighting coefficients for the additional base functions (any base function starting from the fourth one, if more than 3 base functions are provided in <code class="docutils literal notranslate"><span class="pre">normalVelocityFunctionComponents</span></code>)).</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">freeCoefficientsAxialVelocityFunction</span></code></dt>
-<dd>Vector of free coefficients for the axial velocity function (weighting coefficients for the additional base functions (any base function starting from the fourth one, if more than 3 base functions are provided in <code class="docutils literal"><span class="pre">axialVelocityFunctionComponents</span></code>)).</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">freeCoefficientsAxialVelocityFunction</span></code></dt><dd><p>Vector of free coefficients for the axial velocity function (weighting coefficients for the additional base functions (any base function starting from the fourth one, if more than 3 base functions are provided in <code class="docutils literal notranslate"><span class="pre">axialVelocityFunctionComponents</span></code>)).</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">integratorSettings</span></code></dt>
-<dd>Integrator settings (empty by default), used to propagate the spacecraft mass or thrust profiles, or to numerically propagate the fully perturbed trajectory (as a means to assess the quality of the analytical shaped-based preliminary design).</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">integratorSettings</span></code></dt><dd><p>Integrator settings (empty by default), used to propagate the spacecraft mass or thrust profiles, or to numerically propagate the fully perturbed trajectory (as a means to assess the quality of the analytical shaped-based preliminary design).</p>
+</dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
 </div>
 <div class="section" id="hodographic-shaping-base-functions">
-<h2>1.2. Hodographic shaping base functions<a class="headerlink" href="#hodographic-shaping-base-functions" title="Permalink to this headline">¶</a></h2>
-<p>The constructor of the <code class="docutils literal"><span class="pre">HodographicShaping</span></code> class requires as inputs one vector of <code class="docutils literal"><span class="pre">BaseFunctionHodographicShaping</span></code> objects for each of the three velocity components. All the base functions to hodographically shape a trajectory are derived from the base class <code class="docutils literal"><span class="pre">BaseFunctionHodographicShaping</span></code>. The shaping functions for the three velocity components are not fixed in hodographic shaping, but rather are left to be selected by the user (to be chosen among a set of base functions). All these hodographic shaping base functions are defined in the classes presented below.</p>
-<dl class="class">
+<h2><span class="section-number">1.2. </span>Hodographic shaping base functions<a class="headerlink" href="#hodographic-shaping-base-functions" title="Permalink to this headline">¶</a></h2>
+<p>The constructor of the <code class="docutils literal notranslate"><span class="pre">HodographicShaping</span></code> class requires as inputs one vector of <code class="docutils literal notranslate"><span class="pre">BaseFunctionHodographicShaping</span></code> objects for each of the three velocity components. All the base functions to hodographically shape a trajectory are derived from the base class <code class="docutils literal notranslate"><span class="pre">BaseFunctionHodographicShaping</span></code>. The shaping functions for the three velocity components are not fixed in hodographic shaping, but rather are left to be selected by the user (to be chosen among a set of base functions). All these hodographic shaping base functions are defined in the classes presented below.</p>
+<dl class="py class">
 <dt id="BaseFunctionHodographicShaping">
-<em class="property">class </em><code class="descname">BaseFunctionHodographicShaping</code><a class="headerlink" href="#BaseFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">BaseFunctionHodographicShaping</code><a class="headerlink" href="#BaseFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>This is the base class to derive the base functions used for hodographic shaping. Each class derived from this base class retains the following methods:</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">evaluateFunction</span></code></dt>
-<dd>Returns the value of the base function for a specific independent variable value.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">evaluateFunction</span></code></dt><dd><p>Returns the value of the base function for a specific independent variable value.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">evaluateDerivative</span></code></dt>
-<dd>Returns the derivative function of the base function at a specific independent variable value.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">evaluateDerivative</span></code></dt><dd><p>Returns the derivative function of the base function at a specific independent variable value.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">evaluateIntegral</span></code></dt>
-<dd>Returns the integral function of the base function at the specific independent variable.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">evaluateIntegral</span></code></dt><dd><p>Returns the integral function of the base function at the specific independent variable.</p>
+</dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
-<p>The following classes inherit from the base class <code class="docutils literal"><span class="pre">BaseFunctionHodographicShaping</span></code>:</p>
-<dl class="class">
+<p>The following classes inherit from the base class <code class="docutils literal notranslate"><span class="pre">BaseFunctionHodographicShaping</span></code>:</p>
+<dl class="py class">
 <dt id="ConstantFunctionHodographicShaping">
-<em class="property">class </em><code class="descname">ConstantFunctionHodographicShaping</code><a class="headerlink" href="#ConstantFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ConstantFunctionHodographicShaping</code><a class="headerlink" href="#ConstantFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class for the constant function. The class is defined as follows and the function always returns the value 1.0:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">ConstantFunctionHodographicShaping</span><span class="p">(</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ConstantFunctionHodographicShaping</span><span class="p">(</span> <span class="p">)</span>
 </pre></div>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="SineFunctionHodographicShaping">
-<em class="property">class </em><code class="descname">SineFunctionHodographicShaping</code><a class="headerlink" href="#SineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">SineFunctionHodographicShaping</code><a class="headerlink" href="#SineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class for the sine function. The class is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">frequency</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">frequency</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where the input is the frequency of the sine function.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="CosineFunctionHodographicShaping">
-<em class="property">class </em><code class="descname">CosineFunctionHodographicShaping</code><a class="headerlink" href="#CosineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">CosineFunctionHodographicShaping</code><a class="headerlink" href="#CosineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class for the cosine function. The class is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">CosineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">frequency</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CosineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">frequency</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where the input is the frequency of the cosine function.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="ExponentialFunctionHodographicShaping">
-<em class="property">class </em><code class="descname">ExponentialFunctionHodographicShaping</code><a class="headerlink" href="#ExponentialFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ExponentialFunctionHodographicShaping</code><a class="headerlink" href="#ExponentialFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class for the exponential function. The class is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">ExponentialFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponent</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ExponentialFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponent</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where the input is the multiplying coefficient of the independent variable within the exponential function.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="ScaledExponentialFunctionHodographicShaping">
-<em class="property">class </em><code class="descname">ScaledExponentialFunctionHodographicShaping</code><a class="headerlink" href="#ScaledExponentialFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ScaledExponentialFunctionHodographicShaping</code><a class="headerlink" href="#ScaledExponentialFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class for the scaled exponential function. The class is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">ScaledExponentialFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponent</span><span class="p">,</span> <span class="kt">double</span> <span class="n">scaleFactor</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ScaledExponentialFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponent</span><span class="p">,</span> <span class="kt">double</span> <span class="n">scaleFactor</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where the inputs are the multiplying coefficient of the independent variable within the exponential function, and a scaling factor to be applied in front of the multiplying coefficient.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="ExponentialSineFunctionHodographicShaping">
-<em class="property">class </em><code class="descname">ExponentialSineFunctionHodographicShaping</code><a class="headerlink" href="#ExponentialSineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ExponentialSineFunctionHodographicShaping</code><a class="headerlink" href="#ExponentialSineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class for the exponential sine function. The class is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">ExponentialSineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponentExponentialFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">frequencySineFunction</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ExponentialSineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponentExponentialFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">frequencySineFunction</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where the inputs are, in order, the exponent coefficient of the exponential function, and the frequency of the sine function. The exponential sine function returns the product of the sine and exponential functions.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="ScaledExponentialSineFunctionHodographicShaping">
-<em class="property">class </em><code class="descname">ScaledExponentialSineFunctionHodographicShaping</code><a class="headerlink" href="#ScaledExponentialSineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ScaledExponentialSineFunctionHodographicShaping</code><a class="headerlink" href="#ScaledExponentialSineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class for the scaled exponential sine function. The class is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">ScaledExponentialSineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponentExponentialFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">frequencySineFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">scaleFactor</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ScaledExponentialSineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponentExponentialFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">frequencySineFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">scaleFactor</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>where the inputs are the exponent of the exponential function, the frequency of the sine function, and a scaling factor (to be applied to the exponential function, as implemented in <code class="docutils literal"><span class="pre">ScaledExponentialFunctionHodographicShaping</span></code>). This function returns the product of the scaled exponential function with the sine function.</p>
-<dl class="class">
+<p>where the inputs are the exponent of the exponential function, the frequency of the sine function, and a scaling factor (to be applied to the exponential function, as implemented in <code class="docutils literal notranslate"><span class="pre">ScaledExponentialFunctionHodographicShaping</span></code>). This function returns the product of the scaled exponential function with the sine function.</p>
+<dl class="py class">
 <dt id="ExponentialCosineFunctionHodographicShaping">
-<em class="property">class </em><code class="descname">ExponentialCosineFunctionHodographicShaping</code><a class="headerlink" href="#ExponentialCosineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ExponentialCosineFunctionHodographicShaping</code><a class="headerlink" href="#ExponentialCosineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class for the exponential cosine function. The class is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">ExponentialCosineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponentExponentialFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">frequencyCosineFunction</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ExponentialCosineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponentExponentialFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">frequencyCosineFunction</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where the inputs are the exponent of the exponential function, and the frequency of the cosine function. This function returns the product of the cosine and exponential functions.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="ScaledExponentialCosineFunctionHodographicShaping">
-<em class="property">class </em><code class="descname">ScaledExponentialCosineFunctionHodographicShaping</code><a class="headerlink" href="#ScaledExponentialCosineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ScaledExponentialCosineFunctionHodographicShaping</code><a class="headerlink" href="#ScaledExponentialCosineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class for the scaled exponential cosine function. The class is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">ScaledExponentialCosineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponentExponentialFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">frequencyCosineFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">scaleFactor</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ScaledExponentialCosineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponentExponentialFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">frequencyCosineFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">scaleFactor</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>where the inputs are the exponent of the exponential function, the frequency of the cosine function, and a scaling factor (to be applied to the exponential function, as implemented in <code class="docutils literal"><span class="pre">ScaledExponentialFunctionHodographicShaping</span></code>). This function returns the product of the scaled exponential function with the cosine function.</p>
-<dl class="class">
+<p>where the inputs are the exponent of the exponential function, the frequency of the cosine function, and a scaling factor (to be applied to the exponential function, as implemented in <code class="docutils literal notranslate"><span class="pre">ScaledExponentialFunctionHodographicShaping</span></code>). This function returns the product of the scaled exponential function with the cosine function.</p>
+<dl class="py class">
 <dt id="PowerFunctionHodographicShaping">
-<em class="property">class </em><code class="descname">PowerFunctionHodographicShaping</code><a class="headerlink" href="#PowerFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">PowerFunctionHodographicShaping</code><a class="headerlink" href="#PowerFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class for the power function. The class is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">PowerFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponent</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PowerFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponent</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where the input parameter is the exponent of the power function. This function returns the value of the input parameter to the power indicated by the input variable.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="ScaledPowerFunctionHodographicShaping">
-<em class="property">class </em><code class="descname">ScaledPowerFunctionHodographicShaping</code><a class="headerlink" href="#ScaledPowerFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ScaledPowerFunctionHodographicShaping</code><a class="headerlink" href="#ScaledPowerFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class for the scaled power function. The class is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">ScaledPowerFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponent</span><span class="p">,</span> <span class="kt">double</span> <span class="n">scaleFactor</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ScaledPowerFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponent</span><span class="p">,</span> <span class="kt">double</span> <span class="n">scaleFactor</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>where the inputs are the exponent of the power function, and a scaling factor to be applied in front of this power function. This function returns the product between a scaling factor and the power function, as defined by the class <code class="docutils literal"><span class="pre">PowerFunctionHodographicShaping</span></code>.</p>
-<dl class="class">
+<p>where the inputs are the exponent of the power function, and a scaling factor to be applied in front of this power function. This function returns the product between a scaling factor and the power function, as defined by the class <code class="docutils literal notranslate"><span class="pre">PowerFunctionHodographicShaping</span></code>.</p>
+<dl class="py class">
 <dt id="PowerSineFunctionHodographicShaping">
-<em class="property">class </em><code class="descname">PowerSineFunctionHodographicShaping</code><a class="headerlink" href="#PowerSineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">PowerSineFunctionHodographicShaping</code><a class="headerlink" href="#PowerSineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class for the power sine function. The class is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">PowerSineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponentPowerFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">frequencySineFunction</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PowerSineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponentPowerFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">frequencySineFunction</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>where the inputs are the exponent of the power function and the frequency of the sine function. This function returns the product of the sine and the power functions (defined by the classes <code class="docutils literal"><span class="pre">SineFunctionHodographicShaping</span></code> and <code class="docutils literal"><span class="pre">PowerFunctionHodographicShaping</span></code>, respectively).</p>
-<dl class="class">
+<p>where the inputs are the exponent of the power function and the frequency of the sine function. This function returns the product of the sine and the power functions (defined by the classes <code class="docutils literal notranslate"><span class="pre">SineFunctionHodographicShaping</span></code> and <code class="docutils literal notranslate"><span class="pre">PowerFunctionHodographicShaping</span></code>, respectively).</p>
+<dl class="py class">
 <dt id="ScaledPowerSineFunctionHodographicShaping">
-<em class="property">class </em><code class="descname">ScaledPowerSineFunctionHodographicShaping</code><a class="headerlink" href="#ScaledPowerSineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ScaledPowerSineFunctionHodographicShaping</code><a class="headerlink" href="#ScaledPowerSineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class for the scaled power sine function. The class is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">ScaledPowerSineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponentPowerFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">frequencySineFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">scaleFactor</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ScaledPowerSineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponentPowerFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">frequencySineFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">scaleFactor</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>where the inputs are the exponent of the power function, the frequency of the sine function, and a scaling factor (to be applied to the power function, as implemented in <code class="docutils literal"><span class="pre">ScaledPowerFunctionHodographicShaping</span></code>). This function returns the product of the scaled power function (<code class="docutils literal"><span class="pre">ScaledPowerFunctionHodographicShaping</span></code>) with the sine function (<code class="docutils literal"><span class="pre">SineFunctionHodographicShaping</span></code>).</p>
-<dl class="class">
+<p>where the inputs are the exponent of the power function, the frequency of the sine function, and a scaling factor (to be applied to the power function, as implemented in <code class="docutils literal notranslate"><span class="pre">ScaledPowerFunctionHodographicShaping</span></code>). This function returns the product of the scaled power function (<code class="docutils literal notranslate"><span class="pre">ScaledPowerFunctionHodographicShaping</span></code>) with the sine function (<code class="docutils literal notranslate"><span class="pre">SineFunctionHodographicShaping</span></code>).</p>
+<dl class="py class">
 <dt id="PowerCosineFunctionHodographicShaping">
-<em class="property">class </em><code class="descname">PowerCosineFunctionHodographicShaping</code><a class="headerlink" href="#PowerCosineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">PowerCosineFunctionHodographicShaping</code><a class="headerlink" href="#PowerCosineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class for the power cosine function. The class is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">PowerCosineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponentPowerFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">frequencyCosineFunction</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PowerCosineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponentPowerFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">frequencyCosineFunction</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>where the inputs are the exponent of the power function and the frequency of the cosine function. This function returns the product of the cosine and the power functions (<code class="docutils literal"><span class="pre">CosineFunctionHodographicShaping</span></code> and <code class="docutils literal"><span class="pre">PowerFunctionHodographicShaping</span></code>, respectively).</p>
-<dl class="class">
+<p>where the inputs are the exponent of the power function and the frequency of the cosine function. This function returns the product of the cosine and the power functions (<code class="docutils literal notranslate"><span class="pre">CosineFunctionHodographicShaping</span></code> and <code class="docutils literal notranslate"><span class="pre">PowerFunctionHodographicShaping</span></code>, respectively).</p>
+<dl class="py class">
 <dt id="ScaledPowerCosineFunctionHodographicShaping">
-<em class="property">class </em><code class="descname">ScaledPowerCosineFunctionHodographicShaping</code><a class="headerlink" href="#ScaledPowerCosineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ScaledPowerCosineFunctionHodographicShaping</code><a class="headerlink" href="#ScaledPowerCosineFunctionHodographicShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class for the scaled power cosine function. The class is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">ScaledPowerCosineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponentPowerFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">frequencyCosineFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">scaleFactor</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ScaledPowerCosineFunctionHodographicShaping</span><span class="p">(</span> <span class="kt">double</span> <span class="n">exponentPowerFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">frequencyCosineFunction</span><span class="p">,</span> <span class="kt">double</span> <span class="n">scaleFactor</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>where the inputs are the exponent of the power function, the frequency of the cosine function, and a scaling factor (to be applied to the power function, as implemented in <code class="docutils literal"><span class="pre">ScaledPowerFunctionHodographicShaping</span></code>). This function returns the product of the cosine function (<code class="docutils literal"><span class="pre">CosineFunctionHodographicShaping</span></code>) with the scaled power function (<code class="docutils literal"><span class="pre">ScaledPowerFunctionHodographicShaping</span></code>).</p>
+<p>where the inputs are the exponent of the power function, the frequency of the cosine function, and a scaling factor (to be applied to the power function, as implemented in <code class="docutils literal notranslate"><span class="pre">ScaledPowerFunctionHodographicShaping</span></code>). This function returns the product of the cosine function (<code class="docutils literal notranslate"><span class="pre">CosineFunctionHodographicShaping</span></code>) with the scaled power function (<code class="docutils literal notranslate"><span class="pre">ScaledPowerFunctionHodographicShaping</span></code>).</p>
 </div>
 <div class="section" id="setting-up-the-hodographic-base-functions">
-<h2>1.3. Setting up the hodographic base functions<a class="headerlink" href="#setting-up-the-hodographic-base-functions" title="Permalink to this headline">¶</a></h2>
-<p>To facilitate the creation of the base functions described above, settings classes have been implemented for all of them. A <code class="docutils literal"><span class="pre">BaseFunctionHodographicShaping</span></code> object can then be created from the corresponding settings with the function <code class="docutils literal"><span class="pre">createBaseFunctionHodographicShaping</span></code>. It takes the type of the base function, as well as a <code class="docutils literal"><span class="pre">BaseFunctionHodographicShapingSettings</span></code> object as inputs.</p>
-<dl class="class">
+<h2><span class="section-number">1.3. </span>Setting up the hodographic base functions<a class="headerlink" href="#setting-up-the-hodographic-base-functions" title="Permalink to this headline">¶</a></h2>
+<p>To facilitate the creation of the base functions described above, settings classes have been implemented for all of them. A <code class="docutils literal notranslate"><span class="pre">BaseFunctionHodographicShaping</span></code> object can then be created from the corresponding settings with the function <code class="docutils literal notranslate"><span class="pre">createBaseFunctionHodographicShaping</span></code>. It takes the type of the base function, as well as a <code class="docutils literal notranslate"><span class="pre">BaseFunctionHodographicShapingSettings</span></code> object as inputs.</p>
+<dl class="py class">
 <dt id="BaseFunctionHodographicShapingSettings">
-<em class="property">class </em><code class="descname">BaseFunctionHodographicShapingSettings</code><a class="headerlink" href="#BaseFunctionHodographicShapingSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">BaseFunctionHodographicShapingSettings</code><a class="headerlink" href="#BaseFunctionHodographicShapingSettings" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>This is the base class for base function settings for hodographic shaping. Several base function settings classes inherit from this base class:</p>
-<dl class="class">
+<dl class="py class">
 <dt id="TrigonometricFunctionHodographicShapingSettings">
-<em class="property">class </em><code class="descname">TrigonometricFunctionHodographicShapingSettings</code><a class="headerlink" href="#TrigonometricFunctionHodographicShapingSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">TrigonometricFunctionHodographicShapingSettings</code><a class="headerlink" href="#TrigonometricFunctionHodographicShapingSettings" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class of settings for cosine and sine base functions. It is defined as follows, taking the frequency of the trigonometric function as input:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">TrigonometricFunctionHodographicShapingSettings</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">frequency</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TrigonometricFunctionHodographicShapingSettings</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">frequency</span> <span class="p">)</span>
 </pre></div>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="ExponentialFunctionHodographicShapingSettings">
-<em class="property">class </em><code class="descname">ExponentialFunctionHodographicShapingSettings</code><a class="headerlink" href="#ExponentialFunctionHodographicShapingSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ExponentialFunctionHodographicShapingSettings</code><a class="headerlink" href="#ExponentialFunctionHodographicShapingSettings" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class of settings for exponential functions (either simply exponential or scaled exponential functions). It is defined as follows (the scaled factor is by default set to 1):</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">ExponentialFunctionHodographicShapingSettings</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">exponent</span><span class="p">,</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ExponentialFunctionHodographicShapingSettings</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">exponent</span><span class="p">,</span>
                                            <span class="k">const</span> <span class="kt">double</span> <span class="n">scaleFactor</span> <span class="p">)</span>
 </pre></div>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="ExponentialTimesTrigonometricFunctionHodographicShapingSettings">
-<em class="property">class </em><code class="descname">ExponentialTimesTrigonometricFunctionHodographicShapingSettings</code><a class="headerlink" href="#ExponentialTimesTrigonometricFunctionHodographicShapingSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ExponentialTimesTrigonometricFunctionHodographicShapingSettings</code><a class="headerlink" href="#ExponentialTimesTrigonometricFunctionHodographicShapingSettings" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<p>Class of settings for base functions obtained by multiplying exponential functions with trigonometric ones (This includes the following hodographic shaping base functions:  <code class="docutils literal"><span class="pre">ExponentialSineFunctionHodographicShaping</span></code>, <code class="docutils literal"><span class="pre">ExponentialCosineFunctionHodographicShaping</span></code>,
-<code class="docutils literal"><span class="pre">ScaledExponentialSineFunctionHodographicShaping</span></code>, <code class="docutils literal"><span class="pre">ScaledExponentialCosineFunctionHodographicShaping</span></code>). The class is defined as follows (the scaled factor is by default set to 1.0):</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">ExponentialTimesTrigonometricFunctionHodographicShapingSettings</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">exponent</span><span class="p">,</span>
+<p>Class of settings for base functions obtained by multiplying exponential functions with trigonometric ones (This includes the following hodographic shaping base functions:  <code class="docutils literal notranslate"><span class="pre">ExponentialSineFunctionHodographicShaping</span></code>, <code class="docutils literal notranslate"><span class="pre">ExponentialCosineFunctionHodographicShaping</span></code>,
+<code class="docutils literal notranslate"><span class="pre">ScaledExponentialSineFunctionHodographicShaping</span></code>, <code class="docutils literal notranslate"><span class="pre">ScaledExponentialCosineFunctionHodographicShaping</span></code>). The class is defined as follows (the scaled factor is by default set to 1.0):</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ExponentialTimesTrigonometricFunctionHodographicShapingSettings</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">exponent</span><span class="p">,</span>
                                                              <span class="k">const</span> <span class="kt">double</span> <span class="n">frequency</span><span class="p">,</span>
                                                              <span class="k">const</span> <span class="kt">double</span> <span class="n">scaleFactor</span> <span class="p">)</span>
 </pre></div>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="PowerFunctionHodographicShapingSettings">
-<em class="property">class </em><code class="descname">PowerFunctionHodographicShapingSettings</code><a class="headerlink" href="#PowerFunctionHodographicShapingSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">PowerFunctionHodographicShapingSettings</code><a class="headerlink" href="#PowerFunctionHodographicShapingSettings" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Class of settings for power functions (either simply power or scaled power base functions). The class is defined as follows (the scaled factor is by default set to 1.0):</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">PowerFunctionHodographicShapingSettings</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">exponent</span><span class="p">,</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PowerFunctionHodographicShapingSettings</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">exponent</span><span class="p">,</span>
                                      <span class="k">const</span> <span class="kt">double</span> <span class="n">scaleFactor</span> <span class="p">)</span>
 </pre></div>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="PowerTimesTrigonometricFunctionHodographicShapingSettings">
-<em class="property">class </em><code class="descname">PowerTimesTrigonometricFunctionHodographicShapingSettings</code><a class="headerlink" href="#PowerTimesTrigonometricFunctionHodographicShapingSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">PowerTimesTrigonometricFunctionHodographicShapingSettings</code><a class="headerlink" href="#PowerTimesTrigonometricFunctionHodographicShapingSettings" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<p>Class of settings for base functions defined by multiplying power functions with trigonometric ones (this includes the following hodographic shaping base functions: <code class="docutils literal"><span class="pre">PowerSineFunctionHodographicShaping</span></code>, <code class="docutils literal"><span class="pre">PowerCosineFunctionHodographicShaping</span></code>, <code class="docutils literal"><span class="pre">ScaledPowerSineFunctionHodographicShaping</span></code>, <code class="docutils literal"><span class="pre">ScaledPowerCosineFunctionHodographicShaping</span></code>). This settings class is defined as follows (the scaled factor is by default set to 1.0):</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">PowerTimesTrigonometricFunctionHodographicShapingSettings</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">exponent</span><span class="p">,</span>
+<p>Class of settings for base functions defined by multiplying power functions with trigonometric ones (this includes the following hodographic shaping base functions: <code class="docutils literal notranslate"><span class="pre">PowerSineFunctionHodographicShaping</span></code>, <code class="docutils literal notranslate"><span class="pre">PowerCosineFunctionHodographicShaping</span></code>, <code class="docutils literal notranslate"><span class="pre">ScaledPowerSineFunctionHodographicShaping</span></code>, <code class="docutils literal notranslate"><span class="pre">ScaledPowerCosineFunctionHodographicShaping</span></code>). This settings class is defined as follows (the scaled factor is by default set to 1.0):</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PowerTimesTrigonometricFunctionHodographicShapingSettings</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">exponent</span><span class="p">,</span>
                                                        <span class="k">const</span> <span class="kt">double</span> <span class="n">frequency</span><span class="p">,</span>
                                                        <span class="k">const</span> <span class="kt">double</span> <span class="n">scaleFactor</span> <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="optimising-the-hodographically-shaped-trajectory">
-<span id="tudatfeatureshodographicshapingoptimisation"></span><h2>1.4. Optimising the hodographically shaped trajectory<a class="headerlink" href="#optimising-the-hodographically-shaped-trajectory" title="Permalink to this headline">¶</a></h2>
+<span id="tudatfeatureshodographicshapingoptimisation"></span><h2><span class="section-number">1.4. </span>Optimising the hodographically shaped trajectory<a class="headerlink" href="#optimising-the-hodographically-shaped-trajectory" title="Permalink to this headline">¶</a></h2>
 <p>As explained before, hodographic shaping allows for a flexible number of base functions for each velocity component. Three base functions at least must be provided so that the boundary conditions can be satisfied, but a higher number of base functions can also be used, which turns into the creation of n-9 degrees of freedom (n being the total number of base functions provided, over the three velocity components). The weighting coefficients for these additional base functions are free parameters and can be tuned to minimise the deltaV required by the shaped trajectory. This thus transforms the hodographically shaping problem into an optimisation problem where the best set of free parameters, leading to the minimum deltaV, is to be found.</p>
 <p>A pre-defined optimisation problem compatible with the PAGMO library has been implemented to this end.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="HodographicShapingOptimisationProblem">
-<em class="property">class </em><code class="descname">HodographicShapingOptimisationProblem</code><a class="headerlink" href="#HodographicShapingOptimisationProblem" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">HodographicShapingOptimisationProblem</code><a class="headerlink" href="#HodographicShapingOptimisationProblem" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>This class sets up the optimisation of the hodographically shaped trajectory, and its constructor is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">HodographicShapingOptimisationProblem</span><span class="p">(</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HodographicShapingOptimisationProblem</span><span class="p">(</span>
     <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">initialState</span><span class="p">,</span>
     <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">finalState</span><span class="p">,</span>
     <span class="k">const</span> <span class="kt">double</span> <span class="n">timeOfFlight</span><span class="p">,</span>
@@ -569,65 +570,65 @@ This shaping method relies on the combination of integrable and differentiable b
 <p>where the input parameters are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">initialState</span></code></dt>
-<dd>State vector at departure</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">initialState</span></code></dt><dd><p>State vector at departure</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">finalState</span></code></dt>
-<dd>State vector at arrival.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">finalState</span></code></dt><dd><p>State vector at arrival.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">timeOfFlight</span></code></dt>
-<dd>Time-of-flight of the shaped trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">timeOfFlight</span></code></dt><dd><p>Time-of-flight of the shaped trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">numberOfRevolutions</span></code></dt>
-<dd>Expected number of revolutions of the shaped trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">numberOfRevolutions</span></code></dt><dd><p>Expected number of revolutions of the shaped trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">bodyMap</span></code></dt>
-<dd>Map of pointers to <code class="docutils literal"><span class="pre">Body</span></code> objects defining the trajectory environment.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">bodyMap</span></code></dt><dd><p>Map of pointers to <code class="docutils literal notranslate"><span class="pre">Body</span></code> objects defining the trajectory environment.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">bodyToPropagate</span></code></dt>
-<dd>Name of the spacecraft to be propagated.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">bodyToPropagate</span></code></dt><dd><p>Name of the spacecraft to be propagated.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">centralBody</span></code></dt>
-<dd>Name of the central body of the trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">centralBody</span></code></dt><dd><p>Name of the central body of the trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">radialVelocityFunctionComponents</span></code></dt>
-<dd>Vector of <code class="docutils literal"><span class="pre">BaseFunctionHodographicShaping</span></code> objects, containing the definition of the base functions used to shape the radial velocity.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">radialVelocityFunctionComponents</span></code></dt><dd><p>Vector of <code class="docutils literal notranslate"><span class="pre">BaseFunctionHodographicShaping</span></code> objects, containing the definition of the base functions used to shape the radial velocity.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">normalVelocityFunctionComponents</span></code></dt>
-<dd>Vector of <code class="docutils literal"><span class="pre">BaseFunctionHodographicShaping</span></code> objects, containing the definition of the base functions used to shape the normal velocity.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">normalVelocityFunctionComponents</span></code></dt><dd><p>Vector of <code class="docutils literal notranslate"><span class="pre">BaseFunctionHodographicShaping</span></code> objects, containing the definition of the base functions used to shape the normal velocity.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">axialVelocityFunctionComponents</span></code></dt>
-<dd>Vector of <code class="docutils literal"><span class="pre">BaseFunctionHodographicShaping</span></code> objects, containing the definition of the base functions used to shape the axial velocity.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">axialVelocityFunctionComponents</span></code></dt><dd><p>Vector of <code class="docutils literal notranslate"><span class="pre">BaseFunctionHodographicShaping</span></code> objects, containing the definition of the base functions used to shape the axial velocity.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">freeCoefficientsBounds</span></code></dt>
-<dd>Vector containing the lower and upper bounds for the free coefficients of the hodographic shaping method.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">freeCoefficientsBounds</span></code></dt><dd><p>Vector containing the lower and upper bounds for the free coefficients of the hodographic shaping method.</p>
+</dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
-<p>The <code class="docutils literal"><span class="pre">fitness</span></code> function creates the hodographically shaped trajectory corresponding to the base functions provided as inputs, and to a given set of free parameters. It then returns the deltaV associated with this shaped trajectory.</p>
-<p>The <code class="docutils literal"><span class="pre">get_bounds</span></code> function simply returns the bounds for the free coefficients to be optimised, which are already provided as inputs of the <code class="docutils literal"><span class="pre">HodographicShapingOptimisationProblem</span></code> constructor.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">fitness</span></code> function creates the hodographically shaped trajectory corresponding to the base functions provided as inputs, and to a given set of free parameters. It then returns the deltaV associated with this shaped trajectory.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">get_bounds</span></code> function simply returns the bounds for the free coefficients to be optimised, which are already provided as inputs of the <code class="docutils literal notranslate"><span class="pre">HodographicShapingOptimisationProblem</span></code> constructor.</p>
 </div>
 </div>
 
@@ -644,7 +645,7 @@ This shaping method relies on the combination of integrable and differentiable b
         <a href="sphericalShaping.html" class="btn btn-neutral float-right" title="2. Spherical shaping" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Shape-Based Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="4. Shape-Based Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -686,7 +687,8 @@ This shaping method relies on the combination of integrable and differentiable b
       <script type="text/javascript" src="../../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

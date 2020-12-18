@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
 
@@ -111,6 +113,9 @@
 <li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">11. Orbit Determination and Parameter Estimation (Basic)</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">12. Orbit Determination and Parameter Estimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="interplanetaryTrajectory.html">13. MGA Trajectory Design</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fullPropagationCR3BP.html">14. Full propagation of the CR3BP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fullPropagationPatchedConicsTrajectory.html">15. Full propagation of a patched conics trajectory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shapeBasedTrajectory.html">16. Shape-Based Low-Thrust Trajectories</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="index.html#pagmo-optimization-tutorials">Pagmo Optimization Tutorials</a></li>
@@ -174,7 +179,7 @@
         
           <li><a href="index.html">Application Tutorials</a> &raquo;</li>
         
-      <li>12. Orbit Determination and Parameter Estimation</li>
+      <li><span class="section-number">12. </span>Orbit Determination and Parameter Estimation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -194,22 +199,22 @@
            <div itemprop="articleBody">
             
   <div class="section" id="orbit-determination-and-parameter-estimation">
-<span id="earthorbiterstateestimation"></span><h1>12. Orbit Determination and Parameter Estimation<a class="headerlink" href="#orbit-determination-and-parameter-estimation" title="Permalink to this headline">¶</a></h1>
+<span id="earthorbiterstateestimation"></span><h1><span class="section-number">12. </span>Orbit Determination and Parameter Estimation<a class="headerlink" href="#orbit-determination-and-parameter-estimation" title="Permalink to this headline">¶</a></h1>
 <p>In the previous tutorial (see <a class="reference internal" href="earthOrbiterBasicStateEstimation.html#earthorbiterbasicstateestimation"><span class="std std-ref">Orbit Determination and Parameter Estimation (Basic)</span></a>) we introduced the basic features of orbit determination, including simulating observables, defining parameters and performing the estimation. However, various features were not discussed, and a number of assumption were unrealistic. In this tutorial, we discuss a more comprehensive example of orbit determination.</p>
 <p>The code for this tutorial is given on Github, and is also located in your Tudat bundle at:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">earthOrbiterStateEstimation</span><span class="o">.</span><span class="n">cpp</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">earthOrbiterStateEstimation</span><span class="o">.</span><span class="n">cpp</span>
 </pre></div>
 </div>
 <p>As you can see in the code, setting up the environment is done in a similar manner as the previous tutorial. One difference is introduced: the simulation now runs over 30 days instead of 3. For the acceleration models, we make two additions compared to the previous tutorial: a relativistic acceleration correction, and an empirical acceleration. Both are added because we want to estimate properties of these acceleration models in this example.</p>
 <p>Since we want to make this tutorial more realistic than the previous one, we now propagate and estimate the state of the spacecraft over multiple arcs. We take a length of 3 days for each of them, using the same set of acceleration models, and the same numerical integration settings, for each arc. We need the following extra information, compared to the single arc case:</p>
 <blockquote>
 <div><ul class="simple">
-<li>A list of initial times for the arcs</li>
-<li>A list of propagator settings for the arcs</li>
+<li><p>A list of initial times for the arcs</p></li>
+<li><p>A list of propagator settings for the arcs</p></li>
 </ul>
 </div></blockquote>
 <p>This is performed by the code below, where we use an arc length of just over 3 days.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define arc length</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define arc length</span>
 <span class="kt">double</span> <span class="n">arcDuration</span> <span class="o">=</span> <span class="mf">3.01</span> <span class="o">*</span> <span class="mf">86400.0</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">arcOverlap</span> <span class="o">=</span> <span class="mf">3600.0</span><span class="p">;</span>
 
@@ -232,7 +237,7 @@
 </pre></div>
 </div>
 <p>where we have set an arc-overlap of 1 hour. The propagator settings for the multi-arc propagation are now created as:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create propagator settings</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create propagator settings</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">PropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">propagatorSettings</span> <span class="o">=</span>
         <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">MultiArcPropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">propagatorSettingsList</span> <span class="p">);</span>
 </pre></div>
@@ -240,21 +245,21 @@
 <p>We use the same link ends/observable types as in the previous example. However, we extend our list of estimated parameters to:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The spacecraft initial states <span class="math">\(x(t_{j})\)</span> for 10 arcs, with <span class="math">\(j=\left[1,\ldots,10\right]\)</span>, <span class="math">\(t_{j+1}-t_{j}\)</span> = 3 days.</li>
-<li>Parameteric Post-Newtonian (PPN) parameter <span class="math">\(\gamma\)</span>. Parameter equals 1 in general relativity.</li>
-<li>A constant radiation pressure coefficient <span class="math">\(C_{r}\)</span> of the spacecraft (assuming a cannonball radiation pressure model).</li>
-<li>A constant aerodynamic drag coefficient <span class="math">\(C_{D}\)</span> of the spacecraft.</li>
-<li>Constant Earth rotation rate <span class="math">\(\omega_{E}\)</span>.</li>
-<li>Pole position of Earth rotation axis, parameterized by its right ascension and declination <span class="math">\(\alpha_{E}\)</span> and <span class="math">\(\delta_{E}\)</span>.</li>
-<li>Earth-fixed position of ground stations <code class="docutils literal"><span class="pre">&quot;Station1&quot;</span></code> and <code class="docutils literal"><span class="pre">&quot;Station2&quot;</span></code>, namely <span class="math">\(\mathbf{x}_{GS,1}^{(E)}\)</span> and <span class="math">\(\mathbf{x}_{GS,2}^{(E)}\)</span>.</li>
-<li>Absolute observation bias <span class="math">\(K_{a}\)</span> for the first two links used for one-way range.</li>
-<li>Spherical harmonic cosine coefficients <span class="math">\(C_{lm}\)</span> at degree <span class="math">\(l=\left[2,\ldots,8\right]\)</span> and orders <span class="math">\(m=\left[0,\ldots,l\right]\)</span>.</li>
-<li>Spherical harmonic cosine coefficients <span class="math">\(S_{lm}\)</span> at degree <span class="math">\(l=\left[2,\ldots,8\right]\)</span> and orders <span class="math">\(m=\left[1,\ldots,l\right]\)</span>.</li>
-<li>Empirical accelerations in along- and across-track directions (both sine and cosine of true anomaly components), estimated in a multi-arc fashion, using 2 arcs over the full simulation period.</li>
+<li><p>The spacecraft initial states <span class="math notranslate nohighlight">\(x(t_{j})\)</span> for 10 arcs, with <span class="math notranslate nohighlight">\(j=\left[1,\ldots,10\right]\)</span>, <span class="math notranslate nohighlight">\(t_{j+1}-t_{j}\)</span> = 3 days.</p></li>
+<li><p>Parameteric Post-Newtonian (PPN) parameter <span class="math notranslate nohighlight">\(\gamma\)</span>. Parameter equals 1 in general relativity.</p></li>
+<li><p>A constant radiation pressure coefficient <span class="math notranslate nohighlight">\(C_{r}\)</span> of the spacecraft (assuming a cannonball radiation pressure model).</p></li>
+<li><p>A constant aerodynamic drag coefficient <span class="math notranslate nohighlight">\(C_{D}\)</span> of the spacecraft.</p></li>
+<li><p>Constant Earth rotation rate <span class="math notranslate nohighlight">\(\omega_{E}\)</span>.</p></li>
+<li><p>Pole position of Earth rotation axis, parameterized by its right ascension and declination <span class="math notranslate nohighlight">\(\alpha_{E}\)</span> and <span class="math notranslate nohighlight">\(\delta_{E}\)</span>.</p></li>
+<li><p>Earth-fixed position of ground stations <code class="docutils literal notranslate"><span class="pre">&quot;Station1&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;Station2&quot;</span></code>, namely <span class="math notranslate nohighlight">\(\mathbf{x}_{GS,1}^{(E)}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x}_{GS,2}^{(E)}\)</span>.</p></li>
+<li><p>Absolute observation bias <span class="math notranslate nohighlight">\(K_{a}\)</span> for the first two links used for one-way range.</p></li>
+<li><p>Spherical harmonic cosine coefficients <span class="math notranslate nohighlight">\(C_{lm}\)</span> at degree <span class="math notranslate nohighlight">\(l=\left[2,\ldots,8\right]\)</span> and orders <span class="math notranslate nohighlight">\(m=\left[0,\ldots,l\right]\)</span>.</p></li>
+<li><p>Spherical harmonic cosine coefficients <span class="math notranslate nohighlight">\(S_{lm}\)</span> at degree <span class="math notranslate nohighlight">\(l=\left[2,\ldots,8\right]\)</span> and orders <span class="math notranslate nohighlight">\(m=\left[1,\ldots,l\right]\)</span>.</p></li>
+<li><p>Empirical accelerations in along- and across-track directions (both sine and cosine of true anomaly components), estimated in a multi-arc fashion, using 2 arcs over the full simulation period.</p></li>
 </ul>
 </div></blockquote>
 <p>which is achieved with the following block of code:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define list of parameters to estimate.</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define list of parameters to estimate.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">parameterNames</span><span class="p">;</span>
 
 <span class="c1">// Create concatenated list of arc initial states</span>
@@ -302,7 +307,7 @@
 </pre></div>
 </div>
 <p>This list is clearly much more comprehensive than the set of parameters in the previous tutorials. The output becomes:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Parameter</span> <span class="n">start</span> <span class="n">index</span><span class="p">,</span> <span class="n">Parameter</span> <span class="n">definition</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Parameter</span> <span class="n">start</span> <span class="n">index</span><span class="p">,</span> <span class="n">Parameter</span> <span class="n">definition</span>
 <span class="mi">0</span><span class="p">,</span> <span class="n">arc</span><span class="o">-</span><span class="n">wise</span> <span class="n">translational</span> <span class="n">state</span> <span class="n">of</span> <span class="p">(</span><span class="n">Vehicle</span><span class="p">)</span><span class="o">.</span>
 <span class="mi">60</span><span class="p">,</span> <span class="n">PPN</span> <span class="n">parameter</span> <span class="n">gamma</span> <span class="n">of</span> <span class="p">(</span><span class="n">global_metric</span><span class="p">)</span><span class="o">.</span>
 <span class="mi">61</span><span class="p">,</span> <span class="n">radiation</span> <span class="n">pressure</span> <span class="n">coefficient</span> <span class="n">of</span> <span class="p">(</span><span class="n">Vehicle</span><span class="p">)</span><span class="o">.</span>
@@ -318,9 +323,9 @@
 <span class="mi">151</span><span class="p">,</span>  <span class="n">arc</span><span class="o">-</span><span class="n">wise</span> <span class="n">empirical</span> <span class="n">acceleration</span> <span class="n">coefficients</span> <span class="n">of</span> <span class="p">(</span><span class="n">Vehicle</span><span class="p">)</span><span class="o">.</span>
 </pre></div>
 </div>
-<p>You may notice that two parameters stand out in this list: the observation biases. In fact, the objects to which these parameters are linked in the simulation (the <code class="xref py py-class docutils literal"><span class="pre">ObservationBias</span></code> objects) are not yet created. These objects are only created when the observation models are set up, which is performed when creating the <a class="reference internal" href="../tudatFeatures/estimationSetup/estimationExecution.html#OrbitDeterminationManager" title="OrbitDeterminationManager"><code class="xref py py-class docutils literal"><span class="pre">OrbitDeterminationManager</span></code></a> object. Until this time, the <a class="reference internal" href="../tudatFeatures/estimationSetup/parameterEstimationSettings.html#EstimatableParameterSet" title="EstimatableParameterSet"><code class="xref py py-class docutils literal"><span class="pre">EstimatableParameterSet</span></code></a> object exists in a state where it is not fully defined, and its member functions (get/set parameter values) should not be used.</p>
+<p>You may notice that two parameters stand out in this list: the observation biases. In fact, the objects to which these parameters are linked in the simulation (the <code class="xref py py-class docutils literal notranslate"><span class="pre">ObservationBias</span></code> objects) are not yet created. These objects are only created when the observation models are set up, which is performed when creating the <a class="reference internal" href="../tudatFeatures/estimationSetup/estimationExecution.html#OrbitDeterminationManager" title="OrbitDeterminationManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrbitDeterminationManager</span></code></a> object. Until this time, the <a class="reference internal" href="../tudatFeatures/estimationSetup/parameterEstimationSettings.html#EstimatableParameterSet" title="EstimatableParameterSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatableParameterSet</span></code></a> object exists in a state where it is not fully defined, and its member functions (get/set parameter values) should not be used.</p>
 <p>Since we now want to estimate observation biases for the range observables, these models should be endowed with a bias model when creating them (<a class="reference internal" href="../tudatFeatures/estimationSetup/observationModelSetup.html#observationbiases"><span class="std std-ref">Observation Biases</span></a>). This is achieved by the following:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Iterate over all observable types and associated link ends, and creating settings for observation</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Iterate over all observable types and associated link ends, and creating settings for observation</span>
 <span class="n">observation_models</span><span class="o">::</span><span class="n">ObservationSettingsMap</span> <span class="n">observationSettingsMap</span><span class="p">;</span>
 <span class="k">for</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">ObservableType</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">LinkEnds</span> <span class="o">&gt;</span> <span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">linkEndIterator</span> <span class="o">=</span> <span class="n">linkEndsPerObservable</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span> <span class="p">);</span>
      <span class="n">linkEndIterator</span> <span class="o">!=</span> <span class="n">linkEndsPerObservable</span><span class="p">.</span><span class="n">end</span><span class="p">(</span> <span class="p">);</span> <span class="n">linkEndIterator</span><span class="o">++</span> <span class="p">)</span>
@@ -348,9 +353,9 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>which is similar to the previous tutorial, but now includes the definition of a <a class="reference internal" href="../tudatFeatures/estimationSetup/observationModelSetup.html#ConstantObservationBiasSettings" title="ConstantObservationBiasSettings"><code class="xref py py-class docutils literal"><span class="pre">ConstantObservationBiasSettings</span></code></a> for the one-way range model.</p>
-<p>Creating the <a class="reference internal" href="../tudatFeatures/estimationSetup/estimationExecution.html#OrbitDeterminationManager" title="OrbitDeterminationManager"><code class="xref py py-class docutils literal"><span class="pre">OrbitDeterminationManager</span></code></a> object and the <code class="docutils literal"><span class="pre">measurementSimulationInput</span></code> observation simulation settings happens as before. However, when actually generating the observations, we now want to add a crucial check: visibility from the ground station. To do this, we create an object of type <a class="reference internal" href="../tudatFeatures/estimationSetup/observationSimulation.html#ObservationViabilitySettings" title="ObservationViabilitySettings"><code class="xref py py-class docutils literal"><span class="pre">ObservationViabilitySettings</span></code></a>, as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create observation viability settings and calculators</span>
+<p>which is similar to the previous tutorial, but now includes the definition of a <a class="reference internal" href="../tudatFeatures/estimationSetup/observationModelSetup.html#ConstantObservationBiasSettings" title="ConstantObservationBiasSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstantObservationBiasSettings</span></code></a> for the one-way range model.</p>
+<p>Creating the <a class="reference internal" href="../tudatFeatures/estimationSetup/estimationExecution.html#OrbitDeterminationManager" title="OrbitDeterminationManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrbitDeterminationManager</span></code></a> object and the <code class="docutils literal notranslate"><span class="pre">measurementSimulationInput</span></code> observation simulation settings happens as before. However, when actually generating the observations, we now want to add a crucial check: visibility from the ground station. To do this, we create an object of type <a class="reference internal" href="../tudatFeatures/estimationSetup/observationSimulation.html#ObservationViabilitySettings" title="ObservationViabilitySettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObservationViabilitySettings</span></code></a>, as follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create observation viability settings and calculators</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ObservationViabilitySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">observationViabilitySettings</span><span class="p">;</span>
 <span class="n">observationViabilitySettings</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ObservationViabilitySettings</span> <span class="o">&gt;</span><span class="p">(</span>
                                             <span class="n">minimum_elevation_angle</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span> <span class="p">),</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
@@ -359,9 +364,9 @@
             <span class="n">bodyMap</span><span class="p">,</span> <span class="n">linkEndsPerObservable</span><span class="p">,</span> <span class="n">observationViabilitySettings</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The objects that are created by the <code class="docutils literal"><span class="pre">createObservationViabilityCalculators</span></code> function will be used to only use those observations for which the elevation angle at each ground station is larger than 5 degrees.</p>
+<p>The objects that are created by the <code class="docutils literal notranslate"><span class="pre">createObservationViabilityCalculators</span></code> function will be used to only use those observations for which the elevation angle at each ground station is larger than 5 degrees.</p>
 <p>An additional modification to the observation simulation that we will make, w.r.t. the previous tutorial, is that we will now introduce noise in the simulations. We use a relatively simple model for the noise, setting Gaussian, time-independent and time-uncorrelated distribution for the noise of each observable:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define noise levels</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define noise levels</span>
 <span class="kt">double</span> <span class="n">rangeNoise</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">angularPositionNoise</span> <span class="o">=</span> <span class="mf">1.0E-7</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">dopplerNoise</span> <span class="o">=</span> <span class="mf">1.0E-12</span><span class="p">;</span>
@@ -384,29 +389,29 @@
                        <span class="n">normal_boost_distribution</span><span class="p">,</span> <span class="p">{</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">dopplerNoise</span> <span class="p">},</span> <span class="mf">0.0</span> <span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Which generates noise functions that put a 0.1 m noise on range, 0.1 mrad noise on the angular position, and <span class="math">\(10^{-12}\)</span> noise on the Doppler observation. The syntax of the above code is described in more detail on the page on <a class="reference internal" href="../tudatFeatures/estimationSetup/observationSimulation.html#observationnoise"><span class="std std-ref">Observation Noise</span></a>. The observations are simulated similarly as before:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Simulate observations</span>
+<p>Which generates noise functions that put a 0.1 m noise on range, 0.1 mrad noise on the angular position, and <span class="math notranslate nohighlight">\(10^{-12}\)</span> noise on the Doppler observation. The syntax of the above code is described in more detail on the page on <a class="reference internal" href="../tudatFeatures/estimationSetup/observationSimulation.html#observationnoise"><span class="std std-ref">Observation Noise</span></a>. The observations are simulated similarly as before:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Simulate observations</span>
 <span class="n">PodInputDataType</span> <span class="n">observationsAndTimes</span> <span class="o">=</span> <span class="n">simulateObservationsWithNoise</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span>
             <span class="n">measurementSimulationInput</span><span class="p">,</span> <span class="n">orbitDeterminationManager</span><span class="p">.</span><span class="n">getObservationSimulators</span><span class="p">(</span> <span class="p">),</span> <span class="n">noiseFunctions</span><span class="p">,</span>
             <span class="n">viabilityCalculators</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The rest of the code runs the same as in the previous example. To analyze the output, we ship a MATLAB script with the example application, and show some of its output below. Since we are using different data types with weights <span class="math">\(w_{i}=\sigma_{i}^{-2}\)</span> (with <span class="math">\(\sigma_{i}\)</span> the uncertainty on the observation) that differ by orders of magnitude, we rescale variables such as the partial derivatives, residuals, etc., when plotting them, to be able to compare the various data types.</p>
+<p>The rest of the code runs the same as in the previous example. To analyze the output, we ship a MATLAB script with the example application, and show some of its output below. Since we are using different data types with weights <span class="math notranslate nohighlight">\(w_{i}=\sigma_{i}^{-2}\)</span> (with <span class="math notranslate nohighlight">\(\sigma_{i}\)</span> the uncertainty on the observation) that differ by orders of magnitude, we rescale variables such as the partial derivatives, residuals, etc., when plotting them, to be able to compare the various data types.</p>
 <p>We first show the correlation matrix:</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/estimationCorrelations.png" src="../../_images/estimationCorrelations.png" />
 </div>
 <p>where the indices for the patrameters differ by 1, compared to the list given above (since Matlab starts counting at 1, and C++ at 0).</p>
-<p>Next, is the matrix of partial derivatives, scaled by <span class="math">\(\sigma_{i}^{-1}\)</span>, on a logarithmic scale. The different arcs/observables/link ends are clearly visible in the matrix of partial derivatives (see the page on <a class="reference internal" href="../tudatFeatures/estimationSetup/observationSimulation.html#observationsimulation"><span class="std std-ref">Simulating Observations</span></a> on how to interpret the order of the rows of the matrix; columns correspond to the parameters).</p>
-<div class="figure">
+<p>Next, is the matrix of partial derivatives, scaled by <span class="math notranslate nohighlight">\(\sigma_{i}^{-1}\)</span>, on a logarithmic scale. The different arcs/observables/link ends are clearly visible in the matrix of partial derivatives (see the page on <a class="reference internal" href="../tudatFeatures/estimationSetup/observationSimulation.html#observationsimulation"><span class="std std-ref">Simulating Observations</span></a> on how to interpret the order of the rows of the matrix; columns correspond to the parameters).</p>
+<div class="figure align-default">
 <img alt="../../_images/estimationPartials.png" src="../../_images/estimationPartials.png" />
 </div>
-<p>We show the evolution of the observation residuals below (again scaled by <span class="math">\(\sigma_{i}^{-1}\)</span>) as a function of iteration. In the final iteration, the residuals have converged to a Gaussian distribution with 0 mean and standard deviation 1.</p>
-<div class="figure">
+<p>We show the evolution of the observation residuals below (again scaled by <span class="math notranslate nohighlight">\(\sigma_{i}^{-1}\)</span>) as a function of iteration. In the final iteration, the residuals have converged to a Gaussian distribution with 0 mean and standard deviation 1.</p>
+<div class="figure align-default">
 <img alt="../../_images/residualHistograms.png" src="../../_images/residualHistograms.png" />
 </div>
 <p>Finally, we give the ratio of true to formal error of the estimated parameters (as a histogram and as a function of parameter index). The histogram very roughly corresponds to the expected behaviour (Gaussian distribution with 0 mean and standard deviation 1).</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/errorRatios.png" src="../../_images/errorRatios.png" />
 </div>
 </div>
@@ -466,7 +471,8 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

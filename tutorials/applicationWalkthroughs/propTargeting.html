@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
 
@@ -39,7 +41,7 @@
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../index.html"/>
         <link rel="up" title="Application Tutorials" href="index.html"/>
-        <link rel="next" title="Tudat Libraries" href="../tudatFeatures/index.html"/>
+        <link rel="next" title="6. Shaping Methods Trajectory Optimisation" href="hodographicShapingTrajectoryOptimisation.html"/>
         <link rel="prev" title="4. Multiple Gravity Assist Transfer" href="mgaTrans.html"/> 
 
   
@@ -104,6 +106,8 @@
 <li class="toctree-l4"><a class="reference internal" href="earthMarsTrans.html">3. (multi-objective) Earth Mars Transfer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mgaTrans.html">4. Multiple Gravity Assist Transfer</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">5. Propagation Targeting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hodographicShapingTrajectoryOptimisation.html">6. Shaping Methods Trajectory Optimisation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SimsFlanaganTrajectoryDesign.html">7. Sims-Flanagan Trajectory Optimisation</a></li>
 </ul>
 </li>
 </ul>
@@ -118,7 +122,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -167,7 +170,7 @@
         
           <li><a href="index.html">Application Tutorials</a> &raquo;</li>
         
-      <li>5. Propagation Targeting</li>
+      <li><span class="section-number">5. </span>Propagation Targeting</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -187,18 +190,20 @@
            <div itemprop="articleBody">
             
   <div class="section" id="propagation-targeting">
-<span id="walkthroughsproptargeting"></span><h1>5. Propagation Targeting<a class="headerlink" href="#propagation-targeting" title="Permalink to this headline">¶</a></h1>
+<span id="walkthroughsproptargeting"></span><h1><span class="section-number">5. </span>Propagation Targeting<a class="headerlink" href="#propagation-targeting" title="Permalink to this headline">¶</a></h1>
 <p>The example described in this tutorial will cover the following problem statement:</p>
 <blockquote>
-<div>A satellite is going to be launched on an elliptical orbit with min and max altitudes respectively 180 km and 40000 km with inclination i=0 (and argument of perigee omega = 0). A fixed target is set on the same plane at an altitude of 35000 km, fixed latitude of 30 deg. What is the value of the RAAN for which the satellite achieves a minimum approach distance from the target?</div></blockquote>
+<div><p>A satellite is going to be launched on an elliptical orbit with min and max altitudes respectively 180 km and 40000 km with inclination i=0 (and argument of perigee omega = 0). A fixed target is set on the same plane at an altitude of 35000 km, fixed latitude of 30 deg. What is the value of the RAAN for which the satellite achieves a minimum approach distance from the target?</p>
+</div></blockquote>
 <p>The code for this tutorial is given on Github, and is also located in your Tudat bundle at:</p>
 <blockquote>
-<div>tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/propagationTargetingExample.cpp</div></blockquote>
+<div><p>tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/propagationTargetingExample.cpp</p>
+</div></blockquote>
 <p>This tutorial will use the same concepts described in previous examples, however for this example, the Tudat propagation is implemented in the problem. Thus this example will show how the PAGMO library and Tudat can work together. It is necessary that the previous examples are understood to be able to go through this example.</p>
 <div class="section" id="set-up-the-problem">
-<h2>5.1. Set up the problem<a class="headerlink" href="#set-up-the-problem" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.1. </span>Set up the problem<a class="headerlink" href="#set-up-the-problem" title="Permalink to this headline">¶</a></h2>
 <p>The problem is set-up as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//Load spice kernels</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//Load spice kernels</span>
 <span class="n">tudat</span><span class="o">::</span><span class="n">spice_interface</span><span class="o">::</span><span class="n">loadStandardSpiceKernels</span><span class="p">(</span> <span class="p">);</span>
 
 <span class="c1">// Create object to compute the problem fitness; no perturbations</span>
@@ -222,17 +227,17 @@
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The addition of a <code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">propagators::DependentVariableSaveSettings</span> <span class="pre">&gt;</span></code> pointer as an input of the UDP constructor will allow the user to later save the values of some dependent variables from the propagation performed in the <code class="docutils literal"><span class="pre">fitness</span></code> function  (here the altitude of the spacecraft with respect to the Earth for this particular example).</p>
+<p class="admonition-title">Note</p>
+<p>The addition of a <code class="docutils literal notranslate"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">propagators::DependentVariableSaveSettings</span> <span class="pre">&gt;</span></code> pointer as an input of the UDP constructor will allow the user to later save the values of some dependent variables from the propagation performed in the <code class="docutils literal notranslate"><span class="pre">fitness</span></code> function  (here the altitude of the spacecraft with respect to the Earth for this particular example).</p>
 </div>
-<p>First, the Spice (ephemeris) kernels are loaded in to get an accurate ephemeris of all the bodies included in this example. Then the input to the problem is defined: the perigee and apogee of the targeter, and the altitude and longitude of the target. Then the problem object is made in the same manner as was done in previous examples, using the <code class="docutils literal"><span class="pre">PropagationTargetingProblem(...)</span></code> as the UDP.</p>
+<p>First, the Spice (ephemeris) kernels are loaded in to get an accurate ephemeris of all the bodies included in this example. Then the input to the problem is defined: the perigee and apogee of the targeter, and the altitude and longitude of the target. Then the problem object is made in the same manner as was done in previous examples, using the <code class="docutils literal notranslate"><span class="pre">PropagationTargetingProblem(...)</span></code> as the UDP.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Don’t load the spice kernels inside the UDP! This will cause the kernels to be loaded each time the UDP is called, which will slow the application down, and result in an error by spice when a certain limit is reached.</p>
+<p class="admonition-title">Warning</p>
+<p>Don’t load the spice kernels inside the UDP! This will cause the kernels to be loaded each time the UDP is called, which will slow the application down, and result in an error by spice when a certain limit is reached.</p>
 </div>
-<p>The UDP contains an empty constructor and a normal constructor. In the normal constructor, the final argument, <code class="docutils literal"><span class="pre">useExtendedDynamics</span></code>, is a boolean variable that determines if either only the Earth gravitational influence is used (<code class="docutils literal"><span class="pre">false</span></code>, default) or if also the lunar and solar gravitational influence are implememted. The <code class="docutils literal"><span class="pre">get_bounds()</span></code> is implemented in the same way as before, but the fitness function is implemented differently, which will be discussed later. To reduce the computation time of the optimization example, it is important that a part of the code is put in the constructor.</p>
+<p>The UDP contains an empty constructor and a normal constructor. In the normal constructor, the final argument, <code class="docutils literal notranslate"><span class="pre">useExtendedDynamics</span></code>, is a boolean variable that determines if either only the Earth gravitational influence is used (<code class="docutils literal notranslate"><span class="pre">false</span></code>, default) or if also the lunar and solar gravitational influence are implememted. The <code class="docutils literal notranslate"><span class="pre">get_bounds()</span></code> is implemented in the same way as before, but the fitness function is implemented differently, which will be discussed later. To reduce the computation time of the optimization example, it is important that a part of the code is put in the constructor.</p>
 <p>First, in the constructor, the orbit of the targeter is defined:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Definition of the orbit</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Definition of the orbit</span>
 <span class="n">earthRadius_</span> <span class="o">=</span> <span class="n">spice_interface</span><span class="o">::</span><span class="n">getAverageRadius</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
 <span class="n">radiusOfPerigee_</span> <span class="o">=</span>  <span class="n">earthRadius_</span> <span class="o">+</span> <span class="n">altitudeOfPerigee_</span><span class="p">;</span>
 <span class="n">radiusOfApogee_</span> <span class="o">=</span> <span class="n">earthRadius_</span> <span class="o">+</span> <span class="n">altitudeOfApogee_</span><span class="p">;</span>
@@ -242,7 +247,7 @@
 </div>
 <p>The next part of the constructor is the set up of the integration, the bodies, and the environment. This is done in a similar manner as in the <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a>. Thus if a part of this tutorial is not clear, the reader is referred to this example (and the following examples on that page).</p>
 <p>The following code shows the initialization of the integration, the bodies, and the environment:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//Integration time: half a orbit</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//Integration time: half a orbit</span>
 <span class="n">simulationStartEpoch_</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
 <span class="n">simulationEndEpoch_</span> <span class="o">=</span> <span class="mf">1.2</span> <span class="o">*</span> <span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span> <span class="o">*</span>
         <span class="n">std</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">pow</span><span class="p">(</span><span class="n">semiMajorAxis_</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="n">earthGravitationalParameter_</span><span class="p">);</span>
@@ -276,9 +281,9 @@
 <span class="n">bodyMap_</span> <span class="o">=</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>It is important to realize why this is done in the constructor and not in the fitness function of the UDP. If this was put into the fitness function, the <code class="docutils literal"><span class="pre">bodyMap</span></code> would be created each time the fitness function would be called. The <code class="docutils literal"><span class="pre">simulation_setup::createBodies()</span></code> function will store the information every time it is called, and thus the RAM usage on your computer will increase over time, until there is no more RAM left and the program is terminated, or slowed down considerably.</p>
+<p>It is important to realize why this is done in the constructor and not in the fitness function of the UDP. If this was put into the fitness function, the <code class="docutils literal notranslate"><span class="pre">bodyMap</span></code> would be created each time the fitness function would be called. The <code class="docutils literal notranslate"><span class="pre">simulation_setup::createBodies()</span></code> function will store the information every time it is called, and thus the RAM usage on your computer will increase over time, until there is no more RAM left and the program is terminated, or slowed down considerably.</p>
 <p>After the constructor is setup, the next step is to define the target orbit using the input values of the UDP in the fitness function, and set-up the initial conditions for the satellite:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//Define position of the target at 35000 km from Earth at 30 deg latitude</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//Define position of the target at 35000 km from Earth at 30 deg latitude</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">target</span><span class="p">;</span>
 <span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">earthRadius_</span> <span class="o">+</span> <span class="n">altitudeOfTarget_</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">longitudeOfTarget_</span><span class="o">*</span><span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span><span class="o">/</span><span class="mi">180</span><span class="p">);</span>
 <span class="n">target</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">earthRadius_</span> <span class="o">+</span> <span class="n">altitudeOfTarget_</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">longitudeOfTarget_</span><span class="o">*</span><span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span><span class="o">/</span><span class="mi">180</span><span class="p">);</span>
@@ -298,7 +303,7 @@
 </pre></div>
 </div>
 <p>The only acceleration models that are implemented are gravitational of nature. The propagator settings use the Cowell method and a RK4 integrator. The dependent variables that must be saved are also specified in the propagator settings:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//Setup simulation. Simple Keplerian orbit (only central-gravity of Earth)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//Setup simulation. Simple Keplerian orbit (only central-gravity of Earth)</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToPropagate</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;Satellite&quot;</span> <span class="p">};</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodies</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;Earth&quot;</span> <span class="p">};</span>
 <span class="n">SelectedAccelerationMap</span> <span class="n">accelerationMap</span><span class="p">;</span>
@@ -335,8 +340,8 @@
         <span class="n">bodyMap_</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Once the simulation is performed, its results must be retrieved and some of them stored. First, the results of the simulation are stored in a variable: <code class="docutils literal"><span class="pre">integrationResult</span></code>. Additionally, the state history of the spacecraft and the dependent variables are stored in the private attributes <code class="docutils literal"><span class="pre">previousStateHistory_</span></code> and <code class="docutils literal"><span class="pre">previousDependentVariablesHistory_</span></code> respectively. The same is done for the final values of both the spacecraft state and the dependent variables at the end of the propagation (stored in the attributes <code class="docutils literal"><span class="pre">previousFinalState_</span></code> and <code class="docutils literal"><span class="pre">previousDependentVariablesFinalValues_</span></code>). Storing the simulation results this way will allow the user to access them outside the <code class="docutils literal"><span class="pre">fitness</span></code> function and thus to save them in different files later.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//Retrieve results</span>
+<p>Once the simulation is performed, its results must be retrieved and some of them stored. First, the results of the simulation are stored in a variable: <code class="docutils literal notranslate"><span class="pre">integrationResult</span></code>. Additionally, the state history of the spacecraft and the dependent variables are stored in the private attributes <code class="docutils literal notranslate"><span class="pre">previousStateHistory_</span></code> and <code class="docutils literal notranslate"><span class="pre">previousDependentVariablesHistory_</span></code> respectively. The same is done for the final values of both the spacecraft state and the dependent variables at the end of the propagation (stored in the attributes <code class="docutils literal notranslate"><span class="pre">previousFinalState_</span></code> and <code class="docutils literal notranslate"><span class="pre">previousDependentVariablesFinalValues_</span></code>). Storing the simulation results this way will allow the user to access them outside the <code class="docutils literal notranslate"><span class="pre">fitness</span></code> function and thus to save them in different files later.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//Retrieve results</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">integrationResult</span> <span class="o">=</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
 <span class="n">previousStateHistory_</span> <span class="o">=</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
 <span class="n">previousFinalState_</span> <span class="o">=</span> <span class="n">previousStateHistory_</span><span class="p">.</span><span class="n">rbegin</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">;</span>
@@ -345,7 +350,7 @@
 </pre></div>
 </div>
 <p>After the simulation is defined and its results properly saved, it is time to actually define the optimization part of this example:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//Find minimum distance from target</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//Find minimum distance from target</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">separationFromTarget</span> <span class="o">=</span>
         <span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span><span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">AngleAxisd</span><span class="p">(</span>
                                 <span class="o">-</span><span class="n">earthRotationRate</span> <span class="o">*</span> <span class="n">integrationResult</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">first</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitZ</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="o">*</span>
@@ -378,27 +383,27 @@
 <p>The smallest distance and time of the smallest distance between the targeter and the target are intialized. These variables are needed in the for-loop that follows to determine the best results of the simulation. This result is then stored and used as the fitness value.</p>
 </div>
 <div class="section" id="selecting-the-algorithm">
-<h2>5.2. Selecting the Algorithm<a class="headerlink" href="#selecting-the-algorithm" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.2. </span>Selecting the Algorithm<a class="headerlink" href="#selecting-the-algorithm" title="Permalink to this headline">¶</a></h2>
 <p>In this example, the de1220 algorithm is selected to optimize the trajectory:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Instantiate a pagmo algorithm</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Instantiate a pagmo algorithm</span>
 <span class="n">algorithm</span> <span class="n">algo</span><span class="p">{</span><span class="n">de1220</span><span class="p">(</span> <span class="p">)};</span>
 </pre></div>
 </div>
 <p>A grid-search is also performed, however, this is only done to compare the results and it shall thus not be discussed here.</p>
 </div>
 <div class="section" id="building-the-island">
-<h2>5.3. Building the Island<a class="headerlink" href="#building-the-island" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.3. </span>Building the Island<a class="headerlink" href="#building-the-island" title="Permalink to this headline">¶</a></h2>
 <p>The island is built in the same way as in <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create an island with 128 individuals</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create an island with 128 individuals</span>
 <span class="n">pagmo</span><span class="o">::</span><span class="n">population</span><span class="o">::</span><span class="n">size_type</span> <span class="n">populationSize</span> <span class="o">=</span> <span class="mi">128</span><span class="p">;</span>
 <span class="n">island</span> <span class="n">isl</span><span class="p">{</span><span class="n">algo</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">populationSize</span><span class="p">};</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="perform-the-optimization">
-<h2>5.4. Perform the Optimization<a class="headerlink" href="#perform-the-optimization" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.4. </span>Perform the Optimization<a class="headerlink" href="#perform-the-optimization" title="Permalink to this headline">¶</a></h2>
 <p>Finally, the optimization is performed in the same manner as in <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Evolve for 25 generations</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Evolve for 25 generations</span>
 <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
 <span class="p">{</span>
     <span class="n">isl</span><span class="p">.</span><span class="n">evolve</span><span class="p">();</span>
@@ -415,9 +420,9 @@
 </div>
 </div>
 <div class="section" id="save-the-final-spacecraft-state-and-required-dependent-variables-in-files">
-<h2>5.5. Save the final spacecraft state and required dependent variables in files<a class="headerlink" href="#save-the-final-spacecraft-state-and-required-dependent-variables-in-files" title="Permalink to this headline">¶</a></h2>
-<p>The definition of additional private attributes (<code class="docutils literal"><span class="pre">previousStateHistory_</span></code>, <code class="docutils literal"><span class="pre">previousFinalState_</span></code> , <code class="docutils literal"><span class="pre">previousDependentVariablesHistory_</span></code> and <code class="docutils literal"><span class="pre">previousDependentVariablesFinalValues_</span></code>) allows the user to access other variables that just the fitness value from the <code class="docutils literal"><span class="pre">fitness</span></code> function. In this particular example, the final state of the spacecraft at the end of the propagation and the final values of the dependent variables are saved in separate files. Saving these variables requires to recall the <code class="docutils literal"><span class="pre">fitness</span></code> function for each individual of the last population successively, so that the variables to be saved indeed correspond to each indidual, as it is done below.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Retrieve final Cartesian states for population in last generation, and save final states to a file.</span>
+<h2><span class="section-number">5.5. </span>Save the final spacecraft state and required dependent variables in files<a class="headerlink" href="#save-the-final-spacecraft-state-and-required-dependent-variables-in-files" title="Permalink to this headline">¶</a></h2>
+<p>The definition of additional private attributes (<code class="docutils literal notranslate"><span class="pre">previousStateHistory_</span></code>, <code class="docutils literal notranslate"><span class="pre">previousFinalState_</span></code> , <code class="docutils literal notranslate"><span class="pre">previousDependentVariablesHistory_</span></code> and <code class="docutils literal notranslate"><span class="pre">previousDependentVariablesFinalValues_</span></code>) allows the user to access other variables that just the fitness value from the <code class="docutils literal notranslate"><span class="pre">fitness</span></code> function. In this particular example, the final state of the spacecraft at the end of the propagation and the final values of the dependent variables are saved in separate files. Saving these variables requires to recall the <code class="docutils literal notranslate"><span class="pre">fitness</span></code> function for each individual of the last population successively, so that the variables to be saved indeed correspond to each indidual, as it is done below.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Retrieve final Cartesian states for population in last generation, and save final states to a file.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">decisionVariables</span> <span class="o">=</span> <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span> <span class="p">).</span><span class="n">get_x</span><span class="p">(</span> <span class="p">);</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">int</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">finalStates</span><span class="p">;</span>
 <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">decisionVariables</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
@@ -440,15 +445,15 @@
 </pre></div>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">It must be stressed out that retrieving such variables is only doable for the population of the last generation, due to the intrisic way PAGMO is implemented (the variables being overwriten from each generation to the next one).</p>
+<p class="admonition-title">Warning</p>
+<p>It must be stressed out that retrieving such variables is only doable for the population of the last generation, due to the intrisic way PAGMO is implemented (the variables being overwriten from each generation to the next one).</p>
 </div>
 </div>
 <div class="section" id="perturbed-example">
-<h2>5.6. Perturbed Example<a class="headerlink" href="#perturbed-example" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.6. </span>Perturbed Example<a class="headerlink" href="#perturbed-example" title="Permalink to this headline">¶</a></h2>
 <p>In the second half of the example, the code is repeated, but with extended dynamics. This optimization problem is almost the same as the previous problem, but there are some differences due to the fact that the convergence of this problem is non-trivial.</p>
-<p>The first difference is the fact that when the UDP is initialized, a boolean variable in the constructor is set to <code class="docutils literal"><span class="pre">true</span></code>, namely: <code class="docutils literal"><span class="pre">useExtendedDynamics</span></code>. This variable will make sure that the third-body lunar and solar gravitational perturbation is included in the dynamics. The second difference is that the initial population is set to the final population of the previous problem. This will help with the convergence of this problem, and is shown below:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create an empty population for perturbed problem</span>
+<p>The first difference is the fact that when the UDP is initialized, a boolean variable in the constructor is set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, namely: <code class="docutils literal notranslate"><span class="pre">useExtendedDynamics</span></code>. This variable will make sure that the third-body lunar and solar gravitational perturbation is included in the dynamics. The second difference is that the initial population is set to the final population of the previous problem. This will help with the convergence of this problem, and is shown below:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create an empty population for perturbed problem</span>
 <span class="n">population</span> <span class="n">population_pert</span> <span class="o">=</span> <span class="n">population</span><span class="p">(</span> <span class="n">prob_pert</span><span class="p">,</span> <span class="mi">0</span> <span class="p">);</span>
 
 <span class="c1">// Retrieve population of unperturbed problem, and instantiate population of perturbed problem</span>
@@ -462,9 +467,9 @@
 <p>The most important thing to remember here is the fact that the population needs to be set in a for-loop, not just in one line. The rest of the example is fairly straightforward and is left to the reader to understand.</p>
 </div>
 <div class="section" id="results">
-<h2>5.7. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.7. </span>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p>The output of the application should look as follows (specific numbers could be different):</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span>Starting ...\tudatBundle.git\tudatExampleApplications\libraryExamples\bin\applications\application_PagmoPropagationTargetingExample.exe...
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>Starting ...\tudatBundle.git\tudatExampleApplications\libraryExamples\bin\applications\application_PagmoPropagationTargetingExample.exe...
 
 Grid search 0
 Grid search 1
@@ -513,7 +518,7 @@ Grid search 99
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../tudatFeatures/index.html" class="btn btn-neutral float-right" title="Tudat Libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="hodographicShapingTrajectoryOptimisation.html" class="btn btn-neutral float-right" title="6. Shaping Methods Trajectory Optimisation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="mgaTrans.html" class="btn btn-neutral" title="4. Multiple Gravity Assist Transfer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -558,7 +563,8 @@ Grid search 99
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>6.3. Hybrid Method &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>3. Hybrid Method &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -39,8 +41,8 @@
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
         <link rel="up" title="6. Low-Thrust Trajectory Design Module" href="index.html"/>
-        <link rel="next" title="Shape-Based Methods" href="shapeBasedMethods/index.html"/>
-        <link rel="prev" title="6.2. Sims-Flanagan Method" href="SimsFlanagan.html"/> 
+        <link rel="next" title="4. Shape-Based Methods" href="shapeBasedMethods/index.html"/>
+        <link rel="prev" title="2. Sims-Flanagan Method" href="SimsFlanagan.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -103,14 +105,14 @@
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">6. Low-Thrust Trajectory Design Module</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="lowThrustTrajectory.html">6.1. Low-Thrust Trajectories</a></li>
-<li class="toctree-l4"><a class="reference internal" href="SimsFlanagan.html">6.2. Sims-Flanagan Method</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">6.3. Hybrid Method</a></li>
-<li class="toctree-l4"><a class="reference internal" href="shapeBasedMethods/index.html">Shape-Based Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lowThrustTrajectory.html">1. Low-Thrust Trajectories</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SimsFlanagan.html">2. Sims-Flanagan Method</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">3. Hybrid Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shapeBasedMethods/index.html">4. Shape-Based Methods</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">7. Basic Mathematics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">8. Other Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
@@ -122,7 +124,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -171,9 +172,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">6. Low-Thrust Trajectory Design Module</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">6. </span>Low-Thrust Trajectory Design Module</a> &raquo;</li>
         
-      <li>6.3. Hybrid Method</li>
+      <li><span class="section-number">3. </span>Hybrid Method</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -193,39 +194,39 @@
            <div itemprop="articleBody">
             
   <div class="section" id="hybrid-method">
-<span id="tudatfeatureshybridmethod"></span><h1>6.3. Hybrid Method<a class="headerlink" href="#hybrid-method" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeatureshybridmethod"></span><h1><span class="section-number">3. </span>Hybrid Method<a class="headerlink" href="#hybrid-method" title="Permalink to this headline">¶</a></h1>
 <p>The hybrid method implemented in TUDAT follows from the work done in the theses by Boudestijn (2014) and Jimenez-Lluva (2018). It aims at combining the advantages of direct and indirect methods, while limiting their respective drawbacks.</p>
 <p>It makes use of the optimal control theory to reduce the set of free parameters compared to direct methods. As opposed to traditional indirect methods, the costates are not derived from analytically solving the two-point-boundary-value-problem. A linear interpolation is assumed between the initial and final values of the Modified Equinoctial Elements (MEE) costates, and those initial and final costate values are left as the only free parameters of the problem. The thrust profile along the low-thrust trajectory is defined  from the MEE costates guidance and magnitude models.</p>
 <p>The trajectory design problem is turned into a simplified optimisation problem, defined as follows:</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt><strong>Objective</strong></dt>
-<dd>Minimisation of the deltaV required by the trajectory.</dd>
+<li><dl class="simple">
+<dt><strong>Objective</strong></dt><dd><p>Minimisation of the deltaV required by the trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><strong>Constraints</strong></dt>
-<dd>The state vector obtained at the end of the propagation should match with the targeted state at arrival.</dd>
+<li><dl class="simple">
+<dt><strong>Constraints</strong></dt><dd><p>The state vector obtained at the end of the propagation should match with the targeted state at arrival.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><strong>Design parameters</strong></dt>
-<dd>Initial and final values of the MEE costates.</dd>
+<li><dl class="simple">
+<dt><strong>Design parameters</strong></dt><dd><p>Initial and final values of the MEE costates.</p>
+</dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
 <div class="section" id="hybrid-method-optimisation-problem">
-<h2>6.3.1. Hybrid method optimisation problem<a class="headerlink" href="#hybrid-method-optimisation-problem" title="Permalink to this headline">¶</a></h2>
-<p>The hybrid method has been implemented in the class <code class="docutils literal"><span class="pre">HybridMethod</span></code>, which inherits from the base class <code class="docutils literal"><span class="pre">LowThrustLeg</span></code>.</p>
-<dl class="class">
+<h2><span class="section-number">3.1. </span>Hybrid method optimisation problem<a class="headerlink" href="#hybrid-method-optimisation-problem" title="Permalink to this headline">¶</a></h2>
+<p>The hybrid method has been implemented in the class <code class="docutils literal notranslate"><span class="pre">HybridMethod</span></code>, which inherits from the base class <code class="docutils literal notranslate"><span class="pre">LowThrustLeg</span></code>.</p>
+<dl class="py class">
 <dt id="HybridMethod">
-<em class="property">class </em><code class="descname">HybridMethod</code><a class="headerlink" href="#HybridMethod" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">HybridMethod</code><a class="headerlink" href="#HybridMethod" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>This class defines the trajectory design problem as addressed by the hybrid method and runs the associated optimisation problem. The constructor is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">HybridMethod</span><span class="p">(</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HybridMethod</span><span class="p">(</span>
         <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">stateAtDeparture</span><span class="p">,</span>
         <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">stateAtArrival</span><span class="p">,</span>
         <span class="k">const</span> <span class="kt">double</span> <span class="n">maximumThrust</span><span class="p">,</span>
@@ -245,71 +246,71 @@
 <p>where the input parameters are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">stateAtDeparture</span></code></dt>
-<dd>State of the spacecraft at departure.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">stateAtDeparture</span></code></dt><dd><p>State of the spacecraft at departure.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">stateAtArrival</span></code></dt>
-<dd>State of the spacecraft at arrival.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">stateAtArrival</span></code></dt><dd><p>State of the spacecraft at arrival.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">maximumThrust</span></code></dt>
-<dd>Maximum thrust magnitude per impulsive shot.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">maximumThrust</span></code></dt><dd><p>Maximum thrust magnitude per impulsive shot.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">specificImpulse</span></code></dt>
-<dd>Function returning the specific impulse value at a given time.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">specificImpulse</span></code></dt><dd><p>Function returning the specific impulse value at a given time.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">timeOfFlight</span></code></dt>
-<dd>Time of flight required for the trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">timeOfFlight</span></code></dt><dd><p>Time of flight required for the trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">bodyMap</span></code></dt>
-<dd>Map of pointers to <code class="docutils literal"><span class="pre">Body</span></code> objects involved in the low-thrust trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">bodyMap</span></code></dt><dd><p>Map of pointers to <code class="docutils literal notranslate"><span class="pre">Body</span></code> objects involved in the low-thrust trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">bodyToPropagate</span></code></dt>
-<dd>Name of the spacecraft to be propagated.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">bodyToPropagate</span></code></dt><dd><p>Name of the spacecraft to be propagated.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">centralBody</span></code></dt>
-<dd>Name of the central body of the low-thrust trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">centralBody</span></code></dt><dd><p>Name of the central body of the low-thrust trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">integratorSettings</span></code></dt>
-<dd>Integrator settings to propagate the spacecraft trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">integratorSettings</span></code></dt><dd><p>Integrator settings to propagate the spacecraft trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">optimisationSettings</span></code></dt>
-<dd>Settings for the Sims-Flanagan optimisation (includes algorithm to be used, number of generations, number of individuals per population, tolerance with respect to contraints, and possibly initial guess)</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">optimisationSettings</span></code></dt><dd><p>Settings for the Sims-Flanagan optimisation (includes algorithm to be used, number of generations, number of individuals per population, tolerance with respect to contraints, and possibly initial guess)</p>
+</dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
-<p>The <code class="docutils literal"><span class="pre">HybridMethod</span></code> class is directly derived from the base class <code class="docutils literal"><span class="pre">LowThrustLeg</span></code>, and all the methods contained in that base class are thus available from any <code class="docutils literal"><span class="pre">HybridMethod</span></code> object (see <a class="reference internal" href="lowThrustTrajectory.html#tudatfeatureslowthrusttrajectory"><span class="std std-ref">Low-Thrust Trajectories</span></a> for more details). This includes, among others, the methods allowing the user to retrieve the trajectory, mass, thrust, and thrust acceleration history along the trajectory.</p>
-<p>The constructor of the class <code class="docutils literal"><span class="pre">HybridMethod</span></code> automatically calls the method <code class="docutils literal"><span class="pre">performOptimisation</span></code>, which tries to find the solution to the optimisation problem as defined by the hybrid method, using the optimisation settings provided by the user. This method creates the structure <code class="docutils literal"><span class="pre">HybridMethodProblem</span></code>, which defines the corresponding optimisation problem. It thus saves the identified optimum in the <code class="docutils literal"><span class="pre">hybridMethodLeg_</span></code> private variable, which can be retrieved from the (TO BE COMPLETED) method.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">HybridMethod</span></code> class is directly derived from the base class <code class="docutils literal notranslate"><span class="pre">LowThrustLeg</span></code>, and all the methods contained in that base class are thus available from any <code class="docutils literal notranslate"><span class="pre">HybridMethod</span></code> object (see <a class="reference internal" href="lowThrustTrajectory.html#tudatfeatureslowthrusttrajectory"><span class="std std-ref">Low-Thrust Trajectories</span></a> for more details). This includes, among others, the methods allowing the user to retrieve the trajectory, mass, thrust, and thrust acceleration history along the trajectory.</p>
+<p>The constructor of the class <code class="docutils literal notranslate"><span class="pre">HybridMethod</span></code> automatically calls the method <code class="docutils literal notranslate"><span class="pre">performOptimisation</span></code>, which tries to find the solution to the optimisation problem as defined by the hybrid method, using the optimisation settings provided by the user. This method creates the structure <code class="docutils literal notranslate"><span class="pre">HybridMethodProblem</span></code>, which defines the corresponding optimisation problem. It thus saves the identified optimum in the <code class="docutils literal notranslate"><span class="pre">hybridMethodLeg_</span></code> private variable, which can be retrieved from the (TO BE COMPLETED) method.</p>
 </div>
 <div class="section" id="hybrid-method-trajectory-model">
-<h2>6.3.2. Hybrid method trajectory model<a class="headerlink" href="#hybrid-method-trajectory-model" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.2. </span>Hybrid method trajectory model<a class="headerlink" href="#hybrid-method-trajectory-model" title="Permalink to this headline">¶</a></h2>
 <p>Addressing a trajectory design problem with the hybrid method described above requires to run an optimisation algorithm to find the best trajectory, i.e. a trajectory which fulfills the departure and arrival boundary conditions, as well as the required time-of-flight, for the lowest deltaV. This requires the assessment of numerous trajectories to finally identify the best performing one. Each of the individual trajectories parsed by the optimisation algorithm is obtained out of a given set of initial and final MEE costates, and is defined as an object of the class described below.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="HybridMethodModel">
-<em class="property">class </em><code class="descname">HybridMethodModel</code><a class="headerlink" href="#HybridMethodModel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">HybridMethodModel</code><a class="headerlink" href="#HybridMethodModel" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>This class models the low-thrust trajectory as described by the hybrid method. It simply propagates the trajectory assuming a simplified model with thrust and central body gravitational accelerations only. The thrust acceleration is derived from the optimal control theory, using a vector of costates functions which return the value of each costate as a function of time. The costate functions are directly derived from the linear interpolation between their initial and final values, which are provided by the user. This class does not solve the optimisation problem, but it defines the low-thrust trajectory corresponding to a given set of initial and final costate values. The class is defined as:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">HybridMethodLeg</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">stateAtDeparture</span><span class="p">,</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HybridMethodLeg</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">stateAtDeparture</span><span class="p">,</span>
              <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">stateAtArrival</span><span class="p">,</span>
              <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="o">&amp;</span> <span class="n">initialCoStates</span><span class="p">,</span>
              <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="o">&amp;</span> <span class="n">finalCoStates</span><span class="p">,</span>
@@ -325,59 +326,59 @@
 <p>The input parameters of this class constructor are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">stateAtDeparture</span></code></dt>
-<dd>State of the spacecraft at departure.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">stateAtDeparture</span></code></dt><dd><p>State of the spacecraft at departure.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">stateAtArrival</span></code></dt>
-<dd>State of the spacecraft at arrival.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">stateAtArrival</span></code></dt><dd><p>State of the spacecraft at arrival.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">initialCoStates</span></code></dt>
-<dd>Vector containing the values of each of the MEE costates at departure.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">initialCoStates</span></code></dt><dd><p>Vector containing the values of each of the MEE costates at departure.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">finalCoStates</span></code></dt>
-<dd>Vector containing the values of each of the MEE costates at arrival.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">finalCoStates</span></code></dt><dd><p>Vector containing the values of each of the MEE costates at arrival.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">maximumThrust</span></code></dt>
-<dd>Maximum thrust magnitude. The thrust model used in the hybrid method based on the optimal control theory is defined as a so-called “bang-bang” thrust model: the magnitude of the thrust vector is equal to either 0 or the maximum thrust value.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">maximumThrust</span></code></dt><dd><p>Maximum thrust magnitude. The thrust model used in the hybrid method based on the optimal control theory is defined as a so-called “bang-bang” thrust model: the magnitude of the thrust vector is equal to either 0 or the maximum thrust value.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">specificImpulse</span></code></dt>
-<dd>Specific Impulse value. The current implementation of the hybrid method does not allow for time-varying specific impulse.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">specificImpulse</span></code></dt><dd><p>Specific Impulse value. The current implementation of the hybrid method does not allow for time-varying specific impulse.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">timeOfFlight</span></code></dt>
-<dd>Time of flight required for the trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">timeOfFlight</span></code></dt><dd><p>Time of flight required for the trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">bodyMap</span></code></dt>
-<dd>Map of pointers to <code class="docutils literal"><span class="pre">Body</span></code> objects involved in the low-thrust trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">bodyMap</span></code></dt><dd><p>Map of pointers to <code class="docutils literal notranslate"><span class="pre">Body</span></code> objects involved in the low-thrust trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">bodyToPropagate</span></code></dt>
-<dd>Name of the spacecraft to be propagated.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">bodyToPropagate</span></code></dt><dd><p>Name of the spacecraft to be propagated.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">centralBody</span></code></dt>
-<dd>Name of the central body of the low-thrust trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">centralBody</span></code></dt><dd><p>Name of the central body of the low-thrust trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">integratorSettings</span></code></dt>
-<dd>Integrator settings to be used to propagate the spacecraft trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">integratorSettings</span></code></dt><dd><p>Integrator settings to be used to propagate the spacecraft trajectory.</p>
+</dd>
 </dl>
 </li>
 </ul>
@@ -395,10 +396,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="shapeBasedMethods/index.html" class="btn btn-neutral float-right" title="Shape-Based Methods" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="shapeBasedMethods/index.html" class="btn btn-neutral float-right" title="4. Shape-Based Methods" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="SimsFlanagan.html" class="btn btn-neutral" title="6.2. Sims-Flanagan Method" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="SimsFlanagan.html" class="btn btn-neutral" title="2. Sims-Flanagan Method" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -440,7 +441,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

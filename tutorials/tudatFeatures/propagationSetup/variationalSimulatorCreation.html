@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -112,6 +114,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">Low-Thrust Trajectory Design Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
@@ -173,9 +176,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">3. Simulator Set-Up</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">3. </span>Simulator Set-Up</a> &raquo;</li>
         
-      <li>3.7. Performing Variational Equations Propagation</li>
+      <li><span class="section-number">3.7. </span>Performing Variational Equations Propagation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -195,35 +198,35 @@
            <div itemprop="articleBody">
             
   <div class="section" id="performing-variational-equations-propagation">
-<span id="tudatfeaturesvariationalsimulatorcreation"></span><h1>3.7. Performing Variational Equations Propagation<a class="headerlink" href="#performing-variational-equations-propagation" title="Permalink to this headline">¶</a></h1>
-<p>Up to this point, we have been concerned with propagating states of bodies only. Tudat is also capable of propagating the variational equations associated with the dynamics to produce the state transition matrix <span class="math">\(\Phi(t,t_{0})\)</span> and sensitivity matrix <span class="math">\(S(t)\)</span>, which we define here as:</p>
-<div class="math">
+<span id="tudatfeaturesvariationalsimulatorcreation"></span><h1><span class="section-number">3.7. </span>Performing Variational Equations Propagation<a class="headerlink" href="#performing-variational-equations-propagation" title="Permalink to this headline">¶</a></h1>
+<p>Up to this point, we have been concerned with propagating states of bodies only. Tudat is also capable of propagating the variational equations associated with the dynamics to produce the state transition matrix <span class="math notranslate nohighlight">\(\Phi(t,t_{0})\)</span> and sensitivity matrix <span class="math notranslate nohighlight">\(S(t)\)</span>, which we define here as:</p>
+<div class="math notranslate nohighlight">
 \[\begin{split}\Phi(t,t_{0}) &amp;= \frac{\partial \mathbf{x}(t)}{\partial\mathbf{x}(t_{0})}\\
 S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</div>
-<p>where <span class="math">\(\mathbf{x}\)</span> is the propagated state, <span class="math">\(\mathbf{p}\)</span> the vector of a parameter vector (e.g. gravity field parameters, rotation model parameters, etc.), and <span class="math">\(t_{0}\)</span> denotes the initial time.</p>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is the propagated state, <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> the vector of a parameter vector (e.g. gravity field parameters, rotation model parameters, etc.), and <span class="math notranslate nohighlight">\(t_{0}\)</span> denotes the initial time.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">In some literature, the sensitivity matrix is not defined separately, but the state transition matrix <span class="math">\(\Phi(t,t_{0})\)</span> is defined as <span class="math">\(\frac{\partial[\mathbf{x}(t);\text{ }\mathbf{p}]}{\partial[\mathbf{x}(t_{0};\text{ }\mathbf{p}])}\)</span></p>
+<p class="admonition-title">Note</p>
+<p>In some literature, the sensitivity matrix is not defined separately, but the state transition matrix <span class="math notranslate nohighlight">\(\Phi(t,t_{0})\)</span> is defined as <span class="math notranslate nohighlight">\(\frac{\partial[\mathbf{x}(t);\text{ }\mathbf{p}]}{\partial[\mathbf{x}(t_{0};\text{ }\mathbf{p}])}\)</span></p>
 </div>
-<p>The propagation of these equations is done similarly as for the dynamics, and is executed by a (derived class of) <code class="xref py py-class docutils literal"><span class="pre">VariationalEquationsSolved</span></code></p>
-<p>At the moment, the following <a class="reference internal" href="#VariationalEquationsSolver" title="VariationalEquationsSolver"><code class="xref py py-class docutils literal"><span class="pre">VariationalEquationsSolver</span></code></a> options are available or under development in Tudat:</p>
+<p>The propagation of these equations is done similarly as for the dynamics, and is executed by a (derived class of) <code class="xref py py-class docutils literal notranslate"><span class="pre">VariationalEquationsSolved</span></code></p>
+<p>At the moment, the following <a class="reference internal" href="#VariationalEquationsSolver" title="VariationalEquationsSolver"><code class="xref py py-class docutils literal notranslate"><span class="pre">VariationalEquationsSolver</span></code></a> options are available or under development in Tudat:</p>
 <ul class="simple">
-<li>Single-arc variational equations solver.</li>
-<li>Multi-arc variational equations solver.</li>
-<li>Hybrid variational equations solver (under development).</li>
+<li><p>Single-arc variational equations solver.</p></li>
+<li><p>Multi-arc variational equations solver.</p></li>
+<li><p>Hybrid variational equations solver (under development).</p></li>
 </ul>
 <p>These are implemented in derived classes and are discussed below. Note that these objects of these classes propagate bothe the variational equations and dynamics (either concurrently or sequentially).</p>
-<dl class="class">
+<dl class="py class">
 <dt id="VariationalEquationsSolver">
-<em class="property">class </em><code class="descname">VariationalEquationsSolver</code><a class="headerlink" href="#VariationalEquationsSolver" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">VariationalEquationsSolver</code><a class="headerlink" href="#VariationalEquationsSolver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class from which the classes below are derived.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="SingleArcVariationalEquationsSolver">
-<em class="property">class </em><code class="descname">SingleArcVariationalEquationsSolver</code><a class="headerlink" href="#SingleArcVariationalEquationsSolver" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">SingleArcVariationalEquationsSolver</code><a class="headerlink" href="#SingleArcVariationalEquationsSolver" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class simulates single arc dynamics and variational equations and its constructor is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SingleArcVariationalEquationsSolver</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SingleArcVariationalEquationsSolver</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span>
                                      <span class="n">integratorSettings</span><span class="p">,</span>
                                      <span class="n">propagatorSettings</span><span class="p">,</span>
                                      <span class="n">parametersToEstimate</span><span class="p">,</span>
@@ -235,44 +238,44 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
 </div>
 <p>where:</p>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">bodyMap</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">bodyMap</span></code></p>
 <blockquote>
-<div><p><a class="reference internal" href="../environmentSetup/setup.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a> the map containing all the objects of type <a class="reference internal" href="../environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> used in the simulation.</p>
+<div><p><a class="reference internal" href="../environmentSetup/setup.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">NamedBodyMap</span></code></a> the map containing all the objects of type <a class="reference internal" href="../environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> used in the simulation.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">integratorSettings</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">integratorSettings</span></code></p>
 <blockquote>
-<div><p><a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> contains the settings of the integrator used, as discussed in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a>.</p>
+<div><p><a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntegratorSettings</span></code></a> contains the settings of the integrator used, as discussed in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a>.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">propagatorSettings</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">propagatorSettings</span></code></p>
 <blockquote>
-<div><p><a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> contains the settings that defines how the dynamics is propagated, as described in <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>.</p>
+<div><p><a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropagatorSettings</span></code></a> contains the settings that defines how the dynamics is propagated, as described in <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Propagation of variational equations (for translational motion) is only supported for propagated coordinates of size 6. For a description of the difference between conventional and propagated coordinates, see <a class="reference internal" href="propagatorSettingsCoordinates.html#tudatfeaturespropagatorsettingscoordinates"><span class="std std-ref">Propagator Settings: Conventional vs. Propagated Coordinates</span></a>. On the same page (in <a class="reference internal" href="propagatorSettingsCoordinates.html#tudatfeaturespropagatorsettingspropagatedcoordinates"><span class="std std-ref">Propagated Coordinates in Tudat</span></a>) you can find a list of the available propagated coordinates and their respective sizes.</p>
+<p class="admonition-title">Warning</p>
+<p>Propagation of variational equations (for translational motion) is only supported for propagated coordinates of size 6. For a description of the difference between conventional and propagated coordinates, see <a class="reference internal" href="propagatorSettingsCoordinates.html#tudatfeaturespropagatorsettingscoordinates"><span class="std std-ref">Propagator Settings: Conventional vs. Propagated Coordinates</span></a>. On the same page (in <a class="reference internal" href="propagatorSettingsCoordinates.html#tudatfeaturespropagatorsettingspropagatedcoordinates"><span class="std std-ref">Propagated Coordinates in Tudat</span></a>) you can find a list of the available propagated coordinates and their respective sizes.</p>
 </div>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">parametersToEstimate</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">parametersToEstimate</span></code></p>
 <blockquote>
-<div><p><a class="reference internal" href="../estimationSetup/parameterEstimationSettings.html#EstimatableParameterSet" title="EstimatableParameterSet"><code class="xref py py-class docutils literal"><span class="pre">EstimatableParameterSet</span></code></a> contains the settings that define the parameters <span class="math">\(\mathbf{x}_{0}\)</span> and <span class="math">\(\mathbf{p}\)</span> for which the variational equations are to be solved, as described in <a class="reference internal" href="../estimationSetup/parameterEstimationSettings.html#parameterestimationsettings"><span class="std std-ref">Setting Up Estimated Parameters</span></a>.</p>
+<div><p><a class="reference internal" href="../estimationSetup/parameterEstimationSettings.html#EstimatableParameterSet" title="EstimatableParameterSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatableParameterSet</span></code></a> contains the settings that define the parameters <span class="math notranslate nohighlight">\(\mathbf{x}_{0}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> for which the variational equations are to be solved, as described in <a class="reference internal" href="../estimationSetup/parameterEstimationSettings.html#parameterestimationsettings"><span class="std std-ref">Setting Up Estimated Parameters</span></a>.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">integrateDynamicalAndVariationalEquationsConcurrently</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">integrateDynamicalAndVariationalEquationsConcurrently</span></code></p>
 <blockquote>
 <div><p>Boolean to denote whether the equations of motion and variational equations are to be propagated concurrently (default: true), or if the variational eqautions are to be solved after the equations of motion.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">variationalOnlyIntegratorSettings</span></code></p>
-<p><a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> contains the settings of the integrator used, as discussed in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a>, when propagating the variational equations separately (if <code class="docutils literal"><span class="pre">integrateDynamicalAndVariationalEquationsConcurrently</span></code> is false). This pointer is empty by default, in which case the <code class="docutils literal"><span class="pre">integratorSettings</span></code> are used.</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">variationalOnlyIntegratorSettings</span></code></p>
+<p><a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntegratorSettings</span></code></a> contains the settings of the integrator used, as discussed in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a>, when propagating the variational equations separately (if <code class="docutils literal notranslate"><span class="pre">integrateDynamicalAndVariationalEquationsConcurrently</span></code> is false). This pointer is empty by default, in which case the <code class="docutils literal notranslate"><span class="pre">integratorSettings</span></code> are used.</p>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">clearNumericalSolution</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">clearNumericalSolution</span></code></p>
 <blockquote>
 <div><p>Boolean to denote whether numerical solutions of the propagated equations can be retrieved manually from the object after propagation (if false), or if they are cleared from memory (if true).</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">integrateEquationsOnCreation</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">integrateEquationsOnCreation</span></code></p>
 <blockquote>
 <div><p>Boolean to denote whether the equations of motion and variational equations are to be propagated immediately when the object is created (default true).</p>
 </div></blockquote>
@@ -280,11 +283,11 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
 </ul>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="MultiArcVariationalEquationsSolver">
-<em class="property">class </em><code class="descname">MultiArcVariationalEquationsSolver</code><a class="headerlink" href="#MultiArcVariationalEquationsSolver" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">MultiArcVariationalEquationsSolver</code><a class="headerlink" href="#MultiArcVariationalEquationsSolver" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class allows the numerical propagation of variational equations for arc-wise dynamics. It is constructed using:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">MultiArcVariationalEquationsSolver</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiArcVariationalEquationsSolver</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span>
                                     <span class="n">integratorSettings</span><span class="p">,</span>
                                     <span class="n">propagatorSettings</span><span class="p">,</span>
                                     <span class="n">parametersToEstimate</span><span class="p">,</span>
@@ -297,19 +300,19 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
 </div>
 <p>where:</p>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">arcStartTimes</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">arcStartTimes</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">double</span> <span class="pre">&gt;</span></code> contains the times at which the separate arcs start.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">std::vector&lt;</span> <span class="pre">double</span> <span class="pre">&gt;</span></code> contains the times at which the separate arcs start.</p>
 </div></blockquote>
 </li>
 </ul>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="HybridArcVariationalEquationsSolver">
-<em class="property">class </em><code class="descname">HybridArcVariationalEquationsSolver</code><a class="headerlink" href="#HybridArcVariationalEquationsSolver" title="Permalink to this definition">¶</a></dt>
-<dd><p>Allows some bodies to be propagated in a single arc, and some in a multi-arc fashion. See <a class="reference internal" href="simulatorCreation.html#HybridArcDynamicsSimulator" title="HybridArcDynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">HybridArcDynamicsSimulator</span></code></a> for model details. It is constructed using:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">HybridArcVariationalEquationsSolver</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span>
+<em class="property">class </em><code class="sig-name descname">HybridArcVariationalEquationsSolver</code><a class="headerlink" href="#HybridArcVariationalEquationsSolver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows some bodies to be propagated in a single arc, and some in a multi-arc fashion. See <a class="reference internal" href="simulatorCreation.html#HybridArcDynamicsSimulator" title="HybridArcDynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">HybridArcDynamicsSimulator</span></code></a> for model details. It is constructed using:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HybridArcVariationalEquationsSolver</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span>
                                     <span class="n">integratorSettings</span><span class="p">,</span>
                                     <span class="n">propagatorSettings</span><span class="p">,</span>
                                     <span class="n">parametersToEstimate</span><span class="p">,</span>
@@ -322,10 +325,10 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
 </dd></dl>
 
 <div class="section" id="retrieving-the-variational-equation-history">
-<h2>3.7.1. Retrieving the variational equation history<a class="headerlink" href="#retrieving-the-variational-equation-history" title="Permalink to this headline">¶</a></h2>
-<p>Once the <a class="reference internal" href="#VariationalEquationsSolver" title="VariationalEquationsSolver"><code class="xref py py-class docutils literal"><span class="pre">VariationalEquationsSolver</span></code></a> object has been created and the equations of motion have been integrated, the propagation history of the selected bodies is stored within the <a class="reference internal" href="#VariationalEquationsSolver" title="VariationalEquationsSolver"><code class="xref py py-class docutils literal"><span class="pre">VariationalEquationsSolver</span></code></a>. To make use of it manually after propagation, such history can to be retrieved and saved to a file.</p>
-<p>If the variational equations propagation history needs to be saved, the following code can be used (assuming an object of type <a class="reference internal" href="#SingleArcVariationalEquationsSolver" title="SingleArcVariationalEquationsSolver"><code class="xref py py-class docutils literal"><span class="pre">SingleArcVariationalEquationsSolver</span></code></a> called variationalEquationsSimulator has been created):</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="o">&gt;</span> <span class="n">stateTransitionResult</span> <span class="o">=</span>
+<h2><span class="section-number">3.7.1. </span>Retrieving the variational equation history<a class="headerlink" href="#retrieving-the-variational-equation-history" title="Permalink to this headline">¶</a></h2>
+<p>Once the <a class="reference internal" href="#VariationalEquationsSolver" title="VariationalEquationsSolver"><code class="xref py py-class docutils literal notranslate"><span class="pre">VariationalEquationsSolver</span></code></a> object has been created and the equations of motion have been integrated, the propagation history of the selected bodies is stored within the <a class="reference internal" href="#VariationalEquationsSolver" title="VariationalEquationsSolver"><code class="xref py py-class docutils literal notranslate"><span class="pre">VariationalEquationsSolver</span></code></a>. To make use of it manually after propagation, such history can to be retrieved and saved to a file.</p>
+<p>If the variational equations propagation history needs to be saved, the following code can be used (assuming an object of type <a class="reference internal" href="#SingleArcVariationalEquationsSolver" title="SingleArcVariationalEquationsSolver"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleArcVariationalEquationsSolver</span></code></a> called variationalEquationsSimulator has been created):</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="o">&gt;</span> <span class="n">stateTransitionResult</span> <span class="o">=</span>
         <span class="n">variationalEquationsSimulator</span><span class="p">.</span><span class="n">getNumericalVariationalEquationsSolution</span><span class="p">(</span> <span class="p">).</span><span class="n">at</span><span class="p">(</span> <span class="mi">0</span> <span class="p">);</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="o">&gt;</span> <span class="n">sensitivityResult</span> <span class="o">=</span>
         <span class="n">variationalEquationsSimulator</span><span class="p">.</span><span class="n">getNumericalVariationalEquationsSolution</span><span class="p">(</span> <span class="p">).</span><span class="n">at</span><span class="p">(</span> <span class="mi">1</span> <span class="p">);</span>
@@ -333,7 +336,7 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
 </div>
 <p>Where the state transition and sensitivity matrix are storeed separately. Saving the results to a file is done in the same manner as for the dynamics. Note however, that the matrix entries of the maps in the above are spread out over a single row in the output file. The concatenation of the matrix entries is done row by row.</p>
 <p>The state propagation history can also be retrieved from the object, as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">integrationResult</span> <span class="o">=</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">integrationResult</span> <span class="o">=</span>
      <span class="n">variationalEquationsSimulator</span><span class="p">.</span><span class="n">getDynamicsSimulator</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -395,7 +398,8 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

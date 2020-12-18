@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
 
@@ -113,6 +115,7 @@
 <li class="toctree-l4"><a class="reference internal" href="interplanetaryTrajectory.html">13. MGA Trajectory Design</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">14. Full propagation of the CR3BP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="fullPropagationPatchedConicsTrajectory.html">15. Full propagation of a patched conics trajectory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shapeBasedTrajectory.html">16. Shape-Based Low-Thrust Trajectories</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="index.html#pagmo-optimization-tutorials">Pagmo Optimization Tutorials</a></li>
@@ -176,7 +179,7 @@
         
           <li><a href="index.html">Application Tutorials</a> &raquo;</li>
         
-      <li>14. Full propagation of the CR3BP</li>
+      <li><span class="section-number">14. </span>Full propagation of the CR3BP</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -196,26 +199,25 @@
            <div itemprop="articleBody">
             
   <div class="section" id="full-propagation-of-the-cr3bp">
-<span id="walkthroughsfullpropagationcr3bp"></span><h1>14. Full propagation of the CR3BP<a class="headerlink" href="#full-propagation-of-the-cr3bp" title="Permalink to this headline">¶</a></h1>
+<span id="walkthroughsfullpropagationcr3bp"></span><h1><span class="section-number">14. </span>Full propagation of the CR3BP<a class="headerlink" href="#full-propagation-of-the-cr3bp" title="Permalink to this headline">¶</a></h1>
 <p>The example described on this page focuses on the comparison of the results obtained with the circular restricted three body problem (CR3BP) with those provided by the propagation of the full dynamics problem. The code for this tutorial is available on GitHub, and is located in the Tudat bundle at:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">fullPropagationCircularRestrictedThreeBodyProblem</span><span class="o">.</span><span class="n">cpp</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">fullPropagationCircularRestrictedThreeBodyProblem</span><span class="o">.</span><span class="n">cpp</span>
 </pre></div>
 </div>
-<dl class="docutils">
-<dt>As a reminder, the CR3BP relies on the following assumptions:</dt>
-<dd><ul class="first last simple">
-<li>The two main bodies are in co-rotating circular orbits about their barycentre. They are referred to as the primary and secondary in the following.</li>
-<li>The mass of the third body is neglected with respect to the masses of the two main bodies.</li>
-<li>The only perturbations acting on the massless body are the point-mass gravitational accelerations exerted by the two main bodies.</li>
+<dl class="simple">
+<dt>As a reminder, the CR3BP relies on the following assumptions:</dt><dd><ul class="simple">
+<li><p>The two main bodies are in co-rotating circular orbits about their barycentre. They are referred to as the primary and secondary in the following.</p></li>
+<li><p>The mass of the third body is neglected with respect to the masses of the two main bodies.</p></li>
+<li><p>The only perturbations acting on the massless body are the point-mass gravitational accelerations exerted by the two main bodies.</p></li>
 </ul>
 </dd>
 </dl>
 <p>However, this model never exactly holds in reality. It is therefore necessary to investigate how much the full dynamics problem differs from this simplified formation.
 This tutorial takes the propagation of a horseshoe orbit around the L3 point of the Sun-Jupiter system as an example for comparing the CR3BP and full dynamics problem.</p>
 <div class="section" id="ideal-case-corresponding-to-the-assumptions-of-the-cr3bp">
-<h2>14.1. Ideal case corresponding to the assumptions of the CR3BP<a class="headerlink" href="#ideal-case-corresponding-to-the-assumptions-of-the-cr3bp" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">14.1. </span>Ideal case corresponding to the assumptions of the CR3BP<a class="headerlink" href="#ideal-case-corresponding-to-the-assumptions-of-the-cr3bp" title="Permalink to this headline">¶</a></h2>
 <p>First, the initial state of the spacecraft to be propagated is defined, in inertial cartesian coordinates. It corresponds to the initial conditions of a horseshoe orbit around the L3 point of the Sun-Jupiter system (B. Taylor, D. (1981). Horseshoe periodic orbits in the restricted problem of three bodies for a sun-Jupiter mass ratio. Astronomy and Astrophysics. 103. 288-294.).</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Global characteristics of the problem</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Global characteristics of the problem</span>
 <span class="kt">double</span> <span class="n">distanceSunJupiter</span> <span class="o">=</span> <span class="mf">778.0e9</span><span class="p">;</span>
 
 <span class="c1">// Initialise the spacecraft state</span>
@@ -225,7 +227,7 @@ This tutorial takes the propagation of a horseshoe orbit around the L3 point of 
 </pre></div>
 </div>
 <p>The integrator settings to be used for the propagation of the full dynamics are then specified:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create integrator settings.</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create integrator settings.</span>
 <span class="kt">double</span> <span class="n">initialTime</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
 <span class="k">const</span> <span class="kt">double</span> <span class="n">fixedStepSize</span> <span class="o">=</span> <span class="mf">100000.0</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">numerical_integrators</span><span class="o">::</span><span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">integratorSettings</span> <span class="o">=</span>
@@ -233,8 +235,8 @@ This tutorial takes the propagation of a horseshoe orbit around the L3 point of 
          <span class="p">(</span> <span class="n">numerical_integrators</span><span class="o">::</span><span class="n">rungeKutta4</span><span class="p">,</span> <span class="n">initialTime</span><span class="p">,</span> <span class="n">fixedStepSize</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Before propagating the full dynamics problem and calculating the CR3BP solution, the environment also  needs to be set up. To this end, the function <code class="docutils literal"><span class="pre">setupBodyMapCR3BP</span></code> which automatically defines the body map corresponding to the CR3BP assumptions can be used. It takes as inputs the distance between the primary and secondary bodies and the names of the three bodies involved in the problem. Their ephemerides and gravity fields are directly defined in such a way that they respect the CR3BP assumptions.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create body map.</span>
+<p>Before propagating the full dynamics problem and calculating the CR3BP solution, the environment also  needs to be set up. To this end, the function <code class="docutils literal notranslate"><span class="pre">setupBodyMapCR3BP</span></code> which automatically defines the body map corresponding to the CR3BP assumptions can be used. It takes as inputs the distance between the primary and secondary bodies and the names of the three bodies involved in the problem. Their ephemerides and gravity fields are directly defined in such a way that they respect the CR3BP assumptions.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create body map.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span> <span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesCR3BP</span><span class="p">;</span>
 <span class="n">bodiesCR3BP</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Sun&quot;</span> <span class="p">);</span>
 <span class="n">bodiesCR3BP</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">);</span>
@@ -244,8 +246,8 @@ This tutorial takes the propagation of a horseshoe orbit around the L3 point of 
 </pre></div>
 </div>
 <p>In this problem, the Sun (primary body) and Jupiter (secondary body) are the co-rotating, main bodies of the CR3BP while the spacecraft is the third, massless body.</p>
-<p>The accelerations which are exerted on the spacecraft also have to be defined. In a similar way to what was done for the body map, the function <code class="docutils literal"><span class="pre">setupAccelerationMapCR3BP</span></code> directly returns a <code class="docutils literal"><span class="pre">accelerationMap</span></code> object which contains the accelerations corresponding to the CR3BP assumptions (point-mass gravitational attraction from the main bodies only).</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define propagator settings variables.</span>
+<p>The accelerations which are exerted on the spacecraft also have to be defined. In a similar way to what was done for the body map, the function <code class="docutils literal notranslate"><span class="pre">setupAccelerationMapCR3BP</span></code> directly returns a <code class="docutils literal notranslate"><span class="pre">accelerationMap</span></code> object which contains the accelerations corresponding to the CR3BP assumptions (point-mass gravitational attraction from the main bodies only).</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define propagator settings variables.</span>
  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToPropagate</span><span class="p">;</span>
  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodies</span><span class="p">;</span>
  <span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Spacecraft&quot;</span> <span class="p">);</span>
@@ -256,8 +258,8 @@ This tutorial takes the propagation of a horseshoe orbit around the L3 point of 
              <span class="s">&quot;Sun&quot;</span><span class="p">,</span> <span class="s">&quot;Jupiter&quot;</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="mi">0</span> <span class="p">),</span> <span class="n">centralBodies</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="mi">0</span> <span class="p">),</span> <span class="n">bodyMap</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The results obtained from the CR3BP solution and those provided by the propagation of the full dynamics problem are calculated by calling the function <code class="docutils literal"><span class="pre">propagateCR3BPAndFullDynamicsProblem</span></code>. This function fills the maps <code class="docutils literal"><span class="pre">directPropagationResult</span></code> and <code class="docutils literal"><span class="pre">cr3bpPropagationResult</span></code> provided as inputs with the state history of the spacecraft calculated from the CR3BP solution and from the full problem propagation respectively.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Calculate the difference between CR3BP and full problem.</span>
+<p>The results obtained from the CR3BP solution and those provided by the propagation of the full dynamics problem are calculated by calling the function <code class="docutils literal notranslate"><span class="pre">propagateCR3BPAndFullDynamicsProblem</span></code>. This function fills the maps <code class="docutils literal notranslate"><span class="pre">directPropagationResult</span></code> and <code class="docutils literal notranslate"><span class="pre">cr3bpPropagationResult</span></code> provided as inputs with the state history of the spacecraft calculated from the CR3BP solution and from the full problem propagation respectively.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate the difference between CR3BP and full problem.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&gt;</span> <span class="n">fullPropagation</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&gt;</span> <span class="n">cr3bpPropagation</span><span class="p">;</span>
 
@@ -266,41 +268,40 @@ This tutorial takes the propagation of a horseshoe orbit around the L3 point of 
                                                   <span class="n">cr3bpPropagation</span><span class="p">);</span>
 </pre></div>
 </div>
-<dl class="docutils">
-<dt>More precisely, the function <code class="docutils literal"><span class="pre">propagateCR3BPAndFullDynamicsProblem</span></code> takes the following variables as input parameters:</dt>
-<dd><ul class="first last simple">
-<li><code class="docutils literal"><span class="pre">initialTime</span></code> Initial time of the propagation, given in seconds.</li>
-<li><code class="docutils literal"><span class="pre">finalTime</span></code> Time at which the propagation of the full problem and calculation of the CR3BP stop, provided in seconds.</li>
-<li><code class="docutils literal"><span class="pre">initialState</span></code> Initial state of the body to be propagated within the CR3BP and full dynamics problem (given in cartesian coordinates).</li>
-<li><code class="docutils literal"><span class="pre">integratorSettings</span></code> Integrator settings to be used for the propagation.</li>
-<li><code class="docutils literal"><span class="pre">accelerationModelMap</span></code> Map of the accelerations to be taken into account in the propagation of the full dynamics problem.</li>
-<li><code class="docutils literal"><span class="pre">bodyToPropagate</span></code> Name of the body to be propagated.</li>
-<li><code class="docutils literal"><span class="pre">centralBody</span></code> Name of the central body of the CR3BP (ie barycenter of the primary and secondary bodies).</li>
-<li><code class="docutils literal"><span class="pre">bodyMap</span></code> Body map defining the environment of the full dynamics problem.</li>
-<li><code class="docutils literal"><span class="pre">bodiesCR3BP</span></code> Vector containing the names of the co-rotating primary and secondary bodies which define the CR3BP.</li>
+<dl class="simple">
+<dt>More precisely, the function <code class="docutils literal notranslate"><span class="pre">propagateCR3BPAndFullDynamicsProblem</span></code> takes the following variables as input parameters:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">initialTime</span></code> Initial time of the propagation, given in seconds.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">finalTime</span></code> Time at which the propagation of the full problem and calculation of the CR3BP stop, provided in seconds.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initialState</span></code> Initial state of the body to be propagated within the CR3BP and full dynamics problem (given in cartesian coordinates).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">integratorSettings</span></code> Integrator settings to be used for the propagation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">accelerationModelMap</span></code> Map of the accelerations to be taken into account in the propagation of the full dynamics problem.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bodyToPropagate</span></code> Name of the body to be propagated.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">centralBody</span></code> Name of the central body of the CR3BP (ie barycenter of the primary and secondary bodies).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bodyMap</span></code> Body map defining the environment of the full dynamics problem.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bodiesCR3BP</span></code> Vector containing the names of the co-rotating primary and secondary bodies which define the CR3BP.</p></li>
 </ul>
 </dd>
 </dl>
-<p>To directly retrieve the state difference between the CR3BP solution and the result of the full problem propagation, the function <code class="docutils literal"><span class="pre">getFinalStateDifferenceFullPropagationWrtCR3BP</span></code> can be used and returns the difference in cartesian state at the required final time between the two computational methods.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">stateDifference</span> <span class="o">=</span> <span class="n">propagators</span><span class="o">::</span><span class="n">getFinalStateDifferenceFullPropagationWrtCR3BP</span><span class="p">(</span>
+<p>To directly retrieve the state difference between the CR3BP solution and the result of the full problem propagation, the function <code class="docutils literal notranslate"><span class="pre">getFinalStateDifferenceFullPropagationWrtCR3BP</span></code> can be used and returns the difference in cartesian state at the required final time between the two computational methods.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">stateDifference</span> <span class="o">=</span> <span class="n">propagators</span><span class="o">::</span><span class="n">getFinalStateDifferenceFullPropagationWrtCR3BP</span><span class="p">(</span>
              <span class="n">initialTime</span><span class="p">,</span> <span class="n">finalTime</span><span class="p">,</span> <span class="n">initialState</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">accelerationModelMap</span><span class="p">,</span>
              <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">centralBodies</span><span class="p">,</span><span class="n">bodyMap</span><span class="p">,</span> <span class="n">bodiesCR3BP</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>As the body map and acceleration map have here been defined in such a way that they actually fulfill the CR3BP assumptions, no significant state differences are expected between the CR3BP and the full problem propagation results. Below are first provided the spacecraft trajectories obtained from both the CR3BP solution and from the full problem propagation. The differences between the two orbits are actually so small compared to the Sun-Jupiter distance that the two orbits are not distinguishable from this plot. A second plot gives the position difference between the CR3BP and full propagation as a function of time.</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/horseshoeOrbit.png" src="../../_images/horseshoeOrbit.png" />
 </div>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/differenceCR3BPfullProblem.png" src="../../_images/differenceCR3BPfullProblem.png" />
 </div>
 <p>The difference between the CR3BP and numerical solution remains small (200 m after 350 years of propagation), with the difference most likely due to different integration errors between the two cases.</p>
 </div>
 <div class="section" id="perturbed-case">
-<h2>14.2. Perturbed case<a class="headerlink" href="#perturbed-case" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">14.2. </span>Perturbed case<a class="headerlink" href="#perturbed-case" title="Permalink to this headline">¶</a></h2>
 <p>The previous example has been developed in the ideal case in which the full dynamics problem actually corresponds to the CR3BP and respects its assumptions. However, for real-world applications, such a simple dynamical model is rather unrealistic. The CR3BP solution is an approximate solution from which the results of the full problem propagation can significantly differ. In the following example, a more complex and realistic model is considered.</p>
 <p>First of all, the orbits of the two main bodies are neither perfectly circular nor their orbital periods about their barycentre are equal. Instead of this simplified model for their orbits, use can be made of the default settings, which include more realistic ephemerides and gravity fields. In addition, extra perturbations due to thrid-bodies and no-gravitational forces, will perturb the solution away from the idealized CR3BP solution. In this example, we will only consider the latter modification, by adding the third-body perturbations due to Earth, Mars, Venus and Saturn.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">NamedBodyMap</span> <span class="n">perturbedBodyMap</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">NamedBodyMap</span> <span class="n">perturbedBodyMap</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">additionalBodies</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;Mars&quot;</span><span class="p">,</span> <span class="s">&quot;Venus&quot;</span><span class="p">,</span> <span class="s">&quot;Saturn&quot;</span> <span class="p">};</span>
 <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">additionalBodies</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
 <span class="p">{</span>
@@ -318,23 +319,23 @@ This tutorial takes the propagation of a horseshoe orbit around the L3 point of 
 </pre></div>
 </div>
 <p>Where we have created body objects for each of these perturbers, with a simplified ephemeris, and a point-mass gravity model. The ephemeris and gravity field of the Sun and Jupiter are copied from the ideal case:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">perturbedBodyMap</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">idealBodyMap</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">];</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">perturbedBodyMap</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">idealBodyMap</span><span class="p">[</span> <span class="s">&quot;Sun&quot;</span> <span class="p">];</span>
 <span class="n">perturbedBodyMap</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">idealBodyMap</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">];</span>
 </pre></div>
 </div>
 <p>The calculation of the CR3BP solution and of the results of the full problem propagation are obtained similarly to what was done in the previous example. Taking into account the extra perturbations acting on spacecraft leads the results of the full propagation to differ from those of the CR3BP solution. The trajectory of the spacecraft in the two cases as well, as the difference in cartesian state between the simplified CR3BP solution and the propagation results as a function of time, are plotted below.</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/horseshoeOrbitPerturbedCase.png" src="../../_images/horseshoeOrbitPerturbedCase.png" />
 </div>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/differenceCR3BPfullProblemPerturbedCase.png" src="../../_images/differenceCR3BPfullProblemPerturbedCase.png" />
 </div>
 <p>Although the additional perturbations introduce a substantial difference in position, on the order of about 50 million km, it is clear that the spacecraft still follows the horshoe orbit relatively well. Below, the normalized in-plane coordinates of the perturbed case are shown:</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/horseshoeOrbitPerturbedCaseTime.png" src="../../_images/horseshoeOrbitPerturbedCaseTime.png" />
 </div>
 <p>Finally, we show the numerical solution of the CR3BP, as well as the perturbed full numerical solution, in unnormalized coordinates below. Note the different scale of the z-axis compared to the in-plane axes.</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/horseshoeUnnormalized.png" src="../../_images/horseshoeUnnormalized.png" />
 </div>
 </div>
@@ -395,7 +396,8 @@ This tutorial takes the propagation of a horseshoe orbit around the L3 point of 
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

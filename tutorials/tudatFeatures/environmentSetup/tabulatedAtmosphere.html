@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -109,6 +111,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">Low-Thrust Trajectory Design Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
@@ -170,9 +173,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">1. Environment Set-up</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>Environment Set-up</a> &raquo;</li>
         
-      <li>1.4. Tabulated Atmosphere Settings</li>
+      <li><span class="section-number">1.4. </span>Tabulated Atmosphere Settings</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -192,17 +195,17 @@
            <div itemprop="articleBody">
             
   <div class="section" id="tabulated-atmosphere-settings">
-<span id="tudattabulatedatmosphere"></span><h1>1.4. Tabulated Atmosphere Settings<a class="headerlink" href="#tabulated-atmosphere-settings" title="Permalink to this headline">¶</a></h1>
+<span id="tudattabulatedatmosphere"></span><h1><span class="section-number">1.4. </span>Tabulated Atmosphere Settings<a class="headerlink" href="#tabulated-atmosphere-settings" title="Permalink to this headline">¶</a></h1>
 <p>The tabulated atmosphere can be customized to your needs. In particular, the generated atmosphere can vary from the very simple, such as an atmosphere that only depends on altitude and gives values of pressure, density and temperature to a fully specified atmosphere, dependent on altitude, longitude, latitude and time, and providing information on many atmospheric properties.</p>
 <p>In this chapter the main distinction is found between the altitude-only tabulated atmosphere and the more flexible multi-dimensional tabulated atmosphere. At the end of the chapter you will also find a list of built-in tabulated atmospheres and a brief description on how to use them.</p>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">In <a class="reference internal" href="../../applicationWalkthroughs/tabulatedAtmosphereExamples.html#walkthroughstabulatedatmosphere"><span class="std std-ref">Tabulated Atmosphere Usage</span></a> you can find an example where the tabulated atmosphere settings explained below are put into practice. Once you have read this chapter, we recommend trying out for yourself how this part of the environment works, by using the provided example.</p>
+<p class="admonition-title">Tip</p>
+<p>In <a class="reference internal" href="../../applicationWalkthroughs/tabulatedAtmosphereExamples.html#walkthroughstabulatedatmosphere"><span class="std std-ref">Tabulated Atmosphere Usage</span></a> you can find an example where the tabulated atmosphere settings explained below are put into practice. Once you have read this chapter, we recommend trying out for yourself how this part of the environment works, by using the provided example.</p>
 </div>
 <div class="section" id="general-tabulated-atmosphere">
-<span id="generaltabulatedatmosphere"></span><h2>1.4.1. General Tabulated Atmosphere<a class="headerlink" href="#general-tabulated-atmosphere" title="Permalink to this headline">¶</a></h2>
+<span id="generaltabulatedatmosphere"></span><h2><span class="section-number">1.4.1. </span>General Tabulated Atmosphere<a class="headerlink" href="#general-tabulated-atmosphere" title="Permalink to this headline">¶</a></h2>
 <p>In case a sophisticated tabulated atmosphere model is needed, one can use these descriptive settings. The full default constructor looks as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">int</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">atmosphereTableFile</span> <span class="o">=</span> <span class="p">...</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">int</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">atmosphereTableFile</span> <span class="o">=</span> <span class="p">...</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">AtmosphereIndependentVariables</span> <span class="o">&gt;</span> <span class="n">independentVariablesNames</span> <span class="o">=</span> <span class="p">...</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">AtmosphereDependentVariables</span> <span class="o">&gt;&amp;</span> <span class="n">dependentVariablesNames</span> <span class="o">=</span> <span class="p">...</span>
 <span class="kt">double</span> <span class="n">specificGasConstant</span> <span class="o">=</span> <span class="p">...</span>
@@ -219,102 +222,102 @@
                                                                                                   <span class="n">defaultExtrapolationValue</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>where <code class="docutils literal"><span class="pre">atmosphereTableFile</span></code> is a map of files containing information on the atmosphere, where the key of the map is an integer and the mapped value is the file name. Each file should correspond to a different dependent variable. The order of both independent and dependent parameters needs to be specified in the <code class="docutils literal"><span class="pre">independentVariablesNames</span></code> and <code class="docutils literal"><span class="pre">dependentVariablesNames</span></code> vectors, respectively. In <a class="reference internal" href="#tudatwritemultidimensionalfiles"><span class="std std-ref">Writing Multi-dimensional Files</span></a> you can find a description of the format in which the files in <code class="docutils literal"><span class="pre">atmosphereTableFile</span></code> need to be.</p>
+<p>where <code class="docutils literal notranslate"><span class="pre">atmosphereTableFile</span></code> is a map of files containing information on the atmosphere, where the key of the map is an integer and the mapped value is the file name. Each file should correspond to a different dependent variable. The order of both independent and dependent parameters needs to be specified in the <code class="docutils literal notranslate"><span class="pre">independentVariablesNames</span></code> and <code class="docutils literal notranslate"><span class="pre">dependentVariablesNames</span></code> vectors, respectively. In <a class="reference internal" href="#tudatwritemultidimensionalfiles"><span class="std std-ref">Writing Multi-dimensional Files</span></a> you can find a description of the format in which the files in <code class="docutils literal notranslate"><span class="pre">atmosphereTableFile</span></code> need to be.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The order of independent and dependent variables in the file is not important, however, it needs to match the order given by the <code class="docutils literal"><span class="pre">independentVariablesNames</span></code> and <code class="docutils literal"><span class="pre">dependentVariablesNames</span></code> variables, respectively.</p>
+<p class="admonition-title">Note</p>
+<p>The order of independent and dependent variables in the file is not important, however, it needs to match the order given by the <code class="docutils literal notranslate"><span class="pre">independentVariablesNames</span></code> and <code class="docutils literal notranslate"><span class="pre">dependentVariablesNames</span></code> variables, respectively.</p>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">The tabulated atmosphere needs to contain information on at least density, pressure and temperature.</p>
+<p class="admonition-title">Warning</p>
+<p>The tabulated atmosphere needs to contain information on at least density, pressure and temperature.</p>
 </div>
-<p>The next two parameters, <code class="docutils literal"><span class="pre">independentVariablesNames</span></code> and <code class="docutils literal"><span class="pre">dependentVariablesNames</span></code>, specify, as mentioned above, the independent and dependent variables that are used in the atmosphere. For the independent variables, the following are supported:</p>
+<p>The next two parameters, <code class="docutils literal notranslate"><span class="pre">independentVariablesNames</span></code> and <code class="docutils literal notranslate"><span class="pre">dependentVariablesNames</span></code>, specify, as mentioned above, the independent and dependent variables that are used in the atmosphere. For the independent variables, the following are supported:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">altitude_dependent_atmosphere</span></code></li>
-<li><code class="docutils literal"><span class="pre">longitude_dependent_atmosphere</span></code></li>
-<li><code class="docutils literal"><span class="pre">latitude_dependent_atmosphere</span></code></li>
-<li><code class="docutils literal"><span class="pre">time_dependent_atmosphere</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">altitude_dependent_atmosphere</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">longitude_dependent_atmosphere</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">latitude_dependent_atmosphere</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">time_dependent_atmosphere</span></code></p></li>
 </ul>
 </div></blockquote>
 <p>whereas, for dependent variables, the supported variables are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">density_dependent_atmosphere</span></code></li>
-<li><code class="docutils literal"><span class="pre">pressure_dependent_atmosphere</span></code></li>
-<li><code class="docutils literal"><span class="pre">temperature_dependent_atmosphere</span></code></li>
-<li><code class="docutils literal"><span class="pre">gas_constant_dependent_atmosphere</span></code></li>
-<li><code class="docutils literal"><span class="pre">specific_heat_ratio_dependent_atmosphere</span></code></li>
-<li><code class="docutils literal"><span class="pre">molar_mass_dependent_atmosphere</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">density_dependent_atmosphere</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pressure_dependent_atmosphere</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">temperature_dependent_atmosphere</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gas_constant_dependent_atmosphere</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">specific_heat_ratio_dependent_atmosphere</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">molar_mass_dependent_atmosphere</span></code></p></li>
 </ul>
 </div></blockquote>
-<p>If the atmosphere you are modeling has constant gas constant and ratio of specific heats, then you can use the following two inputs, i.e., <code class="docutils literal"><span class="pre">specificGasConstant</span></code> and <code class="docutils literal"><span class="pre">ratioOfSpecificHeats</span></code>, to specify their values. However, keep in mind that these values will be disregarded if you have already specified <code class="docutils literal"><span class="pre">gas_constant_dependent_atmosphere</span></code> or <code class="docutils literal"><span class="pre">specific_heat_ratio_dependent_atmosphere</span></code> as dependent variables. In fact, another constructor exists where you can simply omit these two inputs, if you have already specified them.</p>
+<p>If the atmosphere you are modeling has constant gas constant and ratio of specific heats, then you can use the following two inputs, i.e., <code class="docutils literal notranslate"><span class="pre">specificGasConstant</span></code> and <code class="docutils literal notranslate"><span class="pre">ratioOfSpecificHeats</span></code>, to specify their values. However, keep in mind that these values will be disregarded if you have already specified <code class="docutils literal notranslate"><span class="pre">gas_constant_dependent_atmosphere</span></code> or <code class="docutils literal notranslate"><span class="pre">specific_heat_ratio_dependent_atmosphere</span></code> as dependent variables. In fact, another constructor exists where you can simply omit these two inputs, if you have already specified them.</p>
 <p>Then, it’s time to specify how the atmosphere will behave in case one or more of the independent variables goes out of range. It can happen that the altitude of the spacecraft is temporarely above the defined altitude of the tabulated atmosphere you provided. In this case, the default behavior is extrapolation. This means that Tudat will use the data provided to try and predict what the atmosphere outside its defined range looks like. As you can imagine, this can go very wrong sometimes. To avoid strange results, more options exist:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">throw_exception_at_boundary</span></code>: throw a runtime error</li>
-<li><code class="docutils literal"><span class="pre">use_boundary_value</span></code>: use the closest defined value for these conditions</li>
-<li><code class="docutils literal"><span class="pre">extrapolate_at_boundary</span></code>: extrapolate by using cubic spline in case of only one independent variable, or multi-linear interpolation in case more than one independent variable is defined. This is the <strong>default</strong> behavior.</li>
-<li><code class="docutils literal"><span class="pre">use_default_value</span></code>: use the value provided by the next input parameter, i.e., <code class="docutils literal"><span class="pre">defaultExtrapolationValue</span></code>.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">throw_exception_at_boundary</span></code>: throw a runtime error</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">use_boundary_value</span></code>: use the closest defined value for these conditions</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">extrapolate_at_boundary</span></code>: extrapolate by using cubic spline in case of only one independent variable, or multi-linear interpolation in case more than one independent variable is defined. This is the <strong>default</strong> behavior.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">use_default_value</span></code>: use the value provided by the next input parameter, i.e., <code class="docutils literal notranslate"><span class="pre">defaultExtrapolationValue</span></code>.</p></li>
 </ul>
 </div></blockquote>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Each of the methods above, with the exception of the first one (i.e., the one that gives the runtime error), comes with the option of also giving a warning in case the variable goes out-of-range. You just need to add <code class="docutils literal"><span class="pre">_with_warning</span></code> at the end of the enumeration. For example, you can use <code class="docutils literal"><span class="pre">extrapolate_at_boundary_with_warning</span></code> to extrapolate and give a warning.</p>
+<p class="admonition-title">Tip</p>
+<p>Each of the methods above, with the exception of the first one (i.e., the one that gives the runtime error), comes with the option of also giving a warning in case the variable goes out-of-range. You just need to add <code class="docutils literal notranslate"><span class="pre">_with_warning</span></code> at the end of the enumeration. For example, you can use <code class="docutils literal notranslate"><span class="pre">extrapolate_at_boundary_with_warning</span></code> to extrapolate and give a warning.</p>
 </div>
-<p>You will need to specify the preferred behavior in the <code class="docutils literal"><span class="pre">boundaryHandling</span></code> parameter, which is the next input. Note that here, you can input the value in a few different formats:</p>
+<p>You will need to specify the preferred behavior in the <code class="docutils literal notranslate"><span class="pre">boundaryHandling</span></code> parameter, which is the next input. Note that here, you can input the value in a few different formats:</p>
 <blockquote>
-<div><dl class="method">
+<div><dl class="py method">
 <dt>
-<code class="descname">As a single BoundaryInterpolationType</code></dt>
+<code class="sig-name descname">As a single BoundaryInterpolationType</code></dt>
 <dd><p>The method you define will be used for each independent variable.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">As an std::vector&lt; BoundaryInterpolationType &gt;</code></dt>
+<code class="sig-name descname">As an std::vector&lt; BoundaryInterpolationType &gt;</code></dt>
 <dd><p>In this case, on the other hand, you can specify one out-of-range interpolation method for each independent variable. For instance, you may want to give an error in case the altitude value is out-of-range, but you may want to extrapolate in case time is requested outside its defined domain.</p>
 </dd></dl>
 
 </div></blockquote>
-<p>Unfortunately, it is not yet possible to define a <code class="docutils literal"><span class="pre">boundaryHandling</span></code> method for each extremity of the independent variable range (e.g., give an error in case altitude goes below lowest value and extrapolate if it goes beyond the highest value).</p>
-<p>If you decided to set <code class="docutils literal"><span class="pre">use_default_value</span></code> or <code class="docutils literal"><span class="pre">use_default_value_with_warning</span></code> as methods for <code class="docutils literal"><span class="pre">boundaryHandling</span></code>, then you will also need to specify the extrapolation value, called <code class="docutils literal"><span class="pre">defaultExtrapolationValue</span></code>. In the default constructor, the input format is as follows. For each dependent variable (e.g., temperature, gas constant, etc.), you need to define a vector, where each element in the vector corresponds to a pair of default values. A pair is defined for each independent variable (e.g., altitude, time, etc.). Moreover, each element in the pair (defined with the command <code class="docutils literal"><span class="pre">std::make_pair(</span> <span class="pre">X,</span> <span class="pre">Y</span> <span class="pre">)</span></code>), corresponds to the default value to be output in case the independent variable goes out-of-range at the lower or at the higher bound. For instance, if the altitude is defined between 100 and 1000 kilometers and the value at 50 km is requested, then the output value will be <code class="docutils literal"><span class="pre">X</span></code>, whereas if the value at 1500 km is requested, then the output will be <code class="docutils literal"><span class="pre">Y</span></code>.</p>
-<p>From the above description of the <code class="docutils literal"><span class="pre">defaultExtrapolationValue</span></code> it is clear that its use is very flexible. However, it can also be confusing and overly detailed. For this reason, a few extra constructors exist, where the <code class="docutils literal"><span class="pre">defaultExtrapolationValue</span></code> can be defined with a simpler format:</p>
+<p>Unfortunately, it is not yet possible to define a <code class="docutils literal notranslate"><span class="pre">boundaryHandling</span></code> method for each extremity of the independent variable range (e.g., give an error in case altitude goes below lowest value and extrapolate if it goes beyond the highest value).</p>
+<p>If you decided to set <code class="docutils literal notranslate"><span class="pre">use_default_value</span></code> or <code class="docutils literal notranslate"><span class="pre">use_default_value_with_warning</span></code> as methods for <code class="docutils literal notranslate"><span class="pre">boundaryHandling</span></code>, then you will also need to specify the extrapolation value, called <code class="docutils literal notranslate"><span class="pre">defaultExtrapolationValue</span></code>. In the default constructor, the input format is as follows. For each dependent variable (e.g., temperature, gas constant, etc.), you need to define a vector, where each element in the vector corresponds to a pair of default values. A pair is defined for each independent variable (e.g., altitude, time, etc.). Moreover, each element in the pair (defined with the command <code class="docutils literal notranslate"><span class="pre">std::make_pair(</span> <span class="pre">X,</span> <span class="pre">Y</span> <span class="pre">)</span></code>), corresponds to the default value to be output in case the independent variable goes out-of-range at the lower or at the higher bound. For instance, if the altitude is defined between 100 and 1000 kilometers and the value at 50 km is requested, then the output value will be <code class="docutils literal notranslate"><span class="pre">X</span></code>, whereas if the value at 1500 km is requested, then the output will be <code class="docutils literal notranslate"><span class="pre">Y</span></code>.</p>
+<p>From the above description of the <code class="docutils literal notranslate"><span class="pre">defaultExtrapolationValue</span></code> it is clear that its use is very flexible. However, it can also be confusing and overly detailed. For this reason, a few extra constructors exist, where the <code class="docutils literal notranslate"><span class="pre">defaultExtrapolationValue</span></code> can be defined with a simpler format:</p>
 <blockquote>
-<div><dl class="method">
+<div><dl class="py method">
 <dt>
-<code class="descname">As a single DependentVariableType</code></dt>
+<code class="sig-name descname">As a single DependentVariableType</code></dt>
 <dd><p>The same default value will be used for each dependent and independent variables and regardless of whether the lower or higher boundary has been overrun.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">As an std::vector&lt; DependentVariableType &gt;</code></dt>
+<code class="sig-name descname">As an std::vector&lt; DependentVariableType &gt;</code></dt>
 <dd><p>With this format, you can define a default value for each dependent variable, with will be used regardless of which independent variable goes out-of-range and whether the lower or higher boundary has been overrun.</p>
 </dd></dl>
 
 </div></blockquote>
 </div>
 <div class="section" id="altitude-dependent-tabulated-atmosphere">
-<h2>1.4.2. Altitude-dependent Tabulated Atmosphere<a class="headerlink" href="#altitude-dependent-tabulated-atmosphere" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.4.2. </span>Altitude-dependent Tabulated Atmosphere<a class="headerlink" href="#altitude-dependent-tabulated-atmosphere" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="old-constructor">
-<h3>1.4.2.1. Old Constructor<a class="headerlink" href="#old-constructor" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.4.2.1. </span>Old Constructor<a class="headerlink" href="#old-constructor" title="Permalink to this headline">¶</a></h3>
 <p>Atmosphere model with properties (pressure, density, temperature) read in from a file, which is independent of time, latitude and longitude (i.e., only altitude is used to retrieve the atmospheric properties).</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">atmosphereFile</span> <span class="o">=</span> <span class="p">...</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">atmosphereFile</span> <span class="o">=</span> <span class="p">...</span>
 <span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TabulatedAtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">atmosphereFile</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>which will read the atmospheric properties from the file <code class="docutils literal"><span class="pre">atmosphereFile</span></code> (with as many columns as dependent variables).</p>
+<p>which will read the atmospheric properties from the file <code class="docutils literal notranslate"><span class="pre">atmosphereFile</span></code> (with as many columns as dependent variables).</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">These settings are compatible with the previous definition of the class <code class="docutils literal"><span class="pre">TabulatedAtmosphereSettings</span></code>, thus no change in your previous files is needed.</p>
+<p class="admonition-title">Note</p>
+<p>These settings are compatible with the previous definition of the class <code class="docutils literal notranslate"><span class="pre">TabulatedAtmosphereSettings</span></code>, thus no change in your previous files is needed.</p>
 </div>
 </div>
 <div class="section" id="new-constructor">
-<h3>1.4.2.2. New Constructor<a class="headerlink" href="#new-constructor" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.4.2.2. </span>New Constructor<a class="headerlink" href="#new-constructor" title="Permalink to this headline">¶</a></h3>
 <p>Similarly to the multi-dimensional tabulated atmosphere, you can also specify more parameters for the tabulated atmosphere.</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define inputs</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define inputs</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">atmosphereFile</span> <span class="o">=</span> <span class="s">&quot;...&quot;</span><span class="p">;</span>
 
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">aerodynamics</span><span class="o">::</span><span class="n">AtmosphereDependentVariables</span> <span class="o">&gt;</span> <span class="n">dependentVariables</span><span class="p">;</span>
@@ -338,38 +341,38 @@
 </div></blockquote>
 <p>For starters, you can choose from any of the dependent variables listed in the section above (note that even here, density, pressure and temperature need to be present). Moreover, you can specify custom values for the gas constant and ratio of specific heats (in the example above, values for Mars have been used). Then, the settings for interpolation can be defined. Their meaning is the same as for the multi-dimensional atmosphere, but only a single value can be input for both variables.</p>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">If you want to create a one-dimensional tabulated atmosphere where the independent variable is not altitude (which is the default for the constructors above), you can always use one of the constructors in <a class="reference internal" href="#generaltabulatedatmosphere"><span class="std std-ref">General Tabulated Atmosphere</span></a> and only input one file in the <code class="docutils literal"><span class="pre">std::map</span></code>.</p>
+<p class="admonition-title">Tip</p>
+<p>If you want to create a one-dimensional tabulated atmosphere where the independent variable is not altitude (which is the default for the constructors above), you can always use one of the constructors in <a class="reference internal" href="#generaltabulatedatmosphere"><span class="std std-ref">General Tabulated Atmosphere</span></a> and only input one file in the <code class="docutils literal notranslate"><span class="pre">std::map</span></code>.</p>
 </div>
 </div>
 </div>
 <div class="section" id="included-atmosphere-tables">
-<h2>1.4.3. Included Atmosphere Tables<a class="headerlink" href="#included-atmosphere-tables" title="Permalink to this headline">¶</a></h2>
-<p>For Earth and Mars, one will find some built-in files that can be used to simulate the atmosphere at varying degrees of detail. These can be found in <code class="docutils literal"><span class="pre">Tudat/External/AtmosphereTables/</span></code>.</p>
+<h2><span class="section-number">1.4.3. </span>Included Atmosphere Tables<a class="headerlink" href="#included-atmosphere-tables" title="Permalink to this headline">¶</a></h2>
+<p>For Earth and Mars, one will find some built-in files that can be used to simulate the atmosphere at varying degrees of detail. These can be found in <code class="docutils literal notranslate"><span class="pre">Tudat/External/AtmosphereTables/</span></code>.</p>
 <div class="section" id="earth">
-<h3>1.4.3.1. Earth<a class="headerlink" href="#earth" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.4.3.1. </span>Earth<a class="headerlink" href="#earth" title="Permalink to this headline">¶</a></h3>
 <p>Two atmosphere tables are available for Earth:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">USSA1976Until86kmPer100m.dat</span></code>: provides values of density, pressure and temperature for a range of altitudes from 0 to 86 kilometers with 100 meter spacing</li>
-<li><code class="docutils literal"><span class="pre">USSA1976Until100kmPer100mUntil1000kmPer1000m.dat</span></code>: same as above, but the range of altitudes is extended until 1000 kilometers, where the spacing is 100 meters until 100 kilometers, then becomes 1000 meters.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">USSA1976Until86kmPer100m.dat</span></code>: provides values of density, pressure and temperature for a range of altitudes from 0 to 86 kilometers with 100 meter spacing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">USSA1976Until100kmPer100mUntil1000kmPer1000m.dat</span></code>: same as above, but the range of altitudes is extended until 1000 kilometers, where the spacing is 100 meters until 100 kilometers, then becomes 1000 meters.</p></li>
 </ul>
 </div></blockquote>
 <p>As the name suggests, both of these tables are based on the US Standard Atmosphere (USSA) 1976 model.</p>
 </div>
 <div class="section" id="mars">
-<h3>1.4.3.2. Mars<a class="headerlink" href="#mars" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.4.3.2. </span>Mars<a class="headerlink" href="#mars" title="Permalink to this headline">¶</a></h3>
 <p>Also Mars comes with two tabulated atmospheres:</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">MCDMeanAtmosphere.dat</span></code></dt>
-<dd>Provides values of density, pressure, temperature, gas constant, specific heat ratio and molar mass for a range of altitudes from 50 to 10000 kilometers with logarithmic spacing (i.e., the spacing goes from about 250 meters to 50 kilometers). This table was generated by averaging the atmosphere over longitude, latitude and time.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">MCDMeanAtmosphere.dat</span></code></dt><dd><p>Provides values of density, pressure, temperature, gas constant, specific heat ratio and molar mass for a range of altitudes from 50 to 10000 kilometers with logarithmic spacing (i.e., the spacing goes from about 250 meters to 50 kilometers). This table was generated by averaging the atmosphere over longitude, latitude and time.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">MCDMeanAtmosphereTimeAverage</span></code></dt>
-<dd>Provides the same depenent values as above (without molar mass), but as a function of altitude, longitude and latitude. In fact, the name above indicates a folder, not a file, where one can find 5 files, each corresponding to one dependent variable. The altitude range is the same, but the spacing, although still logarithmic, is larger (500 versus 1000 altitude elements). Spacing for longitude and latitude is constant at roughly 6 and 4 degrees, respectively. This table was generated by averaging the atmosphere over time.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">MCDMeanAtmosphereTimeAverage</span></code></dt><dd><p>Provides the same depenent values as above (without molar mass), but as a function of altitude, longitude and latitude. In fact, the name above indicates a folder, not a file, where one can find 5 files, each corresponding to one dependent variable. The altitude range is the same, but the spacing, although still logarithmic, is larger (500 versus 1000 altitude elements). Spacing for longitude and latitude is constant at roughly 6 and 4 degrees, respectively. This table was generated by averaging the atmosphere over time.</p>
+</dd>
 </dl>
 </li>
 </ul>
@@ -378,9 +381,9 @@
 </div>
 </div>
 <div class="section" id="writing-multi-dimensional-files">
-<span id="tudatwritemultidimensionalfiles"></span><h2>1.4.4. Writing Multi-dimensional Files<a class="headerlink" href="#writing-multi-dimensional-files" title="Permalink to this headline">¶</a></h2>
+<span id="tudatwritemultidimensionalfiles"></span><h2><span class="section-number">1.4.4. </span>Writing Multi-dimensional Files<a class="headerlink" href="#writing-multi-dimensional-files" title="Permalink to this headline">¶</a></h2>
 <p>The general format of multi-dimensional files is as follows:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">number</span> <span class="n">of</span> <span class="n">independent</span> <span class="n">variables</span><span class="o">&gt;</span> <span class="c1"># block 1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">number</span> <span class="n">of</span> <span class="n">independent</span> <span class="n">variables</span><span class="o">&gt;</span> <span class="c1"># block 1</span>
 
 <span class="o">&lt;</span><span class="n">independent</span> <span class="n">variables</span><span class="o">&gt;</span> <span class="c1"># block 2</span>
 
@@ -390,20 +393,20 @@
 <p>In the first block, one can find the number of independent variables. This will be used by the file reader to know how many lines of independent variables to look for, which are located in the second block. Then, in the final block, the dependent variables can be seen. Depending on how many independent variables there are, the storage format is adapted:</p>
 <blockquote>
 <div><ul>
-<li><p class="first"><strong>Two-dimensional Files</strong> (N - first dimension, M - second dimension)</p>
+<li><p><strong>Two-dimensional Files</strong> (N - first dimension, M - second dimension)</p>
 <blockquote>
 <div><p>In the two-dimensional case, the data is stored as a matrix, where along the rows the values are stored according to the first independent variables, and along the columns they are stored according to the second.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">...</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">M</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">...</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">M</span><span class="p">)</span>
   <span class="o">.</span>         <span class="o">.</span>
 <span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">...</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
-<li><p class="first"><strong>Three-dimensional Files</strong> (L - third dimension)</p>
+<li><p><strong>Three-dimensional Files</strong> (L - third dimension)</p>
 <blockquote>
 <div><p>The third dimension is added by stacking the two-dimensional slices vertically. This results to something similar to what is show below.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">...</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">...</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
    <span class="o">.</span>           <span class="o">.</span>
 <span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">...</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 
@@ -416,10 +419,10 @@
 </div>
 </div></blockquote>
 </li>
-<li><p class="first"><strong>Four-dimensional Files</strong> (P - forth dimension)</p>
+<li><p><strong>Four-dimensional Files</strong> (P - forth dimension)</p>
 <blockquote>
 <div><p>The forth dimenison can be added in two methods. For the first one, which is shown below, the forth-dimension is added by stacking the three-dimensional slices horizontally:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">...</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>   <span class="o">.</span>   <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">P</span><span class="p">)</span> <span class="o">...</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">P</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">...</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>   <span class="o">.</span>   <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">P</span><span class="p">)</span> <span class="o">...</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">P</span><span class="p">)</span>
     <span class="o">.</span>             <span class="o">.</span>       <span class="o">.</span>       <span class="o">.</span>             <span class="o">.</span>
 <span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">...</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>   <span class="o">.</span>   <span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">P</span><span class="p">)</span> <span class="o">...</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">P</span><span class="p">)</span>
 
@@ -431,7 +434,7 @@
 </pre></div>
 </div>
 <p>Alternatively, you can also decide to store the data in a similar manner as the thrid-dimension is stored, i.e., by stacking the forth-dimensional data points vertically:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">...</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">...</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
     <span class="o">.</span>             <span class="o">.</span>
 <span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">...</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 
@@ -460,11 +463,11 @@
 </div></blockquote>
 </div>
 <div class="section" id="future-additions">
-<h2>1.4.5. Future Additions<a class="headerlink" href="#future-additions" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.4.5. </span>Future Additions<a class="headerlink" href="#future-additions" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li>Define a <code class="docutils literal"><span class="pre">boundaryHandling</span></code> method for each boundary (for each independent variable).</li>
-<li>Input interpolator settings.</li>
+<li><p>Define a <code class="docutils literal notranslate"><span class="pre">boundaryHandling</span></code> method for each boundary (for each independent variable).</p></li>
+<li><p>Input interpolator settings.</p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -525,7 +528,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

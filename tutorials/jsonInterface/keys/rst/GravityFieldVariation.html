@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
   
 
@@ -158,52 +160,47 @@
            <div itemprop="articleBody">
             
   <ul class="simple">
-<li><span class="jsontype">string</span> <span class="jsonkey">bodyDeformationType</span> (mandatory). Possible values: <code class="docutils literal"><span class="pre">&quot;basicSolidBody&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;basicSolidBody&quot;</span></code>.</li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">bodyDeformationType</span> (mandatory). Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;basicSolidBody&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;basicSolidBody&quot;</span></code>.</p></li>
 </ul>
 <div class="toggle docutils container">
 <div class="header docutils container">
-<span class="arrow">Basic Solid Body Gravity Field Variation</span></div>
+<p><span class="arrow">Basic Solid Body Gravity Field Variation</span></p>
+</div>
 <ul>
-<li><p class="first"><span class="jsontype">string[ ]</span> <span class="jsonkey">deformingBodies</span> (mandatory). List with the names of the bodies causing tidal deformation.</p>
-</li>
-<li><p class="first"><span class="jsontype">string[ ][ ]</span> <span class="jsonkey">loveNumbers</span> (mandatory). List of Love numbers for the deformed body. Each element is a complex number, which in JSON is represented as a string. For instance, <code class="docutils literal"><span class="pre">2</span> <span class="pre">-</span> <span class="pre">0.5i</span></code> is written as <code class="docutils literal"><span class="pre">&quot;(2,-0.5)&quot;</span></code>.</p>
-</li>
-<li><p class="first"><span class="jsontype">number</span> <span class="jsonkey">referenceRadius</span> (mandatory). Reference (typically equatorial) radius of the body being deformed.</p>
-</li>
-<li><p class="first"><span class="jsontype">object</span> <span class="jsonkey">modelInterpolation</span> (optional). Settings that are to be used to create an interpolator for the gravity field variations immediately upon creation. If not defined, no interpolation is used, and the model is evaluated during propagation.</p>
+<li><p><span class="jsontype">string[ ]</span> <span class="jsonkey">deformingBodies</span> (mandatory). List with the names of the bodies causing tidal deformation.</p></li>
+<li><p><span class="jsontype">string[ ][ ]</span> <span class="jsonkey">loveNumbers</span> (mandatory). List of Love numbers for the deformed body. Each element is a complex number, which in JSON is represented as a string. For instance, <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">-</span> <span class="pre">0.5i</span></code> is written as <code class="docutils literal notranslate"><span class="pre">&quot;(2,-0.5)&quot;</span></code>.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">referenceRadius</span> (mandatory). Reference (typically equatorial) radius of the body being deformed.</p></li>
+<li><p><span class="jsontype">object</span> <span class="jsonkey">modelInterpolation</span> (optional). Settings that are to be used to create an interpolator for the gravity field variations immediately upon creation. If not defined, no interpolation is used, and the model is evaluated during propagation.</p>
 <blockquote>
 <div><div class="toggle docutils container">
 <div class="header docutils container">
 <p><span class="arrow">Model Interpolation</span></p>
 </div>
 <ul>
-<li><p class="first"><span class="jsontype">number</span> <span class="jsonkey">initialTime</span> (mandatory). Start time for model interpolation.</p>
-</li>
-<li><p class="first"><span class="jsontype">number</span> <span class="jsonkey">finalTime</span> (mandatory). End time for model interpolation.</p>
-</li>
-<li><p class="first"><span class="jsontype">number</span> <span class="jsonkey">timeStep</span> (mandatory). Time step with which to evaluate model, and provide input to interpolator.</p>
-</li>
-<li><p class="first"><span class="jsontype">object</span> <span class="jsonkey">interpolator</span> (mandatory). The settings for the interpolator to be used in the model interpolation.</p>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">initialTime</span> (mandatory). Start time for model interpolation.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">finalTime</span> (mandatory). End time for model interpolation.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">timeStep</span> (mandatory). Time step with which to evaluate model, and provide input to interpolator.</p></li>
+<li><p><span class="jsontype">object</span> <span class="jsonkey">interpolator</span> (mandatory). The settings for the interpolator to be used in the model interpolation.</p>
 <blockquote>
 <div><div class="toggle docutils container">
 <div class="header docutils container">
 <p><span class="arrow">Interpolator</span></p>
 </div>
 <ul class="simple">
-<li><span class="jsontype">string</span> <span class="jsonkey">type</span> (mandatory). Possible values: <code class="docutils literal"><span class="pre">&quot;linear&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;cubicSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;lagrange&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;hermiteSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;piecewiseConstant&quot;</span></code>.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
-<li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Boundary handling method, in case the independent variable is outside the specified range. Possible values: <code class="docutils literal"><span class="pre">&quot;throwException&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValue&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValueWithWarning&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolateWithWarning&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>.</li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">type</span> (mandatory). Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;linear&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;cubicSpline&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;lagrange&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;hermiteSpline&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;piecewiseConstant&quot;</span></code>.</p></li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</p></li>
+<li><p><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Boundary handling method, in case the independent variable is outside the specified range. Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;throwException&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;boundaryValue&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;boundaryValueWithWarning&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;extrapolate&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;extrapolateWithWarning&quot;</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">&quot;extrapolate&quot;</span></code>.</p></li>
 </ul>
 <div class="toggle docutils container">
 <div class="header docutils container">
 <p><span class="arrow">LagrangeInterpolator</span></p>
 </div>
 <ul class="simple">
-<li><span class="jsontype">number</span> <span class="jsonkey">order</span> (mandatory). Order of the Lagrange interpolator.</li>
-<li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">lagrangeBoundaryHandling</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">order</span> (mandatory). Order of the Lagrange interpolator.</p></li>
+<li><p><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</p></li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">lagrangeBoundaryHandling</span> (optional). Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</p></li>
 </ul>
 </div>
 </div>
@@ -217,37 +214,34 @@
 </div>
 <div class="toggle docutils container">
 <div class="header docutils container">
-<span class="arrow">Tabulated Gravity Field Variation</span></div>
+<p><span class="arrow">Tabulated Gravity Field Variation</span></p>
+</div>
 <ul>
-<li><p class="first"><span class="jsontype">object</span> <span class="jsonkey">cosineCoefficientCorrections</span> (mandatory). Map of corrections to cosine coefficients, where the keys correspond to the epoch.</p>
-</li>
-<li><p class="first"><span class="jsontype">object</span> <span class="jsonkey">sineCoefficientCorrections</span> (mandatory). Map of corrections to sine coefficients, where the keys correspond to the epoch.</p>
-</li>
-<li><p class="first"><span class="jsontype">number</span> <span class="jsonkey">minimumDegree</span> (mandatory). Minimum degree of spherical harmonic corrections.</p>
-</li>
-<li><p class="first"><span class="jsontype">number</span> <span class="jsonkey">minimumOrder</span> (mandatory). Minimum order of spherical harmonic corrections.</p>
-</li>
-<li><p class="first"><span class="jsontype">object</span> <span class="jsonkey">interpolator</span> (mandatory). Settings that are to be used to create an interpolator for the gravity field variations immediately upon creation.</p>
+<li><p><span class="jsontype">object</span> <span class="jsonkey">cosineCoefficientCorrections</span> (mandatory). Map of corrections to cosine coefficients, where the keys correspond to the epoch.</p></li>
+<li><p><span class="jsontype">object</span> <span class="jsonkey">sineCoefficientCorrections</span> (mandatory). Map of corrections to sine coefficients, where the keys correspond to the epoch.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">minimumDegree</span> (mandatory). Minimum degree of spherical harmonic corrections.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">minimumOrder</span> (mandatory). Minimum order of spherical harmonic corrections.</p></li>
+<li><p><span class="jsontype">object</span> <span class="jsonkey">interpolator</span> (mandatory). Settings that are to be used to create an interpolator for the gravity field variations immediately upon creation.</p>
 <blockquote>
 <div><div class="toggle docutils container">
 <div class="header docutils container">
 <p><span class="arrow">Interpolator</span></p>
 </div>
 <ul class="simple">
-<li><span class="jsontype">string</span> <span class="jsonkey">type</span> (mandatory). Possible values: <code class="docutils literal"><span class="pre">&quot;linear&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;cubicSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;lagrange&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;hermiteSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;piecewiseConstant&quot;</span></code>.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
-<li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Boundary handling method, in case the independent variable is outside the specified range. Possible values: <code class="docutils literal"><span class="pre">&quot;throwException&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValue&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValueWithWarning&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolateWithWarning&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>.</li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">type</span> (mandatory). Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;linear&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;cubicSpline&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;lagrange&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;hermiteSpline&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;piecewiseConstant&quot;</span></code>.</p></li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</p></li>
+<li><p><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Boundary handling method, in case the independent variable is outside the specified range. Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;throwException&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;boundaryValue&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;boundaryValueWithWarning&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;extrapolate&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;extrapolateWithWarning&quot;</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">&quot;extrapolate&quot;</span></code>.</p></li>
 </ul>
 <div class="toggle docutils container">
 <div class="header docutils container">
 <p><span class="arrow">LagrangeInterpolator</span></p>
 </div>
 <ul class="simple">
-<li><span class="jsontype">number</span> <span class="jsonkey">order</span> (mandatory). Order of the Lagrange interpolator.</li>
-<li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">lagrangeBoundaryHandling</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">order</span> (mandatory). Order of the Lagrange interpolator.</p></li>
+<li><p><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</p></li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">lagrangeBoundaryHandling</span> (optional). Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</p></li>
 </ul>
 </div>
 </div>
@@ -302,7 +296,8 @@
       <script type="text/javascript" src="../../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

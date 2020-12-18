@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
 
@@ -120,7 +122,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -169,7 +170,7 @@
         
           <li><a href="index.html">Application Tutorials</a> &raquo;</li>
         
-      <li>7. Sims-Flanagan Trajectory Optimisation</li>
+      <li><span class="section-number">7. </span>Sims-Flanagan Trajectory Optimisation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -189,15 +190,16 @@
            <div itemprop="articleBody">
             
   <div class="section" id="sims-flanagan-trajectory-optimisation">
-<span id="walkthroughssimsflanagantrajectoryoptimisation"></span><h1>7. Sims-Flanagan Trajectory Optimisation<a class="headerlink" href="#sims-flanagan-trajectory-optimisation" title="Permalink to this headline">¶</a></h1>
+<span id="walkthroughssimsflanagantrajectoryoptimisation"></span><h1><span class="section-number">7. </span>Sims-Flanagan Trajectory Optimisation<a class="headerlink" href="#sims-flanagan-trajectory-optimisation" title="Permalink to this headline">¶</a></h1>
 <p>This tutorial describes how to tackle an Earth-Mars trajectory design problem using first hodographic shaping to get a good preliminary design, and then a Sims-Flanagan method to optimise the transfer trajectory from this initial guess. The code for this tutorial is given on Github, and is also located in your Tudat bundle at:</p>
 <blockquote>
-<div>tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/SimsFlanaganTrajectoryExample.cpp</div></blockquote>
+<div><p>tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/SimsFlanaganTrajectoryExample.cpp</p>
+</div></blockquote>
 <p>As described in the documentation dedicated to the Sims-Flanagan method (<a class="reference internal" href="../tudatFeatures/lowThrustTrajectoryDesign/SimsFlanagan.html#tudatfeaturessimsflanagan"><span class="std std-ref">Sims-Flanagan Method</span></a>), it is a direct method which turns the trajectory design problem into a parametrised optimisation problem. It is usually extremely difficult to reach convergence without having a good initial guess for the targeted trajectory. This is why, in this tutorial, a hodographically shaped trajectory is first computed and used as a starting point to run the Sims-Flanagan optimisation problem.</p>
 <div class="section" id="set-up-the-trajectory-design-problem">
-<h2>7.1. Set up the trajectory design problem<a class="headerlink" href="#set-up-the-trajectory-design-problem" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">7.1. </span>Set up the trajectory design problem<a class="headerlink" href="#set-up-the-trajectory-design-problem" title="Permalink to this headline">¶</a></h2>
 <p>First, the characteristics of the targeted transfer trajectory are defined (departure date, time-of-flight, and number of revolutions are specified).</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">julianDate</span> <span class="o">=</span> <span class="mf">9264.5</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">julianDate</span> <span class="o">=</span> <span class="mf">9264.5</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">timeOfFlight</span> <span class="o">=</span> <span class="mf">1000.0</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">numberOfRevolutions</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 
@@ -215,7 +217,7 @@
 </pre></div>
 </div>
 <p>The parameters defining the Sims-Flanagan method are then introduced. This includes spacecraft-related parameters (initial mass, maximum allowable thrust magnitude, specific impulse), as well as the number of segments into which the trajectory is to be subdivided.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">maximumThrust</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">maximumThrust</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">specificImpulse</span> <span class="o">=</span> <span class="mf">3000.0</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">mass</span> <span class="o">=</span> <span class="mf">2800.0</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">numberSegments</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
@@ -224,9 +226,9 @@
 <p>The environment within which the trajectory is to be computed is defined similarly to what is done in the previous tutorials. The central body (Sun) is created using default settings and its position is fixed to the origin of the inertial reference frame. A vehicle body is also created, and the value of its initial mass is set up.</p>
 </div>
 <div class="section" id="computing-a-shape-based-preliminary-design">
-<h2>7.2. Computing a shape-based preliminary design<a class="headerlink" href="#computing-a-shape-based-preliminary-design" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">7.2. </span>Computing a shape-based preliminary design<a class="headerlink" href="#computing-a-shape-based-preliminary-design" title="Permalink to this headline">¶</a></h2>
 <p>The lowest-order solution (no free parameter, see the previous tutorial for more details (<a class="reference internal" href="hodographicShapingTrajectoryOptimisation.html#walkthroughshodographicshapingoptimisation"><span class="std std-ref">Shaping Methods Trajectory Optimisation</span></a>)) of the Earth-Mars hodographically shaped transfer is computed. The base functions for the hodographic shaping are defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Get recommended base functions for the radial velocity composite function.</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get recommended base functions for the radial velocity composite function.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BaseFunctionHodographicShapingSettings</span> <span class="o">&gt;</span> <span class="n">firstRadialVelocityBaseFunctionSettings</span> <span class="o">=</span>
         <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">BaseFunctionHodographicShapingSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BaseFunctionHodographicShapingSettings</span> <span class="o">&gt;</span> <span class="n">secondRadialVelocityBaseFunctionSettings</span> <span class="o">=</span>
@@ -281,7 +283,7 @@
 </pre></div>
 </div>
 <p>Once the shaped trajectory has been calculated, it is saved in a separate map, and so are the associated thrust, thrust acceleration, and mass profiles.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Save results</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Save results</span>
 <span class="kt">int</span> <span class="n">numberOfSteps</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">stepSize</span> <span class="o">=</span> <span class="n">timeOfFlight</span> <span class="o">/</span> <span class="k">static_cast</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">numberOfSteps</span> <span class="p">);</span>
 
@@ -313,16 +315,16 @@
 </div>
 </div>
 <div class="section" id="setting-up-a-sims-flanagan-optimisation-problem">
-<h2>7.3. Setting up a Sims-Flanagan optimisation problem<a class="headerlink" href="#setting-up-a-sims-flanagan-optimisation-problem" title="Permalink to this headline">¶</a></h2>
-<p>The Sims-Flanagan problem consists of a parametrised optimisation problem with thrust throttles as design parameters. The use of a shaped trajectory as an initial guess for Sims-Flanagan requires the derivation of a set of thrust throttles (one for each segment of the trajectory) from the thrust profile delivered by the shaping method. The function <code class="docutils literal"><span class="pre">getInitialGuessFunctionFromShaping</span></code>, which approximates the shaped thrust profile by a set of constant thrust segments (constant in both magnitude and direction) is used to this end (see <code class="docutils literal"><span class="pre">tudatFeaturesSimsFlanaganInitialGuessFromShaping</span></code> for more details).</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ShapeBasedMethodLeg</span> <span class="o">&gt;</span> <span class="n">shapeBasedLeg</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">ShapeBasedMethodLeg</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">hodographicShaping</span> <span class="p">);</span>
+<h2><span class="section-number">7.3. </span>Setting up a Sims-Flanagan optimisation problem<a class="headerlink" href="#setting-up-a-sims-flanagan-optimisation-problem" title="Permalink to this headline">¶</a></h2>
+<p>The Sims-Flanagan problem consists of a parametrised optimisation problem with thrust throttles as design parameters. The use of a shaped trajectory as an initial guess for Sims-Flanagan requires the derivation of a set of thrust throttles (one for each segment of the trajectory) from the thrust profile delivered by the shaping method. The function <code class="docutils literal notranslate"><span class="pre">getInitialGuessFunctionFromShaping</span></code>, which approximates the shaped thrust profile by a set of constant thrust segments (constant in both magnitude and direction) is used to this end (see <code class="docutils literal notranslate"><span class="pre">tudatFeaturesSimsFlanaganInitialGuessFromShaping</span></code> for more details).</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ShapeBasedMethodLeg</span> <span class="o">&gt;</span> <span class="n">shapeBasedLeg</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">ShapeBasedMethodLeg</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">hodographicShaping</span> <span class="p">);</span>
 
 <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">initialGuessThrustFromShaping</span> <span class="o">=</span>
         <span class="n">getInitialGuessFunctionFromShaping</span><span class="p">(</span> <span class="n">shapeBasedLeg</span><span class="p">,</span> <span class="n">numberSegments</span><span class="p">,</span> <span class="n">timeOfFlight</span><span class="p">,</span> <span class="n">specificImpulseFunction</span><span class="p">,</span> <span class="n">integratorSettings</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>The Sims-Flanagan initial guess, obtained as an approximation of the shaped trajectory, is saved in a separate map. Not only the approximate thrust profile, but also the corresponding thrust acceleration and mass profiles are saved.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">initialGuessThrustProfile</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">initialGuessThrustProfile</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="n">initialGuessThrustAccelerationProfile</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector1d</span> <span class="o">&gt;</span> <span class="n">initialGuessMassProfile</span><span class="p">;</span>
 
@@ -346,16 +348,16 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>An <code class="docutils literal"><span class="pre">OptimisationSettings</span></code> object can then be defined from this thrust profile initial guess, allowing the algorithm to look for the optimum in a parameter space delimited by 30% lower and upper margins around the initial guess solution.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define optimisation algorithm.</span>
+<p>An <code class="docutils literal notranslate"><span class="pre">OptimisationSettings</span></code> object can then be defined from this thrust profile initial guess, allowing the algorithm to look for the optimum in a parameter space delimited by 30% lower and upper margins around the initial guess solution.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define optimisation algorithm.</span>
 <span class="n">algorithm</span> <span class="n">optimisationAlgorithm</span><span class="p">{</span> <span class="n">pagmo</span><span class="o">::</span><span class="n">de1220</span><span class="p">()</span> <span class="p">};</span>
 
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OptimisationSettings</span> <span class="o">&gt;</span> <span class="n">optimisationSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OptimisationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
             <span class="n">optimisationAlgorithm</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mf">1.0e-6</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="n">initialGuessThrustFromShaping</span><span class="p">,</span> <span class="mf">0.3</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal"><span class="pre">SimsFlanagan</span></code> object is finally created, and the corresponding trajctory, thrust,  thrust acceleration, and mass profiles are saved:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SimsFlanagan</span> <span class="n">simsFlanagan</span> <span class="o">=</span> <span class="n">SimsFlanagan</span><span class="p">(</span> <span class="n">cartesianStateDepartureBody</span><span class="p">,</span> <span class="n">cartesianStateArrivalBody</span><span class="p">,</span> <span class="n">maximumThrust</span><span class="p">,</span> <span class="n">specificImpulseFunction</span><span class="p">,</span> <span class="n">numberSegments</span><span class="p">,</span>
+<p>The <code class="docutils literal notranslate"><span class="pre">SimsFlanagan</span></code> object is finally created, and the corresponding trajctory, thrust,  thrust acceleration, and mass profiles are saved:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SimsFlanagan</span> <span class="n">simsFlanagan</span> <span class="o">=</span> <span class="n">SimsFlanagan</span><span class="p">(</span> <span class="n">cartesianStateDepartureBody</span><span class="p">,</span> <span class="n">cartesianStateArrivalBody</span><span class="p">,</span> <span class="n">maximumThrust</span><span class="p">,</span> <span class="n">specificImpulseFunction</span><span class="p">,</span> <span class="n">numberSegments</span><span class="p">,</span>
                                           <span class="n">timeOfFlight</span><span class="p">,</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">bodyToPropagate</span><span class="p">,</span> <span class="n">centralBody</span><span class="p">,</span> <span class="n">optimisationSettings</span> <span class="p">);</span>
 
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="n">SimsFlanaganTrajectory</span><span class="p">;</span>
@@ -370,9 +372,9 @@
 </div>
 </div>
 <div class="section" id="results">
-<h2>7.4. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">7.4. </span>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p>The output of the application should look as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span>Starting ... \tudatBundle\tudatExampleApplications\libraryExamples\bin\applications\application_PagmoSimsFlanaganTrajectoryExample.exe...
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>Starting ... \tudatBundle\tudatExampleApplications\libraryExamples\bin\applications\application_PagmoSimsFlanaganTrajectoryExample.exe...
 
 DELTAV SIMS FLANAGAN: 71571.1
 
@@ -382,7 +384,7 @@ DELTAV SHAPE BASED: 73112
 </pre></div>
 </div>
 <p>The comparison between the hodographically shaped trajectory and the Sims-Flanagan results is provided in the plot below. The upper plots present the shaped trajectory design (and corresponding thrust, thrust acceleration, and mass profiles), along with the approximate Sims-Flanagan initial guess derived from that the shaping method results. The middle plots represent the Sims-Flanagan results, obtained from that initial guess (they are superimposed with the shaping results). Finally, the bottom plots directly show the difference between hodographic shaping and Sims-Flanagan results.</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/SimsFlanaganResults.png" src="../../_images/SimsFlanaganResults.png" />
 </div>
 <p>The final mass of the spacecraft obtained with Sims-Flanagan is lower than that of the shape-based trajectory (the difference between the two is negative). This is consistent with the slightly lower deltaV of the Sims-Flanagan trajectory solution.</p>
@@ -444,7 +446,8 @@ DELTAV SHAPE BASED: 73112
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

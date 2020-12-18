@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -159,69 +161,64 @@
             
   <div class="section" id="boost-usage-examples">
 <span id="externalboostexamples"></span><h1>Boost: Usage Examples<a class="headerlink" href="#boost-usage-examples" title="Permalink to this headline">¶</a></h1>
-<p>This page provides some examples on how to use&nbsp;<a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal"><span class="pre">shared_ptr</span></code></a>,&nbsp;<a class="reference internal" href="utility.html#make_shared" title="make_shared"><code class="xref py py-class docutils literal"><span class="pre">make_shared</span></code></a>,&nbsp;<a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal"><span class="pre">function</span></code></a>&nbsp;and&nbsp;<a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal"><span class="pre">bind</span></code></a>, which were introduced on the&nbsp;Boost&nbsp;page, at application level and in combination with Tudat. Note that the first two are crucial for any Tudat user. The documentation on <a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal"><span class="pre">function</span></code></a>/<a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal"><span class="pre">bind</span></code></a> should be consulted only when working on feature development. The example of <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal"><span class="pre">bind</span></code></a> also includes the use of the RK4 numerical integrator from Tudat.</p>
+<p>This page provides some examples on how to use <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared_ptr</span></code></a>, <a class="reference internal" href="utility.html#make_shared" title="make_shared"><code class="xref py py-class docutils literal notranslate"><span class="pre">make_shared</span></code></a>, <a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal notranslate"><span class="pre">function</span></code></a> and <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal notranslate"><span class="pre">bind</span></code></a>, which were introduced on the Boost page, at application level and in combination with Tudat. Note that the first two are crucial for any Tudat user. The documentation on <a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal notranslate"><span class="pre">function</span></code></a>/<a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal notranslate"><span class="pre">bind</span></code></a> should be consulted only when working on feature development. The example of <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal notranslate"><span class="pre">bind</span></code></a> also includes the use of the RK4 numerical integrator from Tudat.</p>
 <div class="section" id="shared-ptr">
 <h2>shared_ptr<a class="headerlink" href="#shared-ptr" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><p>The boost <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal"><span class="pre">shared_ptr</span></code></a> is a template class that stores a smart pointer to a dynamically allocated object. Generally, it behaves much like a normal C++ pointer but should be used instead, because it is more safe. Use of this pointer ensures that the object pointed to is destroyed when the last <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal"><span class="pre">shared_ptr</span></code></a> to the object is destroyed or reset. Thus, this feature provides automatic memory management and prevents memory leaks. Also, this eliminates the use of explicit delete statements.</p>
-<dl class="docutils">
-<dt><strong>Example description</strong></dt>
-<dd><p class="first">This example considers a shared pointer to a <a class="reference internal" href="utilityExamples.html#TestBody" title="TestBody"><code class="xref py py-class docutils literal"><span class="pre">TestBody</span></code></a> class. This “TestBody” class is essentially a stripped-down version of the full <code class="docutils literal"><span class="pre">Body</span></code> class used in Tudat. For this example it is assumed that the code for this class is in your application folder. The code of this small TestBody class is given at the end of this page.</p>
+<div><p>The boost <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared_ptr</span></code></a> is a template class that stores a smart pointer to a dynamically allocated object. Generally, it behaves much like a normal C++ pointer but should be used instead, because it is more safe. Use of this pointer ensures that the object pointed to is destroyed when the last <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared_ptr</span></code></a> to the object is destroyed or reset. Thus, this feature provides automatic memory management and prevents memory leaks. Also, this eliminates the use of explicit delete statements.</p>
+<dl>
+<dt><strong>Example description</strong></dt><dd><p>This example considers a shared pointer to a <a class="reference internal" href="utilityExamples.html#TestBody" title="TestBody"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestBody</span></code></a> class. This “TestBody” class is essentially a stripped-down version of the full <code class="docutils literal notranslate"><span class="pre">Body</span></code> class used in Tudat. For this example it is assumed that the code for this class is in your application folder. The code of this small TestBody class is given at the end of this page.</p>
 <p>The constructor of the TestBody class is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">TestBody</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">aState</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">aTime</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TestBody</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">aState</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">aTime</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p class="last">where the input of the constructor is a state vector (in Cartesian elements) and the time, which has the default value 0.0. Assume that the state vector in Cartesian elements is known: initialState.</p>
+<p>where the input of the constructor is a state vector (in Cartesian elements) and the time, which has the default value 0.0. Assume that the state vector in Cartesian elements is known: initialState.</p>
 </dd>
-<dt><strong>Include statements</strong></dt>
-<dd><p class="first">For this example, the following include statement is required:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;boost/shared_ptr.hpp&gt;</span><span class="cp"></span>
+<dt><strong>Include statements</strong></dt><dd><p>For this example, the following include statement is required:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;boost/shared_ptr.hpp&gt;</span><span class="cp"></span>
 </pre></div>
 </div>
-<p class="last">Generally, this include statement is required when using shared pointers in your code. Furthermore, the code of the “TestBody” class should be included, either above the main function or as a separate header and source file.</p>
+<p>Generally, this include statement is required when using shared pointers in your code. Furthermore, the code of the “TestBody” class should be included, either above the main function or as a separate header and source file.</p>
 </dd>
-<dt><strong>Defining the shared pointer type</strong></dt>
-<dd><p class="first">The boost <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal"><span class="pre">shared_ptr</span></code></a> class is a template class that stores a smart pointer to a dynamically allocated object. Generally, it is of the following form:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">objectType</span> <span class="o">&gt;</span>
+<dt><strong>Defining the shared pointer type</strong></dt><dd><p>The boost <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared_ptr</span></code></a> class is a template class that stores a smart pointer to a dynamically allocated object. Generally, it is of the following form:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">objectType</span> <span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>where <code class="docutils literal"><span class="pre">std::shared_ptr</span></code> is used to indicate that it is a shared pointer, and <code class="docutils literal"><span class="pre">objectType</span></code> is the type of the object that it points to. The object type is placed in angular brackets, because it is a template parameter.</p>
+<p>where <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code> is used to indicate that it is a shared pointer, and <code class="docutils literal notranslate"><span class="pre">objectType</span></code> is the type of the object that it points to. The object type is placed in angular brackets, because it is a template parameter.</p>
 <p>The shared pointer to an object of the TestBody class can now be declared as:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TestBody</span> <span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TestBody</span> <span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>The above type can be roughly considered as the ‘equivalent’ to the following raw pointer-type:</p>
-<div class="last highlight-cpp"><div class="highlight"><pre><span></span><span class="n">TestBody</span><span class="o">*</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TestBody</span><span class="o">*</span>
 </pre></div>
 </div>
 </dd>
-<dt><strong>shared_ptr typedef</strong></dt>
-<dd><p class="first">It can be convenient to create a typedef for the <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal"><span class="pre">shared_ptr</span></code></a> to a TestBody class as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TestBody</span> <span class="o">&gt;</span> <span class="n">TestBodyPointer</span><span class="p">;</span>
+<dt><strong>shared_ptr typedef</strong></dt><dd><p>It can be convenient to create a typedef for the <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared_ptr</span></code></a> to a TestBody class as follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TestBody</span> <span class="o">&gt;</span> <span class="n">TestBodyPointer</span><span class="p">;</span>
 </pre></div>
 </div>
-<p class="last">Such a typedef can be placed in the header file of the class below the class itself, or in the main function. Within Tudat you will see many typedefs for shared pointers. Creating such a type definition makes it easier to read the code.</p>
+<p>Such a typedef can be placed in the header file of the class below the class itself, or in the main function. Within Tudat you will see many typedefs for shared pointers. Creating such a type definition makes it easier to read the code.</p>
 </dd>
-<dt><strong>Creating a boost shared pointer</strong></dt>
-<dd><p class="first">In our main function, we now want to create a shared pointer to an object of the TestBody class, we will name the pointer <code class="docutils literal"><span class="pre">exampleTestBodyPointer</span></code>. We can use the following code to create the <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal"><span class="pre">shared_ptr</span></code></a>:</p>
-<blockquote class="last">
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TestBody</span> <span class="o">&gt;</span> <span class="n">exampleTestBodyPointer</span><span class="p">(</span> <span class="k">new</span> <span class="n">TestBody</span><span class="p">(</span> <span class="n">initialState</span> <span class="p">)</span> <span class="p">);</span>
+<dt><strong>Creating a boost shared pointer</strong></dt><dd><p>In our main function, we now want to create a shared pointer to an object of the TestBody class, we will name the pointer <code class="docutils literal notranslate"><span class="pre">exampleTestBodyPointer</span></code>. We can use the following code to create the <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared_ptr</span></code></a>:</p>
+<blockquote>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TestBody</span> <span class="o">&gt;</span> <span class="n">exampleTestBodyPointer</span><span class="p">(</span> <span class="k">new</span> <span class="n">TestBody</span><span class="p">(</span> <span class="n">initialState</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>where:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">TestBody</span> <span class="pre">&gt;</span></code> is the type: a shared pointer to an object of type <a class="reference internal" href="utilityExamples.html#TestBody" title="TestBody"><code class="xref py py-class docutils literal"><span class="pre">TestBody</span></code></a>.</li>
-<li><code class="docutils literal"><span class="pre">exampleTestBodyPointer</span></code> is the name of the object-pointer.</li>
-<li><code class="docutils literal"><span class="pre">new</span></code> is used to dynamically allocate the memory to the object.</li>
-<li><code class="docutils literal"><span class="pre">TestBody(</span> <span class="pre">)</span></code> is the call to the constructor of the <a class="reference internal" href="utilityExamples.html#TestBody" title="TestBody"><code class="xref py py-class docutils literal"><span class="pre">TestBody</span></code></a> class.</li>
-<li><code class="docutils literal"><span class="pre">initialState</span></code> is the input to the TestBody class constructor.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">TestBody</span> <span class="pre">&gt;</span></code> is the type: a shared pointer to an object of type <a class="reference internal" href="utilityExamples.html#TestBody" title="TestBody"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestBody</span></code></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">exampleTestBodyPointer</span></code> is the name of the object-pointer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">new</span></code> is used to dynamically allocate the memory to the object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TestBody(</span> <span class="pre">)</span></code> is the call to the constructor of the <a class="reference internal" href="utilityExamples.html#TestBody" title="TestBody"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestBody</span></code></a> class.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initialState</span></code> is the input to the TestBody class constructor.</p></li>
 </ul>
 <p>Note that the default value for aTime (0.0) is used. Equivalently, we can use the above typedef instead:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">TestBodyPointer</span> <span class="nf">exampleTestBodyPointer</span><span class="p">(</span> <span class="k">new</span> <span class="n">TestBody</span><span class="p">(</span> <span class="n">initialState</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TestBodyPointer</span> <span class="nf">exampleTestBodyPointer</span><span class="p">(</span> <span class="k">new</span> <span class="n">TestBody</span><span class="p">(</span> <span class="n">initialState</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The above line of code can be roughly considered as the <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal"><span class="pre">shared_ptr</span></code></a> ‘equivalent’ to the following raw pointer code:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">TestBody</span><span class="o">*</span> <span class="n">exampleTestBodyPointer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestBody</span><span class="p">(</span> <span class="n">initialState</span> <span class="p">);</span>
+<p>The above line of code can be roughly considered as the <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared_ptr</span></code></a> ‘equivalent’ to the following raw pointer code:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TestBody</span><span class="o">*</span> <span class="n">exampleTestBodyPointer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestBody</span><span class="p">(</span> <span class="n">initialState</span> <span class="p">);</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -232,36 +229,34 @@
 <div class="section" id="make-shared">
 <h2>make_shared<a class="headerlink" href="#make-shared" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><p>Boost <a class="reference internal" href="utility.html#make_shared" title="make_shared"><code class="xref py py-class docutils literal"><span class="pre">make_shared</span></code></a> is a factory function that creates an object of a given type and returns a <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal"><span class="pre">shared_ptr</span></code></a> to it. This way the explicit use of <code class="docutils literal"><span class="pre">new</span></code> is avoided.</p>
-<dl class="docutils">
-<dt><strong>Example description</strong></dt>
-<dd>For this example, again consider the constructor of the TestBody class (see the&nbsp;<a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal"><span class="pre">shared_ptr</span></code></a> example), and assume that the input state is known: <code class="docutils literal"><span class="pre">initialState</span></code>.</dd>
-<dt><strong>Include statements</strong></dt>
-<dd><p class="first">For this example the following include statements are required:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;boost/make_shared.hpp&gt;</span><span class="cp"></span>
+<div><p>Boost <a class="reference internal" href="utility.html#make_shared" title="make_shared"><code class="xref py py-class docutils literal notranslate"><span class="pre">make_shared</span></code></a> is a factory function that creates an object of a given type and returns a <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared_ptr</span></code></a> to it. This way the explicit use of <code class="docutils literal notranslate"><span class="pre">new</span></code> is avoided.</p>
+<dl>
+<dt><strong>Example description</strong></dt><dd><p>For this example, again consider the constructor of the TestBody class (see the <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared_ptr</span></code></a> example), and assume that the input state is known: <code class="docutils literal notranslate"><span class="pre">initialState</span></code>.</p>
+</dd>
+<dt><strong>Include statements</strong></dt><dd><p>For this example the following include statements are required:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;boost/make_shared.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;boost/shared_ptr.hpp&gt;</span><span class="cp"></span>
 </pre></div>
 </div>
-<p class="last">Generally, when using make_shared in your code, the first statement should be included.</p>
+<p>Generally, when using make_shared in your code, the first statement should be included.</p>
 </dd>
-<dt><strong>Creating a boost shared pointer using make_shared</strong></dt>
-<dd><p class="first">In our main function, we again want to create a shared pointer to an object of the <a class="reference internal" href="utilityExamples.html#TestBody" title="TestBody"><code class="xref py py-class docutils literal"><span class="pre">TestBody</span></code></a> class, which we will name <code class="docutils literal"><span class="pre">newExampleTestBodyPointer</span></code>. Now we will create it using boost’s <a class="reference internal" href="utility.html#make_shared" title="make_shared"><code class="xref py py-class docutils literal"><span class="pre">make_shared</span></code></a>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TestBody</span> <span class="o">&gt;</span> <span class="n">newExampleTestBodyPointer</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TestBody</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">initialState</span> <span class="p">);</span>
+<dt><strong>Creating a boost shared pointer using make_shared</strong></dt><dd><p>In our main function, we again want to create a shared pointer to an object of the <a class="reference internal" href="utilityExamples.html#TestBody" title="TestBody"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestBody</span></code></a> class, which we will name <code class="docutils literal notranslate"><span class="pre">newExampleTestBodyPointer</span></code>. Now we will create it using boost’s <a class="reference internal" href="utility.html#make_shared" title="make_shared"><code class="xref py py-class docutils literal notranslate"><span class="pre">make_shared</span></code></a>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TestBody</span> <span class="o">&gt;</span> <span class="n">newExampleTestBodyPointer</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TestBody</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">initialState</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>where:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">TestBody</span> <span class="pre">&gt;</span></code> is the type: a shared pointer to an object of type <a class="reference internal" href="utilityExamples.html#TestBody" title="TestBody"><code class="xref py py-class docutils literal"><span class="pre">TestBody</span></code></a>.</li>
-<li><code class="docutils literal"><span class="pre">newExampleTestBodyPointer</span></code> is the name of the object-pointer.</li>
-<li><code class="docutils literal"><span class="pre">std::make_shared&lt;</span> <span class="pre">TestBody</span> <span class="pre">&gt;</span></code> is the factory function that creates an object of type <a class="reference internal" href="utilityExamples.html#TestBody" title="TestBody"><code class="xref py py-class docutils literal"><span class="pre">TestBody</span></code></a> and returns a shared pointer to it.</li>
-<li><code class="docutils literal"><span class="pre">(</span> <span class="pre">initialState</span> <span class="pre">)</span></code> is the input to the <a class="reference internal" href="utilityExamples.html#TestBody" title="TestBody"><code class="xref py py-class docutils literal"><span class="pre">TestBody</span></code></a> class constructor.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">TestBody</span> <span class="pre">&gt;</span></code> is the type: a shared pointer to an object of type <a class="reference internal" href="utilityExamples.html#TestBody" title="TestBody"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestBody</span></code></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">newExampleTestBodyPointer</span></code> is the name of the object-pointer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std::make_shared&lt;</span> <span class="pre">TestBody</span> <span class="pre">&gt;</span></code> is the factory function that creates an object of type <a class="reference internal" href="utilityExamples.html#TestBody" title="TestBody"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestBody</span></code></a> and returns a shared pointer to it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(</span> <span class="pre">initialState</span> <span class="pre">)</span></code> is the input to the <a class="reference internal" href="utilityExamples.html#TestBody" title="TestBody"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestBody</span></code></a> class constructor.</p></li>
 </ul>
-<p>The above line of code can be roughly considered as the <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal"><span class="pre">shared_ptr</span></code></a> and <a class="reference internal" href="utility.html#make_shared" title="make_shared"><code class="xref py py-class docutils literal"><span class="pre">make_shared</span></code></a> ‘equivalent’ to the following raw pointer code:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">TestBody</span><span class="o">*</span> <span class="n">asterix</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestBody</span><span class="p">(</span> <span class="n">asterixInitialState</span> <span class="p">);</span>
+<p>The above line of code can be roughly considered as the <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared_ptr</span></code></a> and <a class="reference internal" href="utility.html#make_shared" title="make_shared"><code class="xref py py-class docutils literal notranslate"><span class="pre">make_shared</span></code></a> ‘equivalent’ to the following raw pointer code:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TestBody</span><span class="o">*</span> <span class="n">asterix</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestBody</span><span class="p">(</span> <span class="n">asterixInitialState</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Note that the <a class="reference internal" href="utility.html#make_shared" title="make_shared"><code class="xref py py-class docutils literal"><span class="pre">make_shared</span></code></a> constructor cannot take more that 10 arguments. If you want to construct a shared pointer to an object that requires more than 10 arguments, use the following code instead:</p>
-<div class="last highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">objectType</span> <span class="o">&gt;</span> <span class="n">newExampleTestBodyPointer</span><span class="p">(</span> <span class="k">new</span> <span class="n">objectType</span><span class="p">(</span> <span class="n">input1</span><span class="p">,</span> <span class="n">input2</span><span class="p">,</span> <span class="p">...,</span> <span class="n">inputN</span> <span class="p">)</span> <span class="p">);</span> <span class="c1">// Where N &gt; 10.</span>
+<p>Note that the <a class="reference internal" href="utility.html#make_shared" title="make_shared"><code class="xref py py-class docutils literal notranslate"><span class="pre">make_shared</span></code></a> constructor cannot take more that 10 arguments. If you want to construct a shared pointer to an object that requires more than 10 arguments, use the following code instead:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">objectType</span> <span class="o">&gt;</span> <span class="n">newExampleTestBodyPointer</span><span class="p">(</span> <span class="k">new</span> <span class="n">objectType</span><span class="p">(</span> <span class="n">input1</span><span class="p">,</span> <span class="n">input2</span><span class="p">,</span> <span class="p">...,</span> <span class="n">inputN</span> <span class="p">)</span> <span class="p">);</span> <span class="c1">// Where N &gt; 10.</span>
 </pre></div>
 </div>
 </dd>
@@ -272,14 +267,13 @@
 <span id="externalboostexamplesfunction"></span><h2>function<a class="headerlink" href="#function" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><p>The  boost function library contains a family of class templates that are function object wrappers. It is used in Tudat instead of a normal C++ function pointer because it is an easy way to pass a function as an input to another object or function. Specifically, it allows the passing of free functions and class member functions with a single interface. The boost function type defines both its input types (and order) and its output type. Any function that fits this profile is accepted when it is passed.</p>
-<dl class="docutils">
-<dt><strong>Example description</strong></dt>
-<dd><p class="first">For this example, we will show the use of <a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal"><span class="pre">function</span></code></a> with a free function. The example with a member function is shown in the <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal"><span class="pre">bind</span></code></a> example below. We use the Himmelblau function as an example:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">)</span> <span class="o">=</span> <span class="p">(</span> <span class="n">x</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">11</span> <span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">7</span> <span class="p">)</span><span class="o">^</span><span class="mi">2</span>
+<dl>
+<dt><strong>Example description</strong></dt><dd><p>For this example, we will show the use of <a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal notranslate"><span class="pre">function</span></code></a> with a free function. The example with a member function is shown in the <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal notranslate"><span class="pre">bind</span></code></a> example below. We use the Himmelblau function as an example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">)</span> <span class="o">=</span> <span class="p">(</span> <span class="n">x</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">11</span> <span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">7</span> <span class="p">)</span><span class="o">^</span><span class="mi">2</span>
 </pre></div>
 </div>
 <p>For which we have the following C++ free function:</p>
-<div class="last highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="nf">himmelblau</span><span class="p">(</span> <span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">double</span> <span class="n">y</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="nf">himmelblau</span><span class="p">(</span> <span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">double</span> <span class="n">y</span> <span class="p">)</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="p">(</span> <span class="p">(</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">11.0</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">11.0</span> <span class="p">)</span>
              <span class="o">+</span> <span class="p">(</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">7.0</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">7.0</span> <span class="p">)</span> <span class="p">);</span>
@@ -287,49 +281,44 @@
 </pre></div>
 </div>
 </dd>
-<dt><strong>Include statements</strong></dt>
-<dd><blockquote class="first">
+<dt><strong>Include statements</strong></dt><dd><blockquote>
 <div><p>For this example, the following include statement is required:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;boost/function.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;boost/function.hpp&gt;</span><span class="cp"></span>
 </pre></div>
 </div>
 </div></blockquote>
-<p class="last">Generally, when using <a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal"><span class="pre">function</span></code></a> in your code, this include statement is required.</p>
+<p>Generally, when using <a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal notranslate"><span class="pre">function</span></code></a> in your code, this include statement is required.</p>
 </dd>
-<dt><strong>Defining the boost function type</strong></dt>
-<dd><p class="first">The <a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal"><span class="pre">function</span></code></a> type that corresponds to the Himmelblau function defined above is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="p">(</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span><span class="p">;</span>
+<dt><strong>Defining the boost function type</strong></dt><dd><p>The <a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal notranslate"><span class="pre">function</span></code></a> type that corresponds to the Himmelblau function defined above is:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="p">(</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>where the parameters between the angular brackets are the template parameters. These parameters comply to the form:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="o">&lt;</span> <span class="n">output</span> <span class="p">(</span> <span class="n">input</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="p">)</span> <span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span> <span class="n">output</span> <span class="p">(</span> <span class="n">input</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="p">)</span> <span class="o">&gt;</span>
 </pre></div>
 </div>
-<p class="last">where <code class="docutils literal"><span class="pre">output</span></code> is the output type and <code class="docutils literal"><span class="pre">input(s)</span></code> is the type of the input, this can be a list of input arguments.</p>
+<p>where <code class="docutils literal notranslate"><span class="pre">output</span></code> is the output type and <code class="docutils literal notranslate"><span class="pre">input(s)</span></code> is the type of the input, this can be a list of input arguments.</p>
 </dd>
-<dt><strong>Creating a boost function pointer</strong></dt>
-<dd><p class="first">In our main function, we want to create a function pointer that complies to this form, which we name <code class="docutils literal"><span class="pre">exampleFunction</span></code>. We can use the following code to create the function pointer:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="p">(</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">exampleFunction</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">himmelblau</span><span class="p">;</span>
+<dt><strong>Creating a boost function pointer</strong></dt><dd><p>In our main function, we want to create a function pointer that complies to this form, which we name <code class="docutils literal notranslate"><span class="pre">exampleFunction</span></code>. We can use the following code to create the function pointer:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="p">(</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">exampleFunction</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">himmelblau</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>where:</p>
-<ul class="last simple">
-<li><code class="docutils literal"><span class="pre">std::function&lt;</span> <span class="pre">double</span> <span class="pre">(</span> <span class="pre">double,</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> is the type of exampleFunction, which describes the form of the function (input: double, double; output: double).</li>
-<li><code class="docutils literal"><span class="pre">exampleFunction</span></code> is the name of the object.</li>
-<li><code class="docutils literal"><span class="pre">&amp;himmelblau</span></code> is the function object that is assigned (note the use of the ampersand &amp;).</li>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::function&lt;</span> <span class="pre">double</span> <span class="pre">(</span> <span class="pre">double,</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> is the type of exampleFunction, which describes the form of the function (input: double, double; output: double).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">exampleFunction</span></code> is the name of the object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&amp;himmelblau</span></code> is the function object that is assigned (note the use of the ampersand &amp;).</p></li>
 </ul>
 </dd>
-<dt><strong>Using the function pointer</strong></dt>
-<dd><p class="first">Later-on in the code the input argument to the function object <code class="docutils literal"><span class="pre">exampleFunction</span></code> can be provided using:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">initialPoint</span> <span class="o">=</span> <span class="n">exampleFunction</span> <span class="p">(</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span> <span class="p">);</span> <span class="c1">// Computes f( 0.0, 0.0 )</span>
+<dt><strong>Using the function pointer</strong></dt><dd><p>Later-on in the code the input argument to the function object <code class="docutils literal notranslate"><span class="pre">exampleFunction</span></code> can be provided using:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">initialPoint</span> <span class="o">=</span> <span class="n">exampleFunction</span> <span class="p">(</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span> <span class="p">);</span> <span class="c1">// Computes f( 0.0, 0.0 )</span>
 <span class="kt">double</span> <span class="n">randomPoint</span> <span class="o">=</span> <span class="n">exampleFunction</span> <span class="p">(</span> <span class="o">-</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">3.0</span> <span class="p">);</span> <span class="c1">// Computes f( -5.0, 3.0 )</span>
 </pre></div>
 </div>
-<p class="last">Here, the input values (0.0, 0.0 and -5.0, 3.0 respectively) are routed to the function <code class="docutils literal"><span class="pre">himmelblau</span></code>, where the output is computed.</p>
+<p>Here, the input values (0.0, 0.0 and -5.0, 3.0 respectively) are routed to the function <code class="docutils literal notranslate"><span class="pre">himmelblau</span></code>, where the output is computed.</p>
 </dd>
-<dt><strong>Results</strong></dt>
-<dd><p class="first">Using the code that was discussed in this example, you should be able to reproduce the following results:</p>
-<div class="last highlight-cpp"><div class="highlight"><pre><span></span><span class="n">x</span>
+<dt><strong>Results</strong></dt><dd><p>Using the code that was discussed in this example, you should be able to reproduce the following results:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">x</span>
 <span class="n">y</span>
 <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 <span class="mf">3.0</span>
@@ -347,26 +336,25 @@
 </pre></div>
 </div>
 </dd>
-<dt><strong>Creating a function returning a constant value</strong></dt>
-<dd><p class="first">There are cases in which you will want to create a function that always returns the same value, without any reference to a specific implementation. This is achieved by using the <code class="docutils literal"><span class="pre">boost::lambda::constant</span></code> function. This function can be created as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">testFunction</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">lambda</span><span class="o">::</span><span class="n">constant</span><span class="p">(</span> <span class="mf">3.0</span> <span class="p">);</span>
+<dt><strong>Creating a function returning a constant value</strong></dt><dd><p>There are cases in which you will want to create a function that always returns the same value, without any reference to a specific implementation. This is achieved by using the <code class="docutils literal notranslate"><span class="pre">boost::lambda::constant</span></code> function. This function can be created as follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">testFunction</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">lambda</span><span class="o">::</span><span class="n">constant</span><span class="p">(</span> <span class="mf">3.0</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>Now, if at any point in the code, the following is called:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">testValue</span> <span class="o">=</span> <span class="n">testFunction</span><span class="p">(</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">testValue</span> <span class="o">=</span> <span class="n">testFunction</span><span class="p">(</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>will result in testValue holding the value 3.0. The same trick can be used for any other type than a double. For instance:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">testVectorFunction</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">lambda</span><span class="o">::</span><span class="n">constant</span><span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitX</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">testVectorFunction</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">lambda</span><span class="o">::</span><span class="n">constant</span><span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitX</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>will create a function that always returns the (1,0,0) vector. Also, this interface can be used for boost functions requiring inputs, so that:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">testFunction</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">lambda</span><span class="o">::</span><span class="n">constant</span><span class="p">(</span> <span class="mf">3.0</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">testFunction</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">lambda</span><span class="o">::</span><span class="n">constant</span><span class="p">(</span> <span class="mf">3.0</span> <span class="p">);</span>
 <span class="kt">double</span> <span class="n">inputValue</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">;</span>
  <span class="kt">double</span> <span class="n">testValue</span> <span class="o">=</span> <span class="n">testFunction</span><span class="p">(</span> <span class="n">inputValue</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p class="last">will ignore the input to <code class="docutils literal"><span class="pre">testFunction</span></code> and again assign 3.0 to the <code class="docutils literal"><span class="pre">testValue</span></code> variable.</p>
+<p>will ignore the input to <code class="docutils literal notranslate"><span class="pre">testFunction</span></code> and again assign 3.0 to the <code class="docutils literal notranslate"><span class="pre">testValue</span></code> variable.</p>
 </dd>
 </dl>
 </div></blockquote>
@@ -376,34 +364,31 @@
 <blockquote>
 <div><p>The boost bind library implements a simple and versatile function argument binding mechanism. This boost feature is used in Tudat because it is a good way to pass function objects. Its use is required for a unified free function and member function interface when using a class method, due to the way C++ calls function methods1.</p>
 <p>When using boost bind in your code, it can take many forms, varying where the class method is called (e.g. outside or inside the class), and varying the use of placeholders. This example considers the use of placeholders and calling from outside or inside a class.</p>
-<dl class="docutils">
-<dt><strong>Example description</strong></dt>
-<dd><p class="first">The example described here is that of a Skydiver who starts its fall from an altitude of 25 kilometers. We are interested in its position and velocity after 50 seconds of free fall. The following assumptions are made:</p>
-<ul class="last simple">
-<li>The Earth and the Skydiver are modeled as point masses.</li>
-<li>Variations in Earth’s gravity with altitude are ignored.</li>
-<li>All perturbations are neglected.</li>
-<li>The following data is also needed for the calculations:</li>
-<li>The initial altitude is 25 kilometers.</li>
-<li>The initial velocity is 0 m/s.</li>
-<li>The gravitational acceleration is constant at 9.81 m/s^2.</li>
-<li>The Runge-Kutta 4 (RK4) integrator is used with a fixed step size of 1 second.</li>
+<dl>
+<dt><strong>Example description</strong></dt><dd><p>The example described here is that of a Skydiver who starts its fall from an altitude of 25 kilometers. We are interested in its position and velocity after 50 seconds of free fall. The following assumptions are made:</p>
+<ul class="simple">
+<li><p>The Earth and the Skydiver are modeled as point masses.</p></li>
+<li><p>Variations in Earth’s gravity with altitude are ignored.</p></li>
+<li><p>All perturbations are neglected.</p></li>
+<li><p>The following data is also needed for the calculations:</p></li>
+<li><p>The initial altitude is 25 kilometers.</p></li>
+<li><p>The initial velocity is 0 m/s.</p></li>
+<li><p>The gravitational acceleration is constant at 9.81 m/s^2.</p></li>
+<li><p>The Runge-Kutta 4 (RK4) integrator is used with a fixed step size of 1 second.</p></li>
 </ul>
 </dd>
-<dt><strong>Include statements</strong></dt>
-<dd><p class="first">For this example, the following include statements are required:</p>
+<dt><strong>Include statements</strong></dt><dd><p>For this example, the following include statements are required:</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span> <span class="cp">#include</span> <span class="cpf">&lt;boost/bind.hpp&gt;</span><span class="cp"></span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="cp">#include</span> <span class="cpf">&lt;boost/bind.hpp&gt;</span><span class="cp"></span>
  <span class="cp">#include</span> <span class="cpf">&lt;Eigen/Core&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;Tudat/Mathematics/NumericalIntegrators/rungeKutta4Integrator.h&gt;</span><span class="cp"></span>
 </pre></div>
 </div>
 </div></blockquote>
-<p class="last">When using <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal"><span class="pre">bind</span></code></a> in your code, the first include statement is required. To make use of <code class="docutils literal"><span class="pre">Eigen</span></code> types, the <code class="docutils literal"><span class="pre">Core</span></code> of Eigen is included as well. The last include statement is used for the RK4 integrator. For more information on Eigen, see&nbsp;Eigen. For more information on numerical integrators, see&nbsp;Tutorial Numerical Integrators</p>
+<p>When using <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal notranslate"><span class="pre">bind</span></code></a> in your code, the first include statement is required. To make use of <code class="docutils literal notranslate"><span class="pre">Eigen</span></code> types, the <code class="docutils literal notranslate"><span class="pre">Core</span></code> of Eigen is included as well. The last include statement is used for the RK4 integrator. For more information on Eigen, see Eigen. For more information on numerical integrators, see Tutorial Numerical Integrators</p>
 </dd>
-<dt><strong>Calling from outside the class</strong></dt>
-<dd><p class="first">First, an example is given when calling a class method from outside the class. For this we will define the <code class="docutils literal"><span class="pre">Skydiver</span></code> class, with a constructor and a function that computes the state derivative for its equations of motion:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Skydiver</span>
+<dt><strong>Calling from outside the class</strong></dt><dd><p>First, an example is given when calling a class method from outside the class. For this we will define the <code class="docutils literal notranslate"><span class="pre">Skydiver</span></code> class, with a constructor and a function that computes the state derivative for its equations of motion:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Skydiver</span>
 <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
 
@@ -420,7 +405,7 @@
 </pre></div>
 </div>
 <p>The function to compute the state derivative is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span>    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">Skydiver</span><span class="o">::</span><span class="n">computeStateDerivative</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">time</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">&amp;</span> <span class="n">state</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">Skydiver</span><span class="o">::</span><span class="n">computeStateDerivative</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">time</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">&amp;</span> <span class="n">state</span> <span class="p">)</span>
     <span class="p">{</span>
     <span class="c1">// Note that the time is not used in this function, but it is required as input for the integrator.</span>
     <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">stateDerivative</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">::</span><span class="n">Zero</span><span class="p">(</span> <span class="p">);</span> <span class="c1">// Declare and initialize to zero.</span>
@@ -432,59 +417,58 @@
 </pre></div>
 </div>
 <p>The Skydiver class and function to compute the derivative can be placed above the main function (or alternatively in a separate header and source file). Inside the main function, first declare the constants that were given above. Declare these yourself:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">initialTime</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">initialTime</span>
 <span class="n">initialState</span> <span class="c1">// (which is of the type Eigen::Vector2d)</span>
 <span class="n">timeStep</span>
 <span class="n">endTime</span>
 </pre></div>
 </div>
 <p>Then, our Skydiver testDiver is constructed:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Skydiver</span> <span class="n">testDiver</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Skydiver</span> <span class="n">testDiver</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Next, an intermediate step is taken, before defining the integrator itself. The constructor of the RK4 integrator takes a state-derivative function, an initial time and an initial state. The state-derivative function is a <a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal"><span class="pre">function</span></code></a> type that corresponds to:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="p">(</span> <span class="k">const</span> <span class="kt">double</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="p">)</span> <span class="o">&gt;</span>
+<p>Next, an intermediate step is taken, before defining the integrator itself. The constructor of the RK4 integrator takes a state-derivative function, an initial time and an initial state. The state-derivative function is a <a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal notranslate"><span class="pre">function</span></code></a> type that corresponds to:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="p">(</span> <span class="k">const</span> <span class="kt">double</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="p">)</span> <span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>The state derivative is the class method <code class="docutils literal"><span class="pre">computeStateDerivative</span></code> of the Skydiver class, because this is a class method, <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal"><span class="pre">bind</span></code></a> is used to create a function pointer to the state-derivative function:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="p">(</span> <span class="k">const</span> <span class="kt">double</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">stateDerivativeFunction</span>
+<p>The state derivative is the class method <code class="docutils literal notranslate"><span class="pre">computeStateDerivative</span></code> of the Skydiver class, because this is a class method, <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal notranslate"><span class="pre">bind</span></code></a> is used to create a function pointer to the state-derivative function:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="p">(</span> <span class="k">const</span> <span class="kt">double</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">stateDerivativeFunction</span>
     <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">Skydiver</span><span class="o">::</span><span class="n">computeStateDerivative</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">testDiver</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>where:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">std::function&lt;</span> <span class="pre">Eigen::Vector2d</span> <span class="pre">(</span> <span class="pre">const</span> <span class="pre">double,</span> <span class="pre">const</span> <span class="pre">Eigen::Vector2d</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> is the type of stateDerivativeFunction, which describes the form of the function (input: double, Vector2d; output: Vector2d.</li>
-<li><code class="docutils literal"><span class="pre">stateDerivativeFunction</span></code> is the name of the object.</li>
-<li><code class="docutils literal"><span class="pre">std::bind(</span> <span class="pre">...</span> <span class="pre">)</span></code> is the call to std::bind that binds the class method of the object testDiver to the object.</li>
-<li><code class="docutils literal"><span class="pre">&amp;Skydiver::computeStateDerivative</span></code> is the member function of the Skydiver class that is bound (note the use of the ampersand &amp;).</li>
-<li><code class="docutils literal"><span class="pre">&amp;testDiver</span></code> is the object that the member function belongs to. Note the use of the ampersand &amp;: this is used to pass a pointer to the object and not the object itself. Note that you can also pass a shared_ptr.</li>
-<li><code class="docutils literal"><span class="pre">std::placeholders::_1</span></code> and <code class="docutils literal"><span class="pre">std::placeholders::_2</span></code> specify placeholders. This is used to route the input arguments such that the input of the function can be provided later-on. In this case it specifies that the argument list for the computeStateDerivative function takes two arguments (time, state), and the order in which these arguments are taken.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std::function&lt;</span> <span class="pre">Eigen::Vector2d</span> <span class="pre">(</span> <span class="pre">const</span> <span class="pre">double,</span> <span class="pre">const</span> <span class="pre">Eigen::Vector2d</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> is the type of stateDerivativeFunction, which describes the form of the function (input: double, Vector2d; output: Vector2d.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stateDerivativeFunction</span></code> is the name of the object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std::bind(</span> <span class="pre">...</span> <span class="pre">)</span></code> is the call to std::bind that binds the class method of the object testDiver to the object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&amp;Skydiver::computeStateDerivative</span></code> is the member function of the Skydiver class that is bound (note the use of the ampersand &amp;).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&amp;testDiver</span></code> is the object that the member function belongs to. Note the use of the ampersand &amp;: this is used to pass a pointer to the object and not the object itself. Note that you can also pass a shared_ptr.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std::placeholders::_1</span></code> and <code class="docutils literal notranslate"><span class="pre">std::placeholders::_2</span></code> specify placeholders. This is used to route the input arguments such that the input of the function can be provided later-on. In this case it specifies that the argument list for the computeStateDerivative function takes two arguments (time, state), and the order in which these arguments are taken.</p></li>
 </ul>
-<p>This <code class="docutils literal"><span class="pre">std::function</span></code> can then be passed to the constructor of the integrator, the integrator is created as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="o">::</span><span class="n">mathematics</span><span class="o">::</span><span class="n">numerical_integrators</span><span class="o">::</span><span class="n">RungeKutta4IntegratorXd</span> <span class="n">integrator</span><span class="p">(</span>
+<p>This <code class="docutils literal notranslate"><span class="pre">std::function</span></code> can then be passed to the constructor of the integrator, the integrator is created as follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="o">::</span><span class="n">mathematics</span><span class="o">::</span><span class="n">numerical_integrators</span><span class="o">::</span><span class="n">RungeKutta4IntegratorXd</span> <span class="n">integrator</span><span class="p">(</span>
     <span class="n">stateDerivativeFunction</span><span class="p">,</span> <span class="n">initialTime</span><span class="p">,</span> <span class="n">initialState</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>where:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">RungeKuttaIntegratorXd</span></code> is the type of the object created, which is the default <code class="docutils literal"><span class="pre">RungeKutta4Integrator</span></code>.</li>
-<li><code class="docutils literal"><span class="pre">integrator</span></code> is the name of the object.</li>
-<li><code class="docutils literal"><span class="pre">stateDerivativeFunction</span></code>, <code class="docutils literal"><span class="pre">initialTime</span></code> and <code class="docutils literal"><span class="pre">initialState</span></code> are the input arguments of the constructor of the RK4 integrator.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RungeKuttaIntegratorXd</span></code> is the type of the object created, which is the default <code class="docutils literal notranslate"><span class="pre">RungeKutta4Integrator</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">integrator</span></code> is the name of the object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stateDerivativeFunction</span></code>, <code class="docutils literal notranslate"><span class="pre">initialTime</span></code> and <code class="docutils literal notranslate"><span class="pre">initialState</span></code> are the input arguments of the constructor of the RK4 integrator.</p></li>
 </ul>
 <p>Note that the previous two code fragments can also be coded as a single statement, which is more complex:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="o">::</span><span class="n">mathematics</span><span class="o">::</span><span class="n">numerical_integrators</span><span class="o">::</span><span class="n">RungeKutta4IntegratorXd</span> <span class="n">integrator</span><span class="p">(</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="o">::</span><span class="n">mathematics</span><span class="o">::</span><span class="n">numerical_integrators</span><span class="o">::</span><span class="n">RungeKutta4IntegratorXd</span> <span class="n">integrator</span><span class="p">(</span>
     <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">Skydiver</span><span class="o">::</span><span class="n">computeStateDerivative</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">testDiver</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span> <span class="p">),</span>
     <span class="n">initialTime</span><span class="p">,</span> <span class="n">initialState</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>The end state can now be computed using the class method integrateTo( ) of the integrator:</p>
-<div class="last highlight-cpp"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">endState</span> <span class="o">=</span> <span class="n">integrator</span><span class="p">.</span><span class="n">integrateTo</span><span class="p">(</span> <span class="n">endTime</span><span class="p">,</span> <span class="n">timeStep</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">endState</span> <span class="o">=</span> <span class="n">integrator</span><span class="p">.</span><span class="n">integrateTo</span><span class="p">(</span> <span class="n">endTime</span><span class="p">,</span> <span class="n">timeStep</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd>
-<dt><strong>Calling from inside the class</strong></dt>
-<dd><p class="first">Second, an example is given when calling a class method from inside the class. For this we will modify the Skydiver class by adding a second class method:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Skydiver</span>
+<dt><strong>Calling from inside the class</strong></dt><dd><p>Second, an example is given when calling a class method from inside the class. For this we will modify the Skydiver class by adding a second class method:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Skydiver</span>
 <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
 
@@ -505,7 +489,7 @@
 </pre></div>
 </div>
 <p>The function to compute the state derivative is the same as above, and the function to compute the final state is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">Skydiver</span><span class="o">::</span><span class="n">computeFinalState</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">initialTime</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">&amp;</span> <span class="n">initialState</span><span class="p">,</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">Skydiver</span><span class="o">::</span><span class="n">computeFinalState</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">initialTime</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">&amp;</span> <span class="n">initialState</span><span class="p">,</span>
                                          <span class="k">const</span> <span class="kt">double</span> <span class="n">endTime</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">timeStep</span> <span class="p">)</span>
 <span class="p">{</span>
     <span class="n">tudat</span><span class="o">::</span><span class="n">mathematics</span><span class="o">::</span><span class="n">numerical_integrators</span><span class="o">::</span><span class="n">RungeKutta4IntegratorXd</span> <span class="n">integrator</span><span class="p">(</span>
@@ -516,16 +500,15 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Now, compare this function to the code of the previous example. The integrator is now used inside the class method <code class="docutils literal"><span class="pre">computeFinalState</span></code>. This method calls the state derivative function from within the class. Do you notice the difference?</p>
-<p>Focus on the <code class="docutils literal"><span class="pre">std::bind</span></code> call. In the previous example, the object that the method belonged to was <code class="docutils literal"><span class="pre">testDiver</span></code>. Now, the class method is called from within the class and the object that the method belongs to is this. Did you spot it? Great! That is the difference between calling from outside or inside a class.</p>
-<p>As in the previous example, declare the constants that were given in the main function. In the same manner as before, also the <code class="docutils literal"><span class="pre">testDiver</span></code> is declared. Now the end state can be computed using:</p>
-<div class="last highlight-cpp"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">endState</span> <span class="o">=</span> <span class="n">testDiver</span><span class="p">.</span><span class="n">computeFinalState</span><span class="p">(</span> <span class="n">initialTime</span><span class="p">,</span> <span class="n">initialState</span><span class="p">,</span> <span class="n">endTime</span><span class="p">,</span> <span class="n">timeStep</span> <span class="p">);</span>
+<p>Now, compare this function to the code of the previous example. The integrator is now used inside the class method <code class="docutils literal notranslate"><span class="pre">computeFinalState</span></code>. This method calls the state derivative function from within the class. Do you notice the difference?</p>
+<p>Focus on the <code class="docutils literal notranslate"><span class="pre">std::bind</span></code> call. In the previous example, the object that the method belonged to was <code class="docutils literal notranslate"><span class="pre">testDiver</span></code>. Now, the class method is called from within the class and the object that the method belongs to is this. Did you spot it? Great! That is the difference between calling from outside or inside a class.</p>
+<p>As in the previous example, declare the constants that were given in the main function. In the same manner as before, also the <code class="docutils literal notranslate"><span class="pre">testDiver</span></code> is declared. Now the end state can be computed using:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">endState</span> <span class="o">=</span> <span class="n">testDiver</span><span class="p">.</span><span class="n">computeFinalState</span><span class="p">(</span> <span class="n">initialTime</span><span class="p">,</span> <span class="n">initialState</span><span class="p">,</span> <span class="n">endTime</span><span class="p">,</span> <span class="n">timeStep</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd>
-<dt><strong>Results</strong></dt>
-<dd><p class="first">Using the code that was discussed in this example, you should be able to reproduce the following results:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span> <span class="n">Time</span> <span class="p">[</span><span class="n">s</span><span class="p">]</span>
+<dt><strong>Results</strong></dt><dd><p>Using the code that was discussed in this example, you should be able to reproduce the following results:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="n">Time</span> <span class="p">[</span><span class="n">s</span><span class="p">]</span>
  <span class="n">Position</span> <span class="p">[</span><span class="n">m</span><span class="p">]</span>
  <span class="n">Velocity</span> <span class="p">[</span><span class="n">m</span><span class="o">/</span><span class="n">s</span><span class="p">]</span>
  <span class="mi">10</span>
@@ -539,14 +522,14 @@
 <span class="o">-</span><span class="mf">490.5</span>
 </pre></div>
 </div>
-<p class="last">Note that the following explanation about function calls in C++ is a simplification of reality, and for a rigorous explanation refer to your local computer scientist. When a new instance of a class is created, this does not mean that all function definitions etc. are copied. There is only one copy of a function in memory, regardless of the amount of class instances. When a class method is called, the function is called with a hidden pointer to the class instance; this way the method knows about the class variables. When a class method is called via a function pointer, then the pointer to the class instance needs to be passed explicitly by the called. This is where <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal"><span class="pre">bind</span></code></a> comes into the picture. The <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal"><span class="pre">bind</span></code></a> function wraps a function into another object, and stores the passed arguments (which in the examples are respectively <code class="docutils literal"><span class="pre">testDiver</span></code> and this). When the function wrapper is eventually called, the function wrapper will call the wrapped function with both the arguments passed at its construction, as those passed to the call. The arguments passed to the function wrapper call are indicated with the <code class="docutils literal"><span class="pre">std::placeholders::_1</span></code>, respectively <code class="docutils literal"><span class="pre">std::placeholders::_2</span></code> in the <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal"><span class="pre">bind</span></code></a> call.</p>
+<p>Note that the following explanation about function calls in C++ is a simplification of reality, and for a rigorous explanation refer to your local computer scientist. When a new instance of a class is created, this does not mean that all function definitions etc. are copied. There is only one copy of a function in memory, regardless of the amount of class instances. When a class method is called, the function is called with a hidden pointer to the class instance; this way the method knows about the class variables. When a class method is called via a function pointer, then the pointer to the class instance needs to be passed explicitly by the called. This is where <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal notranslate"><span class="pre">bind</span></code></a> comes into the picture. The <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal notranslate"><span class="pre">bind</span></code></a> function wraps a function into another object, and stores the passed arguments (which in the examples are respectively <code class="docutils literal notranslate"><span class="pre">testDiver</span></code> and this). When the function wrapper is eventually called, the function wrapper will call the wrapped function with both the arguments passed at its construction, as those passed to the call. The arguments passed to the function wrapper call are indicated with the <code class="docutils literal notranslate"><span class="pre">std::placeholders::_1</span></code>, respectively <code class="docutils literal notranslate"><span class="pre">std::placeholders::_2</span></code> in the <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal notranslate"><span class="pre">bind</span></code></a> call.</p>
 </dd>
 </dl>
 </div></blockquote>
-<dl class="class">
+<dl class="py class">
 <dt id="TestBody">
-<em class="property">class </em><code class="descname">TestBody</code><a class="headerlink" href="#TestBody" title="Permalink to this definition">¶</a></dt>
-<dd><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! The test body class.</span>
+<em class="property">class </em><code class="sig-name descname">TestBody</code><a class="headerlink" href="#TestBody" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//! The test body class.</span>
 <span class="cm">/*!</span>
 <span class="cm"> * This class serves as an example of how a data repository can be constructed that stores state</span>
 <span class="cm"> * and time information, which can be used in conjunction with acceleration models, the Cartesian</span>
@@ -646,7 +629,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

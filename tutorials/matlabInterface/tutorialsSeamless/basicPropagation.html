@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -193,45 +195,45 @@
   <div class="section" id="unperturbed-earth-orbiting-satellite">
 <span id="matlabinterface-tutorialsseamless-basicpropagation"></span><h1>Unperturbed Earth-orbiting Satellite<a class="headerlink" href="#unperturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
 <p>This tutorial describes how to propagate the orbit of an unperturbed satellite about Earth using the MATLAB Interface, similar (but not identical) to the example <a class="reference internal" href="../../applicationWalkthroughs/unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> written in C++. The code for this example can be found at:</p>
-<div class="highlight-txt"><div class="highlight"><pre><span></span>tudatBundle/matlabInterface/Examples/Seamless/basicPropagation.m
+<div class="highlight-txt notranslate"><div class="highlight"><pre><span></span>tudatBundle/matlabInterface/Examples/Seamless/basicPropagation.m
 </pre></div>
 </div>
 <p>The first step is to include the source code of the MATLAB Interface into MATLAB’s path in the current session so that all the classes needed to set up the simulation can be accessed. This is done by writing:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">load</span><span class="p">();</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">load</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>Now, we create a <code class="xref py py-class docutils literal"><span class="pre">Simulation</span></code> object and specify the initial and final epochs:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">simulation</span> <span class="p">=</span> <span class="n">Simulation</span><span class="p">();</span>
+<p>Now, we create a <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object and specify the initial and final epochs:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span> <span class="p">=</span> <span class="n">Simulation</span><span class="p">();</span>
 <span class="n">simulation</span><span class="p">.</span><span class="n">initialEpoch</span> <span class="p">=</span> <span class="n">convert</span><span class="p">.</span><span class="n">dateToEpoch</span><span class="p">(</span><span class="s">&#39;1992-02-14 06:00&#39;</span><span class="p">);</span>
 <span class="n">simulation</span><span class="p">.</span><span class="n">finalEpoch</span> <span class="p">=</span> <span class="n">convert</span><span class="p">.</span><span class="n">dateToEpoch</span><span class="p">(</span><span class="s">&#39;1992-02-14 12:00&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Note that the function <code class="docutils literal"><span class="pre">dateToEpoch</span></code> from the <code class="docutils literal"><span class="pre">convert</span></code> package has been used. This function convert a date to seconds since J2000.</p>
-<p>Next, we create the bodies. For an unperturbed orbit, the mass of the satellite is irrelevant, so we create a body named <code class="docutils literal"><span class="pre">satellite</span></code> with the following initial state:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">satellite</span> <span class="p">=</span> <span class="n">Body</span><span class="p">(</span><span class="s">&#39;satellite&#39;</span><span class="p">);</span>
+<p>Note that the function <code class="docutils literal notranslate"><span class="pre">dateToEpoch</span></code> from the <code class="docutils literal notranslate"><span class="pre">convert</span></code> package has been used. This function convert a date to seconds since J2000.</p>
+<p>Next, we create the bodies. For an unperturbed orbit, the mass of the satellite is irrelevant, so we create a body named <code class="docutils literal notranslate"><span class="pre">satellite</span></code> with the following initial state:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">satellite</span> <span class="p">=</span> <span class="n">Body</span><span class="p">(</span><span class="s">&#39;satellite&#39;</span><span class="p">);</span>
 <span class="n">satellite</span><span class="p">.</span><span class="n">initialState</span><span class="p">.</span><span class="n">semiMajorAxis</span> <span class="p">=</span> <span class="mf">7500e3</span><span class="p">;</span>
 <span class="n">satellite</span><span class="p">.</span><span class="n">initialState</span><span class="p">.</span><span class="n">eccentricity</span> <span class="p">=</span> <span class="mf">0.1</span><span class="p">;</span>
 <span class="n">satellite</span><span class="p">.</span><span class="n">initialState</span><span class="p">.</span><span class="n">inclination</span> <span class="p">=</span> <span class="n">deg2rad</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Note that some of the Keplerian components have been omitted, and thus they are assumed to be zero. The semi-major axis cannot be omitted when providing a Keplerian state.</p>
-<p>Now, we add the bodies to the simulation by calling the method <code class="docutils literal"><span class="pre">addBodies</span></code> of the <code class="docutils literal"><span class="pre">simulation</span></code> object. There exist predefined objects for celestial bodies (namely the Sun, the Moon and the eight planets), so these objects can be added directly without the need to specify their properties:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">addBodies</span><span class="p">(</span><span class="n">Earth</span><span class="p">,</span><span class="n">satellite</span><span class="p">);</span>
+<p>Now, we add the bodies to the simulation by calling the method <code class="docutils literal notranslate"><span class="pre">addBodies</span></code> of the <code class="docutils literal notranslate"><span class="pre">simulation</span></code> object. There exist predefined objects for celestial bodies (namely the Sun, the Moon and the eight planets), so these objects can be added directly without the need to specify their properties:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">addBodies</span><span class="p">(</span><span class="n">Earth</span><span class="p">,</span><span class="n">satellite</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>In this case, we use the pre-defined body <code class="docutils literal"><span class="pre">Earth</span></code>, which is basically a <a class="reference internal" href="../../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> object named <code class="docutils literal"><span class="pre">Earth</span></code> with the property <code class="docutils literal"><span class="pre">useDefaultSettings</span></code> set to <code class="docutils literal"><span class="pre">true</span></code>.</p>
-<p>Then, we create the settings for the propagation. We are going to propagate the translational state of the body <code class="docutils literal"><span class="pre">satellite</span></code> about <code class="docutils literal"><span class="pre">Earth</span></code>. Thus, we use a <code class="xref py py-class docutils literal"><span class="pre">TranslationalPropagator</span></code>:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">propagator</span> <span class="p">=</span> <span class="n">TranslationalPropagator</span><span class="p">();</span>
+<p>In this case, we use the pre-defined body <code class="docutils literal notranslate"><span class="pre">Earth</span></code>, which is basically a <a class="reference internal" href="../../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> object named <code class="docutils literal notranslate"><span class="pre">Earth</span></code> with the property <code class="docutils literal notranslate"><span class="pre">useDefaultSettings</span></code> set to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<p>Then, we create the settings for the propagation. We are going to propagate the translational state of the body <code class="docutils literal notranslate"><span class="pre">satellite</span></code> about <code class="docutils literal notranslate"><span class="pre">Earth</span></code>. Thus, we use a <code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationalPropagator</span></code>:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">propagator</span> <span class="p">=</span> <span class="n">TranslationalPropagator</span><span class="p">();</span>
 <span class="n">propagator</span><span class="p">.</span><span class="n">bodiesToPropagate</span> <span class="p">=</span> <span class="p">{</span><span class="n">satellite</span><span class="p">};</span>
 <span class="n">propagator</span><span class="p">.</span><span class="n">centralBodies</span> <span class="p">=</span> <span class="p">{</span><span class="n">Earth</span><span class="p">};</span>
 </pre></div>
 </div>
-<p>Now we need to specify the accelerations acting on <code class="docutils literal"><span class="pre">satellite</span></code>. The only accelerations are those caused by <code class="docutils literal"><span class="pre">Earth</span></code>, so we need to specify the property <code class="docutils literal"><span class="pre">propagator.accelerations.satellite.Earth</span></code>, which can be read as “accelerations on satellite caused by Earth”. In the case of an unperturbed orbit, the only acceleration is the point-mass gravitational attraction of the central body:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">propagator</span><span class="p">.</span><span class="n">accelerations</span><span class="p">.</span><span class="n">satellite</span><span class="p">.</span><span class="n">Earth</span> <span class="p">=</span> <span class="p">{</span><span class="n">PointMassGravity</span><span class="p">()};</span>
+<p>Now we need to specify the accelerations acting on <code class="docutils literal notranslate"><span class="pre">satellite</span></code>. The only accelerations are those caused by <code class="docutils literal notranslate"><span class="pre">Earth</span></code>, so we need to specify the property <code class="docutils literal notranslate"><span class="pre">propagator.accelerations.satellite.Earth</span></code>, which can be read as “accelerations on satellite caused by Earth”. In the case of an unperturbed orbit, the only acceleration is the point-mass gravitational attraction of the central body:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">propagator</span><span class="p">.</span><span class="n">accelerations</span><span class="p">.</span><span class="n">satellite</span><span class="p">.</span><span class="n">Earth</span> <span class="p">=</span> <span class="p">{</span><span class="n">PointMassGravity</span><span class="p">()};</span>
 </pre></div>
 </div>
-<p>Finally, we add the <code class="docutils literal"><span class="pre">propagator</span></code> to the <code class="docutils literal"><span class="pre">simulation</span></code> object and define the integrator settings:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">propagators</span> <span class="p">=</span> <span class="p">{</span><span class="n">propagator</span><span class="p">};</span>
+<p>Finally, we add the <code class="docutils literal notranslate"><span class="pre">propagator</span></code> to the <code class="docutils literal notranslate"><span class="pre">simulation</span></code> object and define the integrator settings:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">propagators</span> <span class="p">=</span> <span class="p">{</span><span class="n">propagator</span><span class="p">};</span>
 
 <span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="p">.</span><span class="n">type</span> <span class="p">=</span> <span class="n">Integrators</span><span class="p">.</span><span class="n">rungeKutta4</span><span class="p">;</span>
 <span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="p">.</span><span class="n">stepSize</span> <span class="p">=</span> <span class="mi">10</span><span class="p">;</span>
@@ -239,16 +241,16 @@
 </div>
 <p>In this case we use a Runge-Kutta 4 integrator with a fixed step-size of 10 seconds.</p>
 <p>All the settings needed to run the simulation have been defined. Thus, we can write:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">run</span><span class="p">();</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">run</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>This method creates a temporary input file and calls the <code class="docutils literal"><span class="pre">json_interface</span></code> application, generating a temporary output file containing the state of the satellite for each integration step. Then, it loads these results into the struct <code class="docutils literal"><span class="pre">results</span></code> of the <code class="docutils literal"><span class="pre">simulation</span></code> object. Finally, all the temporary files are deleted.</p>
-<p>After running the simulation, if no specific results have been requested, we can obtain the numerical solution of the equations of motion from <code class="docutils literal"><span class="pre">simulation.results.numericalSolution</span></code>. This is a matrix containing in each row the results of an integration step. The first column contains the epochs, while the columns 2 to 7 contain the associated Cartesian states of the satellite.</p>
+<p>This method creates a temporary input file and calls the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> application, generating a temporary output file containing the state of the satellite for each integration step. Then, it loads these results into the struct <code class="docutils literal notranslate"><span class="pre">results</span></code> of the <code class="docutils literal notranslate"><span class="pre">simulation</span></code> object. Finally, all the temporary files are deleted.</p>
+<p>After running the simulation, if no specific results have been requested, we can obtain the numerical solution of the equations of motion from <code class="docutils literal notranslate"><span class="pre">simulation.results.numericalSolution</span></code>. This is a matrix containing in each row the results of an integration step. The first column contains the epochs, while the columns 2 to 7 contain the associated Cartesian states of the satellite.</p>
 <p>We can use the results to generate a plot of the x, y and z components of the position of the satellite:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="p">=</span> <span class="n">simulation</span><span class="p">.</span><span class="n">results</span><span class="p">.</span><span class="n">numericalSolution</span><span class="p">(:,</span><span class="mi">1</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="p">=</span> <span class="n">simulation</span><span class="p">.</span><span class="n">results</span><span class="p">.</span><span class="n">numericalSolution</span><span class="p">(:,</span><span class="mi">1</span><span class="p">);</span>
 <span class="n">r</span> <span class="p">=</span> <span class="n">simulation</span><span class="p">.</span><span class="n">results</span><span class="p">.</span><span class="n">numericalSolution</span><span class="p">(:,</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">);</span>
 <span class="n">plot</span><span class="p">(</span><span class="n">convert</span><span class="p">.</span><span class="n">epochToDate</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="n">r</span><span class="o">/</span><span class="mf">1e3</span><span class="p">);</span>
-<span class="n">grid</span> <span class="n">on</span><span class="p">;</span>
+<span class="n">grid</span> <span class="s">on</span><span class="p">;</span>
 <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Distance [km]&#39;</span><span class="p">);</span>
 <span class="n">legend</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span><span class="s">&#39;y&#39;</span><span class="p">,</span><span class="s">&#39;z&#39;</span><span class="p">,</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="s">&#39;South&#39;</span><span class="p">,</span><span class="s">&#39;Orientation&#39;</span><span class="p">,</span><span class="s">&#39;Horizontal&#39;</span><span class="p">);</span>
 </pre></div>
@@ -311,7 +313,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

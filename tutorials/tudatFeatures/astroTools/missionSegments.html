@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -107,6 +109,7 @@
 <li class="toctree-l4"><a class="reference internal" href="trajectoryDesign.html">5.3. Trajectory Design</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">Low-Thrust Trajectory Design Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
@@ -168,9 +171,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">5. Basic Astrodynamics Tools</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">5. </span>Basic Astrodynamics Tools</a> &raquo;</li>
         
-      <li>5.2. Mission Segments</li>
+      <li><span class="section-number">5.2. </span>Mission Segments</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -190,24 +193,24 @@
            <div itemprop="articleBody">
             
   <div class="section" id="mission-segments">
-<span id="tudatfeaturesmissionsegments"></span><h1>5.2. Mission Segments<a class="headerlink" href="#mission-segments" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturesmissionsegments"></span><h1><span class="section-number">5.2. </span>Mission Segments<a class="headerlink" href="#mission-segments" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="lambert-targeter">
-<h2>5.2.1. Lambert Targeter<a class="headerlink" href="#lambert-targeter" title="Permalink to this headline">¶</a></h2>
-<p>A Lambert targeter is an algorithm which can solve Lambert’s problem. The input into this problem is the initial position vector, the final position vector, and the time-of-flight (TOF) for the peoblem that needs to be solved. Several Lambert Targeting algorithms, developed over the last few years, are included in Tudat. Each of these algorithm are a seperate class that is derived from one base class: <code class="docutils literal"><span class="pre">lambertTargeter</span></code>.</p>
-<dl class="class">
+<h2><span class="section-number">5.2.1. </span>Lambert Targeter<a class="headerlink" href="#lambert-targeter" title="Permalink to this headline">¶</a></h2>
+<p>A Lambert targeter is an algorithm which can solve Lambert’s problem. The input into this problem is the initial position vector, the final position vector, and the time-of-flight (TOF) for the peoblem that needs to be solved. Several Lambert Targeting algorithms, developed over the last few years, are included in Tudat. Each of these algorithm are a seperate class that is derived from one base class: <code class="docutils literal notranslate"><span class="pre">lambertTargeter</span></code>.</p>
+<dl class="py class">
 <dt id="lambertTargeter">
-<em class="property">class </em><code class="descname">lambertTargeter</code><a class="headerlink" href="#lambertTargeter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">lambertTargeter</code><a class="headerlink" href="#lambertTargeter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<p>This is the base class that is used to derive the different algorithms to solve Lambert’s problem. Each class that is derived from this base class contains a method called <code class="docutils literal"><span class="pre">execute()</span></code>. This method is called in the constructor of each class and performs the specific algorithm. Other methods like: <code class="docutils literal"><span class="pre">getInertialVelocityAtDeparture()</span></code> can then be called to get the results of the algorithm.</p>
+<p>This is the base class that is used to derive the different algorithms to solve Lambert’s problem. Each class that is derived from this base class contains a method called <code class="docutils literal notranslate"><span class="pre">execute()</span></code>. This method is called in the constructor of each class and performs the specific algorithm. Other methods like: <code class="docutils literal notranslate"><span class="pre">getInertialVelocityAtDeparture()</span></code> can then be called to get the results of the algorithm.</p>
 <p>There are several algorithms available in Tudat. Which algorithms are available are discussed below, however, the specifics of these algorithms are not explained here.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="lambertTargeterIzzo">
-<em class="property">class </em><code class="descname">lambertTargeterIzzo</code><a class="headerlink" href="#lambertTargeterIzzo" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">lambertTargeterIzzo</code><a class="headerlink" href="#lambertTargeterIzzo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>This class uses Izzo’s algorithm to solve the Lambert problem. This class can be called as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">LambertTargeterIzzo</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtDeparture</span><span class="p">,</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LambertTargeterIzzo</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtDeparture</span><span class="p">,</span>
                    <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtArrival</span><span class="p">,</span>
                    <span class="k">const</span> <span class="kt">double</span> <span class="n">aTimeOfFlight</span><span class="p">,</span>
                    <span class="k">const</span> <span class="kt">double</span> <span class="n">aGravitationalParameter</span><span class="p">,</span>
@@ -219,50 +222,50 @@
 <p>where:</p>
 <blockquote>
 <div><ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">aCartesianPositionAtDeparture</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aCartesianPositionAtDeparture</span></code>:</p>
 <blockquote>
 <div><p>The cartesian position of the body at departure, given in meters.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">aCartesianPositionAtArrival</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aCartesianPositionAtArrival</span></code>:</p>
 <blockquote>
 <div><p>The cartesian position of the body at arrival, given in meters.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">aTimeOfFlight</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aTimeOfFlight</span></code>:</p>
 <blockquote>
 <div><p>The time-of-flight between departure and arrival, given in seconds.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">aGravitationalParameter</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aGravitationalParameter</span></code>:</p>
 <blockquote>
 <div><p>The gravitational parameter of the main body.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">isRetrograde</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">isRetrograde</span></code>:</p>
 <blockquote>
 <div><p>Boolean variable that determines if the orbital motion is retrograde or not.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">convergenceTolerance</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">convergenceTolerance</span></code>:</p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">double</span></code> that gives the tolerance of the root finding algorithm.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">double</span></code> that gives the tolerance of the root finding algorithm.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">maximumNumberOfIterations</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">maximumNumberOfIterations</span></code>:</p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">int</span></code> that gives the maximum number of iterations of the root finding algorithm.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">int</span></code> that gives the maximum number of iterations of the root finding algorithm.</p>
 </div></blockquote>
 </li>
 </ul>
 </div></blockquote>
-<dl class="class">
+<dl class="py class">
 <dt id="lambertTargeterGooding">
-<em class="property">class </em><code class="descname">lambertTargeterGooding</code><a class="headerlink" href="#lambertTargeterGooding" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">lambertTargeterGooding</code><a class="headerlink" href="#lambertTargeterGooding" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>This class uses Gooding’s algorithm to solve the Lambert problem. This class can be called as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">LambertTargeterGooding</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtDeparture</span><span class="p">,</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LambertTargeterGooding</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtDeparture</span><span class="p">,</span>
                       <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtArrival</span><span class="p">,</span>
                       <span class="k">const</span> <span class="kt">double</span> <span class="n">aTimeOfFlight</span><span class="p">,</span>
                       <span class="k">const</span> <span class="kt">double</span> <span class="n">aGravitationalParameter</span><span class="p">,</span>
@@ -273,40 +276,40 @@
 <p>where:</p>
 <blockquote>
 <div><ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">aCartesianPositionAtDeparture</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aCartesianPositionAtDeparture</span></code>:</p>
 <blockquote>
 <div><p>The cartesian position of the body at departure, given in meters.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">aCartesianPositionAtArrival</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aCartesianPositionAtArrival</span></code>:</p>
 <blockquote>
 <div><p>The cartesian position of the body at arrival, given in meters.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">aTimeOfFlight</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aTimeOfFlight</span></code>:</p>
 <blockquote>
 <div><p>The time-of-flight between departure and arrival, given in seconds.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">aGravitationalParameter</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aGravitationalParameter</span></code>:</p>
 <blockquote>
 <div><p>The gravitational parameter of the main body.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">aRootFinder</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aRootFinder</span></code>:</p>
 <blockquote>
-<div><p>A pointer of type: <code class="docutils literal"><span class="pre">root_finders::RootFinderPointer</span></code> that points to a root finding algorithm.</p>
+<div><p>A pointer of type: <code class="docutils literal notranslate"><span class="pre">root_finders::RootFinderPointer</span></code> that points to a root finding algorithm.</p>
 </div></blockquote>
 </li>
 </ul>
 </div></blockquote>
-<dl class="class">
+<dl class="py class">
 <dt id="ZeroRevolutionlambertTargeterIzzo">
-<em class="property">class </em><code class="descname">ZeroRevolutionlambertTargeterIzzo</code><a class="headerlink" href="#ZeroRevolutionlambertTargeterIzzo" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ZeroRevolutionlambertTargeterIzzo</code><a class="headerlink" href="#ZeroRevolutionlambertTargeterIzzo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>This class uses Izzo’s zero revolution algorithm to solve the Lambert problem. This class can be called as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">ZeroRevolutionLambertTargeterIzzo</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtDeparture</span><span class="p">,</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ZeroRevolutionLambertTargeterIzzo</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtDeparture</span><span class="p">,</span>
                                  <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtArrival</span><span class="p">,</span>
                                  <span class="k">const</span> <span class="kt">double</span> <span class="n">aTimeOfFlight</span><span class="p">,</span>
                                  <span class="k">const</span> <span class="kt">double</span> <span class="n">aGravitationalParameter</span><span class="p">,</span>
@@ -319,50 +322,50 @@
 <blockquote>
 <div><p>where:</p>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">aCartesianPositionAtDeparture</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aCartesianPositionAtDeparture</span></code>:</p>
 <blockquote>
 <div><p>The cartesian position of the body at departure, given in meters.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">aCartesianPositionAtArrival</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aCartesianPositionAtArrival</span></code>:</p>
 <blockquote>
 <div><p>The cartesian position of the body at arrival, given in meters.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">aTimeOfFlight</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aTimeOfFlight</span></code>:</p>
 <blockquote>
 <div><p>The time-of-flight between departure and arrival, given in seconds.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">aGravitationalParameter</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aGravitationalParameter</span></code>:</p>
 <blockquote>
 <div><p>The gravitational parameter of the main body.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">isRetrograde</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">isRetrograde</span></code>:</p>
 <blockquote>
 <div><p>Boolean variable that determines if the orbital motion is retrograde or not.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">convergenceTolerance</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">convergenceTolerance</span></code>:</p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">double</span></code> that gives the tolerance of the root finding algorithm.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">double</span></code> that gives the tolerance of the root finding algorithm.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">maximumNumberOfIterations</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">maximumNumberOfIterations</span></code>:</p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">int</span></code> that gives the maximum number of iterations of the root finding algorithm.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">int</span></code> that gives the maximum number of iterations of the root finding algorithm.</p>
 </div></blockquote>
 </li>
 </ul>
 </div></blockquote>
-<dl class="class">
+<dl class="py class">
 <dt id="MultiRevolutionlambertTargeterIzzo">
-<em class="property">class </em><code class="descname">MultiRevolutionlambertTargeterIzzo</code><a class="headerlink" href="#MultiRevolutionlambertTargeterIzzo" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">MultiRevolutionlambertTargeterIzzo</code><a class="headerlink" href="#MultiRevolutionlambertTargeterIzzo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<p>This class uses Izzo’s multi-revolution algorithm to solve the Lambert problem. This class is not directly derived from the <code class="docutils literal"><span class="pre">lambertTargeter</span></code> class, but it is derived from the <code class="docutils literal"><span class="pre">ZeroRevolutionlambertTargeterIzzo</span></code> class. This class can be called as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">MultiRevolutionLambertTargeterIzzo</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtDeparture</span><span class="p">,</span>
+<p>This class uses Izzo’s multi-revolution algorithm to solve the Lambert problem. This class is not directly derived from the <code class="docutils literal notranslate"><span class="pre">lambertTargeter</span></code> class, but it is derived from the <code class="docutils literal notranslate"><span class="pre">ZeroRevolutionlambertTargeterIzzo</span></code> class. This class can be called as follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiRevolutionLambertTargeterIzzo</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtDeparture</span><span class="p">,</span>
                                   <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtArrival</span><span class="p">,</span>
                                   <span class="k">const</span> <span class="kt">double</span> <span class="n">aTimeOfFlight</span><span class="p">,</span>
                                   <span class="k">const</span> <span class="kt">double</span> <span class="n">aGravitationalParameter</span><span class="p">,</span>
@@ -377,49 +380,49 @@
 <blockquote>
 <div><p>where:</p>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">aCartesianPositionAtDeparture</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aCartesianPositionAtDeparture</span></code>:</p>
 <blockquote>
 <div><p>The cartesian position of the body at departure, given in meters.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">aCartesianPositionAtArrival</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aCartesianPositionAtArrival</span></code>:</p>
 <blockquote>
 <div><p>The cartesian position of the body at arrival, given in meters.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">aTimeOfFlight</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aTimeOfFlight</span></code>:</p>
 <blockquote>
 <div><p>The time-of-flight between departure and arrival, given in seconds.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">aGravitationalParameter</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aGravitationalParameter</span></code>:</p>
 <blockquote>
 <div><p>The gravitational parameter of the main body.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">aNumberOfRevolutions</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aNumberOfRevolutions</span></code>:</p>
 <blockquote>
 <div><p>Required number of revolutions in the problem solution.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">aIsRightBranch</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aIsRightBranch</span></code>:</p>
 <blockquote>
 <div><p>A boolean flag to indicate whether the right or left branch (corresponding to a low or high energy transfer arc) should be used in the solution .</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">aIsRetrograde</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">aIsRetrograde</span></code>:</p>
 <blockquote>
 <div><p>Boolean variable that determines if the orbital motion is retrograde or not.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">convergenceTolerance</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">convergenceTolerance</span></code>:</p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">double</span></code> that gives the tolerance of the root finding algorithm.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">double</span></code> that gives the tolerance of the root finding algorithm.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">maximumNumberOfIterations</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">maximumNumberOfIterations</span></code>:</p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">int</span></code> that gives the maximum number of iterations of the root finding algorithm.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">int</span></code> that gives the maximum number of iterations of the root finding algorithm.</p>
 </div></blockquote>
 </li>
 </ul>
@@ -482,7 +485,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

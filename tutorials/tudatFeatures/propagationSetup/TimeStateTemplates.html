@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -112,6 +114,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">Low-Thrust Trajectory Design Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
@@ -173,9 +176,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">3. Simulator Set-Up</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">3. </span>Simulator Set-Up</a> &raquo;</li>
         
-      <li>3.8. Time and State Templates</li>
+      <li><span class="section-number">3.8. </span>Time and State Templates</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -195,27 +198,27 @@
            <div itemprop="articleBody">
             
   <div class="section" id="time-and-state-templates">
-<span id="tudatfeaturestimestatetemplates"></span><h1>3.8. Time and State Templates<a class="headerlink" href="#time-and-state-templates" title="Permalink to this headline">¶</a></h1>
-<p>Various classes like <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> and <a class="reference internal" href="propagatorSettings.html#TranslationalStatePropagatorSettings" title="TranslationalStatePropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">TranslationalStatePropagatorSettings</span></code></a> require inputs called <code class="docutils literal"><span class="pre">StateScalarType</span></code> or <code class="docutils literal"><span class="pre">TimeType</span></code>. These parameters are called template parameters in C++, and they are used in classes and functions to declare a special kind of parameter type (for more information on templates in C++, go <a class="reference external" href="http://www.cplusplus.com/doc/oldtutorial/templates/">here</a>). The templates can be used to define the accuracy of the state and/or the time used in the class, which can have a large influence on the total accuracy of the simulation, as can be seen in the figure at the end of this page.</p>
-<p><code class="docutils literal"><span class="pre">StateScalarType</span></code> is used in classes which contain variables that are used to define the state of the object. This template has a default value of <code class="docutils literal"><span class="pre">double</span></code>. The other option for <code class="docutils literal"><span class="pre">StateScalarType</span></code> is <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code>, which, depending on your computer, has a higher accuracy then a <code class="docutils literal"><span class="pre">double</span></code> variable. When one of the options is chosen for a specific class, all variables that are of the <code class="docutils literal"><span class="pre">StateScalarType</span></code> in that class will have an accuracy which corresponds to the chosen option.</p>
-<p>The <code class="docutils literal"><span class="pre">TimeType</span></code> has slightly different options. The default option is the same as for the <code class="docutils literal"><span class="pre">StateScalarType</span></code>, i.e. <code class="docutils literal"><span class="pre">double</span></code>. However, the second option is a class called <code class="xref py py-class docutils literal"><span class="pre">Time</span></code>. This class has a special way of calculating time, because of the reduction of the quality of time variables over longer periods of time. For example, when <code class="docutils literal"><span class="pre">double</span></code> or <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code> variables are used to determine the time, the accuracy of these variables will be in the order of (for a time period of 3 years) <span class="math">\(10^{-8}\)</span> or <span class="math">\(10^{-11}\)</span>, respectively, which is insufficient for various applications. The <code class="xref py py-class docutils literal"><span class="pre">Time</span></code> option uses an <code class="docutils literal"><span class="pre">int</span></code> to keep track of the number of hours that have passed, and a <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code> to represent the number of seconds into the present hour. This provides a resulution of &lt; 1 femtosecond, over a range of 2147483647 hours (about 300,000 years), which is more than sufficient for practical applications.</p>
+<span id="tudatfeaturestimestatetemplates"></span><h1><span class="section-number">3.8. </span>Time and State Templates<a class="headerlink" href="#time-and-state-templates" title="Permalink to this headline">¶</a></h1>
+<p>Various classes like <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntegratorSettings</span></code></a> and <a class="reference internal" href="propagatorSettings.html#TranslationalStatePropagatorSettings" title="TranslationalStatePropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationalStatePropagatorSettings</span></code></a> require inputs called <code class="docutils literal notranslate"><span class="pre">StateScalarType</span></code> or <code class="docutils literal notranslate"><span class="pre">TimeType</span></code>. These parameters are called template parameters in C++, and they are used in classes and functions to declare a special kind of parameter type (for more information on templates in C++, go <a class="reference external" href="http://www.cplusplus.com/doc/oldtutorial/templates/">here</a>). The templates can be used to define the accuracy of the state and/or the time used in the class, which can have a large influence on the total accuracy of the simulation, as can be seen in the figure at the end of this page.</p>
+<p><code class="docutils literal notranslate"><span class="pre">StateScalarType</span></code> is used in classes which contain variables that are used to define the state of the object. This template has a default value of <code class="docutils literal notranslate"><span class="pre">double</span></code>. The other option for <code class="docutils literal notranslate"><span class="pre">StateScalarType</span></code> is <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">double</span></code>, which, depending on your computer, has a higher accuracy then a <code class="docutils literal notranslate"><span class="pre">double</span></code> variable. When one of the options is chosen for a specific class, all variables that are of the <code class="docutils literal notranslate"><span class="pre">StateScalarType</span></code> in that class will have an accuracy which corresponds to the chosen option.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">TimeType</span></code> has slightly different options. The default option is the same as for the <code class="docutils literal notranslate"><span class="pre">StateScalarType</span></code>, i.e. <code class="docutils literal notranslate"><span class="pre">double</span></code>. However, the second option is a class called <code class="xref py py-class docutils literal notranslate"><span class="pre">Time</span></code>. This class has a special way of calculating time, because of the reduction of the quality of time variables over longer periods of time. For example, when <code class="docutils literal notranslate"><span class="pre">double</span></code> or <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">double</span></code> variables are used to determine the time, the accuracy of these variables will be in the order of (for a time period of 3 years) <span class="math notranslate nohighlight">\(10^{-8}\)</span> or <span class="math notranslate nohighlight">\(10^{-11}\)</span>, respectively, which is insufficient for various applications. The <code class="xref py py-class docutils literal notranslate"><span class="pre">Time</span></code> option uses an <code class="docutils literal notranslate"><span class="pre">int</span></code> to keep track of the number of hours that have passed, and a <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">double</span></code> to represent the number of seconds into the present hour. This provides a resulution of &lt; 1 femtosecond, over a range of 2147483647 hours (about 300,000 years), which is more than sufficient for practical applications.</p>
 <p>The most important cases where these types can be chosen are:</p>
 <ul class="simple">
-<li>In the <code class="xref py py-class docutils literal"><span class="pre">integratorSettings</span></code> class, where only the <code class="docutils literal"><span class="pre">TimeType</span></code> needs to be chosen. If the default value needs to be chosen, <code class="docutils literal"><span class="pre">&lt;&gt;</span></code> can be left empty.</li>
+<li><p>In the <code class="xref py py-class docutils literal notranslate"><span class="pre">integratorSettings</span></code> class, where only the <code class="docutils literal notranslate"><span class="pre">TimeType</span></code> needs to be chosen. If the default value needs to be chosen, <code class="docutils literal notranslate"><span class="pre">&lt;&gt;</span></code> can be left empty.</p></li>
 </ul>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">IntegratorSettings</span><span class="o">&lt;</span><span class="n">TimeType</span><span class="o">&gt;</span><span class="p">()</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">IntegratorSettings</span><span class="o">&lt;</span><span class="n">TimeType</span><span class="o">&gt;</span><span class="p">()</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li>In the <code class="xref py py-class docutils literal"><span class="pre">TranslationalStatePropagatorSetting</span></code> class, where only the <code class="docutils literal"><span class="pre">StateScalarType</span></code> needs to be chosen. If the default value needs to be chosen, <code class="docutils literal"><span class="pre">&lt;&gt;</span></code> can be left empty.</li>
+<li><p>In the <code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationalStatePropagatorSetting</span></code> class, where only the <code class="docutils literal notranslate"><span class="pre">StateScalarType</span></code> needs to be chosen. If the default value needs to be chosen, <code class="docutils literal notranslate"><span class="pre">&lt;&gt;</span></code> can be left empty.</p></li>
 </ul>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span><span class="n">StateScalarType</span><span class="o">&gt;</span><span class="p">()</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span><span class="n">StateScalarType</span><span class="o">&gt;</span><span class="p">()</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li>In the <a class="reference internal" href="simulatorCreation.html#SingleArcDynamicsSimulator" title="SingleArcDynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">SingleArcDynamicsSimulator</span></code></a> class, where both the <code class="docutils literal"><span class="pre">StateScalarType</span></code> and <code class="docutils literal"><span class="pre">TimeType</span></code> needs to be chosen. If the default values need to be chosen, <code class="docutils literal"><span class="pre">&lt;&gt;</span></code> can be left empty.</li>
+<li><p>In the <a class="reference internal" href="simulatorCreation.html#SingleArcDynamicsSimulator" title="SingleArcDynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleArcDynamicsSimulator</span></code></a> class, where both the <code class="docutils literal notranslate"><span class="pre">StateScalarType</span></code> and <code class="docutils literal notranslate"><span class="pre">TimeType</span></code> needs to be chosen. If the default values need to be chosen, <code class="docutils literal notranslate"><span class="pre">&lt;&gt;</span></code> can be left empty.</p></li>
 </ul>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span><span class="n">StateScalarType</span><span class="p">,</span> <span class="n">TimeType</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span><span class="n">StateScalarType</span><span class="p">,</span> <span class="n">TimeType</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>There are other classes where these types need to be used as an input, but these are the most commonly used ones.</p>
@@ -279,7 +282,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

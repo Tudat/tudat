@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
 
@@ -120,7 +122,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developerGuide/index.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -169,7 +170,7 @@
         
           <li><a href="index.html">Application Tutorials</a> &raquo;</li>
         
-      <li>6. Shaping Methods Trajectory Optimisation</li>
+      <li><span class="section-number">6. </span>Shaping Methods Trajectory Optimisation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -189,25 +190,26 @@
            <div itemprop="articleBody">
             
   <div class="section" id="shaping-methods-trajectory-optimisation">
-<span id="walkthroughshodographicshapingoptimisation"></span><h1>6. Shaping Methods Trajectory Optimisation<a class="headerlink" href="#shaping-methods-trajectory-optimisation" title="Permalink to this headline">¶</a></h1>
+<span id="walkthroughshodographicshapingoptimisation"></span><h1><span class="section-number">6. </span>Shaping Methods Trajectory Optimisation<a class="headerlink" href="#shaping-methods-trajectory-optimisation" title="Permalink to this headline">¶</a></h1>
 <p>The example described in this tutorial presents the use of shape-based methods to find the best trajectory to transfer from Earth to Mars. The code for this tutorial is given on Github, and is also located in your Tudat bundle at:</p>
 <blockquote>
-<div>tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/lowThrustTrajectoryExample.cpp</div></blockquote>
+<div><p>tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/lowThrustTrajectoryExample.cpp</p>
+</div></blockquote>
 <p>This tutorial presents the optimisation of a shape-based trajectory, using hodographic shaping. As described in more details here <a class="reference internal" href="../tudatFeatures/lowThrustTrajectoryDesign/shapeBasedMethods/hodographicShaping.html#tudatfeatureshodographicshaping"><span class="std std-ref">Hodographic shaping</span></a>, this shaping method allows the user to introduce some extra degrees of freedom in the problem, by adding more base functions than what is required to satisfy the boundary conditions. The weighting coefficients associated with those additional base functions are then free parameters of the problem and can be tuned to minimise the deltaV required by the shaped trajectory.</p>
 <p>In this tutorial, we determine the best departure date and time-of-flight for an Earth-Mars transfer using hodographic shaping to design the trajectory. We first use the lowest-order solution (no additional base functions, so no degree of freedom in the design problem). Then, we optimise the shaped trajectory by introducing some free parameters (high-order solution) while focusing on a reduced search space.</p>
 <div class="section" id="set-up-the-trajectory-design-problem">
-<h2>6.1. Set up the trajectory design problem<a class="headerlink" href="#set-up-the-trajectory-design-problem" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.1. </span>Set up the trajectory design problem<a class="headerlink" href="#set-up-the-trajectory-design-problem" title="Permalink to this headline">¶</a></h2>
 <p>The environment within which the trajectory is to be computed is defined similarly to what is done in the previous tutorials. The central body (Sun) is created using default settings and its position is fixed to the origin of the inertial reference frame. A vehicle body is also created, and its initial mass is specified.</p>
 </div>
 <div class="section" id="grid-search-for-the-lowest-order-solution">
-<h2>6.2. Grid search for the lowest-order solution<a class="headerlink" href="#grid-search-for-the-lowest-order-solution" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.2. </span>Grid search for the lowest-order solution<a class="headerlink" href="#grid-search-for-the-lowest-order-solution" title="Permalink to this headline">¶</a></h2>
 <p>Two nested for loops are used to parse the departure date and time-of-flight ranges for hodographically shaped Earth-Mars transfers. The departure dates range from 7304 MJD (Modified Julian Date) to 10225 MJD, while the time-of-flight are constrained between 500 and 2000 days.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">departureTimeBounds</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="mf">7304.5</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">,</span> <span class="mf">10225.5</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span>  <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">departureTimeBounds</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="mf">7304.5</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">,</span> <span class="mf">10225.5</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span>  <span class="p">);</span>
 <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">timeOfFlightBounds</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="mf">500.0</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">,</span> <span class="mf">2000.0</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The time-of-flight step of the grid search is 5 days, while 400 departure dates are parsed from 7304 to 10225 MJD. For each combination of departure date and time-of-flight, different numbers of revolutions are also parsed (N=0-5), and only the one leading to the best trajectory (lowest deltaV) is saved. Because the recommended base functions depend on the value of the time-of-flight and on the number of revolutions, they need to be defined inside the for-loops. More precisely, the base functions of the radial and normal velocity components depend on the time-of-flight only, while the base functions for the axial velocity component also depend on the number of revolutions. For the sake of brevity, and to avoid repeating the same lines of code when defining different base functions, we use the function <code class="docutils literal"><span class="pre">getRecommendedRadialVelocityBaseFunctions</span></code> (and equivalent for normal and axial velocity components) to define them with limited coding effort. The global code structure for the grid search is thus the following one:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">numberCases</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<p>The time-of-flight step of the grid search is 5 days, while 400 departure dates are parsed from 7304 to 10225 MJD. For each combination of departure date and time-of-flight, different numbers of revolutions are also parsed (N=0-5), and only the one leading to the best trajectory (lowest deltaV) is saved. Because the recommended base functions depend on the value of the time-of-flight and on the number of revolutions, they need to be defined inside the for-loops. More precisely, the base functions of the radial and normal velocity components depend on the time-of-flight only, while the base functions for the axial velocity component also depend on the number of revolutions. For the sake of brevity, and to avoid repeating the same lines of code when defining different base functions, we use the function <code class="docutils literal notranslate"><span class="pre">getRecommendedRadialVelocityBaseFunctions</span></code> (and equivalent for normal and axial velocity components) to define them with limited coding effort. The global code structure for the grid search is thus the following one:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">numberCases</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
 <span class="c1">// for-loop parsing the time-of-flight values, ranging from 500 to 2000 days, with a time-step of 5 days.</span>
 <span class="k">for</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="p">(</span> <span class="n">timeOfFlightBounds</span><span class="p">.</span><span class="n">second</span> <span class="o">-</span> <span class="n">timeOfFlightBounds</span><span class="p">.</span><span class="n">first</span> <span class="p">)</span> <span class="o">/</span> <span class="p">(</span> <span class="mf">5.0</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span> <span class="p">)</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span>  <span class="p">)</span>
@@ -263,19 +265,19 @@
 </pre></div>
 </div>
 <p>This grid search based on the lowest-order hodographic shaping solution provides the following Porkchop plot (in agreement with the results presented in Gondelach, 2015 (Hodographic-Shaping Method for Low-Thrust Interplanetary Trajectory Design):</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/porkchopHodographicShapingLowOrder.png" src="../../_images/porkchopHodographicShapingLowOrder.png" />
 </div>
 </div>
 <div class="section" id="optimisation-of-the-shaped-trajectories-high-order-solution">
-<h2>6.3. Optimisation of the shaped trajectories (high-order solution)<a class="headerlink" href="#optimisation-of-the-shaped-trajectories-high-order-solution" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.3. </span>Optimisation of the shaped trajectories (high-order solution)<a class="headerlink" href="#optimisation-of-the-shaped-trajectories-high-order-solution" title="Permalink to this headline">¶</a></h2>
 <p>Here, we introduce two degrees of freedom to the trajectory design problem, by adding two extra base functions to the composite function mapping the radial velocity component. We then want to optimise their values to minimise the deltaV required by the trajectory. Because of the computational load of the optimisation process, a reduced search space is considered here. The departure dates range from 7304 to 7379 MJD, while the time-of-flight search space is reduced to the [200d;900d] interval.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Only the definition of the base functions used to shape the radial velocity component is modified compared to the lowest-order grid search presented above.</p>
+<p class="admonition-title">Note</p>
+<p>Only the definition of the base functions used to shape the radial velocity component is modified compared to the lowest-order grid search presented above.</p>
 </div>
 <p>Still, the global structure is similar to the one presented for the lowest-order solution presented in the first part of this tutorial. One major difference is that we no longer iterate on the number of revolutions to find the one leading the best trajectory, but the number of revolutions is now set to 1 (again, to reduce the computational load). The code is written as follows</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">numberCases</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">numberCases</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
 <span class="c1">// Define lower and upper bounds for the radial velocity free coefficients.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bounds</span><span class="p">(</span> <span class="mi">2</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.0</span> <span class="p">)</span> <span class="p">);</span>
@@ -344,7 +346,7 @@
 </pre></div>
 </div>
 <p>Focusing first on the definition of the base functions for the radial velocity components, five of them are defined in this example. Two extra base functions are added to the three recommended base functions used in the lowest-order solution. This adds two degrees of freedom, since three base functions are required to satisfy the boundary conditions in the radial direction. The following piece of code is used to define those five radial base functions:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define settings for the two additional base functions for the radial velocity composite function.</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define settings for the two additional base functions for the radial velocity composite function.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">shape_based_methods</span><span class="o">::</span><span class="n">BaseFunctionHodographicShapingSettings</span> <span class="o">&gt;</span> <span class="n">fourthRadialVelocityBaseFunctionSettings</span> <span class="o">=</span>
         <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">shape_based_methods</span><span class="o">::</span><span class="n">PowerTimesTrigonometricFunctionHodographicShapingSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">frequency</span><span class="p">,</span> <span class="n">scaleFactor</span> <span class="p">);</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">shape_based_methods</span><span class="o">::</span><span class="n">BaseFunctionHodographicShapingSettings</span> <span class="o">&gt;</span> <span class="n">fifthRadialVelocityBaseFunctionSettings</span> <span class="o">=</span>
@@ -360,8 +362,8 @@
             <span class="n">createBaseFunctionHodographicShaping</span><span class="p">(</span> <span class="n">shape_based_methods</span><span class="o">::</span><span class="n">scaledPowerCosine</span><span class="p">,</span> <span class="n">fifthRadialVelocityBaseFunctionSettings</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The base functions for the normal and axial velocity shaping functions are defined exactly as it was done in the lowest-order solution case. Then, for each combination of time-of-flight and departure date, the hodographically shaped trajectory has to be optimised. The hodographic shaping optimisation problem has been implemented in the class <code class="docutils literal"><span class="pre">HodographicShapingOptimisationProblem</span></code> (see <a class="reference internal" href="../tudatFeatures/lowThrustTrajectoryDesign/shapeBasedMethods/hodographicShaping.html#tudatfeatureshodographicshapingoptimisation"><span class="std std-ref">Optimising the hodographically shaped trajectory</span></a> for more details). Creating an object of this class automatically creates a PAGMO compatible optimisation problem whose design parameters are the free coefficients of the hodographic shaping method, and which aims at minimising the deltaV of the trajectory.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create hodographic shaping optimisation problem.</span>
+<p>The base functions for the normal and axial velocity shaping functions are defined exactly as it was done in the lowest-order solution case. Then, for each combination of time-of-flight and departure date, the hodographically shaped trajectory has to be optimised. The hodographic shaping optimisation problem has been implemented in the class <code class="docutils literal notranslate"><span class="pre">HodographicShapingOptimisationProblem</span></code> (see <a class="reference internal" href="../tudatFeatures/lowThrustTrajectoryDesign/shapeBasedMethods/hodographicShaping.html#tudatfeatureshodographicshapingoptimisation"><span class="std std-ref">Optimising the hodographically shaped trajectory</span></a> for more details). Creating an object of this class automatically creates a PAGMO compatible optimisation problem whose design parameters are the free coefficients of the hodographic shaping method, and which aims at minimising the deltaV of the trajectory.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create hodographic shaping optimisation problem.</span>
 <span class="n">problem</span> <span class="n">prob</span><span class="p">{</span> <span class="n">HodographicShapingOptimisationProblem</span><span class="p">(</span> <span class="n">cartesianStateAtDeparture</span><span class="p">,</span> <span class="n">cartesianStateAtArrival</span><span class="p">,</span> <span class="n">currentTOF</span><span class="p">,</span> <span class="n">numberOfRevolutions</span><span class="p">,</span>
                                                      <span class="n">bodyMap</span><span class="p">,</span> <span class="s">&quot;Vehicle&quot;</span><span class="p">,</span> <span class="s">&quot;Sun&quot;</span><span class="p">,</span> <span class="n">radialVelocityFunctionComponents</span><span class="p">,</span>
                                                      <span class="n">normalVelocityFunctionComponents</span><span class="p">,</span>
@@ -369,7 +371,7 @@
 </pre></div>
 </div>
 <p>Once the optimisation problem has been defined, the selection of the algorithm, the creation of the Island and the solving of the optimisation problem itself are done in a very similar manner to what is presented in the previous optimisation tutorials:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">algorithm</span> <span class="n">algo</span><span class="p">{</span> <span class="n">pagmo</span><span class="o">::</span><span class="n">sga</span><span class="p">(</span> <span class="p">)</span> <span class="p">};</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">algorithm</span> <span class="n">algo</span><span class="p">{</span> <span class="n">pagmo</span><span class="o">::</span><span class="n">sga</span><span class="p">(</span> <span class="p">)</span> <span class="p">};</span>
 
 <span class="c1">// Create an island with 1024 individuals</span>
 <span class="n">island</span> <span class="n">isl</span><span class="p">{</span> <span class="n">algo</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="mi">1024</span> <span class="p">};</span>
@@ -388,15 +390,15 @@
 </pre></div>
 </div>
 <p>The results obtained after optimising the shaped trajectory over the reduced search space are the following ones:</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/porkchopHodographicShapingLowVsHighOrder.png" src="../../_images/porkchopHodographicShapingLowVsHighOrder.png" />
 </div>
 <p>The use of a global evolutionary algorithm (genetic algorithm) here is not ideal to tackle this kind of optimisation problem and thus does not guarantee convergence. Local optimizers are known to perform better in that case (Stubbig, 2019), but the NLOPT library used in PAGMO for local optimisation encounters issues when run on Windows, so that global optimisation has been used in this tutorial for system compatibility. However, it is still sufficient to see that introducing some degrees of freedom in the trajectory design can reduce the deltaV budget and thus leads to better preliminary designs.</p>
 </div>
 <div class="section" id="results">
-<h2>6.4. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.4. </span>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p>The output of the application should look as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span>Starting C:\tudatBundle\tudatExampleApplications\libraryExamples\bin\applications\application_PagmoLowThrustTrajectoryExample.exe...
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>Starting C:\tudatBundle\tudatExampleApplications\libraryExamples\bin\applications\application_PagmoLowThrustTrajectoryExample.exe...
 C:/tudatBundle/tudatExampleApplications/libraryExamples/bin/applications/application_PagmoLowThrustTrajectoryExample.exe exited with code 0
 </pre></div>
 </div>
@@ -458,7 +460,8 @@ C:/tudatBundle/tudatExampleApplications/libraryExamples/bin/applications/applica
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

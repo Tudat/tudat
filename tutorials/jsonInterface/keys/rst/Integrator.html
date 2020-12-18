@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
   
 
@@ -158,66 +160,71 @@
            <div itemprop="articleBody">
             
   <ul class="simple">
-<li><span class="jsontype">string</span> <span class="jsonkey">type</span> (optional). Method to use for the integration of the equations of motion. Possible values: <code class="docutils literal"><span class="pre">&quot;euler&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;rungeKutta4&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;rungeKuttaVariableStepSize&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;adamsBashforthMoulton&quot;</span></code>, <code class="docutils literal"><span class="pre">bulirschStoer</span></code> . Default value: <code class="docutils literal"><span class="pre">&quot;rungeKutta4&quot;</span></code>.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">initialTime</span> (optional). Initial value of the independent variable (typically, seconds since J2000). If not provided, will be obtained from <span class="jsonkey">.initialEpoch</span>.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">saveFrequency</span> (optional). Frequency with which the state is saved to the results map. For instance, a value of <code class="docutils literal"><span class="pre">5</span></code> means that the results are only saved for 1 in every 5 integration steps. Default value: <code class="docutils literal"><span class="pre">1</span></code>.</li>
-<li><span class="jsontype">boolean</span> <span class="jsonkey">assessPropagationTerminationConditionDuringIntegrationSubsteps</span> (optional). Whether the termination conditions defined in <span class="jsonkey">.termination</span> should be assessed after each integrator substep (e.g. for an RK4 integrator, after computing <code class="docutils literal"><span class="pre">k1</span></code>, <code class="docutils literal"><span class="pre">k2</span></code>, <code class="docutils literal"><span class="pre">k3</span></code>…). Not applicable to the Euler integrator. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">type</span> (optional). Method to use for the integration of the equations of motion. Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;euler&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;rungeKutta4&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;rungeKuttaVariableStepSize&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;adamsBashforthMoulton&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">bulirschStoer</span></code> . Default value: <code class="docutils literal notranslate"><span class="pre">&quot;rungeKutta4&quot;</span></code>.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">initialTime</span> (optional). Initial value of the independent variable (typically, seconds since J2000). If not provided, will be obtained from <span class="jsonkey">.initialEpoch</span>.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">saveFrequency</span> (optional). Frequency with which the state is saved to the results map. For instance, a value of <code class="docutils literal notranslate"><span class="pre">5</span></code> means that the results are only saved for 1 in every 5 integration steps. Default value: <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></li>
+<li><p><span class="jsontype">boolean</span> <span class="jsonkey">assessPropagationTerminationConditionDuringIntegrationSubsteps</span> (optional). Whether the termination conditions defined in <span class="jsonkey">.termination</span> should be assessed after each integrator substep (e.g. for an RK4 integrator, after computing <code class="docutils literal notranslate"><span class="pre">k1</span></code>, <code class="docutils literal notranslate"><span class="pre">k2</span></code>, <code class="docutils literal notranslate"><span class="pre">k3</span></code>…). Not applicable to the Euler integrator. Default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
 </ul>
 <div class="toggle docutils container">
 <div class="header docutils container">
-<span class="arrow">Euler Integrator</span></div>
+<p><span class="arrow">Euler Integrator</span></p>
+</div>
 <ul class="simple">
-<li><span class="jsontype">number</span> <span class="jsonkey">stepSize</span> (mandatory). Fixed step-size. Must be negative for backwards propagations.</li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">stepSize</span> (mandatory). Fixed step-size. Must be negative for backwards propagations.</p></li>
 </ul>
 </div>
 <div class="toggle docutils container">
 <div class="header docutils container">
-<span class="arrow">Runge-Kutta 4 Integrator</span></div>
+<p><span class="arrow">Runge-Kutta 4 Integrator</span></p>
+</div>
 <ul class="simple">
-<li><span class="jsontype">number</span> <span class="jsonkey">stepSize</span> (mandatory). Fixed step-size. Must be negative for backwards propagations.</li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">stepSize</span> (mandatory). Fixed step-size. Must be negative for backwards propagations.</p></li>
 </ul>
 </div>
 <div class="toggle docutils container">
 <div class="header docutils container">
-<span class="arrow">Runge-Kutta Variable Step-Size Integrator</span></div>
+<p><span class="arrow">Runge-Kutta Variable Step-Size Integrator</span></p>
+</div>
 <ul class="simple">
-<li><span class="jsontype">string</span> <span class="jsonkey">rungeKuttaCoefficientSet</span> (mandatory). Identifier of the Runge-Kutta method to be used that will determine the coefficients set. Possible values: <code class="docutils literal"><span class="pre">&quot;rungeKuttaFehlberg45&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;rungeKuttaFehlberg56&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;rungeKuttaFehlberg78&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;rungeKutta87DormandPrince&quot;</span></code>.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">initialStepSize</span> (mandatory). Initial step-size. Must be negative for backwards propagations.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">minimumStepSize</span> (mandatory). An error will be thrown if the required step-size for the specified error tolerances is smaller than this value.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">maximumStepSize</span> (mandatory). An error will be thrown if the required step-size for the specified error tolerances is larger than this value.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">relativeErrorTolerance</span> (optional). Relative error tolerance for step-size control. Default value: <code class="docutils literal"><span class="pre">1.0E-12</span></code>.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">absoluteErrorTolerance</span> (optional). Absolute error tolerance for step-size control. Default value: <code class="docutils literal"><span class="pre">1.0E-12</span></code>.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">safetyFactorForNextStepSize</span> (optional). Safety factor for step-size control. Default value: <code class="docutils literal"><span class="pre">0.8</span></code>.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">maximumFactorIncreaseForNextStepSize</span> (optional). Maximum increase factor in step-size in subsequent iterations. Default value: <code class="docutils literal"><span class="pre">4.0</span></code>.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">minimumFactorDecreaseForNextStepSize</span> (optional). Minimum decrease factor in step-size in subsequent iterations. Default value: <code class="docutils literal"><span class="pre">0.1</span></code>.</li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">rungeKuttaCoefficientSet</span> (mandatory). Identifier of the Runge-Kutta method to be used that will determine the coefficients set. Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;rungeKuttaFehlberg45&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;rungeKuttaFehlberg56&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;rungeKuttaFehlberg78&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;rungeKutta87DormandPrince&quot;</span></code>.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">initialStepSize</span> (mandatory). Initial step-size. Must be negative for backwards propagations.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">minimumStepSize</span> (mandatory). An error will be thrown if the required step-size for the specified error tolerances is smaller than this value.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">maximumStepSize</span> (mandatory). An error will be thrown if the required step-size for the specified error tolerances is larger than this value.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">relativeErrorTolerance</span> (optional). Relative error tolerance for step-size control. Default value: <code class="docutils literal notranslate"><span class="pre">1.0E-12</span></code>.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">absoluteErrorTolerance</span> (optional). Absolute error tolerance for step-size control. Default value: <code class="docutils literal notranslate"><span class="pre">1.0E-12</span></code>.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">safetyFactorForNextStepSize</span> (optional). Safety factor for step-size control. Default value: <code class="docutils literal notranslate"><span class="pre">0.8</span></code>.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">maximumFactorIncreaseForNextStepSize</span> (optional). Maximum increase factor in step-size in subsequent iterations. Default value: <code class="docutils literal notranslate"><span class="pre">4.0</span></code>.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">minimumFactorDecreaseForNextStepSize</span> (optional). Minimum decrease factor in step-size in subsequent iterations. Default value: <code class="docutils literal notranslate"><span class="pre">0.1</span></code>.</p></li>
 </ul>
 </div>
 <div class="toggle docutils container">
 <div class="header docutils container">
-<span class="arrow">Adams-Bashforth Variable Step-Size/Order Integrator</span></div>
+<p><span class="arrow">Adams-Bashforth Variable Step-Size/Order Integrator</span></p>
+</div>
 <ul class="simple">
-<li><span class="jsontype">number</span> <span class="jsonkey">initialStepSize</span> (mandatory). Initial step-size. Must be negative for backwards propagations.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">minimumStepSize</span> (mandatory). An error will be thrown if the required step-size for the specified error tolerances is smaller than this value.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">maximumStepSize</span> (mandatory). An error will be thrown if the required step-size for the specified error tolerances is larger than this value.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">relativeErrorTolerance</span> (optional). Relative error tolerance for step-size control. Default value: <code class="docutils literal"><span class="pre">1.0E-12</span></code>.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">absoluteErrorTolerance</span> (optional). Absolute error tolerance for step-size control. Default value: <code class="docutils literal"><span class="pre">1.0E-12</span></code>.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">minimumOrder</span> (optional). Minimum order of numerical integrator. Default value: <code class="docutils literal"><span class="pre">6</span></code>.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">maximumOrder</span> (optional). Maximum order of numerical integrator. Default value: <code class="docutils literal"><span class="pre">11</span></code>.</li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">initialStepSize</span> (mandatory). Initial step-size. Must be negative for backwards propagations.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">minimumStepSize</span> (mandatory). An error will be thrown if the required step-size for the specified error tolerances is smaller than this value.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">maximumStepSize</span> (mandatory). An error will be thrown if the required step-size for the specified error tolerances is larger than this value.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">relativeErrorTolerance</span> (optional). Relative error tolerance for step-size control. Default value: <code class="docutils literal notranslate"><span class="pre">1.0E-12</span></code>.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">absoluteErrorTolerance</span> (optional). Absolute error tolerance for step-size control. Default value: <code class="docutils literal notranslate"><span class="pre">1.0E-12</span></code>.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">minimumOrder</span> (optional). Minimum order of numerical integrator. Default value: <code class="docutils literal notranslate"><span class="pre">6</span></code>.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">maximumOrder</span> (optional). Maximum order of numerical integrator. Default value: <code class="docutils literal notranslate"><span class="pre">11</span></code>.</p></li>
 </ul>
 </div>
 <div class="toggle docutils container">
 <div class="header docutils container">
-<span class="arrow">Bulirsch-Stoer Variable Step-Size Integrator</span></div>
+<p><span class="arrow">Bulirsch-Stoer Variable Step-Size Integrator</span></p>
+</div>
 <ul class="simple">
-<li><span class="jsontype">number</span> <span class="jsonkey">initialStepSize</span> (mandatory). Initial step-size. Must be negative for backwards propagations.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">maximumNumberOfSteps</span> (mandatory). Number of entries in the sequence, e.g. number of integrations used for a single extrapolation.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">minimumStepSize</span> (mandatory). An error will be thrown if the required step-size for the specified error tolerances is smaller than this value.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">maximumStepSize</span> (mandatory). An error will be thrown if the required step-size for the specified error tolerances is larger than this value.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">relativeErrorTolerance</span> (optional). Relative error tolerance for step-size control. Default value: <code class="docutils literal"><span class="pre">1.0E-12</span></code>.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">absoluteErrorTolerance</span> (optional). Absolute error tolerance for step-size control. Default value: <code class="docutils literal"><span class="pre">1.0E-12</span></code>.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">safetyFactorForNextStepSize</span> (optional). Safety factor for step-size control. Default value: <code class="docutils literal"><span class="pre">0.7</span></code>.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">maximumFactorIncreaseForNextStepSize</span> (optional). Maximum increase factor in step-size in subsequent iterations. Default value: <code class="docutils literal"><span class="pre">10.0</span></code>.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">minimumFactorDecreaseForNextStepSize</span> (optional). Minimum decrease factor in step-size in subsequent iterations. Default value: <code class="docutils literal"><span class="pre">0.1</span></code>.</li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">initialStepSize</span> (mandatory). Initial step-size. Must be negative for backwards propagations.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">maximumNumberOfSteps</span> (mandatory). Number of entries in the sequence, e.g. number of integrations used for a single extrapolation.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">minimumStepSize</span> (mandatory). An error will be thrown if the required step-size for the specified error tolerances is smaller than this value.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">maximumStepSize</span> (mandatory). An error will be thrown if the required step-size for the specified error tolerances is larger than this value.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">relativeErrorTolerance</span> (optional). Relative error tolerance for step-size control. Default value: <code class="docutils literal notranslate"><span class="pre">1.0E-12</span></code>.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">absoluteErrorTolerance</span> (optional). Absolute error tolerance for step-size control. Default value: <code class="docutils literal notranslate"><span class="pre">1.0E-12</span></code>.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">safetyFactorForNextStepSize</span> (optional). Safety factor for step-size control. Default value: <code class="docutils literal notranslate"><span class="pre">0.7</span></code>.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">maximumFactorIncreaseForNextStepSize</span> (optional). Maximum increase factor in step-size in subsequent iterations. Default value: <code class="docutils literal notranslate"><span class="pre">10.0</span></code>.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">minimumFactorDecreaseForNextStepSize</span> (optional). Minimum decrease factor in step-size in subsequent iterations. Default value: <code class="docutils literal notranslate"><span class="pre">0.1</span></code>.</p></li>
 </ul>
 </div>
 
@@ -267,7 +274,8 @@
       <script type="text/javascript" src="../../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

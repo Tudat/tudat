@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>6.2. Sims-Flanagan Method &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>2. Sims-Flanagan Method &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -39,8 +41,8 @@
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
         <link rel="up" title="6. Low-Thrust Trajectory Design Module" href="index.html"/>
-        <link rel="next" title="6.3. Hybrid Method" href="hybridMethod.html"/>
-        <link rel="prev" title="6.1. Low-Thrust Trajectories" href="lowThrustTrajectory.html"/> 
+        <link rel="next" title="3. Hybrid Method" href="hybridMethod.html"/>
+        <link rel="prev" title="1. Low-Thrust Trajectories" href="lowThrustTrajectory.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -103,14 +105,14 @@
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">6. Low-Thrust Trajectory Design Module</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="lowThrustTrajectory.html">6.1. Low-Thrust Trajectories</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">6.2. Sims-Flanagan Method</a></li>
-<li class="toctree-l4"><a class="reference internal" href="hybridMethod.html">6.3. Hybrid Method</a></li>
-<li class="toctree-l4"><a class="reference internal" href="shapeBasedMethods/index.html">Shape-Based Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lowThrustTrajectory.html">1. Low-Thrust Trajectories</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">2. Sims-Flanagan Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hybridMethod.html">3. Hybrid Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shapeBasedMethods/index.html">4. Shape-Based Methods</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">7. Basic Mathematics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">8. Other Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
@@ -122,7 +124,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -171,9 +172,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">6. Low-Thrust Trajectory Design Module</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">6. </span>Low-Thrust Trajectory Design Module</a> &raquo;</li>
         
-      <li>6.2. Sims-Flanagan Method</li>
+      <li><span class="section-number">2. </span>Sims-Flanagan Method</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -193,41 +194,40 @@
            <div itemprop="articleBody">
             
   <div class="section" id="sims-flanagan-method">
-<span id="tudatfeaturessimsflanagan"></span><h1>6.2. Sims-Flanagan Method<a class="headerlink" href="#sims-flanagan-method" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturessimsflanagan"></span><h1><span class="section-number">2. </span>Sims-Flanagan Method<a class="headerlink" href="#sims-flanagan-method" title="Permalink to this headline">¶</a></h1>
 <p>The Sims-Flanagan method is the most commonly used direct method. It consists in dividing the trajectory into two separate parts: a forward propagation subleg from departure to half of the time of flight, and a backward propagation subleg from arrival to half of the time of flight. Those two sublegs are themselves divided into a given number of segments, so that the low-thrust trajectory is modelled as a succession of impulsive shots, which are applied at the middle of each trajectory segment. The direction and magnitude of the impulsive shots are left as free parameters, but are constrained to ensure they do not overshoot the maximum allowable thrust magnitude. The Sims-Flanagan method thus transforms the two-boundary problem into a parametrised optimisation problem, which is defined as follows:</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt><strong>Objective</strong></dt>
-<dd>Minimisation of the deltaV required by the trajectory.</dd>
+<li><dl class="simple">
+<dt><strong>Objective</strong></dt><dd><p>Minimisation of the deltaV required by the trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><strong>Constraints</strong></dt>
-<dd><ul class="first last">
-<li>The state vectors obtained with respectively forward propagation from departure, and backward propagation from arrival should match at half of the time of flight.</li>
-<li>The thrust magnitude shall not exceed its maximum value (provided as input by the user).</li>
+<li><dl class="simple">
+<dt><strong>Constraints</strong></dt><dd><ul>
+<li><p>The state vectors obtained with respectively forward propagation from departure, and backward propagation from arrival should match at half of the time of flight.</p></li>
+<li><p>The thrust magnitude shall not exceed its maximum value (provided as input by the user).</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><strong>Design parameters</strong></dt>
-<dd>So-called thrust throttles: direction and magnitude of the impulsive shots applied at the middle of each trajectory segment.</dd>
+<li><dl class="simple">
+<dt><strong>Design parameters</strong></dt><dd><p>So-called thrust throttles: direction and magnitude of the impulsive shots applied at the middle of each trajectory segment.</p>
+</dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
 <div class="section" id="sims-flanagan-optimisation-problem">
-<h2>6.2.1. Sims-Flanagan optimisation problem<a class="headerlink" href="#sims-flanagan-optimisation-problem" title="Permalink to this headline">¶</a></h2>
-<p>The Sims-Flanagan method has been implemented in the class <code class="docutils literal"><span class="pre">SimsFlanagan</span></code>, which is derived from the base class <code class="docutils literal"><span class="pre">LowThrustLeg</span></code>.</p>
-<dl class="class">
+<h2><span class="section-number">2.1. </span>Sims-Flanagan optimisation problem<a class="headerlink" href="#sims-flanagan-optimisation-problem" title="Permalink to this headline">¶</a></h2>
+<p>The Sims-Flanagan method has been implemented in the class <code class="docutils literal notranslate"><span class="pre">SimsFlanagan</span></code>, which is derived from the base class <code class="docutils literal notranslate"><span class="pre">LowThrustLeg</span></code>.</p>
+<dl class="py class">
 <dt id="SimsFlanagan">
-<em class="property">class </em><code class="descname">SimsFlanagan</code><a class="headerlink" href="#SimsFlanagan" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">SimsFlanagan</code><a class="headerlink" href="#SimsFlanagan" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<p>This class creates the Sims-Flanagan problem and runs the associated optimisation problem. It inherits from the base class <code class="docutils literal"><span class="pre">LowThrustLeg</span></code> and is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SimsFlanagan</span><span class="p">(</span>
+<p>This class creates the Sims-Flanagan problem and runs the associated optimisation problem. It inherits from the base class <code class="docutils literal notranslate"><span class="pre">LowThrustLeg</span></code> and is defined as follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SimsFlanagan</span><span class="p">(</span>
     <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">stateAtDeparture</span><span class="p">,</span>
     <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">stateAtArrival</span><span class="p">,</span>
     <span class="k">const</span> <span class="kt">double</span> <span class="n">maximumThrust</span><span class="p">,</span>
@@ -247,125 +247,125 @@
 <p>where the input parameters are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">stateAtDeparture</span></code></dt>
-<dd>State of the spacecraft at departure.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">stateAtDeparture</span></code></dt><dd><p>State of the spacecraft at departure.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">stateAtArrival</span></code></dt>
-<dd>State of the spacecraft at arrival.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">stateAtArrival</span></code></dt><dd><p>State of the spacecraft at arrival.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">maximumThrust</span></code></dt>
-<dd>Maximum thrust magnitude per impulsive shot.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">maximumThrust</span></code></dt><dd><p>Maximum thrust magnitude per impulsive shot.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">specificImpulseFunction</span></code></dt>
-<dd>Function returning the specific impulse value at a given time.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">specificImpulseFunction</span></code></dt><dd><p>Function returning the specific impulse value at a given time.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">numberSegments</span></code></dt>
-<dd>Total number of segments into which the trajectory leg is subdivided (this includes both the forward and backward propagation legs into which the whole trajectory is divided into).</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">numberSegments</span></code></dt><dd><p>Total number of segments into which the trajectory leg is subdivided (this includes both the forward and backward propagation legs into which the whole trajectory is divided into).</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">timeOfFlight</span></code></dt>
-<dd>Time of flight required for the trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">timeOfFlight</span></code></dt><dd><p>Time of flight required for the trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">bodyMap</span></code></dt>
-<dd>Map of pointers to <code class="docutils literal"><span class="pre">Body</span></code> objects involved in the low-thrust trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">bodyMap</span></code></dt><dd><p>Map of pointers to <code class="docutils literal notranslate"><span class="pre">Body</span></code> objects involved in the low-thrust trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">bodyToPropagate</span></code></dt>
-<dd>Name of the spacecraft to be propagated.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">bodyToPropagate</span></code></dt><dd><p>Name of the spacecraft to be propagated.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">centralBody</span></code></dt>
-<dd>Name of the central body of the low-thrust trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">centralBody</span></code></dt><dd><p>Name of the central body of the low-thrust trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">optimisationSettings</span></code></dt>
-<dd>Settings for the Sims-Flanagan optimisation (includes algorithm to be used, number of generations, number of individuals per population, tolerance with respect to contraints, and possibly initial guess)</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">optimisationSettings</span></code></dt><dd><p>Settings for the Sims-Flanagan optimisation (includes algorithm to be used, number of generations, number of individuals per population, tolerance with respect to contraints, and possibly initial guess)</p>
+</dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
-<p>The <code class="docutils literal"><span class="pre">SimsFlanagan</span></code> class is directly derived from the base class <code class="docutils literal"><span class="pre">LowThrustLeg</span></code>, and all the methods contained in that base class are thus available from any <code class="docutils literal"><span class="pre">SimsFlanagan</span></code> object (see <a class="reference internal" href="lowThrustTrajectory.html#tudatfeatureslowthrusttrajectory"><span class="std std-ref">Low-Thrust Trajectories</span></a> for more details). This includes, among others, the methods allowing the user to retrieve the trajectory, mass, thrust, and thrust acceleration history along the trajectory.</p>
-<p>The constructor of the class <code class="docutils literal"><span class="pre">SimsFlanagan</span></code> automatically calls the method <code class="docutils literal"><span class="pre">performOptimisation</span></code>, which tries to find the solution to the Sims-Flanagan parametrised optimisation problem, using the optimisation settings provided by the user. This method creates an object of the class <code class="docutils literal"><span class="pre">SimsFlanaganProblem</span></code>, which defines the Sims-Flanagan optimisation problem so that it is compatible with the PAGMO library. The <code class="docutils literal"><span class="pre">performOptimisation</span></code> function then runs the optimisation algorithm and saves the identified optimum in the <code class="docutils literal"><span class="pre">simsFlanaganLeg_</span></code> private variable, which can be retrieved from the <code class="docutils literal"><span class="pre">getOptimalSimsFlanaganLeg</span></code> method.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">SimsFlanagan</span></code> class is directly derived from the base class <code class="docutils literal notranslate"><span class="pre">LowThrustLeg</span></code>, and all the methods contained in that base class are thus available from any <code class="docutils literal notranslate"><span class="pre">SimsFlanagan</span></code> object (see <a class="reference internal" href="lowThrustTrajectory.html#tudatfeatureslowthrusttrajectory"><span class="std std-ref">Low-Thrust Trajectories</span></a> for more details). This includes, among others, the methods allowing the user to retrieve the trajectory, mass, thrust, and thrust acceleration history along the trajectory.</p>
+<p>The constructor of the class <code class="docutils literal notranslate"><span class="pre">SimsFlanagan</span></code> automatically calls the method <code class="docutils literal notranslate"><span class="pre">performOptimisation</span></code>, which tries to find the solution to the Sims-Flanagan parametrised optimisation problem, using the optimisation settings provided by the user. This method creates an object of the class <code class="docutils literal notranslate"><span class="pre">SimsFlanaganProblem</span></code>, which defines the Sims-Flanagan optimisation problem so that it is compatible with the PAGMO library. The <code class="docutils literal notranslate"><span class="pre">performOptimisation</span></code> function then runs the optimisation algorithm and saves the identified optimum in the <code class="docutils literal notranslate"><span class="pre">simsFlanaganLeg_</span></code> private variable, which can be retrieved from the <code class="docutils literal notranslate"><span class="pre">getOptimalSimsFlanaganLeg</span></code> method.</p>
 </div>
 <div class="section" id="sims-flanagan-trajectory-model">
-<h2>6.2.2. Sims-Flanagan trajectory model<a class="headerlink" href="#sims-flanagan-trajectory-model" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.2. </span>Sims-Flanagan trajectory model<a class="headerlink" href="#sims-flanagan-trajectory-model" title="Permalink to this headline">¶</a></h2>
 <p>Trying the solve the Sims-Flanagan parametrised optimisation problem, as presented above, implies considering many different parametrised trajectories with various thrust profiles, and trying to converge towards the best performing one (in terms of constraints satisfaction, and deltaV budget). Each individual parametrised trajectory whose performance is to be assessed with respect to the trajectory design optimisation objective is created as an object of the following class.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="SimsFlanaganModel">
-<em class="property">class </em><code class="descname">SimsFlanaganModel</code><a class="headerlink" href="#SimsFlanaganModel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">SimsFlanaganModel</code><a class="headerlink" href="#SimsFlanaganModel" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>This class models the low-thrust trajectory as described by the Sims-Flanagan method: forward and backward propagation legs from departure and arrival respectively, matching at half of the time of flight, and low-thrust profile discretised as a succession of impulsive shots applied along the trajectory. This class does not solve the parametrised optimisation problem, but can simply propagate the trajectory defined by a set of user-defined impulsive shots. The class is defined as:</p>
 <p>The input parameters of this class constructor are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">stateAtDeparture</span></code></dt>
-<dd>State of the spacecraft at departure.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">stateAtDeparture</span></code></dt><dd><p>State of the spacecraft at departure.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">stateAtArrival</span></code></dt>
-<dd>State of the spacecraft at arrival.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">stateAtArrival</span></code></dt><dd><p>State of the spacecraft at arrival.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">maximumThrust</span></code></dt>
-<dd>Maximum thrust magnitude per impulsive shot.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">maximumThrust</span></code></dt><dd><p>Maximum thrust magnitude per impulsive shot.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">specificImpulseFunction</span></code></dt>
-<dd>Function returning the specific impulse value at a given time.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">specificImpulseFunction</span></code></dt><dd><p>Function returning the specific impulse value at a given time.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">timeOfFlight</span></code></dt>
-<dd>Time of flight required for the trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">timeOfFlight</span></code></dt><dd><p>Time of flight required for the trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">bodyMap</span></code></dt>
-<dd>Map of pointers to <code class="docutils literal"><span class="pre">Body</span></code> objects involved in the low-thrust trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">bodyMap</span></code></dt><dd><p>Map of pointers to <code class="docutils literal notranslate"><span class="pre">Body</span></code> objects involved in the low-thrust trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">throttles</span></code></dt>
-<dd>Vector containing the thrust vectors (normalised with respect to the maximum thrust value) for each of the impulsive shots.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">throttles</span></code></dt><dd><p>Vector containing the thrust vectors (normalised with respect to the maximum thrust value) for each of the impulsive shots.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">bodyToPropagate</span></code></dt>
-<dd>Name of the spacecraft to be propagated.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">bodyToPropagate</span></code></dt><dd><p>Name of the spacecraft to be propagated.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">centralBody</span></code></dt>
-<dd>Name of the central body of the low-thrust trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">centralBody</span></code></dt><dd><p>Name of the central body of the low-thrust trajectory.</p>
+</dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
 </div>
 <div class="section" id="using-shape-based-trajectory-as-an-initial-guess">
-<span id="tudatfeaturessimsflanaganinitialguessfromshaping"></span><h2>6.2.3. Using shape-based trajectory as an initial guess<a class="headerlink" href="#using-shape-based-trajectory-as-an-initial-guess" title="Permalink to this headline">¶</a></h2>
-<p>It can be rather difficult to reach convergence when trying to solve the parametrised Sims-Flanagan optimisation problem. This is mostly due to the fact that the constant thrust vector of each of the trajectory segment can be arbitrarily chosen, so that the parameters search space is extremely large. This is why it is recommended to use a good initial guess as a starting point for the Sims-Flanagan trajectory design method. The shaping methods which have been implemented in Tudat are good candidates to compute a preliminary trajectory design in an efficient way. As the design parameters for the Sims-Flanagan method are the thrust vectors of the trajectory segments, the initial guess must be provided as a set of n thrust vectors, constant in magnitude and directions (n being the number of segments of the Sims-Flanagan trajectory). One can use the function <code class="docutils literal"><span class="pre">getInitialGuessFunctionFromShaping</span></code> to approximate a thrust profile delivered by a shaping method by a set of n successive, constant thrust vectors.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">getInitialGuessFunctionFromShaping</span><span class="p">(</span>
+<span id="tudatfeaturessimsflanaganinitialguessfromshaping"></span><h2><span class="section-number">2.3. </span>Using shape-based trajectory as an initial guess<a class="headerlink" href="#using-shape-based-trajectory-as-an-initial-guess" title="Permalink to this headline">¶</a></h2>
+<p>It can be rather difficult to reach convergence when trying to solve the parametrised Sims-Flanagan optimisation problem. This is mostly due to the fact that the constant thrust vector of each of the trajectory segment can be arbitrarily chosen, so that the parameters search space is extremely large. This is why it is recommended to use a good initial guess as a starting point for the Sims-Flanagan trajectory design method. The shaping methods which have been implemented in Tudat are good candidates to compute a preliminary trajectory design in an efficient way. As the design parameters for the Sims-Flanagan method are the thrust vectors of the trajectory segments, the initial guess must be provided as a set of n thrust vectors, constant in magnitude and directions (n being the number of segments of the Sims-Flanagan trajectory). One can use the function <code class="docutils literal notranslate"><span class="pre">getInitialGuessFunctionFromShaping</span></code> to approximate a thrust profile delivered by a shaping method by a set of n successive, constant thrust vectors.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">getInitialGuessFunctionFromShaping</span><span class="p">(</span>
     <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">shape_based_methods</span><span class="o">::</span><span class="n">ShapeBasedMethodLeg</span> <span class="o">&gt;</span> <span class="n">shapeBasedLeg</span><span class="p">,</span>
     <span class="k">const</span> <span class="kt">int</span> <span class="n">numberSegmentsSimsFlanagan</span><span class="p">,</span>
     <span class="k">const</span> <span class="kt">double</span> <span class="n">timeOfFlight</span><span class="p">,</span>
@@ -376,35 +376,35 @@
 <p>The input parameters of this function are the following ones:</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">shapeBasedLeg</span></code></dt>
-<dd>Pointer to a <code class="docutils literal"><span class="pre">ShapeBasedObject</span></code> from which the thrust profile of the shape-based trajectory used as initial guess is to be retrieved.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">shapeBasedLeg</span></code></dt><dd><p>Pointer to a <code class="docutils literal notranslate"><span class="pre">ShapeBasedObject</span></code> from which the thrust profile of the shape-based trajectory used as initial guess is to be retrieved.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">numberSegmentsSimsFlanagan</span></code></dt>
-<dd><code class="docutils literal"><span class="pre">int</span></code> object defining the number of segments into which the trajectory is to be subdivided when using the Sims-Flanagan method.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">numberSegmentsSimsFlanagan</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">int</span></code> object defining the number of segments into which the trajectory is to be subdivided when using the Sims-Flanagan method.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">timeOfFlight</span></code></dt>
-<dd>Expected time-of-flight for the trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">timeOfFlight</span></code></dt><dd><p>Expected time-of-flight for the trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">specificImpulseFunction</span></code></dt>
-<dd>Function returning the specific impulse of the spacecraft as a function of time.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">specificImpulseFunction</span></code></dt><dd><p>Function returning the specific impulse of the spacecraft as a function of time.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">integratorSettings</span></code></dt>
-<dd>Integrator settings to be used to retrieve the thrust profile of the shape-based trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">integratorSettings</span></code></dt><dd><p>Integrator settings to be used to retrieve the thrust profile of the shape-based trajectory.</p>
+</dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
 <p>Below is an example of how a thrust profile derived from a shape-based trajectory is approximated to a set of succcessive, constant thrust vectors which can be used as an initial guess for the Sims-Flanagan thrust throttles. It is based on an Earth-Mars transfer, and the shaping method used to get the rough preliminary design is hodographic shaping.</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../../_images/initialGuessSimsFlanagan.png" src="../../../_images/initialGuessSimsFlanagan.png" />
 </div>
 </div>
@@ -420,10 +420,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="hybridMethod.html" class="btn btn-neutral float-right" title="6.3. Hybrid Method" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="hybridMethod.html" class="btn btn-neutral float-right" title="3. Hybrid Method" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="lowThrustTrajectory.html" class="btn btn-neutral" title="6.1. Low-Thrust Trajectories" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="lowThrustTrajectory.html" class="btn btn-neutral" title="1. Low-Thrust Trajectories" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -465,7 +465,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

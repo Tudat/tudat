@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -112,6 +114,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">Low-Thrust Trajectory Design Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
@@ -173,9 +176,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">3. Simulator Set-Up</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">3. </span>Simulator Set-Up</a> &raquo;</li>
         
-      <li>3.1. Integrator Settings</li>
+      <li><span class="section-number">3.1. </span>Integrator Settings</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -195,47 +198,47 @@
            <div itemprop="articleBody">
             
   <div class="section" id="integrator-settings">
-<span id="tudatfeaturesintegratorsettings"></span><h1>3.1. Integrator Settings<a class="headerlink" href="#integrator-settings" title="Permalink to this headline">¶</a></h1>
-<p>As the name suggests, the integrator settings tell the dynamics simulator how to integrate numerically the equations of motion that govern the orbital mechanics to simulate. The <a class="reference internal" href="#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> are defined using four derived classes, depending on whether the integrator to be used is a fixed step-size integrator or a variable step-size integrator.</p>
-<dl class="class">
+<span id="tudatfeaturesintegratorsettings"></span><h1><span class="section-number">3.1. </span>Integrator Settings<a class="headerlink" href="#integrator-settings" title="Permalink to this headline">¶</a></h1>
+<p>As the name suggests, the integrator settings tell the dynamics simulator how to integrate numerically the equations of motion that govern the orbital mechanics to simulate. The <a class="reference internal" href="#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntegratorSettings</span></code></a> are defined using four derived classes, depending on whether the integrator to be used is a fixed step-size integrator or a variable step-size integrator.</p>
+<dl class="py class">
 <dt id="IntegratorSettings">
-<em class="property">class </em><code class="descname">IntegratorSettings</code><a class="headerlink" href="#IntegratorSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">IntegratorSettings</code><a class="headerlink" href="#IntegratorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is used to define the settings for fixed step-size integration. The constructor for this base class is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">integratorType</span><span class="p">,</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">integratorType</span><span class="p">,</span>
                                 <span class="n">simulationStartEpoch</span><span class="p">,</span>
                                 <span class="n">fixedStepSize</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>where:</p>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">TimeType</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code></p>
 <blockquote>
-<div><p>Template argument used to set the precision of the time, in general <code class="docutils literal"><span class="pre">double</span></code> is used. For some application where a high precision is required, <code class="docutils literal"><span class="pre">tudat::Time</span></code> can be used and cast to <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code>.</p>
+<div><p>Template argument used to set the precision of the time, in general <code class="docutils literal notranslate"><span class="pre">double</span></code> is used. For some application where a high precision is required, <code class="docutils literal notranslate"><span class="pre">tudat::Time</span></code> can be used and cast to <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">double</span></code>.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">integratorType</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">integratorType</span></code></p>
 <blockquote>
-<div><p><code class="xref py py-class docutils literal"><span class="pre">AvailableIntegrators</span></code> which defines the fixed step-size integrator type to be used. Currently the only options available are <code class="docutils literal"><span class="pre">euler</span></code> and <code class="docutils literal"><span class="pre">rungeKutta4</span></code>.</p>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">AvailableIntegrators</span></code> which defines the fixed step-size integrator type to be used. Currently the only options available are <code class="docutils literal notranslate"><span class="pre">euler</span></code> and <code class="docutils literal notranslate"><span class="pre">rungeKutta4</span></code>.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">simulationStartEpoch</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">simulationStartEpoch</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the simulation’s start epoch.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the simulation’s start epoch.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">fixedStepSize</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">fixedStepSize</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the fixed step-size to be used either by the <code class="docutils literal"><span class="pre">euler</span></code> or the <code class="docutils literal"><span class="pre">rungeKutta4</span></code> numerical integrator.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the fixed step-size to be used either by the <code class="docutils literal notranslate"><span class="pre">euler</span></code> or the <code class="docutils literal notranslate"><span class="pre">rungeKutta4</span></code> numerical integrator.</p>
 </div></blockquote>
 </li>
 </ul>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="RungeKuttaVariableStepSizeSettings">
-<em class="property">class </em><code class="descname">RungeKuttaVariableStepSizeSettings</code><a class="headerlink" href="#RungeKuttaVariableStepSizeSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">RungeKuttaVariableStepSizeSettings</code><a class="headerlink" href="#RungeKuttaVariableStepSizeSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is used to define the settings for the Runge-Kutta variable step-size integration methods, where the error tolerances are defined as a scalar (i.e., each state element has the same tolerance). The constructor for this derived class is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">RungeKuttaVariableStepSizeSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RungeKuttaVariableStepSizeSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span>
       <span class="n">simulationStartEpoch</span><span class="p">,</span>
       <span class="n">initialTimeStep</span><span class="p">,</span>
       <span class="n">coefficientSet</span><span class="p">,</span>
@@ -253,68 +256,68 @@
 <p>where:</p>
 <blockquote>
 <div><ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">TimeType</span></code></p>
-<p>Template argument used to set the precision of the time, in general <code class="docutils literal"><span class="pre">double</span></code> is used. For some application where a high precision is required this can be changed to e.g. <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code>.</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code></p>
+<p>Template argument used to set the precision of the time, in general <code class="docutils literal notranslate"><span class="pre">double</span></code> is used. For some application where a high precision is required this can be changed to e.g. <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">double</span></code>.</p>
 </li>
 </ul>
 </div></blockquote>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">simulationStartEpoch</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">simulationStartEpoch</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the simulation’s initial time. It must be a <code class="docutils literal"><span class="pre">double</span></code> variable-type.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the simulation’s initial time. It must be a <code class="docutils literal notranslate"><span class="pre">double</span></code> variable-type.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">initialTimeStep</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">initialTimeStep</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the initial step-size to be used either by the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator. It must be a <code class="docutils literal"><span class="pre">double</span></code> variable-type.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the initial step-size to be used either by the <code class="docutils literal notranslate"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator. It must be a <code class="docutils literal notranslate"><span class="pre">double</span></code> variable-type.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">coefficientSet</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">coefficientSet</span></code></p>
 <blockquote>
-<div><p><code class="xref py py-class docutils literal"><span class="pre">RungeKuttaCoefficients::CoefficientSets</span></code> that defines the coefficient set to be used by the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator. The list of available coefficient sets is given in <a class="reference internal" href="../mathTools/integrators.html#tudatfeaturesintegrators"><span class="std std-ref">Integrators</span></a>.</p>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">RungeKuttaCoefficients::CoefficientSets</span></code> that defines the coefficient set to be used by the <code class="docutils literal notranslate"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator. The list of available coefficient sets is given in <a class="reference internal" href="../mathTools/integrators.html#tudatfeaturesintegrators"><span class="std std-ref">Integrators</span></a>.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">minimumStepSize</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">minimumStepSize</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the minimum step-size that the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator can take.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the minimum step-size that the <code class="docutils literal notranslate"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator can take.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">maximumStepSize</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">maximumStepSize</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the maximum step-size that the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator can take.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the maximum step-size that the <code class="docutils literal notranslate"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator can take.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">relativeErrorTolerance</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">relativeErrorTolerance</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the relative error tolerance for step size control of the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the relative error tolerance for step size control of the <code class="docutils literal notranslate"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">absoluteErrorTolerance</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">absoluteErrorTolerance</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the absolute error tolerance for step size control of the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the absolute error tolerance for step size control of the <code class="docutils literal notranslate"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">saveFrequency</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">saveFrequency</span></code></p>
 <blockquote>
-<div><p>Frequency at which to save the numerical integrated states. For instance, you may want to save one every 15 time steps, to give an output that is less demanding in terms of storage (in this case 15 would be the <code class="docutils literal"><span class="pre">saveFrequency</span></code>). The default value is 1.</p>
+<div><p>Frequency at which to save the numerical integrated states. For instance, you may want to save one every 15 time steps, to give an output that is less demanding in terms of storage (in this case 15 would be the <code class="docutils literal notranslate"><span class="pre">saveFrequency</span></code>). The default value is 1.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">assessPropagationTerminationConditionDuringIntegrationSubsteps</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">assessPropagationTerminationConditionDuringIntegrationSubsteps</span></code></p>
 <blockquote>
-<div><p>Whether the propagation termination conditions should be evaluated during the intermediate sub-steps of the integrator (<code class="docutils literal"><span class="pre">true</span></code>) or only at the end of each integration step (<code class="docutils literal"><span class="pre">false</span></code>). The default value is <code class="docutils literal"><span class="pre">false</span></code>.</p>
+<div><p>Whether the propagation termination conditions should be evaluated during the intermediate sub-steps of the integrator (<code class="docutils literal notranslate"><span class="pre">true</span></code>) or only at the end of each integration step (<code class="docutils literal notranslate"><span class="pre">false</span></code>). The default value is <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">safetyFactorForNextStepSize</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">safetyFactorForNextStepSize</span></code></p>
 <blockquote>
 <div><p>Safety factor for step size control. The default value is 0.8.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">maximumFactorIncreaseForNextStepSize</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">maximumFactorIncreaseForNextStepSize</span></code></p>
 <blockquote>
 <div><p>Maximum increase factor in time step in subsequent iterations. The default value is 4.0.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">minimumFactorDecreaseForNextStepSize</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">minimumFactorDecreaseForNextStepSize</span></code></p>
 <blockquote>
 <div><p>Minimum decrease factor in time step in subsequent iterations. The default value is 0.1.</p>
 </div></blockquote>
@@ -322,20 +325,20 @@
 </ul>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="RungeKuttaVariableStepSizeSettingsScalarTolerances">
-<em class="property">class </em><code class="descname">RungeKuttaVariableStepSizeSettingsScalarTolerances</code><a class="headerlink" href="#RungeKuttaVariableStepSizeSettingsScalarTolerances" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">RungeKuttaVariableStepSizeSettingsScalarTolerances</code><a class="headerlink" href="#RungeKuttaVariableStepSizeSettingsScalarTolerances" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The <a class="reference internal" href="#RungeKuttaVariableStepSizeSettings" title="RungeKuttaVariableStepSizeSettings"><code class="xref py py-class docutils literal"><span class="pre">RungeKuttaVariableStepSizeSettings</span></code></a> class is actually a shorthand for the alias <a class="reference internal" href="#RungeKuttaVariableStepSizeSettingsScalarTolerances" title="RungeKuttaVariableStepSizeSettingsScalarTolerances"><code class="xref py py-class docutils literal"><span class="pre">RungeKuttaVariableStepSizeSettingsScalarTolerances</span></code></a>, for compatibility with the previous definition of the Runge-Kutta variable step-size integrator.</p>
+<p class="admonition-title">Note</p>
+<p>The <a class="reference internal" href="#RungeKuttaVariableStepSizeSettings" title="RungeKuttaVariableStepSizeSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">RungeKuttaVariableStepSizeSettings</span></code></a> class is actually a shorthand for the alias <a class="reference internal" href="#RungeKuttaVariableStepSizeSettingsScalarTolerances" title="RungeKuttaVariableStepSizeSettingsScalarTolerances"><code class="xref py py-class docutils literal notranslate"><span class="pre">RungeKuttaVariableStepSizeSettingsScalarTolerances</span></code></a>, for compatibility with the previous definition of the Runge-Kutta variable step-size integrator.</p>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="RungeKuttaVariableStepSizeSettingsVectorTolerances">
-<em class="property">class </em><code class="descname">RungeKuttaVariableStepSizeSettingsVectorTolerances</code><a class="headerlink" href="#RungeKuttaVariableStepSizeSettingsVectorTolerances" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">RungeKuttaVariableStepSizeSettingsVectorTolerances</code><a class="headerlink" href="#RungeKuttaVariableStepSizeSettingsVectorTolerances" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is used to define the settings for the Runge-Kutta variable step-size integration methods, where the error tolerances are defined as a vector (i.e., you could set a different absolute tolerance for position and velocity, if the propagated state is expressed in Cartesian elements). The constructor for this derived class is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">RungeKuttaVariableStepSizeSettingsVectorTolerances</span><span class="o">&lt;</span> <span class="n">TimeType</span><span class="p">,</span> <span class="n">StateType</span> <span class="o">&gt;</span><span class="p">(</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RungeKuttaVariableStepSizeSettingsVectorTolerances</span><span class="o">&lt;</span> <span class="n">TimeType</span><span class="p">,</span> <span class="n">StateType</span> <span class="o">&gt;</span><span class="p">(</span>
       <span class="n">simulationStartEpoch</span><span class="p">,</span>
       <span class="n">initialTimeStep</span><span class="p">,</span>
       <span class="n">coefficientSet</span><span class="p">,</span>
@@ -353,30 +356,30 @@
 <p>where most of the input variables are the same as for the previous constructor, except for the following:</p>
 <blockquote>
 <div><ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">StateType</span></code></p>
-<p>Template argument used to set the format of the state, in general <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code> is used. For applications where covariance propagation is also performed, this may be <code class="docutils literal"><span class="pre">Eigen::MatrixXd</span></code>. One can also change the precision of the state scalar, such as in <code class="docutils literal"><span class="pre">Eigen::VectorXld</span></code>, where <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code> is used instead of <code class="docutils literal"><span class="pre">double</span></code>.</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">StateType</span></code></p>
+<p>Template argument used to set the format of the state, in general <code class="docutils literal notranslate"><span class="pre">Eigen::VectorXd</span></code> is used. For applications where covariance propagation is also performed, this may be <code class="docutils literal notranslate"><span class="pre">Eigen::MatrixXd</span></code>. One can also change the precision of the state scalar, such as in <code class="docutils literal notranslate"><span class="pre">Eigen::VectorXld</span></code>, where <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">double</span></code> is used instead of <code class="docutils literal notranslate"><span class="pre">double</span></code>.</p>
 </li>
 </ul>
 </div></blockquote>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">relativeErrorTolerance</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">relativeErrorTolerance</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">StateType</span></code> that defines the relative error tolerance for each state entry, for step size control of the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">StateType</span></code> that defines the relative error tolerance for each state entry, for step size control of the <code class="docutils literal notranslate"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">absoluteErrorTolerance</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">absoluteErrorTolerance</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">StateType</span></code> that defines the absolute error tolerance for each state entry, for step size control of the <code class="docutils literal"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">StateType</span></code> that defines the absolute error tolerance for each state entry, for step size control of the <code class="docutils literal notranslate"><span class="pre">rungeKuttaVariableStepSize</span></code> numerical integrator.</p>
 </div></blockquote>
 </li>
 </ul>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="BulirschStoerIntegratorSettings">
-<em class="property">class </em><code class="descname">BulirschStoerIntegratorSettings</code><a class="headerlink" href="#BulirschStoerIntegratorSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">BulirschStoerIntegratorSettings</code><a class="headerlink" href="#BulirschStoerIntegratorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is used to define the settings for variable step-size integration using the Bulirsch-Stoer method. The constructor for this derived class is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">BulirschStoerIntegratorSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">initialTime</span><span class="p">,</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">BulirschStoerIntegratorSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">initialTime</span><span class="p">,</span>
                                              <span class="n">initialTimeStep</span><span class="p">,</span>
                                              <span class="n">extrapolationSequence</span><span class="p">,</span>
                                              <span class="n">maximumNumberOfSteps</span><span class="p">,</span>
@@ -389,60 +392,60 @@
 <p>where:</p>
 <blockquote>
 <div><ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">TimeType</span></code></p>
-<p>Template argument used to set the precision of the time, in general <code class="docutils literal"><span class="pre">double</span></code> is used. For some application where a high precision is required this can be changed to e.g. <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code>.</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code></p>
+<p>Template argument used to set the precision of the time, in general <code class="docutils literal notranslate"><span class="pre">double</span></code> is used. For some application where a high precision is required this can be changed to e.g. <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">double</span></code>.</p>
 </li>
 </ul>
 </div></blockquote>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">initialTime</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">initialTime</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the simulation’s initial time. It must be a <code class="docutils literal"><span class="pre">double</span></code> variable-type.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the simulation’s initial time. It must be a <code class="docutils literal notranslate"><span class="pre">double</span></code> variable-type.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">initialTimeStep</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">initialTimeStep</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the initial step-size to be used either by the <code class="docutils literal"><span class="pre">BulirschStoerIntegrator</span></code> numerical integrator. It must be a <code class="docutils literal"><span class="pre">double</span></code> variable-type.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the initial step-size to be used either by the <code class="docutils literal notranslate"><span class="pre">BulirschStoerIntegrator</span></code> numerical integrator. It must be a <code class="docutils literal notranslate"><span class="pre">double</span></code> variable-type.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">extrapolationSequence</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">extrapolationSequence</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">ExtrapolationMethodStepSequences</span></code> that defines the extrapolation sequence that is used for the <code class="docutils literal"><span class="pre">BulirschStoerIntegrator</span></code> numerical integrator.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">ExtrapolationMethodStepSequences</span></code> that defines the extrapolation sequence that is used for the <code class="docutils literal notranslate"><span class="pre">BulirschStoerIntegrator</span></code> numerical integrator.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">maximumNumberOfSteps</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">maximumNumberOfSteps</span></code></p>
 <blockquote>
-<div><p>Number of integrations that are used for a single extrapolation. It must be a  <code class="docutils literal"><span class="pre">int</span></code> variable-type.</p>
+<div><p>Number of integrations that are used for a single extrapolation. It must be a  <code class="docutils literal notranslate"><span class="pre">int</span></code> variable-type.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">minimumStepSize</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">minimumStepSize</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the minimum step-size that the <code class="docutils literal"><span class="pre">BulirschStoerIntegrator</span></code> numerical integrator can take.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the minimum step-size that the <code class="docutils literal notranslate"><span class="pre">BulirschStoerIntegrator</span></code> numerical integrator can take.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">maximumStepSize</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">maximumStepSize</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the maximum step-size that the <code class="docutils literal"><span class="pre">BulirschStoerIntegrator</span></code> numerical integrator can take.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the maximum step-size that the <code class="docutils literal notranslate"><span class="pre">BulirschStoerIntegrator</span></code> numerical integrator can take.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">relativeErrorTolerance</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">relativeErrorTolerance</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the relative error tolerance for step size control of the <code class="docutils literal"><span class="pre">BulirschStoerIntegrator</span></code> numerical integrator.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the relative error tolerance for step size control of the <code class="docutils literal notranslate"><span class="pre">BulirschStoerIntegrator</span></code> numerical integrator.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">absoluteErrorTolerance</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">absoluteErrorTolerance</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the absolute error tolerance for step size control of the <code class="docutils literal"><span class="pre">BulirschStoerIntegrator</span></code> numerical integrator.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the absolute error tolerance for step size control of the <code class="docutils literal notranslate"><span class="pre">BulirschStoerIntegrator</span></code> numerical integrator.</p>
 </div></blockquote>
 </li>
 </ul>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="AdamsBashforthMoultonSettings">
-<em class="property">class </em><code class="descname">AdamsBashforthMoultonSettings</code><a class="headerlink" href="#AdamsBashforthMoultonSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">AdamsBashforthMoultonSettings</code><a class="headerlink" href="#AdamsBashforthMoultonSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is used to define the settings for variable step-size integration using the Adams-Bashfort-Moulton method. The constructor for this derived class is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">AdamsBashforthMoultonSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">initialTime</span><span class="p">,</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">AdamsBashforthMoultonSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">initialTime</span><span class="p">,</span>
                                            <span class="n">initialTimeStep</span><span class="p">,</span>
                                            <span class="n">minimumStepSize</span><span class="p">,</span>
                                            <span class="n">maximumStepSize</span><span class="p">,</span>
@@ -455,62 +458,62 @@
 <p>where:</p>
 <blockquote>
 <div><ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">TimeType</span></code></p>
-<p>Template argument used to set the precision of the time, in general <code class="docutils literal"><span class="pre">double</span></code> is used. For some application where a high precision is required this can be changed to e.g. <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code>.</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code></p>
+<p>Template argument used to set the precision of the time, in general <code class="docutils literal notranslate"><span class="pre">double</span></code> is used. For some application where a high precision is required this can be changed to e.g. <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">double</span></code>.</p>
 </li>
 </ul>
 </div></blockquote>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">initialTime</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">initialTime</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the simulation’s initial time. It must be a <code class="docutils literal"><span class="pre">double</span></code> variable-type.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the simulation’s initial time. It must be a <code class="docutils literal notranslate"><span class="pre">double</span></code> variable-type.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">initialTimeStep</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">initialTimeStep</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the initial step-size to be used either by the <code class="docutils literal"><span class="pre">AdamsBashforthMoultonIntegrator</span></code> numerical integrator. It must be a <code class="docutils literal"><span class="pre">double</span></code> variable-type.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the initial step-size to be used either by the <code class="docutils literal notranslate"><span class="pre">AdamsBashforthMoultonIntegrator</span></code> numerical integrator. It must be a <code class="docutils literal notranslate"><span class="pre">double</span></code> variable-type.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">minimumStepSize</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">minimumStepSize</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the minimum step-size that the <code class="docutils literal"><span class="pre">AdamsBashforthMoultonIntegrator</span></code> numerical integrator can take.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the minimum step-size that the <code class="docutils literal notranslate"><span class="pre">AdamsBashforthMoultonIntegrator</span></code> numerical integrator can take.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">maximumStepSize</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">maximumStepSize</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the maximum step-size that the <code class="docutils literal"><span class="pre">AdamsBashforthMoultonIntegrator</span></code> numerical integrator can take.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the maximum step-size that the <code class="docutils literal notranslate"><span class="pre">AdamsBashforthMoultonIntegrator</span></code> numerical integrator can take.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">relativeErrorTolerance</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">relativeErrorTolerance</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the relative error tolerance for step size control of the <code class="docutils literal"><span class="pre">AdamsBashforthMoultonIntegratorr</span></code> numerical integrator.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the relative error tolerance for step size control of the <code class="docutils literal notranslate"><span class="pre">AdamsBashforthMoultonIntegratorr</span></code> numerical integrator.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">absoluteErrorTolerance</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">absoluteErrorTolerance</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">TimeType</span></code> that defines the absolute error tolerance for step size control of the <code class="docutils literal"><span class="pre">AdamsBashforthMoultonIntegrator</span></code> numerical integrator.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code> that defines the absolute error tolerance for step size control of the <code class="docutils literal notranslate"><span class="pre">AdamsBashforthMoultonIntegrator</span></code> numerical integrator.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">minimumOrder</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">minimumOrder</span></code></p>
 <blockquote>
-<div><p>The minimum order of the integrator, the default value is 6. It must be a <code class="docutils literal"><span class="pre">int</span></code> variable-type.</p>
+<div><p>The minimum order of the integrator, the default value is 6. It must be a <code class="docutils literal notranslate"><span class="pre">int</span></code> variable-type.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">maximumOrder</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">maximumOrder</span></code></p>
 <blockquote>
-<div><p>The maximum order of the integrator, the default value is 11. It must be a <code class="docutils literal"><span class="pre">int</span></code> variable-type.</p>
+<div><p>The maximum order of the integrator, the default value is 11. It must be a <code class="docutils literal notranslate"><span class="pre">int</span></code> variable-type.</p>
 </div></blockquote>
 </li>
 </ul>
 </dd></dl>
 
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Aside from the arguments listed in this page, the <a class="reference internal" href="#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> class and derived classes described here offer a number of optional arguments. The reader is advised to examine the Doxygen documentation included in the code for further details.</p>
+<p class="admonition-title">Note</p>
+<p>Aside from the arguments listed in this page, the <a class="reference internal" href="#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntegratorSettings</span></code></a> class and derived classes described here offer a number of optional arguments. The reader is advised to examine the Doxygen documentation included in the code for further details.</p>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Make sure that a compatible <code class="docutils literal"><span class="pre">integratorType</span></code> is selected, otherwise a runtime exception will be thrown.</p>
+<p class="admonition-title">Warning</p>
+<p>Make sure that a compatible <code class="docutils literal notranslate"><span class="pre">integratorType</span></code> is selected, otherwise a runtime exception will be thrown.</p>
 </div>
 </div>
 
@@ -569,7 +572,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
   
 
@@ -38,8 +40,8 @@
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../../index.html"/>
-        <link rel="up" title="Shape-Based Methods" href="index.html"/>
-        <link rel="next" title="7. Basic Mathematics Tools" href="../../mathTools/index.html"/>
+        <link rel="up" title="4. Shape-Based Methods" href="index.html"/>
+        <link rel="next" title="6. Basic Mathematics Tools" href="../../mathTools/index.html"/>
         <link rel="prev" title="1. Hodographic shaping" href="hodographicShaping.html"/> 
 
   
@@ -103,14 +105,14 @@
 <li class="toctree-l3"><a class="reference internal" href="../../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="../index.html">6. Low-Thrust Trajectory Design Module</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="../lowThrustTrajectory.html">6.1. Low-Thrust Trajectories</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../SimsFlanagan.html">6.2. Sims-Flanagan Method</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../hybridMethod.html">6.3. Hybrid Method</a></li>
-<li class="toctree-l4 current"><a class="reference internal" href="index.html">Shape-Based Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lowThrustTrajectory.html">1. Low-Thrust Trajectories</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../SimsFlanagan.html">2. Sims-Flanagan Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../hybridMethod.html">3. Hybrid Method</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="index.html">4. Shape-Based Methods</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../../mathTools/index.html">7. Basic Mathematics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../otherLibraries/index.html">8. Other Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mathTools/index.html">6. Basic Mathematics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/index.html">Tudat Basics</a></li>
@@ -122,7 +124,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developerGuide/index.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -171,11 +172,11 @@
         
           <li><a href="../../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="../index.html">6. Low-Thrust Trajectory Design Module</a> &raquo;</li>
+          <li><a href="../index.html"><span class="section-number">6. </span>Low-Thrust Trajectory Design Module</a> &raquo;</li>
         
-          <li><a href="index.html">Shape-Based Methods</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">4. </span>Shape-Based Methods</a> &raquo;</li>
         
-      <li>2. Spherical shaping</li>
+      <li><span class="section-number">2. </span>Spherical shaping</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -195,20 +196,20 @@
            <div itemprop="articleBody">
             
   <div class="section" id="spherical-shaping">
-<span id="tudatfeaturessphericalshaping"></span><h1>2. Spherical shaping<a class="headerlink" href="#spherical-shaping" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturessphericalshaping"></span><h1><span class="section-number">2. </span>Spherical shaping<a class="headerlink" href="#spherical-shaping" title="Permalink to this headline">¶</a></h1>
 <p>The spherical shape-based method shapes the position of the spacecraft using spherical coordinates, and uses the azimuth angle as independent variable. This shaping method assumes an inverse function for the radial distance, and a polynomial function for the elevation angle. It only requires two shaping functions, as one of the spherical coordinates is used as independent variable. As opposed to hodographic shaping, the current implementation of the spherical shaping method does not let the choice of base functions free. The ones proposed in Novak, 2012 (Methods and tools for preliminary low thrust mission analysis), where this shaping method has been initially developed, are used directly. The weighting coefficients of those base functions are calculated so that the boundary conditions of the low-thrust trajectory are fulfilled. The spherical shaping method has no free parameter (on the contrary to the hodographic shaping method), so that the shaped trajectory is entirely defined by its boundary conditions and time-of-flight and cannot be optimised in terms of deltaV budget.</p>
 <p>One of the main drawbacks of this shaping method is that it assumes the thrust is always tangential to the orbit. Consequently, there is no guarantee this shape-based method always leads to a feasible trajectory, depending on the boundary conditions and required time-of-flight. This is especially the case for trajectories implying large inclination changes.</p>
 <p>Moreover, because this method shapes the position of the spacecraft and not its velocity, matching the required time of flight is not inherently ensured by the implementation of the shape-based method itself (as it is the case for hodographic shaping for instance). An iterative process is required to match the expected time-of-flight. The coefficient associated to the second base function of the inverse polynomial radial distance function (referred to as the “free coefficient” is the following) is thus not determined by the departure and arrival boundary conditions, but its value is tuned until the expected time-of-flight is matched.</p>
 <div class="section" id="setting-up-a-spherically-shaped-trajectory">
-<h2>2.1. Setting up a spherically shaped trajectory<a class="headerlink" href="#setting-up-a-spherically-shaped-trajectory" title="Permalink to this headline">¶</a></h2>
-<p>A spherically shaped trajectory is defined with the <code class="docutils literal"><span class="pre">SphericalShaping</span></code> class. It is a derived class from <code class="docutils literal"><span class="pre">ShapeBasedMethodLeg</span></code>. A corresponding settings class (<code class="docutils literal"><span class="pre">SphericalShapingLegSettings</span></code>) has been implemented to facilitate the creation of <code class="docutils literal"><span class="pre">SphericalShaping</span></code> objects (see <a class="reference internal" href="../lowThrustTrajectory.html#tudatfeaturessetuplowthrusttrajectory"><span class="std std-ref">Setting up a low-thrust trajectory</span></a> for more details on the <code class="docutils literal"><span class="pre">SphericalShapingLegSettings</span></code>).</p>
-<dl class="class">
+<h2><span class="section-number">2.1. </span>Setting up a spherically shaped trajectory<a class="headerlink" href="#setting-up-a-spherically-shaped-trajectory" title="Permalink to this headline">¶</a></h2>
+<p>A spherically shaped trajectory is defined with the <code class="docutils literal notranslate"><span class="pre">SphericalShaping</span></code> class. It is a derived class from <code class="docutils literal notranslate"><span class="pre">ShapeBasedMethodLeg</span></code>. A corresponding settings class (<code class="docutils literal notranslate"><span class="pre">SphericalShapingLegSettings</span></code>) has been implemented to facilitate the creation of <code class="docutils literal notranslate"><span class="pre">SphericalShaping</span></code> objects (see <a class="reference internal" href="../lowThrustTrajectory.html#tudatfeaturessetuplowthrusttrajectory"><span class="std std-ref">Setting up a low-thrust trajectory</span></a> for more details on the <code class="docutils literal notranslate"><span class="pre">SphericalShapingLegSettings</span></code>).</p>
+<dl class="py class">
 <dt id="SphericalShaping">
-<em class="property">class </em><code class="descname">SphericalShaping</code><a class="headerlink" href="#SphericalShaping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">SphericalShaping</code><a class="headerlink" href="#SphericalShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>The SphericalShaping class is defined as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SphericalShaping</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">initialState</span><span class="p">,</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SphericalShaping</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">initialState</span><span class="p">,</span>
                <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">finalState</span><span class="p">,</span>
                <span class="kt">double</span> <span class="n">requiredTimeOfFlight</span><span class="p">,</span>
                <span class="kt">int</span> <span class="n">numberOfRevolutions</span><span class="p">,</span>
@@ -226,71 +227,71 @@
 <p>where the inputs are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">initialState</span></code></dt>
-<dd>State of the spacecraft at departure.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">initialState</span></code></dt><dd><p>State of the spacecraft at departure.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">finalState</span></code></dt>
-<dd>State of the spacecraft at arrival.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">finalState</span></code></dt><dd><p>State of the spacecraft at arrival.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">requiredTimeOfFlight</span></code></dt>
-<dd>Time of flight required for the shape-based trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">requiredTimeOfFlight</span></code></dt><dd><p>Time of flight required for the shape-based trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">numberOfRevolutions</span></code></dt>
-<dd>Required number of revolutions before the spacecraft reaches its final state.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">numberOfRevolutions</span></code></dt><dd><p>Required number of revolutions before the spacecraft reaches its final state.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">bodyMap</span></code></dt>
-<dd>Map of pointers to <code class="docutils literal"><span class="pre">Body</span></code> objects involved in the low-thrust trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">bodyMap</span></code></dt><dd><p>Map of pointers to <code class="docutils literal notranslate"><span class="pre">Body</span></code> objects involved in the low-thrust trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">bodyToPropagate</span></code></dt>
-<dd>Name of the spacecraft to be propagated.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">bodyToPropagate</span></code></dt><dd><p>Name of the spacecraft to be propagated.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">centralBody</span></code></dt>
-<dd>Name of the central body of the low-thrust trajectory.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">centralBody</span></code></dt><dd><p>Name of the central body of the low-thrust trajectory.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">initialValueFreeCoefficient</span></code></dt>
-<dd>Initial value for the free coefficient, to be tuned until the required time-of-flight is matched.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">initialValueFreeCoefficient</span></code></dt><dd><p>Initial value for the free coefficient, to be tuned until the required time-of-flight is matched.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">rootFinderSettings</span></code></dt>
-<dd>Settings that define the root finder algorithm, used to find the proper free coefficient value for which the required time-of-flight would be achieved.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">rootFinderSettings</span></code></dt><dd><p>Settings that define the root finder algorithm, used to find the proper free coefficient value for which the required time-of-flight would be achieved.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">lowerBoundFreeCoefficient</span></code></dt>
-<dd>Lower bound for the free coefficient search.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">lowerBoundFreeCoefficient</span></code></dt><dd><p>Lower bound for the free coefficient search.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">upperBoundFreeCoefficient</span></code></dt>
-<dd>Upper bound for the free coefficient search.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">upperBoundFreeCoefficient</span></code></dt><dd><p>Upper bound for the free coefficient search.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">integratorSettings</span></code></dt>
-<dd>Integrator settings (empty by default), used to propagate the spacecraft mass or thrust profiles, or to numerically propagate the fully perturbed trajectory (as a means to assess the quality of the analytical shaped-based preliminary design).</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">integratorSettings</span></code></dt><dd><p>Integrator settings (empty by default), used to propagate the spacecraft mass or thrust profiles, or to numerically propagate the fully perturbed trajectory (as a means to assess the quality of the analytical shaped-based preliminary design).</p>
+</dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The creation of a spherically shaped trajectory requires much less inputs from the user than hodographic shaping does. The shaping functions are indeed fixed in spherical shaping, while they are user-defined in hodogaphic shaping. Morever, spherical shaping does not allow for free parameter, as opposed to hodographic shaping. This makes the definition of a spherically shaped trajectory more straightforward (no need to set up the base functions) from the user’s point of view. The downside of it is that spherical is less flexible than hodographic shaping, and cannot be optimised to get a lower deltaV.</p>
+<p class="admonition-title">Note</p>
+<p>The creation of a spherically shaped trajectory requires much less inputs from the user than hodographic shaping does. The shaping functions are indeed fixed in spherical shaping, while they are user-defined in hodogaphic shaping. Morever, spherical shaping does not allow for free parameter, as opposed to hodographic shaping. This makes the definition of a spherically shaped trajectory more straightforward (no need to set up the base functions) from the user’s point of view. The downside of it is that spherical is less flexible than hodographic shaping, and cannot be optimised to get a lower deltaV.</p>
 </div>
 </div>
 </div>
@@ -305,7 +306,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../mathTools/index.html" class="btn btn-neutral float-right" title="7. Basic Mathematics Tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../../mathTools/index.html" class="btn btn-neutral float-right" title="6. Basic Mathematics Tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="hodographicShaping.html" class="btn btn-neutral" title="1. Hodographic shaping" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -350,7 +351,8 @@
       <script type="text/javascript" src="../../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

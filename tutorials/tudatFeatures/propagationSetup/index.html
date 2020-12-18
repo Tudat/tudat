@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -112,6 +114,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">Low-Thrust Trajectory Design Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
@@ -125,7 +128,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -174,7 +176,7 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-      <li>3. Simulator Set-Up</li>
+      <li><span class="section-number">3. </span>Simulator Set-Up</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -194,10 +196,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="simulator-set-up">
-<span id="tudatfeaturessimulatorindex"></span><h1>3. Simulator Set-Up<a class="headerlink" href="#simulator-set-up" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturessimulatorindex"></span><h1><span class="section-number">3. </span>Simulator Set-Up<a class="headerlink" href="#simulator-set-up" title="Permalink to this headline">¶</a></h1>
 <p>One of the core elements of the Tudat libraries is its simulator framework. The goal of this page is discuss the implementation of such framework as well as the numerous options available. The top-level framework of the simulator is shown below:</p>
-<object data="../../../_images/graphviz-8fe92cf0473ebf085f374278b4e264712b279858.svg" type="image/svg+xml">
-            <p class="warning">digraph
+<div class="graphviz"><object data="../../../_images/graphviz-7208cc76c3ed686d1ded76285ab48ebb96d8af09.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph
 {
    # General diagram settings
    rankdir = &quot;LR&quot;;
@@ -285,54 +287,52 @@
    {rank = same; NamedBodyMap, DynamicsSimulator}
    MultiType -&gt; MultiArc [ltail = clusterSingleArcPropagatorSettings];
    Mass -&gt; Custom [style = invis];
-}</p></object>
-<p>The top-element in such framework is the <a class="reference internal" href="simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a>, which is in charge of propagating the equations of motion using the environment and acceleration models discussed in <a class="reference internal" href="../environmentSetup/index.html#tudatfeaturesenvironmentindex"><span class="std std-ref">Environment Set-up</span></a> and <a class="reference internal" href="../accelerationSetup/index.html#tudatfeaturesaccelerationindex"><span class="std std-ref">Setting up State Derivative Models</span></a>, respectively. The orbit propation is done according to the specified <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> and the <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a>, which are discussed in detail in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a> and <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>.</p>
-<p>As shown in the figure above, there are various types of <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> and <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a> depending on the particularities of the application at hand. For convenience, we list the types of dynamics that can be propagated, and their associated <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">PropagatorSettings</span></code></a>:</p>
-<dl class="docutils">
-<dt><strong>Propagator Settings</strong></dt>
-<dd><ul class="first last simple">
-<li><dl class="first docutils">
-<dt>Translational dynamics: <a class="reference internal" href="propagatorSettings.html#TranslationalStatePropagatorSettings" title="TranslationalStatePropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">TranslationalStatePropagatorSettings</span></code></a></dt>
-<dd>This derived class defines the settings to propagate the translational dynamics.</dd>
+}</p></object></div>
+<p>The top-element in such framework is the <a class="reference internal" href="simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a>, which is in charge of propagating the equations of motion using the environment and acceleration models discussed in <a class="reference internal" href="../environmentSetup/index.html#tudatfeaturesenvironmentindex"><span class="std std-ref">Environment Set-up</span></a> and <a class="reference internal" href="../accelerationSetup/index.html#tudatfeaturesaccelerationindex"><span class="std std-ref">Setting up State Derivative Models</span></a>, respectively. The orbit propation is done according to the specified <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntegratorSettings</span></code></a> and the <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropagatorSettings</span></code></a>, which are discussed in detail in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a> and <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>.</p>
+<p>As shown in the figure above, there are various types of <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntegratorSettings</span></code></a> and <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropagatorSettings</span></code></a> depending on the particularities of the application at hand. For convenience, we list the types of dynamics that can be propagated, and their associated <a class="reference internal" href="propagatorSettings.html#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropagatorSettings</span></code></a>:</p>
+<dl class="simple">
+<dt><strong>Propagator Settings</strong></dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Translational dynamics: <a class="reference internal" href="propagatorSettings.html#TranslationalStatePropagatorSettings" title="TranslationalStatePropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationalStatePropagatorSettings</span></code></a></dt><dd><p>This derived class defines the settings to propagate the translational dynamics.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Rotational dynamics: <a class="reference internal" href="propagatorSettings.html#RotationalStatePropagatorSettings" title="RotationalStatePropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">RotationalStatePropagatorSettings</span></code></a></dt>
-<dd>This derived class defines the settings to propagate the rotational dynamics.</dd>
+<li><dl class="simple">
+<dt>Rotational dynamics: <a class="reference internal" href="propagatorSettings.html#RotationalStatePropagatorSettings" title="RotationalStatePropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">RotationalStatePropagatorSettings</span></code></a></dt><dd><p>This derived class defines the settings to propagate the rotational dynamics.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Mass variations: <a class="reference internal" href="propagatorSettings.html#MassPropagationSettings" title="MassPropagationSettings"><code class="xref py py-class docutils literal"><span class="pre">MassPropagationSettings</span></code></a></dt>
-<dd>This derived class defines the settings to propagate the mass of a body.</dd>
+<li><dl class="simple">
+<dt>Mass variations: <a class="reference internal" href="propagatorSettings.html#MassPropagationSettings" title="MassPropagationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">MassPropagationSettings</span></code></a></dt><dd><p>This derived class defines the settings to propagate the mass of a body.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>User-defined dynamics type: <a class="reference internal" href="propagatorSettings.html#CustomStatePropagatorSettings" title="CustomStatePropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">CustomStatePropagatorSettings</span></code></a></dt>
-<dd>This derived class allows the propagation of user-defined dynamics.</dd>
+<li><dl class="simple">
+<dt>User-defined dynamics type: <a class="reference internal" href="propagatorSettings.html#CustomStatePropagatorSettings" title="CustomStatePropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">CustomStatePropagatorSettings</span></code></a></dt><dd><p>This derived class allows the propagation of user-defined dynamics.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Multiple types of dynamics <a class="reference internal" href="propagatorSettings.html#MultiTypePropagatorSettings" title="MultiTypePropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">MultiTypePropagatorSettings</span></code></a></dt>
-<dd>This derived class allows to propagate (in a single-arc) simultaneously any or all of the various propagator types defined above.</dd>
+<li><dl class="simple">
+<dt>Multiple types of dynamics <a class="reference internal" href="propagatorSettings.html#MultiTypePropagatorSettings" title="MultiTypePropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiTypePropagatorSettings</span></code></a></dt><dd><p>This derived class allows to propagate (in a single-arc) simultaneously any or all of the various propagator types defined above.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Multi-arc dynamics <a class="reference internal" href="propagatorSettings.html#MultiArcPropagatorSettings" title="MultiArcPropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">MultiArcPropagatorSettings</span></code></a></dt>
-<dd>This derived class allows to propagate the dynamics over multiple arcs, using any of the above settings for the constituent arcs.</dd>
+<li><dl class="simple">
+<dt>Multi-arc dynamics <a class="reference internal" href="propagatorSettings.html#MultiArcPropagatorSettings" title="MultiArcPropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiArcPropagatorSettings</span></code></a></dt><dd><p>This derived class allows to propagate the dynamics over multiple arcs, using any of the above settings for the constituent arcs.</p>
+</dd>
 </dl>
 </li>
 </ul>
 </dd>
 </dl>
-<p>Similarly, the following integrators, and associated derived classes of <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> (if applicable), are available:</p>
-<dl class="docutils">
-<dt><strong>Integrator Settings</strong></dt>
-<dd><ul class="first last simple">
-<li><strong>Euler integrator</strong>: (no derived class)</li>
-<li><strong>Runge-Kutta 4</strong> integrator: (no derived class)</li>
-<li><strong>Variable step-size Runge-Kutta</strong> integrators: <a class="reference internal" href="integratorSettings.html#RungeKuttaVariableStepSizeSettings" title="RungeKuttaVariableStepSizeSettings"><code class="xref py py-class docutils literal"><span class="pre">RungeKuttaVariableStepSizeSettings</span></code></a>. The RKF4(5), RKF5(6), RKF7(8) and DOPRI8(7) coefficient sets are available.</li>
-<li><strong>Variable step-size Adams-Bashforth-Moulton</strong> integrator: <a class="reference internal" href="integratorSettings.html#AdamsBashforthMoultonSettings" title="AdamsBashforthMoultonSettings"><code class="xref py py-class docutils literal"><span class="pre">AdamsBashforthMoultonSettings</span></code></a></li>
-<li><strong>Variable step-size, fixed order, Bulirsch-Stoer</strong> integrator: <a class="reference internal" href="integratorSettings.html#BulirschStoerIntegratorSettings" title="BulirschStoerIntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">BulirschStoerIntegratorSettings</span></code></a></li>
+<p>Similarly, the following integrators, and associated derived classes of <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntegratorSettings</span></code></a> (if applicable), are available:</p>
+<dl class="simple">
+<dt><strong>Integrator Settings</strong></dt><dd><ul class="simple">
+<li><p><strong>Euler integrator</strong>: (no derived class)</p></li>
+<li><p><strong>Runge-Kutta 4</strong> integrator: (no derived class)</p></li>
+<li><p><strong>Variable step-size Runge-Kutta</strong> integrators: <a class="reference internal" href="integratorSettings.html#RungeKuttaVariableStepSizeSettings" title="RungeKuttaVariableStepSizeSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">RungeKuttaVariableStepSizeSettings</span></code></a>. The RKF4(5), RKF5(6), RKF7(8) and DOPRI8(7) coefficient sets are available.</p></li>
+<li><p><strong>Variable step-size Adams-Bashforth-Moulton</strong> integrator: <a class="reference internal" href="integratorSettings.html#AdamsBashforthMoultonSettings" title="AdamsBashforthMoultonSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">AdamsBashforthMoultonSettings</span></code></a></p></li>
+<li><p><strong>Variable step-size, fixed order, Bulirsch-Stoer</strong> integrator: <a class="reference internal" href="integratorSettings.html#BulirschStoerIntegratorSettings" title="BulirschStoerIntegratorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">BulirschStoerIntegratorSettings</span></code></a></p></li>
 </ul>
 </dd>
 </dl>
@@ -425,7 +425,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

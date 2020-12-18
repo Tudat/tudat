@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -109,6 +111,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">Low-Thrust Trajectory Design Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
@@ -170,9 +173,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">1. Environment Set-up</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>Environment Set-up</a> &raquo;</li>
         
-      <li>1.5. Aerodynamic Coefficients</li>
+      <li><span class="section-number">1.5. </span>Aerodynamic Coefficients</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -192,25 +195,25 @@
            <div itemprop="articleBody">
             
   <div class="section" id="aerodynamic-coefficients">
-<span id="tudatfeaturesaerodynamiccoefficients"></span><h1>1.5. Aerodynamic Coefficients<a class="headerlink" href="#aerodynamic-coefficients" title="Permalink to this headline">¶</a></h1>
-<p>For a body that experiences aerodynamic forces, the aerodynamic coefficients of that body need to be defined. Aerodynamic coefficients are created in Tudat by creating an object of type&nbsp;<a class="reference internal" href="availableSettings.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientSettings</span></code></a>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AerodynamicCoefficientSettings</span> <span class="o">&gt;</span> <span class="n">aerodynamicCoefficientSettings</span> <span class="o">=</span> <span class="p">.....</span>
+<span id="tudatfeaturesaerodynamiccoefficients"></span><h1><span class="section-number">1.5. </span>Aerodynamic Coefficients<a class="headerlink" href="#aerodynamic-coefficients" title="Permalink to this headline">¶</a></h1>
+<p>For a body that experiences aerodynamic forces, the aerodynamic coefficients of that body need to be defined. Aerodynamic coefficients are created in Tudat by creating an object of type <a class="reference internal" href="availableSettings.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">AerodynamicCoefficientSettings</span></code></a>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AerodynamicCoefficientSettings</span> <span class="o">&gt;</span> <span class="n">aerodynamicCoefficientSettings</span> <span class="o">=</span> <span class="p">.....</span>
 <span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;VehicleName&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setAerodynamicCoefficientInterface</span><span class="p">(</span>
                     <span class="n">createAerodynamicCoefficientInterface</span><span class="p">(</span> <span class="n">aerodynamicCoefficientSettings</span><span class="p">,</span> <span class="s">&quot;VehicleName&quot;</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>The aerodynamic coefficients can be implemented in several different ways that are discussed in this section.</p>
 <div class="section" id="local-incliniation-methods">
-<h2>1.5.1. Local Incliniation Methods<a class="headerlink" href="#local-incliniation-methods" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.5.1. </span>Local Incliniation Methods<a class="headerlink" href="#local-incliniation-methods" title="Permalink to this headline">¶</a></h2>
 <p>One of the options to determine the aerodynamic coefficients during hypersonic flight is to use a hypersonic local inclination method. These methods calculate the aerodynamic coefficients using the orientation of the vehicle with respect to the incoming flow. A selection of these methods are implemented into Tudat and are able to calculate the aerodynamic coefficients for several pre-defined geometries and user defined grids.</p>
 <p>The class which can be used is defined below.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="HypersonicLocalInclinationAnalysis">
-<em class="property">class </em><code class="descname">HypersonicLocalInclinationAnalysis</code><a class="headerlink" href="#HypersonicLocalInclinationAnalysis" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">HypersonicLocalInclinationAnalysis</code><a class="headerlink" href="#HypersonicLocalInclinationAnalysis" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>The settings for this class are constructed as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">HypersonicLocalInclinationAnalysis</span><span class="p">(</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HypersonicLocalInclinationAnalysis</span><span class="p">(</span>
         <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;&amp;</span> <span class="n">dataPointsOfIndependentVariables</span><span class="p">,</span>
         <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">SurfaceGeometry</span> <span class="o">&gt;</span> <span class="n">inputVehicleSurface</span><span class="p">,</span>
         <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">int</span> <span class="o">&gt;&amp;</span> <span class="n">numberOfLines</span><span class="p">,</span>
@@ -224,85 +227,85 @@
 </div>
 <p>where:</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">dataPointsOfIndependentVariables</span></code>:</dt>
-<dd>A 2-dimensional vector of doubles that contains the data points of each independent variable. Index 0 corresponds to the Mach number, index 1 to the angle of attack, and index 2 to the
-sideslip angle.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">dataPointsOfIndependentVariables</span></code>:</dt><dd><p>A 2-dimensional vector of doubles that contains the data points of each independent variable. Index 0 corresponds to the Mach number, index 1 to the angle of attack, and index 2 to the
+sideslip angle.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">inputVehicleSurface</span></code>:</dt>
-<dd>A <code class="docutils literal"><span class="pre">SurfaceGeometry</span></code> type variable that defines the geometry of the vehicle used for the determination of the aerodynamic coefficients.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">inputVehicleSurface</span></code>:</dt><dd><p>A <code class="docutils literal notranslate"><span class="pre">SurfaceGeometry</span></code> type variable that defines the geometry of the vehicle used for the determination of the aerodynamic coefficients.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">numberOfLines</span></code>:</dt>
-<dd>The number of discretization points in the first independent surface for each subpart of the vehicle defined in <code class="docutils literal"><span class="pre">inputVehicleSurface</span></code>.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">numberOfLines</span></code>:</dt><dd><p>The number of discretization points in the first independent surface for each subpart of the vehicle defined in <code class="docutils literal notranslate"><span class="pre">inputVehicleSurface</span></code>.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">numberOfPoints</span></code>:</dt>
-<dd>The number of discretization points in the second independent surface for each subpart of the vehicle defined in <code class="docutils literal"><span class="pre">inputVehicleSurface</span></code>.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">numberOfPoints</span></code>:</dt><dd><p>The number of discretization points in the second independent surface for each subpart of the vehicle defined in <code class="docutils literal notranslate"><span class="pre">inputVehicleSurface</span></code>.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">invertOrders</span></code>:</dt>
-<dd>A boolean that determines the orientation of the normal vectors of the panels (the discretized units) of each subpart of the vehicle defined in <code class="docutils literal"><span class="pre">inputVehicleSurface</span></code>. This can either be
-inward- or outward-facing.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">invertOrders</span></code>:</dt><dd><p>A boolean that determines the orientation of the normal vectors of the panels (the discretized units) of each subpart of the vehicle defined in <code class="docutils literal notranslate"><span class="pre">inputVehicleSurface</span></code>. This can either be
+inward- or outward-facing.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">selectedMethods</span></code>:</dt>
-<dd>A two dimensional vector that selects which specific method is used for the local inclination analysis. The first index determines if a compression (0) or a expansion (1) method is used, and
-the second index determines the specific method (a list of available methods is given below).</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">selectedMethods</span></code>:</dt><dd><p>A two dimensional vector that selects which specific method is used for the local inclination analysis. The first index determines if a compression (0) or a expansion (1) method is used, and
+the second index determines the specific method (a list of available methods is given below).</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">referenceArea</span></code>:</dt>
-<dd>A <code class="docutils literal"><span class="pre">double</span></code> that gives the reference area of the vehicle that is used for the analysis.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">referenceArea</span></code>:</dt><dd><p>A <code class="docutils literal notranslate"><span class="pre">double</span></code> that gives the reference area of the vehicle that is used for the analysis.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">referencelength</span></code>:</dt>
-<dd>A <code class="docutils literal"><span class="pre">double</span></code> that gives the reference length of the vehicle that is used for the analysis.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">referencelength</span></code>:</dt><dd><p>A <code class="docutils literal notranslate"><span class="pre">double</span></code> that gives the reference length of the vehicle that is used for the analysis.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">momentReferencePoint</span></code>:</dt>
-<dd>A <code class="docutils literal"><span class="pre">Eigen::Vector3d</span></code> that gives the location of the moment reference point, which is used as a reference point to calculate the moments acting on the vehicle.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">momentReferencePoint</span></code>:</dt><dd><p>A <code class="docutils literal notranslate"><span class="pre">Eigen::Vector3d</span></code> that gives the location of the moment reference point, which is used as a reference point to calculate the moments acting on the vehicle.</p>
+</dd>
 </dl>
 </li>
 </ul>
-<p>The <code class="docutils literal"><span class="pre">HypersonicLocalInclinationAnalysis</span></code> has several methods incorporated in it, that can be selected by the user through the <code class="docutils literal"><span class="pre">selectedMethods</span></code> setting. The first index of this vector determines which kind of method is used: a compression or expansion method. The second index then determines the specific method.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">HypersonicLocalInclinationAnalysis</span></code> has several methods incorporated in it, that can be selected by the user through the <code class="docutils literal notranslate"><span class="pre">selectedMethods</span></code> setting. The first index of this vector determines which kind of method is used: a compression or expansion method. The second index then determines the specific method.</p>
 <p>For the compression methods, the following are available:</p>
 <ul class="simple">
-<li>0: Newtonian Method.</li>
-<li>1: Modified Newtonian.</li>
-<li>2 and 3: not available at this moment.</li>
-<li>4: tangent-wedge method.</li>
-<li>5: tangent-cone method.</li>
-<li>6: modified Dahlem-Buck method.</li>
-<li>7: VanDyke unified pressure method.</li>
-<li>8: Smyth Delta Wing method.</li>
-<li>9: Hankey flat surface method.</li>
+<li><p>0: Newtonian Method.</p></li>
+<li><p>1: Modified Newtonian.</p></li>
+<li><p>2 and 3: not available at this moment.</p></li>
+<li><p>4: tangent-wedge method.</p></li>
+<li><p>5: tangent-cone method.</p></li>
+<li><p>6: modified Dahlem-Buck method.</p></li>
+<li><p>7: VanDyke unified pressure method.</p></li>
+<li><p>8: Smyth Delta Wing method.</p></li>
+<li><p>9: Hankey flat surface method.</p></li>
 </ul>
 <p>The expansion method has the following options:</p>
 <ul class="simple">
-<li>0: Vacuum Pressure coefficient method.</li>
-<li>1: Zero Pressure function.</li>
-<li>4: High Mach base pressure method.</li>
-<li>3 or 5: Prandtl-Meyer method.</li>
-<li>6: ACM empirical pressure coefficient.</li>
+<li><p>0: Vacuum Pressure coefficient method.</p></li>
+<li><p>1: Zero Pressure function.</p></li>
+<li><p>4: High Mach base pressure method.</p></li>
+<li><p>3 or 5: Prandtl-Meyer method.</p></li>
+<li><p>6: ACM empirical pressure coefficient.</p></li>
 </ul>
-<p>To get a better idea of how this can be implemented, an example contained in the aerodynamics unit test of Tudat is used. This example describes how the aerodynamic coefficients are generated for the Apollo capsule. A function called <code class="docutils literal"><span class="pre">getApolloCoefficientInterface()</span></code> is made which returns a variable of the type: <code class="docutils literal"><span class="pre">HypersonicLocalInclinationAnalysis</span></code>.</p>
+<p>To get a better idea of how this can be implemented, an example contained in the aerodynamics unit test of Tudat is used. This example describes how the aerodynamic coefficients are generated for the Apollo capsule. A function called <code class="docutils literal notranslate"><span class="pre">getApolloCoefficientInterface()</span></code> is made which returns a variable of the type: <code class="docutils literal notranslate"><span class="pre">HypersonicLocalInclinationAnalysis</span></code>.</p>
 <p>First the capsule geometry is made using a pre-defined capsule shape:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">geometric_shapes</span><span class="o">::</span><span class="n">Capsule</span> <span class="o">&gt;</span> <span class="n">capsule</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">geometric_shapes</span><span class="o">::</span><span class="n">Capsule</span> <span class="o">&gt;</span> <span class="n">capsule</span>
         <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">geometric_shapes</span><span class="o">::</span><span class="n">Capsule</span> <span class="o">&gt;</span><span class="p">(</span>
            <span class="mf">4.694</span><span class="p">,</span> <span class="mf">1.956</span><span class="p">,</span> <span class="mf">2.662</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">*</span> <span class="mf">33.0</span> <span class="o">*</span> <span class="n">PI</span> <span class="o">/</span> <span class="mf">180.0</span><span class="p">,</span> <span class="mf">0.196</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>There is also an option to define a grid by the user, but this is not explained here. To define the panels on the vehicle, which are used for the calculation of the local inclination, the number of lines and points are easily definable:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">int</span> <span class="o">&gt;</span> <span class="n">numberOfLines</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">int</span> <span class="o">&gt;</span> <span class="n">numberOfLines</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">int</span> <span class="o">&gt;</span> <span class="n">numberOfPoints</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">bool</span> <span class="o">&gt;</span> <span class="n">invertOrders</span><span class="p">;</span>
 <span class="n">numberOfLines</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="mi">4</span> <span class="p">);</span>
@@ -325,7 +328,7 @@ the second index determines the specific method (a list of available methods is 
 </pre></div>
 </div>
 <p>A moment reference point is then defined. Afterwards, the independent variable points are defined, which are used to calculate the coefficients in the simulation during specific flight conditions. These points can be defined by the user, but there is also an option to get default values:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">independentVariableDataPoints</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">independentVariableDataPoints</span><span class="p">;</span>
 <span class="n">independentVariableDataPoints</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="mi">3</span> <span class="p">);</span>
 <span class="n">independentVariableDataPoints</span><span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="n">getDefaultHypersonicLocalInclinationMachPoints</span><span class="p">(</span> <span class="s">&quot;Full&quot;</span> <span class="p">);</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">angleOfAttackPoints</span><span class="p">;</span>
@@ -342,7 +345,7 @@ the second index determines the specific method (a list of available methods is 
 </pre></div>
 </div>
 <p>For the Mach number and angle of sideslip, default values are used, whereas for the angle of attack, the values are defined by the user. The final part of the code is the selection of methods. In this case there are several methods used to determine the coefficients.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">int</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">selectedMethods</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">int</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">selectedMethods</span><span class="p">;</span>
 <span class="n">selectedMethods</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="mi">2</span> <span class="p">);</span>
 <span class="n">selectedMethods</span><span class="p">[</span> <span class="mi">0</span> <span class="p">].</span><span class="n">resize</span><span class="p">(</span> <span class="mi">4</span> <span class="p">);</span>
 <span class="n">selectedMethods</span><span class="p">[</span> <span class="mi">1</span> <span class="p">].</span><span class="n">resize</span><span class="p">(</span> <span class="mi">4</span> <span class="p">);</span>
@@ -357,8 +360,8 @@ the second index determines the specific method (a list of available methods is 
 <span class="n">selectedMethods</span><span class="p">[</span> <span class="mi">1</span> <span class="p">][</span> <span class="mi">3</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Finally, in the return statement, the local inclination analysis is made, which can be used to define an <code class="docutils literal"><span class="pre">AerodynamicCoefficientInterface</span></code>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create analysis object and capsule database.</span>
+<p>Finally, in the return statement, the local inclination analysis is made, which can be used to define an <code class="docutils literal notranslate"><span class="pre">AerodynamicCoefficientInterface</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create analysis object and capsule database.</span>
 <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">HypersonicLocalInclinationAnalysis</span> <span class="o">&gt;</span><span class="p">(</span>
             <span class="n">independentVariableDataPoints</span><span class="p">,</span> <span class="n">capsule</span><span class="p">,</span> <span class="n">numberOfLines</span><span class="p">,</span> <span class="n">numberOfPoints</span><span class="p">,</span>
             <span class="n">invertOrders</span><span class="p">,</span> <span class="n">selectedMethods</span><span class="p">,</span> <span class="n">PI</span> <span class="o">*</span> <span class="n">pow</span><span class="p">(</span> <span class="n">capsule</span><span class="o">-&gt;</span><span class="n">getMiddleRadius</span><span class="p">(</span> <span class="p">),</span> <span class="mf">2.0</span> <span class="p">),</span>
@@ -367,27 +370,27 @@ the second index determines the specific method (a list of available methods is 
 </div>
 </div>
 <div class="section" id="reading-aerodynamic-coefficients-from-files">
-<span id="tudatfeaturesaerodynamicguidancereadingaerodynamiccoefficients"></span><h2>1.5.2. Reading aerodynamic coefficients from Files<a class="headerlink" href="#reading-aerodynamic-coefficients-from-files" title="Permalink to this headline">¶</a></h2>
+<span id="tudatfeaturesaerodynamicguidancereadingaerodynamiccoefficients"></span><h2><span class="section-number">1.5.2. </span>Reading aerodynamic coefficients from Files<a class="headerlink" href="#reading-aerodynamic-coefficients-from-files" title="Permalink to this headline">¶</a></h2>
 <p>For many simulations/analyses involving atmospheric flight, the aerodynamic coefficients will be provided in tabulated form. If put into the correct file format, these files can be read into Tudat used during the orbit propagation. By specifying the physical meaning of the independent variables of the aerodynamic coefficients, no action on the side of the user is required to update the aerodynamic coefficients to their correct values during propagation. Here, we give an overview and some examples on how to load aerodynamic coefficients from a file.</p>
-<p>As a reminder, aerodynamic coefficients are created in Tudat by creating an object of type&nbsp;<a class="reference internal" href="availableSettings.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientSettings</span></code></a>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AerodynamicCoefficientSettings</span> <span class="o">&gt;</span> <span class="n">aerodynamicCoefficientSettings</span> <span class="o">=</span> <span class="p">.....</span>
+<p>As a reminder, aerodynamic coefficients are created in Tudat by creating an object of type <a class="reference internal" href="availableSettings.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">AerodynamicCoefficientSettings</span></code></a>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AerodynamicCoefficientSettings</span> <span class="o">&gt;</span> <span class="n">aerodynamicCoefficientSettings</span> <span class="o">=</span> <span class="p">.....</span>
 <span class="n">bodyMap</span><span class="p">[</span> <span class="s">&quot;VehicleName&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setAerodynamicCoefficientInterface</span><span class="p">(</span>
                     <span class="n">createAerodynamicCoefficientInterface</span><span class="p">(</span> <span class="n">aerodynamicCoefficientSettings</span><span class="p">,</span> <span class="s">&quot;VehicleName&quot;</span> <span class="p">)</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>To create an&nbsp;<a class="reference internal" href="availableSettings.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientSettings</span></code></a>&nbsp;object from data in files, we provide two functions named&nbsp;<code class="docutils literal"><span class="pre">readTabulatedAerodynamicCoefficientsFromFiles</span></code>&nbsp;(in <code class="docutils literal"><span class="pre">createFlightConditions.h</span></code>). For one of the functions, only force coefficients are loaded (with moment coefficients set to zero at all times). The other function allows both force and moment coefficients to be loaded.</p>
+<p>To create an <a class="reference internal" href="availableSettings.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">AerodynamicCoefficientSettings</span></code></a> object from data in files, we provide two functions named <code class="docutils literal notranslate"><span class="pre">readTabulatedAerodynamicCoefficientsFromFiles</span></code> (in <code class="docutils literal notranslate"><span class="pre">createFlightConditions.h</span></code>). For one of the functions, only force coefficients are loaded (with moment coefficients set to zero at all times). The other function allows both force and moment coefficients to be loaded.</p>
 <p>For the situation where only force coefficients are considered, several pieces information are needed:</p>
 <blockquote>
 <div><ul class="simple">
-<li>A list of files for any of the three aerodynamic coefficients (e.g. C<sub>D</sub>, C<sub>S</sub>, C<sub>L</sub>&nbsp;or C<sub>X</sub>, C<sub>Y</sub>, C<sub>Z</sub>). Note that the behaviour of each coefficient must be provided in a&nbsp;separate file. Note that not every coefficient needs to be defined. If a file is not provided for one of the coefficients, as will often be the case for C<sub>S</sub>, zeros are assumed at all points in the propagation.</li>
-<li>The physical meaning of each of the independent variables of the coefficients.</li>
-<li>The reference area for the aerodynamics. This is&nbsp;not&nbsp;read from the file and must be provided as an input to the function.</li>
-<li>Two booleans denoting the orientation and direction of the aerodynamic coefficients. For instance C<sub>D</sub>, C<sub>S</sub>, C<sub>L</sub>&nbsp;denote the strength of the aerodynamic force in the aerodynamic reference frame, in a direction opposite to the axes of that frame. The C<sub>X</sub>, C<sub>Y</sub>, C<sub>Z</sub>&nbsp;coefficients, on the other hand, are defined in the body-fixed frame.</li>
+<li><p>A list of files for any of the three aerodynamic coefficients (e.g. C<sub>D</sub>, C<sub>S</sub>, C<sub>L</sub> or C<sub>X</sub>, C<sub>Y</sub>, C<sub>Z</sub>). Note that the behaviour of each coefficient must be provided in a separate file. Note that not every coefficient needs to be defined. If a file is not provided for one of the coefficients, as will often be the case for C<sub>S</sub>, zeros are assumed at all points in the propagation.</p></li>
+<li><p>The physical meaning of each of the independent variables of the coefficients.</p></li>
+<li><p>The reference area for the aerodynamics. This is not read from the file and must be provided as an input to the function.</p></li>
+<li><p>Two booleans denoting the orientation and direction of the aerodynamic coefficients. For instance C<sub>D</sub>, C<sub>S</sub>, C<sub>L</sub> denote the strength of the aerodynamic force in the aerodynamic reference frame, in a direction opposite to the axes of that frame. The C<sub>X</sub>, C<sub>Y</sub>, C<sub>Z</sub> coefficients, on the other hand, are defined in the body-fixed frame.</p></li>
 </ul>
 </div></blockquote>
-<p>As an example, the following can be used to create&nbsp;<a class="reference internal" href="availableSettings.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicCoefficientSettings</span></code></a>&nbsp;for force coefficients only from a file:</p>
+<p>As an example, the following can be used to create <a class="reference internal" href="availableSettings.html#AerodynamicCoefficientSettings" title="AerodynamicCoefficientSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">AerodynamicCoefficientSettings</span></code></a> for force coefficients only from a file:</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">referenceArea</span> <span class="o">=</span> <span class="mf">50.0</span><span class="p">;</span> <span class="c1">// Define reference area</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">referenceArea</span> <span class="o">=</span> <span class="mf">50.0</span><span class="p">;</span> <span class="c1">// Define reference area</span>
 
 <span class="c1">// Define physical meaning of independent variables, in this case Mach number and angle of attack</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">aerodynamics</span><span class="o">::</span><span class="n">AerodynamicCoefficientsIndependentVariables</span> <span class="o">&gt;</span> <span class="n">independentVariableNames</span><span class="p">;</span>
@@ -415,18 +418,18 @@ the second index determines the specific method (a list of available methods is 
 </div></blockquote>
 <p>Note that in the above, no side force coefficient file (entry 1 for forceCoefficientFiles) is given, so that C:sub:<a href="#id1"><span class="problematic" id="id2">`</span></a>S`=0 always. Two independent variables have been defines (Mach number and angle of attack). If either the lift or drag coefficient files encounter a different number of independent variables, the program will terminate with an appropriate error message. Also, if the independent variables used for the lift and drag coefficients are not identical, the program is terminated.</p>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Moment coefficients are added in a completely analogous manner (with separate files for the x-, y- and z-components).</p>
+<p class="admonition-title">Tip</p>
+<p>Moment coefficients are added in a completely analogous manner (with separate files for the x-, y- and z-components).</p>
 </div>
-<p>In addition to defining aerodynamic coefficients for the vehicle itself, the influence of control surface deflections on the values of the coefficients will be needed for certain applications. In Tudat, any number of control surfaces may be defined for a vehicle, the deflection of which may be set by your particular <a class="reference internal" href="../accelerationSetup/aerodynamicGuidance.html#AerodynamicGuidance" title="AerodynamicGuidance"><code class="xref py py-class docutils literal"><span class="pre">AerodynamicGuidance</span></code></a> derived class. Loading the aerodynamic coefficient increments of the control surface is done in a manner similar to those of the total vehicle, but:</p>
+<p>In addition to defining aerodynamic coefficients for the vehicle itself, the influence of control surface deflections on the values of the coefficients will be needed for certain applications. In Tudat, any number of control surfaces may be defined for a vehicle, the deflection of which may be set by your particular <a class="reference internal" href="../accelerationSetup/aerodynamicGuidance.html#AerodynamicGuidance" title="AerodynamicGuidance"><code class="xref py py-class docutils literal notranslate"><span class="pre">AerodynamicGuidance</span></code></a> derived class. Loading the aerodynamic coefficient increments of the control surface is done in a manner similar to those of the total vehicle, but:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Reference area and reference frame in which the coefficients are defined are not provided. These are implcitily assumed to be equal to those of the aerodynamic coefficients of the ‘main body’. If your application requires these quantities to be different for the body and control surface deflections, please open an issue on Github requesting the functionality.</li>
-<li>Exactly one of the independent variables of the coefficient increments must be a control surface deflection.</li>
+<li><p>Reference area and reference frame in which the coefficients are defined are not provided. These are implcitily assumed to be equal to those of the aerodynamic coefficients of the ‘main body’. If your application requires these quantities to be different for the body and control surface deflections, please open an issue on Github requesting the functionality.</p></li>
+<li><p>Exactly one of the independent variables of the coefficient increments must be a control surface deflection.</p></li>
 </ul>
 </div></blockquote>
 <p>Below, an example is given on how to load the aerodynamic coefficient increments:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create coefficient settings for body.</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create coefficient settings for body.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AerodynamicCoefficientSettings</span> <span class="o">&gt;</span> <span class="n">aerodynamicCoefficientSettings</span> <span class="o">=</span> <span class="p">...</span>
 
 <span class="c1">// Define physical meaning of independent variables for control surface increments, in this case Mach number, angle of attack and control surface deflection</span>
@@ -454,15 +457,15 @@ the second index determines the specific method (a list of available methods is 
 <p>For this example, only the drag coefficient is affected by the control surface deflections.</p>
 </div>
 <div class="section" id="custom-aerodynamic-coefficient-settings">
-<span id="tudatfeaturescustomaerodynamiccoefficients"></span><h2>1.5.3. Custom Aerodynamic Coefficient Settings<a class="headerlink" href="#custom-aerodynamic-coefficient-settings" title="Permalink to this headline">¶</a></h2>
-<p>If a user specific aerodynamic coefficient interface is needed, the <code class="docutils literal"><span class="pre">CustomAerodynamicCoefficientInterface</span></code> can be used. This class allows a generic aerodynamic and moment coefficient function input, and allows the user to use all the aerodynamic coefficient interface methods.</p>
-<dl class="class">
+<span id="tudatfeaturescustomaerodynamiccoefficients"></span><h2><span class="section-number">1.5.3. </span>Custom Aerodynamic Coefficient Settings<a class="headerlink" href="#custom-aerodynamic-coefficient-settings" title="Permalink to this headline">¶</a></h2>
+<p>If a user specific aerodynamic coefficient interface is needed, the <code class="docutils literal notranslate"><span class="pre">CustomAerodynamicCoefficientInterface</span></code> can be used. This class allows a generic aerodynamic and moment coefficient function input, and allows the user to use all the aerodynamic coefficient interface methods.</p>
+<dl class="py class">
 <dt id="CustomAerodynamicCoefficientInterface">
-<em class="property">class </em><code class="descname">CustomAerodynamicCoefficientInterface</code><a class="headerlink" href="#CustomAerodynamicCoefficientInterface" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">CustomAerodynamicCoefficientInterface</code><a class="headerlink" href="#CustomAerodynamicCoefficientInterface" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>The constructor for this class looks as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">CustomAerodynamicCoefficientInterface</span><span class="p">(</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CustomAerodynamicCoefficientInterface</span><span class="p">(</span>
         <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;&amp;</span> <span class="p">)</span> <span class="o">&gt;</span>
         <span class="n">forceCoefficientFunction</span><span class="p">,</span>
         <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;&amp;</span> <span class="p">)</span> <span class="o">&gt;</span>
@@ -479,51 +482,51 @@ the second index determines the specific method (a list of available methods is 
 </div>
 <p>where:</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">forceCoefficientFunction</span></code>:</dt>
-<dd>A function outputting the aerodynamic force coefficients as a function of the independent variables, listed in <code class="docutils literal"><span class="pre">independentVariableNames</span></code>. This requires a <code class="docutils literal"><span class="pre">std::function</span>
-<span class="pre">and</span> <span class="pre">:literal:`std::bind</span></code>, which is explained in: <a class="reference internal" href="../../basics/externalLibraries/utility.html#externalutility"><span class="std std-ref">Dynamic Memory and Function Objects</span></a>.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">forceCoefficientFunction</span></code>:</dt><dd><p>A function outputting the aerodynamic force coefficients as a function of the independent variables, listed in <code class="docutils literal notranslate"><span class="pre">independentVariableNames</span></code>. This requires a <code class="docutils literal notranslate"><span class="pre">std::function</span>
+<span class="pre">and</span> <span class="pre">:literal:`std::bind</span></code>, which is explained in: <a class="reference internal" href="../../basics/externalLibraries/utility.html#externalutility"><span class="std std-ref">Dynamic Memory and Function Objects</span></a>.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">momentCoefficientFunction</span></code>:</dt>
-<dd>A function outputting the aerodynamic moment coefficients as a function of the independent variables, listed in <code class="docutils literal"><span class="pre">independentVariableNames</span></code>. This requires a <code class="docutils literal"><span class="pre">std::function</span>
-<span class="pre">and</span> <span class="pre">:literal:`std::bind</span></code>, which is explained in: <a class="reference internal" href="../../basics/externalLibraries/utility.html#externalutility"><span class="std std-ref">Dynamic Memory and Function Objects</span></a>.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">momentCoefficientFunction</span></code>:</dt><dd><p>A function outputting the aerodynamic moment coefficients as a function of the independent variables, listed in <code class="docutils literal notranslate"><span class="pre">independentVariableNames</span></code>. This requires a <code class="docutils literal notranslate"><span class="pre">std::function</span>
+<span class="pre">and</span> <span class="pre">:literal:`std::bind</span></code>, which is explained in: <a class="reference internal" href="../../basics/externalLibraries/utility.html#externalutility"><span class="std std-ref">Dynamic Memory and Function Objects</span></a>.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">referenceLength</span></code>:</dt>
-<dd>The length with which the coefficients are non-dimensionalized (about the z- and x-axis).</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">referenceLength</span></code>:</dt><dd><p>The length with which the coefficients are non-dimensionalized (about the z- and x-axis).</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">referenceArea</span></code>:</dt>
-<dd>The area with which the coefficients are non-dimensionalized.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">referenceArea</span></code>:</dt><dd><p>The area with which the coefficients are non-dimensionalized.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">lateralReferenceLength</span></code>:</dt>
-<dd>The length with which the coefficients are non-dimensionalized (about the y-axis).</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">lateralReferenceLength</span></code>:</dt><dd><p>The length with which the coefficients are non-dimensionalized (about the y-axis).</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">momentReferencePoint</span></code>:</dt>
-<dd>The point with respect to the aerodynamic moments are calculated.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">momentReferencePoint</span></code>:</dt><dd><p>The point with respect to the aerodynamic moments are calculated.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">independentVariableNames</span></code>:</dt>
-<dd>A vector containing identifiers for the independent variables that are used in the <code class="docutils literal"><span class="pre">forceCoefficientFunction</span></code>.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">independentVariableNames</span></code>:</dt><dd><p>A vector containing identifiers for the independent variables that are used in the <code class="docutils literal notranslate"><span class="pre">forceCoefficientFunction</span></code>.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">areCoefficientsInAerodynamicFrame</span></code>:</dt>
-<dd>A <code class="docutils literal"><span class="pre">bool</span></code> that determines if the aerodynamic coefficients are in the aerodynamic reference frame or not.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">areCoefficientsInAerodynamicFrame</span></code>:</dt><dd><p>A <code class="docutils literal notranslate"><span class="pre">bool</span></code> that determines if the aerodynamic coefficients are in the aerodynamic reference frame or not.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">areCoefficientsInNegativeAxisDirection</span></code>:</dt>
-<dd>A <code class="docutils literal"><span class="pre">bool</span></code> that determines if the aerodynamic coefficients are in the negative axis direction.</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">areCoefficientsInNegativeAxisDirection</span></code>:</dt><dd><p>A <code class="docutils literal notranslate"><span class="pre">bool</span></code> that determines if the aerodynamic coefficients are in the negative axis direction.</p>
+</dd>
 </dl>
 </li>
 </ul>
@@ -585,7 +588,8 @@ the second index determines the specific method (a list of available methods is 
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

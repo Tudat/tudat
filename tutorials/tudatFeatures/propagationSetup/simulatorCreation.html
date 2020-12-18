@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -112,6 +114,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">Low-Thrust Trajectory Design Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
@@ -173,9 +176,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">3. Simulator Set-Up</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">3. </span>Simulator Set-Up</a> &raquo;</li>
         
-      <li>3.6. Performing State Propagation</li>
+      <li><span class="section-number">3.6. </span>Performing State Propagation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -195,64 +198,64 @@
            <div itemprop="articleBody">
             
   <div class="section" id="performing-state-propagation">
-<span id="tudatfeaturessimulatorcreation"></span><h1>3.6. Performing State Propagation<a class="headerlink" href="#performing-state-propagation" title="Permalink to this headline">¶</a></h1>
-<p>Propagating the dynamics, using the settings discussed in previous wiki pages, is done by using a <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> object. We have several different derived classes of <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> for different types of propagation. The following are available or under development in Tudat:</p>
+<span id="tudatfeaturessimulatorcreation"></span><h1><span class="section-number">3.6. </span>Performing State Propagation<a class="headerlink" href="#performing-state-propagation" title="Permalink to this headline">¶</a></h1>
+<p>Propagating the dynamics, using the settings discussed in previous wiki pages, is done by using a <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a> object. We have several different derived classes of <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a> for different types of propagation. The following are available or under development in Tudat:</p>
 <ul class="simple">
-<li>Single-arc dynamics simulator, by using <a class="reference internal" href="#SingleArcDynamicsSimulator" title="SingleArcDynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">SingleArcDynamicsSimulator</span></code></a>. For most Tudat applications, this will be the preferred option (if you’re not sure which one you need, it’s probably this one).</li>
-<li>Multi-arc dynamics simulator, by using <a class="reference internal" href="#MultiArcDynamicsSimulator" title="MultiArcDynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">MultiArcDynamicsSimulator</span></code></a>.</li>
-<li>Hybrid-arc (combination of single- and multi-arc) dynamics simulator, by using <a class="reference internal" href="#HybridArcDynamicsSimulator" title="HybridArcDynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">HybridArcDynamicsSimulator</span></code></a>.</li>
+<li><p>Single-arc dynamics simulator, by using <a class="reference internal" href="#SingleArcDynamicsSimulator" title="SingleArcDynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleArcDynamicsSimulator</span></code></a>. For most Tudat applications, this will be the preferred option (if you’re not sure which one you need, it’s probably this one).</p></li>
+<li><p>Multi-arc dynamics simulator, by using <a class="reference internal" href="#MultiArcDynamicsSimulator" title="MultiArcDynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiArcDynamicsSimulator</span></code></a>.</p></li>
+<li><p>Hybrid-arc (combination of single- and multi-arc) dynamics simulator, by using <a class="reference internal" href="#HybridArcDynamicsSimulator" title="HybridArcDynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">HybridArcDynamicsSimulator</span></code></a>.</p></li>
 </ul>
 <p>As discussed below, the state may be propagated directly upon the creation of one of these objects, or at a later time (depending on the input that is used.)</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">It is important to ensure that the propagator settings are compatible with the dynamics simulator type selected. Otherwise it will result in an exception being thrown during run-time.</p>
+<p class="admonition-title">Warning</p>
+<p>It is important to ensure that the propagator settings are compatible with the dynamics simulator type selected. Otherwise it will result in an exception being thrown during run-time.</p>
 </div>
 <p>These are implemented in derived classes and are discussed below.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="DynamicsSimulator">
-<em class="property">class </em><code class="descname">DynamicsSimulator</code><a class="headerlink" href="#DynamicsSimulator" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">DynamicsSimulator</code><a class="headerlink" href="#DynamicsSimulator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class from which the classes below are derived.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="SingleArcDynamicsSimulator">
-<em class="property">class </em><code class="descname">SingleArcDynamicsSimulator</code><a class="headerlink" href="#SingleArcDynamicsSimulator" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">SingleArcDynamicsSimulator</code><a class="headerlink" href="#SingleArcDynamicsSimulator" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class simulates single arc dynamics and its constructor is:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="n">StateScalarType</span><span class="p">,</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="n">StateScalarType</span><span class="p">,</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>where:</p>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">bodyMap</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">bodyMap</span></code></p>
 <blockquote>
-<div><p><a class="reference internal" href="../environmentSetup/setup.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal"><span class="pre">NamedBodyMap</span></code></a> the map containing al the objects of type <a class="reference internal" href="../environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> used in the simulation.</p>
+<div><p><a class="reference internal" href="../environmentSetup/setup.html#NamedBodyMap" title="NamedBodyMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">NamedBodyMap</span></code></a> the map containing al the objects of type <a class="reference internal" href="../environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> used in the simulation.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">integratorSettings</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">integratorSettings</span></code></p>
 <blockquote>
-<div><p><a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal"><span class="pre">IntegratorSettings</span></code></a> contains the settings of the integrator used, as discussed in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a>.</p>
+<div><p><a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntegratorSettings</span></code></a> contains the settings of the integrator used, as discussed in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a>.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">propagatorSettings</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">propagatorSettings</span></code></p>
 <blockquote>
-<div><p><a class="reference internal" href="propagatorSettings.html#SingleArcPropagatorSettings" title="SingleArcPropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">SingleArcPropagatorSettings</span></code></a> contains the settings that defines how the orbit is propagated, as described in <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>.</p>
+<div><p><a class="reference internal" href="propagatorSettings.html#SingleArcPropagatorSettings" title="SingleArcPropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleArcPropagatorSettings</span></code></a> contains the settings that defines how the orbit is propagated, as described in <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>.</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">StateScalarType</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">StateScalarType</span></code></p>
 <blockquote>
-<div><p>Template argument used to set the precision of the state, <code class="docutils literal"><span class="pre">double</span></code> by default. For some application where a high precision is required this can be changed to e.g. <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code> (see <a class="reference internal" href="TimeStateTemplates.html#tudatfeaturestimestatetemplates"><span class="std std-ref">Time and State Templates</span></a>).</p>
+<div><p>Template argument used to set the precision of the state, <code class="docutils literal notranslate"><span class="pre">double</span></code> by default. For some application where a high precision is required this can be changed to e.g. <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">double</span></code> (see <a class="reference internal" href="TimeStateTemplates.html#tudatfeaturestimestatetemplates"><span class="std std-ref">Time and State Templates</span></a>).</p>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">TimeType</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">TimeType</span></code></p>
 <blockquote>
-<div><p>Template argument used to set the precision of the time, <code class="docutils literal"><span class="pre">double</span></code> by default. For some application where a high precision is required this can be changed to e.g. <code class="xref py py-class docutils literal"><span class="pre">Time</span></code> (see <a class="reference internal" href="TimeStateTemplates.html#tudatfeaturestimestatetemplates"><span class="std std-ref">Time and State Templates</span></a>).</p>
+<div><p>Template argument used to set the precision of the time, <code class="docutils literal notranslate"><span class="pre">double</span></code> by default. For some application where a high precision is required this can be changed to e.g. <code class="xref py py-class docutils literal notranslate"><span class="pre">Time</span></code> (see <a class="reference internal" href="TimeStateTemplates.html#tudatfeaturestimestatetemplates"><span class="std std-ref">Time and State Templates</span></a>).</p>
 </div></blockquote>
 </li>
 </ul>
 </dd></dl>
 
-<p>By default, the equations of motion are integrated once the object is created. This can be changed by adding additional arguments to the cosntructors of the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a>, as shown below for the <a class="reference internal" href="#SingleArcDynamicsSimulator" title="SingleArcDynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">SingleArcDynamicsSimulator</span></code></a>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create simulation object and propagate dynamics.</span>
+<p>By default, the equations of motion are integrated once the object is created. This can be changed by adding additional arguments to the cosntructors of the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a>, as shown below for the <a class="reference internal" href="#SingleArcDynamicsSimulator" title="SingleArcDynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleArcDynamicsSimulator</span></code></a>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create simulation object and propagate dynamics.</span>
 <span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="n">StateScalarType</span><span class="p">,</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="n">dynamicsSimulator</span><span class="p">(</span>
    <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="n">areEquationsOfMotionToBeIntegrated</span><span class="p">,</span>
    <span class="n">clearNumericalSolutions</span><span class="p">,</span> <span class="n">setIntegratedResult</span><span class="p">,</span> <span class="n">printNumberOfFunctionEvaluations</span> <span class="p">);</span>
@@ -260,47 +263,47 @@
 </div>
 <p>where:</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">areEquationsOfMotionToBeIntegrated</span></code></dt>
-<dd>Boolean to denote whether equations of motion should be integrated immediately at the end of the contructor or not (default true).</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">areEquationsOfMotionToBeIntegrated</span></code></dt><dd><p>Boolean to denote whether equations of motion should be integrated immediately at the end of the contructor or not (default true).</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">clearNumericalSolutions</span></code></dt>
-<dd>Boolean to determine whether to clear the raw numerical solution member variables after propagation and resetting ephemerides (default false for <code class="xref py py-class docutils literal"><span class="pre">SingleArcDynamicsSimulation</span></code>, and true for <code class="xref py py-class docutils literal"><span class="pre">MultiArcDynamicsSimulation</span></code> and <code class="xref py py-class docutils literal"><span class="pre">HybridArcDynamicsSimulation</span></code>).</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">clearNumericalSolutions</span></code></dt><dd><p>Boolean to determine whether to clear the raw numerical solution member variables after propagation and resetting ephemerides (default false for <code class="xref py py-class docutils literal notranslate"><span class="pre">SingleArcDynamicsSimulation</span></code>, and true for <code class="xref py py-class docutils literal notranslate"><span class="pre">MultiArcDynamicsSimulation</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">HybridArcDynamicsSimulation</span></code>).</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">setIntegratedResult</span></code></dt>
-<dd>Boolean to determine whether to automatically use the integrated results to set ephemerides (default false for <code class="xref py py-class docutils literal"><span class="pre">SingleArcDynamicsSimulation</span></code>, and true for <code class="xref py py-class docutils literal"><span class="pre">MultiArcDynamicsSimulation</span></code> and <code class="xref py py-class docutils literal"><span class="pre">HybridArcDynamicsSimulation</span></code>).</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">setIntegratedResult</span></code></dt><dd><p>Boolean to determine whether to automatically use the integrated results to set ephemerides (default false for <code class="xref py py-class docutils literal notranslate"><span class="pre">SingleArcDynamicsSimulation</span></code>, and true for <code class="xref py py-class docutils literal notranslate"><span class="pre">MultiArcDynamicsSimulation</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">HybridArcDynamicsSimulation</span></code>).</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">printNumberOfFunctionEvaluations</span></code></dt>
-<dd>Boolean to toggle the printing of number of function evaluations at the end of propagation (default false).</dd>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">printNumberOfFunctionEvaluations</span></code></dt><dd><p>Boolean to toggle the printing of number of function evaluations at the end of propagation (default false).</p>
+</dd>
 </dl>
 </li>
 </ul>
-<dl class="class">
+<dl class="py class">
 <dt id="MultiArcDynamicsSimulator">
-<em class="property">class </em><code class="descname">MultiArcDynamicsSimulator</code><a class="headerlink" href="#MultiArcDynamicsSimulator" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">MultiArcDynamicsSimulator</code><a class="headerlink" href="#MultiArcDynamicsSimulator" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This derived class allows the numerical propagation to be performed in an arc-wise manner. It is constructed using:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">MultiArcDynamicsSimulator</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="n">arcStartTimes</span><span class="p">,</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiArcDynamicsSimulator</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="n">arcStartTimes</span><span class="p">,</span>
                            <span class="n">areEquationsOfMotionToBeIntegrated</span><span class="p">,</span> <span class="n">clearNumericalSolutions</span><span class="p">,</span> <span class="n">setIntegratedResult</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>where:</p>
 </div></blockquote>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">propagatorSettings</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">propagatorSettings</span></code></p>
 <blockquote>
-<div><p><a class="reference internal" href="propagatorSettings.html#MultiArcPropagatorSettings" title="MultiArcPropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">MultiArcPropagatorSettings</span></code></a>, contains the settings that defines how the orbit is propagated, as described in <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>. Note that the propagator settings may be identical, or different, per arc (depending on the contents of the settings object).</p>
+<div><p><a class="reference internal" href="propagatorSettings.html#MultiArcPropagatorSettings" title="MultiArcPropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiArcPropagatorSettings</span></code></a>, contains the settings that defines how the orbit is propagated, as described in <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>. Note that the propagator settings may be identical, or different, per arc (depending on the contents of the settings object).</p>
 </div></blockquote>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">arcStartTimes</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">arcStartTimes</span></code></p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">double</span> <span class="pre">&gt;</span></code> containing the times at which the separate arcs start. Note: there is no requirement for the arcs to be contiguous and/or overlapping.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">std::vector&lt;</span> <span class="pre">double</span> <span class="pre">&gt;</span></code> containing the times at which the separate arcs start. Note: there is no requirement for the arcs to be contiguous and/or overlapping.</p>
 </div></blockquote>
 </li>
 </ul>
@@ -311,55 +314,56 @@
 <p>The following, alternative, constructor allows you to specify different integrator settings per arc:</p>
 <blockquote>
 <div><blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">MultiArcDynamicsSimulator</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettingsList</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="n">arcStartTimes</span><span class="p">,</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiArcDynamicsSimulator</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettingsList</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="n">arcStartTimes</span><span class="p">,</span>
                          <span class="n">areEquationsOfMotionToBeIntegrated</span><span class="p">,</span> <span class="n">clearNumericalSolutions</span><span class="p">,</span> <span class="n">setIntegratedResult</span> <span class="p">);</span>
 </pre></div>
 </div>
 </div></blockquote>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">integratorSettingsList</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">integratorSettingsList</span></code></p>
 <blockquote>
-<div><p><code class="xref py py-class docutils literal"><span class="pre">std::vector</span></code> is the list (same size as number of arcs) with the settings of the integrator used, per arc.</p>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">std::vector</span></code> is the list (same size as number of arcs) with the settings of the integrator used, per arc.</p>
 </div></blockquote>
 </li>
 </ul>
 </div></blockquote>
-<dl class="class">
+<dl class="py class">
 <dt id="HybridArcDynamicsSimulator">
-<em class="property">class </em><code class="descname">HybridArcDynamicsSimulator</code><a class="headerlink" href="#HybridArcDynamicsSimulator" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">HybridArcDynamicsSimulator</code><a class="headerlink" href="#HybridArcDynamicsSimulator" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
-<div>Allows some bodies to be propagated in a single arc, and some in a multi-arc fashion. This has the strict requirement that the single-arc bodies’ dynamics does not depend on the multi-arc bodies. For instance, the multi-arc bodies are typically spacecraft and the single-arc bodies solar system bodies. The vehicles do not exert an acceleration on the planets, but the planets exert accelerations on the spacecraft. When using hybrid-arc propagation, the single-arc bodies are first propagated, followed by the multi-arc bodies.</div></blockquote>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span> <span class="n">HybridArcDynamicsSimulator</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="n">arcStartTimes</span><span class="p">,</span>
+<div><p>Allows some bodies to be propagated in a single arc, and some in a multi-arc fashion. This has the strict requirement that the single-arc bodies’ dynamics does not depend on the multi-arc bodies. For instance, the multi-arc bodies are typically spacecraft and the single-arc bodies solar system bodies. The vehicles do not exert an acceleration on the planets, but the planets exert accelerations on the spacecraft. When using hybrid-arc propagation, the single-arc bodies are first propagated, followed by the multi-arc bodies.</p>
+</div></blockquote>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="n">HybridArcDynamicsSimulator</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="n">arcStartTimes</span><span class="p">,</span>
                             <span class="n">areEquationsOfMotionToBeIntegrated</span><span class="p">,</span> <span class="n">clearNumericalSolutions</span><span class="p">,</span> <span class="n">setIntegratedResult</span> <span class="p">);</span>
 
 <span class="nl">where</span><span class="p">:</span>
 </pre></div>
 </div>
 <ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">propagatorSettings</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">propagatorSettings</span></code></p>
 <blockquote>
-<div><p><a class="reference internal" href="propagatorSettings.html#HybridArcPropagatorSettings" title="HybridArcPropagatorSettings"><code class="xref py py-class docutils literal"><span class="pre">HybridArcPropagatorSettings</span></code></a>, contains the settings that defines how the orbit is propagated, as described in <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>.</p>
+<div><p><a class="reference internal" href="propagatorSettings.html#HybridArcPropagatorSettings" title="HybridArcPropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">HybridArcPropagatorSettings</span></code></a>, contains the settings that defines how the orbit is propagated, as described in <a class="reference internal" href="propagatorSettings.html#tudatfeaturespropagatorsettings"><span class="std std-ref">Propagator Settings: Basics</span></a>.</p>
 </div></blockquote>
 </li>
 </ul>
 </dd></dl>
 
 <div class="section" id="retrieving-the-propagation-history">
-<h2>3.6.1. Retrieving the Propagation History<a class="headerlink" href="#retrieving-the-propagation-history" title="Permalink to this headline">¶</a></h2>
-<p>Once the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> object has been created and the equations of motion have been integrated, the propagation history of the selected bodies is stored within the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a>, unless the <code class="docutils literal"><span class="pre">clearNumericalSolutions</span></code> variable has been set to true. Note that this is the <strong>default</strong> for multi- and hybrid-arc propagation.</p>
-<p>To make use of it, such history needs to be retrieved and saved to a file. The <code class="xref py py-class docutils literal"><span class="pre">SingleDynamicsSimulator</span></code> offers a few different options to extract results, based on what you have input in the simulation. All propagation history is stored as a <code class="docutils literal"><span class="pre">std::map&lt;</span> <span class="pre">double,</span> <span class="pre">Eigen::VectorXd</span> <span class="pre">&gt;</span></code> (assuming you are using standard <code class="docutils literal"><span class="pre">TimeType</span></code> and <code class="docutils literal"><span class="pre">StateScalarType</span></code>).</p>
+<h2><span class="section-number">3.6.1. </span>Retrieving the Propagation History<a class="headerlink" href="#retrieving-the-propagation-history" title="Permalink to this headline">¶</a></h2>
+<p>Once the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a> object has been created and the equations of motion have been integrated, the propagation history of the selected bodies is stored within the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a>, unless the <code class="docutils literal notranslate"><span class="pre">clearNumericalSolutions</span></code> variable has been set to true. Note that this is the <strong>default</strong> for multi- and hybrid-arc propagation.</p>
+<p>To make use of it, such history needs to be retrieved and saved to a file. The <code class="xref py py-class docutils literal notranslate"><span class="pre">SingleDynamicsSimulator</span></code> offers a few different options to extract results, based on what you have input in the simulation. All propagation history is stored as a <code class="docutils literal notranslate"><span class="pre">std::map&lt;</span> <span class="pre">double,</span> <span class="pre">Eigen::VectorXd</span> <span class="pre">&gt;</span></code> (assuming you are using standard <code class="docutils literal notranslate"><span class="pre">TimeType</span></code> and <code class="docutils literal notranslate"><span class="pre">StateScalarType</span></code>).</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">All examples given below are valid for the single-arc propagation only. The corresponding functions of the multi- and hybird-arc models produce a <code class="docutils literal"><span class="pre">std::vector&lt;</span> <span class="pre">std::map&lt;</span> <span class="pre">...,</span> <span class="pre">...</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code>, instead of the <code class="docutils literal"><span class="pre">std::map&lt;</span> <span class="pre">...,</span> <span class="pre">...</span> <span class="pre">&gt;</span></code> output used below.</p>
+<p class="admonition-title">Note</p>
+<p>All examples given below are valid for the single-arc propagation only. The corresponding functions of the multi- and hybird-arc models produce a <code class="docutils literal notranslate"><span class="pre">std::vector&lt;</span> <span class="pre">std::map&lt;</span> <span class="pre">...,</span> <span class="pre">...</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code>, instead of the <code class="docutils literal notranslate"><span class="pre">std::map&lt;</span> <span class="pre">...,</span> <span class="pre">...</span> <span class="pre">&gt;</span></code> output used below.</p>
 </div>
 <p>First of all, you can access the history of the propagated states for each object you have simulated:</p>
 <blockquote>
 <div><ul>
-<li><p class="first"><strong>Extracting the state history in the conventional coordinates</strong></p>
+<li><p><strong>Extracting the state history in the conventional coordinates</strong></p>
 <blockquote>
-<div><p>The <em>conventional</em> coordinates are those coordinates that are used to describe the acceleration model. For translational motion, these are the Cartesian coordinates, whereas for rotational motion, they are quaternions. To access and save these results you can use the function <code class="docutils literal"><span class="pre">getEquationsOfMotionNumericalSolution</span></code> of the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> object, as shown below:</p>
+<div><p>The <em>conventional</em> coordinates are those coordinates that are used to describe the acceleration model. For translational motion, these are the Cartesian coordinates, whereas for rotational motion, they are quaternions. To access and save these results you can use the function <code class="docutils literal notranslate"><span class="pre">getEquationsOfMotionNumericalSolution</span></code> of the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a> object, as shown below:</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Write body propagation history in conventional coordinates to file.</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Write body propagation history in conventional coordinates to file.</span>
 <span class="n">writeDataMapToTextFile</span><span class="p">(</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">),</span>
                         <span class="s">&quot;bodyPropagationHistory.dat&quot;</span><span class="p">,</span>
                         <span class="n">outputPath</span> <span class="p">);</span>
@@ -368,11 +372,11 @@
 </div></blockquote>
 </div></blockquote>
 </li>
-<li><p class="first"><strong>Extracting the state history in the propagated coordinates</strong></p>
+<li><p><strong>Extracting the state history in the propagated coordinates</strong></p>
 <blockquote>
-<div><p>The <em>propagation</em> coordinates are those coordinates that are used to describe the equations of motion and thus are the ones that are actually integrated. For translational motion, these can be Cartesian coordinates, Keplerian elements and one of the three unified state models, whereas for rotational motion, these can be quaternions, modified Rodrigues parameters or the exponential map. To access and save these results you can use the function <code class="docutils literal"><span class="pre">getEquationsOfMotionNumericalSolutionRaw</span></code> of the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> object, as shown here:</p>
+<div><p>The <em>propagation</em> coordinates are those coordinates that are used to describe the equations of motion and thus are the ones that are actually integrated. For translational motion, these can be Cartesian coordinates, Keplerian elements and one of the three unified state models, whereas for rotational motion, these can be quaternions, modified Rodrigues parameters or the exponential map. To access and save these results you can use the function <code class="docutils literal notranslate"><span class="pre">getEquationsOfMotionNumericalSolutionRaw</span></code> of the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a> object, as shown here:</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Write body propagation history in propagation coordinates to file.</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Write body propagation history in propagation coordinates to file.</span>
 <span class="n">writeDataMapToTextFile</span><span class="p">(</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolutionRaw</span><span class="p">(</span> <span class="p">),</span>
                         <span class="s">&quot;bodyPropagationRawHistory.dat&quot;</span><span class="p">,</span>
                         <span class="n">outputPath</span> <span class="p">);</span>
@@ -383,39 +387,39 @@
 </li>
 </ul>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">You can find more information about the difference between <em>conventional</em> and <em>propagation</em> coordinates in <a class="reference internal" href="propagatorSettingsCoordinates.html#tudatfeaturespropagatorsettingscoordinates"><span class="std std-ref">Propagator Settings: Conventional vs. Propagated Coordinates</span></a>.</p>
+<p class="admonition-title">Tip</p>
+<p>You can find more information about the difference between <em>conventional</em> and <em>propagation</em> coordinates in <a class="reference internal" href="propagatorSettingsCoordinates.html#tudatfeaturespropagatorsettingscoordinates"><span class="std std-ref">Propagator Settings: Conventional vs. Propagated Coordinates</span></a>.</p>
 </div>
 </div></blockquote>
-<p>In case you have also decided to store some dependent variables, you can access and save their history by placing the following code after the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> object creation:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Write body dependent variable history to file.</span>
+<p>In case you have also decided to store some dependent variables, you can access and save their history by placing the following code after the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a> object creation:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Write body dependent variable history to file.</span>
 <span class="n">writeDataMapToTextFile</span><span class="p">(</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getDependentVariableHistory</span><span class="p">(</span> <span class="p">),</span>
                         <span class="s">&quot;bodyDependentVariableHistory.dat&quot;</span><span class="p">,</span>
                         <span class="n">outputPath</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Similarly to the <code class="docutils literal"><span class="pre">getEquationsOfMotionNumericalSolution</span></code> and <code class="docutils literal"><span class="pre">getEquationsOfMotionNumericalSolutionRaw</span></code> functions, the <code class="docutils literal"><span class="pre">getDependentVariableHistory</span></code> outputs a map, where the key is the time and the mapped value a vector of variable length. This length depends on a few things:</p>
+<p>Similarly to the <code class="docutils literal notranslate"><span class="pre">getEquationsOfMotionNumericalSolution</span></code> and <code class="docutils literal notranslate"><span class="pre">getEquationsOfMotionNumericalSolutionRaw</span></code> functions, the <code class="docutils literal notranslate"><span class="pre">getDependentVariableHistory</span></code> outputs a map, where the key is the time and the mapped value a vector of variable length. This length depends on a few things:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>For extraction of numerical solutions:</strong> how many bodies are being propagated, how many propagators are used and the length of the conventional or propagation coordinates</li>
-<li><strong>For extraction of dependent variables:</strong> how many depenent variables are being saved and whether they are a scalar or a vector</li>
+<li><p><strong>For extraction of numerical solutions:</strong> how many bodies are being propagated, how many propagators are used and the length of the conventional or propagation coordinates</p></li>
+<li><p><strong>For extraction of dependent variables:</strong> how many depenent variables are being saved and whether they are a scalar or a vector</p></li>
 </ul>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">For the dependent variables, the simulation will automatically output the order and length of each dependent variable. This is true, however, only if you have not turned off this feature while adding the dependent variable settings to the propagator object.</p>
+<p class="admonition-title">Note</p>
+<p>For the dependent variables, the simulation will automatically output the order and length of each dependent variable. This is true, however, only if you have not turned off this feature while adding the dependent variable settings to the propagator object.</p>
 </div>
 </div></blockquote>
-<p>Finally, the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> object offers a couple more interesting member functions that can be used to access some internal variables. You can, for instance, use:</p>
+<p>Finally, the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a> object offers a couple more interesting member functions that can be used to access some internal variables. You can, for instance, use:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">getCumulativeNumberOfFunctionEvaluations</span></code> to access the history of the number of function evaluations over propagation; the key is the simulation time and the mapped value gives the cumulative number of function evaluations; this can be very useful when studying the performance of the propagation coordinates and/or of a variable step size integrator.</li>
-<li><code class="docutils literal"><span class="pre">getCumulativeComputationTimeHistory</span></code> to access the history of the computation time over propagation; the key is the simulation time and the mapped value gives the cumulative computation time.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getCumulativeNumberOfFunctionEvaluations</span></code> to access the history of the number of function evaluations over propagation; the key is the simulation time and the mapped value gives the cumulative number of function evaluations; this can be very useful when studying the performance of the propagation coordinates and/or of a variable step size integrator.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getCumulativeComputationTimeHistory</span></code> to access the history of the computation time over propagation; the key is the simulation time and the mapped value gives the cumulative computation time.</p></li>
 </ul>
 </div></blockquote>
-<p>The code snippets used at the beginning of this section can be also used to save the cumulative variables above. The result will be a <code class="docutils literal"><span class="pre">.dat</span></code> file in the folder specified by the <code class="docutils literal"><span class="pre">outputPath</span></code> string. You can make use of the <code class="docutils literal"><span class="pre">tudat_applications::getOutputPath(</span> <span class="pre">)</span></code> function to get a folder name relative to the project folder.</p>
+<p>The code snippets used at the beginning of this section can be also used to save the cumulative variables above. The result will be a <code class="docutils literal notranslate"><span class="pre">.dat</span></code> file in the folder specified by the <code class="docutils literal notranslate"><span class="pre">outputPath</span></code> string. You can make use of the <code class="docutils literal notranslate"><span class="pre">tudat_applications::getOutputPath(</span> <span class="pre">)</span></code> function to get a folder name relative to the project folder.</p>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">In case you wanted to have more control on how the data is written to the text file (e.g., setting a different number of significant digits, adding a header to the file, etc.) you can check out the Wiki page on <code class="docutils literal"><span class="pre">writeDataMapToTextFile</span></code> at <a class="reference internal" href="../otherLibraries/inputOutput.html#tudatfeaturesinputoutput"><span class="std std-ref">Input/Output</span></a>.</p>
+<p class="admonition-title">Tip</p>
+<p>In case you wanted to have more control on how the data is written to the text file (e.g., setting a different number of significant digits, adding a header to the file, etc.) you can check out the Wiki page on <code class="docutils literal notranslate"><span class="pre">writeDataMapToTextFile</span></code> at <a class="reference internal" href="../otherLibraries/inputOutput.html#tudatfeaturesinputoutput"><span class="std std-ref">Input/Output</span></a>.</p>
 </div>
 </div>
 </div>
@@ -475,7 +479,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
   
 
@@ -158,91 +160,93 @@
            <div itemprop="articleBody">
             
   <ul class="simple">
-<li><span class="jsontype">string</span> <span class="jsonkey">type</span> (mandatory). Possible values: <code class="docutils literal"><span class="pre">&quot;constant&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;kepler&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;approximatePlanetPositions&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;directSpice&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;interpolatedSpice&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;tabulated&quot;</span></code>.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">frameOrigin</span> (optional). Identifier of the reference frame origin. Default value: <code class="docutils literal"><span class="pre">&quot;SSB&quot;</span></code>.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">frameOrigin</span> (optional). Identifier of the reference frame orientation. Default value: <code class="docutils literal"><span class="pre">&quot;ECLIPJ2000&quot;</span></code>.</li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">type</span> (mandatory). Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;constant&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;kepler&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;approximatePlanetPositions&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;directSpice&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;interpolatedSpice&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;tabulated&quot;</span></code>.</p></li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">frameOrigin</span> (optional). Identifier of the reference frame origin. Default value: <code class="docutils literal notranslate"><span class="pre">&quot;SSB&quot;</span></code>.</p></li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">frameOrigin</span> (optional). Identifier of the reference frame orientation. Default value: <code class="docutils literal notranslate"><span class="pre">&quot;ECLIPJ2000&quot;</span></code>.</p></li>
 </ul>
 <div class="toggle docutils container">
 <div class="header docutils container">
-<span class="arrow">Constant Ephemeris</span></div>
+<p><span class="arrow">Constant Ephemeris</span></p>
+</div>
 <ul class="simple">
-<li><span class="jsontype">number[ 6 ]</span> <span class="jsonkey">constantState</span> (mandatory). Constant Cartesian state.</li>
+<li><p><span class="jsontype">number[ 6 ]</span> <span class="jsonkey">constantState</span> (mandatory). Constant Cartesian state.</p></li>
 </ul>
 </div>
 <div class="toggle docutils container">
 <div class="header docutils container">
-<span class="arrow">Kepler Ephemeris</span></div>
+<p><span class="arrow">Kepler Ephemeris</span></p>
+</div>
 <ul class="simple">
-<li><span class="jsontype">number[ 6 ]</span> <span class="jsonkey">initialStateInKeplerianElements</span> (mandatory). Initial Keplerian state.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">epochOfInitialState</span> (mandatory). Initial epoch from which propagation of Kepler orbit is performed.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">centralBodyGravitationalParameter</span> (mandatory). Gravitational parameter of central body about which the Kepler orbit is defined.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">rootFinderAbsoluteTolerance</span> (optional). Convergence tolerance for root finder used to convert mean to eccentric anomaly. Default value: <code class="docutils literal"><span class="pre">200.0</span> <span class="pre">*</span> <span class="pre">std::numeric_limits&lt;</span> <span class="pre">double</span> <span class="pre">&gt;::epsilon(</span> <span class="pre">)</span></code>.</li>
-<li><span class="jsontype">number</span> <span class="jsonkey">rootFinderMaximumNumberOfIterations</span> (optional). Maximum iteration for root finder used to convert mean to eccentric anomaly. Default value: <code class="docutils literal"><span class="pre">1000</span></code>.</li>
+<li><p><span class="jsontype">number[ 6 ]</span> <span class="jsonkey">initialStateInKeplerianElements</span> (mandatory). Initial Keplerian state.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">epochOfInitialState</span> (mandatory). Initial epoch from which propagation of Kepler orbit is performed.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">centralBodyGravitationalParameter</span> (mandatory). Gravitational parameter of central body about which the Kepler orbit is defined.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">rootFinderAbsoluteTolerance</span> (optional). Convergence tolerance for root finder used to convert mean to eccentric anomaly. Default value: <code class="docutils literal notranslate"><span class="pre">200.0</span> <span class="pre">*</span> <span class="pre">std::numeric_limits&lt;</span> <span class="pre">double</span> <span class="pre">&gt;::epsilon(</span> <span class="pre">)</span></code>.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">rootFinderMaximumNumberOfIterations</span> (optional). Maximum iteration for root finder used to convert mean to eccentric anomaly. Default value: <code class="docutils literal notranslate"><span class="pre">1000</span></code>.</p></li>
 </ul>
 </div>
 <div class="toggle docutils container">
 <div class="header docutils container">
-<span class="arrow">Approximate Planet Positions Ephemeris</span></div>
+<p><span class="arrow">Approximate Planet Positions Ephemeris</span></p>
+</div>
 <ul class="simple">
-<li><span class="jsontype">string</span> <span class="jsonkey">bodyIdentifier</span> (mandatory). Parameter identifying for which body an ephemeris is to be created. Possible values: <code class="docutils literal"><span class="pre">&quot;mercury&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;venus&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;earthMoonBarycenter&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;mars&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;jupiter&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;saturn&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;uranus&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;neptune&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;pluto&quot;</span></code>.</li>
-<li><span class="jsontype">boolean</span> <span class="jsonkey">useCircularCoplanarApproximation</span> (mandatory). Boolean defining whether a circular, coplanar orbit of the body is to be assumed (creating an <code class="xref py py-class docutils literal"><span class="pre">ApproximatePlanetPositionsCircularCoplanar</span></code> object), or whether a non-zero inclination and long-period changes in the orbit are to be included (creating an <code class="xref py py-class docutils literal"><span class="pre">ApproximatePlanetPositions</span></code> object).</li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">bodyIdentifier</span> (mandatory). Parameter identifying for which body an ephemeris is to be created. Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;mercury&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;venus&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;earthMoonBarycenter&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;mars&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;jupiter&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;saturn&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;uranus&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;neptune&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;pluto&quot;</span></code>.</p></li>
+<li><p><span class="jsontype">boolean</span> <span class="jsonkey">useCircularCoplanarApproximation</span> (mandatory). Boolean defining whether a circular, coplanar orbit of the body is to be assumed (creating an <code class="xref py py-class docutils literal notranslate"><span class="pre">ApproximatePlanetPositionsCircularCoplanar</span></code> object), or whether a non-zero inclination and long-period changes in the orbit are to be included (creating an <code class="xref py py-class docutils literal notranslate"><span class="pre">ApproximatePlanetPositions</span></code> object).</p></li>
 </ul>
 </div>
 <div class="toggle docutils container">
 <div class="header docutils container">
-<span class="arrow">Direct Spice Ephemeris</span></div>
+<p><span class="arrow">Direct Spice Ephemeris</span></p>
+</div>
 <ul class="simple">
-<li><span class="jsontype">boolean</span> <span class="jsonkey">correctForStellarAberration</span> (optional). Whether to correct for stellar aberration in retrieved values of (observed state). Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
-<li><span class="jsontype">boolean</span> <span class="jsonkey">correctForLightTimeAberration</span> (optional). Whether to correct for light time in retrieved values of (observed state). Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
-<li><span class="jsontype">boolean</span> <span class="jsonkey">convergeLighTimeAberration</span> (optional). Whether to use single iteration or max. 3 iterations for calculating light time. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
+<li><p><span class="jsontype">boolean</span> <span class="jsonkey">correctForStellarAberration</span> (optional). Whether to correct for stellar aberration in retrieved values of (observed state). Default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+<li><p><span class="jsontype">boolean</span> <span class="jsonkey">correctForLightTimeAberration</span> (optional). Whether to correct for light time in retrieved values of (observed state). Default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+<li><p><span class="jsontype">boolean</span> <span class="jsonkey">convergeLighTimeAberration</span> (optional). Whether to use single iteration or max. 3 iterations for calculating light time. Default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
 </ul>
 </div>
 <div class="toggle docutils container">
 <div class="header docutils container">
-<span class="arrow">Interpolated Spice Ephemeris</span></div>
+<p><span class="arrow">Interpolated Spice Ephemeris</span></p>
+</div>
 <ul>
-<li><p class="first"><span class="jsontype">number</span> <span class="jsonkey">initialTime</span> (mandatory). Initial time from which interpolated data from Spice should be created.</p>
-</li>
-<li><p class="first"><span class="jsontype">number</span> <span class="jsonkey">finalTime</span> (mandatory). Final time until which interpolated data from Spice should be created.</p>
-</li>
-<li><p class="first"><span class="jsontype">number</span> <span class="jsonkey">timeStep</span> (mandatory). Time step with which interpolated data from Spice should be created.</p>
-</li>
-<li><p class="first"><span class="jsontype">object</span> <span class="jsonkey">interpolator</span> (optional). Settings to be used for the state interpolation. Default value: <code class="docutils literal"><span class="pre">{&quot;type&quot;:&quot;lagrange&quot;,&quot;order&quot;:6}</span></code>.</p>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">initialTime</span> (mandatory). Initial time from which interpolated data from Spice should be created.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">finalTime</span> (mandatory). Final time until which interpolated data from Spice should be created.</p></li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">timeStep</span> (mandatory). Time step with which interpolated data from Spice should be created.</p></li>
+<li><p><span class="jsontype">object</span> <span class="jsonkey">interpolator</span> (optional). Settings to be used for the state interpolation. Default value: <code class="docutils literal notranslate"><span class="pre">{&quot;type&quot;:&quot;lagrange&quot;,&quot;order&quot;:6}</span></code>.</p>
 <blockquote>
 <div><div class="toggle docutils container">
 <div class="header docutils container">
 <p><span class="arrow">Interpolator</span></p>
 </div>
 <ul class="simple">
-<li><span class="jsontype">string</span> <span class="jsonkey">type</span> (mandatory). Possible values: <code class="docutils literal"><span class="pre">&quot;linear&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;cubicSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;lagrange&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;hermiteSpline&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;piecewiseConstant&quot;</span></code>.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
-<li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Boundary handling method, in case the independent variable is outside the specified range. Possible values: <code class="docutils literal"><span class="pre">&quot;throwException&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValue&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;boundaryValueWithWarning&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;extrapolateWithWarning&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;extrapolate&quot;</span></code>.</li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">type</span> (mandatory). Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;linear&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;cubicSpline&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;lagrange&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;hermiteSpline&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;piecewiseConstant&quot;</span></code>.</p></li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</p></li>
+<li><p><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">boundaryHandling</span> (optional). Boundary handling method, in case the independent variable is outside the specified range. Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;throwException&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;boundaryValue&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;boundaryValueWithWarning&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;extrapolate&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;extrapolateWithWarning&quot;</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">&quot;extrapolate&quot;</span></code>.</p></li>
 </ul>
 <div class="toggle docutils container">
 <div class="header docutils container">
 <p><span class="arrow">LagrangeInterpolator</span></p>
 </div>
 <ul class="simple">
-<li><span class="jsontype">number</span> <span class="jsonkey">order</span> (mandatory). Order of the Lagrange interpolator.</li>
-<li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</li>
-<li><span class="jsontype">string</span> <span class="jsonkey">lagrangeBoundaryHandling</span> (optional). Possible values: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</li>
+<li><p><span class="jsontype">number</span> <span class="jsonkey">order</span> (mandatory). Order of the Lagrange interpolator.</p></li>
+<li><p><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleTimeStep</span> (optional). Whether the time step is to be a long double, for higher precision. Default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">lookupScheme</span> (optional). Selected type of lookup scheme for independent variables. Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;binarySearch&quot;</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">&quot;huntingAlgorithm&quot;</span></code>.</p></li>
+<li><p><span class="jsontype">string</span> <span class="jsonkey">lagrangeBoundaryHandling</span> (optional). Possible values: <code class="docutils literal notranslate"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;noBoundary&quot;</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">&quot;cubicSplineBoundary&quot;</span></code>.</p></li>
 </ul>
 </div>
 </div>
 </div></blockquote>
 </li>
-<li><p class="first"><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleStates</span> (optional). Whether to use long double states doubles for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</p>
-</li>
+<li><p><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleStates</span> (optional). Whether to use long double states doubles for higher precision. Default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
 </ul>
 </div>
 <div class="toggle docutils container">
 <div class="header docutils container">
-<span class="arrow">Tabulated Ephemeris</span></div>
+<p><span class="arrow">Tabulated Ephemeris</span></p>
+</div>
 <ul class="simple">
-<li><span class="jsontype">object</span> <span class="jsonkey">bodyStateHistory</span> (mandatory). Map containing the Cartesian states, where the keys are the epochs they correspond to.</li>
-<li><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleStates</span> (optional). Whether to use long double states doubles for higher precision. Default value: <code class="docutils literal"><span class="pre">false</span></code>.</li>
+<li><p><span class="jsontype">object</span> <span class="jsonkey">bodyStateHistory</span> (mandatory). Map containing the Cartesian states, where the keys are the epochs they correspond to.</p></li>
+<li><p><span class="jsontype">boolean</span> <span class="jsonkey">useLongDoubleStates</span> (optional). Whether to use long double states doubles for higher precision. Default value: <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
 </ul>
 </div>
 
@@ -292,7 +296,8 @@
       <script type="text/javascript" src="../../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

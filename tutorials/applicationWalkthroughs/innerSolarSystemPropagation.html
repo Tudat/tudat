@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
 
@@ -111,6 +113,9 @@
 <li class="toctree-l4"><a class="reference internal" href="earthOrbiterBasicStateEstimation.html">11. Orbit Determination and Parameter Estimation (Basic)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="earthOrbiterStateEstimation.html">12. Orbit Determination and Parameter Estimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="interplanetaryTrajectory.html">13. MGA Trajectory Design</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fullPropagationCR3BP.html">14. Full propagation of the CR3BP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fullPropagationPatchedConicsTrajectory.html">15. Full propagation of a patched conics trajectory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shapeBasedTrajectory.html">16. Shape-Based Low-Thrust Trajectories</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="index.html#pagmo-optimization-tutorials">Pagmo Optimization Tutorials</a></li>
@@ -174,7 +179,7 @@
         
           <li><a href="index.html">Application Tutorials</a> &raquo;</li>
         
-      <li>4. Inner Solar System Propagation</li>
+      <li><span class="section-number">4. </span>Inner Solar System Propagation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -194,22 +199,23 @@
            <div itemprop="articleBody">
             
   <div class="section" id="inner-solar-system-propagation">
-<span id="walkthroughsinnersolarsystempropagation"></span><h1>4. Inner Solar System Propagation<a class="headerlink" href="#inner-solar-system-propagation" title="Permalink to this headline">¶</a></h1>
+<span id="walkthroughsinnersolarsystempropagation"></span><h1><span class="section-number">4. </span>Inner Solar System Propagation<a class="headerlink" href="#inner-solar-system-propagation" title="Permalink to this headline">¶</a></h1>
 <p>The example described on this page aims to simulate the dynamics of the main celestial bodies in the inner solar system. The code for this tutorial is given on Github, and is also located in your Tudat bundle at:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">innerSolarSystemPropagation</span><span class="o">.</span><span class="n">cpp</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tudatBundle</span><span class="o">/</span><span class="n">tudatExampleApplications</span><span class="o">/</span><span class="n">satellitePropagatorExamples</span><span class="o">/</span><span class="n">SatellitePropagatorExamples</span><span class="o">/</span><span class="n">innerSolarSystemPropagation</span><span class="o">.</span><span class="n">cpp</span>
 </pre></div>
 </div>
 <p>For this example, we have the following problem statement:</p>
 <blockquote>
-<div><em>Given the position and velocity of the main celestial bodies in the inner solar system at a certain point in time, what will their position and velocity after a certain period of time?</em></div></blockquote>
+<div><p><em>Given the position and velocity of the main celestial bodies in the inner solar system at a certain point in time, what will their position and velocity after a certain period of time?</em></p>
+</div></blockquote>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">The example described in this page assumes that the user has read the <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a>. This page only describes the differences with respect to such example, so please go back before proceeding.</p>
+<p class="admonition-title">Warning</p>
+<p>The example described in this page assumes that the user has read the <a class="reference internal" href="unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a>. This page only describes the differences with respect to such example, so please go back before proceeding.</p>
 </div>
 <div class="section" id="set-up-the-environment">
-<h2>4.1. Set Up the Environment<a class="headerlink" href="#set-up-the-environment" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.1. </span>Set Up the Environment<a class="headerlink" href="#set-up-the-environment" title="Permalink to this headline">¶</a></h2>
 <p>The first step is to define the bodies that will be propagated, which are stored hierarchically in a moons to stars fashion. The reason why this is done will become clear later:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define bodies in simulation.</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define bodies in simulation.</span>
 <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">totalNumberOfBodies</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodyNames</span><span class="p">;</span>
 <span class="n">bodyNames</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">totalNumberOfBodies</span> <span class="p">);</span>
@@ -221,8 +227,8 @@
 <span class="n">bodyNames</span><span class="p">[</span> <span class="mi">5</span> <span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>The next step is to save such bodies in the <code class="docutils literal"><span class="pre">bodyMap</span></code> and set the global ephemerides:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create bodies needed in simulation</span>
+<p>The next step is to save such bodies in the <code class="docutils literal notranslate"><span class="pre">bodyMap</span></code> and set the global ephemerides:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create bodies needed in simulation</span>
 <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodySettings</span> <span class="o">=</span>
         <span class="n">getDefaultBodySettings</span><span class="p">(</span> <span class="n">bodyNames</span> <span class="p">);</span>
 <span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
@@ -231,16 +237,16 @@
 </div>
 </div>
 <div class="section" id="set-up-the-acceleration-models">
-<h2>4.2. Set Up the Acceleration Models<a class="headerlink" href="#set-up-the-acceleration-models" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.2. </span>Set Up the Acceleration Models<a class="headerlink" href="#set-up-the-acceleration-models" title="Permalink to this headline">¶</a></h2>
 <p>The example explained in this page is slightly different than all the previous examples, since two simulations are performed within the same application:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>The Solar System Barycenter (SSB) is considered as the central body for all the propagated celestial bodies.</li>
-<li>The propagated celestial bodies consider the higher hierarchical body as their respective central body. (Moon &gt; Earth; Mercury, Venus, Earth, Mars &gt; Sun; Sun &gt; SSB).</li>
+<li><p>The Solar System Barycenter (SSB) is considered as the central body for all the propagated celestial bodies.</p></li>
+<li><p>The propagated celestial bodies consider the higher hierarchical body as their respective central body. (Moon &gt; Earth; Mercury, Venus, Earth, Mars &gt; Sun; Sun &gt; SSB).</p></li>
 </ol>
 </div></blockquote>
-<p>These two simulations result in two different output files. Consequently, all the steps required to create a <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> are performed twice, as shown by the following <code class="docutils literal"><span class="pre">for</span></code> loop:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Run simulation for 2 different central body settings (barycentric and hierarchical)</span>
+<p>These two simulations result in two different output files. Consequently, all the steps required to create a <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a> are performed twice, as shown by the following <code class="docutils literal notranslate"><span class="pre">for</span></code> loop:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Run simulation for 2 different central body settings (barycentric and hierarchical)</span>
 <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">centralBodySettings</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">centralBodySettings</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="n">centralBodySettings</span><span class="o">++</span> <span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">///////////////////////////////////////////////////////////////////////////////////////////////////////////////////</span>
@@ -265,28 +271,28 @@
     <span class="p">}</span>
 </pre></div>
 </div>
-<p>The first step in the <code class="docutils literal"><span class="pre">for</span></code> loop is to create the acceleration models. The only acceleration model used in this example is the <code class="docutils literal"><span class="pre">central_gravity</span></code> model, which in this case acts on all bodies from all bodies. The <code class="docutils literal"><span class="pre">if</span></code> condition shown above ensures that the gravity field model of a body does not act on itself.</p>
+<p>The first step in the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop is to create the acceleration models. The only acceleration model used in this example is the <code class="docutils literal notranslate"><span class="pre">central_gravity</span></code> model, which in this case acts on all bodies from all bodies. The <code class="docutils literal notranslate"><span class="pre">if</span></code> condition shown above ensures that the gravity field model of a body does not act on itself.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The reason behind having two different simulations is merely for illustration purposes and is not a requirement when simulating the Solar System dynamics.</p>
+<p class="admonition-title">Note</p>
+<p>The reason behind having two different simulations is merely for illustration purposes and is not a requirement when simulating the Solar System dynamics.</p>
 </div>
 </div>
 <div class="section" id="set-up-the-propagation-settings">
-<h2>4.3. Set up the propagation settings<a class="headerlink" href="#set-up-the-propagation-settings" title="Permalink to this headline">¶</a></h2>
-<p>The next step found in the <code class="docutils literal"><span class="pre">for</span></code> loop is to create the list with the <code class="docutils literal"><span class="pre">bodiesToPropagate</span></code>. Contrary to the <a class="reference internal" href="perturbedEarthOrbitingSatellite.html#walkthroughsperturbedearthorbitingsatellite"><span class="std std-ref">Perturbed Earth-orbiting Satellite</span></a> example, in this case all the bodies in the <code class="docutils literal"><span class="pre">bodyMap</span></code> are propagated:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define list of bodies to propagate</span>
+<h2><span class="section-number">4.3. </span>Set up the propagation settings<a class="headerlink" href="#set-up-the-propagation-settings" title="Permalink to this headline">¶</a></h2>
+<p>The next step found in the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop is to create the list with the <code class="docutils literal notranslate"><span class="pre">bodiesToPropagate</span></code>. Contrary to the <a class="reference internal" href="perturbedEarthOrbitingSatellite.html#walkthroughsperturbedearthorbitingsatellite"><span class="std std-ref">Perturbed Earth-orbiting Satellite</span></a> example, in this case all the bodies in the <code class="docutils literal notranslate"><span class="pre">bodyMap</span></code> are propagated:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define list of bodies to propagate</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToPropagate</span> <span class="o">=</span> <span class="n">bodyNames</span><span class="p">;</span>
 <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">numberOfNumericalBodies</span> <span class="o">=</span> <span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>Since all bodies require a central body, a placeholder is created for each body:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Define central bodies to use in propagation.</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define central bodies to use in propagation.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodies</span><span class="p">;</span>
 <span class="n">centralBodies</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">numberOfNumericalBodies</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>where each place holder is filled depending on which simulation is being executed. The first part of the following <code class="docutils literal"><span class="pre">if</span></code> loop corresponds to Simulation 1 and the second part (the <code class="docutils literal"><span class="pre">else</span> <span class="pre">if</span></code> loop) corresponds to Simulation 2:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Set central body as Solar System Barycente for each body</span>
+<p>where each place holder is filled depending on which simulation is being executed. The first part of the following <code class="docutils literal notranslate"><span class="pre">if</span></code> loop corresponds to Simulation 1 and the second part (the <code class="docutils literal notranslate"><span class="pre">else</span> <span class="pre">if</span></code> loop) corresponds to Simulation 2:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Set central body as Solar System Barycente for each body</span>
 <span class="k">if</span><span class="p">(</span> <span class="n">centralBodySettings</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
 <span class="p">{</span>
    <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfNumericalBodies</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
@@ -317,14 +323,14 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Once the <code class="docutils literal"><span class="pre">centralBodies</span></code> have been set, the creation of the <code class="xref py py-class docutils literal"><span class="pre">AccelerationMap</span></code> can be finalized:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create acceleration models and propagation settings.</span>
+<p>Once the <code class="docutils literal notranslate"><span class="pre">centralBodies</span></code> have been set, the creation of the <code class="xref py py-class docutils literal notranslate"><span class="pre">AccelerationMap</span></code> can be finalized:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create acceleration models and propagation settings.</span>
 <span class="n">AccelerationMap</span> <span class="n">accelerationModelMap</span> <span class="o">=</span> <span class="n">createAccelerationModelsMap</span><span class="p">(</span>
             <span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">centralBodies</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The next step in the <code class="docutils literal"><span class="pre">for</span></code> loop is to define the propagation time. In this example, the orbits of the inner solar system bodies are initiated <span class="math">\(10^7\)</span> seconds after J2000 and are propagated for five Julian years:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Specify initial time.</span>
+<p>The next step in the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop is to define the propagation time. In this example, the orbits of the inner solar system bodies are initiated <span class="math notranslate nohighlight">\(10^7\)</span> seconds after J2000 and are propagated for five Julian years:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Specify initial time.</span>
 <span class="kt">double</span> <span class="n">initialEphemerisTime</span> <span class="o">=</span> <span class="mf">1.0E7</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">finalEphemerisTime</span> <span class="o">=</span> <span class="mf">1.0E7</span> <span class="o">+</span> <span class="mf">5.0</span> <span class="o">*</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_YEAR</span><span class="p">;</span>
 
@@ -338,24 +344,24 @@
       <span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span> <span class="n">accelerationModelMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">systemInitialState</span><span class="p">,</span> <span class="n">finalEphemerisTime</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Once this step is completed, the <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> object is created and the equations of motion are integrated. Once again, this step is within the <code class="docutils literal"><span class="pre">for</span></code> loop, thus this step is performed twice:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create simulation object and propagate dynamics.</span>
+<p>Once this step is completed, the <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a> object is created and the equations of motion are integrated. Once again, this step is within the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, thus this step is performed twice:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create simulation object and propagate dynamics.</span>
 <span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="n">dynamicsSimulator</span><span class="p">(</span>
    <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Please go to <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#tudatfeaturessimulatorcreation"><span class="std std-ref">Performing State Propagation</span></a> for further details on the <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal"><span class="pre">DynamicsSimulator</span></code></a> and derived classes.</p>
+<p class="admonition-title">Tip</p>
+<p>Please go to <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#tudatfeaturessimulatorcreation"><span class="std std-ref">Performing State Propagation</span></a> for further details on the <a class="reference internal" href="../tudatFeatures/propagationSetup/simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a> and derived classes.</p>
 </div>
 <div class="section" id="save-the-propagation-results">
-<h3>4.3.1. Save the propagation results<a class="headerlink" href="#save-the-propagation-results" title="Permalink to this headline">¶</a></h3>
-<p>The final step in the <code class="docutils literal"><span class="pre">for</span></code> loop is to save the propagation results to a file. First, the propagation history is retrieved from the <code class="docutils literal"><span class="pre">dynamicsSimulator</span></code>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">integrationResult</span> <span class="o">=</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
+<h3><span class="section-number">4.3.1. </span>Save the propagation results<a class="headerlink" href="#save-the-propagation-results" title="Permalink to this headline">¶</a></h3>
+<p>The final step in the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop is to save the propagation results to a file. First, the propagation history is retrieved from the <code class="docutils literal notranslate"><span class="pre">dynamicsSimulator</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">integrationResult</span> <span class="o">=</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>where the retrieved result is an <code class="docutils literal"><span class="pre">std::map</span></code> with a <code class="docutils literal"><span class="pre">double</span></code> as key (the simulation time) and a <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code> of 1x36 elements, containing the 6-variable state for the six bodies. Next, a <code class="docutils literal"><span class="pre">std::vector</span></code> is created where each of its elements is an <code class="docutils literal"><span class="pre">std::map</span></code> that contains the propagation history of a single body:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Retrieve numerically integrated state for each body.</span>
+<p>where the retrieved result is an <code class="docutils literal notranslate"><span class="pre">std::map</span></code> with a <code class="docutils literal notranslate"><span class="pre">double</span></code> as key (the simulation time) and a <code class="docutils literal notranslate"><span class="pre">Eigen::VectorXd</span></code> of 1x36 elements, containing the 6-variable state for the six bodies. Next, a <code class="docutils literal notranslate"><span class="pre">std::vector</span></code> is created where each of its elements is an <code class="docutils literal notranslate"><span class="pre">std::map</span></code> that contains the propagation history of a single body:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Retrieve numerically integrated state for each body.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">allBodiesPropagationHistory</span><span class="p">;</span>
 <span class="n">allBodiesPropagationHistory</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">numberOfNumericalBodies</span> <span class="p">);</span>
 
@@ -369,8 +375,8 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Finally, each of the <code class="docutils literal"><span class="pre">std::map</span></code> within <code class="docutils literal"><span class="pre">allBodiesPropagationHistory</span></code> are written to individual <code class="docutils literal"><span class="pre">.dat</span></code> files using the <code class="docutils literal"><span class="pre">writeDataMapToFile</span></code> as discussed in <a class="reference internal" href="../tudatFeatures/otherLibraries/inputOutput.html#tudatfeaturesinputoutput"><span class="std std-ref">Input/Output</span></a>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span> <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfNumericalBodies</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+<p>Finally, each of the <code class="docutils literal notranslate"><span class="pre">std::map</span></code> within <code class="docutils literal notranslate"><span class="pre">allBodiesPropagationHistory</span></code> are written to individual <code class="docutils literal notranslate"><span class="pre">.dat</span></code> files using the <code class="docutils literal notranslate"><span class="pre">writeDataMapToFile</span></code> as discussed in <a class="reference internal" href="../tudatFeatures/otherLibraries/inputOutput.html#tudatfeaturesinputoutput"><span class="std std-ref">Input/Output</span></a>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfNumericalBodies</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
  <span class="p">{</span>
     <span class="c1">// Write propagation history to file.</span>
     <span class="n">input_output</span><span class="o">::</span><span class="n">writeDataMapToTextFile</span><span class="p">(</span>
@@ -388,20 +394,20 @@
 </div>
 </div>
 <div class="section" id="results">
-<h2>4.4. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.4. </span>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p>The orbit of the propagated bodies are shown below. First the orbits are shown in the inertial frame. Then case 1 is shown first where the Solar System Barycenter is considered as the central body. Finally case 2 where the higher hierarchical body is used as respective central body.</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/InnerSolarSystemOverview.png" src="../../_images/InnerSolarSystemOverview.png" />
 </div>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/InnerSolarSystemOrbitsBaryCenter.png" src="../../_images/InnerSolarSystemOrbitsBaryCenter.png" />
 </div>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/InnerSolarSystemOrbits.png" src="../../_images/InnerSolarSystemOrbits.png" />
 </div>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Open the figure(s) in a new tab for more detail.</p>
+<p class="admonition-title">Tip</p>
+<p>Open the figure(s) in a new tab for more detail.</p>
 </div>
 </div>
 </div>
@@ -461,7 +467,8 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

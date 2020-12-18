@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
 
@@ -182,33 +184,33 @@
   <div class="section" id="installation">
 <span id="matlabinterface-installation"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <ol class="arabic simple">
-<li>Clone the <a class="reference external" href="https://github.com/aleixpinardell/tudatBundle/tree/json/">tudatBundle:json</a> repository and its submodules:</li>
+<li><p>Clone the <a class="reference external" href="https://github.com/aleixpinardell/tudatBundle/tree/json/">tudatBundle:json</a> repository and its submodules:</p></li>
 </ol>
 <blockquote>
-<div><div class="highlight-txt"><div class="highlight"><pre><span></span>git clone -b json --recursive https://github.com/aleixpinardell/tudatBundle
+<div><div class="highlight-txt notranslate"><div class="highlight"><pre><span></span>git clone -b json --recursive https://github.com/aleixpinardell/tudatBundle
 </pre></div>
 </div>
 <p>If you don’t have git installed on your machine, download it from <a class="reference external" href="https://git-scm.com/downloads">here</a>.</p>
 </div></blockquote>
 <ol class="arabic simple" start="2">
-<li>Install <a class="reference external" href="https://cmake.org">CMake</a>.</li>
-<li>Install MATLAB R2016b or later.</li>
-<li>After choosing a definitive location for your tudatBundle directory, run the script <code class="xref py py-class docutils literal"><span class="pre">tudatBundle/matlabInterface/setup.m</span></code> in MATLAB.</li>
-<li>Run the script <code class="xref py py-class docutils literal"><span class="pre">tudatBundle/matlabInterface/build.m</span></code> in MATLAB to compile all the necessary targets for the MATLAB Interface to work.</li>
-<li>If you get an error or prefer to compile the targets manually, you can use Qt Creator (see how to <a class="reference internal" href="../../installation/setupDevEnvironment.html#setupdevelopmentenvironment"><span class="std std-ref">Setup Development Environment</span></a>). After the project tudatBundle has been built, run the MATLAB Interface’s unit tests by writing in MATLAB’s Command Window:</li>
+<li><p>Install <a class="reference external" href="https://cmake.org">CMake</a>.</p></li>
+<li><p>Install MATLAB R2016b or later.</p></li>
+<li><p>After choosing a definitive location for your tudatBundle directory, run the script <code class="xref py py-class docutils literal notranslate"><span class="pre">tudatBundle/matlabInterface/setup.m</span></code> in MATLAB.</p></li>
+<li><p>Run the script <code class="xref py py-class docutils literal notranslate"><span class="pre">tudatBundle/matlabInterface/build.m</span></code> in MATLAB to compile all the necessary targets for the MATLAB Interface to work.</p></li>
+<li><p>If you get an error or prefer to compile the targets manually, you can use Qt Creator (see how to <a class="reference internal" href="../../installation/setupDevEnvironment.html#setupdevelopmentenvironment"><span class="std std-ref">Setup Development Environment</span></a>). After the project tudatBundle has been built, run the MATLAB Interface’s unit tests by writing in MATLAB’s Command Window:</p></li>
 </ol>
 <blockquote>
-<div><div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">test</span><span class="p">()</span>
+<div><div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">test</span><span class="p">()</span>
 </pre></div>
 </div>
 </div></blockquote>
-<p>If you want to move, rename or delete your tudatBundle/matlabInterface directory, remove it first from MATLAB’s path by using <code class="docutils literal"><span class="pre">pathtool</span></code>.</p>
+<p>If you want to move, rename or delete your tudatBundle/matlabInterface directory, remove it first from MATLAB’s path by using <code class="docutils literal notranslate"><span class="pre">pathtool</span></code>.</p>
 <p>When building with Qt Creator and running the tests in MATLAB, if all of them fail, the source of the problem may have to do with MATLAB being unable to locate some of the dynamic libraries. Pick one of the tests and run in from Qt creator. It it passes, then in Qt creator go to Projects &gt; Build &gt; Build Environment and check the value of the variable PATH. If some of the paths indicated there refer to Qt, you will have to add them to the MATLAB Interface manually. For instance, in MATLAB’s Command Window:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">PATH</span><span class="p">(</span><span class="s">&#39;C:\Qt\Tools\mingw492_32\bin&#39;</span><span class="p">)</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">PATH</span><span class="p">(</span><span class="s">&#39;C:\Qt\Tools\mingw492_32\bin&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This setting is set permanently, so you won’t need to run this command again in future MATLAB sessions. If you need to specify several paths, use <code class="docutils literal"><span class="pre">;</span></code> as separator (on UNIX systems, using <code class="docutils literal"><span class="pre">:</span></code> as separator is also valid).</p>
-<p>After performing this step, try running the tests again. If all of them fail, open an issue on GitHub. If only some of them fail, open an individual issue on GitHub for each. Depending on the severity and percentage of features affected by the problem, you may be able to run the examples in the <code class="xref py py-class docutils literal"><span class="pre">tudatBundle/matlabInterface/Examples</span></code> folder.</p>
+<p>This setting is set permanently, so you won’t need to run this command again in future MATLAB sessions. If you need to specify several paths, use <code class="docutils literal notranslate"><span class="pre">;</span></code> as separator (on UNIX systems, using <code class="docutils literal notranslate"><span class="pre">:</span></code> as separator is also valid).</p>
+<p>After performing this step, try running the tests again. If all of them fail, open an issue on GitHub. If only some of them fail, open an individual issue on GitHub for each. Depending on the severity and percentage of features affected by the problem, you may be able to run the examples in the <code class="xref py py-class docutils literal notranslate"><span class="pre">tudatBundle/matlabInterface/Examples</span></code> folder.</p>
 </div>
 
 
@@ -266,7 +268,8 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

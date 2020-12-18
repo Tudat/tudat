@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -188,28 +190,28 @@
             
   <div class="section" id="unperturbed-earth-orbiting-satellite">
 <span id="matlabinterface-tutorialsinputoutput-basicpropagation"></span><h1>Unperturbed Earth-orbiting Satellite<a class="headerlink" href="#unperturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
-<p>This tutorial describes how to propagate the orbit of an unperturbed satellite about Earth using the MATLAB Interface to generate an input file that is then provided to the <code class="docutils literal"><span class="pre">json_interface</span></code> application. This example is similar (but not identical) to the example <a class="reference internal" href="../../applicationWalkthroughs/unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> written in C++. The code for this example can be found at:</p>
-<div class="highlight-txt"><div class="highlight"><pre><span></span>tudatBundle/matlabInterface/Examples/InputOutput/BasicPropagation/generateInput.m
+<p>This tutorial describes how to propagate the orbit of an unperturbed satellite about Earth using the MATLAB Interface to generate an input file that is then provided to the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> application. This example is similar (but not identical) to the example <a class="reference internal" href="../../applicationWalkthroughs/unperturbedEarthOrbitingSatellite.html#walkthroughsunperturbedearthorbitingsatellite"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a> written in C++. The code for this example can be found at:</p>
+<div class="highlight-txt notranslate"><div class="highlight"><pre><span></span>tudatBundle/matlabInterface/Examples/InputOutput/BasicPropagation/generateInput.m
 </pre></div>
 </div>
-<p>The first part of the script sets up the <code class="xref py py-class docutils literal"><span class="pre">Simulation</span></code> object. This is identical to the initial part of <a class="reference internal" href="../tutorialsSeamless/basicPropagation.html#matlabinterface-tutorialsseamless-basicpropagation"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a>, so it is not repeated here.</p>
-<p>Once that all the settings have been defined, instead of calling <code class="docutils literal"><span class="pre">simulatinon.run()</span></code>, we export the <code class="xref py py-class docutils literal"><span class="pre">Simulation</span></code> object to a JSON file. However, we have to specify first the results to be exported to output files:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">inputFile</span> <span class="p">=</span> <span class="n">fullfile</span><span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">,</span><span class="s">&#39;main.json&#39;</span><span class="p">);</span>
+<p>The first part of the script sets up the <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object. This is identical to the initial part of <a class="reference internal" href="../tutorialsSeamless/basicPropagation.html#matlabinterface-tutorialsseamless-basicpropagation"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a>, so it is not repeated here.</p>
+<p>Once that all the settings have been defined, instead of calling <code class="docutils literal notranslate"><span class="pre">simulatinon.run()</span></code>, we export the <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object to a JSON file. However, we have to specify first the results to be exported to output files:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">inputFile</span> <span class="p">=</span> <span class="n">fullfile</span><span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">,</span><span class="s">&#39;main.json&#39;</span><span class="p">);</span>
 <span class="n">simulation</span><span class="p">.</span><span class="n">addResultsToExport</span><span class="p">(</span><span class="n">fullfile</span><span class="p">(</span><span class="s">&#39;..&#39;</span><span class="p">,</span><span class="s">&#39;output&#39;</span><span class="p">,</span><span class="s">&#39;results.txt&#39;</span><span class="p">),{</span><span class="s">&#39;independent&#39;</span><span class="p">,</span><span class="s">&#39;state&#39;</span><span class="p">});</span>
 </pre></div>
 </div>
-<p>Here, the <code class="docutils literal"><span class="pre">fullfile</span></code> function is used to build a platform-dependent path (e.g. <code class="docutils literal"><span class="pre">input/main.json</span></code> on Unix systems, <code class="docutils literal"><span class="pre">input\main.json</span></code> on Windows). In the first line, we declare the path to which the input file will be saved (will be used later). Then, in the second line, we request the variables <code class="docutils literal"><span class="pre">independent</span></code> and <code class="docutils literal"><span class="pre">state</span></code> to be saved to a file at <code class="docutils literal"><span class="pre">../output/results.txt</span></code>.</p>
+<p>Here, the <code class="docutils literal notranslate"><span class="pre">fullfile</span></code> function is used to build a platform-dependent path (e.g. <code class="docutils literal notranslate"><span class="pre">input/main.json</span></code> on Unix systems, <code class="docutils literal notranslate"><span class="pre">input\main.json</span></code> on Windows). In the first line, we declare the path to which the input file will be saved (will be used later). Then, in the second line, we request the variables <code class="docutils literal notranslate"><span class="pre">independent</span></code> and <code class="docutils literal notranslate"><span class="pre">state</span></code> to be saved to a file at <code class="docutils literal notranslate"><span class="pre">../output/results.txt</span></code>.</p>
 <p>Then, we request the application to generate a file containing the full settings actually used for the propagation (including all the default values):</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="n">fullSettingsFile</span> <span class="p">=</span> <span class="s">&#39;fullSettings.json&#39;</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="n">fullSettingsFile</span> <span class="p">=</span> <span class="s">&#39;fullSettings.json&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>This file will be generated inside the <code class="docutils literal"><span class="pre">input</span></code> directory, because paths are specified relative to the root input file (<code class="docutils literal"><span class="pre">input/main.json</span></code> in this case), and not relative to the directory in which the MATLAB script is located.</p>
+<p>This file will be generated inside the <code class="docutils literal notranslate"><span class="pre">input</span></code> directory, because paths are specified relative to the root input file (<code class="docutils literal notranslate"><span class="pre">input/main.json</span></code> in this case), and not relative to the directory in which the MATLAB script is located.</p>
 <p>The last step is to generate the JSON file:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span><span class="n">inputFile</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span><span class="n">inputFile</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>After running <code class="docutils literal"><span class="pre">json_interface</span> <span class="pre">main.json</span></code>, the resulting directory tree looks like this:</p>
-<div class="highlight-txt"><div class="highlight"><pre><span></span>BasicPropagation
+<p>After running <code class="docutils literal notranslate"><span class="pre">json_interface</span> <span class="pre">main.json</span></code>, the resulting directory tree looks like this:</p>
+<div class="highlight-txt notranslate"><div class="highlight"><pre><span></span>BasicPropagation
 |
 | input
 |     |
@@ -224,7 +226,7 @@
 | processOutput.m
 </pre></div>
 </div>
-<p>The script <code class="docutils literal"><span class="pre">processOutput.m</span></code> can be used to generate a plot using the results file.</p>
+<p>The script <code class="docutils literal notranslate"><span class="pre">processOutput.m</span></code> can be used to generate a plot using the results file.</p>
 </div>
 
 
@@ -282,7 +284,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

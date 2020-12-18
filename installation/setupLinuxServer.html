@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
 
@@ -110,7 +112,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials and Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developerGuide/index.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -157,7 +158,7 @@
         
           <li><a href="index.html">Installation Guide</a> &raquo;</li>
         
-      <li>5. Tudat on a remote Linux server</li>
+      <li><span class="section-number">5. </span>Tudat on a remote Linux server</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -177,72 +178,72 @@
            <div itemprop="articleBody">
             
   <div class="section" id="tudat-on-a-remote-linux-server">
-<span id="setuplinuxserver"></span><h1>5. Tudat on a remote Linux server<a class="headerlink" href="#tudat-on-a-remote-linux-server" title="Permalink to this headline">¶</a></h1>
+<span id="setuplinuxserver"></span><h1><span class="section-number">5. </span>Tudat on a remote Linux server<a class="headerlink" href="#tudat-on-a-remote-linux-server" title="Permalink to this headline">¶</a></h1>
 <p>This section of the guide refers to the use of Tudat on a remote Linux server. Specific examples will be given with the TU Delft server (only accessible to TU Delft students and staff, please contact the server administrator to ask for server access). The global directions are however applicable to every server you may want to run Tudat on.</p>
 <div class="section" id="accessing-the-server">
-<h2>5.1. Accessing the server<a class="headerlink" href="#accessing-the-server" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.1. </span>Accessing the server<a class="headerlink" href="#accessing-the-server" title="Permalink to this headline">¶</a></h2>
 <p>This section details how to access the server. Login to the server is usually done via SSH (secure shell).</p>
 <p>For <strong>Linux or Mac OS X</strong> environments, use the following commands from your terminal (the server adress for TU Delft server is AAAAAAA.tudelft.nl; please contact responsible staff member for server name, in case you are TU Delft staff or M.Sc. thesis student):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="o">-</span><span class="n">Y</span> <span class="o">&lt;</span><span class="n">userID</span><span class="o">&gt;</span><span class="nd">@serverAdress</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="o">-</span><span class="n">Y</span> <span class="o">&lt;</span><span class="n">userID</span><span class="o">&gt;</span><span class="nd">@serverAdress</span>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Adding <code class="docutils literal"><span class="pre">-Y</span></code> after the <code class="docutils literal"><span class="pre">ssh</span></code> command activates the interface that will allow you to open graphical softwares installed on the server on your local machine.</p>
+<p class="admonition-title">Note</p>
+<p>Adding <code class="docutils literal notranslate"><span class="pre">-Y</span></code> after the <code class="docutils literal notranslate"><span class="pre">ssh</span></code> command activates the interface that will allow you to open graphical softwares installed on the server on your local machine.</p>
 </div>
-<p>From a <strong>Windows</strong> machine, you have to follow a slightly different procedure as you will need an SSH client. One of the most commonly used SSH client is Putty, which you can download from <a class="reference external" href="https://www.putty.org">https://www.putty.org</a>. Once downloaded, run the installer (you can keep the default install options) and open it. Fill the tab <code class="docutils literal"><span class="pre">Session</span></code> as follows, with the adress of your server (HostName) and the port number you will use to access it, and then select the SSH option. The example below corresponds to the TU Delft server:</p>
+<p>From a <strong>Windows</strong> machine, you have to follow a slightly different procedure as you will need an SSH client. One of the most commonly used SSH client is Putty, which you can download from <a class="reference external" href="https://www.putty.org">https://www.putty.org</a>. Once downloaded, run the installer (you can keep the default install options) and open it. Fill the tab <code class="docutils literal notranslate"><span class="pre">Session</span></code> as follows, with the adress of your server (HostName) and the port number you will use to access it, and then select the SSH option. The example below corresponds to the TU Delft server:</p>
 <blockquote>
-<div><div class="figure">
+<div><div class="figure align-default">
 <img alt="../_images/puttySessionTab.PNG" src="../_images/puttySessionTab.PNG" />
 </div>
 </div></blockquote>
-<p>Then, you have to go to the <code class="docutils literal"><span class="pre">Data</span></code> tab under <code class="docutils literal"><span class="pre">Connection</span></code> and fill in your user account (in the figure below, the <code class="docutils literal"><span class="pre">Auto-login</span> <span class="pre">username</span></code> is to be replaced by your own user ID).</p>
+<p>Then, you have to go to the <code class="docutils literal notranslate"><span class="pre">Data</span></code> tab under <code class="docutils literal notranslate"><span class="pre">Connection</span></code> and fill in your user account (in the figure below, the <code class="docutils literal notranslate"><span class="pre">Auto-login</span> <span class="pre">username</span></code> is to be replaced by your own user ID).</p>
 <blockquote>
-<div><div class="figure">
+<div><div class="figure align-default">
 <img alt="../_images/puttyDataTab.PNG" src="../_images/puttyDataTab.PNG" />
 </div>
 </div></blockquote>
-<p>Finally, go to the <code class="docutils literal"><span class="pre">SSH</span></code> tab (still under <code class="docutils literal"><span class="pre">Connection</span></code>) and then into <code class="docutils literal"><span class="pre">X1</span></code> and tick <code class="docutils literal"><span class="pre">Enable</span> <span class="pre">X11</span> <span class="pre">forwarding</span></code>. Going back to the <code class="docutils literal"><span class="pre">Session</span></code> tab, enter a name for the connection and save. The configuration you have just set up is then saved. When you will later open Putty, simply double-clicking on the connection name you have chosen will directly initiate the connection.</p>
+<p>Finally, go to the <code class="docutils literal notranslate"><span class="pre">SSH</span></code> tab (still under <code class="docutils literal notranslate"><span class="pre">Connection</span></code>) and then into <code class="docutils literal notranslate"><span class="pre">X1</span></code> and tick <code class="docutils literal notranslate"><span class="pre">Enable</span> <span class="pre">X11</span> <span class="pre">forwarding</span></code>. Going back to the <code class="docutils literal notranslate"><span class="pre">Session</span></code> tab, enter a name for the connection and save. The configuration you have just set up is then saved. When you will later open Putty, simply double-clicking on the connection name you have chosen will directly initiate the connection.</p>
 <blockquote>
 <div><div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you want to open graphical software from the server on your local Windows machine, you will also need to install a Xclient (for X11) (VcXsrv or Exceed are possible solutions).</p>
+<p class="admonition-title">Note</p>
+<p>If you want to open graphical software from the server on your local Windows machine, you will also need to install a Xclient (for X11) (VcXsrv or Exceed are possible solutions).</p>
 </div>
 </div></blockquote>
-<p>To move files back and forth from the server, you will need a FTP client. The recommended one is FileZilla (you can download it from <a class="reference external" href="https://filezilla-project.org">https://filezilla-project.org</a>, and run the installer keeping the default options). Open FileZilla, and enter the hostname of your server, port number (same as before), user account and associated password and click <code class="docutils literal"><span class="pre">Quickconnect</span></code> (in the blanks highlighted in blue in the figure below). For later connections, note that you can directly click on the small arrow next to the <code class="docutils literal"><span class="pre">Quickconnect</span></code> button (in red below) and find your connection details already saved in the drop-down menu.</p>
+<p>To move files back and forth from the server, you will need a FTP client. The recommended one is FileZilla (you can download it from <a class="reference external" href="https://filezilla-project.org">https://filezilla-project.org</a>, and run the installer keeping the default options). Open FileZilla, and enter the hostname of your server, port number (same as before), user account and associated password and click <code class="docutils literal notranslate"><span class="pre">Quickconnect</span></code> (in the blanks highlighted in blue in the figure below). For later connections, note that you can directly click on the small arrow next to the <code class="docutils literal notranslate"><span class="pre">Quickconnect</span></code> button (in red below) and find your connection details already saved in the drop-down menu.</p>
 <blockquote>
-<div><div class="figure">
+<div><div class="figure align-default">
 <img alt="../_images/fileZilla.png" src="../_images/fileZilla.png" />
 </div>
 </div></blockquote>
 <p>You can then simply drag-and-drop your files from the server (right column) to your local machine (left column) and vice-versa.</p>
 </div>
 <div class="section" id="installing-and-building-tudat-bundle">
-<h2>5.2. Installing and building Tudat Bundle<a class="headerlink" href="#installing-and-building-tudat-bundle" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.2. </span>Installing and building Tudat Bundle<a class="headerlink" href="#installing-and-building-tudat-bundle" title="Permalink to this headline">¶</a></h2>
 <p>Most of the steps described below are very similar to the install guide for Linux environments (see <a class="reference internal" href="setupDevLinux.html#setupdevelopmentenvironmentlinux"><span class="std std-ref">Install on Linux</span></a>) but will be reminded here for the sake of completeness. Before installing Tudat, please make sure that all the required dependencies are installed on the server (see <span class="xref std std-ref">setupDevLinux</span> for more details on the Tudat development environment).</p>
-<p>Once logged in your server account, navigate to the folder in which you want to download the Tudat code. To print the content of the folder you are in, use the <code class="docutils literal"><span class="pre">ls</span></code> command. To navigate from your current folder to the ‘parent’ one, use <code class="docutils literal"><span class="pre">cd</span> <span class="pre">..</span></code> (so that if you are in <code class="docutils literal"><span class="pre">folder1/folder2/</span></code> and type <code class="docutils literal"><span class="pre">cd</span> <span class="pre">..</span></code>, you will end up in <code class="docutils literal"><span class="pre">folder1/</span></code>). On the contrary, use <code class="docutils literal"><span class="pre">cd</span> <span class="pre">folderName</span></code> to do the opposite (enter <code class="docutils literal"><span class="pre">cd</span> <span class="pre">folder2</span></code> to get to <code class="docutils literal"><span class="pre">folder1/folder2/</span></code> from <code class="docutils literal"><span class="pre">folder1/</span></code>). Once you are in your chosen folder, clone the tudatBundle repository with the following command:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tudat</span><span class="o">/</span><span class="n">tudatBundle</span><span class="o">.</span><span class="n">git</span>
+<p>Once logged in your server account, navigate to the folder in which you want to download the Tudat code. To print the content of the folder you are in, use the <code class="docutils literal notranslate"><span class="pre">ls</span></code> command. To navigate from your current folder to the ‘parent’ one, use <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">..</span></code> (so that if you are in <code class="docutils literal notranslate"><span class="pre">folder1/folder2/</span></code> and type <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">..</span></code>, you will end up in <code class="docutils literal notranslate"><span class="pre">folder1/</span></code>). On the contrary, use <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">folderName</span></code> to do the opposite (enter <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">folder2</span></code> to get to <code class="docutils literal notranslate"><span class="pre">folder1/folder2/</span></code> from <code class="docutils literal notranslate"><span class="pre">folder1/</span></code>). Once you are in your chosen folder, clone the tudatBundle repository with the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tudat</span><span class="o">/</span><span class="n">tudatBundle</span><span class="o">.</span><span class="n">git</span>
 </pre></div>
 </div>
-<p>When the tudatBundle download is completed, a folder <code class="docutils literal"><span class="pre">tudatBundle</span></code> has been created in your chosen directory (you can verify it by typing the <code class="docutils literal"><span class="pre">ls</span></code> command, as mentioned above). Go to this tudatBundle directory (<code class="docutils literal"><span class="pre">cd</span> <span class="pre">tudatBundle</span></code>) and enter the following command:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">submodule</span> <span class="n">update</span> <span class="o">--</span><span class="n">init</span> <span class="o">--</span><span class="n">recursive</span>
+<p>When the tudatBundle download is completed, a folder <code class="docutils literal notranslate"><span class="pre">tudatBundle</span></code> has been created in your chosen directory (you can verify it by typing the <code class="docutils literal notranslate"><span class="pre">ls</span></code> command, as mentioned above). Go to this tudatBundle directory (<code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">tudatBundle</span></code>) and enter the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">submodule</span> <span class="n">update</span> <span class="o">--</span><span class="n">init</span> <span class="o">--</span><span class="n">recursive</span>
 </pre></div>
 </div>
 <p>This step aims at updating the required modules and might take some time.</p>
-<p>Once all the previous steps are done, you might want to modify the default Tudat settings before building the whole Tudat code. Depending on the settings you want, you might set the different options (namely <code class="docutils literal"><span class="pre">USE_CSPICE</span></code>, <code class="docutils literal"><span class="pre">USE_JSON</span></code>, <code class="docutils literal"><span class="pre">USE_NRLMSISE00</span></code>, <code class="docutils literal"><span class="pre">USE_SOFA</span></code>, <code class="docutils literal"><span class="pre">USE_PAGMO</span></code>, <code class="docutils literal"><span class="pre">USE_PYGMO</span></code>, <code class="docutils literal"><span class="pre">BUILD_WITH_ESTIMATION_TOOLS</span></code>) to either <code class="docutils literal"><span class="pre">ON</span></code> or <code class="docutils literal"><span class="pre">OFF</span></code>. As an example, the option <code class="docutils literal"><span class="pre">USE_PAGMO</span></code> is set to <code class="docutils literal"><span class="pre">OFF</span></code> by default but should be turned on if you are planning on using the PAGMO toolbox for optimisation. This is done by typing the following command line:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="o">-</span><span class="n">DUSEPAGMO</span><span class="o">=</span><span class="n">ON</span>
+<p>Once all the previous steps are done, you might want to modify the default Tudat settings before building the whole Tudat code. Depending on the settings you want, you might set the different options (namely <code class="docutils literal notranslate"><span class="pre">USE_CSPICE</span></code>, <code class="docutils literal notranslate"><span class="pre">USE_JSON</span></code>, <code class="docutils literal notranslate"><span class="pre">USE_NRLMSISE00</span></code>, <code class="docutils literal notranslate"><span class="pre">USE_SOFA</span></code>, <code class="docutils literal notranslate"><span class="pre">USE_PAGMO</span></code>, <code class="docutils literal notranslate"><span class="pre">USE_PYGMO</span></code>, <code class="docutils literal notranslate"><span class="pre">BUILD_WITH_ESTIMATION_TOOLS</span></code>) to either <code class="docutils literal notranslate"><span class="pre">ON</span></code> or <code class="docutils literal notranslate"><span class="pre">OFF</span></code>. As an example, the option <code class="docutils literal notranslate"><span class="pre">USE_PAGMO</span></code> is set to <code class="docutils literal notranslate"><span class="pre">OFF</span></code> by default but should be turned on if you are planning on using the PAGMO toolbox for optimisation. This is done by typing the following command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="o">-</span><span class="n">DUSEPAGMO</span><span class="o">=</span><span class="n">ON</span>
 </pre></div>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">As a general advice and if you do not need it in particular, please switch off the <code class="docutils literal"><span class="pre">USE_JSON</span></code> option on the TU Delft server. Indeed, it will most probably yield compilation issues because the version of the gcc compiler currently available on the server is not supported by the JSON interface. In case you really need the JSON interface, please contact the server administrator to discuss about installing more recent gcc versions.</p>
+<p class="admonition-title">Warning</p>
+<p>As a general advice and if you do not need it in particular, please switch off the <code class="docutils literal notranslate"><span class="pre">USE_JSON</span></code> option on the TU Delft server. Indeed, it will most probably yield compilation issues because the version of the gcc compiler currently available on the server is not supported by the JSON interface. In case you really need the JSON interface, please contact the server administrator to discuss about installing more recent gcc versions.</p>
 </div>
-<p>The tudatBundle libraries are now ready to be built. Just entering the following command in your terminal will initiate the compilation (make sure you are in the <code class="docutils literal"><span class="pre">tudatBundle/</span></code> folder before doing it):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="n">CMakeLists</span><span class="o">.</span><span class="n">txt</span>
+<p>The tudatBundle libraries are now ready to be built. Just entering the following command in your terminal will initiate the compilation (make sure you are in the <code class="docutils literal notranslate"><span class="pre">tudatBundle/</span></code> folder before doing it):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="n">CMakeLists</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 <p>This will build the Tudat code and might take a while (from several dozens of minutes up to several hours). The following output is expected to appear in your terminal:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>-- The C compiler identification is GNU 4.8.4
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-- The C compiler identification is GNU 4.8.4
 -- The CXX compiler identification is GNU 4.8.4
 -- Check for working C compiler: /usr/bin/cc
 -- Check for working C compiler: /usr/bin/cc -- works
@@ -338,11 +339,11 @@
 </div>
 <p>When the process is over, Tudat has been successfully build in your server account!
 The only remaining step is to run all the unit tests to ensure Tudat is working properly. It can be done from the tudatBundle directory by typing the following command:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="o">--</span><span class="n">build</span> <span class="o">.</span> <span class="o">--</span><span class="n">target</span> <span class="nb">all</span> <span class="o">--</span> <span class="n">test</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="o">--</span><span class="n">build</span> <span class="o">.</span> <span class="o">--</span><span class="n">target</span> <span class="nb">all</span> <span class="o">--</span> <span class="n">test</span>
 </pre></div>
 </div>
 <p>You should then be able to see the unit tests being run in your terminal, the output looking as follows:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">15</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span> <span class="n">Running</span> <span class="n">steps</span> <span class="k">for</span> <span class="n">project</span> <span class="n">TudatBundle</span><span class="o">...</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">15</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span> <span class="n">Running</span> <span class="n">steps</span> <span class="k">for</span> <span class="n">project</span> <span class="n">TudatBundle</span><span class="o">...</span>
 <span class="mi">15</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span> <span class="n">Starting</span><span class="p">:</span> <span class="s2">&quot;/usr/bin/make&quot;</span> <span class="n">test</span>
 <span class="n">Running</span> <span class="n">tests</span><span class="o">...</span>
 <span class="n">Test</span> <span class="n">project</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">dominicdirkx</span><span class="o">/</span><span class="n">Software</span><span class="o">/</span><span class="n">tudat</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">tudatBundle</span><span class="o">-</span><span class="n">Desktop</span><span class="o">-</span><span class="n">Default</span>
@@ -384,29 +385,28 @@ The only remaining step is to run all the unit tests to ensure Tudat is working 
 <span class="mi">15</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span> <span class="n">The</span> <span class="n">process</span> <span class="s2">&quot;/usr/bin/make&quot;</span> <span class="n">exited</span> <span class="n">normally</span><span class="o">.</span>
 </pre></div>
 </div>
-<p>Depending on your compilation settings, this step can take from several minutes to more than one hour (the number of unit tests also depends on your settings). If the output ends with <code class="docutils literal"><span class="pre">100%</span> <span class="pre">tests</span> <span class="pre">passed,</span> <span class="pre">0</span> <span class="pre">tests</span> <span class="pre">failed</span></code>, everything worked out and you do not need to take any further action. If any tests fail the reader is refered to <a class="reference internal" href="troubleshooting/installationErrors.html#debuggingfailedunittests"><span class="std std-ref">Failed unit tests</span></a>.</p>
+<p>Depending on your compilation settings, this step can take from several minutes to more than one hour (the number of unit tests also depends on your settings). If the output ends with <code class="docutils literal notranslate"><span class="pre">100%</span> <span class="pre">tests</span> <span class="pre">passed,</span> <span class="pre">0</span> <span class="pre">tests</span> <span class="pre">failed</span></code>, everything worked out and you do not need to take any further action. If any tests fail the reader is refered to <a class="reference internal" href="troubleshooting/installationErrors.html#debuggingfailedunittests"><span class="std std-ref">Failed unit tests</span></a>.</p>
 </div>
 <div class="section" id="running-tudat-applications-on-the-server">
-<h2>5.3. Running Tudat applications on the server<a class="headerlink" href="#running-tudat-applications-on-the-server" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.3. </span>Running Tudat applications on the server<a class="headerlink" href="#running-tudat-applications-on-the-server" title="Permalink to this headline">¶</a></h2>
 <p>You are now ready to play around with the sample applications already available in Tudat or to run your own applications on the server. The different applications can be accessed and run from the following folders, depending on the type of application.</p>
 <blockquote>
 <div><ul class="simple">
-<li>If you want to re-run an unit test independently, go to <code class="docutils literal"><span class="pre">tudatBundle/tudat/bin/unit_tests/</span></code>.</li>
-<li>If you want to run an example application, go to <code class="docutils literal"><span class="pre">tudatBundle/tudatExampleApplications/satellitePropagatorExamples/bin/applications/</span></code>.</li>
-<li>If you want to run an PAGMO optimisation application, go to <code class="docutils literal"><span class="pre">tudatBundle/tudatExampleApplications/libraryExamples/bin/applications/</span></code>.</li>
+<li><p>If you want to re-run an unit test independently, go to <code class="docutils literal notranslate"><span class="pre">tudatBundle/tudat/bin/unit_tests/</span></code>.</p></li>
+<li><p>If you want to run an example application, go to <code class="docutils literal notranslate"><span class="pre">tudatBundle/tudatExampleApplications/satellitePropagatorExamples/bin/applications/</span></code>.</p></li>
+<li><p>If you want to run an PAGMO optimisation application, go to <code class="docutils literal notranslate"><span class="pre">tudatBundle/tudatExampleApplications/libraryExamples/bin/applications/</span></code>.</p></li>
 </ul>
 </div></blockquote>
-<p>Once you are in the proper directory, use the <code class="docutils literal"><span class="pre">ls</span></code> command to get the list of all the built executables. Enter <code class="docutils literal"><span class="pre">./</span></code> directly followed by the name of your targeted executable to run it (<code class="docutils literal"><span class="pre">./executable_name</span></code>). The executable outputs will then appear in your terminal.</p>
-<p>It is of course also possible to write your own applications and run them on the server. The guidelines to write your application are presented in <a class="reference internal" href="creatingNewApps.html#createnewapps"><span class="std std-ref">Creating Tudat Applications</span></a>. As mentioned there, new applications are typically added to the <code class="docutils literal"><span class="pre">tudatBundle/tudatApplications/</span></code> folder. If so, then the executables created after building your new applications can be found in <code class="docutils literal"><span class="pre">tudatBundle/tudatApplications/bin/applications/</span></code> and run with the same <code class="docutils literal"><span class="pre">./</span></code> command which has been described above.
-For more details about getting a new application from an existing github repository or creating a totally new one, the reader is referred to <a class="reference internal" href="creatingNewApps.html#createnewapps"><span class="std std-ref">Creating Tudat Applications</span></a>.</p>
-<p>When you modify either an application file or some parts of the Tudat code, you need to redo the building process (with the command <code class="docutils literal"><span class="pre">make</span></code>, from the folder containing the files you have modified). This will automatically generate new executables corresponding to the updated version of the code.</p>
+<p>Once you are in the proper directory, use the <code class="docutils literal notranslate"><span class="pre">ls</span></code> command to get the list of all the built executables. Enter <code class="docutils literal notranslate"><span class="pre">./</span></code> directly followed by the name of your targeted executable to run it (<code class="docutils literal notranslate"><span class="pre">./executable_name</span></code>). The executable outputs will then appear in your terminal.</p>
+<p>It is of course also possible to write your own applications and run them on the server. The guidelines to write your application are presented in <a class="reference internal" href="creatingNewAppsCode.html#createnewapps"><span class="std std-ref">Creating Tudat Applications - Git</span></a>. As mentioned there, new applications are typically added to the <code class="docutils literal notranslate"><span class="pre">tudatBundle/tudatApplications/</span></code> folder. If so, then the executables created after building your new applications can be found in <code class="docutils literal notranslate"><span class="pre">tudatBundle/tudatApplications/bin/applications/</span></code> and run with the same <code class="docutils literal notranslate"><span class="pre">./</span></code> command which has been described above.
+For more details about getting a new application from an existing github repository or creating a totally new one, the reader is referred to <a class="reference internal" href="creatingNewAppsCode.html#createnewapps"><span class="std std-ref">Creating Tudat Applications - Git</span></a>.</p>
+<p>When you modify either an application file or some parts of the Tudat code, you need to redo the building process (with the command <code class="docutils literal notranslate"><span class="pre">make</span></code>, from the folder containing the files you have modified). This will automatically generate new executables corresponding to the updated version of the code.</p>
 <p>As previously mentioned, the application outputs appear in the terminal when running the associated executable. However, it might be advantageous to run the application in the background to be allowed to log out from the server while keeping your application running. Several options are possible here:</p>
 <blockquote>
 <div><ul>
-<li><p class="first">If you have already run your application as described above (so with a simple <code class="docutils literal"><span class="pre">./executable_name</span></code> command) but want to put it in the background to be able to log out, then press <code class="docutils literal"><span class="pre">ctrl+Z</span></code> to pause it and enter the command <code class="docutils literal"><span class="pre">bg</span></code> to put it in the background. Then you can type <code class="docutils literal"><span class="pre">exit</span></code> to log out and your application will keep running.</p>
-</li>
-<li><p class="first">You can also directly start the process in the background by using the command <code class="docutils literal"><span class="pre">./executable_name</span> <span class="pre">&amp;</span></code>. However, if you do so, the application outputs will not be accessible. You can choose to store them in a log file so that you can still read them when the running is over. This can be done with the following command (<code class="docutils literal"><span class="pre">log_run_date</span></code> being the name of the log file):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">executable_name</span> <span class="o">&gt;</span> <span class="n">log_run_date</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span> <span class="o">&amp;</span>
+<li><p>If you have already run your application as described above (so with a simple <code class="docutils literal notranslate"><span class="pre">./executable_name</span></code> command) but want to put it in the background to be able to log out, then press <code class="docutils literal notranslate"><span class="pre">ctrl+Z</span></code> to pause it and enter the command <code class="docutils literal notranslate"><span class="pre">bg</span></code> to put it in the background. Then you can type <code class="docutils literal notranslate"><span class="pre">exit</span></code> to log out and your application will keep running.</p></li>
+<li><p>You can also directly start the process in the background by using the command <code class="docutils literal notranslate"><span class="pre">./executable_name</span> <span class="pre">&amp;</span></code>. However, if you do so, the application outputs will not be accessible. You can choose to store them in a log file so that you can still read them when the running is over. This can be done with the following command (<code class="docutils literal notranslate"><span class="pre">log_run_date</span></code> being the name of the log file):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">executable_name</span> <span class="o">&gt;</span> <span class="n">log_run_date</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span> <span class="o">&amp;</span>
 </pre></div>
 </div>
 </li>
@@ -470,7 +470,8 @@ For more details about getting a new application from an existing github reposit
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

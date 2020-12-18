@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
 
@@ -162,7 +164,7 @@
         
           <li><a href="index.html">JSON Interface</a> &raquo;</li>
         
-      <li>6. Multi-case Simulations</li>
+      <li><span class="section-number">6. </span>Multi-case Simulations</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -182,11 +184,11 @@
            <div itemprop="articleBody">
             
   <div class="section" id="multi-case-simulations">
-<span id="jsoninterface-multicase"></span><h1>6. Multi-case Simulations<a class="headerlink" href="#multi-case-simulations" title="Permalink to this headline">¶</a></h1>
-<p>The JSON Interface allows combining several input files to generate a single object that is used to set up a propagation. This is slightly different than the modular files described in the previous page. In the previous case, during the creation of the root input file, the special strings <code class="docutils literal"><span class="pre">&quot;$(file.json)&quot;</span></code> were replaced by the contents of the reference file. In this case, the contents of two files are combined, processing first one object and then (re-)defining the keys specified in the second object. This is done by writing, for instance:</p>
+<span id="jsoninterface-multicase"></span><h1><span class="section-number">6. </span>Multi-case Simulations<a class="headerlink" href="#multi-case-simulations" title="Permalink to this headline">¶</a></h1>
+<p>The JSON Interface allows combining several input files to generate a single object that is used to set up a propagation. This is slightly different than the modular files described in the previous page. In the previous case, during the creation of the root input file, the special strings <code class="docutils literal notranslate"><span class="pre">&quot;$(file.json)&quot;</span></code> were replaced by the contents of the reference file. In this case, the contents of two files are combined, processing first one object and then (re-)defining the keys specified in the second object. This is done by writing, for instance:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">mass8000.json</span></code></span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
-<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">[</span>
+<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">mass8000.json</span></code></span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
   <span class="s2">&quot;$(shared.json)&quot;</span><span class="p">,</span>
   <span class="p">{</span>
     <span class="nt">&quot;bodies.satellite.mass&quot;</span><span class="p">:</span> <span class="mi">8000</span>
@@ -197,8 +199,8 @@
 </div>
 <p>The first element of the array is (a reference to a file containing) the settings for the simulation (the file referred to as root or main file so far). Then, the second object is used to (re-)define the values of some keys by providing key paths. For instance, if the contents of the reference file are:</p>
 <div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code></span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
-<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared.json</span></code></span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;bodies&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
@@ -211,8 +213,8 @@
 </pre></div>
 </div>
 </div>
-<p>parsing the file <code class="xref py py-class docutils literal"><span class="pre">mass8000.json</span></code> will result in the following object:</p>
-<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+<p>parsing the file <code class="xref py py-class docutils literal notranslate"><span class="pre">mass8000.json</span></code> will result in the following object:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;bodies&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
@@ -224,10 +226,10 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Even when the keys <span class="jsonkey">satellite.mass</span> or <span class="jsonkey">satellite</span> are undefined in <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code>, the same combined object would be obtained.</p>
+<p>Even when the keys <span class="jsonkey">satellite.mass</span> or <span class="jsonkey">satellite</span> are undefined in <code class="xref py py-class docutils literal notranslate"><span class="pre">shared.json</span></code>, the same combined object would be obtained.</p>
 <p>This feature is especially useful when running multi-case simulations (for solving optimisation problems), as it allows the user to define the shared settings in a file, that is referenced from mergeable files in which some keys (the optimisation variables) are (re-)defined. In this way, repeating the same information in every file is avoided, which can lead to large file sizes specially for complex propagations or when the number of simulations to be run is large.</p>
 <p>For instance, the following tree structure can be used to run the same simulations with a variable value for the mass of the vehicle:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span>
 <span class="o">|</span>
 <span class="o">|</span> <span class="n">inputs</span>
 <span class="o">|</span>      <span class="o">|</span>
@@ -239,12 +241,12 @@
 <span class="o">|</span> <span class="n">shared</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
-<p>Then, the <code class="docutils literal"><span class="pre">json_interface</span></code> application is called for each of the files inside the <code class="xref py py-class docutils literal"><span class="pre">inputs</span></code> directory. Note that there is no need to call it for the file <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code>. If one has <a class="reference external" href="https://www.gnu.org/software/parallel/">GNU Parallel</a> installed, it is possible to run the simulations in parallel by writing in Terminal:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">parallel</span> <span class="n">json_interface</span> <span class="p">:::</span> <span class="n">inputs</span><span class="o">/*.</span><span class="n">json</span>
+<p>Then, the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> application is called for each of the files inside the <code class="xref py py-class docutils literal notranslate"><span class="pre">inputs</span></code> directory. Note that there is no need to call it for the file <code class="xref py py-class docutils literal notranslate"><span class="pre">shared.json</span></code>. If one has <a class="reference external" href="https://www.gnu.org/software/parallel/">GNU Parallel</a> installed, it is possible to run the simulations in parallel by writing in Terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">parallel</span> <span class="n">json_interface</span> <span class="p">:::</span> <span class="n">inputs</span><span class="o">/*.</span><span class="n">json</span>
 </pre></div>
 </div>
 <p>Note that the second element of the array to be merged can contain several keys to be (re-)defined, and even more than one object can be provided. For instance, consider the following tree structure:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span>
 <span class="o">|</span>
 <span class="o">|</span> <span class="n">inputs</span>
 <span class="o">|</span>      <span class="o">|</span>
@@ -268,8 +270,8 @@
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">rk4.json</span></code></span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
-<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">rk4.json</span></code></span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;rungeKutta4&quot;</span><span class="p">,</span>
   <span class="nt">&quot;stepSize&quot;</span><span class="p">:</span> <span class="mi">20</span>
 <span class="p">}</span>
@@ -277,8 +279,8 @@
 </div>
 </div>
 <div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">rk78.json</span></code></span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
-<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">rk78.json</span></code></span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;rungeKuttaVariableStepSize&quot;</span><span class="p">,</span>
   <span class="nt">&quot;rungeKuttaCoefficientSet&quot;</span><span class="p">:</span> <span class="s2">&quot;rungeKuttaFehlberg78&quot;</span><span class="p">,</span>
   <span class="nt">&quot;initialStepSize&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
@@ -290,8 +292,8 @@
 </div>
 <p>Then, each of the mergeable files would look like this:</p>
 <div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">inputs/rk4/mass8000.json</span></code></span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
-<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">[</span>
+<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">inputs/rk4/mass8000.json</span></code></span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
   <span class="s2">&quot;$(../../shared.json)&quot;</span><span class="p">,</span>
   <span class="p">{</span>
     <span class="nt">&quot;integrator&quot;</span><span class="p">:</span> <span class="s2">&quot;$(../../rk4.json)&quot;</span><span class="p">,</span>
@@ -303,8 +305,8 @@
 </div>
 <p>It is also possible to use the following integrator file:</p>
 <div class="literal-block-wrapper docutils container" id="id6">
-<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">rk4.json</span></code></span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
-<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">[</span>
+<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">rk4.json</span></code></span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
   <span class="s2">&quot;$(shared.json)&quot;</span><span class="p">,</span>
   <span class="p">{</span>
     <span class="nt">&quot;integrator&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -318,8 +320,8 @@
 </div>
 <p>and then</p>
 <div class="literal-block-wrapper docutils container" id="id7">
-<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">inputs/rk4/mass8000.json</span></code></span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
-<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">[</span>
+<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">inputs/rk4/mass8000.json</span></code></span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
   <span class="s2">&quot;$(../../rk4.json)&quot;</span><span class="p">,</span>
   <span class="p">{</span>
     <span class="nt">&quot;bodies.satellite.mass&quot;</span><span class="p">:</span> <span class="mi">8000</span>
@@ -328,13 +330,13 @@
 </pre></div>
 </div>
 </div>
-<p>In this case, the <code class="xref py py-class docutils literal"><span class="pre">mass8000.json</span></code> file is a mergeable file that references another mergeable file. The mergeable <code class="xref py py-class docutils literal"><span class="pre">rk4.json</span></code> loads first the data defined in <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code> and then defines the key <span class="jsonkey">integrator</span> to be equal to the provided object (i.e. <code class="docutils literal"><span class="pre">{</span> <span class="pre">&quot;type&quot;:</span> <span class="pre">&quot;rungeKutta4&quot;,</span> <span class="pre">&quot;stepSize&quot;:</span> <span class="pre">20</span> <span class="pre">}</span></code>). In both cases, the final merged object used to actually set up the simulation will be identical.</p>
+<p>In this case, the <code class="xref py py-class docutils literal notranslate"><span class="pre">mass8000.json</span></code> file is a mergeable file that references another mergeable file. The mergeable <code class="xref py py-class docutils literal notranslate"><span class="pre">rk4.json</span></code> loads first the data defined in <code class="xref py py-class docutils literal notranslate"><span class="pre">shared.json</span></code> and then defines the key <span class="jsonkey">integrator</span> to be equal to the provided object (i.e. <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;type&quot;:</span> <span class="pre">&quot;rungeKutta4&quot;,</span> <span class="pre">&quot;stepSize&quot;:</span> <span class="pre">20</span> <span class="pre">}</span></code>). In both cases, the final merged object used to actually set up the simulation will be identical.</p>
 <div class="admonition caution">
-<p class="first admonition-title">Caution</p>
+<p class="admonition-title">Caution</p>
 <p>Note that the following file would result in a different behaviour:</p>
 <div class="literal-block-wrapper docutils container" id="id8">
-<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">inputs/rk4/mass8000.json</span></code></span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
-<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">[</span>
+<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">inputs/rk4/mass8000.json</span></code></span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
   <span class="s2">&quot;$(../../rk4.json)&quot;</span><span class="p">,</span>
   <span class="p">{</span>
     <span class="nt">&quot;bodies&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -347,10 +349,10 @@
 </pre></div>
 </div>
 </div>
-<p class="last">In this case, the contents of <code class="xref py py-class docutils literal"><span class="pre">rk4.json</span></code> would be loaded first, and then the property of the key <span class="jsonkey">bodies</span> would be re-defined to be equal to <code class="docutils literal"><span class="pre">{</span> <span class="pre">&quot;satellite&quot;:</span> <span class="pre">{</span> <span class="pre">&quot;mass&quot;:</span> <span class="pre">8000</span> <span class="pre">}</span> <span class="pre">}</span></code>. This would result in the loss of other keys defined inside <code class="docutils literal"><span class="pre">bodies.satellite</span></code> and <code class="docutils literal"><span class="pre">bodies</span></code> in the file <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code>.</p>
+<p>In this case, the contents of <code class="xref py py-class docutils literal notranslate"><span class="pre">rk4.json</span></code> would be loaded first, and then the property of the key <span class="jsonkey">bodies</span> would be re-defined to be equal to <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;satellite&quot;:</span> <span class="pre">{</span> <span class="pre">&quot;mass&quot;:</span> <span class="pre">8000</span> <span class="pre">}</span> <span class="pre">}</span></code>. This would result in the loss of other keys defined inside <code class="docutils literal notranslate"><span class="pre">bodies.satellite</span></code> and <code class="docutils literal notranslate"><span class="pre">bodies</span></code> in the file <code class="xref py py-class docutils literal notranslate"><span class="pre">shared.json</span></code>.</p>
 </div>
 <p>Generally, we will want to save the results of each simulation (e.g. the epochs and states) to a different file, so that we end up with the following file tree:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span>
 <span class="o">|</span>
 <span class="o">|</span> <span class="n">inputs</span>
 <span class="o">|</span>      <span class="o">|</span>
@@ -369,10 +371,10 @@
 <span class="o">|</span> <span class="n">shared</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
-<p>We can do this by defining the key <span class="jsonkey">export</span> in the <code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code> file:</p>
+<p>We can do this by defining the key <span class="jsonkey">export</span> in the <code class="xref py py-class docutils literal notranslate"><span class="pre">shared.json</span></code> file:</p>
 <div class="literal-block-wrapper docutils container" id="id9">
-<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code></span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
-<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared.json</span></code></span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;export&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;variables&quot;</span><span class="p">:</span> <span class="p">[</span>
       <span class="p">{</span>
@@ -387,10 +389,10 @@
 </pre></div>
 </div>
 </div>
-<p>and then, in each file inside the <code class="xref py py-class docutils literal"><span class="pre">inputs</span></code> directory, we would have to define the file to which the results of that simulation should be saved:</p>
+<p>and then, in each file inside the <code class="xref py py-class docutils literal notranslate"><span class="pre">inputs</span></code> directory, we would have to define the file to which the results of that simulation should be saved:</p>
 <div class="literal-block-wrapper docutils container" id="id10">
-<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">inputs/mass8000.json</span></code></span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
-<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">[</span>
+<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">inputs/mass8000.json</span></code></span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
   <span class="s2">&quot;$(../shared.json)&quot;</span><span class="p">,</span>
   <span class="p">{</span>
     <span class="nt">&quot;bodies.satellite.mass&quot;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
@@ -403,29 +405,29 @@
 <p>However, there is a way to avoid having to include this additional line in each of the input files. Before showing how this can be done, it is necessary to define the following concepts:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>Declaration file</strong>: file in which a JSON key and corresponding value are defined.</li>
-<li><strong>Parent file</strong>: file from which the declaration file is referenced.</li>
-<li><strong>Root file</strong>: file provided as input argument to the <code class="docutils literal"><span class="pre">json_interface</span></code> application.</li>
+<li><p><strong>Declaration file</strong>: file in which a JSON key and corresponding value are defined.</p></li>
+<li><p><strong>Parent file</strong>: file from which the declaration file is referenced.</p></li>
+<li><p><strong>Root file</strong>: file provided as input argument to the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> application.</p></li>
 </ul>
 </div></blockquote>
 <p>Then, the following special variables can be used inside strings anywhere in input files, which will be replaced by:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">${FILE_DIR}</span></code>: absolute path of the directory where the declaration file is located.</li>
-<li><code class="docutils literal"><span class="pre">${FILE_STEM}</span></code>: filename (without extension) of the declaration file.</li>
-<li><code class="docutils literal"><span class="pre">${FILE_NAME}</span></code>: filename (with extension) of the declaration file.</li>
-<li><code class="docutils literal"><span class="pre">${PARENT_FILE_DIR}</span></code>: absolute path of the directory where the parent file is located.</li>
-<li><code class="docutils literal"><span class="pre">${PARENT_FILE_STEM}</span></code>: filename (without extension) of the parent file.</li>
-<li><code class="docutils literal"><span class="pre">${PARENT_FILE_NAME}</span></code>: filename (with extension) of the parent file.</li>
-<li><code class="docutils literal"><span class="pre">${ROOT_FILE_DIR}</span></code>: absolute path of the directory where the root file is located.</li>
-<li><code class="docutils literal"><span class="pre">${ROOT_FILE_STEM}</span></code>: filename (without extension) of the root file.</li>
-<li><code class="docutils literal"><span class="pre">${ROOT_FILE_NAME}</span></code>: filename (with extension) of the root file.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">${FILE_DIR}</span></code>: absolute path of the directory where the declaration file is located.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">${FILE_STEM}</span></code>: filename (without extension) of the declaration file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">${FILE_NAME}</span></code>: filename (with extension) of the declaration file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">${PARENT_FILE_DIR}</span></code>: absolute path of the directory where the parent file is located.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">${PARENT_FILE_STEM}</span></code>: filename (without extension) of the parent file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">${PARENT_FILE_NAME}</span></code>: filename (with extension) of the parent file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">${ROOT_FILE_DIR}</span></code>: absolute path of the directory where the root file is located.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">${ROOT_FILE_STEM}</span></code>: filename (without extension) of the root file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">${ROOT_FILE_NAME}</span></code>: filename (with extension) of the root file.</p></li>
 </ul>
 </div></blockquote>
-<p>For instance, we can remove the line <code class="docutils literal"><span class="pre">export.file</span> <span class="pre">=</span> <span class="pre">...</span></code> from each of the individual input files by writing in the shared file:</p>
+<p>For instance, we can remove the line <code class="docutils literal notranslate"><span class="pre">export.file</span> <span class="pre">=</span> <span class="pre">...</span></code> from each of the individual input files by writing in the shared file:</p>
 <div class="literal-block-wrapper docutils container" id="id11">
-<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal"><span class="pre">shared.json</span></code></span><a class="headerlink" href="#id11" title="Permalink to this code">¶</a></div>
-<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+<div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared.json</span></code></span><a class="headerlink" href="#id11" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;export&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;variables&quot;</span><span class="p">:</span> <span class="p">[</span>
       <span class="p">{</span>
@@ -441,15 +443,15 @@
 </pre></div>
 </div>
 </div>
-<p>When running <code class="docutils literal"><span class="pre">json_interface</span> <span class="pre">mass8000.json</span></code>, the string <code class="docutils literal"><span class="pre">&quot;&#64;path(outputs/${ROOT_FILE_STEM}.txt)&quot;</span></code> will be resolved to <code class="docutils literal"><span class="pre">&quot;../outputs/mass8000.txt&quot;</span></code>. Note that the path, defined relative to the input file in which it was declared, is converted to a path that is relative to the root input file provided to the application as command-line argument (i.e. <code class="xref py py-class docutils literal"><span class="pre">mass8000.json</span></code>). This is only possible by using <code class="docutils literal"><span class="pre">&quot;&#64;path(relPath)&quot;</span></code>. If we do not use the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword, the JSON parser cannot tell regular strings and paths apart, and in this case that would have resulted in the creation of an <code class="xref py py-class docutils literal"><span class="pre">outputs</span></code> directory inside the <code class="xref py py-class docutils literal"><span class="pre">inputs</span></code> directory. In summary:</p>
+<p>When running <code class="docutils literal notranslate"><span class="pre">json_interface</span> <span class="pre">mass8000.json</span></code>, the string <code class="docutils literal notranslate"><span class="pre">&quot;&#64;path(outputs/${ROOT_FILE_STEM}.txt)&quot;</span></code> will be resolved to <code class="docutils literal notranslate"><span class="pre">&quot;../outputs/mass8000.txt&quot;</span></code>. Note that the path, defined relative to the input file in which it was declared, is converted to a path that is relative to the root input file provided to the application as command-line argument (i.e. <code class="xref py py-class docutils literal notranslate"><span class="pre">mass8000.json</span></code>). This is only possible by using <code class="docutils literal notranslate"><span class="pre">&quot;&#64;path(relPath)&quot;</span></code>. If we do not use the <code class="docutils literal notranslate"><span class="pre">&#64;path</span></code> keyword, the JSON parser cannot tell regular strings and paths apart, and in this case that would have resulted in the creation of an <code class="xref py py-class docutils literal notranslate"><span class="pre">outputs</span></code> directory inside the <code class="xref py py-class docutils literal notranslate"><span class="pre">inputs</span></code> directory. In summary:</p>
 <blockquote>
 <div><ul class="simple">
-<li>When a path is provided as a plain string (e.g. <code class="docutils literal"><span class="pre">&quot;relativePath&quot;</span></code>), it must be relative to the root file.</li>
-<li>When a path is provided using the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword (e.g. <code class="docutils literal"><span class="pre">&quot;&#64;path(relativePath)&quot;</span></code>), it must be relative to the declaration file.</li>
-<li>When a special string is used to include (parts of) the contents of another JSON file (e.g. <code class="docutils literal"><span class="pre">&quot;$(shared.json)&quot;</span></code>), the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword is not used and it must be relative to the declaration file.</li>
+<li><p>When a path is provided as a plain string (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;relativePath&quot;</span></code>), it must be relative to the root file.</p></li>
+<li><p>When a path is provided using the <code class="docutils literal notranslate"><span class="pre">&#64;path</span></code> keyword (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;&#64;path(relativePath)&quot;</span></code>), it must be relative to the declaration file.</p></li>
+<li><p>When a special string is used to include (parts of) the contents of another JSON file (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;$(shared.json)&quot;</span></code>), the <code class="docutils literal notranslate"><span class="pre">&#64;path</span></code> keyword is not used and it must be relative to the declaration file.</p></li>
 </ul>
 </div></blockquote>
-<p>It is recommended to never provide relative paths as plain strings, and to always use either <code class="docutils literal"><span class="pre">&#64;path(</span> <span class="pre">)</span></code> or <code class="docutils literal"><span class="pre">$(</span> <span class="pre">)</span></code>, so that the paths are always specified relative to the declaration file. When no modular or mergeable files are used, the root file and the definition file are always the same, so using the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword makes it unnecessary but still recommended, as the project could be modularised in the future or parts of it may be end up being used in other projects, potentially requiring the use of the <code class="docutils literal"><span class="pre">&#64;path</span></code> keyword.</p>
+<p>It is recommended to never provide relative paths as plain strings, and to always use either <code class="docutils literal notranslate"><span class="pre">&#64;path(</span> <span class="pre">)</span></code> or <code class="docutils literal notranslate"><span class="pre">$(</span> <span class="pre">)</span></code>, so that the paths are always specified relative to the declaration file. When no modular or mergeable files are used, the root file and the definition file are always the same, so using the <code class="docutils literal notranslate"><span class="pre">&#64;path</span></code> keyword makes it unnecessary but still recommended, as the project could be modularised in the future or parts of it may be end up being used in other projects, potentially requiring the use of the <code class="docutils literal notranslate"><span class="pre">&#64;path</span></code> keyword.</p>
 </div>
 
 
@@ -507,7 +509,8 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

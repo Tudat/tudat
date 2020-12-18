@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>7.4. Filters &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>6.4. Filters &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -38,9 +40,9 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="7. Basic Mathematics Tools" href="index.html"/>
-        <link rel="next" title="8. Other Libraries" href="../otherLibraries/index.html"/>
-        <link rel="prev" title="7.3. Probability Distributions" href="probabilityDistributions.html"/> 
+        <link rel="up" title="6. Basic Mathematics Tools" href="index.html"/>
+        <link rel="next" title="7. Other Libraries" href="../otherLibraries/index.html"/>
+        <link rel="prev" title="6.3. Probability Distributions" href="probabilityDistributions.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -103,14 +105,14 @@
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">6. Low-Thrust Trajectory Design Module</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">7. Basic Mathematics Tools</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="interpolators.html">7.1. Interpolators</a></li>
-<li class="toctree-l4"><a class="reference internal" href="integrators.html">7.2. Integrators</a></li>
-<li class="toctree-l4"><a class="reference internal" href="probabilityDistributions.html">7.3. Probability Distributions</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">7.4. Filters</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6. Basic Mathematics Tools</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="interpolators.html">6.1. Interpolators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="integrators.html">6.2. Integrators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="probabilityDistributions.html">6.3. Probability Distributions</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.4. Filters</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">8. Other Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/index.html">Tudat Basics</a></li>
@@ -122,7 +124,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -171,9 +172,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">7. Basic Mathematics Tools</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">6. </span>Basic Mathematics Tools</a> &raquo;</li>
         
-      <li>7.4. Filters</li>
+      <li><span class="section-number">6.4. </span>Filters</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -193,30 +194,30 @@
            <div itemprop="articleBody">
             
   <div class="section" id="filters">
-<span id="tudatfeaturesfilters"></span><h1>7.4. Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturesfilters"></span><h1><span class="section-number">6.4. </span>Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h1>
 <p>Filters, in astrodynamics, are generally used to estimate the state of a system, based on a model description and measurement data. Tudat provides a few filters, based on the Kalman filter concept, that you can use for these or any other purpose you see fit. The filtering techinques currently offered in Tudat are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>Linear Kalman Filter</strong> (LKF): an extremely effective and versatile procedure for combining noisy sensor outputs to estimate the state of a linear system with uncertain dynamics</li>
-<li><strong>Extended Kalman Filter</strong> (EKF): extends the LKF to non-linear applications, by using a first-order Taylor series approximation of the system around the current estimate</li>
-<li><strong>Unscented Kalman Filter</strong> (UKF): similar to the EKF, but addresses the non-linearity by using a deterministic sampling approach (instead of using system and measurement Jacobians)</li>
+<li><p><strong>Linear Kalman Filter</strong> (LKF): an extremely effective and versatile procedure for combining noisy sensor outputs to estimate the state of a linear system with uncertain dynamics</p></li>
+<li><p><strong>Extended Kalman Filter</strong> (EKF): extends the LKF to non-linear applications, by using a first-order Taylor series approximation of the system around the current estimate</p></li>
+<li><p><strong>Unscented Kalman Filter</strong> (UKF): similar to the EKF, but addresses the non-linearity by using a deterministic sampling approach (instead of using system and measurement Jacobians)</p></li>
 </ul>
 </div></blockquote>
 <p>You can find more information on the mathematical background of these filters in virtually any guidance, navigation and control book. However, the references used to define the filters in Tudat are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>LKF</strong>: E. Mooij, AE4870B - Re-entry Systems, Lecture Notes, Delft University of Technology, 2016.</li>
-<li><strong>EKF</strong>: Ogata, K., Discrete-Time Control Systems, 2nd ed. Pearson Education Asia, 2002.</li>
-<li><strong>UKF</strong>: Wan, E. and Van Der Merwe, R., “The Unscented Kalman Filter for Nonlinear Estimation,” in Adaptive Systems for Signal Processing, Communications, and Control Symposium. Institute of Electrical and Electronics Engineers, 2000, pp. 153–158.</li>
+<li><p><strong>LKF</strong>: E. Mooij, AE4870B - Re-entry Systems, Lecture Notes, Delft University of Technology, 2016.</p></li>
+<li><p><strong>EKF</strong>: Ogata, K., Discrete-Time Control Systems, 2nd ed. Pearson Education Asia, 2002.</p></li>
+<li><p><strong>UKF</strong>: Wan, E. and Van Der Merwe, R., “The Unscented Kalman Filter for Nonlinear Estimation,” in Adaptive Systems for Signal Processing, Communications, and Control Symposium. Institute of Electrical and Electronics Engineers, 2000, pp. 153–158.</p></li>
 </ul>
 </div></blockquote>
-<p>On this page, you will find a description of how to create a Kalman filter object, either based on the linear, extended, or unscented principle. In general, you will notice that the creation of a filter, requires the input of two template arguments. These are called <code class="docutils literal"><span class="pre">IndependentVariableType</span></code> and <code class="docutils literal"><span class="pre">DependentVariableType</span></code>, and they respectively denote the type (i.e., <code class="docutils literal"><span class="pre">double</span></code>, <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code>, etc.) for the independent variable (usually time) and the dependent variables. Note that the dependent variable is internally defined as an <code class="docutils literal"><span class="pre">Eigen::Matrix&lt;</span> <span class="pre">DependentVariableType,</span> <span class="pre">Eigen::Dynamic,</span> <span class="pre">1</span> <span class="pre">&gt;</span></code> object (which corresponds to a vector of unspecified length).</p>
+<p>On this page, you will find a description of how to create a Kalman filter object, either based on the linear, extended, or unscented principle. In general, you will notice that the creation of a filter, requires the input of two template arguments. These are called <code class="docutils literal notranslate"><span class="pre">IndependentVariableType</span></code> and <code class="docutils literal notranslate"><span class="pre">DependentVariableType</span></code>, and they respectively denote the type (i.e., <code class="docutils literal notranslate"><span class="pre">double</span></code>, <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">double</span></code>, etc.) for the independent variable (usually time) and the dependent variables. Note that the dependent variable is internally defined as an <code class="docutils literal notranslate"><span class="pre">Eigen::Matrix&lt;</span> <span class="pre">DependentVariableType,</span> <span class="pre">Eigen::Dynamic,</span> <span class="pre">1</span> <span class="pre">&gt;</span></code> object (which corresponds to a vector of unspecified length).</p>
 <div class="section" id="linear-kalman-filter">
-<h2>7.4.1. Linear Kalman Filter<a class="headerlink" href="#linear-kalman-filter" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<h2><span class="section-number">6.4.1. </span>Linear Kalman Filter<a class="headerlink" href="#linear-kalman-filter" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
 <dt id="LinearKalmanFilter">
-<em class="property">class </em><code class="descname">LinearKalmanFilter</code><a class="headerlink" href="#LinearKalmanFilter" title="Permalink to this definition">¶</a></dt>
-<dd><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">LinearKalmanFilter</span><span class="o">&lt;</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">linearFilter</span> <span class="o">=</span>
+<em class="property">class </em><code class="sig-name descname">LinearKalmanFilter</code><a class="headerlink" href="#LinearKalmanFilter" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">LinearKalmanFilter</span><span class="o">&lt;</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">linearFilter</span> <span class="o">=</span>
    <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">LinearKalmanFilter</span><span class="o">&lt;</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span>
                <span class="n">stateTransitionMatrix</span><span class="p">,</span>
                <span class="n">controlMatrix</span><span class="p">,</span>
@@ -232,31 +233,31 @@
 <p>In the code above, the inputs are given by:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">stateTransitionMatrixFunction</span></code>: a function returning the state transition matrix, as a function of time, state and control input</li>
-<li><code class="docutils literal"><span class="pre">controlMatrixFunction</span></code>: a function returning the control matrix as a function of time, state and control input</li>
-<li><code class="docutils literal"><span class="pre">measurementMatrixFunction</span></code>: a function returning the measurement matrix as a function of time, state and control input</li>
-<li><code class="docutils literal"><span class="pre">systemUncertainty</span></code>: a matrix defining the uncertainty in modeling of the system</li>
-<li><code class="docutils literal"><span class="pre">measurementUncertainty</span></code>: a matrix defining the uncertainty in modeling of the measurements</li>
-<li><code class="docutils literal"><span class="pre">filteringTimeStep</span></code>: a scalar representing the value of the constant filtering time step</li>
-<li><code class="docutils literal"><span class="pre">initialTime</span></code>: a scalar representing the value of the initial time</li>
-<li><code class="docutils literal"><span class="pre">initialStateVector</span></code>: a vector representing the initial (estimated) state of the system; it is used as first a-priori estimate of the state vector</li>
-<li><code class="docutils literal"><span class="pre">initialCovarianceMatrix</span></code>: a matrix representing the initial (estimated) covariance of the system; it is used as first a-priori estimate of the covariance matrix</li>
-<li><code class="docutils literal"><span class="pre">integrator</span></code>: a pointer to integrator to be used to propagate state</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stateTransitionMatrixFunction</span></code>: a function returning the state transition matrix, as a function of time, state and control input</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">controlMatrixFunction</span></code>: a function returning the control matrix as a function of time, state and control input</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">measurementMatrixFunction</span></code>: a function returning the measurement matrix as a function of time, state and control input</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">systemUncertainty</span></code>: a matrix defining the uncertainty in modeling of the system</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">measurementUncertainty</span></code>: a matrix defining the uncertainty in modeling of the measurements</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">filteringTimeStep</span></code>: a scalar representing the value of the constant filtering time step</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initialTime</span></code>: a scalar representing the value of the initial time</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initialStateVector</span></code>: a vector representing the initial (estimated) state of the system; it is used as first a-priori estimate of the state vector</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initialCovarianceMatrix</span></code>: a matrix representing the initial (estimated) covariance of the system; it is used as first a-priori estimate of the covariance matrix</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">integrator</span></code>: a pointer to integrator to be used to propagate state</p></li>
 </ul>
 </div></blockquote>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Currently, the creation of the LKF is only supported in the method above. A class such as <code class="xref py py-class docutils literal"><span class="pre">LinearKalmanFilterSettings</span></code> has not yet been implemented.</p>
+<p class="admonition-title">Note</p>
+<p>Currently, the creation of the LKF is only supported in the method above. A class such as <code class="xref py py-class docutils literal notranslate"><span class="pre">LinearKalmanFilterSettings</span></code> has not yet been implemented.</p>
 </div>
 </dd></dl>
 
 </div>
 <div class="section" id="extended-kalman-filter">
-<h2>7.4.2. Extended Kalman Filter<a class="headerlink" href="#extended-kalman-filter" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<h2><span class="section-number">6.4.2. </span>Extended Kalman Filter<a class="headerlink" href="#extended-kalman-filter" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
 <dt id="ExtendedKalmanFilter">
-<em class="property">class </em><code class="descname">ExtendedKalmanFilter</code><a class="headerlink" href="#ExtendedKalmanFilter" title="Permalink to this definition">¶</a></dt>
-<dd><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">FilterBase</span><span class="o">&lt;</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">filterObject</span><span class="p">;</span>
+<em class="property">class </em><code class="sig-name descname">ExtendedKalmanFilter</code><a class="headerlink" href="#ExtendedKalmanFilter" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">FilterBase</span><span class="o">&lt;</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">filterObject</span><span class="p">;</span>
 <span class="n">filterObject</span> <span class="o">=</span> <span class="n">createFilter</span><span class="p">(</span> <span class="n">filterSettings</span><span class="p">,</span>
                              <span class="n">systemFunction</span><span class="p">,</span>
                              <span class="n">measurementFunction</span><span class="p">,</span>
@@ -269,20 +270,20 @@
 <p>Here, the inputs are as follows:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">filterSettings</span></code>: a pointer to a <a class="reference internal" href="#ExtendedKalmanFilter.ExtendedKalmanFilterSettings" title="ExtendedKalmanFilter.ExtendedKalmanFilterSettings"><code class="xref py py-class docutils literal"><span class="pre">ExtendedKalmanFilterSettings</span></code></a> object, described at the end of this section</li>
-<li><code class="docutils literal"><span class="pre">systemFunction</span></code>: a function returning the state as a function of time and state vector; this can be a differential equation if the <code class="docutils literal"><span class="pre">integratorSettings</span></code> is set (i.e., if it is not a <code class="docutils literal"><span class="pre">nullptr</span></code>)</li>
-<li><code class="docutils literal"><span class="pre">measurementFunction</span></code>: a function returning the measurement as a function of time and state</li>
-<li><code class="docutils literal"><span class="pre">stateJacobianFunction</span></code>: a function returning the Jacobian of the system w.r.t. the state; its input values can be time and state vector</li>
-<li><code class="docutils literal"><span class="pre">stateNoiseJacobianFunction</span></code>: a function returning the Jacobian of the system function w.r.t. the system noise; its input values can be time and state vector</li>
-<li><code class="docutils literal"><span class="pre">measurementJacobianFunction</span></code>: a function returning the Jacobian of the measurement function w.r.t. the state; its input values can be time and state vector</li>
-<li><code class="docutils literal"><span class="pre">measurementNoiseJacobianFunction</span></code>: a function returning the Jacobian of the measurement function w.r.t. the measurement noise. The input values can be time and state vector</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">filterSettings</span></code>: a pointer to a <a class="reference internal" href="#ExtendedKalmanFilter.ExtendedKalmanFilterSettings" title="ExtendedKalmanFilter.ExtendedKalmanFilterSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExtendedKalmanFilterSettings</span></code></a> object, described at the end of this section</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">systemFunction</span></code>: a function returning the state as a function of time and state vector; this can be a differential equation if the <code class="docutils literal notranslate"><span class="pre">integratorSettings</span></code> is set (i.e., if it is not a <code class="docutils literal notranslate"><span class="pre">nullptr</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">measurementFunction</span></code>: a function returning the measurement as a function of time and state</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stateJacobianFunction</span></code>: a function returning the Jacobian of the system w.r.t. the state; its input values can be time and state vector</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stateNoiseJacobianFunction</span></code>: a function returning the Jacobian of the system function w.r.t. the system noise; its input values can be time and state vector</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">measurementJacobianFunction</span></code>: a function returning the Jacobian of the measurement function w.r.t. the state; its input values can be time and state vector</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">measurementNoiseJacobianFunction</span></code>: a function returning the Jacobian of the measurement function w.r.t. the measurement noise. The input values can be time and state vector</p></li>
 </ul>
 </div></blockquote>
 <p>The filter settings above, can be defined for an extended Kalman filter as:</p>
-<dl class="class">
+<dl class="py class">
 <dt id="ExtendedKalmanFilter.ExtendedKalmanFilterSettings">
-<em class="property">class </em><code class="descname">ExtendedKalmanFilterSettings</code><a class="headerlink" href="#ExtendedKalmanFilter.ExtendedKalmanFilterSettings" title="Permalink to this definition">¶</a></dt>
-<dd><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">FilterSettings</span><span class="o">&lt;</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">filterSettings</span> <span class="o">=</span>
+<em class="property">class </em><code class="sig-name descname">ExtendedKalmanFilterSettings</code><a class="headerlink" href="#ExtendedKalmanFilter.ExtendedKalmanFilterSettings" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">FilterSettings</span><span class="o">&lt;</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">filterSettings</span> <span class="o">=</span>
    <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ExtendedKalmanFilterSettings</span><span class="o">&lt;</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span>
                <span class="n">systemUncertainty</span><span class="p">,</span>
                <span class="n">measurementUncertainty</span><span class="p">,</span>
@@ -296,13 +297,13 @@
 <p>where each element is defined as:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">systemUncertainty</span></code>: a matrix defining the uncertainty in modeling of the system</li>
-<li><code class="docutils literal"><span class="pre">measurementUncertainty</span></code>: a matrix defining the uncertainty in modeling of the measurements</li>
-<li><code class="docutils literal"><span class="pre">filteringTimeStep</span></code>: a scalar representing the value of the constant filtering time step</li>
-<li><code class="docutils literal"><span class="pre">initialTime</span></code>: a scalar representing the value of the initial time</li>
-<li><code class="docutils literal"><span class="pre">initialStateVector</span></code>: a vector representing the initial (estimated) state of the system; it is used as first a-priori estimate of the state vector</li>
-<li><code class="docutils literal"><span class="pre">initialCovarianceMatrix</span></code>: a matrix representing the initial (estimated) covariance of the system; it is used as first a-priori estimate of the covariance matrix</li>
-<li><code class="docutils literal"><span class="pre">integratorSettings</span></code>: a pointer to integration settings defining the integrator to be used to propagate the state</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">systemUncertainty</span></code>: a matrix defining the uncertainty in modeling of the system</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">measurementUncertainty</span></code>: a matrix defining the uncertainty in modeling of the measurements</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">filteringTimeStep</span></code>: a scalar representing the value of the constant filtering time step</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initialTime</span></code>: a scalar representing the value of the initial time</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initialStateVector</span></code>: a vector representing the initial (estimated) state of the system; it is used as first a-priori estimate of the state vector</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initialCovarianceMatrix</span></code>: a matrix representing the initial (estimated) covariance of the system; it is used as first a-priori estimate of the covariance matrix</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">integratorSettings</span></code>: a pointer to integration settings defining the integrator to be used to propagate the state</p></li>
 </ul>
 </div></blockquote>
 </dd></dl>
@@ -311,11 +312,11 @@
 
 </div>
 <div class="section" id="unscented-kalman-filter">
-<h2>7.4.3. Unscented Kalman Filter<a class="headerlink" href="#unscented-kalman-filter" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<h2><span class="section-number">6.4.3. </span>Unscented Kalman Filter<a class="headerlink" href="#unscented-kalman-filter" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
 <dt id="UnscentedKalmanFilter">
-<em class="property">class </em><code class="descname">UnscentedKalmanFilter</code><a class="headerlink" href="#UnscentedKalmanFilter" title="Permalink to this definition">¶</a></dt>
-<dd><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">FilterBase</span><span class="o">&lt;</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">filterObject</span><span class="p">;</span>
+<em class="property">class </em><code class="sig-name descname">UnscentedKalmanFilter</code><a class="headerlink" href="#UnscentedKalmanFilter" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">FilterBase</span><span class="o">&lt;</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">filterObject</span><span class="p">;</span>
 <span class="n">filterObject</span> <span class="o">=</span> <span class="n">createFilter</span><span class="p">(</span> <span class="n">filterSettings</span><span class="p">,</span>
                              <span class="n">systemFunction</span><span class="p">,</span>
                              <span class="n">measurementFunction</span> <span class="p">)</span>
@@ -324,16 +325,16 @@
 <p>Here, the inputs are as follows:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">filterSettings</span></code>: a pointer to a <a class="reference internal" href="#UnscentedKalmanFilter.UnscentedKalmanFilterSettings" title="UnscentedKalmanFilter.UnscentedKalmanFilterSettings"><code class="xref py py-class docutils literal"><span class="pre">UnscentedKalmanFilterSettings</span></code></a> object, described at the end of this section</li>
-<li><code class="docutils literal"><span class="pre">systemFunction</span></code>: a function returning the state as a function of time and state vector; this can be a differential equation if the <code class="docutils literal"><span class="pre">integratorSettings</span></code> is set (i.e., if it is not a <code class="docutils literal"><span class="pre">nullptr</span></code>)</li>
-<li><code class="docutils literal"><span class="pre">measurementFunction</span></code>: a function returning the measurement as a function of time and state</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">filterSettings</span></code>: a pointer to a <a class="reference internal" href="#UnscentedKalmanFilter.UnscentedKalmanFilterSettings" title="UnscentedKalmanFilter.UnscentedKalmanFilterSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnscentedKalmanFilterSettings</span></code></a> object, described at the end of this section</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">systemFunction</span></code>: a function returning the state as a function of time and state vector; this can be a differential equation if the <code class="docutils literal notranslate"><span class="pre">integratorSettings</span></code> is set (i.e., if it is not a <code class="docutils literal notranslate"><span class="pre">nullptr</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">measurementFunction</span></code>: a function returning the measurement as a function of time and state</p></li>
 </ul>
 </div></blockquote>
 <p>The filter settings above, can be defined for an extended Kalman filter as:</p>
-<dl class="class">
+<dl class="py class">
 <dt id="UnscentedKalmanFilter.UnscentedKalmanFilterSettings">
-<em class="property">class </em><code class="descname">UnscentedKalmanFilterSettings</code><a class="headerlink" href="#UnscentedKalmanFilter.UnscentedKalmanFilterSettings" title="Permalink to this definition">¶</a></dt>
-<dd><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">FilterSettings</span><span class="o">&lt;</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">filterSettings</span> <span class="o">=</span>
+<em class="property">class </em><code class="sig-name descname">UnscentedKalmanFilterSettings</code><a class="headerlink" href="#UnscentedKalmanFilter.UnscentedKalmanFilterSettings" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">FilterSettings</span><span class="o">&lt;</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">filterSettings</span> <span class="o">=</span>
    <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">UnscentedKalmanFilterSettings</span><span class="o">&lt;</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span>
                <span class="n">systemUncertainty</span><span class="p">,</span>
                <span class="n">measurementUncertainty</span><span class="p">,</span>
@@ -349,52 +350,52 @@
 <p>where each element is defined as:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">systemUncertainty</span></code>: a matrix defining the uncertainty in modeling of the system</li>
-<li><code class="docutils literal"><span class="pre">measurementUncertainty</span></code>: a matrix defining the uncertainty in modeling of the measurements</li>
-<li><code class="docutils literal"><span class="pre">filteringTimeStep</span></code>: a scalar representing the value of the constant filtering time step</li>
-<li><code class="docutils literal"><span class="pre">initialTime</span></code>: a scalar representing the value of the initial time</li>
-<li><code class="docutils literal"><span class="pre">initialStateVector</span></code>: a vector representing the initial (estimated) state of the system; it is used as first a-priori estimate of the state vector</li>
-<li><code class="docutils literal"><span class="pre">initialCovarianceMatrix</span></code>: a matrix representing the initial (estimated) covariance of the system; it is used as first a-priori estimate of the covariance matrix</li>
-<li><code class="docutils literal"><span class="pre">integratorSettings</span></code>: a pointer to integration settings defining the integrator to be used to propagate the state</li>
-<li><code class="docutils literal"><span class="pre">constantValueReference</span></code>: reference to be used for the values of the <span class="math">\(\alpha\)</span> and <span class="math">\(\kappa\)</span> parameters; this variable has to be part of the <code class="docutils literal"><span class="pre">ConstantParameterReferences</span></code> enumeration (custom parameters are supported)</li>
-<li><code class="docutils literal"><span class="pre">customConstantParameters</span></code>: values of the constant parameters <span class="math">\(\alpha\)</span> and <span class="math">\(\kappa\)</span>, input as a pair, in case the <code class="docutils literal"><span class="pre">custom_parameters</span></code> enumeration is used in the previous field</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">systemUncertainty</span></code>: a matrix defining the uncertainty in modeling of the system</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">measurementUncertainty</span></code>: a matrix defining the uncertainty in modeling of the measurements</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">filteringTimeStep</span></code>: a scalar representing the value of the constant filtering time step</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initialTime</span></code>: a scalar representing the value of the initial time</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initialStateVector</span></code>: a vector representing the initial (estimated) state of the system; it is used as first a-priori estimate of the state vector</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initialCovarianceMatrix</span></code>: a matrix representing the initial (estimated) covariance of the system; it is used as first a-priori estimate of the covariance matrix</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">integratorSettings</span></code>: a pointer to integration settings defining the integrator to be used to propagate the state</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">constantValueReference</span></code>: reference to be used for the values of the <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\kappa\)</span> parameters; this variable has to be part of the <code class="docutils literal notranslate"><span class="pre">ConstantParameterReferences</span></code> enumeration (custom parameters are supported)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">customConstantParameters</span></code>: values of the constant parameters <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\kappa\)</span>, input as a pair, in case the <code class="docutils literal notranslate"><span class="pre">custom_parameters</span></code> enumeration is used in the previous field</p></li>
 </ul>
 </div></blockquote>
-<p>The supported values for <code class="docutils literal"><span class="pre">constantValueReference</span></code> are based on UKF literature, and correspond to the values of <span class="math">\(\alpha\)</span> and <span class="math">\(\kappa\)</span> shown in the table below (where <span class="math">\(N\)</span> denotes the length of the state vector). Note that the values of these two parameters have the following meaning:</p>
+<p>The supported values for <code class="docutils literal notranslate"><span class="pre">constantValueReference</span></code> are based on UKF literature, and correspond to the values of <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\kappa\)</span> shown in the table below (where <span class="math notranslate nohighlight">\(N\)</span> denotes the length of the state vector). Note that the values of these two parameters have the following meaning:</p>
 <blockquote>
 <div><ul class="simple">
-<li><span class="math">\(\alpha\)</span> is used to distribute the sigma points around the a-priori estimate</li>
-<li><span class="math">\(\kappa\)</span> is a secondary scaling parameter, also used to distribute the sigma points around the a-priori estimate, but it has a smaller influence</li>
+<li><p><span class="math notranslate nohighlight">\(\alpha\)</span> is used to distribute the sigma points around the a-priori estimate</p></li>
+<li><p><span class="math notranslate nohighlight">\(\kappa\)</span> is a secondary scaling parameter, also used to distribute the sigma points around the a-priori estimate, but it has a smaller influence</p></li>
 </ul>
 </div></blockquote>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="64%" />
-<col width="17%" />
-<col width="19%" />
+<col style="width: 64%" />
+<col style="width: 17%" />
+<col style="width: 19%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head"><code class="docutils literal"><span class="pre">constantValueReference</span></code></th>
-<th class="head"><span class="math">\(\alpha\)</span></th>
-<th class="head"><span class="math">\(\kappa\)</span></th>
+<thead>
+<tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">constantValueReference</span></code></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(\alpha\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(\kappa\)</span></p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">reference_Wan_and_Van_der_Merwe</span></code> (default)</td>
-<td>0.003</td>
-<td>0.0</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">reference_Wan_and_Van_der_Merwe</span></code> (default)</p></td>
+<td><p>0.003</p></td>
+<td><p>0.0</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">reference_Lisano_and_Born_and_Axelrad</span></code></td>
-<td>1.0</td>
-<td>3.0 - <span class="math">\(N\)</span></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">reference_Lisano_and_Born_and_Axelrad</span></code></p></td>
+<td><p>1.0</p></td>
+<td><p>3.0 - <span class="math notranslate nohighlight">\(N\)</span></p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">reference_Challa_and_Moore_and_Rogers</span></code></td>
-<td>0.001</td>
-<td>0.1</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">reference_Challa_and_Moore_and_Rogers</span></code></p></td>
+<td><p>0.001</p></td>
+<td><p>0.1</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">customConstantParameters</span></code></td>
-<td>–</td>
-<td>–</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">customConstantParameters</span></code></p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
 </tr>
 </tbody>
 </table>
@@ -404,47 +405,47 @@
 
 </div>
 <div class="section" id="using-a-kalman-filter-object">
-<h2>7.4.4. Using a Kalman Filter Object<a class="headerlink" href="#using-a-kalman-filter-object" title="Permalink to this headline">¶</a></h2>
-<p>To use the filters after their creation, you will need to update the system with the data corresponding to the new time step. This can be done by using the function <code class="docutils literal"><span class="pre">updateFilter</span></code>, which takes one inputs:</p>
+<h2><span class="section-number">6.4.4. </span>Using a Kalman Filter Object<a class="headerlink" href="#using-a-kalman-filter-object" title="Permalink to this headline">¶</a></h2>
+<p>To use the filters after their creation, you will need to update the system with the data corresponding to the new time step. This can be done by using the function <code class="docutils literal notranslate"><span class="pre">updateFilter</span></code>, which takes one inputs:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">currentMeasurementVector</span></code>: a vector denoting the current external measurement which will be used to correct the estimated a-priori state (thus to obtain the a-posteriori estimate)</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">currentMeasurementVector</span></code>: a vector denoting the current external measurement which will be used to correct the estimated a-priori state (thus to obtain the a-posteriori estimate)</p></li>
 </ul>
 </div></blockquote>
-<p>Note that the filter object comes equipped with two noise generators. These produce random Gaussian noise based on the system and measuremenet uncertainty properties input by you. They can be retrieved with the commands <code class="docutils literal"><span class="pre">produceSystemNoise</span></code> and <code class="docutils literal"><span class="pre">produceMeasurementNoise</span></code>. You will find cases of how to use the noise and the other features mentioned on this page, in:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">Tudat</span><span class="o">/</span><span class="n">Mathematics</span><span class="o">/</span><span class="n">Filters</span><span class="o">/</span><span class="n">UnitTests</span>
+<p>Note that the filter object comes equipped with two noise generators. These produce random Gaussian noise based on the system and measuremenet uncertainty properties input by you. They can be retrieved with the commands <code class="docutils literal notranslate"><span class="pre">produceSystemNoise</span></code> and <code class="docutils literal notranslate"><span class="pre">produceMeasurementNoise</span></code>. You will find cases of how to use the noise and the other features mentioned on this page, in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">Tudat</span><span class="o">/</span><span class="n">Mathematics</span><span class="o">/</span><span class="n">Filters</span><span class="o">/</span><span class="n">UnitTests</span>
 </pre></div>
 </div>
 <p>where a few examples for each filtering technique are shown. One of the test cases shown for the extended (EKF) and unscented (UKF) filters is also shown in an example application, which you can find in <a class="reference internal" href="../../applicationWalkthroughs/filterExample.html#walkthroughsfiltering"><span class="std std-ref">Kalman Filter for State Estimation</span></a>.</p>
-<p>The last element that should be discussed is the control system. It may be the case that you also need a control input together with the time and state. This can be added with the creation of a <code class="xref py py-class docutils literal"><span class="pre">ControlWrapper</span></code> of the type explained in the next section, <a class="reference internal" href="#tudatfeaturesfilterscontrolsystem"><span class="std std-ref">Adding a Control Input</span></a>.</p>
-<p>These are the only major steps that you will need to take to keep the filter running. At the end of the estimation process, however, you can retrieve, however, retireve the history of the estimated states and covariance matrices by using the functions <code class="docutils literal"><span class="pre">getEstimatedStateHistory</span></code> and <code class="docutils literal"><span class="pre">getEstimatedCovarianceHistory</span></code>, respectively.</p>
+<p>The last element that should be discussed is the control system. It may be the case that you also need a control input together with the time and state. This can be added with the creation of a <code class="xref py py-class docutils literal notranslate"><span class="pre">ControlWrapper</span></code> of the type explained in the next section, <a class="reference internal" href="#tudatfeaturesfilterscontrolsystem"><span class="std std-ref">Adding a Control Input</span></a>.</p>
+<p>These are the only major steps that you will need to take to keep the filter running. At the end of the estimation process, however, you can retrieve, however, retireve the history of the estimated states and covariance matrices by using the functions <code class="docutils literal notranslate"><span class="pre">getEstimatedStateHistory</span></code> and <code class="docutils literal notranslate"><span class="pre">getEstimatedCovarianceHistory</span></code>, respectively.</p>
 </div>
 <div class="section" id="adding-a-control-input">
-<span id="tudatfeaturesfilterscontrolsystem"></span><h2>7.4.5. Adding a Control Input<a class="headerlink" href="#adding-a-control-input" title="Permalink to this headline">¶</a></h2>
-<p>It may be that for your application, your system needs to be controlled. This can be achieved by creating a control system (<code class="xref py py-class docutils literal"><span class="pre">ControlSystem</span></code>, or <code class="xref py py-class docutils literal"><span class="pre">ControlWrapper</span></code> in the unit tests), that provides the state function (and possibly the state Jacobian) with the current commanded vector.</p>
+<span id="tudatfeaturesfilterscontrolsystem"></span><h2><span class="section-number">6.4.5. </span>Adding a Control Input<a class="headerlink" href="#adding-a-control-input" title="Permalink to this headline">¶</a></h2>
+<p>It may be that for your application, your system needs to be controlled. This can be achieved by creating a control system (<code class="xref py py-class docutils literal notranslate"><span class="pre">ControlSystem</span></code>, or <code class="xref py py-class docutils literal notranslate"><span class="pre">ControlWrapper</span></code> in the unit tests), that provides the state function (and possibly the state Jacobian) with the current commanded vector.</p>
 <p>The way this is done is by adding an extra input to the state function, i.e.,</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">stateFunction</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">currentTime</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">currentState</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">currentControl</span> <span class="p">)</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">stateFunction</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">currentTime</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">currentState</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">currentControl</span> <span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
-<p>The last input of the <code class="docutils literal"><span class="pre">stateFunction</span></code> is another vector which denotes the commanded control vector. Note how this function, however is incompatible with the definition of <code class="docutils literal"><span class="pre">systemFunction</span></code>, i.e., the input to the <a class="reference internal" href="#ExtendedKalmanFilter" title="ExtendedKalmanFilter"><code class="xref py py-class docutils literal"><span class="pre">ExtendedKalmanFilter</span></code></a> and <a class="reference internal" href="#UnscentedKalmanFilter" title="UnscentedKalmanFilter"><code class="xref py py-class docutils literal"><span class="pre">UnscentedKalmanFilter</span></code></a> classes. In fact, this should be of type</p>
+<p>The last input of the <code class="docutils literal notranslate"><span class="pre">stateFunction</span></code> is another vector which denotes the commanded control vector. Note how this function, however is incompatible with the definition of <code class="docutils literal notranslate"><span class="pre">systemFunction</span></code>, i.e., the input to the <a class="reference internal" href="#ExtendedKalmanFilter" title="ExtendedKalmanFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExtendedKalmanFilter</span></code></a> and <a class="reference internal" href="#UnscentedKalmanFilter" title="UnscentedKalmanFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnscentedKalmanFilter</span></code></a> classes. In fact, this should be of type</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">DependentVector</span><span class="p">(</span> <span class="k">const</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="k">const</span> <span class="n">DependentVector</span><span class="o">&amp;</span> <span class="p">)</span> <span class="o">&gt;</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">DependentVector</span><span class="p">(</span> <span class="k">const</span> <span class="n">IndependentVariableType</span><span class="p">,</span> <span class="k">const</span> <span class="n">DependentVector</span><span class="o">&amp;</span> <span class="p">)</span> <span class="o">&gt;</span>
 </pre></div>
 </div>
 </div></blockquote>
-<p>which one has two inputs (a <code class="docutils literal"><span class="pre">double</span></code> and an <code class="docutils literal"><span class="pre">Eigen::Vector3d</span></code>, in our case). The extra vector can be added by using the very handy <code class="docutils literal"><span class="pre">std::bind</span></code> command. This function allows us to bind the output of a function as an input to another function. Thus, by using the control class mentioned above, one can replace the <code class="docutils literal"><span class="pre">systemFunction</span></code> input with:</p>
+<p>which one has two inputs (a <code class="docutils literal notranslate"><span class="pre">double</span></code> and an <code class="docutils literal notranslate"><span class="pre">Eigen::Vector3d</span></code>, in our case). The extra vector can be added by using the very handy <code class="docutils literal notranslate"><span class="pre">std::bind</span></code> command. This function allows us to bind the output of a function as an input to another function. Thus, by using the control class mentioned above, one can replace the <code class="docutils literal notranslate"><span class="pre">systemFunction</span></code> input with:</p>
 <blockquote>
-<div><div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">stateFunction</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">ControlSystem</span><span class="o">::</span><span class="n">getCurrentStateVector</span><span class="p">,</span> <span class="n">controlSystem</span> <span class="p">)</span> <span class="p">)</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">stateFunction</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">ControlSystem</span><span class="o">::</span><span class="n">getCurrentStateVector</span><span class="p">,</span> <span class="n">controlSystem</span> <span class="p">)</span> <span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
-<p>where the <code class="docutils literal"><span class="pre">controlSystem</span></code> object is of type <code class="xref py py-class docutils literal"><span class="pre">ControlSystem</span></code>. Using this method, if the control system is regularly updated (possibly every time step), the control vector will be automatically retrieved and parsed by the filter.</p>
+<p>where the <code class="docutils literal notranslate"><span class="pre">controlSystem</span></code> object is of type <code class="xref py py-class docutils literal notranslate"><span class="pre">ControlSystem</span></code>. Using this method, if the control system is regularly updated (possibly every time step), the control vector will be automatically retrieved and parsed by the filter.</p>
 <p>In <a class="reference internal" href="../../applicationWalkthroughs/filterExample.html#walkthroughsfiltering"><span class="std std-ref">Kalman Filter for State Estimation</span></a> you will find an example where a control system is added to both an EKF and a UKF, which are used to estimate the state of a simple estimation application.</p>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">In general, you can apply the principle above to feed any other variable or object to the state and/or measurement functions.</p>
+<p class="admonition-title">Tip</p>
+<p>In general, you can apply the principle above to feed any other variable or object to the state and/or measurement functions.</p>
 </div>
 </div>
 </div>
@@ -459,10 +460,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../otherLibraries/index.html" class="btn btn-neutral float-right" title="8. Other Libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../otherLibraries/index.html" class="btn btn-neutral float-right" title="7. Other Libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="probabilityDistributions.html" class="btn btn-neutral" title="7.3. Probability Distributions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="probabilityDistributions.html" class="btn btn-neutral" title="6.3. Probability Distributions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -504,7 +505,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

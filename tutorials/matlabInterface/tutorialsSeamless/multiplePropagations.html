@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -193,21 +195,21 @@
   <div class="section" id="multiple-propagations">
 <span id="matlabinterface-tutorialsseamless-multiplepropagations"></span><h1>Multiple propagations<a class="headerlink" href="#multiple-propagations" title="Permalink to this headline">¶</a></h1>
 <p>This tutorial describes how to run multiple propagations sharing a set of settings for which just a few parameters are changed in every case using the MATLAB Interface. The code for this example can be found at:</p>
-<div class="highlight-txt"><div class="highlight"><pre><span></span>tudatBundle/matlabInterface/Examples/Seamless/multiplePropagations.m
+<div class="highlight-txt notranslate"><div class="highlight"><pre><span></span>tudatBundle/matlabInterface/Examples/Seamless/multiplePropagations.m
 </pre></div>
 </div>
 <p>The first step is to include the source code of the MATLAB Interface into MATLAB’s path in the current session so that all the classes needed to set up the simulation can be accessed. This is done by writing:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">load</span><span class="p">();</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">load</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>Now, we create a <code class="xref py py-class docutils literal"><span class="pre">Simulation</span></code> object specifying the initial epoch by providing it as input argument (i.e. 0 seconds since J2000):</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">simulation</span> <span class="p">=</span> <span class="n">Simulation</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<p>Now, we create a <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object specifying the initial epoch by providing it as input argument (i.e. 0 seconds since J2000):</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span> <span class="p">=</span> <span class="n">Simulation</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 <span class="n">simulation</span><span class="p">.</span><span class="n">spice</span><span class="p">.</span><span class="n">preloadEphemeris</span> <span class="p">=</span> <span class="n">false</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>We do not specify a final epoch because there is no time termination condition. Later we will define a termination condition based on the periapsis altitude of the propagated body. Since the propagation period is not known (we know the initial epoch but not the final epoch), the ephemeris of the celestial bodies cannot be preloaded from Spice, so we set <code class="docutils literal"><span class="pre">simulation.spice.preloadEphemeris</span></code> to <code class="docutils literal"><span class="pre">false</span></code>.</p>
-<p>Next, we create the bodies. In this case, the only non-celestial body is named <code class="docutils literal"><span class="pre">satellite</span></code>:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">satellite</span> <span class="p">=</span> <span class="n">Body</span><span class="p">(</span><span class="s">&#39;satellite&#39;</span><span class="p">);</span>
+<p>We do not specify a final epoch because there is no time termination condition. Later we will define a termination condition based on the periapsis altitude of the propagated body. Since the propagation period is not known (we know the initial epoch but not the final epoch), the ephemeris of the celestial bodies cannot be preloaded from Spice, so we set <code class="docutils literal notranslate"><span class="pre">simulation.spice.preloadEphemeris</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Next, we create the bodies. In this case, the only non-celestial body is named <code class="docutils literal notranslate"><span class="pre">satellite</span></code>:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">satellite</span> <span class="p">=</span> <span class="n">Body</span><span class="p">(</span><span class="s">&#39;satellite&#39;</span><span class="p">);</span>
 <span class="n">satellite</span><span class="p">.</span><span class="n">initialState</span><span class="p">.</span><span class="n">apoapsisAltitude</span> <span class="p">=</span> <span class="mf">300e3</span><span class="p">;</span>
 <span class="n">satellite</span><span class="p">.</span><span class="n">initialState</span><span class="p">.</span><span class="n">periapsisAltitude</span> <span class="p">=</span> <span class="mf">200e3</span><span class="p">;</span>
 <span class="n">satellite</span><span class="p">.</span><span class="n">initialState</span><span class="p">.</span><span class="n">inclination</span> <span class="p">=</span> <span class="n">deg2rad</span><span class="p">(</span><span class="mi">60</span><span class="p">);</span>
@@ -217,20 +219,20 @@
 <span class="n">satellite</span><span class="p">.</span><span class="n">radiationPressure</span><span class="p">.</span><span class="n">Sun</span><span class="p">.</span><span class="n">occultingBodies</span> <span class="p">=</span> <span class="p">{</span><span class="n">Earth</span><span class="p">};</span>
 </pre></div>
 </div>
-<p>Now, we add the bodies to the simulation by calling the method <code class="docutils literal"><span class="pre">addBodies</span></code> of the <code class="docutils literal"><span class="pre">simulation</span></code> object. There exist predefined objects for celestial bodies (namely the Sun, the Moon and the eight planets), so these objects can be added directly without the need to specify their properties:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">addBodies</span><span class="p">(</span><span class="n">Earth</span><span class="p">,</span><span class="n">Sun</span><span class="p">,</span><span class="n">Moon</span><span class="p">,</span><span class="n">Mars</span><span class="p">,</span><span class="n">Venus</span><span class="p">,</span><span class="n">satellite</span><span class="p">);</span>
+<p>Now, we add the bodies to the simulation by calling the method <code class="docutils literal notranslate"><span class="pre">addBodies</span></code> of the <code class="docutils literal notranslate"><span class="pre">simulation</span></code> object. There exist predefined objects for celestial bodies (namely the Sun, the Moon and the eight planets), so these objects can be added directly without the need to specify their properties:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">addBodies</span><span class="p">(</span><span class="n">Earth</span><span class="p">,</span><span class="n">Sun</span><span class="p">,</span><span class="n">Moon</span><span class="p">,</span><span class="n">Mars</span><span class="p">,</span><span class="n">Venus</span><span class="p">,</span><span class="n">satellite</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Now we need to specify the accelerations acting on <code class="docutils literal"><span class="pre">satellite</span></code>:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">accelerationsOnSatellite</span><span class="p">.</span><span class="n">Earth</span> <span class="p">=</span> <span class="p">{</span><span class="n">SphericalHarmonicGravity</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">AerodynamicAcceleration</span><span class="p">()};</span>
+<p>Now we need to specify the accelerations acting on <code class="docutils literal notranslate"><span class="pre">satellite</span></code>:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">accelerationsOnSatellite</span><span class="p">.</span><span class="n">Earth</span> <span class="p">=</span> <span class="p">{</span><span class="n">SphericalHarmonicGravity</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">AerodynamicAcceleration</span><span class="p">()};</span>
 <span class="n">accelerationsOnSatellite</span><span class="p">.</span><span class="n">Sun</span> <span class="p">=</span> <span class="p">{</span><span class="n">PointMassGravity</span><span class="p">(),</span> <span class="n">RadiationPressureAcceleration</span><span class="p">()};</span>
 <span class="n">accelerationsOnSatellite</span><span class="p">.</span><span class="n">Moon</span> <span class="p">=</span> <span class="p">{</span><span class="n">PointMassGravity</span><span class="p">()};</span>
 <span class="n">accelerationsOnSatellite</span><span class="p">.</span><span class="n">Mars</span> <span class="p">=</span> <span class="p">{</span><span class="n">PointMassGravity</span><span class="p">()};</span>
 <span class="n">accelerationsOnSatellite</span><span class="p">.</span><span class="n">Venus</span> <span class="p">=</span> <span class="p">{</span><span class="n">PointMassGravity</span><span class="p">()};</span>
 </pre></div>
 </div>
-<p>Then, we create the settings for the propagation. We are going to propagate the translational state of the body <code class="docutils literal"><span class="pre">satellite</span></code> about <code class="docutils literal"><span class="pre">Earth</span></code>. Thus, we use a <code class="xref py py-class docutils literal"><span class="pre">TranslationalPropagator</span></code>:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">propagator</span> <span class="p">=</span> <span class="n">TranslationalPropagator</span><span class="p">();</span>
+<p>Then, we create the settings for the propagation. We are going to propagate the translational state of the body <code class="docutils literal notranslate"><span class="pre">satellite</span></code> about <code class="docutils literal notranslate"><span class="pre">Earth</span></code>. Thus, we use a <code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationalPropagator</span></code>:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">propagator</span> <span class="p">=</span> <span class="n">TranslationalPropagator</span><span class="p">();</span>
 <span class="n">propagator</span><span class="p">.</span><span class="n">bodiesToPropagate</span> <span class="p">=</span> <span class="p">{</span><span class="n">satellite</span><span class="p">};</span>
 <span class="n">propagator</span><span class="p">.</span><span class="n">centralBodies</span> <span class="p">=</span> <span class="p">{</span><span class="n">Earth</span><span class="p">};</span>
 <span class="n">propagator</span><span class="p">.</span><span class="n">accelerations</span><span class="p">.</span><span class="n">satellite</span> <span class="p">=</span> <span class="n">accelerationsOnSatellite</span><span class="p">;</span>
@@ -238,12 +240,12 @@
 </pre></div>
 </div>
 <p>The next step is to add a termination condition:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">termination</span> <span class="p">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;satellite.periapsisAltitude-Earth&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">105e3</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">termination</span> <span class="p">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;satellite.periapsisAltitude-Earth&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">105e3</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The propagation will terminate when the perigee altitude gets below 105 km.</p>
 <p>Finally, we define the integrator settings, in this case we use a variable step-size Runge-Kutta Fehlberg 7(8) integrator:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">integrator</span> <span class="p">=</span> <span class="n">VariableStepSizeIntegrator</span><span class="p">(</span><span class="n">RungeKuttaCoefficientSets</span><span class="p">.</span><span class="n">rungeKuttaFehlberg78</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span> <span class="p">=</span> <span class="n">VariableStepSizeIntegrator</span><span class="p">(</span><span class="n">RungeKuttaCoefficientSets</span><span class="p">.</span><span class="n">rungeKuttaFehlberg78</span><span class="p">);</span>
 <span class="n">integrator</span><span class="p">.</span><span class="n">initialStepSize</span> <span class="p">=</span> <span class="mi">60</span><span class="p">;</span>
 <span class="n">integrator</span><span class="p">.</span><span class="n">minimumStepSize</span> <span class="p">=</span> <span class="mi">5</span><span class="p">;</span>
 <span class="n">integrator</span><span class="p">.</span><span class="n">maximumStepSize</span> <span class="p">=</span> <span class="mf">1e4</span><span class="p">;</span>
@@ -252,30 +254,30 @@
 <span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span> <span class="p">=</span> <span class="n">integrator</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>All the settings needed to run the simulation have been defined, except for the mass and reference area of <code class="docutils literal"><span class="pre">satellite</span></code>. In this example, we are going to run the simulation several times for different masses and reference areas, saving the results of each case in a cell array called <code class="docutils literal"><span class="pre">results</span></code>:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">masses</span> <span class="p">=</span> <span class="mi">200</span><span class="p">:</span><span class="mi">100</span><span class="p">:</span><span class="mi">800</span><span class="p">;</span>
+<p>All the settings needed to run the simulation have been defined, except for the mass and reference area of <code class="docutils literal notranslate"><span class="pre">satellite</span></code>. In this example, we are going to run the simulation several times for different masses and reference areas, saving the results of each case in a cell array called <code class="docutils literal notranslate"><span class="pre">results</span></code>:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">masses</span> <span class="p">=</span> <span class="mi">200</span><span class="p">:</span><span class="mi">100</span><span class="p">:</span><span class="mi">800</span><span class="p">;</span>
 <span class="n">referenceAreas</span> <span class="p">=</span> <span class="mi">8</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">;</span>
 <span class="n">results</span> <span class="p">=</span> <span class="n">cell</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">masses</span><span class="p">));</span>
-<span class="k">for</span> <span class="nb">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">masses</span><span class="p">)</span>
+<span class="n">for</span> <span class="s">i</span> <span class="s">=</span> <span class="s">1:length(masses)</span>
     <span class="n">fprintf</span><span class="p">(</span><span class="s">&#39;Running case %i of %i...\n&#39;</span><span class="p">,</span><span class="nb">i</span><span class="p">,</span><span class="nb">length</span><span class="p">(</span><span class="n">masses</span><span class="p">));</span>
     <span class="n">satellite</span><span class="p">.</span><span class="n">mass</span> <span class="p">=</span> <span class="n">masses</span><span class="p">(</span><span class="nb">i</span><span class="p">);</span>
     <span class="n">satellite</span><span class="p">.</span><span class="n">referenceArea</span> <span class="p">=</span> <span class="n">referenceAreas</span><span class="p">(</span><span class="nb">i</span><span class="p">);</span>
     <span class="n">simulation</span><span class="p">.</span><span class="n">run</span><span class="p">();</span>
     <span class="n">results</span><span class="p">{</span><span class="nb">i</span><span class="p">}</span> <span class="p">=</span> <span class="n">simulation</span><span class="p">.</span><span class="n">results</span><span class="p">.</span><span class="n">numericalSolution</span><span class="p">;</span>
-<span class="k">end</span>
+<span class="n">end</span>
 </pre></div>
 </div>
 <p>Finally, we can use the saved results to plot the apoapsis and periapsis for each satellite:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">figure</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">figure</span><span class="p">;</span>
 <span class="n">plot</span><span class="p">.</span><span class="n">apoapsisPeriapsisAltitudesHistory</span><span class="p">(</span><span class="n">results</span><span class="p">,</span><span class="s">&#39;CentralBody&#39;</span><span class="p">,</span><span class="n">Earth</span><span class="p">);</span>
 <span class="n">l</span> <span class="p">=</span> <span class="n">legend</span><span class="p">(</span><span class="n">sprintfc</span><span class="p">(</span><span class="s">&#39;%g&#39;</span><span class="p">,</span><span class="n">masses</span><span class="p">));</span>
 <span class="n">l</span><span class="p">.</span><span class="n">Title</span><span class="p">.</span><span class="n">String</span> <span class="p">=</span> <span class="s">&#39;Mass [kg]&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <img alt="../../../_images/multiplePropagations.png" src="../../../_images/multiplePropagations.png" />
-<p>Note the use of the function <code class="docutils literal"><span class="pre">apoapsisPeriapsisAltitudesHistory</span></code> from the <code class="docutils literal"><span class="pre">plot</span></code> package. This function takes as first argument a results object, which can be a cell array of results matrices (with epochs in the fist column and Cartesian states in the columns 2 to 7) or a single results matrix. Additional options for plotting can be provided as a set of key-value pairs. The only mandatory argument is the <code class="docutils literal"><span class="pre">CentralBody</span></code>, whose average radius is used to compute altitudes. Other optional arguments are <code class="docutils literal"><span class="pre">TimeUnits</span></code>, <code class="docutils literal"><span class="pre">Title</span></code>, <code class="docutils literal"><span class="pre">Legends</span></code> and <code class="docutils literal"><span class="pre">LineStyle</span></code>.</p>
-<p>This function, as well as the <code class="docutils literal"><span class="pre">plot.keplerianComponentsHistory</span></code> function, also accept providing the data to be plotted in other formats. For instance (the first two lines are equivalent):</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="c">% results = nx7</span>
+<p>Note the use of the function <code class="docutils literal notranslate"><span class="pre">apoapsisPeriapsisAltitudesHistory</span></code> from the <code class="docutils literal notranslate"><span class="pre">plot</span></code> package. This function takes as first argument a results object, which can be a cell array of results matrices (with epochs in the fist column and Cartesian states in the columns 2 to 7) or a single results matrix. Additional options for plotting can be provided as a set of key-value pairs. The only mandatory argument is the <code class="docutils literal notranslate"><span class="pre">CentralBody</span></code>, whose average radius is used to compute altitudes. Other optional arguments are <code class="docutils literal notranslate"><span class="pre">TimeUnits</span></code>, <code class="docutils literal notranslate"><span class="pre">Title</span></code>, <code class="docutils literal notranslate"><span class="pre">Legends</span></code> and <code class="docutils literal notranslate"><span class="pre">LineStyle</span></code>.</p>
+<p>This function, as well as the <code class="docutils literal notranslate"><span class="pre">plot.keplerianComponentsHistory</span></code> function, also accept providing the data to be plotted in other formats. For instance (the first two lines are equivalent):</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% results = nx7</span>
 <span class="n">plot</span><span class="p">.</span><span class="n">apoapsisPeriapsisAltitudesHistory</span><span class="p">(</span><span class="n">results</span><span class="p">,</span><span class="s">&#39;CentralBody&#39;</span><span class="p">,</span><span class="n">Earth</span><span class="p">);</span>
 <span class="n">plot</span><span class="p">.</span><span class="n">apoapsisPeriapsisAltitudesHistory</span><span class="p">(</span><span class="s">&#39;CartesianStatesHistory&#39;</span><span class="p">,</span><span class="n">results</span><span class="p">,</span><span class="s">&#39;CentralBody&#39;</span><span class="p">,</span><span class="n">Earth</span><span class="p">);</span>
 <span class="n">plot</span><span class="p">.</span><span class="n">apoapsisPeriapsisAltitudesHistory</span><span class="p">(</span><span class="s">&#39;KeplerianStatesHistory&#39;</span><span class="p">,</span><span class="n">results</span><span class="p">,</span><span class="s">&#39;CentralBody&#39;</span><span class="p">,</span><span class="n">Earth</span><span class="p">);</span>
@@ -342,7 +344,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

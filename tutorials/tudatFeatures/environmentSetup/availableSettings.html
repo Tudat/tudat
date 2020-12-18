@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -109,6 +111,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">Low-Thrust Trajectory Design Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../otherLibraries/index.html">7. Other Libraries</a></li>
 </ul>
@@ -122,7 +125,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../FAQ/index.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developerGuide/index.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../socis.html">SOCIS 2019</a></li>
 </ul>
 
             
@@ -171,9 +173,9 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html">1. Environment Set-up</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>Environment Set-up</a> &raquo;</li>
         
-      <li>1.2. Available Settings for the Environment Models</li>
+      <li><span class="section-number">1.2. </span>Available Settings for the Environment Models</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -193,81 +195,81 @@
            <div itemprop="articleBody">
             
   <div class="section" id="available-settings-for-the-environment-models">
-<h1>1.2. Available Settings for the Environment Models<a class="headerlink" href="#available-settings-for-the-environment-models" title="Permalink to this headline">¶</a></h1>
-<p>Here, we will provide a full list of the available properties of the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> object. Each type of environment model has one base class to define settings for the creation of the model). Often, a specific derived class is implemented for a specific environment model of a given class, in which any additional information that may be needed can be provided. For instance, when defining a gravity field model, one can simply use:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">central_spice</span> <span class="p">);</span>
+<h1><span class="section-number">1.2. </span>Available Settings for the Environment Models<a class="headerlink" href="#available-settings-for-the-environment-models" title="Permalink to this headline">¶</a></h1>
+<p>Here, we will provide a full list of the available properties of the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">BodySettings</span></code></a> object. Each type of environment model has one base class to define settings for the creation of the model). Often, a specific derived class is implemented for a specific environment model of a given class, in which any additional information that may be needed can be provided. For instance, when defining a gravity field model, one can simply use:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">central_spice</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>if you want to use a central gravity field with the gravitational parameter taken from Spice: no information is needed except the type of gravity field model that is created. On the other hand, if you want to use a spherical harmonic gravity field, you need to specify additional parameters yourself, which is done by using the specific derived class:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicsGravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicsGravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span>
    <span class="n">gravitationalParameter</span><span class="p">,</span> <span class="n">referenceRadius</span><span class="p">,</span> <span class="n">normalizedCosineCoefficients</span><span class="p">,</span> <span class="n">normalizedSineCoefficients</span><span class="p">,</span> <span class="n">associatedReferenceFrame</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>To find out which input arguments must be provided to create a specific settings class, have a look at the documentation in the code (written above the code for the constructor of the settings class you are interested in). Below, we give examples of each type of environment model setting.</p>
 <p>The full list of available environment model settings is described below.</p>
 <div class="section" id="atmosphere-model">
-<h2>1.2.1. Atmosphere model<a class="headerlink" href="#atmosphere-model" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<h2><span class="section-number">1.2.1. </span>Atmosphere model<a class="headerlink" href="#atmosphere-model" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
 <dt id="AtmosphereModel">
-<em class="property">class </em><code class="descname">AtmosphereModel</code><a class="headerlink" href="#AtmosphereModel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">AtmosphereModel</code><a class="headerlink" href="#AtmosphereModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for all atmosphere models. This model is constructed using the settings classes described below.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="AtmosphereSettings">
-<em class="property">class </em><code class="descname">AtmosphereSettings</code><a class="headerlink" href="#AtmosphereSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>The base class for atmosphere settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> architecture are (with examples when defining settings for Earth):</p>
+<em class="property">class </em><code class="sig-name descname">AtmosphereSettings</code><a class="headerlink" href="#AtmosphereSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The base class for atmosphere settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">BodySettings</span></code></a> architecture are (with examples when defining settings for Earth):</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="ExponentialAtmosphereSettings">
-<em class="property">class </em><code class="descname">ExponentialAtmosphereSettings</code><a class="headerlink" href="#ExponentialAtmosphereSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ExponentialAtmosphereSettings</code><a class="headerlink" href="#ExponentialAtmosphereSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simple atmosphere model independent of time, latitude and longitude based on an exponentially decaying density profile with a constant temperature.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ExponentialAtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mf">7.2E3</span><span class="p">,</span> <span class="mf">290.0</span><span class="p">,</span> <span class="mf">1.225</span><span class="p">,</span> <span class="mf">287.06</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ExponentialAtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mf">7.2E3</span><span class="p">,</span> <span class="mf">290.0</span><span class="p">,</span> <span class="mf">1.225</span><span class="p">,</span> <span class="mf">287.06</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>for an exponential atmosphere with a scale height of 7200 m, a constant temperature of 290 K, a density at 0 m altitude of 1.225 kg/m^3 and a specific gas constant of 287.06 J/(kg K).</p>
-<p>If you want to model the exponential atmosphere for Earth or Mars, you can also simply input <code class="docutils literal"><span class="pre">aerodynamics::earth</span></code> or <code class="docutils literal"><span class="pre">aerodynamics::mars</span></code> to load the default settings, which are defined in the table below.</p>
+<p>If you want to model the exponential atmosphere for Earth or Mars, you can also simply input <code class="docutils literal notranslate"><span class="pre">aerodynamics::earth</span></code> or <code class="docutils literal notranslate"><span class="pre">aerodynamics::mars</span></code> to load the default settings, which are defined in the table below.</p>
 <blockquote>
-<div><table border="1" class="docutils">
+<div><table class="docutils align-default">
 <colgroup>
-<col width="43%" />
-<col width="15%" />
-<col width="15%" />
-<col width="26%" />
+<col style="width: 43%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 26%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Property</th>
-<th class="head">Earth</th>
-<th class="head">Mars</th>
-<th class="head">Units</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Earth</p></th>
+<th class="head"><p>Mars</p></th>
+<th class="head"><p>Units</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Scale Height</td>
-<td>7.2</td>
-<td>1.11</td>
-<td>km</td>
+<tbody>
+<tr class="row-even"><td><p>Scale Height</p></td>
+<td><p>7.2</p></td>
+<td><p>1.11</p></td>
+<td><p>km</p></td>
 </tr>
-<tr class="row-odd"><td>Density at Zero Altitude</td>
-<td>1.225</td>
-<td>0.02</td>
-<td>kg/m <span class="math">\({}^3\)</span></td>
+<tr class="row-odd"><td><p>Density at Zero Altitude</p></td>
+<td><p>1.225</p></td>
+<td><p>0.02</p></td>
+<td><p>kg/m <span class="math notranslate nohighlight">\({}^3\)</span></p></td>
 </tr>
-<tr class="row-even"><td>Constant Temperature</td>
-<td>246.0</td>
-<td>215.0</td>
-<td>K</td>
+<tr class="row-even"><td><p>Constant Temperature</p></td>
+<td><p>246.0</p></td>
+<td><p>215.0</p></td>
+<td><p>K</p></td>
 </tr>
-<tr class="row-odd"><td>Specific Gas Constant</td>
-<td>287.0</td>
-<td>197.0</td>
-<td>J/kg/K</td>
+<tr class="row-odd"><td><p>Specific Gas Constant</p></td>
+<td><p>287.0</p></td>
+<td><p>197.0</p></td>
+<td><p>J/kg/K</p></td>
 </tr>
-<tr class="row-even"><td>Ratio of Specific Heats</td>
-<td>1.4</td>
-<td>1.3</td>
-<td>–</td>
+<tr class="row-even"><td><p>Ratio of Specific Heats</p></td>
+<td><p>1.4</p></td>
+<td><p>1.3</p></td>
+<td><p>–</p></td>
 </tr>
 </tbody>
 </table>
@@ -275,23 +277,23 @@
 <p>References for the values above are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>Earth</strong>: Lecture notes, Rocket Motion by Prof. Ir. B.A.C. Ambrosius, November 2009</li>
-<li><strong>Mars</strong>: Spohn, T., Breuer, D., and Johnson, T., Eds., Encyclopedia of the Solar System, 3rd ed. Elsevier, 2014</li>
+<li><p><strong>Earth</strong>: Lecture notes, Rocket Motion by Prof. Ir. B.A.C. Ambrosius, November 2009</p></li>
+<li><p><strong>Mars</strong>: Spohn, T., Breuer, D., and Johnson, T., Eds., Encyclopedia of the Solar System, 3rd ed. Elsevier, 2014</p></li>
 </ul>
 </div></blockquote>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="TabulatedAtmosphereSettings">
-<em class="property">class </em><code class="descname">TabulatedAtmosphereSettings</code><a class="headerlink" href="#TabulatedAtmosphereSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">TabulatedAtmosphereSettings</code><a class="headerlink" href="#TabulatedAtmosphereSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Due to the extensive customization available for the tabulated atmosphere, you can find the settings for this class in a separate page: <a class="reference internal" href="tabulatedAtmosphere.html#tudattabulatedatmosphere"><span class="std std-ref">Tabulated Atmosphere Settings</span></a>.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="CustomConstantTemperatureAtmosphereSettings">
-<em class="property">class </em><code class="descname">CustomConstantTemperatureAtmosphereSettings</code><a class="headerlink" href="#CustomConstantTemperatureAtmosphereSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">CustomConstantTemperatureAtmosphereSettings</code><a class="headerlink" href="#CustomConstantTemperatureAtmosphereSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>With this class, you can define your own constant temperature atmosphere, which computes the atmospheric properties based on an input function. For instance, one can link a function to the settings as such:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Outside main</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Outside main</span>
 <span class="kt">double</span> <span class="nf">customDensityFunction</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">altitude</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">longitude</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">latitude</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">time</span> <span class="p">)</span>
 <span class="p">{</span>
    <span class="c1">// Return a linear combination of the input values</span>
@@ -312,62 +314,62 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>As shown in the example above, the user-defined function, in this case <code class="docutils literal"><span class="pre">customDensityFunction</span></code>, is required to have those inputs, and in that specific order. The value of pressure is computed by assuming hydrostatic equilibrium, whereas temperature, gas constant and the ratio of specific heats are assumed to be constant.</p>
+<p>As shown in the example above, the user-defined function, in this case <code class="docutils literal notranslate"><span class="pre">customDensityFunction</span></code>, is required to have those inputs, and in that specific order. The value of pressure is computed by assuming hydrostatic equilibrium, whereas temperature, gas constant and the ratio of specific heats are assumed to be constant.</p>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Note that, by using <code class="docutils literal"><span class="pre">std::bind</span></code>, you can have more inputs than the ones in <code class="docutils literal"><span class="pre">customDensityFunction</span></code>. However, keep in mind that <code class="docutils literal"><span class="pre">std::bind</span></code> only allows up to 9 inputs.</p>
+<p class="admonition-title">Tip</p>
+<p>Note that, by using <code class="docutils literal notranslate"><span class="pre">std::bind</span></code>, you can have more inputs than the ones in <code class="docutils literal notranslate"><span class="pre">customDensityFunction</span></code>. However, keep in mind that <code class="docutils literal notranslate"><span class="pre">std::bind</span></code> only allows up to 9 inputs.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">NRLMSISE-00</code></dt>
-<dd><p>This can be used to select the NRLMSISE-00 atmosphere model. To use this model, the <code class="docutils literal"><span class="pre">USE_NRLMSISE</span></code> flag in your top-level <code class="docutils literal"><span class="pre">CMakeLists</span></code> must be set to true. No derived class of <a class="reference internal" href="#AtmosphereSettings" title="AtmosphereSettings"><code class="xref py py-class docutils literal"><span class="pre">AtmosphereSettings</span></code></a> base class required, the model can be created by passing <code class="docutils literal"><span class="pre">nrlmsise00</span></code> as argument to base class constructor.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">nrlmsise00</span> <span class="p">);</span>
+<code class="sig-name descname">NRLMSISE-00</code></dt>
+<dd><p>This can be used to select the NRLMSISE-00 atmosphere model. To use this model, the <code class="docutils literal notranslate"><span class="pre">USE_NRLMSISE</span></code> flag in your top-level <code class="docutils literal notranslate"><span class="pre">CMakeLists</span></code> must be set to true. No derived class of <a class="reference internal" href="#AtmosphereSettings" title="AtmosphereSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">AtmosphereSettings</span></code></a> base class required, the model can be created by passing <code class="docutils literal notranslate"><span class="pre">nrlmsise00</span></code> as argument to base class constructor.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">nrlmsise00</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="CustomWindModelSettings">
-<em class="property">class </em><code class="descname">CustomWindModelSettings</code><a class="headerlink" href="#CustomWindModelSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">CustomWindModelSettings</code><a class="headerlink" href="#CustomWindModelSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Custom wind model which can be used to retrieve a wind vector. This wind vector is in the body-fixed, body-centered reference frame.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CustomWindModelSettings</span> <span class="o">&gt;</span><span class="p">(</span>  <span class="n">windFunction</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CustomWindModelSettings</span> <span class="o">&gt;</span><span class="p">(</span>  <span class="n">windFunction</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>where <code class="docutils literal"><span class="pre">windFunction</span></code> is a <code class="docutils literal"><span class="pre">std::function</span></code> with inputs; altitude, longitude, latitude and time.</p>
+<p>where <code class="docutils literal notranslate"><span class="pre">windFunction</span></code> is a <code class="docutils literal notranslate"><span class="pre">std::function</span></code> with inputs; altitude, longitude, latitude and time.</p>
 </dd></dl>
 
 </div>
 <div class="section" id="ephemeris-model">
-<h2>1.2.2. Ephemeris model<a class="headerlink" href="#ephemeris-model" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<h2><span class="section-number">1.2.2. </span>Ephemeris model<a class="headerlink" href="#ephemeris-model" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
 <dt id="Ephemeris">
-<em class="property">class </em><code class="descname">Ephemeris</code><a class="headerlink" href="#Ephemeris" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Ephemeris</code><a class="headerlink" href="#Ephemeris" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for the ephemeris. It is constructed using one of the settings classes below.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="EphemerisSettings">
-<em class="property">class </em><code class="descname">EphemerisSettings</code><a class="headerlink" href="#EphemerisSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the ephemeris settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> architecture and set by their respective derived classes are:</p>
+<em class="property">class </em><code class="sig-name descname">EphemerisSettings</code><a class="headerlink" href="#EphemerisSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for the ephemeris settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">BodySettings</span></code></a> architecture and set by their respective derived classes are:</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="ApproximatePlanetPositionSettings">
-<em class="property">class </em><code class="descname">ApproximatePlanetPositionSettings</code><a class="headerlink" href="#ApproximatePlanetPositionSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ApproximatePlanetPositionSettings</code><a class="headerlink" href="#ApproximatePlanetPositionSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Highly simplified model of ephemerides of major Solar system bodies (model described here). Both a three-dimensional, and circular coplanar approximation may be used.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ApproximatePlanetPositionSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">jupiter</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ApproximatePlanetPositionSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">jupiter</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
 </pre></div>
 </div>
 <p>where the first constructor argument is taken from the enum in approximatePlanetPositionsBase.h, and the second argument (false) denotes that the circular coplanar approximation is not made.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="DirectSpiceEphermerisSettings">
-<em class="property">class </em><code class="descname">DirectSpiceEphermerisSettings</code><a class="headerlink" href="#DirectSpiceEphermerisSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">DirectSpiceEphermerisSettings</code><a class="headerlink" href="#DirectSpiceEphermerisSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Ephemeris retrieved directly using <a class="reference internal" href="../otherLibraries/spice.html#tudatfeaturesspice"><span class="std std-ref">External Libraries: SPICE</span></a>.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrigin</span> <span class="o">=</span> <span class="s">&quot;SSB&quot;</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrigin</span> <span class="o">=</span> <span class="s">&quot;SSB&quot;</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrientation</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
 <span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DirectSpiceEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">frameOrigin</span><span class="p">,</span> <span class="n">frameOrientation</span> <span class="p">);</span>
 </pre></div>
@@ -375,11 +377,11 @@
 <p>creating a barycentric (SSB) ephemeris with axes along J2000, with data directly from spice.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="InterpolatedSpiceEphemerisSettings">
-<em class="property">class </em><code class="descname">InterpolatedSpiceEphemerisSettings</code><a class="headerlink" href="#InterpolatedSpiceEphemerisSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">InterpolatedSpiceEphemerisSettings</code><a class="headerlink" href="#InterpolatedSpiceEphemerisSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Using this option the state of the body is retrieved at regular intervals, and used to create an interpolator, before setting up environment. This has the advantage of only requiring calls to Spice outside of the propagation inner loop, reducing computation time. However, it has the downside of begin applicable only during a limited time interval.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">initialTime</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">initialTime</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">finalTime</span> <span class="o">=</span> <span class="mf">1.0E8</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">timeStep</span> <span class="o">=</span> <span class="mf">3600.0</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrigin</span> <span class="o">=</span> <span class="s">&quot;SSB&quot;</span><span class="p">;</span>
@@ -391,11 +393,11 @@
 <p>creating a barycentric (SSB) ephemeris with axes along J2000, with data retrieved from Spice at 3600 s intervals between t=0 and t=1.0E8, using a 6th order Lagrange interpolator. Settings for the interpolator (discussed here, can be added as a sixth argument if you wish to use a different interpolation method)</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="TabulatedEphemerisSettings">
-<em class="property">class </em><code class="descname">TabulatedEphemerisSettings</code><a class="headerlink" href="#TabulatedEphemerisSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">TabulatedEphemerisSettings</code><a class="headerlink" href="#TabulatedEphemerisSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Ephemeris created directly by interpolating user-specified states as a function of time.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="n">bodyStateHistory</span> <span class="p">...</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="n">bodyStateHistory</span> <span class="p">...</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrigin</span> <span class="o">=</span> <span class="s">&quot;SSB&quot;</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrientation</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
 <span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TabulatedEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
@@ -405,11 +407,11 @@
 <p>creating an ephemeris interpolated (with 6th order Lagrange interpolation) from the data in bodyStateHistory, which contains the Cartesian state (w.r.t. SSB; axes along J2000) for a given number of times (map keys, valid time range between first and last time in this map).</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="KeplerEphemerisSettings">
-<em class="property">class </em><code class="descname">KeplerEphemerisSettings</code><a class="headerlink" href="#KeplerEphemerisSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">KeplerEphemerisSettings</code><a class="headerlink" href="#KeplerEphemerisSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Ephemeris modelled as being a perfect Kepler orbit.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">initialStateInKeplerianElements</span> <span class="o">=</span> <span class="p">...</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">initialStateInKeplerianElements</span> <span class="o">=</span> <span class="p">...</span>
 <span class="kt">double</span> <span class="n">epochOfInitialState</span> <span class="o">=</span> <span class="p">...</span>
 <span class="kt">double</span> <span class="n">centralBodyGravitationalParameter</span> <span class="o">=</span> <span class="p">...</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrigin</span> <span class="o">=</span> <span class="s">&quot;SSB&quot;</span><span class="p">;</span>
@@ -421,11 +423,11 @@
 <p>creating a Kepler orbit as ephemeris using the given kepler elements and associated initial time and gravitational parameter. See <a class="reference internal" href="../astroTools/framestateTransformations.html#tudatfeaturesframestatetransformations"><span class="std std-ref">Frame/State Transformations</span></a> for more details on orbital elements in Tudat.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="ConstantEphemerisSettings">
-<em class="property">class </em><code class="descname">ConstantEphemerisSettings</code><a class="headerlink" href="#ConstantEphemerisSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ConstantEphemerisSettings</code><a class="headerlink" href="#ConstantEphemerisSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Ephemeris modelled as being independent of time.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">constantCartesianState</span> <span class="o">=</span> <span class="p">...</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">constantCartesianState</span> <span class="o">=</span> <span class="p">...</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrigin</span> <span class="o">=</span> <span class="s">&quot;SSB&quot;</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">frameOrientation</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
 <span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Jupiter&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
@@ -434,20 +436,20 @@
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">Multi-arc ephemeris</code></dt>
-<dd><p>An ephemeris model (for translational state) that allows the body’s state to be defined by distinct ephemeris models over different arcs. Class is implemented to support multi-arc propagation/estimation. No derived class of <a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a> base class required, the created ephemeris can be made multi-arc by using the <code class="docutils literal"><span class="pre">resetMakeMultiArcEphemeris</span></code> function of the <a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a> class. The resulting <a class="reference internal" href="#Ephemeris" title="Ephemeris"><code class="xref py py-class docutils literal"><span class="pre">Ephemeris</span></code></a> object will then be <code class="xref py py-class docutils literal"><span class="pre">MultiArcEphemeris</span></code> (with the same ephemeris model for each arc when created, according to the settings in the <a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal"><span class="pre">EphemerisSettings</span></code></a> object)</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span><span class="o">-&gt;</span> <span class="n">resetMakeMultiArcEphemeris</span><span class="p">(</span> <span class="nb">true</span> <span class="p">);</span>
+<code class="sig-name descname">Multi-arc ephemeris</code></dt>
+<dd><p>An ephemeris model (for translational state) that allows the body’s state to be defined by distinct ephemeris models over different arcs. Class is implemented to support multi-arc propagation/estimation. No derived class of <a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EphemerisSettings</span></code></a> base class required, the created ephemeris can be made multi-arc by using the <code class="docutils literal notranslate"><span class="pre">resetMakeMultiArcEphemeris</span></code> function of the <a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EphemerisSettings</span></code></a> class. The resulting <a class="reference internal" href="#Ephemeris" title="Ephemeris"><code class="xref py py-class docutils literal notranslate"><span class="pre">Ephemeris</span></code></a> object will then be <code class="xref py py-class docutils literal notranslate"><span class="pre">MultiArcEphemeris</span></code> (with the same ephemeris model for each arc when created, according to the settings in the <a class="reference internal" href="#EphemerisSettings" title="EphemerisSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EphemerisSettings</span></code></a> object)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span><span class="o">-&gt;</span> <span class="n">resetMakeMultiArcEphemeris</span><span class="p">(</span> <span class="nb">true</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="CustomEphemerisSettings">
-<em class="property">class </em><code class="descname">CustomEphemerisSettings</code><a class="headerlink" href="#CustomEphemerisSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">CustomEphemerisSettings</code><a class="headerlink" href="#CustomEphemerisSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allows user to provide arbitrary function as ephemeris model.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EphemerisSettings</span> <span class="o">&gt;</span> <span class="n">customEphemerisSettings</span> <span class="o">=</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EphemerisSettings</span> <span class="o">&gt;</span> <span class="n">customEphemerisSettings</span> <span class="o">=</span>
              <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CustomEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
                 <span class="n">customBoostFunction</span><span class="p">,</span> <span class="n">frameOrigin</span><span class="p">,</span> <span class="n">frameOrientation</span> <span class="p">);</span>
 </pre></div>
@@ -456,43 +458,43 @@
 
 </div>
 <div class="section" id="gravity-field-model">
-<h2>1.2.3. Gravity field model<a class="headerlink" href="#gravity-field-model" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<h2><span class="section-number">1.2.3. </span>Gravity field model<a class="headerlink" href="#gravity-field-model" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
 <dt id="GravityFieldModel">
-<em class="property">class </em><code class="descname">GravityFieldModel</code><a class="headerlink" href="#GravityFieldModel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">GravityFieldModel</code><a class="headerlink" href="#GravityFieldModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for the gravity field model, set using the settings classes described below.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="GravityFieldSettings">
-<em class="property">class </em><code class="descname">GravityFieldSettings</code><a class="headerlink" href="#GravityFieldSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the gravity field settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> architecture can be called by the following:</p>
+<em class="property">class </em><code class="sig-name descname">GravityFieldSettings</code><a class="headerlink" href="#GravityFieldSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for the gravity field settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">BodySettings</span></code></a> architecture can be called by the following:</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="CentralGravityFieldSettings">
-<em class="property">class </em><code class="descname">CentralGravityFieldSettings</code><a class="headerlink" href="#CentralGravityFieldSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">CentralGravityFieldSettings</code><a class="headerlink" href="#CentralGravityFieldSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Point-mass gravity field model, with user-defined gravitational parameter.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">gravitationalParameter</span> <span class="o">=</span> <span class="p">...</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">gravitationalParameter</span> <span class="o">=</span> <span class="p">...</span>
 <span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CentralGravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">gravitationalParameter</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">Point-mass gravity field model from Spice</code></dt>
-<dd><p>Point-mass gravity field model, with gravitational parameter from Spice. No derived class of <a class="reference internal" href="#GravityFieldSettings" title="GravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">GravityFieldSettings</span></code></a> base class required, created by passing <code class="docutils literal"><span class="pre">central_spice</span></code> as argument to base class constructor.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">central_spice</span> <span class="p">);</span>
+<code class="sig-name descname">Point-mass gravity field model from Spice</code></dt>
+<dd><p>Point-mass gravity field model, with gravitational parameter from Spice. No derived class of <a class="reference internal" href="#GravityFieldSettings" title="GravityFieldSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">GravityFieldSettings</span></code></a> base class required, created by passing <code class="docutils literal notranslate"><span class="pre">central_spice</span></code> as argument to base class constructor.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">gravityFieldSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GravityFieldSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">central_spice</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="SphericalHarmonicsGravityFieldSettings">
-<em class="property">class </em><code class="descname">SphericalHarmonicsGravityFieldSettings</code><a class="headerlink" href="#SphericalHarmonicsGravityFieldSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">SphericalHarmonicsGravityFieldSettings</code><a class="headerlink" href="#SphericalHarmonicsGravityFieldSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gravity field model as a spherical harmonic expansion.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">gravitationalParameter</span> <span class="o">=</span> <span class="p">...</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">gravitationalParameter</span> <span class="o">=</span> <span class="p">...</span>
 <span class="kt">double</span> <span class="n">referenceRadius</span> <span class="o">=</span> <span class="p">...</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">normalizedCosineCoefficients</span> <span class="o">=</span>  <span class="c1">// NOTE: entry (i,j) denotes coefficient at degree i and order j</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">normalizedSineCoefficients</span> <span class="o">=</span>  <span class="c1">// NOTE: entry (i,j) denotes coefficient at degree i and order j</span>
@@ -501,33 +503,33 @@
    <span class="n">gravitationalParameter</span><span class="p">,</span> <span class="n">referenceRadius</span><span class="p">,</span> <span class="n">normalizedCosineCoefficients</span><span class="p">,</span> <span class="n">normalizedSineCoefficients</span><span class="p">,</span> <span class="n">associatedReferenceFrame</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal"><span class="pre">associatedReferenceFrame</span></code> reference frame must presently be the same frame as the target frame of the body’s rotation model (see below). It represents the frame to which the spherical harmonic field is fixed.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">associatedReferenceFrame</span></code> reference frame must presently be the same frame as the target frame of the body’s rotation model (see below). It represents the frame to which the spherical harmonic field is fixed.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Spherical harmonic coefficients used for this environment model must ALWAYS be fully normalized</p>
+<p class="admonition-title">Warning</p>
+<p>Spherical harmonic coefficients used for this environment model must ALWAYS be fully normalized</p>
 </div>
 </dd></dl>
 
 </div>
 <div class="section" id="rotational-model">
-<h2>1.2.4. Rotational model<a class="headerlink" href="#rotational-model" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<h2><span class="section-number">1.2.4. </span>Rotational model<a class="headerlink" href="#rotational-model" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
 <dt id="RotationalEphemeris">
-<em class="property">class </em><code class="descname">RotationalEphemeris</code><a class="headerlink" href="#RotationalEphemeris" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">RotationalEphemeris</code><a class="headerlink" href="#RotationalEphemeris" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for the rotational ephemeris model, set using the settings classes described below.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="RotationModelSettings">
-<em class="property">class </em><code class="descname">RotationModelSettings</code><a class="headerlink" href="#RotationModelSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the rotational model settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> architecture are:</p>
+<em class="property">class </em><code class="sig-name descname">RotationModelSettings</code><a class="headerlink" href="#RotationModelSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for the rotational model settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">BodySettings</span></code></a> architecture are:</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="SimpleRotationModelSettings">
-<em class="property">class </em><code class="descname">SimpleRotationModelSettings</code><a class="headerlink" href="#SimpleRotationModelSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">SimpleRotationModelSettings</code><a class="headerlink" href="#SimpleRotationModelSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rotation model with constant orientation of the rotation axis, and constant rotation rate about local z-axis.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span> <span class="n">initialOrientation</span> <span class="o">=</span> <span class="p">...</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span> <span class="n">initialOrientation</span> <span class="o">=</span> <span class="p">...</span>
 <span class="kt">double</span> <span class="n">initialTime</span> <span class="o">=</span> <span class="p">...</span>
 <span class="kt">double</span> <span class="n">rotationRate</span> <span class="o">=</span> <span class="p">...</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">originalFrame</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
@@ -539,86 +541,86 @@
 <p>where the rotation from originalFrame to targetFrame at initialTime is given by the quaternion initialOrientation. This is mapped to other times using the rotation rate rotationRate.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">Spice Rotation model</code></dt>
-<dd><p>Rotation model directly obtained from Spice. No derived class of <a class="reference internal" href="#RotationModelSettings" title="RotationModelSettings"><code class="xref py py-class docutils literal"><span class="pre">RotationModelSettings</span></code></a> base class required, created by passing <code class="docutils literal"><span class="pre">spice_rotation_model</span></code> as argument to base class constructor.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">originalFrame</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
+<code class="sig-name descname">Spice Rotation model</code></dt>
+<dd><p>Rotation model directly obtained from Spice. No derived class of <a class="reference internal" href="#RotationModelSettings" title="RotationModelSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">RotationModelSettings</span></code></a> base class required, created by passing <code class="docutils literal notranslate"><span class="pre">spice_rotation_model</span></code> as argument to base class constructor.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">originalFrame</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">targetFrame</span> <span class="o">=</span> <span class="s">&quot;IAU_Earth&quot;</span><span class="p">;</span>
 <span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">RotationModelSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">spice_rotation_model</span><span class="p">,</span> <span class="n">originalFrame</span><span class="p">,</span> <span class="n">targetFrame</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="GcrsToItrsRotationModelSettings">
-<em class="property">class </em><code class="descname">GcrsToItrsRotationModelSettings</code><a class="headerlink" href="#GcrsToItrsRotationModelSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">GcrsToItrsRotationModelSettings</code><a class="headerlink" href="#GcrsToItrsRotationModelSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>High-accuracy rotation model of the Earth, according to the IERS 2010 Conventions. This class has various options to deviate from the default settings, here we only show the main options (typical applications will use default):</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">IAUConventions</span> <span class="n">precessionNutationTheory</span> <span class="o">=</span> <span class="n">iau_2006</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">IAUConventions</span> <span class="n">precessionNutationTheory</span> <span class="o">=</span> <span class="n">iau_2006</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">originalFrame</span> <span class="o">=</span> <span class="s">&quot;J2000&quot;</span><span class="p">;</span>
 <span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">GcrsToItrsRotationModelSettings</span> <span class="o">&gt;</span><span class="p">(</span>
    <span class="n">precessionNutationTheory</span><span class="p">,</span> <span class="n">originalFrame</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Note that for this model the original frame must be J2000, ECLIPJ2000 or GCRS. The precession-nutation theory may be <code class="docutils literal"><span class="pre">iau_2000a</span></code>, <code class="docutils literal"><span class="pre">iau_2000b</span></code> or <code class="docutils literal"><span class="pre">iau_2006</span></code>, as implemented in the SOFA toolbox. Alternative options to modify (not shown above) include the EOP correction file, input time scale, short period UT1 and polar motion variations. Please see the Dosygen documentation for details.</p>
+<p>Note that for this model the original frame must be J2000, ECLIPJ2000 or GCRS. The precession-nutation theory may be <code class="docutils literal notranslate"><span class="pre">iau_2000a</span></code>, <code class="docutils literal notranslate"><span class="pre">iau_2000b</span></code> or <code class="docutils literal notranslate"><span class="pre">iau_2006</span></code>, as implemented in the SOFA toolbox. Alternative options to modify (not shown above) include the EOP correction file, input time scale, short period UT1 and polar motion variations. Please see the Dosygen documentation for details.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">Tabulated RotationalEphemeris model</code></dt>
-<dd><p>Rotation model obtained from an interpolator, with dependent variable a <code class="docutils literal"><span class="pre">Eigen::VectorXd</span></code> of size 7: the four entries (w,x,y,z) of the quaternion from the target frame to the base frame, and body’s angular velocity vector, expressed in its body-fixed frame . Currently the settings interface is not yet implemented but the functionality is implemented in <code class="xref py py-class docutils literal"><span class="pre">TabulatedRotationalEphemeris</span></code>. The tabulated rotational ephemeris can be implemented as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create tabulated rotational model</span>
+<code class="sig-name descname">Tabulated RotationalEphemeris model</code></dt>
+<dd><p>Rotation model obtained from an interpolator, with dependent variable a <code class="docutils literal notranslate"><span class="pre">Eigen::VectorXd</span></code> of size 7: the four entries (w,x,y,z) of the quaternion from the target frame to the base frame, and body’s angular velocity vector, expressed in its body-fixed frame . Currently the settings interface is not yet implemented but the functionality is implemented in <code class="xref py py-class docutils literal notranslate"><span class="pre">TabulatedRotationalEphemeris</span></code>. The tabulated rotational ephemeris can be implemented as follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create tabulated rotational model</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TabulatedRotationalEphemeris</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">tabulatedEphemeris</span> <span class="o">=</span>
         <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TabulatedRotationalEphemeris</span><span class="o">&lt;</span>  <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">rotationInterpolator</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">Constant Rotation Model</code></dt>
+<code class="sig-name descname">Constant Rotation Model</code></dt>
 <dd><p>Rotation model with a constant value for the rotation. Currently the settings interface is not yet implemented.</p>
 </dd></dl>
 
 </div>
 <div class="section" id="body-shape-model">
-<h2>1.2.5. Body shape model<a class="headerlink" href="#body-shape-model" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<h2><span class="section-number">1.2.5. </span>Body shape model<a class="headerlink" href="#body-shape-model" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
 <dt id="BodyShapeModel">
-<em class="property">class </em><code class="descname">BodyShapeModel</code><a class="headerlink" href="#BodyShapeModel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">BodyShapeModel</code><a class="headerlink" href="#BodyShapeModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for body shape models. It is constructed using the settings described below.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="BodyShapeSettings">
-<em class="property">class </em><code class="descname">BodyShapeSettings</code><a class="headerlink" href="#BodyShapeSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the body shape settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> architecture are:</p>
+<em class="property">class </em><code class="sig-name descname">BodyShapeSettings</code><a class="headerlink" href="#BodyShapeSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for the body shape settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">BodySettings</span></code></a> architecture are:</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="SphericalBodyShapeSettings">
-<em class="property">class </em><code class="descname">SphericalBodyShapeSettings</code><a class="headerlink" href="#SphericalBodyShapeSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">SphericalBodyShapeSettings</code><a class="headerlink" href="#SphericalBodyShapeSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Model defining a body shape as a perfect sphere, with the sphere radius provided by the user.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">bodyRadius</span> <span class="o">=</span> <span class="mf">6378.0E3</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">bodyRadius</span> <span class="o">=</span> <span class="mf">6378.0E3</span><span class="p">;</span>
 <span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalBodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodyRadius</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">Spherical shape from Spice</code></dt>
-<dd><p>Model defining a body shape as a perfect sphere, with the sphere radius retrieved from Spice. No derived class of <a class="reference internal" href="#BodyShapeSettings" title="BodyShapeSettings"><code class="xref py py-class docutils literal"><span class="pre">BodyShapeSettings</span></code></a> base class required, created by passing <code class="docutils literal"><span class="pre">spherical_spice</span></code> as argument to base class constructor.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">BodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">spherical_spice</span> <span class="p">);</span>
+<code class="sig-name descname">Spherical shape from Spice</code></dt>
+<dd><p>Model defining a body shape as a perfect sphere, with the sphere radius retrieved from Spice. No derived class of <a class="reference internal" href="#BodyShapeSettings" title="BodyShapeSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">BodyShapeSettings</span></code></a> base class required, created by passing <code class="docutils literal notranslate"><span class="pre">spherical_spice</span></code> as argument to base class constructor.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">BodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">spherical_spice</span> <span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="OblateSphericalBodyShapeSettings">
-<em class="property">class </em><code class="descname">OblateSphericalBodyShapeSettings</code><a class="headerlink" href="#OblateSphericalBodyShapeSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">OblateSphericalBodyShapeSettings</code><a class="headerlink" href="#OblateSphericalBodyShapeSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Model defining a body shape as a flattened sphere, with the equatorial radius and flattening provided by the user.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">bodyRadius</span> <span class="o">=</span> <span class="mf">6378.0E3</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">bodyRadius</span> <span class="o">=</span> <span class="mf">6378.0E3</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">bodyFlattening</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">300.0</span><span class="p">;</span>
 <span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Earth&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">shapeModelSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OblateSphericalBodyShapeSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodyRadius</span><span class="p">,</span> <span class="n">bodyFlattening</span> <span class="p">);</span>
 </pre></div>
@@ -627,24 +629,24 @@
 
 </div>
 <div class="section" id="radiation-pressure-interface">
-<span id="radiationpressuremodeloptions"></span><h2>1.2.6. Radiation pressure interface<a class="headerlink" href="#radiation-pressure-interface" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<span id="radiationpressuremodeloptions"></span><h2><span class="section-number">1.2.6. </span>Radiation pressure interface<a class="headerlink" href="#radiation-pressure-interface" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
 <dt id="RadiationPressureInterface">
-<em class="property">class </em><code class="descname">RadiationPressureInterface</code><a class="headerlink" href="#RadiationPressureInterface" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">RadiationPressureInterface</code><a class="headerlink" href="#RadiationPressureInterface" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class containing the properties of a solar radiation pressure acceleration model. It is constructed using the settings classes below.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="RadiationPressureInterfaceSettings">
-<em class="property">class </em><code class="descname">RadiationPressureInterfaceSettings</code><a class="headerlink" href="#RadiationPressureInterfaceSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the radiation pressure interface settings. A separate model can be used for different bodies emitting radiation (key values of radiationPressureSettings) Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> architecture are:</p>
+<em class="property">class </em><code class="sig-name descname">RadiationPressureInterfaceSettings</code><a class="headerlink" href="#RadiationPressureInterfaceSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for the radiation pressure interface settings. A separate model can be used for different bodies emitting radiation (key values of radiationPressureSettings) Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">BodySettings</span></code></a> architecture are:</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="CannonBallRadiationPressureInterfaceSettings">
-<em class="property">class </em><code class="descname">CannonBallRadiationPressureInterfaceSettings</code><a class="headerlink" href="#CannonBallRadiationPressureInterfaceSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">CannonBallRadiationPressureInterfaceSettings</code><a class="headerlink" href="#CannonBallRadiationPressureInterfaceSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Properties for a cannonball radiation pressure model, i.e. effective force colinear with vector from source to target.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">sourceBody</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">sourceBody</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">area</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">;</span>
 <span class="k">const</span> <span class="kt">double</span> <span class="n">radiationPressureCoefficient</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">occultingBodies</span><span class="p">;</span>
@@ -655,16 +657,16 @@
 </div>
 <p>Creating cannonball radiation pressure settings for radiation due to the Sun, acting on the “TestVehicle” body, where the occultations due to the Earth are taken into account.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Occultations by multiple bodies are not yet supported. Please contact the Tudat suppport team if you wish to use multiple occultations.</p>
+<p class="admonition-title">Note</p>
+<p>Occultations by multiple bodies are not yet supported. Please contact the Tudat suppport team if you wish to use multiple occultations.</p>
 </div>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="PanelledRadiationPressureInterfaceSettings">
-<em class="property">class </em><code class="descname">PanelledRadiationPressureInterfaceSettings</code><a class="headerlink" href="#PanelledRadiationPressureInterfaceSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">PanelledRadiationPressureInterfaceSettings</code><a class="headerlink" href="#PanelledRadiationPressureInterfaceSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Properties for a panelled radiation pressure model, i.e. solar radiation pressure force derived from a so-called boxes-and-wings model.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">sourceBody</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">sourceBody</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">emissivities</span> <span class="o">=</span> <span class="p">{</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span> <span class="p">};</span>
  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">areas</span> <span class="o">=</span> <span class="p">{</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">2.3</span> <span class="p">};</span>
  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">diffusionCoefficients</span> <span class="o">=</span> <span class="p">{</span> <span class="mf">0.46</span><span class="p">,</span> <span class="mf">0.06</span><span class="p">,</span> <span class="mf">0.46</span><span class="p">,</span> <span class="mf">0.46</span> <span class="p">};</span>
@@ -683,20 +685,20 @@
 </div>
 <p>Creating panelled radiation pressure settings for radiation due to the Sun, acting on the “Vehicle” body, from the following input variables:</p>
 <ul class="simple">
-<li>Name of the source body of the radiation pressure.</li>
-<li>Vector containing the emissivities of the different panels.</li>
-<li>Vector containing the areas of the panels.</li>
-<li>Vector containing the diffusion coefficient of each panel.</li>
-<li>Vector containing the functions that return the normals of the panels surfaces, in body-fixed reference frame.</li>
-<li>Vector with the names of the occulting bodies.</li>
+<li><p>Name of the source body of the radiation pressure.</p></li>
+<li><p>Vector containing the emissivities of the different panels.</p></li>
+<li><p>Vector containing the areas of the panels.</p></li>
+<li><p>Vector containing the diffusion coefficient of each panel.</p></li>
+<li><p>Vector containing the functions that return the normals of the panels surfaces, in body-fixed reference frame.</p></li>
+<li><p>Vector with the names of the occulting bodies.</p></li>
 </ul>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="SolarSailRadiationInterfaceSettings">
-<em class="property">class </em><code class="descname">SolarSailRadiationInterfaceSettings</code><a class="headerlink" href="#SolarSailRadiationInterfaceSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">SolarSailRadiationInterfaceSettings</code><a class="headerlink" href="#SolarSailRadiationInterfaceSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Properties for a solar sail radiation pressure model, i.e. solar radiation pressure force derived from a solar sail characteristics and orientation.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">sourceBody</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">sourceBody</span> <span class="o">=</span> <span class="s">&quot;Sun&quot;</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">area</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">coneAngle</span> <span class="o">=</span> <span class="p">[</span> <span class="o">=</span> <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="mf">0.25</span><span class="p">;</span> <span class="p">};</span>
 <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">clockAngle</span> <span class="o">=</span> <span class="p">[</span> <span class="o">=</span>  <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="mf">0.2</span><span class="p">;</span> <span class="p">};</span>
@@ -716,40 +718,40 @@
 </div>
 <p>Creating solar sail radiation pressure settings for radiation due to the Sun, acting on the “Vehicle” body, where the occultations due to the Earth are taken into account. The input variables for the solar sail radiation pressure settings are:</p>
 <ul class="simple">
-<li>Name of the radiation pressure source body.</li>
-<li>Area of the solar sail.</li>
-<li>Function returning the cone angle of the solar sail as a function of time (in the above example, the cone angle function is constant).</li>
-<li>Function returning the clock angle of the solar sail as a function of time (in the above example, the clock angle function is constant).</li>
-<li>Emissivity coefficient of the front face of the solar sail.</li>
-<li>Emissivity coefficient of the back face of the solar sail.</li>
-<li>Lambertian coefficient of the front face of the solar sail.</li>
-<li>Lambertian coefficient of the back face of the solar sail.</li>
-<li>Reflectvity coefficient of the solar sail.</li>
-<li>Specular reflection coefficient of the solar sail.</li>
-<li>Vector with the names of the occulting bodies.</li>
+<li><p>Name of the radiation pressure source body.</p></li>
+<li><p>Area of the solar sail.</p></li>
+<li><p>Function returning the cone angle of the solar sail as a function of time (in the above example, the cone angle function is constant).</p></li>
+<li><p>Function returning the clock angle of the solar sail as a function of time (in the above example, the clock angle function is constant).</p></li>
+<li><p>Emissivity coefficient of the front face of the solar sail.</p></li>
+<li><p>Emissivity coefficient of the back face of the solar sail.</p></li>
+<li><p>Lambertian coefficient of the front face of the solar sail.</p></li>
+<li><p>Lambertian coefficient of the back face of the solar sail.</p></li>
+<li><p>Reflectvity coefficient of the solar sail.</p></li>
+<li><p>Specular reflection coefficient of the solar sail.</p></li>
+<li><p>Vector with the names of the occulting bodies.</p></li>
 </ul>
 </dd></dl>
 
 </div>
 <div class="section" id="aerodynamic-coefficient-interface">
-<span id="aerodynamiccoefficientoptions"></span><h2>1.2.7. Aerodynamic coefficient interface<a class="headerlink" href="#aerodynamic-coefficient-interface" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<span id="aerodynamiccoefficientoptions"></span><h2><span class="section-number">1.2.7. </span>Aerodynamic coefficient interface<a class="headerlink" href="#aerodynamic-coefficient-interface" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
 <dt id="AerodynamicCoefficientInterface">
-<em class="property">class </em><code class="descname">AerodynamicCoefficientInterface</code><a class="headerlink" href="#AerodynamicCoefficientInterface" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">AerodynamicCoefficientInterface</code><a class="headerlink" href="#AerodynamicCoefficientInterface" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class containing the aerodynamic coefficient interface set by the settings classes below.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="AerodynamicCoefficientSettings">
-<em class="property">class </em><code class="descname">AerodynamicCoefficientSettings</code><a class="headerlink" href="#AerodynamicCoefficientSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the aerodynamic coefficient settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> architecture are:</p>
+<em class="property">class </em><code class="sig-name descname">AerodynamicCoefficientSettings</code><a class="headerlink" href="#AerodynamicCoefficientSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for the aerodynamic coefficient settings. Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">BodySettings</span></code></a> architecture are:</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="ConstantAerodynamicCoefficientSettings">
-<em class="property">class </em><code class="descname">ConstantAerodynamicCoefficientSettings</code><a class="headerlink" href="#ConstantAerodynamicCoefficientSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ConstantAerodynamicCoefficientSettings</code><a class="headerlink" href="#ConstantAerodynamicCoefficientSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Settings for constant (not a function of any independent variables) aerodynamic coefficients.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">referenceArea</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">referenceArea</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">;</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">constantCoefficients</span><span class="p">;</span>
 <span class="n">constantCoefficients</span><span class="p">(</span> <span class="mi">0</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">;</span>
 <span class="n">constantCoefficients</span><span class="p">(</span> <span class="mi">2</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>
@@ -760,42 +762,42 @@
 <p>For constant drag coefficient of 1.5 and lift coefficient of 0.3.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="TabulatedAerodynamicCoefficientSettings">
-<em class="property">class </em><code class="descname">TabulatedAerodynamicCoefficientSettings</code><a class="headerlink" href="#TabulatedAerodynamicCoefficientSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">TabulatedAerodynamicCoefficientSettings</code><a class="headerlink" href="#TabulatedAerodynamicCoefficientSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Settings for tabulated aerodynamic coefficients as a function of given independent variables. These tables can be defined either manually or loaded from a file, as discussed in more detail <a class="reference internal" href="aerodynamicCoefficients.html#tudatfeaturesaerodynamicguidancereadingaerodynamiccoefficients"><span class="std std-ref">here</span></a>. Coefficients can be defined as a function of angle of sideslip, angle of attack, Mach number or altitude. If you simulation requires any other dependencies for the coefficients, please open an issue on Github requesting feature.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">Local Inclination methods</code></dt>
-<dd><p>Settings for aerodynamic coefficients computed internally using a shape model of the vehicle, valid for hypersonic Mach numbers. Currently, this type of aerodynamic coefficients can only be set manually in the <a class="reference internal" href="setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> object directly.</p>
+<code class="sig-name descname">Local Inclination methods</code></dt>
+<dd><p>Settings for aerodynamic coefficients computed internally using a shape model of the vehicle, valid for hypersonic Mach numbers. Currently, this type of aerodynamic coefficients can only be set manually in the <a class="reference internal" href="setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> object directly.</p>
 </dd></dl>
 
 </div>
 <div class="section" id="time-variations-of-the-gravity-field">
-<h2>1.2.8. Time-variations of the gravity field<a class="headerlink" href="#time-variations-of-the-gravity-field" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<h2><span class="section-number">1.2.8. </span>Time-variations of the gravity field<a class="headerlink" href="#time-variations-of-the-gravity-field" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
 <dt id="GravityFieldVariations">
-<em class="property">class </em><code class="descname">GravityFieldVariations</code><a class="headerlink" href="#GravityFieldVariations" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">GravityFieldVariations</code><a class="headerlink" href="#GravityFieldVariations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Virtual base class for spherical harmonic gravity field variations. Constructed using the settings classes below.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="GravityFieldVariationSettings">
-<em class="property">class </em><code class="descname">GravityFieldVariationSettings</code><a class="headerlink" href="#GravityFieldVariationSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for the gravity field variation settings. Any number of gravity field variations may be used (hence the use of a vector). NOTE: You can only use gravity field variations for bodies where you have defined a spherical harmonic gravity field (through the use of <a class="reference internal" href="#SphericalHarmonicsGravityFieldSettings" title="SphericalHarmonicsGravityFieldSettings"><code class="xref py py-class docutils literal"><span class="pre">SphericalHarmonicsGravityFieldSettings</span></code></a>). Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal"><span class="pre">BodySettings</span></code></a> architecture are:</p>
+<em class="property">class </em><code class="sig-name descname">GravityFieldVariationSettings</code><a class="headerlink" href="#GravityFieldVariationSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for the gravity field variation settings. Any number of gravity field variations may be used (hence the use of a vector). NOTE: You can only use gravity field variations for bodies where you have defined a spherical harmonic gravity field (through the use of <a class="reference internal" href="#SphericalHarmonicsGravityFieldSettings" title="SphericalHarmonicsGravityFieldSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">SphericalHarmonicsGravityFieldSettings</span></code></a>). Models currently available through the <a class="reference internal" href="setup.html#BodySettings" title="BodySettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">BodySettings</span></code></a> architecture are:</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="BasicSolidBodyGravityFieldVariationSettings">
-<em class="property">class </em><code class="descname">BasicSolidBodyGravityFieldVariationSettings</code><a class="headerlink" href="#BasicSolidBodyGravityFieldVariationSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">BasicSolidBodyGravityFieldVariationSettings</code><a class="headerlink" href="#BasicSolidBodyGravityFieldVariationSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tidal variation of the gravity field using first-order tidal theory.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="TabulatedGravityFieldVariationSettings">
-<em class="property">class </em><code class="descname">TabulatedGravityFieldVariationSettings</code><a class="headerlink" href="#TabulatedGravityFieldVariationSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">TabulatedGravityFieldVariationSettings</code><a class="headerlink" href="#TabulatedGravityFieldVariationSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Variations in spherical harmonic coefficients tabulated as a function of time.</p>
 </dd></dl>
 
@@ -857,7 +859,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
 
@@ -193,23 +195,23 @@
   <div class="section" id="perturbed-earth-orbiting-satellite">
 <span id="matlabinterface-tutorialsseamless-singleperturbedsatellite"></span><h1>Perturbed Earth-orbiting Satellite<a class="headerlink" href="#perturbed-earth-orbiting-satellite" title="Permalink to this headline">¶</a></h1>
 <p>This tutorial describes how to propagate the orbit of a perturbed satellite about Earth using the MATLAB Interface, similar to the example <a class="reference internal" href="../../applicationWalkthroughs/perturbedEarthOrbitingSatellite.html#walkthroughsperturbedearthorbitingsatellite"><span class="std std-ref">Perturbed Earth-orbiting Satellite</span></a> written in C++. The code for this example can be found at:</p>
-<div class="highlight-txt"><div class="highlight"><pre><span></span>tudatBundle/matlabInterface/Examples/Seamless/singlePerturbedSatellite.m
+<div class="highlight-txt notranslate"><div class="highlight"><pre><span></span>tudatBundle/matlabInterface/Examples/Seamless/singlePerturbedSatellite.m
 </pre></div>
 </div>
 <p>The first step is to include the source code of the MATLAB Interface into MATLAB’s path in the current session so that all the classes needed to set up the simulation can be accessed. This is done by writing:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">load</span><span class="p">();</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">load</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>Now, we create a <code class="xref py py-class docutils literal"><span class="pre">Simulation</span></code> object and specify the initial and final epochs and the global frame orientation:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">simulation</span> <span class="p">=</span> <span class="n">Simulation</span><span class="p">();</span>
+<p>Now, we create a <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object and specify the initial and final epochs and the global frame orientation:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span> <span class="p">=</span> <span class="n">Simulation</span><span class="p">();</span>
 <span class="n">simulation</span><span class="p">.</span><span class="n">initialEpoch</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="n">simulation</span><span class="p">.</span><span class="n">finalEpoch</span> <span class="p">=</span> <span class="n">convert</span><span class="p">.</span><span class="n">toSI</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s">&#39;d&#39;</span><span class="p">);</span>
 <span class="n">simulation</span><span class="p">.</span><span class="n">globalFrameOrientation</span> <span class="p">=</span> <span class="s">&#39;J2000&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Note that the function <code class="docutils literal"><span class="pre">toSI</span></code> from the <code class="docutils literal"><span class="pre">convert</span></code> package has been used to convert 1 day to seconds. In this case, the global frame origin is not specified because the default value (<code class="docutils literal"><span class="pre">SSB</span></code>, Solar system barycentre) is to be used. However, for the global frame orientation the value of <code class="docutils literal"><span class="pre">J2000</span></code> is specified instead of the default <code class="docutils literal"><span class="pre">ECLIPJ2000</span></code>.</p>
-<p>Next, we create the bodies. In this case, the only non-celestial body is <code class="docutils literal"><span class="pre">asterix</span></code>:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">asterix</span> <span class="p">=</span> <span class="n">Body</span><span class="p">(</span><span class="s">&#39;asterix&#39;</span><span class="p">);</span>
+<p>Note that the function <code class="docutils literal notranslate"><span class="pre">toSI</span></code> from the <code class="docutils literal notranslate"><span class="pre">convert</span></code> package has been used to convert 1 day to seconds. In this case, the global frame origin is not specified because the default value (<code class="docutils literal notranslate"><span class="pre">SSB</span></code>, Solar system barycentre) is to be used. However, for the global frame orientation the value of <code class="docutils literal notranslate"><span class="pre">J2000</span></code> is specified instead of the default <code class="docutils literal notranslate"><span class="pre">ECLIPJ2000</span></code>.</p>
+<p>Next, we create the bodies. In this case, the only non-celestial body is <code class="docutils literal notranslate"><span class="pre">asterix</span></code>:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">asterix</span> <span class="p">=</span> <span class="n">Body</span><span class="p">(</span><span class="s">&#39;asterix&#39;</span><span class="p">);</span>
 <span class="n">asterix</span><span class="p">.</span><span class="n">initialState</span><span class="p">.</span><span class="n">semiMajorAxis</span> <span class="p">=</span> <span class="mf">7500e3</span><span class="p">;</span>
 <span class="n">asterix</span><span class="p">.</span><span class="n">initialState</span><span class="p">.</span><span class="n">eccentricity</span> <span class="p">=</span> <span class="mf">0.1</span><span class="p">;</span>
 <span class="n">asterix</span><span class="p">.</span><span class="n">initialState</span><span class="p">.</span><span class="n">inclination</span> <span class="p">=</span> <span class="n">deg2rad</span><span class="p">(</span><span class="mf">85.3</span><span class="p">);</span>
@@ -223,20 +225,20 @@
 <span class="n">asterix</span><span class="p">.</span><span class="n">radiationPressure</span><span class="p">.</span><span class="n">Sun</span><span class="p">.</span><span class="n">occultingBodies</span> <span class="p">=</span> <span class="p">{</span><span class="n">Earth</span><span class="p">};</span>
 </pre></div>
 </div>
-<p>Now, we add the bodies to the simulation by calling the method <code class="docutils literal"><span class="pre">addBodies</span></code> of the <code class="docutils literal"><span class="pre">simulation</span></code> object. There exist predefined objects for celestial bodies (namely the Sun, the Moon and the eight planets), so these objects can be added directly without the need to specify their properties:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">addBodies</span><span class="p">(</span><span class="n">Sun</span><span class="p">,</span><span class="n">Earth</span><span class="p">,</span><span class="n">Moon</span><span class="p">,</span><span class="n">Mars</span><span class="p">,</span><span class="n">Venus</span><span class="p">,</span><span class="n">asterix</span><span class="p">);</span>
+<p>Now, we add the bodies to the simulation by calling the method <code class="docutils literal notranslate"><span class="pre">addBodies</span></code> of the <code class="docutils literal notranslate"><span class="pre">simulation</span></code> object. There exist predefined objects for celestial bodies (namely the Sun, the Moon and the eight planets), so these objects can be added directly without the need to specify their properties:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">addBodies</span><span class="p">(</span><span class="n">Sun</span><span class="p">,</span><span class="n">Earth</span><span class="p">,</span><span class="n">Moon</span><span class="p">,</span><span class="n">Mars</span><span class="p">,</span><span class="n">Venus</span><span class="p">,</span><span class="n">asterix</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Now we need to specify the accelerations acting on <code class="docutils literal"><span class="pre">asterix</span></code>:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">accelerationsOnAsterix</span><span class="p">.</span><span class="n">Earth</span> <span class="p">=</span> <span class="p">{</span><span class="n">SphericalHarmonicGravity</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">AerodynamicAcceleration</span><span class="p">()};</span>
+<p>Now we need to specify the accelerations acting on <code class="docutils literal notranslate"><span class="pre">asterix</span></code>:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">accelerationsOnAsterix</span><span class="p">.</span><span class="n">Earth</span> <span class="p">=</span> <span class="p">{</span><span class="n">SphericalHarmonicGravity</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">AerodynamicAcceleration</span><span class="p">()};</span>
 <span class="n">accelerationsOnAsterix</span><span class="p">.</span><span class="n">Sun</span> <span class="p">=</span> <span class="p">{</span><span class="n">PointMassGravity</span><span class="p">(),</span> <span class="n">RadiationPressureAcceleration</span><span class="p">()};</span>
 <span class="n">accelerationsOnAsterix</span><span class="p">.</span><span class="n">Moon</span> <span class="p">=</span> <span class="p">{</span><span class="n">PointMassGravity</span><span class="p">()};</span>
 <span class="n">accelerationsOnAsterix</span><span class="p">.</span><span class="n">Mars</span> <span class="p">=</span> <span class="p">{</span><span class="n">PointMassGravity</span><span class="p">()};</span>
 <span class="n">accelerationsOnAsterix</span><span class="p">.</span><span class="n">Venus</span> <span class="p">=</span> <span class="p">{</span><span class="n">PointMassGravity</span><span class="p">()};</span>
 </pre></div>
 </div>
-<p>Then, we create the settings for the propagation. We are going to propagate the translational state of the body <code class="docutils literal"><span class="pre">asterix</span></code> about <code class="docutils literal"><span class="pre">Earth</span></code>. Thus, we use a <code class="xref py py-class docutils literal"><span class="pre">TranslationalPropagator</span></code>:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">propagator</span> <span class="p">=</span> <span class="n">TranslationalPropagator</span><span class="p">();</span>
+<p>Then, we create the settings for the propagation. We are going to propagate the translational state of the body <code class="docutils literal notranslate"><span class="pre">asterix</span></code> about <code class="docutils literal notranslate"><span class="pre">Earth</span></code>. Thus, we use a <code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationalPropagator</span></code>:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">propagator</span> <span class="p">=</span> <span class="n">TranslationalPropagator</span><span class="p">();</span>
 <span class="n">propagator</span><span class="p">.</span><span class="n">bodiesToPropagate</span> <span class="p">=</span> <span class="p">{</span><span class="n">asterix</span><span class="p">};</span>
 <span class="n">propagator</span><span class="p">.</span><span class="n">centralBodies</span> <span class="p">=</span> <span class="p">{</span><span class="n">Earth</span><span class="p">};</span>
 <span class="n">propagator</span><span class="p">.</span><span class="n">accelerations</span><span class="p">.</span><span class="n">asterix</span> <span class="p">=</span> <span class="n">accelerationsOnAsterix</span><span class="p">;</span>
@@ -244,39 +246,39 @@
 </pre></div>
 </div>
 <p>Then, we define the integrator settings, in this case we use a Runge-Kutta 4 integrator with a fixed step-size of 10 seconds:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="p">.</span><span class="n">type</span> <span class="p">=</span> <span class="n">Integrators</span><span class="p">.</span><span class="n">rungeKutta4</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="p">.</span><span class="n">type</span> <span class="p">=</span> <span class="n">Integrators</span><span class="p">.</span><span class="n">rungeKutta4</span><span class="p">;</span>
 <span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="p">.</span><span class="n">stepSize</span> <span class="p">=</span> <span class="mi">10</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Finally, we specify the results to be saved:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">addResultsToSave</span><span class="p">(</span><span class="s">&#39;t&#39;</span><span class="p">,</span><span class="s">&#39;independent&#39;</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">addResultsToSave</span><span class="p">(</span><span class="s">&#39;t&#39;</span><span class="p">,</span><span class="s">&#39;independent&#39;</span><span class="p">);</span>
 <span class="n">simulation</span><span class="p">.</span><span class="n">addResultsToSave</span><span class="p">(</span><span class="s">&#39;h&#39;</span><span class="p">,</span><span class="s">&#39;asterix.altitude-Earth&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The first variable, named <code class="docutils literal"><span class="pre">t</span></code>, represents the independent variable, i.e. the epoch (seconds since J2000). The second variable, named <code class="docutils literal"><span class="pre">h</span></code>, represents the altitude of <code class="docutils literal"><span class="pre">asterix</span></code> w.r.t. <code class="docutils literal"><span class="pre">Earth</span></code>.</p>
+<p>The first variable, named <code class="docutils literal notranslate"><span class="pre">t</span></code>, represents the independent variable, i.e. the epoch (seconds since J2000). The second variable, named <code class="docutils literal notranslate"><span class="pre">h</span></code>, represents the altitude of <code class="docutils literal notranslate"><span class="pre">asterix</span></code> w.r.t. <code class="docutils literal notranslate"><span class="pre">Earth</span></code>.</p>
 <p>All the settings needed to run the simulation have been defined. Thus, we can write:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">run</span><span class="p">();</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">run</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>This method creates a temporary input file and calls the <code class="docutils literal"><span class="pre">json_interface</span></code> application, generating a temporary output file containing the values of the variables that were requested to be saved. Then, it loads these results into the struct <code class="docutils literal"><span class="pre">results</span></code> of the <code class="docutils literal"><span class="pre">simulation</span></code> object. Finally, all the temporary files are deleted.</p>
-<p>After running the simulation, we can obtain the requested results from <code class="docutils literal"><span class="pre">simulation.results.t</span></code> and <code class="docutils literal"><span class="pre">simulation.results.h</span></code>, which are column vectors containing the values of these variables at each integration step. We can use the results to generate a plot of the altitude of <code class="docutils literal"><span class="pre">asterix</span></code>:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">figure</span><span class="p">;</span>
+<p>This method creates a temporary input file and calls the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> application, generating a temporary output file containing the values of the variables that were requested to be saved. Then, it loads these results into the struct <code class="docutils literal notranslate"><span class="pre">results</span></code> of the <code class="docutils literal notranslate"><span class="pre">simulation</span></code> object. Finally, all the temporary files are deleted.</p>
+<p>After running the simulation, we can obtain the requested results from <code class="docutils literal notranslate"><span class="pre">simulation.results.t</span></code> and <code class="docutils literal notranslate"><span class="pre">simulation.results.h</span></code>, which are column vectors containing the values of these variables at each integration step. We can use the results to generate a plot of the altitude of <code class="docutils literal notranslate"><span class="pre">asterix</span></code>:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">figure</span><span class="p">;</span>
 <span class="n">plot</span><span class="p">(</span><span class="n">convert</span><span class="p">.</span><span class="n">epochToDate</span><span class="p">(</span><span class="n">simulation</span><span class="p">.</span><span class="n">results</span><span class="p">.</span><span class="n">t</span><span class="p">),</span><span class="n">simulation</span><span class="p">.</span><span class="n">results</span><span class="p">.</span><span class="n">h</span><span class="o">/</span><span class="mf">1e3</span><span class="p">);</span>
-<span class="n">grid</span> <span class="n">on</span><span class="p">;</span>
+<span class="n">grid</span> <span class="s">on</span><span class="p">;</span>
 <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Altitude [km]&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Note the use of the <code class="docutils literal"><span class="pre">epochToDate</span></code> function of the <code class="docutils literal"><span class="pre">convert</span></code> package, which converts seconds since J2000 to a <code class="xref py py-class docutils literal"><span class="pre">datetime</span></code> object.</p>
+<p>Note the use of the <code class="docutils literal notranslate"><span class="pre">epochToDate</span></code> function of the <code class="docutils literal notranslate"><span class="pre">convert</span></code> package, which converts seconds since J2000 to a <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code> object.</p>
 <p>Then, we can run another propagation just by modifying a few parameters. For instance, we can propagate the orbit of a satellite with a larger area and smaller mass, similar to a solar sail. We can do this by writing:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">asterix</span><span class="p">.</span><span class="n">mass</span> <span class="p">=</span> <span class="mi">4</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">asterix</span><span class="p">.</span><span class="n">mass</span> <span class="p">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="n">asterix</span><span class="p">.</span><span class="n">referenceArea</span> <span class="p">=</span> <span class="mi">40</span><span class="p">;</span>
 <span class="n">simulation</span><span class="p">.</span><span class="n">run</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>Since the class <a class="reference internal" href="../../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal"><span class="pre">Body</span></code></a> derives from <code class="xref py py-class docutils literal"><span class="pre">handle</span></code>, whose behaviour is similar to that of a shared pointer, when we modify the body <code class="docutils literal"><span class="pre">asterix</span></code>, the property <code class="docutils literal"><span class="pre">simulation.bodies.asterix</span></code> is updated automatically. Then, we can run the simulation again (with the updated properties) and use the new results to add a curve to the current plot:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">hold</span> <span class="n">on</span><span class="p">;</span>
+<p>Since the class <a class="reference internal" href="../../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> derives from <code class="xref py py-class docutils literal notranslate"><span class="pre">handle</span></code>, whose behaviour is similar to that of a shared pointer, when we modify the body <code class="docutils literal notranslate"><span class="pre">asterix</span></code>, the property <code class="docutils literal notranslate"><span class="pre">simulation.bodies.asterix</span></code> is updated automatically. Then, we can run the simulation again (with the updated properties) and use the new results to add a curve to the current plot:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">hold</span> <span class="s">on</span><span class="p">;</span>
 <span class="n">plot</span><span class="p">(</span><span class="n">convert</span><span class="p">.</span><span class="n">epochToDate</span><span class="p">(</span><span class="n">simulation</span><span class="p">.</span><span class="n">results</span><span class="p">.</span><span class="n">t</span><span class="p">),</span><span class="n">simulation</span><span class="p">.</span><span class="n">results</span><span class="p">.</span><span class="n">h</span><span class="o">/</span><span class="mf">1e3</span><span class="p">);</span>
-<span class="n">hold</span> <span class="n">off</span><span class="p">;</span>
+<span class="n">hold</span> <span class="s">off</span><span class="p">;</span>
 <span class="n">legend</span><span class="p">(</span><span class="s">&#39;Satellite&#39;</span><span class="p">,</span><span class="s">&#39;Solar sail&#39;</span><span class="p">,</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="s">&#39;South&#39;</span><span class="p">,</span><span class="s">&#39;Orientation&#39;</span><span class="p">,</span><span class="s">&#39;Horizontal&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -338,7 +340,8 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

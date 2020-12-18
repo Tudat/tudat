@@ -30,6 +30,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
 
@@ -104,6 +106,8 @@
 <li class="toctree-l4 current"><a class="current reference internal" href="#">3. (multi-objective) Earth Mars Transfer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mgaTrans.html">4. Multiple Gravity Assist Transfer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="propTargeting.html">5. Propagation Targeting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hodographicShapingTrajectoryOptimisation.html">6. Shaping Methods Trajectory Optimisation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SimsFlanaganTrajectoryDesign.html">7. Sims-Flanagan Trajectory Optimisation</a></li>
 </ul>
 </li>
 </ul>
@@ -166,7 +170,7 @@
         
           <li><a href="index.html">Application Tutorials</a> &raquo;</li>
         
-      <li>3. (multi-objective) Earth Mars Transfer</li>
+      <li><span class="section-number">3. </span>(multi-objective) Earth Mars Transfer</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -186,18 +190,20 @@
            <div itemprop="articleBody">
             
   <div class="section" id="multi-objective-earth-mars-transfer">
-<span id="walkthroughsearthmars"></span><h1>3. (multi-objective) Earth Mars Transfer<a class="headerlink" href="#multi-objective-earth-mars-transfer" title="Permalink to this headline">¶</a></h1>
+<span id="walkthroughsearthmars"></span><h1><span class="section-number">3. </span>(multi-objective) Earth Mars Transfer<a class="headerlink" href="#multi-objective-earth-mars-transfer" title="Permalink to this headline">¶</a></h1>
 <p>The examples described in this tutorial will cover a direct transfer from Earth to Mars using a Lambert targeter. The code for this tutorial is given on Github, and is also located in your Tudat bundle at:</p>
 <blockquote>
-<div>tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/earthMarsTransferExample.cpp</div></blockquote>
+<div><p>tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/earthMarsTransferExample.cpp</p>
+</div></blockquote>
 <p>and</p>
 <blockquote>
-<div>tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/multiObjectiveEarthMarsTransferExample.cpp</div></blockquote>
+<div><p>tudatBundle/tudatExampleApplications/libraryExamples/PaGMOEx/multiObjectiveEarthMarsTransferExample.cpp</p>
+</div></blockquote>
 <p>This tutorial will  cover two examples, one with a single objective, and one with multiple objectives. It will also show how the bounds of the decision vector can be defined in a more intuitive manner, and how Pagmo can be integrated into Tudat. It is necessary that the previous example, the <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>, is understood to be able to go through this example.</p>
 <div class="section" id="set-up-the-problem">
-<h2>3.1. Set up the problem<a class="headerlink" href="#set-up-the-problem" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.1. </span>Set up the problem<a class="headerlink" href="#set-up-the-problem" title="Permalink to this headline">¶</a></h2>
 <p>As mentioned earlier, in this example the definition of the bounds will be done in a more intuitive manner, as is shown below:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// We have two decision variables each with a lower and upper bound, create a vector of vectors that will contain these.</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// We have two decision variables each with a lower and upper bound, create a vector of vectors that will contain these.</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bounds</span><span class="p">(</span> <span class="mi">2</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.0</span> <span class="p">)</span> <span class="p">);</span>
 
 <span class="c1">// Define bounds: Search between 2020 and 2025 for flight duration between 200 and 1000 days.</span>
@@ -208,18 +214,18 @@
 </pre></div>
 </div>
 <p>In this example a two-dimensional vector is defined, wich is initialized to be of size 2-by-2, with 0.0 as initial values. The decision variable in this example contains two variables: the launch date and the flight duration. The first index of the vector represents the lower (0) and the upper (1) bound, the second index represents the launch date (0) and the flight duration (1). This vector can then be passed to the UDP, as is done in the following part of the code:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create object to compute the problem fitness</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create object to compute the problem fitness</span>
 <span class="n">problem</span> <span class="n">prob</span><span class="p">{</span><span class="n">EarthMarsTransfer</span><span class="p">(</span> <span class="n">bounds</span> <span class="p">)};</span>
 </pre></div>
 </div>
 <p>and for the multi-objective example:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create object to compute the problem fitness</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create object to compute the problem fitness</span>
 <span class="n">problem</span> <span class="n">prob</span><span class="p">{</span><span class="n">EarthMarsTransfer</span><span class="p">(</span> <span class="n">bounds</span><span class="p">,</span> <span class="nb">true</span> <span class="p">)};</span>
 </pre></div>
 </div>
-<p>where <code class="docutils literal"><span class="pre">EarthMarsTransfer(</span> <span class="pre">bounds</span> <span class="pre">)</span></code> is the UDP. The true statement enables the UDP to not only use the delta-V as an objective, but also the trip time.</p>
+<p>where <code class="docutils literal notranslate"><span class="pre">EarthMarsTransfer(</span> <span class="pre">bounds</span> <span class="pre">)</span></code> is the UDP. The true statement enables the UDP to not only use the delta-V as an objective, but also the trip time.</p>
 <p>This UDP contains an empty constructor, and a constructor that initializes the bounds, just as in <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>. Afterwards two methods are added:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//! Descriptive name of the problem</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//! Descriptive name of the problem</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">EarthMarsTransfer</span><span class="o">::</span><span class="n">get_name</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
    <span class="k">return</span> <span class="s">&quot;Multi-revolution Lambert Earth-Mars transfer trajectory&quot;</span><span class="p">;</span>
 <span class="p">}</span>
@@ -231,7 +237,7 @@
 </pre></div>
 </div>
 <p>They are in charge of producing an descriptive output, and getting the bounds (which is a mandatory method). After this the fitness function is defined. This function integrates several tudat features into the problem, thus it is important that these features are first understood. This will not be done in this tutorial, readers who do not undderstand these features are referred to: <a class="reference internal" href="index.html#walkthroughsindex"><span class="std std-ref">Application Tutorials</span></a> or <a class="reference internal" href="../tudatFeatures/index.html#tudatfeaturesindex"><span class="std std-ref">Tudat Libraries</span></a> to get a better understanding of them. The fitness function looks as follows:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span> <span class="c1">//! Implementation of the fitness function (return delta-v)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="c1">//! Implementation of the fitness function (return delta-v)</span>
  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">EarthMarsTransfer</span><span class="o">::</span><span class="n">fitness</span><span class="p">(</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">xv</span> <span class="p">)</span> <span class="k">const</span><span class="p">{</span>
 
     <span class="k">using</span> <span class="n">tudat</span><span class="o">::</span><span class="n">mission_segments</span><span class="o">::</span><span class="n">MultiRevolutionLambertTargeterIzzo</span><span class="p">;</span>
@@ -276,12 +282,12 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>After the necessary features and variables are defined, the first step in the fitness function is to get the initial state and the final state of the spacecraft. The initial state is the state of the Earth and the final state is that of Mars. These states are retrieved using a method in the same class called: :literal`getPlanetPosition()`, which doesn’t contain any special Pagmo features, thus is not discussed in this tutorial. The following three lines initialize the lambert targeter using the intitial and final positions, and the decision variables. Finally, in the for-loop, the solutions of the Lambert targeter are evaluated and the one with the lowest delta-v is selected. For the multi-objective optimizer, the variable <code class="docutils literal"><span class="pre">useTripTime_</span></code> is set to true, thus the trip time for the selected trajectory is added to the fitness vector.</p>
+<p>After the necessary features and variables are defined, the first step in the fitness function is to get the initial state and the final state of the spacecraft. The initial state is the state of the Earth and the final state is that of Mars. These states are retrieved using a method in the same class called: :literal`getPlanetPosition()`, which doesn’t contain any special Pagmo features, thus is not discussed in this tutorial. The following three lines initialize the lambert targeter using the intitial and final positions, and the decision variables. Finally, in the for-loop, the solutions of the Lambert targeter are evaluated and the one with the lowest delta-v is selected. For the multi-objective optimizer, the variable <code class="docutils literal notranslate"><span class="pre">useTripTime_</span></code> is set to true, thus the trip time for the selected trajectory is added to the fitness vector.</p>
 </div>
 <div class="section" id="selecting-the-algorithm">
-<h2>3.2. Selecting the Algorithm<a class="headerlink" href="#selecting-the-algorithm" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.2. </span>Selecting the Algorithm<a class="headerlink" href="#selecting-the-algorithm" title="Permalink to this headline">¶</a></h2>
 <p>In this example, 8 optimizers are compared. These optimizers are selected using a for-loop:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">// Retrieve algorothm</span>
     <span class="kt">int</span> <span class="n">algorithmIndex</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
@@ -292,7 +298,7 @@
 </pre></div>
 </div>
 <p>and for the multi-objective example</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">// Retrieve MO algorithm</span>
     <span class="n">algorithm</span> <span class="n">algo</span><span class="p">{</span><span class="n">getMultiObjectiveAlgorithm</span><span class="p">(</span> <span class="n">j</span> <span class="p">)};</span>
@@ -301,20 +307,20 @@
     <span class="p">...</span>
 </pre></div>
 </div>
-<p>where the <code class="docutils literal"><span class="pre">getAlgorithm()</span></code> function is used, just as in the previous example. For the multi-objective example, a similar function is used: <code class="docutils literal"><span class="pre">getMultiObjectiveAlgorithm()</span></code>, which works the same as <code class="docutils literal"><span class="pre">getAlgorithm()</span></code>, but only selects algorithms suitable for multi-objective problems.</p>
+<p>where the <code class="docutils literal notranslate"><span class="pre">getAlgorithm()</span></code> function is used, just as in the previous example. For the multi-objective example, a similar function is used: <code class="docutils literal notranslate"><span class="pre">getMultiObjectiveAlgorithm()</span></code>, which works the same as <code class="docutils literal notranslate"><span class="pre">getAlgorithm()</span></code>, but only selects algorithms suitable for multi-objective problems.</p>
 </div>
 <div class="section" id="building-the-island">
-<h2>3.3. Building the Island<a class="headerlink" href="#building-the-island" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.3. </span>Building the Island<a class="headerlink" href="#building-the-island" title="Permalink to this headline">¶</a></h2>
 <p>The island is built in the same way as in <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Create an island with 1024 individuals</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create an island with 1024 individuals</span>
 <span class="n">island</span> <span class="n">isl</span><span class="p">{</span><span class="n">algo</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="mi">1024</span><span class="p">};</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="perform-the-optimization">
-<h2>3.4. Perform the Optimization<a class="headerlink" href="#perform-the-optimization" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.4. </span>Perform the Optimization<a class="headerlink" href="#perform-the-optimization" title="Permalink to this headline">¶</a></h2>
 <p>Finally, the optimization is performed in the same manner as in <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span>   <span class="p">...</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>   <span class="p">...</span>
    <span class="p">...</span>
    <span class="p">...</span>
    <span class="c1">// Evolve for 100 generations</span>
@@ -335,9 +341,9 @@
 </div>
 </div>
 <div class="section" id="results">
-<h2>3.5. Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.5. </span>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p>The single-objective application output should look like this:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span>Starting ...\tudatBundle\tudatExampleApplications\libraryExamples\bin\applications\application_PagmoEarthMarsTransferExample.exe...
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>Starting ...\tudatBundle\tudatExampleApplications\libraryExamples\bin\applications\application_PagmoEarthMarsTransferExample.exe...
 
 Grid search 0
 Grid search 1
@@ -364,7 +370,7 @@ Grid search 999
 </pre></div>
 </div>
 <p>For the multi-objective example, the following output plot can be seen here (there are several figures that all represent different generations, the 10th generation is shown here):</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../../_images/porkchop10.png" src="../../_images/porkchop10.png" />
 </div>
 </div>
@@ -425,7 +431,8 @@ Grid search 999
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
