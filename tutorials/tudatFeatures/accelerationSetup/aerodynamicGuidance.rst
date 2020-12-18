@@ -8,7 +8,7 @@ When including aerodynamics in the orbit propagation, it may often be desirable 
 
 Vehicle orientation
 ~~~~~~~~~~~~~~~~~~~
-Although rotational motion can be propagated in Tudat (see :class:`RotationalStatePropagatorSettings`), sometime the user simply wants to impose this rotational motion on the vehicle. 
+Although rotational motion can be propagated in Tudat (see :class:`RotationalStatePropagatorSettings`), in many cases the user wants to impose this rotational motion on the vehicle, using some a-priori model or guidance system. 
 
 For aerodynamics, the vehicle orientation is typically described by the angle of attack, angle of sideslip and bank angle, which is also the approach we take in Tudat. There is a single interface in Tudat through which the functions describing these angles are fed to the trajectory propagation:
 
@@ -21,7 +21,7 @@ For aerodynamics, the vehicle orientation is typically described by the angle of
       - Pre-defined guidance laws (only angle-of-attack trim presently implemented).
       - A user-defined :class:`AerodynamicGuidance` class, which computes the current angles using any number of input/environment variables. This option is typically the preferred option for a realistic entry propagation.
 
-   Below, we will indicate how to use these three options for the example of the Apollo entry example. Currently, the following code is used in the example, defining a constant angle of attack of 30 degree, and 0 sideslip and bank angle:
+    Below, we will indicate how to use these three options for the example of the Apollo entry example. Currently, the following code is used in the example, defining a constant angle of attack of 30 degree, and 0 sideslip and bank angle:
 
    .. code-block:: cpp
 

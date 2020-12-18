@@ -3,6 +3,11 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. figure:: _images/warning_box.png   
+
+.. warning:: We are currently in the process of re-organizing the tudat code and project, including a conda installation and a Python interface!! The website where we'll be (temporarily) hosting everything on our new setup is: https://tudat-space.readthedocs.io/en/latest/
+
+
 Start Page
 ==========
 
