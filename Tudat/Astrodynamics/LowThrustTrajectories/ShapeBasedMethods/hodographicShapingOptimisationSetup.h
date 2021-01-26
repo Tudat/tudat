@@ -165,6 +165,11 @@ struct HodographicShapingOptimisationProblem
         return minimizeMaximumThrust_ ? 2u : 1u;
     }
 
+//    HodographicShaping getHodographicShaping( )
+//    {
+//        return hodographicShaping;
+//    }
+
 protected:
 
 private:
@@ -184,6 +189,8 @@ private:
     bool minimizeMaximumThrust_;
 
     double initialMass_;
+
+//    mutable HodographicShaping hodographicShaping;
 
 };
 
