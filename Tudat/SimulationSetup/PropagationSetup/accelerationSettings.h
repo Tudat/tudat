@@ -539,6 +539,34 @@ public:
 
 };
 
+inline Eigen::Vector3d applyAccelerationScalingFunction(
+        const std::function< Eigen::Vector3d( const double ) > accelerationFunction,
+        const std::function< double( const double) > scalingFunction,
+        const double time )
+{
+    return accelerationFunction( time ) * scalingFunction( time );
+}
+
+class CustomAccelerationSettings: public AccelerationSettings
+{
+public:
+
+    CustomAccelerationSettings(
+            const std::function< Eigen::Vector3d( const double ) > accelerationFunction  ):
+        AccelerationSettings( basic_astrodynamics::custom_acceleration ),
+        accelerationFunction_( accelerationFunction ){ }
+
+    CustomAccelerationSettings(
+            const std::function< Eigen::Vector3d( const double ) > accelerationFunction,
+            std::function< double( const double) > scalingFunction ):
+        AccelerationSettings( basic_astrodynamics::custom_acceleration ),
+        accelerationFunction_(
+            std::bind( &applyAccelerationScalingFunction, accelerationFunction, scalingFunction,
+                       std::placeholders::_1 ) ){ }
+
+    std::function< Eigen::Vector3d( const double ) > accelerationFunction_;
+};
+
 //! Typedef defining a list of acceleration settings, set up in the same manner as the
 //! AccelerationMap typedef.
 typedef std::map< std::string, std::map< std::string, std::vector< std::shared_ptr< AccelerationSettings > > > >

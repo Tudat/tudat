@@ -417,6 +417,9 @@ std::shared_ptr< acceleration_partials::AccelerationPartial > createAnalyticalAc
         }
         break;
     }
+    case custom_acceleration:
+        throw std::runtime_error( "Custom acceleration does not yet have an associated partial." );
+        break;
     default:
         std::string errorMessage = "Acceleration model " + std::to_string( accelerationType ) +
                 " not found when making acceleration partial";

@@ -470,6 +470,11 @@ private:
 
 };
 
+std::function< double( const double ) > getOccultationFunction(
+        const NamedBodyMap& bodyMap,
+        const std::string& sourceBody,
+        const std::string& occultingBody,
+        const std::string& shadowedBody );
 
 //! Function to obtain (by reference) the position functions and radii of occulting bodies
 /*!

@@ -822,20 +822,20 @@ std::shared_ptr< electro_magnetism::PanelledRadiationPressureAcceleration > crea
 
 //! Function to create a solar sail radiation pressure acceleration model.
 std::shared_ptr< SolarSailAcceleration > createSolarSailAccelerationModel(
-    const std::shared_ptr< Body > bodyUndergoingAcceleration,
-    const std::shared_ptr< Body > bodyExertingAcceleration,
-    const std::shared_ptr< Body > centralBody,
-    const std::string& nameOfBodyUndergoingAcceleration,
-    const std::string& nameOfBodyExertingAcceleration )
+        const std::shared_ptr< Body > bodyUndergoingAcceleration,
+        const std::shared_ptr< Body > bodyExertingAcceleration,
+        const std::shared_ptr< Body > centralBody,
+        const std::string& nameOfBodyUndergoingAcceleration,
+        const std::string& nameOfBodyExertingAcceleration )
 {
     // Retrieve radiation pressure interface.
     if( bodyUndergoingAcceleration->getRadiationPressureInterfaces( ).count(
-            nameOfBodyExertingAcceleration ) == 0 )
+                nameOfBodyExertingAcceleration ) == 0 )
     {
         throw std::runtime_error(
-            "Error when making radiation pressure, no radiation pressure interface found  in " +
-            nameOfBodyUndergoingAcceleration +
-            " for body " + nameOfBodyExertingAcceleration );
+                    "Error when making radiation pressure, no radiation pressure interface found  in " +
+                    nameOfBodyUndergoingAcceleration +
+                    " for body " + nameOfBodyExertingAcceleration );
     }
 
     // Get radiation pressure interface from body undergoing acceleration, containing data on how body responds to radiation pressure.
@@ -863,6 +863,21 @@ std::shared_ptr< SolarSailAcceleration > createSolarSailAccelerationModel(
 
 }
 
+std::shared_ptr< basic_astrodynamics::CustomAccelerationModel > createCustomAccelerationModel(
+        const std::shared_ptr< AccelerationSettings > accelerationSettings,
+        const std::string& nameOfBodyUndergoingAcceleration )
+{
+    std::shared_ptr< CustomAccelerationSettings > customAccelerationSettings =
+            std::dynamic_pointer_cast< CustomAccelerationSettings >(
+                accelerationSettings );
+    if( customAccelerationSettings == nullptr )
+    {
+        throw std::runtime_error( "Error, expected custom acceleration settings when making acceleration model on " +
+                                  nameOfBodyUndergoingAcceleration  );
+    }
+    return std::make_shared< CustomAccelerationModel >( customAccelerationSettings->accelerationFunction_ );
+
+}
 
 //! Function to create an orbiter relativistic correction acceleration model
 std::shared_ptr< relativity::RelativisticAccelerationCorrection > createRelativisticCorrectionAcceleration(
@@ -1394,6 +1409,11 @@ std::shared_ptr< AccelerationModel< Eigen::Vector3d > > createAccelerationModel(
                     centralBody,
                     nameOfBodyUndergoingAcceleration,
                     nameOfBodyExertingAcceleration );
+        break;
+    case custom_acceleration:
+        accelerationModelPointer = createCustomAccelerationModel(
+                    accelerationSettings,
+                    nameOfBodyUndergoingAcceleration );
         break;
     default:
         throw std::runtime_error(

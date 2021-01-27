@@ -339,6 +339,29 @@ std::shared_ptr< electro_magnetism::RadiationPressureInterface > createRadiation
     return radiationPressureInterface;
 }
 
+
+std::function< double( const double ) > getOccultationFunction(
+        const NamedBodyMap& bodyMap,
+        const std::string& sourceBody,
+        const std::string& occultingBody,
+        const std::string& shadowedBody )
+{
+    std::function< Eigen::Vector3d( ) > sourceBodyPositionFunction =
+            std::bind( &Body::getPosition, bodyMap.at( sourceBody ) );
+    std::function< Eigen::Vector3d( ) > occultingBodyPositionFunction =
+            std::bind( &Body::getPosition, bodyMap.at( occultingBody ) );
+    std::function< Eigen::Vector3d( ) > shadowedBodyPositionFunction =
+            std::bind( &Body::getPosition, bodyMap.at( shadowedBody ) );
+    double sourceBodyRadius = bodyMap.at( sourceBody )->getShapeModel( )->getAverageRadius( );
+    double occultingBodyRadius = bodyMap.at( occultingBody )->getShapeModel( )->getAverageRadius( );
+
+    return [=]( const double ){
+        return mission_geometry::computeShadowFunction(
+                    sourceBodyPositionFunction( ), sourceBodyRadius,
+                    occultingBodyPositionFunction( ), occultingBodyRadius,
+                    shadowedBodyPositionFunction( ) ); };
+}
+
 } // namespace simulation_setup
 
 } // namespace tudat

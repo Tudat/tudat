@@ -61,7 +61,8 @@ enum AvailableAcceleration
     direct_tidal_dissipation_in_orbiting_body_acceleration,
     panelled_radiation_pressure_acceleration,
     momentum_wheel_desaturation_acceleration,
-    solar_sail_acceleration
+    solar_sail_acceleration,
+    custom_acceleration
 };
 
 //! Function to get a string representing a 'named identification' of an acceleration type

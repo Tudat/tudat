@@ -96,6 +96,8 @@ private:
 
 };
 
+
+
 //! Typedef to a 3D acceleration model.
 typedef AccelerationModel< > AccelerationModel3d;
 
@@ -110,6 +112,35 @@ typedef AccelerationModel< Eigen::Vector2d > AccelerationModel2d;
 typedef std::shared_ptr< AccelerationModel2d > AccelerationModel2dPointer;
 
 extern template class AccelerationModel< Eigen::Vector3d >;
+
+
+class CustomAccelerationModel: public basic_astrodynamics::AccelerationModel3d
+{
+public:
+    CustomAccelerationModel(
+            const std::function< Eigen::Vector3d( const double ) > accelerationFunction ):
+        accelerationFunction_( accelerationFunction ){ }
+
+    Eigen::Vector3d getAcceleration( )
+    {
+        return currentAcceleration_;
+    }
+
+    virtual void updateMembers( const double currentTime = TUDAT_NAN )
+    {
+        if( !( this->currentTime_ == currentTime ) )
+        {
+            currentAcceleration_ = accelerationFunction_( currentTime );
+        }
+
+    }
+
+private:
+    std::function< Eigen::Vector3d( const double ) > accelerationFunction_;
+
+    Eigen::Vector3d currentAcceleration_;
+
+};
 
 
 //! Update the members of an acceleration model and evaluate the acceleration.
