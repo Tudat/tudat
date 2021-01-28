@@ -9,12 +9,12 @@
  *
  */
 
-#ifndef SPHERICALSHAPING_H
-#define SPHERICALSHAPING_H
+#ifndef INVPOLYSHAPING_H
+#define INVPOLYSHAPING_H
 
 #include "Tudat/Astrodynamics/ShapeBasedMethods/shapeBasedMethodLeg.h"
-#include "Tudat/Astrodynamics/ShapeBasedMethods/baseFunctionsSphericalShaping.h"
-#include "Tudat/Astrodynamics/ShapeBasedMethods/compositeFunctionSphericalShaping.h"
+#include "Tudat/Astrodynamics/ShapeBasedMethods/baseFunctionsInvPolyShaping.h"
+#include "Tudat/Astrodynamics/ShapeBasedMethods/compositeFunctionInvPolyShaping.h"
 #include "Tudat/Mathematics/NumericalIntegrators/createNumericalIntegrator.h"
 #include "Tudat/Mathematics/NumericalQuadrature/createNumericalQuadrature.h"
 #include <Tudat/SimulationSetup/tudatSimulationHeader.h>
@@ -29,12 +29,12 @@ namespace shape_based_methods
 {
 
 
-class SphericalShaping : public ShapeBasedMethodLeg  /*: public ShapeBasedMethod*/
+class InvPolyShaping : public ShapeBasedMethodLeg  /*: public ShapeBasedMethod*/
 {
 public:
 
-    //! Constructor for spherical shaping.
-    SphericalShaping(Eigen::Vector6d initialState,
+    //! Constructor for InvPoly shaping.
+    InvPolyShaping(Eigen::Vector6d initialState,
                      Eigen::Vector6d finalState,
                      double requiredTimeOfFlight,
                      int numberOfRevolutions,
@@ -50,7 +50,7 @@ public:
                         = std::shared_ptr< numerical_integrators::IntegratorSettings< > >( ) );
 
     //! Default destructor.
-    ~SphericalShaping( ) { }
+    ~InvPolyShaping( ) { }
 
     //! Convert time to independent variable.
     double convertTimeToIndependentVariable( const double time );
@@ -70,6 +70,12 @@ public:
         return finalAzimuthAngle_;
     }
 
+    //! Return final azimuth angle.
+    double getTravelledAzimuthAngle( )
+    {
+        return travelledAzimuthAngle_;
+    }
+
     //! Return the coefficients of the radial distance composite function.
     Eigen::VectorXd getRadialDistanceFunctionCoefficients( )
     {
@@ -79,7 +85,7 @@ public:
     //! Return the coefficients of the elevation angle composite function.
     Eigen::VectorXd getElevationAngleFunctionCoefficients( )
     {
-        return coefficientsElevationAngleFunction_;
+        return coefficientsZFunction_;
     }
 
     //! Return initial azimuth angle.
@@ -100,6 +106,9 @@ public:
         return infeasibleTOF_;
     }
 
+    //! Compute current time from azimuth angle.
+    double computeCurrentTimeFromAzimuthAngle( const double currentAzimuthAngle );
+
     //! Compute time of flight.
     double computeTimeOfFlight()
     {
@@ -110,6 +119,18 @@ public:
     //! Compute current cartesian state.
     Eigen::Vector6d computeCurrentStateVector( const double currentAzimuthAngle );
 
+
+    //! Compute magnitude thrust acceleration.
+    double computeCurrentInPlaneThrustAccelerationMagnitude( double currentAzimuthAngle );
+
+    //! Compute magnitude thrust acceleration.
+    double computeCurrentOutOfPlaneThrustAccelerationMagnitude( double currentAzimuthAngle );
+
+    //! Compute current thrust acceleration in normalized cartesian coordinates.
+    double computeNormalizedThrustAccelerationMagnitude( const double currentAzimuthAngle );
+
+    //! Compute magnitude thrust acceleration.
+    double computeCurrentThrustAccelerationMagnitude( double currentAzimuthAngle );
 
     //! Compute current thrust acceleration in cartesian coordinates.
     Eigen::Vector3d computeCurrentThrustAccelerationVector( const double currentAzimuthAngle )
@@ -159,17 +180,20 @@ protected:
     //! Compute the final value of the constant C, as defined in ... (ADD REFERENCE) to express the boundary conditions.
     double computeFinalValueBoundariesConstant( );
 
-    //! Compute the Free coefficient boundaries.
-    void computeFreeCoefficientBoundaries( );
-
     //! Ensure that the boundary conditions are respected.
     void satisfyBoundaryConditions( );
+
+    //! Function to find boundary values of d coefficient
+    Eigen::Vector2d computeDCoefficientBounds( );
 
     //! Iterate to match the required time of flight, by updating the value of the free coefficient.
     void iterateToMatchRequiredTimeOfFlight( std::shared_ptr< root_finders::RootFinderSettings > rootFinderSettings,
                                              const double lowerBound = TUDAT_NAN,
                                              const double upperBound = TUDAT_NAN,
                                              const double initialGuess = TUDAT_NAN );
+
+    //! Compute Base time of flight function w.r.t. azimuth angle. - invpoly
+    double computeBaseTimeOfFlightFunction( double currentAzimuthAngle );
 
     //! Compute derivative of the scalar function D in the time equation (ADD REFERENCE AND EQUATION NUMBER) w.r.t. azimuth angle.
     double computeScalarFunctionTimeEquation( double currentAzimuthAngle );
@@ -186,15 +210,20 @@ protected:
     //! Compute normalized time of flight.
     double computeNormalizedTimeOfFlight();
 
-    //! Compute current time from azimuth angle.
-    double computeCurrentTimeFromAzimuthAngle( const double currentAzimuthAngle );
+
 
     //! Reset the value of the free coefficient, in order to match the required time of flight.
     void resetValueFreeCoefficient( const double freeCoefficient )
     {
         initialValueFreeCoefficient_ = freeCoefficient;
-        coefficientsRadialDistanceFunction_[ 2 ] = freeCoefficient;
+        coefficientsRadialDistanceFunction_[ 3 ] = freeCoefficient; // adjusted for invPoly 'd' @4th place
     }
+
+    //! Computed travelled angle theta_f
+    void computeTravelledAzimuthAngle( );
+
+    //! Computed travelled angle theta_f
+    double computeTanFlightPathAngle( const double currentAzimuthAngle );
 
     //! Compute first derivative of the azimuth angle w.r.t. time.
     double computeFirstDerivativeAzimuthAngleWrtTime( const double currentAzimuthAngle );
@@ -224,11 +253,11 @@ protected:
     //! Compute thrust acceleration vector in spherical coordinates.
     Eigen::Vector3d computeThrustAccelerationInSphericalCoordinates( const double currentAzimuthAngle );
 
-    //! Compute magnitude thrust acceleration.
-    double computeCurrentThrustAccelerationMagnitude( double currentTime );
+
 
     //! Compute direction thrust acceleration in cartesian coordinates.
     Eigen::Vector3d computeCurrentThrustAccelerationDirection( double currentTime );
+
 
     //! Compute current thrust acceleration in normalized cartesian coordinates.
     Eigen::Vector3d computeNormalizedThrustAccelerationVector( const double currentAzimuthAngle );
@@ -298,6 +327,18 @@ protected:
 
 private:
 
+    //! Unit vector of the initial position
+    Eigen::Vector3d initialPositionUnit_;
+
+    //! Unit vector of the final position
+    Eigen::Vector3d finalPositionUnit_;
+
+    //! Axis of rotation, cross product of initial and final position
+    Eigen::Vector3d axisOfRotation_;
+
+    //! A Travelled azimuthal angular distance by the trajectory
+    double travelledAzimuthAngle_;
+
     //! Initial state in cartesian coordinates.
     Eigen::Vector6d initialState_;
 
@@ -306,6 +347,9 @@ private:
 
     //! Targeted value for the time of flight.
     double requiredTimeOfFlight_;
+
+    //! Upper limit of TOF due to d-coefficient - TOF interaction.
+    double TOFdUpperLimit_;
 
     //! Number of revolutions.
     int numberOfRevolutions_;
@@ -331,6 +375,12 @@ private:
     //! Final state in spherical coordinates.
     Eigen::Vector6d finalStateSphericalCoordinates_;
 
+    //! Initial state in cylindrical coordinates.
+    Eigen::Vector6d initialStateCylindricalCoordinates_;
+
+    //! Final state in cylindrical coordinates.
+    Eigen::Vector6d finalStateCylindricalCoordinates_;
+
     //! Initial value azimuth angle.
     double initialAzimuthAngle_;
 
@@ -344,16 +394,16 @@ private:
     Eigen::Vector6d finalStateParametrizedByAzimuthAngle_;
 
     //! Pointer to the spherical shaping radial distance composite function.
-    std::shared_ptr< CompositeRadialFunctionSphericalShaping > radialDistanceCompositeFunction_;
+    std::shared_ptr< CompositeRadialFunctionInvPolyShaping > radialDistanceCompositeFunction_;
 
     //! Pointer to the spherical shaping elevation angle composite function.
-    std::shared_ptr< CompositeElevationFunctionSphericalShaping > elevationAngleCompositeFunction_;
+    std::shared_ptr< CompositeZFunctionInvPolyShaping > zCompositeFunction_;
 
     //! Coefficients for the radial distance composite function.
     Eigen::VectorXd coefficientsRadialDistanceFunction_;
 
     //! Coefficients for the elevation angle composite function.
-    Eigen::VectorXd coefficientsElevationAngleFunction_;
+    Eigen::VectorXd coefficientsZFunction_;
 
     //! Initial guess for the free coefficient (i.e. coefficient of the second order component of the radial inverse polynomial).
     double initialValueFreeCoefficient_;
@@ -361,11 +411,11 @@ private:
     //! Root finder settings, to be used to find the free coefficient value that ensures the time of flight is correct.
     std::shared_ptr< root_finders::RootFinderSettings > rootFinderSettings_;
 
-    //! Lower bound for the free coefficient, to be used when trying to match the required time of flight. - ANDRES: removes 'const'
-    double lowerBoundFreeCoefficient_;
+    //! Lower bound for the free coefficient, to be used when trying to match the required time of flight.
+    const double lowerBoundFreeCoefficient_;
 
     //! Upper bound for the free coefficient, to be used when trying to match the required time of flight.
-    double upperBoundFreeCoefficient_;
+    const double upperBoundFreeCoefficient_;
 
     //! Integrator settings.
     std::shared_ptr< numerical_integrators::IntegratorSettings< double > > integratorSettings_;
@@ -385,4 +435,4 @@ private:
 } // namespace shape_based_methods
 } // namespace tudat
 
-#endif // SPHERICALSHAPING_H
+#endif // INVPOLYSHAPING_H

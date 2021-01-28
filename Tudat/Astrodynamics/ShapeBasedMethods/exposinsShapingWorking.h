@@ -9,12 +9,12 @@
  *
  */
 
-#ifndef SPHERICALSHAPING_H
-#define SPHERICALSHAPING_H
+#ifndef EXPOSINSSHAPING_H
+#define EXPOSINSSHAPING_H
 
 #include "Tudat/Astrodynamics/ShapeBasedMethods/shapeBasedMethodLeg.h"
-#include "Tudat/Astrodynamics/ShapeBasedMethods/baseFunctionsSphericalShaping.h"
-#include "Tudat/Astrodynamics/ShapeBasedMethods/compositeFunctionSphericalShaping.h"
+#include "Tudat/Astrodynamics/ShapeBasedMethods/baseFunctionsExposinsShaping.h"
+#include "Tudat/Astrodynamics/ShapeBasedMethods/compositeFunctionExposinsShaping.h"
 #include "Tudat/Mathematics/NumericalIntegrators/createNumericalIntegrator.h"
 #include "Tudat/Mathematics/NumericalQuadrature/createNumericalQuadrature.h"
 #include <Tudat/SimulationSetup/tudatSimulationHeader.h>
@@ -29,12 +29,12 @@ namespace shape_based_methods
 {
 
 
-class SphericalShaping : public ShapeBasedMethodLeg  /*: public ShapeBasedMethod*/
+class ExposinsShaping : public ShapeBasedMethodLeg  /*: public ShapeBasedMethod*/
 {
 public:
 
-    //! Constructor for spherical shaping.
-    SphericalShaping(Eigen::Vector6d initialState,
+    //! Constructor for exposins shaping.
+    ExposinsShaping(Eigen::Vector6d initialState,
                      Eigen::Vector6d finalState,
                      double requiredTimeOfFlight,
                      int numberOfRevolutions,
@@ -50,7 +50,7 @@ public:
                         = std::shared_ptr< numerical_integrators::IntegratorSettings< > >( ) );
 
     //! Default destructor.
-    ~SphericalShaping( ) { }
+    ~ExposinsShaping( ) { }
 
     //! Convert time to independent variable.
     double convertTimeToIndependentVariable( const double time );
@@ -94,12 +94,6 @@ public:
         return finalAzimuthAngle_;
     }
 
-    //! Return wheter trajectory is feasible.
-    bool getInfeasibleTOF( )
-    {
-        return infeasibleTOF_;
-    }
-
     //! Compute time of flight.
     double computeTimeOfFlight()
     {
@@ -120,6 +114,9 @@ public:
 
     //! Compute deltaV.
     double computeDeltaV( );
+
+    //! Compute deltaV.
+    double computeDeltaVExposins( );
 
 //    //! Get low-thrust acceleration model from shaping method.
 //    std::shared_ptr< propulsion::ThrustAcceleration > getLowThrustAccelerationModel(
@@ -144,6 +141,9 @@ public:
 
 protected:
 
+    //! Compute the bounds of the gamma value.
+    void computeBoundsGamma( );
+
     //! Compute the inverse of the boundary conditions matrix.
     Eigen::MatrixXd computeInverseMatrixBoundaryConditions( );
 
@@ -159,9 +159,6 @@ protected:
     //! Compute the final value of the constant C, as defined in ... (ADD REFERENCE) to express the boundary conditions.
     double computeFinalValueBoundariesConstant( );
 
-    //! Compute the Free coefficient boundaries.
-    void computeFreeCoefficientBoundaries( );
-
     //! Ensure that the boundary conditions are respected.
     void satisfyBoundaryConditions( );
 
@@ -170,6 +167,15 @@ protected:
                                              const double lowerBound = TUDAT_NAN,
                                              const double upperBound = TUDAT_NAN,
                                              const double initialGuess = TUDAT_NAN );
+
+    //! Iterate to match the required time of flight, by updating the value of the free coefficient.
+    void iterateToMatchRequiredTimeOfFlightExposins( std::shared_ptr< root_finders::RootFinderSettings > rootFinderSettings,
+                                             const double lowerBound = TUDAT_NAN,
+                                             const double upperBound = TUDAT_NAN,
+                                             const double initialGuess = TUDAT_NAN );
+
+    //! Compute Base time of flight function w.r.t. azimuth angle. - exposins
+    double computeBaseTimeOfFlightFunction( double currentAzimuthAngle );
 
     //! Compute derivative of the scalar function D in the time equation (ADD REFERENCE AND EQUATION NUMBER) w.r.t. azimuth angle.
     double computeScalarFunctionTimeEquation( double currentAzimuthAngle );
@@ -186,6 +192,9 @@ protected:
     //! Compute normalized time of flight.
     double computeNormalizedTimeOfFlight();
 
+    //! Compute normalized time of flight.
+    double computeNormalizedTimeOfFlightExposins();
+
     //! Compute current time from azimuth angle.
     double computeCurrentTimeFromAzimuthAngle( const double currentAzimuthAngle );
 
@@ -196,8 +205,17 @@ protected:
         coefficientsRadialDistanceFunction_[ 2 ] = freeCoefficient;
     }
 
+    //! Reset the value of the free coefficient, in order to match the required time of flight.
+    void resetRequiredGamma( const double requiredGamma )
+    {
+        requiredGamma_ = requiredGamma;
+    }
+
     //! Compute first derivative of the azimuth angle w.r.t. time.
     double computeFirstDerivativeAzimuthAngleWrtTime( const double currentAzimuthAngle );
+
+    //! Compute first derivative of the azimuth angle w.r.t. time. - Exposins
+    double computeFirstDerivativeAzimuthAngleWrtTimeExposins( const double currentAzimuthAngle );
 
     //! Compute second derivative of the azimuth angle w.r.t. time.
     double computeSecondDerivativeAzimuthAngleWrtTime( const double currentAzimuthAngle );
@@ -229,6 +247,9 @@ protected:
 
     //! Compute direction thrust acceleration in cartesian coordinates.
     Eigen::Vector3d computeCurrentThrustAccelerationDirection( double currentTime );
+
+    //! Compute normalized magnitude thrust acceleration. Exposins
+    double computeCurrentNormalizedThrustAccelerationMagnitude( double currentAzimuthAngle );
 
     //! Compute current thrust acceleration in normalized cartesian coordinates.
     Eigen::Vector3d computeNormalizedThrustAccelerationVector( const double currentAzimuthAngle );
@@ -294,9 +315,90 @@ protected:
         std::function< double ( ) > getRequiredTimeOfFlightfunction_;
     };
 
+    //! Time of flight function for the root-finder.
+    struct TimeOfFlightFunctionExposins : public basic_mathematics::BasicFunction< double, double >
+    {
+
+        //! Create a function that returns the time of flight associated with the current trajectory.
+        TimeOfFlightFunctionExposins( std::function< void ( const double ) > resetFreeCoefficientFunction,
+                              std::function< void( ) > satisfyBoundaryConditionsFunction,
+                              std::function< double ( ) >  computeTimeOfFlightFunction,
+                              std::function< double( ) > getRequiredTimeOfFlightfunction ):
+        resetFreeCoefficientFunction_( resetFreeCoefficientFunction ),
+        satisfyBoundaryConditionsFunction_( satisfyBoundaryConditionsFunction ),
+        computeTimeOfFlightFunction_( computeTimeOfFlightFunction ),
+        getRequiredTimeOfFlightfunction_( getRequiredTimeOfFlightfunction ){ }
+
+        //! Evaluate the difference between the current and required time of flight values, from the current value of the free coefficient.
+        double evaluate( const double inputValue )
+        {
+            resetFreeCoefficientFunction_( inputValue );
+//            satisfyBoundaryConditionsFunction_( );
+            double currentTimeOfFlight = computeTimeOfFlightFunction_( );
+
+            return 0.5 - currentTimeOfFlight; //getRequiredTimeOfFlightfunction_( ) - currentTimeOfFlight;
+        }
+
+        //! Derivative function (not provided).
+        double computeDerivative( const unsigned int order, const double inputValue )
+        {
+            throw std::runtime_error( "The rootfinder for TOF should not evaluate derivatives!" );
+        }
+
+        //! Integral function (not provided).
+        double computeDefiniteIntegral( unsigned int order, double lowerBound, double upperbound )
+        {
+            throw std::runtime_error( "The rootfinder for TOF should not evaluate integrals!" );
+        }
+
+        //! Get the expected true location of the root (not implemented).
+        double getTrueRootLocation( ) { return TUDAT_NAN; }
+
+        //! Get the accuracy of the true location of the root (not implemented).
+        double getTrueRootAccuracy( ) { return TUDAT_NAN; }
+
+        //! Get a reasonable initial guess of the root location (not implemented).
+        double getInitialGuess( ) { return TUDAT_NAN; }
+
+        //! Get a reasonable lower boundary for the root location (not implemented).
+        double getLowerBound( ) { return TUDAT_NAN; }
+
+        //! Get a reasonable upper boundary for the root location (not implemented).
+        double getUpperBound( ) { return TUDAT_NAN; }
+
+    protected:
+
+    private:
+        std::function< void ( const double ) > resetFreeCoefficientFunction_;
+        std::function< void ( ) > satisfyBoundaryConditionsFunction_;
+        std::function< double ( ) >  computeTimeOfFlightFunction_;
+        std::function< double ( ) > getRequiredTimeOfFlightfunction_;
+    };
+
+
 
 
 private:
+    //! A Initial radius in the cylindrical coordinate system
+    double initialCylindricalRadius_;
+
+    //! A Final radius in the cylindrical coordinate system
+    double finalCylindricalRadius_;
+
+    //! A Travelled azimuthal angular distance by the trajectory
+    double travelledAzimuthAngle_;
+
+    //! The winding parameter k_2
+    double windingParameter_;
+
+    //! A Lower bound of gamma
+    double lowerBoundGamma_;
+
+    //! A Upper bound of gamma
+    double upperBoundGamma_;
+
+    //! A Required gamma for meeting TOF req.
+    double requiredGamma_;
 
     //! Initial state in cartesian coordinates.
     Eigen::Vector6d initialState_;
@@ -309,9 +411,6 @@ private:
 
     //! Number of revolutions.
     int numberOfRevolutions_;
-
-    //! Variabale whether trajectory is feasible for given TOF
-    bool infeasibleTOF_;
 
     //! Body map object.
     simulation_setup::NamedBodyMap bodyMap_;
@@ -343,11 +442,11 @@ private:
     //! Final state parametrised by the azimuth angle theta.
     Eigen::Vector6d finalStateParametrizedByAzimuthAngle_;
 
-    //! Pointer to the spherical shaping radial distance composite function.
-    std::shared_ptr< CompositeRadialFunctionSphericalShaping > radialDistanceCompositeFunction_;
+    //! Pointer to the exposins shaping radial distance composite function.
+    std::shared_ptr< CompositeRadialFunctionExposinsShaping > radialDistanceCompositeFunction_;
 
-    //! Pointer to the spherical shaping elevation angle composite function.
-    std::shared_ptr< CompositeElevationFunctionSphericalShaping > elevationAngleCompositeFunction_;
+    //! Pointer to the exposins shaping elevation angle composite function.
+    std::shared_ptr< CompositeElevationFunctionExposinsShaping > elevationAngleCompositeFunction_;
 
     //! Coefficients for the radial distance composite function.
     Eigen::VectorXd coefficientsRadialDistanceFunction_;
@@ -361,11 +460,11 @@ private:
     //! Root finder settings, to be used to find the free coefficient value that ensures the time of flight is correct.
     std::shared_ptr< root_finders::RootFinderSettings > rootFinderSettings_;
 
-    //! Lower bound for the free coefficient, to be used when trying to match the required time of flight. - ANDRES: removes 'const'
-    double lowerBoundFreeCoefficient_;
+    //! Lower bound for the free coefficient, to be used when trying to match the required time of flight.
+    const double lowerBoundFreeCoefficient_;
 
     //! Upper bound for the free coefficient, to be used when trying to match the required time of flight.
-    double upperBoundFreeCoefficient_;
+    const double upperBoundFreeCoefficient_;
 
     //! Integrator settings.
     std::shared_ptr< numerical_integrators::IntegratorSettings< double > > integratorSettings_;
@@ -385,4 +484,4 @@ private:
 } // namespace shape_based_methods
 } // namespace tudat
 
-#endif // SPHERICALSHAPING_H
+#endif // EXPOSINSSHAPING_H

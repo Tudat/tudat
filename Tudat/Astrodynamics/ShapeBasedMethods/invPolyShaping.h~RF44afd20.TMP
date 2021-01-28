@@ -9,12 +9,12 @@
  *
  */
 
-#ifndef SPHERICALSHAPING_H
-#define SPHERICALSHAPING_H
+#ifndef INVPOLYSHAPING_H
+#define INVPOLYSHAPING_H
 
 #include "Tudat/Astrodynamics/ShapeBasedMethods/shapeBasedMethodLeg.h"
-#include "Tudat/Astrodynamics/ShapeBasedMethods/baseFunctionsSphericalShaping.h"
-#include "Tudat/Astrodynamics/ShapeBasedMethods/compositeFunctionSphericalShaping.h"
+#include "Tudat/Astrodynamics/ShapeBasedMethods/baseFunctionsInvPolyShaping.h"
+#include "Tudat/Astrodynamics/ShapeBasedMethods/compositeFunctionInvPolyShaping.h"
 #include "Tudat/Mathematics/NumericalIntegrators/createNumericalIntegrator.h"
 #include "Tudat/Mathematics/NumericalQuadrature/createNumericalQuadrature.h"
 #include <Tudat/SimulationSetup/tudatSimulationHeader.h>
@@ -29,12 +29,12 @@ namespace shape_based_methods
 {
 
 
-class SphericalShaping : public ShapeBasedMethodLeg  /*: public ShapeBasedMethod*/
+class InvPolyShaping : public ShapeBasedMethodLeg  /*: public ShapeBasedMethod*/
 {
 public:
 
-    //! Constructor for spherical shaping.
-    SphericalShaping(Eigen::Vector6d initialState,
+    //! Constructor for InvPoly shaping.
+    InvPolyShaping(Eigen::Vector6d initialState,
                      Eigen::Vector6d finalState,
                      double requiredTimeOfFlight,
                      int numberOfRevolutions,
@@ -50,7 +50,7 @@ public:
                         = std::shared_ptr< numerical_integrators::IntegratorSettings< > >( ) );
 
     //! Default destructor.
-    ~SphericalShaping( ) { }
+    ~InvPolyShaping( ) { }
 
     //! Convert time to independent variable.
     double convertTimeToIndependentVariable( const double time );
@@ -92,12 +92,6 @@ public:
     double getFinalAzimuthAngle( )
     {
         return finalAzimuthAngle_;
-    }
-
-    //! Return wheter trajectory is feasible.
-    bool getInfeasibleTOF( )
-    {
-        return infeasibleTOF_;
     }
 
     //! Compute time of flight.
@@ -158,9 +152,6 @@ protected:
 
     //! Compute the final value of the constant C, as defined in ... (ADD REFERENCE) to express the boundary conditions.
     double computeFinalValueBoundariesConstant( );
-
-    //! Compute the Free coefficient boundaries.
-    void computeFreeCoefficientBoundaries( );
 
     //! Ensure that the boundary conditions are respected.
     void satisfyBoundaryConditions( );
@@ -298,6 +289,9 @@ protected:
 
 private:
 
+    //! A Travelled azimuthal angular distance by the trajectory
+    double travelledAzimuthAngle_;
+
     //! Initial state in cartesian coordinates.
     Eigen::Vector6d initialState_;
 
@@ -309,9 +303,6 @@ private:
 
     //! Number of revolutions.
     int numberOfRevolutions_;
-
-    //! Variabale whether trajectory is feasible for given TOF
-    bool infeasibleTOF_;
 
     //! Body map object.
     simulation_setup::NamedBodyMap bodyMap_;
@@ -344,10 +335,10 @@ private:
     Eigen::Vector6d finalStateParametrizedByAzimuthAngle_;
 
     //! Pointer to the spherical shaping radial distance composite function.
-    std::shared_ptr< CompositeRadialFunctionSphericalShaping > radialDistanceCompositeFunction_;
+    std::shared_ptr< CompositeRadialFunctionInvPolyShaping > radialDistanceCompositeFunction_;
 
-    //! Pointer to the spherical shaping elevation angle composite function.
-    std::shared_ptr< CompositeElevationFunctionSphericalShaping > elevationAngleCompositeFunction_;
+//    //! Pointer to the spherical shaping elevation angle composite function.
+//    std::shared_ptr< CompositeElevationFunctionInvPolyShaping > elevationAngleCompositeFunction_;
 
     //! Coefficients for the radial distance composite function.
     Eigen::VectorXd coefficientsRadialDistanceFunction_;
@@ -361,11 +352,11 @@ private:
     //! Root finder settings, to be used to find the free coefficient value that ensures the time of flight is correct.
     std::shared_ptr< root_finders::RootFinderSettings > rootFinderSettings_;
 
-    //! Lower bound for the free coefficient, to be used when trying to match the required time of flight. - ANDRES: removes 'const'
-    double lowerBoundFreeCoefficient_;
+    //! Lower bound for the free coefficient, to be used when trying to match the required time of flight.
+    const double lowerBoundFreeCoefficient_;
 
     //! Upper bound for the free coefficient, to be used when trying to match the required time of flight.
-    double upperBoundFreeCoefficient_;
+    const double upperBoundFreeCoefficient_;
 
     //! Integrator settings.
     std::shared_ptr< numerical_integrators::IntegratorSettings< double > > integratorSettings_;
@@ -385,4 +376,4 @@ private:
 } // namespace shape_based_methods
 } // namespace tudat
 
-#endif // SPHERICALSHAPING_H
+#endif // INVPOLYSHAPING_H
