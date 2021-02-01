@@ -115,6 +115,10 @@ add_executable(test_AccelerationModel "${SRCROOT}${BASICASTRODYNAMICSDIR}/UnitTe
 setup_custom_test_program(test_AccelerationModel "${SRCROOT}${BASICASTRODYNAMICSDIR}")
 target_link_libraries(test_AccelerationModel tudat_basic_astrodynamics ${Boost_LIBRARIES})
 
+add_executable(test_CustomAccelerationModel "${SRCROOT}${BASICASTRODYNAMICSDIR}/UnitTests/unitTestCustomAccelerationModel.cpp")
+setup_custom_test_program(test_CustomAccelerationModel "${SRCROOT}${BASICASTRODYNAMICSDIR}")
+target_link_libraries(test_CustomAccelerationModel ${TUDAT_PROPAGATION_LIBRARIES} ${Boost_LIBRARIES})
+
 add_executable(test_ClohessyWiltshirePropagator "${SRCROOT}${BASICASTRODYNAMICSDIR}/UnitTests/unitTestClohessyWiltshirePropagator.cpp")
 setup_custom_test_program(test_ClohessyWiltshirePropagator "${SRCROOT}${BASICASTRODYNAMICSDIR}")
 target_link_libraries(test_ClohessyWiltshirePropagator tudat_basic_astrodynamics ${Boost_LIBRARIES})
