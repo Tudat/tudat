@@ -14,6 +14,7 @@
 #include "Tudat/Astrodynamics/Gravitation/basicSolidBodyTideGravityFieldVariations.h"
 #include "Tudat/Astrodynamics/Gravitation/tabulatedGravityFieldVariations.h"
 #include "Tudat/Astrodynamics/Gravitation/timeDependentSphericalHarmonicsGravityField.h"
+#include "Tudat/Astrodynamics/Gravitation/periodicGravityFieldVariations.h"
 #include "Tudat/SimulationSetup/EnvironmentSetup/createGravityFieldVariations.h"
 
 namespace tudat
@@ -42,9 +43,16 @@ std::shared_ptr< gravitation::GravityFieldVariationsSet > createGravityFieldMode
     std::map< int, double > finalTimes;
     std::map< int, double > timeSteps;
 
+    if( bodyMap.count( body ) == 0 )
+        {
+            throw std::runtime_error( "Error when making gravity field variations of body " + body +
+                                      ", body not found" );
+        }
+
     // Iterate over all variations to create.
     for( unsigned int i = 0; i < gravityFieldVariationSettings.size( ); i++ )
     {
+
         // Get current type of deformation
         variationTypes.push_back( gravityFieldVariationSettings.at( i )->getBodyDeformationType( ) );
 
@@ -99,7 +107,7 @@ std::shared_ptr< gravitation::GravityFieldVariationsSet > createGravityFieldMode
     }
 
     std::dynamic_pointer_cast< TimeDependentSphericalHarmonicsGravityField >(
-                bodyMap.at( body )->getGravityFieldModel( ) )->setFieldVariationSettings( fieldVariationsSet, false );
+                bodyMap.at( body )->getGravityFieldModel( ) )->setFieldVariationSettings( fieldVariationsSet, true );
 
     return fieldVariationsSet;
 }
@@ -238,6 +246,38 @@ std::shared_ptr< gravitation::GravityFieldVariations > createGravityFieldVariati
         }
         break;
     }
+    case periodic_variation:
+        {
+            // Check input consistency
+            std::shared_ptr< PeriodicGravityFieldVariationsSettings > periodicGravityFieldVariationSettings
+                    = std::dynamic_pointer_cast< PeriodicGravityFieldVariationsSettings >(
+                        gravityFieldVariationSettings );
+            if( periodicGravityFieldVariationSettings == nullptr )
+            {
+                throw std::runtime_error( "Error, expected periodic gravity field variation settings for " + body );
+            }
+            else
+            {
+                if( periodicGravityFieldVariationSettings->getCosineAmplitudes( ).size( ) > 0 )
+                {
+                // Create variation.
+                gravityFieldVariationModel = std::make_shared< PeriodicGravityFieldVariations >
+                        (  periodicGravityFieldVariationSettings->getCosineAmplitudes( ),
+                           periodicGravityFieldVariationSettings->getSineAmplitudes( ),
+                           periodicGravityFieldVariationSettings->getFrequencies( ),
+                           periodicGravityFieldVariationSettings->getPhases( ),
+                           periodicGravityFieldVariationSettings->getReferenceEpoch( ),
+                           periodicGravityFieldVariationSettings->getMinimumDegree( ),
+                           periodicGravityFieldVariationSettings->getMinimumOrder( ) );
+                }
+                else
+                {
+                    throw std::runtime_error( "Error when creating periodic gravity field variations; no cosine amplitudes found" );
+                }
+            }
+
+            break;
+        }
     default:
     {
         throw std::runtime_error( "Error, case " + std::to_string(
