@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
@@ -200,13 +204,13 @@
 <li><p>If you get an error or prefer to compile the targets manually, you can use Qt Creator (see how to <a class="reference internal" href="../../installation/setupDevEnvironment.html#setupdevelopmentenvironment"><span class="std std-ref">Setup Development Environment</span></a>). After the project tudatBundle has been built, run the MATLAB Interface’s unit tests by writing in MATLAB’s Command Window:</p></li>
 </ol>
 <blockquote>
-<div><div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">test</span><span class="p">()</span>
+<div><div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">test</span><span class="p">()</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>If you want to move, rename or delete your tudatBundle/matlabInterface directory, remove it first from MATLAB’s path by using <code class="docutils literal notranslate"><span class="pre">pathtool</span></code>.</p>
 <p>When building with Qt Creator and running the tests in MATLAB, if all of them fail, the source of the problem may have to do with MATLAB being unable to locate some of the dynamic libraries. Pick one of the tests and run in from Qt creator. It it passes, then in Qt creator go to Projects &gt; Build &gt; Build Environment and check the value of the variable PATH. If some of the paths indicated there refer to Qt, you will have to add them to the MATLAB Interface manually. For instance, in MATLAB’s Command Window:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">PATH</span><span class="p">(</span><span class="s">&#39;C:\Qt\Tools\mingw492_32\bin&#39;</span><span class="p">)</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">PATH</span><span class="p">(</span><span class="s">&#39;C:\Qt\Tools\mingw492_32\bin&#39;</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This setting is set permanently, so you won’t need to run this command again in future MATLAB sessions. If you need to specify several paths, use <code class="docutils literal notranslate"><span class="pre">;</span></code> as separator (on UNIX systems, using <code class="docutils literal notranslate"><span class="pre">:</span></code> as separator is also valid).</p>
@@ -265,11 +269,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -304,6 +307,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

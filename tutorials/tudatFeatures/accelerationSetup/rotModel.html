@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -199,23 +203,23 @@
 <p>The setup of the rotational state is similar to the set-up of the translational acceleration framework.</p>
 <p>The user can define the settings for the torque acting on a vehicle in the following variable: <code class="docutils literal notranslate"><span class="pre">SelectedTorqueMap</span></code>.</p>
 <dl class="py class">
-<dt id="SelectedTorqueMap">
-<em class="property">class </em><code class="sig-name descname">SelectedTorqueMap</code><a class="headerlink" href="#SelectedTorqueMap" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="SelectedTorqueMap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SelectedTorqueMap</span></span><a class="headerlink" href="#SelectedTorqueMap" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a <code class="docutils literal notranslate"><span class="pre">typedef</span></code> for:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">torqueSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">torqueSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Just as in the translational acceleration setup, the first key is the body undergoing the torque, the second key is the body exerting the torque, and the third entry is a vector
 of <code class="docutils literal notranslate"><span class="pre">torqueSettings</span></code>. The available torque models are given in an <code class="docutils literal notranslate"><span class="pre">enum</span></code> called <code class="docutils literal notranslate"><span class="pre">AvailableTorque</span></code>. An example can be given using the Apollo capsule
 example:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SelectedTorqueMap</span> <span class="n">selectedTorqueModelMap</span><span class="p">;</span>
-<span class="n">selectedTorqueModelMap</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TorqueSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">aerodynamic_torque</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SelectedTorqueMap</span><span class="w"> </span><span class="n">selectedTorqueModelMap</span><span class="p">;</span><span class="w"></span>
+<span class="n">selectedTorqueModelMap</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;Apollo&quot;</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="s">&quot;Earth&quot;</span><span class="w"> </span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TorqueSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">aerodynamic_torque</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Currently, there are only two options for the torque settings, both which are not derived classes of the <code class="docutils literal notranslate"><span class="pre">TorqueSettings</span></code> class, and do not need extra information. Thus both can be defined
 in a similar way.</p>
 <p>When all the settings of the torque acting on the body are defined, the <code class="docutils literal notranslate"><span class="pre">TorqueModelMap</span></code> can be created as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TorqueModelMap</span> <span class="n">torqueModelMap</span> <span class="o">=</span> <span class="n">createTorqueModelsMap</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">selectedTorqueModelMap</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TorqueModelMap</span><span class="w"> </span><span class="n">torqueModelMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createTorqueModelsMap</span><span class="p">(</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"> </span><span class="n">selectedTorqueModelMap</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This will create a map that can be used as an input to the <code class="docutils literal notranslate"><span class="pre">RotationalStatePropagatorSettings</span></code>.</p>
@@ -225,13 +229,13 @@ in a similar way.</p>
 <h2><span class="section-number">2.2.1. </span>Available Models<a class="headerlink" href="#available-models" title="Permalink to this headline">¶</a></h2>
 <p>Currently, there are two torque models that can be used for the rotational state propagator:</p>
 <dl class="py method">
-<dt>
-<code class="sig-name descname">Second-order Gravitational Torque</code></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">Second-order</span> <span class="pre">Gravitational</span> <span class="pre">Torque</span></span></dt>
 <dd><p>Torque exerted by a point mass on a body with a degree two spherical harmonics mass distribution. A degree two spherical harmonics mass distribution can be represented by an inertia tensor, thus
 for this torque model, the body undergoing the torque needs to have an inertia tensor defined. The body exerting the torque only needs to have a point-mass gravitational model defined.</p>
 <p>The settings are created as follows, for a torque exerted by <code class="docutils literal notranslate"><span class="pre">&quot;Mars&quot;</span></code> on body <code class="docutils literal notranslate"><span class="pre">&quot;Phobos&quot;</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SelectedTorqueMap</span> <span class="n">selectedTorqueModelMap</span><span class="p">;</span>
-<span class="n">selectedTorqueModelMap</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TorqueSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">second_order_gravitational_torque</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SelectedTorqueMap</span><span class="w"> </span><span class="n">selectedTorqueModelMap</span><span class="p">;</span><span class="w"></span>
+<span class="n">selectedTorqueModelMap</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;Apollo&quot;</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="s">&quot;Earth&quot;</span><span class="w"> </span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TorqueSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">second_order_gravitational_torque</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Requires the following environment models to be defined:</p>
@@ -243,14 +247,14 @@ for this torque model, the body undergoing the torque needs to have an inertia t
 </dd></dl>
 
 <dl class="py class">
-<dt id="SphericalHarmonicTorqueSettings">
-<em class="property">class </em><code class="sig-name descname">SphericalHarmonicTorqueSettings</code><a class="headerlink" href="#SphericalHarmonicTorqueSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="SphericalHarmonicTorqueSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SphericalHarmonicTorqueSettings</span></span><a class="headerlink" href="#SphericalHarmonicTorqueSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Torque exerted by a point mass on a body with an arbitrary degree/order spherical harmonics mass distribution. The body exerting the torque only needs to have a gravitational model defined.</p>
 <p>The settings are created with the dedicated <code class="docutils literal notranslate"><span class="pre">SphericalHarmonicTorqueSettings</span></code> class. As an example, for a spherical harmonic torque, expanded to degree and order 8, exerted by <code class="docutils literal notranslate"><span class="pre">&quot;Mars&quot;</span></code> on body <code class="docutils literal notranslate"><span class="pre">&quot;Phobos&quot;</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SelectedTorqueMap</span> <span class="n">selectedTorqueModelMap</span><span class="p">;</span>
-<span class="kt">int</span> <span class="n">maximumDegree</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
-<span class="kt">int</span> <span class="n">maximumOrder</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
-<span class="n">selectedTorqueModelMap</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicTorqueSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">maximumDegree</span><span class="p">,</span> <span class="n">maximumOrder</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SelectedTorqueMap</span><span class="w"> </span><span class="n">selectedTorqueModelMap</span><span class="p">;</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">maximumDegree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">maximumOrder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span><span class="w"></span>
+<span class="n">selectedTorqueModelMap</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;Apollo&quot;</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="s">&quot;Earth&quot;</span><span class="w"> </span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">SphericalHarmonicTorqueSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">maximumDegree</span><span class="p">,</span><span class="w"> </span><span class="n">maximumOrder</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Requires the following environment models to be defined:</p>
@@ -262,12 +266,12 @@ for this torque model, the body undergoing the torque needs to have an inertia t
 </dd></dl>
 
 <dl class="py method">
-<dt>
-<code class="sig-name descname">Aerodynamic Torque</code></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">Aerodynamic</span> <span class="pre">Torque</span></span></dt>
 <dd><p>Torque exerted by a body with an atmosphere model and shape model on another body. It is important that the body exerting the torque has an atmosphere model defined, and a shape model, if this is
 not the case, the torque cannot be calculated. Furthermore, the body undergoing the torque needs to have aerodynamic coefficient interface defined, and needs to have its moment coefficients defined. The settings are created as follows, for an aerodynamic torque exerted by <code class="docutils literal notranslate"><span class="pre">&quot;Earth&quot;</span></code> on body <code class="docutils literal notranslate"><span class="pre">&quot;Apollo&quot;</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SelectedTorqueMap</span> <span class="n">selectedTorqueModelMap</span><span class="p">;</span>
-<span class="n">selectedTorqueModelMap</span><span class="p">[</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">][</span> <span class="s">&quot;Earth&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TorqueSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">aerodynamic_torque</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SelectedTorqueMap</span><span class="w"> </span><span class="n">selectedTorqueModelMap</span><span class="p">;</span><span class="w"></span>
+<span class="n">selectedTorqueModelMap</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;Apollo&quot;</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="s">&quot;Earth&quot;</span><span class="w"> </span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TorqueSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">aerodynamic_torque</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Requires the following environment models to be defined:</p>
@@ -334,11 +338,10 @@ not the case, the torque cannot be calculated. Furthermore, the body undergoing 
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -373,6 +376,11 @@ not the case, the torque cannot be calculated. Furthermore, the body undergoing 
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

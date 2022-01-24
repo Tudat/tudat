@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
@@ -213,27 +217,27 @@
 <p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">tudat</span></code> class can also be used to set/get user settings, stored in the file <code class="docutils literal notranslate"><span class="pre">settings.mat</span></code>:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatlabInterface/tudat.m</span></code></span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">properties</span> <span class="p">(</span><span class="n">Constant</span><span class="p">,</span> <span class="n">Hidden</span><span class="p">)</span>
-  <span class="c">...</span>
-  <span class="n">bundlePathKey</span> <span class="p">=</span> <span class="s">&#39;bundlePath&#39;</span>
-  <span class="n">defaultBundlePath</span> <span class="p">=</span> <span class="n">fileparts</span><span class="p">(</span><span class="n">tudat</span><span class="p">.</span><span class="n">rootdir</span><span class="p">);</span>
-  <span class="c">...</span>
-<span class="k">end</span>
-<span class="c">...</span>
-<span class="k">methods</span> <span class="p">(</span><span class="n">Static</span><span class="p">,</span> <span class="n">Hidden</span><span class="p">)</span>
-<span class="k">  function</span><span class="w"> </span>path <span class="p">=</span><span class="w"> </span><span class="nf">bundle</span><span class="p">(</span>newPath<span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="k">if</span> <span class="n">nargin</span> <span class="o">==</span> <span class="mi">0</span>  <span class="c">% get</span>
-          <span class="n">try</span>
-              <span class="s">path</span> <span class="s">=</span> <span class="s">tudat.settings.(tudat.bundlePathKey)</span><span class="p">;</span>
-          <span class="n">catch</span>
-              <span class="s">path</span> <span class="s">=</span> <span class="s">tudat.defaultBundlePath</span><span class="p">;</span>
-          <span class="n">end</span>
-      <span class="s">else</span>  <span class="s">%</span> <span class="s">set</span>
-          <span class="n">updateSetting</span><span class="p">(</span><span class="n">tudat</span><span class="p">.</span><span class="n">bundlePathKey</span><span class="p">,</span><span class="n">newPath</span><span class="p">);</span>
-      <span class="n">end</span>
-  <span class="s">end</span>
-<span class="c">...</span>
-<span class="k">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">properties</span><span class="w"> </span><span class="p">(</span>Constant<span class="p">,</span><span class="w"> </span>Hidden<span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">...</span><span class="w"></span>
+<span class="w">  </span><span class="n">bundlePathKey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;bundlePath&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="n">defaultBundlePath</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">fileparts</span><span class="p">(</span><span class="n">tudat</span><span class="p">.</span><span class="n">rootdir</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">...</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="k">...</span><span class="w"></span>
+<span class="k">methods</span><span class="w"> </span><span class="p">(</span><span class="n">Static</span><span class="p">,</span><span class="w"> </span><span class="n">Hidden</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="k">function</span><span class="w"> </span>path<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">bundle</span><span class="p">(</span>newPath<span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="nb">nargin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="c">% get</span><span class="w"></span>
+<span class="w">          </span><span class="k">try</span><span class="w"></span>
+<span class="w">              </span><span class="nb">path</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tudat</span><span class="p">.</span><span class="n">settings</span><span class="p">.(</span><span class="n">tudat</span><span class="p">.</span><span class="n">bundlePathKey</span><span class="p">);</span><span class="w"></span>
+<span class="w">          </span><span class="k">catch</span><span class="w"></span>
+<span class="w">              </span><span class="nb">path</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tudat</span><span class="p">.</span><span class="n">defaultBundlePath</span><span class="p">;</span><span class="w"></span>
+<span class="w">          </span><span class="k">end</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w">  </span><span class="c">% set</span><span class="w"></span>
+<span class="w">          </span><span class="n">updateSetting</span><span class="p">(</span><span class="n">tudat</span><span class="p">.</span><span class="n">bundlePathKey</span><span class="p">,</span><span class="n">newPath</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">end</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"></span>
+<span class="k">...</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -254,12 +258,12 @@
 <p>For enumerations, the name of the enumeration value is used. This means that nothing has to be added to the enumeration definition for it to be serialisable. For instance, consider the following enumeration:</p>
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatlabInterface/MassRateModel/MassRateModels.m</span></code></span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span> <span class="n">RotationModels</span>
-  <span class="n">enumeration</span>
-      <span class="s">simple</span>
-      <span class="n">spice</span>
-  <span class="s">end</span>
-<span class="k">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">RotationModels</span><span class="w"></span>
+<span class="w">  </span><span class="nb">enumeration</span><span class="w"></span>
+<span class="w">      </span><span class="n">simple</span><span class="w"></span>
+<span class="w">      </span><span class="n">spice</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -279,27 +283,27 @@ Unable to encode objects of enumeration class RotationModels as JSON-formatted t
 <li><p><code class="docutils literal notranslate"><span class="pre">getProperties</span></code>: returns the list of properties to be used for the JSON representation. This list includes all the properties of the (derived) class on which it is called <strong>that are not marked as Transient</strong>. For instance, for the <a class="reference internal" href="../../tutorials/tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> class:</p>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatlabInterface/Body/Body.m</span></code></span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span> <span class="n">Body</span> <span class="o">&lt;</span> <span class="n">jsonable</span>
-  <span class="n">properties</span>
-      <span class="s">useDefaultSettings</span>
-      <span class="n">initialState</span>
-      <span class="s">mass</span>
-      <span class="n">rotationalState</span>
-      <span class="s">referenceArea</span>
-      <span class="n">aerodynamics</span>
-      <span class="s">atmosphere</span>
-      <span class="n">ephemeris</span>
-      <span class="s">gravityField</span>
-      <span class="n">gravityFieldVariation</span>
-      <span class="s">radiationPressure</span>
-      <span class="n">rotationModel</span>
-      <span class="s">shapeModel</span>
-  <span class="n">end</span>
-  <span class="s">properties</span> <span class="s">(Transient)</span>
-      <span class="n">name</span>
-  <span class="s">end</span>
-<span class="c">...</span>
-<span class="k">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">Body</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">jsonable</span><span class="w"></span>
+<span class="w">  </span><span class="k">properties</span><span class="w"></span>
+<span class="w">      </span><span class="n">useDefaultSettings</span><span class="w"></span>
+<span class="w">      </span><span class="n">initialState</span><span class="w"></span>
+<span class="w">      </span><span class="n">mass</span><span class="w"></span>
+<span class="w">      </span><span class="n">rotationalState</span><span class="w"></span>
+<span class="w">      </span><span class="n">referenceArea</span><span class="w"></span>
+<span class="w">      </span><span class="n">aerodynamics</span><span class="w"></span>
+<span class="w">      </span><span class="n">atmosphere</span><span class="w"></span>
+<span class="w">      </span><span class="n">ephemeris</span><span class="w"></span>
+<span class="w">      </span><span class="n">gravityField</span><span class="w"></span>
+<span class="w">      </span><span class="n">gravityFieldVariation</span><span class="w"></span>
+<span class="w">      </span><span class="n">radiationPressure</span><span class="w"></span>
+<span class="w">      </span><span class="n">rotationModel</span><span class="w"></span>
+<span class="w">      </span><span class="n">shapeModel</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"></span>
+<span class="w">  </span><span class="k">properties</span><span class="w"> </span><span class="p">(</span>Transient<span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">name</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"></span>
+<span class="k">...</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -308,42 +312,42 @@ Unable to encode objects of enumeration class RotationModels as JSON-formatted t
 <li><p><code class="docutils literal notranslate"><span class="pre">isMandatory(property)</span></code>: returns whether the property named <code class="docutils literal notranslate"><span class="pre">property</span></code> is mandatory. If a property is marked as mandatory, but its value is empty, the <code class="docutils literal notranslate"><span class="pre">json.encode</span></code> function will fail. In order to know which properties are mandatory, the derived classes have to implement the (hidden) method <code class="docutils literal notranslate"><span class="pre">getMandatoryProperties</span></code>. For instance, for <a class="reference internal" href="../../tutorials/tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a>:</p>
 <div class="literal-block-wrapper docutils container" id="id4">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatlabInterface/Body/Body.m</span></code></span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span> <span class="n">Body</span> <span class="o">&lt;</span> <span class="n">jsonable</span>
-  <span class="c">...</span>
-  <span class="k">methods</span> <span class="p">(</span><span class="n">Hidden</span><span class="p">)</span>
-<span class="k">      function</span><span class="w"> </span>mp <span class="p">=</span><span class="w"> </span><span class="nf">getMandatoryProperties</span><span class="p">(</span>obj<span class="p">)</span><span class="w"></span>
-<span class="w">          </span><span class="n">mp</span> <span class="p">=</span> <span class="p">{};</span>
-      <span class="n">end</span>
-  <span class="s">end</span>
-<span class="k">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">Body</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">jsonable</span><span class="w"></span>
+<span class="w">  </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="k">methods</span><span class="w"> </span><span class="p">(</span><span class="n">Hidden</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">function</span><span class="w"> </span>mp<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">getMandatoryProperties</span><span class="p">(</span>obj<span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="n">mp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+<span class="w">      </span><span class="k">end</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <p>In this case, none of the properties of <a class="reference internal" href="../../tutorials/tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> are mandatory, because for a non-perturbed problem, we do not need to define any of its properties, so an empty body (i.e. <code class="docutils literal notranslate"><span class="pre">[]</span></code> or <code class="docutils literal notranslate"><span class="pre">null</span></code>) is valid. In other cases, some of the properties <em>are</em> mandatory:</p>
 <div class="literal-block-wrapper docutils container" id="id5">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatlabInterface/Propagator/Propagator.m</span></code></span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span> <span class="n">Propagator</span> <span class="o">&lt;</span> <span class="n">jsonable</span>
-  <span class="c">...</span>
-  <span class="k">methods</span> <span class="p">(</span><span class="n">Hidden</span><span class="p">)</span>
-<span class="k">      function</span><span class="w"> </span>mp <span class="p">=</span><span class="w"> </span><span class="nf">getMandatoryProperties</span><span class="p">(</span>obj<span class="p">)</span><span class="w"></span>
-<span class="w">          </span><span class="n">mp</span> <span class="p">=</span> <span class="p">{</span><span class="s">&#39;integratedStateType&#39;</span><span class="p">,</span><span class="s">&#39;bodiesToPropagate&#39;</span><span class="p">};</span>
-      <span class="n">end</span>
-  <span class="s">end</span>
-<span class="k">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">Propagator</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">jsonable</span><span class="w"></span>
+<span class="w">  </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="k">methods</span><span class="w"> </span><span class="p">(</span><span class="n">Hidden</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">function</span><span class="w"> </span>mp<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">getMandatoryProperties</span><span class="p">(</span>obj<span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="n">mp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">&#39;integratedStateType&#39;</span><span class="p">,</span><span class="s">&#39;bodiesToPropagate&#39;</span><span class="p">};</span><span class="w"></span>
+<span class="w">      </span><span class="k">end</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="literal-block-wrapper docutils container" id="id6">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatlabInterface/Propagator/MassPropagator.m</span></code></span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span> <span class="n">MassPropagator</span> <span class="o">&lt;</span> <span class="n">Propagator</span>
-  <span class="c">...</span>
-  <span class="k">methods</span> <span class="p">(</span><span class="n">Hidden</span><span class="p">)</span>
-<span class="k">      function</span><span class="w"> </span>mp <span class="p">=</span><span class="w"> </span><span class="nf">getMandatoryProperties</span><span class="p">(</span>obj<span class="p">)</span><span class="w"></span>
-<span class="w">          </span><span class="n">mp</span> <span class="p">=</span> <span class="n">getMandatoryProperties</span><span class="p">@</span><span class="n">Propagator</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
-          <span class="n">mp</span> <span class="p">=</span> <span class="n">horzcat</span><span class="p">(</span><span class="n">mp</span><span class="p">,{</span><span class="s">&#39;massRateModels&#39;</span><span class="p">});</span>
-      <span class="n">end</span>
-  <span class="s">end</span>
-<span class="k">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">MassPropagator</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">Propagator</span><span class="w"></span>
+<span class="w">  </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="k">methods</span><span class="w"> </span><span class="p">(</span><span class="n">Hidden</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">function</span><span class="w"> </span>mp<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">getMandatoryProperties</span><span class="p">(</span>obj<span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="n">mp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">getMandatoryProperties</span><span class="p">@</span><span class="n">Propagator</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span><span class="w"></span>
+<span class="w">          </span><span class="n">mp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">horzcat</span><span class="p">(</span><span class="n">mp</span><span class="p">,{</span><span class="s">&#39;massRateModels&#39;</span><span class="p">});</span><span class="w"></span>
+<span class="w">      </span><span class="k">end</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -352,17 +356,17 @@ Unable to encode objects of enumeration class RotationModels as JSON-formatted t
 <li><p><code class="docutils literal notranslate"><span class="pre">isPath(property)</span></code>: returns whether the property named <code class="docutils literal notranslate"><span class="pre">property</span></code> represents a path. Paths are automatically converted to JSON using the format specification <code class="docutils literal notranslate"><span class="pre">&#64;path(%s)</span></code>. By default, this returns <code class="docutils literal notranslate"><span class="pre">false</span></code>. Derived classes can override this method:</p>
 <div class="literal-block-wrapper docutils container" id="id7">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatlabInterface/Body/Atmosphere/TabulatedAtmosphere.m</span></code></span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span> <span class="n">TabulatedAtmosphere</span> <span class="o">&lt;</span> <span class="n">Atmosphere</span>
-    <span class="n">properties</span>
-        <span class="s">file</span>
-    <span class="n">end</span>
-    <span class="s">...</span>
-    <span class="k">methods</span> <span class="p">(</span><span class="n">Hidden</span><span class="p">)</span>
-<span class="k">        function</span><span class="w"> </span>p <span class="p">=</span><span class="w"> </span><span class="nf">isPath</span><span class="p">(</span>obj,property<span class="p">)</span><span class="w"></span>
-<span class="w">            </span><span class="n">p</span> <span class="p">=</span> <span class="n">strcmp</span><span class="p">(</span><span class="n">property</span><span class="p">,</span><span class="s">&#39;file&#39;</span><span class="p">);</span>
-        <span class="n">end</span>
-    <span class="s">end</span>
-<span class="k">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">TabulatedAtmosphere</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">Atmosphere</span><span class="w"></span>
+<span class="w">    </span><span class="k">properties</span><span class="w"></span>
+<span class="w">        </span><span class="n">file</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">...</span><span class="w"></span>
+<span class="w">    </span><span class="k">methods</span><span class="w"> </span><span class="p">(</span><span class="n">Hidden</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">function</span><span class="w"> </span>p<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">isPath</span><span class="p">(</span>obj,property<span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">p</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">strcmp</span><span class="p">(</span><span class="n">property</span><span class="p">,</span><span class="s">&#39;file&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -376,16 +380,16 @@ Unable to encode objects of enumeration class RotationModels as JSON-formatted t
 <p>Some variables other than custom classes or enumerations are not serialisable either. For instance, complex numbers. These types have to be identified in the function <code class="docutils literal notranslate"><span class="pre">json.jsonize</span></code>, a custom implementation can be provided in this file:</p>
 <div class="literal-block-wrapper docutils container" id="id8">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatlabInterface/+json/jsonize.m</span></code></span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span>j <span class="p">=</span><span class="w"> </span><span class="nf">jsonize</span><span class="p">(</span>object<span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="c">...</span>
-  <span class="n">try</span>
-    <span class="s">j</span> <span class="s">=</span> <span class="s">object.jsonize()</span><span class="p">;</span>
-  <span class="n">catch</span> <span class="s">ME</span>
-      <span class="c">...</span>
-      <span class="n">elseif</span> <span class="s">strcmp(ME.identifier,&#39;MATLAB:structRefFromNonStruct&#39;)</span>
-          <span class="n">if</span> <span class="s">isnumeric(object)</span>
-              <span class="n">if</span> <span class="s">any(imag(object(:)))</span>
-                <span class="c">...</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span>j<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">jsonize</span><span class="p">(</span>object<span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="k">try</span><span class="w"></span>
+<span class="w">    </span><span class="nb">j</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">object</span><span class="p">.</span><span class="n">jsonize</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="k">catch</span><span class="w"> </span><span class="n">ME</span><span class="w"></span>
+<span class="w">      </span><span class="k">...</span><span class="w"></span>
+<span class="w">      </span><span class="k">elseif</span><span class="w"> </span><span class="nb">strcmp</span><span class="p">(</span><span class="n">ME</span><span class="p">.</span><span class="n">identifier</span><span class="p">,</span><span class="s">&#39;MATLAB:structRefFromNonStruct&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="nb">isnumeric</span><span class="p">(</span><span class="n">object</span><span class="p">)</span><span class="w"></span>
+<span class="w">              </span><span class="k">if</span><span class="w"> </span><span class="nb">any</span><span class="p">(</span><span class="nb">imag</span><span class="p">(</span><span class="n">object</span><span class="p">(:)))</span><span class="w"></span>
+<span class="w">                </span><span class="k">...</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -446,11 +450,10 @@ Unable to encode objects of enumeration class RotationModels as JSON-formatted t
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -485,6 +488,11 @@ Unable to encode objects of enumeration class RotationModels as JSON-formatted t
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

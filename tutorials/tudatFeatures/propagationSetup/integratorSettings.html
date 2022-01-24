@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -201,12 +205,12 @@
 <span id="tudatfeaturesintegratorsettings"></span><h1><span class="section-number">3.1. </span>Integrator Settings<a class="headerlink" href="#integrator-settings" title="Permalink to this headline">¶</a></h1>
 <p>As the name suggests, the integrator settings tell the dynamics simulator how to integrate numerically the equations of motion that govern the orbital mechanics to simulate. The <a class="reference internal" href="#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntegratorSettings</span></code></a> are defined using four derived classes, depending on whether the integrator to be used is a fixed step-size integrator or a variable step-size integrator.</p>
 <dl class="py class">
-<dt id="IntegratorSettings">
-<em class="property">class </em><code class="sig-name descname">IntegratorSettings</code><a class="headerlink" href="#IntegratorSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="IntegratorSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IntegratorSettings</span></span><a class="headerlink" href="#IntegratorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is used to define the settings for fixed step-size integration. The constructor for this base class is:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">integratorType</span><span class="p">,</span>
-                                <span class="n">simulationStartEpoch</span><span class="p">,</span>
-                                <span class="n">fixedStepSize</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">IntegratorSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TimeType</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">integratorType</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                </span><span class="n">simulationStartEpoch</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                </span><span class="n">fixedStepSize</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -235,22 +239,22 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="RungeKuttaVariableStepSizeSettings">
-<em class="property">class </em><code class="sig-name descname">RungeKuttaVariableStepSizeSettings</code><a class="headerlink" href="#RungeKuttaVariableStepSizeSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="RungeKuttaVariableStepSizeSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RungeKuttaVariableStepSizeSettings</span></span><a class="headerlink" href="#RungeKuttaVariableStepSizeSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is used to define the settings for the Runge-Kutta variable step-size integration methods, where the error tolerances are defined as a scalar (i.e., each state element has the same tolerance). The constructor for this derived class is:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RungeKuttaVariableStepSizeSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span>
-      <span class="n">simulationStartEpoch</span><span class="p">,</span>
-      <span class="n">initialTimeStep</span><span class="p">,</span>
-      <span class="n">coefficientSet</span><span class="p">,</span>
-      <span class="n">minimumStepSize</span><span class="p">,</span>
-      <span class="n">maximumStepSize</span><span class="p">,</span>
-      <span class="n">relativeErrorTolerance</span><span class="p">,</span>
-      <span class="n">absoluteErrorTolerance</span><span class="p">,</span>
-      <span class="n">saveFrequency</span><span class="p">,</span>
-      <span class="n">assessPropagationTerminationConditionDuringIntegrationSubsteps</span><span class="p">,</span>
-      <span class="n">safetyFactorForNextStepSize</span><span class="p">,</span>
-      <span class="n">maximumFactorIncreaseForNextStepSize</span><span class="p">,</span>
-      <span class="n">minimumFactorDecreaseForNextStepSize</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RungeKuttaVariableStepSizeSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TimeType</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">simulationStartEpoch</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">initialTimeStep</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">coefficientSet</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">minimumStepSize</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">maximumStepSize</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">relativeErrorTolerance</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">absoluteErrorTolerance</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">saveFrequency</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">assessPropagationTerminationConditionDuringIntegrationSubsteps</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">safetyFactorForNextStepSize</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">maximumFactorIncreaseForNextStepSize</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">minimumFactorDecreaseForNextStepSize</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -326,8 +330,8 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="RungeKuttaVariableStepSizeSettingsScalarTolerances">
-<em class="property">class </em><code class="sig-name descname">RungeKuttaVariableStepSizeSettingsScalarTolerances</code><a class="headerlink" href="#RungeKuttaVariableStepSizeSettingsScalarTolerances" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="RungeKuttaVariableStepSizeSettingsScalarTolerances">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RungeKuttaVariableStepSizeSettingsScalarTolerances</span></span><a class="headerlink" href="#RungeKuttaVariableStepSizeSettingsScalarTolerances" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <div class="admonition note">
@@ -335,22 +339,22 @@
 <p>The <a class="reference internal" href="#RungeKuttaVariableStepSizeSettings" title="RungeKuttaVariableStepSizeSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">RungeKuttaVariableStepSizeSettings</span></code></a> class is actually a shorthand for the alias <a class="reference internal" href="#RungeKuttaVariableStepSizeSettingsScalarTolerances" title="RungeKuttaVariableStepSizeSettingsScalarTolerances"><code class="xref py py-class docutils literal notranslate"><span class="pre">RungeKuttaVariableStepSizeSettingsScalarTolerances</span></code></a>, for compatibility with the previous definition of the Runge-Kutta variable step-size integrator.</p>
 </div>
 <dl class="py class">
-<dt id="RungeKuttaVariableStepSizeSettingsVectorTolerances">
-<em class="property">class </em><code class="sig-name descname">RungeKuttaVariableStepSizeSettingsVectorTolerances</code><a class="headerlink" href="#RungeKuttaVariableStepSizeSettingsVectorTolerances" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="RungeKuttaVariableStepSizeSettingsVectorTolerances">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RungeKuttaVariableStepSizeSettingsVectorTolerances</span></span><a class="headerlink" href="#RungeKuttaVariableStepSizeSettingsVectorTolerances" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is used to define the settings for the Runge-Kutta variable step-size integration methods, where the error tolerances are defined as a vector (i.e., you could set a different absolute tolerance for position and velocity, if the propagated state is expressed in Cartesian elements). The constructor for this derived class is:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RungeKuttaVariableStepSizeSettingsVectorTolerances</span><span class="o">&lt;</span> <span class="n">TimeType</span><span class="p">,</span> <span class="n">StateType</span> <span class="o">&gt;</span><span class="p">(</span>
-      <span class="n">simulationStartEpoch</span><span class="p">,</span>
-      <span class="n">initialTimeStep</span><span class="p">,</span>
-      <span class="n">coefficientSet</span><span class="p">,</span>
-      <span class="n">minimumStepSize</span><span class="p">,</span>
-      <span class="n">maximumStepSize</span><span class="p">,</span>
-      <span class="n">relativeErrorTolerance</span><span class="p">,</span>
-      <span class="n">absoluteErrorTolerance</span><span class="p">,</span>
-      <span class="n">saveFrequency</span><span class="p">,</span>
-      <span class="n">assessPropagationTerminationConditionDuringIntegrationSubsteps</span><span class="p">,</span>
-      <span class="n">safetyFactorForNextStepSize</span><span class="p">,</span>
-      <span class="n">maximumFactorIncreaseForNextStepSize</span><span class="p">,</span>
-      <span class="n">minimumFactorDecreaseForNextStepSize</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RungeKuttaVariableStepSizeSettingsVectorTolerances</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TimeType</span><span class="p">,</span><span class="w"> </span><span class="n">StateType</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">simulationStartEpoch</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">initialTimeStep</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">coefficientSet</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">minimumStepSize</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">maximumStepSize</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">relativeErrorTolerance</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">absoluteErrorTolerance</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">saveFrequency</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">assessPropagationTerminationConditionDuringIntegrationSubsteps</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">safetyFactorForNextStepSize</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">maximumFactorIncreaseForNextStepSize</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">minimumFactorDecreaseForNextStepSize</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where most of the input variables are the same as for the previous constructor, except for the following:</p>
@@ -376,17 +380,17 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="BulirschStoerIntegratorSettings">
-<em class="property">class </em><code class="sig-name descname">BulirschStoerIntegratorSettings</code><a class="headerlink" href="#BulirschStoerIntegratorSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="BulirschStoerIntegratorSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BulirschStoerIntegratorSettings</span></span><a class="headerlink" href="#BulirschStoerIntegratorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is used to define the settings for variable step-size integration using the Bulirsch-Stoer method. The constructor for this derived class is:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">BulirschStoerIntegratorSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">initialTime</span><span class="p">,</span>
-                                             <span class="n">initialTimeStep</span><span class="p">,</span>
-                                             <span class="n">extrapolationSequence</span><span class="p">,</span>
-                                             <span class="n">maximumNumberOfSteps</span><span class="p">,</span>
-                                             <span class="n">minimumStepSize</span><span class="p">,</span>
-                                             <span class="n">maximumStepSize</span><span class="p">,</span>
-                                             <span class="n">relativeErrorTolerence</span><span class="p">,</span>
-                                             <span class="n">absoluteErrorTolerence</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">BulirschStoerIntegratorSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TimeType</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">initialTime</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                             </span><span class="n">initialTimeStep</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                             </span><span class="n">extrapolationSequence</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                             </span><span class="n">maximumNumberOfSteps</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                             </span><span class="n">minimumStepSize</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                             </span><span class="n">maximumStepSize</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                             </span><span class="n">relativeErrorTolerence</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                             </span><span class="n">absoluteErrorTolerence</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -442,17 +446,17 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="AdamsBashforthMoultonSettings">
-<em class="property">class </em><code class="sig-name descname">AdamsBashforthMoultonSettings</code><a class="headerlink" href="#AdamsBashforthMoultonSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="AdamsBashforthMoultonSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AdamsBashforthMoultonSettings</span></span><a class="headerlink" href="#AdamsBashforthMoultonSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is used to define the settings for variable step-size integration using the Adams-Bashfort-Moulton method. The constructor for this derived class is:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">AdamsBashforthMoultonSettings</span><span class="o">&lt;</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">initialTime</span><span class="p">,</span>
-                                           <span class="n">initialTimeStep</span><span class="p">,</span>
-                                           <span class="n">minimumStepSize</span><span class="p">,</span>
-                                           <span class="n">maximumStepSize</span><span class="p">,</span>
-                                           <span class="n">relativeErrorTolerence</span><span class="p">,</span>
-                                           <span class="n">absoluteErrorTolerence</span><span class="p">,</span>
-                                           <span class="n">minimumOrder</span><span class="p">,</span>
-                                           <span class="n">maximumOrder</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">AdamsBashforthMoultonSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TimeType</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">initialTime</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">initialTimeStep</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">minimumStepSize</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">maximumStepSize</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">relativeErrorTolerence</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">absoluteErrorTolerence</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">minimumOrder</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">maximumOrder</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -569,11 +573,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -608,6 +611,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2. Spherical shaping &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
+  <title>4.2. Spherical shaping &mdash; TU Delft Astrodynamic Toolbox  documentation</title>
   
 
   
@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
@@ -42,7 +46,7 @@
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../../index.html"/>
         <link rel="up" title="4. Shape-Based Methods" href="index.html"/>
         <link rel="next" title="6. Basic Mathematics Tools" href="../../mathTools/index.html"/>
-        <link rel="prev" title="1. Hodographic shaping" href="hodographicShaping.html"/> 
+        <link rel="prev" title="4.1. Hodographic shaping" href="hodographicShaping.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../started/index.html">Getting Started</a></li>
@@ -104,7 +108,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../propagationSetup/index.html">3. Simulator Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="../index.html">6. Low-Thrust Trajectory Design Module</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Low-Thrust Trajectory Design Module</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="../lowThrustTrajectory.html">1. Low-Thrust Trajectories</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../SimsFlanagan.html">2. Sims-Flanagan Method</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../hybridMethod.html">3. Hybrid Method</a></li>
@@ -172,11 +176,11 @@
         
           <li><a href="../../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="../index.html"><span class="section-number">6. </span>Low-Thrust Trajectory Design Module</a> &raquo;</li>
+          <li><a href="../index.html">Low-Thrust Trajectory Design Module</a> &raquo;</li>
         
           <li><a href="index.html"><span class="section-number">4. </span>Shape-Based Methods</a> &raquo;</li>
         
-      <li><span class="section-number">2. </span>Spherical shaping</li>
+      <li><span class="section-number">4.2. </span>Spherical shaping</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -196,32 +200,32 @@
            <div itemprop="articleBody">
             
   <div class="section" id="spherical-shaping">
-<span id="tudatfeaturessphericalshaping"></span><h1><span class="section-number">2. </span>Spherical shaping<a class="headerlink" href="#spherical-shaping" title="Permalink to this headline">¶</a></h1>
+<span id="tudatfeaturessphericalshaping"></span><h1><span class="section-number">4.2. </span>Spherical shaping<a class="headerlink" href="#spherical-shaping" title="Permalink to this headline">¶</a></h1>
 <p>The spherical shape-based method shapes the position of the spacecraft using spherical coordinates, and uses the azimuth angle as independent variable. This shaping method assumes an inverse function for the radial distance, and a polynomial function for the elevation angle. It only requires two shaping functions, as one of the spherical coordinates is used as independent variable. As opposed to hodographic shaping, the current implementation of the spherical shaping method does not let the choice of base functions free. The ones proposed in Novak, 2012 (Methods and tools for preliminary low thrust mission analysis), where this shaping method has been initially developed, are used directly. The weighting coefficients of those base functions are calculated so that the boundary conditions of the low-thrust trajectory are fulfilled. The spherical shaping method has no free parameter (on the contrary to the hodographic shaping method), so that the shaped trajectory is entirely defined by its boundary conditions and time-of-flight and cannot be optimised in terms of deltaV budget.</p>
 <p>One of the main drawbacks of this shaping method is that it assumes the thrust is always tangential to the orbit. Consequently, there is no guarantee this shape-based method always leads to a feasible trajectory, depending on the boundary conditions and required time-of-flight. This is especially the case for trajectories implying large inclination changes.</p>
 <p>Moreover, because this method shapes the position of the spacecraft and not its velocity, matching the required time of flight is not inherently ensured by the implementation of the shape-based method itself (as it is the case for hodographic shaping for instance). An iterative process is required to match the expected time-of-flight. The coefficient associated to the second base function of the inverse polynomial radial distance function (referred to as the “free coefficient” is the following) is thus not determined by the departure and arrival boundary conditions, but its value is tuned until the expected time-of-flight is matched.</p>
 <div class="section" id="setting-up-a-spherically-shaped-trajectory">
-<h2><span class="section-number">2.1. </span>Setting up a spherically shaped trajectory<a class="headerlink" href="#setting-up-a-spherically-shaped-trajectory" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.2.1. </span>Setting up a spherically shaped trajectory<a class="headerlink" href="#setting-up-a-spherically-shaped-trajectory" title="Permalink to this headline">¶</a></h2>
 <p>A spherically shaped trajectory is defined with the <code class="docutils literal notranslate"><span class="pre">SphericalShaping</span></code> class. It is a derived class from <code class="docutils literal notranslate"><span class="pre">ShapeBasedMethodLeg</span></code>. A corresponding settings class (<code class="docutils literal notranslate"><span class="pre">SphericalShapingLegSettings</span></code>) has been implemented to facilitate the creation of <code class="docutils literal notranslate"><span class="pre">SphericalShaping</span></code> objects (see <a class="reference internal" href="../lowThrustTrajectory.html#tudatfeaturessetuplowthrusttrajectory"><span class="std std-ref">Setting up a low-thrust trajectory</span></a> for more details on the <code class="docutils literal notranslate"><span class="pre">SphericalShapingLegSettings</span></code>).</p>
 <dl class="py class">
-<dt id="SphericalShaping">
-<em class="property">class </em><code class="sig-name descname">SphericalShaping</code><a class="headerlink" href="#SphericalShaping" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="SphericalShaping">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SphericalShaping</span></span><a class="headerlink" href="#SphericalShaping" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>The SphericalShaping class is defined as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SphericalShaping</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">initialState</span><span class="p">,</span>
-               <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">finalState</span><span class="p">,</span>
-               <span class="kt">double</span> <span class="n">requiredTimeOfFlight</span><span class="p">,</span>
-               <span class="kt">int</span> <span class="n">numberOfRevolutions</span><span class="p">,</span>
-               <span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span>
-               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">bodyToPropagate</span><span class="p">,</span>
-               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">centralBody</span><span class="p">,</span>
-               <span class="kt">double</span> <span class="n">initialValueFreeCoefficient</span><span class="p">,</span>
-               <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">root_finders</span><span class="o">::</span><span class="n">RootFinderSettings</span> <span class="o">&gt;&amp;</span> <span class="n">rootFinderSettings</span><span class="p">,</span>
-               <span class="k">const</span> <span class="kt">double</span> <span class="n">lowerBoundFreeCoefficient</span> <span class="o">=</span> <span class="n">TUDAT_NAN</span><span class="p">,</span>
-               <span class="k">const</span> <span class="kt">double</span> <span class="n">upperBoundFreeCoefficient</span> <span class="o">=</span> <span class="n">TUDAT_NAN</span><span class="p">,</span>
-               <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">numerical_integrators</span><span class="o">::</span><span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">integratorSettings</span>
-                  <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">numerical_integrators</span><span class="o">::</span><span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SphericalShaping</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="w"> </span><span class="n">initialState</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="w"> </span><span class="n">finalState</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="kt">double</span><span class="w"> </span><span class="n">requiredTimeOfFlight</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="kt">int</span><span class="w"> </span><span class="n">numberOfRevolutions</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">bodyToPropagate</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">centralBody</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="kt">double</span><span class="w"> </span><span class="n">initialValueFreeCoefficient</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">root_finders</span><span class="o">::</span><span class="n">RootFinderSettings</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">rootFinderSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">lowerBoundFreeCoefficient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TUDAT_NAN</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">upperBoundFreeCoefficient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TUDAT_NAN</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">numerical_integrators</span><span class="o">::</span><span class="n">IntegratorSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">integratorSettings</span><span class="w"></span>
+<span class="w">                  </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">numerical_integrators</span><span class="o">::</span><span class="n">IntegratorSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where the inputs are:</p>
@@ -309,7 +313,7 @@
         <a href="../../mathTools/index.html" class="btn btn-neutral float-right" title="6. Basic Mathematics Tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="hodographicShaping.html" class="btn btn-neutral" title="1. Hodographic shaping" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="hodographicShaping.html" class="btn btn-neutral" title="4.1. Hodographic shaping" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -348,11 +352,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -387,6 +390,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

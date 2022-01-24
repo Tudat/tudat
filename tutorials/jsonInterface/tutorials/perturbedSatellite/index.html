@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../started/index.html">Getting Started</a></li>
@@ -353,241 +357,125 @@
 <p>The resulting input file, where all the settings have been combined, should look something like this:</p>
 <div class="literal-block-wrapper docutils container" id="main-json-perturbed">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">main.json</span></code></span><a class="headerlink" href="#main-json-perturbed" title="Permalink to this code">¶</a></div>
-<div class="highlight-json notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
-  2
-  3
-  4
-  5
-  6
-  7
-  8
-  9
- 10
- 11
- 12
- 13
- 14
- 15
- 16
- 17
- 18
- 19
- 20
- 21
- 22
- 23
- 24
- 25
- 26
- 27
- 28
- 29
- 30
- 31
- 32
- 33
- 34
- 35
- 36
- 37
- 38
- 39
- 40
- 41
- 42
- 43
- 44
- 45
- 46
- 47
- 48
- 49
- 50
- 51
- 52
- 53
- 54
- 55
- 56
- 57
- 58
- 59
- 60
- 61
- 62
- 63
- 64
- 65
- 66
- 67
- 68
- 69
- 70
- 71
- 72
- 73
- 74
- 75
- 76
- 77
- 78
- 79
- 80
- 81
- 82
- 83
- 84
- 85
- 86
- 87
- 88
- 89
- 90
- 91
- 92
- 93
- 94
- 95
- 96
- 97
- 98
- 99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="nt">&quot;initialEpoch&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-  <span class="nt">&quot;finalEpoch&quot;</span><span class="p">:</span> <span class="mi">86400</span><span class="p">,</span>
-  <span class="nt">&quot;globalFrameOrientation&quot;</span><span class="p">:</span> <span class="s2">&quot;J2000&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;spice&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;useStandardKernels&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nt">&quot;preloadEphemeris&quot;</span><span class="p">:</span> <span class="kc">false</span>
-  <span class="p">},</span>
-  <span class="nt">&quot;bodies&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-      <span class="nt">&quot;gravityField&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sphericalHarmonic&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;ggm02c&quot;</span>
-      <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;Moon&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;Mars&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;Venus&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;initialState&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;keplerian&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;semiMajorAxis&quot;</span><span class="p">:</span> <span class="mf">7.5E+6</span><span class="p">,</span>
-        <span class="nt">&quot;eccentricity&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
-        <span class="nt">&quot;inclination&quot;</span><span class="p">:</span> <span class="mf">1.4888</span><span class="p">,</span>
-        <span class="nt">&quot;argumentOfPeriapsis&quot;</span><span class="p">:</span> <span class="mf">4.1137</span><span class="p">,</span>
-        <span class="nt">&quot;longitudeOfAscendingNode&quot;</span><span class="p">:</span> <span class="mf">0.4084</span><span class="p">,</span>
-        <span class="nt">&quot;trueAnomaly&quot;</span><span class="p">:</span> <span class="mf">2.4412</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;mass&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
-      <span class="nt">&quot;referenceArea&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-      <span class="nt">&quot;aerodynamics&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;forceCoefficients&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">]</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;radiationPressure&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">{</span>
-          <span class="nt">&quot;radiationPressureCoefficient&quot;</span><span class="p">:</span> <span class="mf">1.2</span><span class="p">,</span>
-          <span class="nt">&quot;occultingBodies&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;Earth&quot;</span> <span class="p">]</span>
-        <span class="p">}</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-  <span class="p">},</span>
-  <span class="nt">&quot;propagators&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">{</span>
-      <span class="nt">&quot;integratedStateType&quot;</span><span class="p">:</span> <span class="s2">&quot;translational&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;centralBodies&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;Earth&quot;</span>
-      <span class="p">],</span>
-      <span class="nt">&quot;bodiesToPropagate&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;Asterix&quot;</span>
-      <span class="p">],</span>
-      <span class="nt">&quot;accelerations&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
-          <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sphericalHarmonicGravity&quot;</span><span class="p">,</span>
-              <span class="nt">&quot;maximumDegree&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-              <span class="nt">&quot;maximumOrder&quot;</span><span class="p">:</span> <span class="mi">5</span>
-            <span class="p">},</span>
-            <span class="p">{</span>
-              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;aerodynamic&quot;</span>
-            <span class="p">}</span>
-          <span class="p">],</span>
-          <span class="nt">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;pointMassGravity&quot;</span>
-            <span class="p">},</span>
-            <span class="p">{</span>
-              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;cannonBallRadiationPressure&quot;</span>
-            <span class="p">}</span>
-          <span class="p">],</span>
-          <span class="nt">&quot;Moon&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;pointMassGravity&quot;</span>
-            <span class="p">}</span>
-          <span class="p">],</span>
-          <span class="nt">&quot;Mars&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;pointMassGravity&quot;</span>
-            <span class="p">}</span>
-          <span class="p">],</span>
-          <span class="nt">&quot;Venus&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;pointMassGravity&quot;</span>
-            <span class="p">}</span>
-          <span class="p">]</span>
-        <span class="p">}</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-  <span class="p">],</span>
-  <span class="nt">&quot;integrator&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;rungeKutta4&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;stepSize&quot;</span><span class="p">:</span> <span class="mi">10</span>
-  <span class="p">},</span>
-  <span class="nt">&quot;export&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">{</span>
-      <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;@path(stateHistory.txt)&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;variables&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;state&quot;</span>
-        <span class="p">}</span>
-      <span class="p">]</span>
-    <span class="p">}</span>
-  <span class="p">],</span>
-  <span class="nt">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;fullSettingsFile&quot;</span><span class="p">:</span> <span class="s2">&quot;@path(fullSettings.json)&quot;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="p">{</span>
+<span class="linenos">  2</span>  <span class="nt">&quot;initialEpoch&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="linenos">  3</span>  <span class="nt">&quot;finalEpoch&quot;</span><span class="p">:</span> <span class="mi">86400</span><span class="p">,</span>
+<span class="linenos">  4</span>  <span class="nt">&quot;globalFrameOrientation&quot;</span><span class="p">:</span> <span class="s2">&quot;J2000&quot;</span><span class="p">,</span>
+<span class="linenos">  5</span>  <span class="nt">&quot;spice&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos">  6</span>    <span class="nt">&quot;useStandardKernels&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+<span class="linenos">  7</span>    <span class="nt">&quot;preloadEphemeris&quot;</span><span class="p">:</span> <span class="kc">false</span>
+<span class="linenos">  8</span>  <span class="p">},</span>
+<span class="linenos">  9</span>  <span class="nt">&quot;bodies&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos"> 10</span>    <span class="nt">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos"> 11</span>      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
+<span class="linenos"> 12</span>    <span class="p">},</span>
+<span class="linenos"> 13</span>    <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos"> 14</span>      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+<span class="linenos"> 15</span>      <span class="nt">&quot;gravityField&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos"> 16</span>        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sphericalHarmonic&quot;</span><span class="p">,</span>
+<span class="linenos"> 17</span>        <span class="nt">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;ggm02c&quot;</span>
+<span class="linenos"> 18</span>      <span class="p">}</span>
+<span class="linenos"> 19</span>    <span class="p">},</span>
+<span class="linenos"> 20</span>    <span class="nt">&quot;Moon&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos"> 21</span>      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
+<span class="linenos"> 22</span>    <span class="p">},</span>
+<span class="linenos"> 23</span>    <span class="nt">&quot;Mars&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos"> 24</span>      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
+<span class="linenos"> 25</span>    <span class="p">},</span>
+<span class="linenos"> 26</span>    <span class="nt">&quot;Venus&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos"> 27</span>      <span class="nt">&quot;useDefaultSettings&quot;</span><span class="p">:</span> <span class="kc">true</span>
+<span class="linenos"> 28</span>    <span class="p">},</span>
+<span class="linenos"> 29</span>    <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos"> 30</span>      <span class="nt">&quot;initialState&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos"> 31</span>        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;keplerian&quot;</span><span class="p">,</span>
+<span class="linenos"> 32</span>        <span class="nt">&quot;semiMajorAxis&quot;</span><span class="p">:</span> <span class="mf">7.5E+6</span><span class="p">,</span>
+<span class="linenos"> 33</span>        <span class="nt">&quot;eccentricity&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+<span class="linenos"> 34</span>        <span class="nt">&quot;inclination&quot;</span><span class="p">:</span> <span class="mf">1.4888</span><span class="p">,</span>
+<span class="linenos"> 35</span>        <span class="nt">&quot;argumentOfPeriapsis&quot;</span><span class="p">:</span> <span class="mf">4.1137</span><span class="p">,</span>
+<span class="linenos"> 36</span>        <span class="nt">&quot;longitudeOfAscendingNode&quot;</span><span class="p">:</span> <span class="mf">0.4084</span><span class="p">,</span>
+<span class="linenos"> 37</span>        <span class="nt">&quot;trueAnomaly&quot;</span><span class="p">:</span> <span class="mf">2.4412</span>
+<span class="linenos"> 38</span>      <span class="p">},</span>
+<span class="linenos"> 39</span>      <span class="nt">&quot;mass&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+<span class="linenos"> 40</span>      <span class="nt">&quot;referenceArea&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+<span class="linenos"> 41</span>      <span class="nt">&quot;aerodynamics&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos"> 42</span>        <span class="nt">&quot;forceCoefficients&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">]</span>
+<span class="linenos"> 43</span>      <span class="p">},</span>
+<span class="linenos"> 44</span>      <span class="nt">&quot;radiationPressure&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos"> 45</span>        <span class="nt">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos"> 46</span>          <span class="nt">&quot;radiationPressureCoefficient&quot;</span><span class="p">:</span> <span class="mf">1.2</span><span class="p">,</span>
+<span class="linenos"> 47</span>          <span class="nt">&quot;occultingBodies&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;Earth&quot;</span> <span class="p">]</span>
+<span class="linenos"> 48</span>        <span class="p">}</span>
+<span class="linenos"> 49</span>      <span class="p">}</span>
+<span class="linenos"> 50</span>    <span class="p">}</span>
+<span class="linenos"> 51</span>  <span class="p">},</span>
+<span class="linenos"> 52</span>  <span class="nt">&quot;propagators&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="linenos"> 53</span>    <span class="p">{</span>
+<span class="linenos"> 54</span>      <span class="nt">&quot;integratedStateType&quot;</span><span class="p">:</span> <span class="s2">&quot;translational&quot;</span><span class="p">,</span>
+<span class="linenos"> 55</span>      <span class="nt">&quot;centralBodies&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="linenos"> 56</span>        <span class="s2">&quot;Earth&quot;</span>
+<span class="linenos"> 57</span>      <span class="p">],</span>
+<span class="linenos"> 58</span>      <span class="nt">&quot;bodiesToPropagate&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="linenos"> 59</span>        <span class="s2">&quot;Asterix&quot;</span>
+<span class="linenos"> 60</span>      <span class="p">],</span>
+<span class="linenos"> 61</span>      <span class="nt">&quot;accelerations&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos"> 62</span>        <span class="nt">&quot;Asterix&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos"> 63</span>          <span class="nt">&quot;Earth&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="linenos"> 64</span>            <span class="p">{</span>
+<span class="linenos"> 65</span>              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sphericalHarmonicGravity&quot;</span><span class="p">,</span>
+<span class="linenos"> 66</span>              <span class="nt">&quot;maximumDegree&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+<span class="linenos"> 67</span>              <span class="nt">&quot;maximumOrder&quot;</span><span class="p">:</span> <span class="mi">5</span>
+<span class="linenos"> 68</span>            <span class="p">},</span>
+<span class="linenos"> 69</span>            <span class="p">{</span>
+<span class="linenos"> 70</span>              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;aerodynamic&quot;</span>
+<span class="linenos"> 71</span>            <span class="p">}</span>
+<span class="linenos"> 72</span>          <span class="p">],</span>
+<span class="linenos"> 73</span>          <span class="nt">&quot;Sun&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="linenos"> 74</span>            <span class="p">{</span>
+<span class="linenos"> 75</span>              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;pointMassGravity&quot;</span>
+<span class="linenos"> 76</span>            <span class="p">},</span>
+<span class="linenos"> 77</span>            <span class="p">{</span>
+<span class="linenos"> 78</span>              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;cannonBallRadiationPressure&quot;</span>
+<span class="linenos"> 79</span>            <span class="p">}</span>
+<span class="linenos"> 80</span>          <span class="p">],</span>
+<span class="linenos"> 81</span>          <span class="nt">&quot;Moon&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="linenos"> 82</span>            <span class="p">{</span>
+<span class="linenos"> 83</span>              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;pointMassGravity&quot;</span>
+<span class="linenos"> 84</span>            <span class="p">}</span>
+<span class="linenos"> 85</span>          <span class="p">],</span>
+<span class="linenos"> 86</span>          <span class="nt">&quot;Mars&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="linenos"> 87</span>            <span class="p">{</span>
+<span class="linenos"> 88</span>              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;pointMassGravity&quot;</span>
+<span class="linenos"> 89</span>            <span class="p">}</span>
+<span class="linenos"> 90</span>          <span class="p">],</span>
+<span class="linenos"> 91</span>          <span class="nt">&quot;Venus&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="linenos"> 92</span>            <span class="p">{</span>
+<span class="linenos"> 93</span>              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;pointMassGravity&quot;</span>
+<span class="linenos"> 94</span>            <span class="p">}</span>
+<span class="linenos"> 95</span>          <span class="p">]</span>
+<span class="linenos"> 96</span>        <span class="p">}</span>
+<span class="linenos"> 97</span>      <span class="p">}</span>
+<span class="linenos"> 98</span>    <span class="p">}</span>
+<span class="linenos"> 99</span>  <span class="p">],</span>
+<span class="linenos">100</span>  <span class="nt">&quot;integrator&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos">101</span>    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;rungeKutta4&quot;</span><span class="p">,</span>
+<span class="linenos">102</span>    <span class="nt">&quot;stepSize&quot;</span><span class="p">:</span> <span class="mi">10</span>
+<span class="linenos">103</span>  <span class="p">},</span>
+<span class="linenos">104</span>  <span class="nt">&quot;export&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="linenos">105</span>    <span class="p">{</span>
+<span class="linenos">106</span>      <span class="nt">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;@path(stateHistory.txt)&quot;</span><span class="p">,</span>
+<span class="linenos">107</span>      <span class="nt">&quot;variables&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="linenos">108</span>        <span class="p">{</span>
+<span class="linenos">109</span>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;state&quot;</span>
+<span class="linenos">110</span>        <span class="p">}</span>
+<span class="linenos">111</span>      <span class="p">]</span>
+<span class="linenos">112</span>    <span class="p">}</span>
+<span class="linenos">113</span>  <span class="p">],</span>
+<span class="linenos">114</span>  <span class="nt">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos">115</span>    <span class="nt">&quot;fullSettingsFile&quot;</span><span class="p">:</span> <span class="s2">&quot;@path(fullSettings.json)&quot;</span>
+<span class="linenos">116</span>  <span class="p">}</span>
+<span class="linenos">117</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <p>After running in Terminal the following command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">json_inteface</span> <span class="n">main</span><span class="o">.</span><span class="n">json</span>
@@ -655,11 +543,11 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   
 
@@ -694,6 +582,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

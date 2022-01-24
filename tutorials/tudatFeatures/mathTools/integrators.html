@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -104,7 +108,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">6. Low-Thrust Trajectory Design Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">Low-Thrust Trajectory Design Module</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">6. Basic Mathematics Tools</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="interpolators.html">6.1. Interpolators</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">6.2. Integrators</a></li>
@@ -211,11 +215,11 @@
 <div class="section" id="creating-an-integrator-object">
 <h3><span class="section-number">6.2.1.1. </span>Creating an Integrator Object<a class="headerlink" href="#creating-an-integrator-object" title="Permalink to this headline">¶</a></h3>
 <p>All numerical integrators presented in this page follow the same framework, where the first step is to create the <code class="docutils literal notranslate"><span class="pre">integrator</span></code> object, which has the <code class="docutils literal notranslate"><span class="pre">NumericalIntegratorXdPointer</span></code> type:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">NumericalIntegratorXdPointer</span> <span class="n">integrator</span>
-                <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">EulerIntegratorXd</span> <span class="o">&gt;</span><span class="p">(</span>
-                    <span class="n">stateDerivativeFunction</span><span class="p">,</span>
-                    <span class="n">intervalStart</span><span class="p">,</span>
-                    <span class="n">initialState</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">NumericalIntegratorXdPointer</span><span class="w"> </span><span class="n">integrator</span><span class="w"></span>
+<span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EulerIntegratorXd</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">                    </span><span class="n">stateDerivativeFunction</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="n">intervalStart</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="n">initialState</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Although in this case <code class="docutils literal notranslate"><span class="pre">NumericalIntegratorXdPointer</span></code> is a <em>typedef</em> for a <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code>, the constructor can be created explicitly. To initialize an Euler integrator, the following arguments need to be specified:</p>
@@ -226,11 +230,11 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">initialState</span></code> provides the initial state and must have the type of the dependent variable.</p></li>
 </ul>
 <p>It is important to emphasize that the provided state derivative function must have a particular structure for the numerical integration to work. A sample state derivative function is defined here:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="kr">inline</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">stateDerivativeFunction</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">time</span><span class="p">,</span>
-                                                       <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="o">&amp;</span> <span class="n">state</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="p">...</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="nf">stateDerivativeFunction</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">time</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Any user-defined state derivative function must satisfy the following requirements:</p>
@@ -248,7 +252,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">getNextStepSize(</span> <span class="pre">)</span></code></p>
 <blockquote>
 <div><p>Returns the step-size at the next integration step. The return type is defined by the type of the independent variable:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">nextStepSize</span> <span class="o">=</span> <span class="n">integrator</span><span class="o">-&gt;</span><span class="n">getNextStepSize</span><span class="p">(</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="n">nextStepSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integrator</span><span class="o">-&gt;</span><span class="n">getNextStepSize</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -256,7 +260,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">getCurrentState(</span> <span class="pre">)</span></code></p>
 <blockquote>
 <div><p>Returns the state at the current integration step. The return type is defined by the type of the dependent variable.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">currentState</span> <span class="o">=</span> <span class="n">integrator</span><span class="o">-&gt;</span><span class="n">getCurrentState</span><span class="p">(</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="n">currentState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integrator</span><span class="o">-&gt;</span><span class="n">getCurrentState</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -264,7 +268,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">getCurrentIndependentVariable(</span> <span class="pre">)</span></code></p>
 <blockquote>
 <div><p>Returns the value of the independent variable at the current integration step. The return type is defined by the type of the dependent variable.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">currentIndependentVariable</span> <span class="o">=</span> <span class="n">integrator</span><span class="o">-&gt;</span><span class="n">getCurrentIndependentVariable</span><span class="p">(</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="n">currentIndependentVariable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integrator</span><span class="o">-&gt;</span><span class="n">getCurrentIndependentVariable</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -272,7 +276,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">performIntegrationStep(</span> <span class="pre">stepSize</span> <span class="pre">)</span></code></p>
 <blockquote>
 <div><p>Perform an integration step with the step-size fed to the first argument and return the integration result.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">stateAfterIntegrationStep</span> <span class="o">=</span> <span class="n">integrator</span><span class="o">-&gt;</span><span class="n">performIntegrationStep</span><span class="p">(</span> <span class="n">nextStepSize</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="n">stateAfterIntegrationStep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integrator</span><span class="o">-&gt;</span><span class="n">performIntegrationStep</span><span class="p">(</span><span class="w"> </span><span class="n">nextStepSize</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -280,7 +284,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">integrateTo(</span> <span class="pre">intervalEnd</span> <span class="pre">,</span> <span class="pre">initialTimeStep</span> <span class="pre">)</span></code></p>
 <blockquote>
 <div><p>Performs an integration until the specified <code class="docutils literal notranslate"><span class="pre">intervalEnd</span></code>, given the provided <code class="docutils literal notranslate"><span class="pre">initialTimeStep</span></code>. This function returns the state at the end of the interval.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">stateAtIntervalEnd</span> <span class="o">=</span> <span class="n">integrator</span><span class="o">-&gt;</span><span class="n">integrateTo</span><span class="p">(</span> <span class="n">intervalEnd</span> <span class="p">,</span> <span class="n">initialTimeStep</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="n">stateAtIntervalEnd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integrator</span><span class="o">-&gt;</span><span class="n">integrateTo</span><span class="p">(</span><span class="w"> </span><span class="n">intervalEnd</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">initialTimeStep</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -301,37 +305,37 @@
 <div class="section" id="euler-integrator">
 <h3><span class="section-number">6.2.2.1. </span>Euler Integrator<a class="headerlink" href="#euler-integrator" title="Permalink to this headline">¶</a></h3>
 <p>The Euler integrator is the simplest integrator available but is also a first-order method, meaning that the global error is proportional to the step-size. Thus, its use for high-accuracy applications is not encouraged. Creating the Euler integrator object is done as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">NumericalIntegratorXdPointer</span> <span class="n">integrator</span>
-                <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">EulerIntegratorXd</span> <span class="o">&gt;</span><span class="p">(</span>
-                    <span class="n">stateDerivativeFunction</span><span class="p">,</span>
-                    <span class="n">intervalStart</span><span class="p">,</span>
-                    <span class="n">initialState</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">NumericalIntegratorXdPointer</span><span class="w"> </span><span class="n">integrator</span><span class="w"></span>
+<span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EulerIntegratorXd</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">                    </span><span class="n">stateDerivativeFunction</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="n">intervalStart</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="n">initialState</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="runge-kutta-4-integrator">
 <h3><span class="section-number">6.2.2.2. </span>Runge-Kutta 4 Integrator<a class="headerlink" href="#runge-kutta-4-integrator" title="Permalink to this headline">¶</a></h3>
 <p>The Runge-Kutta 4 (RK4) integrator is a fourth-order fixed step-size integrator, thus performing better than the Euler integrator. The RK4 integrator is created as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">NumericalIntegratorXdPointer</span> <span class="n">integrator</span>
-                <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">RungeKutta4IntegratorXd</span> <span class="o">&gt;</span><span class="p">(</span>
-                    <span class="n">stateDerivativeFunction</span><span class="p">,</span>
-                    <span class="n">intervalStart</span><span class="p">,</span>
-                    <span class="n">initialState</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">NumericalIntegratorXdPointer</span><span class="w"> </span><span class="n">integrator</span><span class="w"></span>
+<span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">RungeKutta4IntegratorXd</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">                    </span><span class="n">stateDerivativeFunction</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="n">intervalStart</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="n">initialState</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="runge-kutta-variable-step-size-integrator">
 <h3><span class="section-number">6.2.2.3. </span>Runge-Kutta Variable Step-size Integrator<a class="headerlink" href="#runge-kutta-variable-step-size-integrator" title="Permalink to this headline">¶</a></h3>
 <p>The Runge-Kutta variable step-size integrator involves a number of methods where the step-size is adjusted throughout the integration interval to bound the numerical error. Creating such integrators differs from the Euler integrator and the Runge-Kutta 4 fixed step-size methods:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RungeKuttaVariableStepSizeIntegratorXd</span> <span class="n">integrator</span><span class="p">(</span>
-            <span class="n">rungeKuttaCoefficients</span><span class="p">,</span>
-            <span class="n">stateDerivativeFunction</span><span class="p">,</span>
-            <span class="n">initialTime</span><span class="p">,</span>
-            <span class="n">initialState</span><span class="p">,</span>
-            <span class="n">minimumStepSize</span><span class="p">,</span>
-            <span class="n">maximumStepSize</span><span class="p">,</span>
-            <span class="n">relativeErrorTolerance</span><span class="p">,</span>
-            <span class="n">absoluteErrorTolerance</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RungeKuttaVariableStepSizeIntegratorXd</span><span class="w"> </span><span class="n">integrator</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">rungeKuttaCoefficients</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">stateDerivativeFunction</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">initialTime</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">initialState</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">minimumStepSize</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">maximumStepSize</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">relativeErrorTolerance</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">absoluteErrorTolerance</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where the following arguments are necessary:</p>
@@ -340,20 +344,20 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">rungeKuttaCoefficients</span></code> provides the set of coefficients that define the particular variable step-size method being used. A number of Runge-Kutta coefficient sets are available in Tudat:</p>
 <blockquote>
 <div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Runge-Kutta-Fehlberg 4(5)</span>
-<span class="n">RungeKuttaCoefficients</span> <span class="n">rungeKuttaCoefficients</span> <span class="o">=</span>
-        <span class="n">RungeKuttaCoefficients</span><span class="o">::</span><span class="n">get</span><span class="p">(</span> <span class="n">RungeKuttaCoefficients</span><span class="o">::</span><span class="n">rungeKuttaFehlberg45</span> <span class="p">);</span>
+<span class="n">RungeKuttaCoefficients</span><span class="w"> </span><span class="n">rungeKuttaCoefficients</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="n">RungeKuttaCoefficients</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="w"> </span><span class="n">RungeKuttaCoefficients</span><span class="o">::</span><span class="n">rungeKuttaFehlberg45</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Runge-Kutta-Fehlberg 5(6)</span>
-<span class="n">RungeKuttaCoefficients</span> <span class="n">rungeKuttaCoefficients</span> <span class="o">=</span>
-        <span class="n">RungeKuttaCoefficients</span><span class="o">::</span><span class="n">get</span><span class="p">(</span> <span class="n">RungeKuttaCoefficients</span><span class="o">::</span><span class="n">rungeKuttaFehlberg56</span> <span class="p">);</span>
+<span class="n">RungeKuttaCoefficients</span><span class="w"> </span><span class="n">rungeKuttaCoefficients</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="n">RungeKuttaCoefficients</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="w"> </span><span class="n">RungeKuttaCoefficients</span><span class="o">::</span><span class="n">rungeKuttaFehlberg56</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Runge-Kutta-Fehlberg 7(8)</span>
-<span class="n">RungeKuttaCoefficients</span> <span class="n">rungeKuttaCoefficients</span> <span class="o">=</span>
-        <span class="n">RungeKuttaCoefficients</span><span class="o">::</span><span class="n">get</span><span class="p">(</span> <span class="n">RungeKuttaCoefficients</span><span class="o">::</span><span class="n">rungeKuttaFehlberg78</span> <span class="p">);</span>
+<span class="n">RungeKuttaCoefficients</span><span class="w"> </span><span class="n">rungeKuttaCoefficients</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="n">RungeKuttaCoefficients</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="w"> </span><span class="n">RungeKuttaCoefficients</span><span class="o">::</span><span class="n">rungeKuttaFehlberg78</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Runge-Kutta-Fehlberg 8(7) Dormand-Prince</span>
-<span class="n">RungeKuttaCoefficients</span> <span class="n">rungeKuttaCoefficients</span> <span class="o">=</span>
-        <span class="n">RungeKuttaCoefficients</span><span class="o">::</span><span class="n">get</span><span class="p">(</span> <span class="n">RungeKuttaCoefficients</span><span class="o">::</span><span class="n">rungeKuttaFehlberg87</span> <span class="p">);</span>
+<span class="n">RungeKuttaCoefficients</span><span class="w"> </span><span class="n">rungeKuttaCoefficients</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="n">RungeKuttaCoefficients</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="w"> </span><span class="n">RungeKuttaCoefficients</span><span class="o">::</span><span class="n">rungeKuttaFehlberg87</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -426,11 +430,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -465,6 +468,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

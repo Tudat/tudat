@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -88,7 +92,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -244,30 +248,30 @@ Your final file structure should look as follows:</p>
 
     <span class="c1">// Tab indent size</span>
     <span class="c1">// (multi-line comment)</span>
-    <span class="s2">&quot;indent&quot;</span> <span class="o">:</span> <span class="p">{</span> <span class="cm">/*embedded comment*/</span> <span class="s2">&quot;length&quot;</span> <span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s2">&quot;indent&quot;</span> <span class="o">:</span> <span class="p">{</span> <span class="cm">/*embedded comment*/</span> <span class="s2">&quot;length&quot;</span> <span class="o">:</span> <span class="mf">3</span><span class="p">,</span>
 
 <span class="s2">&quot;use_space&quot;</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>In your application you should include:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;json/json.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;json/value.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
-<span class="p">[...]</span>
-<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
-<span class="p">[...]</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;json/json.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;json/value.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+<span class="p">[...]</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">(){</span><span class="w"></span>
+<span class="p">[...]</span><span class="w"></span>
 <span class="c1">// Construct Json Database</span>
-<span class="n">Json</span><span class="o">::</span><span class="n">Value</span> <span class="n">jsonRoot</span><span class="p">;</span>
-<span class="n">jsonRoot</span><span class="p">[</span><span class="s">&quot;test&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span><span class="p">;</span> <span class="c1">// write value</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">jsonRoot</span><span class="p">[</span><span class="s">&quot;test&quot;</span><span class="p">].</span><span class="n">asString</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">Json</span><span class="o">::</span><span class="n">Value</span><span class="w"> </span><span class="n">jsonRoot</span><span class="p">;</span><span class="w"></span>
+<span class="n">jsonRoot</span><span class="p">[</span><span class="s">&quot;test&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// write value</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">jsonRoot</span><span class="p">[</span><span class="s">&quot;test&quot;</span><span class="p">].</span><span class="n">asString</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">// Read file and overwrite Json database</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">filename</span> <span class="p">(</span><span class="s">&quot;/full/path/to/file.json&quot;</span><span class="p">);</span>
-<span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">config_doc</span><span class="p">(</span><span class="n">filename</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
-<span class="n">config_doc</span> <span class="o">&gt;&gt;</span> <span class="n">jsonRoot</span><span class="p">;</span> <span class="c1">// write file to jsonRoot</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">jsonRoot</span><span class="p">[</span><span class="s">&quot;encoding&quot;</span><span class="p">].</span><span class="n">asString</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">jsonRoot</span><span class="p">[</span><span class="s">&quot;test&quot;</span><span class="p">].</span><span class="n">asString</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> <span class="c1">// this instance is overwritten.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">filename</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;/full/path/to/file.json&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="w"> </span><span class="nf">config_doc</span><span class="p">(</span><span class="n">filename</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span><span class="w"></span>
+<span class="n">config_doc</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">jsonRoot</span><span class="p">;</span><span class="w"> </span><span class="c1">// write file to jsonRoot</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">jsonRoot</span><span class="p">[</span><span class="s">&quot;encoding&quot;</span><span class="p">].</span><span class="n">asString</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">jsonRoot</span><span class="p">[</span><span class="s">&quot;test&quot;</span><span class="p">].</span><span class="n">asString</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"> </span><span class="c1">// this instance is overwritten.</span>
 </pre></div>
 </div>
 <p>which will return:</p>
@@ -280,49 +284,49 @@ Your final file structure should look as follows:</p>
 <h2>Usage example: read an Eigen matrix or an Eigen vector<a class="headerlink" href="#usage-example-read-an-eigen-matrix-or-an-eigen-vector" title="Permalink to this headline">¶</a></h2>
 <p>The following functions can be used to read a matrix or a vector from a Json file.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//// Read Json Array and return as Eigen Matrix</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">ReadJsonMatrix</span><span class="p">(</span> <span class="n">Json</span><span class="o">::</span><span class="n">Value</span> <span class="n">Array</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="kt">int</span> <span class="n">rows</span> <span class="o">=</span> <span class="n">Array</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span>
-    <span class="kt">int</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">Array</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="w"> </span><span class="nf">ReadJsonMatrix</span><span class="p">(</span><span class="w"> </span><span class="n">Json</span><span class="o">::</span><span class="n">Value</span><span class="w"> </span><span class="n">Array</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Array</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">cols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Array</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">Matrix</span><span class="p">(</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="p">);</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="w"> </span><span class="n">Matrix</span><span class="p">(</span><span class="w"> </span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">cols</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">rows</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span> <span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">cols</span> <span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">Matrix</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> <span class="o">=</span> <span class="n">Array</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">].</span><span class="n">asDouble</span><span class="p">(</span> <span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">rows</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">&lt;</span><span class="n">cols</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">Matrix</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Array</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">].</span><span class="n">asDouble</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
 <span class="c1">//    std::cout &lt;&lt; &quot;Matrix size: rows = &quot; &lt;&lt; rows &lt;&lt; &quot; cols = &quot; &lt;&lt; cols &lt;&lt; std::endl;</span>
-<span class="k">return</span> <span class="n">Matrix</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="k">return</span><span class="w"> </span><span class="n">Matrix</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
 <span class="c1">//// Read Json Array and return as Eigen Vector</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">ReadJsonVector</span><span class="p">(</span> <span class="n">Json</span><span class="o">::</span><span class="n">Value</span> <span class="n">Array</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">Array</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="nf">ReadJsonVector</span><span class="p">(</span><span class="w"> </span><span class="n">Json</span><span class="o">::</span><span class="n">Value</span><span class="w"> </span><span class="n">Array</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Array</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">Vector</span><span class="p">(</span> <span class="n">size</span> <span class="p">);</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="n">Vector</span><span class="p">(</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">Vector</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">Array</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">asDouble</span><span class="p">(</span> <span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">Vector</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Array</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">asDouble</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="k">return</span> <span class="n">Vector</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Vector</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="n">Json</span><span class="o">::</span><span class="n">Value</span> <span class="n">settings</span> <span class="o">=</span> <span class="n">ReadConfigFile</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span><span class="n">filename</span><span class="p">);</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">A</span> <span class="o">=</span> <span class="n">ReadJsonMatrix</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&quot;A&quot;</span><span class="p">]);</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">X0</span> <span class="o">=</span> <span class="n">ReadJsonVector</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&quot;X0&quot;</span><span class="p">]);</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">A</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">X0</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">Json</span><span class="o">::</span><span class="n">Value</span><span class="w"> </span><span class="n">settings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ReadConfigFile</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span><span class="n">filename</span><span class="p">);</span><span class="w"></span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ReadJsonMatrix</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&quot;A&quot;</span><span class="p">]);</span><span class="w"></span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="n">X0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ReadJsonVector</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&quot;X0&quot;</span><span class="p">]);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">X0</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where the matrix A is defined in the config file as an array:</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;A&quot;</span> <span class="o">:</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]],</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;A&quot;</span> <span class="o">:</span> <span class="p">[[</span><span class="mf">1</span><span class="p">,</span><span class="mf">2</span><span class="p">,</span><span class="mf">3</span><span class="p">],[</span><span class="mf">3</span><span class="p">,</span><span class="mf">4</span><span class="p">,</span><span class="mf">5</span><span class="p">],[</span><span class="mf">1</span><span class="p">,</span><span class="mf">1</span><span class="p">]],</span>
 <span class="s2">&quot;X0&quot;</span> <span class="o">:</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span><span class="o">-</span><span class="mf">0.25</span><span class="p">],</span>
 </pre></div>
 </div>
@@ -381,11 +385,10 @@ Your final file structure should look as follows:</p>
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -420,6 +423,11 @@ Your final file structure should look as follows:</p>
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

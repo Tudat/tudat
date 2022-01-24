@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
@@ -195,68 +199,68 @@
 <h2><span class="section-number">5.1. </span>Updating the list of estimatable parameters<a class="headerlink" href="#updating-the-list-of-estimatable-parameters" title="Permalink to this headline">¶</a></h2>
 <p>First of all, the name of the new estimatable parameter has to be added to the list of the estimatable parameters available in Tudat, in the file <code class="docutils literal notranslate"><span class="pre">estimatableParameter.h</span></code>:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//! List of parameters that can be estimated by the orbit determination code</span>
-<span class="k">enum</span> <span class="n">EstimatebleParametersEnum</span>
-<span class="p">{</span>
-   <span class="n">arc_wise_initial_body_state</span><span class="p">,</span>
-   <span class="n">initial_body_state</span><span class="p">,</span>
-   <span class="n">initial_rotational_body_state</span><span class="p">,</span>
-   <span class="n">gravitational_parameter</span><span class="p">,</span>
-   <span class="n">constant_drag_coefficient</span><span class="p">,</span>
-   <span class="n">radiation_pressure_coefficient</span><span class="p">,</span>
-   <span class="n">arc_wise_radiation_pressure_coefficient</span><span class="p">,</span>
-   <span class="n">spherical_harmonics_cosine_coefficient_block</span><span class="p">,</span>
-   <span class="n">spherical_harmonics_sine_coefficient_block</span><span class="p">,</span>
-   <span class="n">constant_rotation_rate</span><span class="p">,</span>
-   <span class="n">rotation_pole_position</span><span class="p">,</span>
-   <span class="n">constant_additive_observation_bias</span><span class="p">,</span>
-   <span class="p">...</span>
-   <span class="p">...</span>
-<span class="p">}</span>
+<span class="k">enum</span> <span class="nc">EstimatebleParametersEnum</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="n">arc_wise_initial_body_state</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">initial_body_state</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">initial_rotational_body_state</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">gravitational_parameter</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">constant_drag_coefficient</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">radiation_pressure_coefficient</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">arc_wise_radiation_pressure_coefficient</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">spherical_harmonics_cosine_coefficient_block</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">spherical_harmonics_sine_coefficient_block</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">constant_rotation_rate</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">rotation_pole_position</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">constant_additive_observation_bias</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="p">...</span><span class="w"></span>
+<span class="w">   </span><span class="p">...</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In addition to the file <code class="docutils literal notranslate"><span class="pre">estimatableParameters.h</span></code>, the file <code class="docutils literal notranslate"><span class="pre">estimatableParameters.cpp</span></code> also has to be modified. In particular, a short description of each estimatable parameter has to be provided in the function <code class="docutils literal notranslate"><span class="pre">getParameterTypeString</span></code>, as it is done in the following for the parameters <code class="docutils literal notranslate"><span class="pre">radiation_pressure_coefficient</span></code> and <code class="docutils literal notranslate"><span class="pre">rotation_pole_position</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">getParameterTypeString</span><span class="p">(</span> <span class="k">const</span> <span class="n">EstimatebleParametersEnum</span> <span class="n">parameterType</span> <span class="p">)</span>
-<span class="p">{</span>
-<span class="p">...</span>
-<span class="k">case</span> <span class="nl">radiation_pressure_coefficient</span><span class="p">:</span>
-     <span class="n">parameterDescription</span> <span class="o">=</span> <span class="s">&quot;radiation pressure coefficient &quot;</span><span class="p">;</span>
-     <span class="k">break</span><span class="p">;</span>
-<span class="p">...</span>
-<span class="k">case</span> <span class="nl">rotation_pole_position</span><span class="p">:</span>
-     <span class="n">parameterDescription</span> <span class="o">=</span> <span class="s">&quot;pole position &quot;</span><span class="p">;</span>
-     <span class="k">break</span><span class="p">;</span>
-<span class="p">...</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">getParameterTypeString</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">EstimatebleParametersEnum</span><span class="w"> </span><span class="n">parameterType</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="k">case</span><span class="w"> </span><span class="nl">radiation_pressure_coefficient</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="n">parameterDescription</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;radiation pressure coefficient &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="k">case</span><span class="w"> </span><span class="nl">rotation_pole_position</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="n">parameterDescription</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;pole position &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The type of the new estimatable parameter must then be specified within the function <code class="docutils literal notranslate"><span class="pre">isDoubleParameter</span></code> (still inside the file <code class="docutils literal notranslate"><span class="pre">estimatableParameters.cpp</span></code>). An estimatable parameter can either be a <code class="docutils literal notranslate"><span class="pre">double</span></code> or a <code class="docutils literal notranslate"><span class="pre">Eigen::VectorXd</span></code>, depending on whether the parameter is represented by a single or multiple floating-point values. Regarding the two examples which are considered here, the parameter <code class="docutils literal notranslate"><span class="pre">radiation_pressure_coefficient</span></code> is a <code class="docutils literal notranslate"><span class="pre">double</span></code> while the parameter <code class="docutils literal notranslate"><span class="pre">rotation_pole_position</span></code> is a <code class="docutils literal notranslate"><span class="pre">Eigen::VectorXd</span></code>, whose first element is the right ascension of the rotation pole and the second one its declination.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="nf">isDoubleParameter</span><span class="p">(</span> <span class="k">const</span> <span class="n">EstimatebleParametersEnum</span> <span class="n">parameterType</span> <span class="p">)</span>
-<span class="p">{</span>
-<span class="p">...</span>
-<span class="k">case</span> <span class="nl">radiation_pressure_coefficient</span><span class="p">:</span>
-     <span class="n">isDoubleParameter</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-     <span class="k">break</span><span class="p">;</span>
-<span class="p">...</span>
-<span class="k">case</span> <span class="nl">rotation_pole_position</span><span class="p">:</span>
-     <span class="n">isDoubleParameter</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-     <span class="k">break</span><span class="p">;</span>
-<span class="p">...</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">isDoubleParameter</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">EstimatebleParametersEnum</span><span class="w"> </span><span class="n">parameterType</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="k">case</span><span class="w"> </span><span class="nl">radiation_pressure_coefficient</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="n">isDoubleParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="k">case</span><span class="w"> </span><span class="nl">rotation_pole_position</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="n">isDoubleParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Finally, depending on which estimatable parameter is to be added to the list of available parameters, the functions <code class="docutils literal notranslate"><span class="pre">isParameterDynamicalPropertyInitialState</span></code>, <code class="docutils literal notranslate"><span class="pre">isParameterRotationMatrixProperty</span></code>, <code class="docutils literal notranslate"><span class="pre">isParameterObservationLinkProperty</span></code> and <code class="docutils literal notranslate"><span class="pre">isParameterTidalProperty</span></code> may also need to be modified to take this new parameter into account (again in <code class="docutils literal notranslate"><span class="pre">estimatableParameters.cpp</span></code>). These function return a boolean which is set to false as default value, but needs to be set to true for specific types of parameters. Specifically, if the parameter represents an initial dynamical state (e.g. initial translational state), a property influencing rotation matrix (e.g. planetary rotation rate), an observation link (e.g. observation bias) or a property influencing tidal gravity field variations (e.g. Love numbers; tidal lags). For our examples, the parameter <code class="docutils literal notranslate"><span class="pre">radiation_pressure_coefficient</span></code> is related to none of them but the parameter <code class="docutils literal notranslate"><span class="pre">rotation_pole_position</span></code> is linked to a rotation matrix so that the function <code class="docutils literal notranslate"><span class="pre">isParameterRotationMatrixProperty</span></code> includes a case switching the boolean to <code class="docutils literal notranslate"><span class="pre">true</span></code> for this parameter.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="nf">isParameterRotationMatrixProperty</span><span class="p">(</span> <span class="k">const</span> <span class="n">EstimatebleParametersEnum</span> <span class="n">parameterType</span> <span class="p">)</span>
-<span class="p">{</span>
-   <span class="kt">bool</span> <span class="n">flag</span><span class="p">;</span>
-   <span class="k">switch</span><span class="p">(</span> <span class="n">parameterType</span> <span class="p">)</span>
-   <span class="p">{</span>
-   <span class="p">...</span>
-   <span class="k">case</span> <span class="nl">rotation_pole_position</span><span class="p">:</span>
-      <span class="n">flag</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-      <span class="k">break</span><span class="p">;</span>
-   <span class="p">}</span>
-   <span class="k">return</span> <span class="n">flag</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">isParameterRotationMatrixProperty</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">EstimatebleParametersEnum</span><span class="w"> </span><span class="n">parameterType</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">flag</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">switch</span><span class="p">(</span><span class="w"> </span><span class="n">parameterType</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="p">...</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="nl">rotation_pole_position</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="n">flag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">flag</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -267,40 +271,40 @@
 <div><p>…/tudatBundle/tudat/Tudat/Astrodynamics/OrbitDetermination/EstimatableParameters/</p>
 </div></blockquote>
 <p>Each estimatable parameter class is defined in a similar way, usually from the base class <code class="docutils literal notranslate"><span class="pre">EstimatableParameter</span></code> and includes the definition of three functions <code class="docutils literal notranslate"><span class="pre">getParameterValues</span></code>, <code class="docutils literal notranslate"><span class="pre">setParameterValue</span></code> and <code class="docutils literal notranslate"><span class="pre">getParameterSize</span></code>. Considering the parameter <code class="docutils literal notranslate"><span class="pre">radiation_pressure_coefficient</span></code>, the definition of its associated class <code class="docutils literal notranslate"><span class="pre">RadiationPressureCoefficient</span></code> is done as follows (in the file <code class="docutils literal notranslate"><span class="pre">radiationPressureCoefficient.h</span></code>).</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RadiationPressureCoefficient</span><span class="o">:</span> <span class="k">public</span> <span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span>
-<span class="p">{</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RadiationPressureCoefficient</span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">EstimatableParameter</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
 
-<span class="k">public</span><span class="o">:</span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
 <span class="c1">//! Constructor.</span>
-<span class="n">RadiationPressureCoefficient</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">electro_magnetism</span><span class="o">::</span><span class="n">RadiationPressureInterface</span> <span class="o">&gt;</span> <span class="n">radiationPressureInterface</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">associatedBody</span> <span class="p">)</span><span class="o">:</span>
-<span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">radiation_pressure_coefficient</span><span class="p">,</span> <span class="n">associatedBody</span> <span class="p">),</span> <span class="n">radiationPressureInterface_</span><span class="p">(</span> <span class="n">radiationPressureInterface</span> <span class="p">)</span>
-<span class="p">{</span> <span class="p">}</span>
+<span class="n">RadiationPressureCoefficient</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">electro_magnetism</span><span class="o">::</span><span class="n">RadiationPressureInterface</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">radiationPressureInterface</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">associatedBody</span><span class="w"> </span><span class="p">)</span><span class="o">:</span><span class="w"></span>
+<span class="n">EstimatableParameter</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">radiation_pressure_coefficient</span><span class="p">,</span><span class="w"> </span><span class="n">associatedBody</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">radiationPressureInterface_</span><span class="p">(</span><span class="w"> </span><span class="n">radiationPressureInterface</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
 <span class="c1">//! Destructor.</span>
-<span class="o">~</span><span class="n">RadiationPressureCoefficient</span><span class="p">(</span> <span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+<span class="o">~</span><span class="n">RadiationPressureCoefficient</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
 <span class="c1">//! Function to get the current value of the radiation pressure coefficient that is to be estimated.</span>
-<span class="kt">double</span> <span class="n">getParameterValue</span><span class="p">(</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="n">radiationPressureInterface_</span><span class="o">-&gt;</span><span class="n">getRadiationPressureCoefficient</span><span class="p">(</span> <span class="p">);</span>
-<span class="p">}</span>
+<span class="kt">double</span><span class="w"> </span><span class="n">getParameterValue</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">radiationPressureInterface_</span><span class="o">-&gt;</span><span class="n">getRadiationPressureCoefficient</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
 <span class="c1">//! Function to reset the value of the radiation pressure coefficient that is to be estimated.</span>
-<span class="kt">void</span> <span class="n">setParameterValue</span><span class="p">(</span> <span class="kt">double</span> <span class="n">parameterValue</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">radiationPressureInterface_</span><span class="o">-&gt;</span><span class="n">resetRadiationPressureCoefficient</span><span class="p">(</span> <span class="n">parameterValue</span> <span class="p">);</span>
-<span class="p">}</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">setParameterValue</span><span class="p">(</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">parameterValue</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">radiationPressureInterface_</span><span class="o">-&gt;</span><span class="n">resetRadiationPressureCoefficient</span><span class="p">(</span><span class="w"> </span><span class="n">parameterValue</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
 <span class="c1">//! Function to retrieve the size of the parameter.</span>
-<span class="kt">int</span> <span class="n">getParameterSize</span><span class="p">(</span> <span class="p">){</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">getParameterSize</span><span class="p">(</span><span class="w"> </span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
-<span class="k">protected</span><span class="o">:</span>
+<span class="k">protected</span><span class="o">:</span><span class="w"></span>
 
-<span class="k">private</span><span class="o">:</span>
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
 
 <span class="c1">//! Object containing the radiation pressure coefficient to be estimated.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">electro_magnetism</span><span class="o">::</span><span class="n">RadiationPressureInterface</span> <span class="o">&gt;</span> <span class="n">radiationPressureInterface_</span><span class="p">;</span>
-<span class="p">};</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">electro_magnetism</span><span class="o">::</span><span class="n">RadiationPressureInterface</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">radiationPressureInterface_</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>For the parameter <code class="docutils literal notranslate"><span class="pre">rotation_pole_position</span></code>, the class <code class="docutils literal notranslate"><span class="pre">ConstantRotationalOrientation</span></code> is created in a very similar way, in a file <code class="docutils literal notranslate"><span class="pre">constantRotationalOrientation.h</span></code>, keeping in mind that this parameter is a <code class="docutils literal notranslate"><span class="pre">Eigen::VectorXd</span></code> whose size is 2 and not a double as it is the case for the radiation pressure coefficient.</p>
@@ -313,60 +317,60 @@
 </ul>
 <p>In some cases, this base class is not detailed enough to give access to all the required properties of the estimatable parameter and a specific class has to be defined. As an example, the parameter <code class="docutils literal notranslate"><span class="pre">spherical_harmonics_cosine_coefficient_block</span></code> requires the definition of the estimatable parameter settings class called <code class="docutils literal notranslate"><span class="pre">SphericalHarmonicEstimatableParameterSettings</span></code> (defined in the file <code class="docutils literal notranslate"><span class="pre">estimatableParameterSettings.h</span></code>). This class manages the different combinations of degrees and orders of the spherical harmonic coefficients that have to be estimated.</p>
 <p>Regarding the verification of the estimatable parameter settings of <code class="docutils literal notranslate"><span class="pre">radiation_pressure_coefficient</span></code>, it is checked that only one single radiation pressure interface is defined before creating the parameter and linking it to this radiation pressure interface and to the propagated body.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">createDoubleParameterToEstimate</span><span class="p">(</span>
-     <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSettings</span> <span class="o">&gt;&amp;</span> <span class="n">doubleParameterName</span><span class="p">,</span>
-     <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="k">const</span> <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span><span class="o">&amp;</span> <span class="n">accelerationModelMap</span> <span class="p">)</span>
-<span class="p">{</span>
-<span class="p">...</span>
-<span class="k">case</span> <span class="nl">radiation_pressure_coefficient</span><span class="p">:</span>
-     <span class="p">{</span>
-         <span class="k">if</span><span class="p">(</span> <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRadiationPressureInterfaces</span><span class="p">(</span> <span class="p">).</span><span class="n">size</span><span class="p">(</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
-         <span class="p">{</span>
-             <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;Error, no radiation pressure interfaces found in body &quot;</span> <span class="o">+</span>
-                     <span class="n">currentBodyName</span> <span class="o">+</span> <span class="s">&quot; when making Cr parameter.&quot;</span><span class="p">;</span>
-             <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="n">errorMessage</span> <span class="p">);</span>
-         <span class="p">}</span>
-         <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRadiationPressureInterfaces</span><span class="p">(</span> <span class="p">).</span><span class="n">size</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="p">)</span>
-             <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;Error, multiple radiation pressure interfaces found in body &quot;</span> <span class="o">+</span>
-         <span class="p">{</span>
-                     <span class="n">currentBodyName</span> <span class="o">+</span> <span class="s">&quot; when making Cr parameter.&quot;</span><span class="p">;</span>
-             <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="n">errorMessage</span> <span class="p">);</span>
-         <span class="p">}</span>
-         <span class="k">else</span>
-         <span class="p">{</span>
-             <span class="n">doubleParameterToEstimate</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">RadiationPressureCoefficient</span> <span class="o">&gt;</span><span class="p">(</span>
-                         <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRadiationPressureInterfaces</span><span class="p">(</span> <span class="p">).</span><span class="n">begin</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">,</span>
-                         <span class="n">currentBodyName</span> <span class="p">);</span>
-         <span class="p">}</span>
-         <span class="k">break</span><span class="p">;</span>
-     <span class="p">}</span>
- <span class="p">...</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EstimatableParameter</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">createDoubleParameterToEstimate</span><span class="p">(</span><span class="w"></span>
+<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">doubleParameterName</span><span class="p">,</span><span class="w"></span>
+<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="n">NamedBodyMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">accelerationModelMap</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="k">case</span><span class="w"> </span><span class="nl">radiation_pressure_coefficient</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRadiationPressureInterfaces</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">size</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="w">             </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Error, no radiation pressure interfaces found in body &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                     </span><span class="n">currentBodyName</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; when making Cr parameter.&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">             </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRadiationPressureInterfaces</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">size</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">             </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Error, multiple radiation pressure interfaces found in body &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="w">                     </span><span class="n">currentBodyName</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; when making Cr parameter.&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">             </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="k">else</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="w">             </span><span class="n">doubleParameterToEstimate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">RadiationPressureCoefficient</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">                         </span><span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRadiationPressureInterfaces</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">begin</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">,</span><span class="w"></span>
+<span class="w">                         </span><span class="n">currentBodyName</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="p">}</span><span class="w"></span>
+<span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Concerning the parameter <code class="docutils literal notranslate"><span class="pre">rotation_pole_position</span></code>, it must be verified that the rotation model is a simple rotational ephemeris for which the position of the rotation pole is indeed defined before creating the estimatable parameter.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">createVectorParameterToEstimate</span><span class="p">(</span>
-     <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSettings</span> <span class="o">&gt;&amp;</span> <span class="n">vectorParameterName</span><span class="p">,</span>
-     <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="k">const</span> <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span><span class="o">&amp;</span> <span class="n">accelerationModelMap</span> <span class="p">)</span>
-<span class="p">{</span>
-<span class="p">...</span>
-<span class="k">case</span> <span class="nl">rotation_pole_position</span><span class="p">:</span>
-         <span class="k">if</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">SimpleRotationalEphemeris</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span> <span class="o">==</span> <span class="k">nullptr</span> <span class="p">)</span>
-         <span class="p">{</span>
-             <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;Warning, no simple rotational ephemeris present in body &quot;</span> <span class="o">+</span> <span class="n">currentBodyName</span> <span class="o">+</span>
-                     <span class="s">&quot; when making constant rotation orientation parameter&quot;</span><span class="p">;</span>
-             <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="n">errorMessage</span> <span class="p">);</span>
-         <span class="p">}</span>
-         <span class="k">else</span>
-         <span class="p">{</span>
-             <span class="n">vectorParameterToEstimate</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantRotationalOrientation</span> <span class="o">&gt;</span>
-                     <span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">SimpleRotationalEphemeris</span> <span class="o">&gt;</span>
-                       <span class="p">(</span> <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span> <span class="p">)</span> <span class="p">),</span> <span class="n">currentBodyName</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EstimatableParameter</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">createVectorParameterToEstimate</span><span class="p">(</span><span class="w"></span>
+<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">vectorParameterName</span><span class="p">,</span><span class="w"></span>
+<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="n">NamedBodyMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">accelerationModelMap</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="k">case</span><span class="w"> </span><span class="nl">rotation_pole_position</span><span class="p">:</span><span class="w"></span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span><span class="w"> </span><span class="n">SimpleRotationalEphemeris</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="w">             </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Warning, no simple rotational ephemeris present in body &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">currentBodyName</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                     </span><span class="s">&quot; when making constant rotation orientation parameter&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">             </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="k">else</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="w">             </span><span class="n">vectorParameterToEstimate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ConstantRotationalOrientation</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">                     </span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ephemerides</span><span class="o">::</span><span class="n">SimpleRotationalEphemeris</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">                       </span><span class="p">(</span><span class="w"> </span><span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">currentBodyName</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-         <span class="p">}</span>
-         <span class="k">break</span><span class="p">;</span>
-  <span class="p">...</span>
-  <span class="p">}</span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">...</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Note that in both these cases, the <a class="reference internal" href="../../tutorials/tudatFeatures/estimationSetup/parameterEstimationSettings.html#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatableParameterSettings</span></code></a> class is sufficient to define the parameter fully, and no dedicated settings class is required.</p>
@@ -377,26 +381,26 @@
 <p>For partial derivatives of observations w.r.t. a parameter, the dependency of observation on parameter is typically a kinematic one, in the sense that a different current parameter value directly changes the observation. A typical example of this is the position of a ground station. This is opposed to parameters that influence the dynamics of a body, which influence the state of the spacecraft, which in turn influences the observation. Examples of such parameters are spherical harmonic coefficients and drag coefficients.</p>
 <p>Due to the kinematic nature of the observation partials, they are implemented as partials of the Cartesian state of the propagated body with respect to the estimatable parameter (which are then mapped to an observation partial for each observable by a dedicated class). These Cartesian state partials have to be implemented in the file <code class="docutils literal notranslate"><span class="pre">createCartesianStatePartial.cpp</span></code>, within the functions <code class="docutils literal notranslate"><span class="pre">createCartesianStatePartialsWrtParameter</span></code> (two functions exist with two different input types, depending on the type of the parameter (<code class="docutils literal notranslate"><span class="pre">double</span></code> or <code class="docutils literal notranslate"><span class="pre">Eigen::VectorXd</span></code>) that is to be considered).</p>
 <p>If the estimatable parameter has been identified as being a property of a rotation matrix, then the function <code class="docutils literal notranslate"><span class="pre">createCartesianStatePartialsWrtParameter</span></code> calls another function named <code class="docutils literal notranslate"><span class="pre">createRotationMatrixPartialsWrtParameter</span></code> and defined in <code class="docutils literal notranslate"><span class="pre">createCartesianStatePartial.cpp</span></code> too (again two functions with the same name exist for the two types of estimatable parameters: VectorXd and double parameters). A specific case has to be added within this function for each parameter which is related to a rotation matrix. For the parameter <code class="docutils literal notranslate"><span class="pre">rotation_pole_position</span></code>, the following lines of code have been added to first check that the rotation model is consistent with the estimatable parameter (here that is a simple rotational model) and then to call a function that returns the required rotation matrix  partials for this particular model.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RotationMatrixPartial</span> <span class="o">&gt;</span> <span class="n">createRotationMatrixPartialsWrtParameter</span><span class="p">(</span>
-      <span class="k">const</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span>
-      <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">estimatable_parameters</span><span class="o">::</span><span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">parameterToEstimate</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">RotationMatrixPartial</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">createRotationMatrixPartialsWrtParameter</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">estimatable_parameters</span><span class="o">::</span><span class="n">EstimatableParameter</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">parameterToEstimate</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 
-<span class="p">{</span>
-   <span class="p">...</span>
-   <span class="k">case</span> <span class="n">estimatable_parameters</span><span class="o">::</span><span class="nl">rotation_pole_position</span><span class="p">:</span>
-      <span class="k">if</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">SimpleRotationalEphemeris</span> <span class="o">&gt;</span><span class="p">(</span>
-                  <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span> <span class="o">==</span> <span class="k">nullptr</span> <span class="p">)</span>
-      <span class="p">{</span>
-          <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;Warning, body&#39;s rotation model is not simple when making position w.r.t. pole position partial&quot;</span><span class="p">;</span>
-          <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="n">errorMessage</span> <span class="p">);</span>
-      <span class="p">}</span>
-      <span class="c1">// Create rotation matrix partial object</span>
-      <span class="n">rotationMatrixPartial</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">RotationMatrixPartialWrtPoleOrientation</span> <span class="o">&gt;</span><span class="p">(</span>
-                  <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">SimpleRotationalEphemeris</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span> <span class="p">);</span>
-      <span class="k">break</span><span class="p">;</span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="p">...</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="n">estimatable_parameters</span><span class="o">::</span><span class="nl">rotation_pole_position</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ephemerides</span><span class="o">::</span><span class="n">SimpleRotationalEphemeris</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">                  </span><span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Warning, body&#39;s rotation model is not simple when making position w.r.t. pole position partial&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">          </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// Create rotation matrix partial object</span>
+<span class="w">      </span><span class="n">rotationMatrixPartial</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">RotationMatrixPartialWrtPoleOrientation</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">                  </span><span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span><span class="w"> </span><span class="n">SimpleRotationalEphemeris</span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 
- <span class="p">...</span>
- <span class="p">}</span>
+<span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="w"> </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The class <code class="docutils literal notranslate"><span class="pre">RotationMatrixPartialWrtPoleOrientation</span></code> used in the code above to define the <code class="docutils literal notranslate"><span class="pre">rotationMatrixPartial</span></code> variable is created in the file <code class="docutils literal notranslate"><span class="pre">rotationMatrixPartial.h</span></code> and must contain two internal functions <code class="docutils literal notranslate"><span class="pre">calculatePartialOfRotationMatrixToBaseFrameWrtParameter</span></code> and <code class="docutils literal notranslate"><span class="pre">calculatePartialOfRotationMatrixDerivativeToBaseFrameWrtParameter</span></code>. These functions return the rotation matrix and rotation matrix derivative partials respectively, with respect to the estimatable parameter. Specific functions to calculate these partials have to be added to the file <code class="docutils literal notranslate"><span class="pre">rotationMatrixPartial.cpp</span></code>. Regarding the parameter <code class="docutils literal notranslate"><span class="pre">rotation_pole_position</span></code>, these functions are <code class="docutils literal notranslate"><span class="pre">calculatePartialOfRotationMatrixFromLocalFrameWrtPoleOrientation</span></code> and <code class="docutils literal notranslate"><span class="pre">calculatePartialOfRotationMatrixDerivativeFromLocalFrameWrtPoleOrientation</span></code>, respectively.</p>
@@ -411,39 +415,39 @@
 </div></blockquote>
 <p>When adding a new parameter, no new classes need to be defined. Instead, existing class(es) need to be update with teh new dependency of an acceleration on a parameter. For any estimatable parameter related to an acceleration model, one must define a function <code class="docutils literal notranslate"><span class="pre">getParameterPartialFunction</span></code> in the associated <code class="docutils literal notranslate"><span class="pre">AccelerationPartial</span></code> class, which is a method of its associated acceleration partial clas. This function provides the partial of the acceleration model with respect to the estimatable parameter. Looking at the parameter <code class="docutils literal notranslate"><span class="pre">radiation_pressure_coefficient</span></code> in particular, the acceleration partials are defined from the class <code class="docutils literal notranslate"><span class="pre">CannonBallRadiationPressurePartial</span></code> which is itself derived from the base class <code class="docutils literal notranslate"><span class="pre">AccelerationPartial</span></code>). This acceleration partials class is defined in the files <code class="docutils literal notranslate"><span class="pre">radiationPressureAccelerationPartial.h</span></code> and <code class="docutils literal notranslate"><span class="pre">radiationPressureAccelerationPartial.cpp</span></code>. Only the radiation pressure coefficient can be estimated for this acceleration model so that the function <code class="docutils literal notranslate"><span class="pre">getParameterPartialFunction</span></code> only contains a single specific case dedicated to this parameter.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//! Function for setting up and retrieving a function returning a partial w.r.t. a double parameter.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">void</span><span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span> <span class="p">)</span> <span class="o">&gt;</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&gt;</span> <span class="n">CannonBallRadiationPressurePartial</span><span class="o">::</span><span class="n">getParameterPartialFunction</span><span class="p">(</span>
-     <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">estimatable_parameters</span><span class="o">::</span><span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">parameter</span> <span class="p">)</span>
-<span class="p">{</span>
-   <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">void</span><span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">partialFunction</span><span class="p">;</span>
-   <span class="kt">int</span> <span class="n">numberOfRows</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">void</span><span class="p">(</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">CannonBallRadiationPressurePartial</span><span class="o">::</span><span class="n">getParameterPartialFunction</span><span class="p">(</span><span class="w"></span>
+<span class="w">     </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">estimatable_parameters</span><span class="o">::</span><span class="n">EstimatableParameter</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">parameter</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">void</span><span class="p">(</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">partialFunction</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">int</span><span class="w"> </span><span class="n">numberOfRows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 
-   <span class="c1">// Check if parameter dependency exists.</span>
-   <span class="k">if</span><span class="p">(</span> <span class="n">parameter</span><span class="o">-&gt;</span><span class="n">getParameterName</span><span class="p">(</span> <span class="p">).</span><span class="n">second</span><span class="p">.</span><span class="n">first</span> <span class="o">==</span> <span class="n">acceleratedBody_</span> <span class="p">)</span>
-   <span class="p">{</span>
-      <span class="k">switch</span><span class="p">(</span> <span class="n">parameter</span><span class="o">-&gt;</span><span class="n">getParameterName</span><span class="p">(</span> <span class="p">).</span><span class="n">first</span> <span class="p">)</span>
-      <span class="p">{</span>
-         <span class="c1">// Set function returning partial w.r.t. radiation pressure coefficient.</span>
-         <span class="k">case</span> <span class="n">estimatable_parameters</span><span class="o">::</span><span class="nl">radiation_pressure_coefficient</span><span class="p">:</span>
+<span class="w">   </span><span class="c1">// Check if parameter dependency exists.</span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">parameter</span><span class="o">-&gt;</span><span class="n">getParameterName</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">second</span><span class="p">.</span><span class="n">first</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">acceleratedBody_</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">switch</span><span class="p">(</span><span class="w"> </span><span class="n">parameter</span><span class="o">-&gt;</span><span class="n">getParameterName</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">first</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// Set function returning partial w.r.t. radiation pressure coefficient.</span>
+<span class="w">         </span><span class="k">case</span><span class="w"> </span><span class="n">estimatable_parameters</span><span class="o">::</span><span class="nl">radiation_pressure_coefficient</span><span class="p">:</span><span class="w"></span>
 
-            <span class="n">partialFunction</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">CannonBallRadiationPressurePartial</span><span class="o">::</span><span class="n">wrtRadiationPressureCoefficient</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span> <span class="p">);</span>
-            <span class="n">numberOfRows</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="w">            </span><span class="n">partialFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">CannonBallRadiationPressurePartial</span><span class="o">::</span><span class="n">wrtRadiationPressureCoefficient</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">numberOfRows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
 
-            <span class="k">break</span><span class="p">;</span>
-         <span class="k">default</span><span class="o">:</span>
-            <span class="k">break</span><span class="p">;</span>
-       <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="n">partialFunction</span><span class="p">,</span> <span class="n">numberOfRows</span> <span class="p">);</span>
- <span class="p">}</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="k">default</span><span class="o">:</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">       </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="w"> </span><span class="n">partialFunction</span><span class="p">,</span><span class="w"> </span><span class="n">numberOfRows</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w"> </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The function <code class="docutils literal notranslate"><span class="pre">wrtRadiationPressureCoefficient</span></code> called in the piece of code above is also a method of the class <code class="docutils literal notranslate"><span class="pre">CannonBallRadiationPressurePartial</span></code> and is defined in the file <code class="docutils literal notranslate"><span class="pre">radiationPressureAccelerationPartial.h</span></code>. It directly returns the partial derivative of the radiation pressure acceleration model with respect to the radiation pressure coefficient, as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="kt">void</span> <span class="n">wrtRadiationPressureCoefficient</span><span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span> <span class="n">partial</span> <span class="p">)</span>
-     <span class="n">partial</span> <span class="o">=</span> <span class="n">computePartialOfCannonBallRadiationPressureAccelerationWrtRadiationPressureCoefficient</span><span class="p">(</span>
-                 <span class="n">radiationPressureFunction_</span><span class="p">(</span> <span class="p">),</span> <span class="n">areaFunction_</span><span class="p">(</span> <span class="p">),</span> <span class="n">acceleratedBodyMassFunction_</span><span class="p">(</span> <span class="p">),</span>
-                 <span class="p">(</span> <span class="n">sourceBodyState_</span><span class="p">(</span> <span class="p">)</span> <span class="o">-</span> <span class="n">acceleratedBodyState_</span><span class="p">(</span> <span class="p">)</span> <span class="p">).</span><span class="n">normalized</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">wrtRadiationPressureCoefficient</span><span class="p">(</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span><span class="w"> </span><span class="n">partial</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">     </span><span class="n">partial</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">computePartialOfCannonBallRadiationPressureAccelerationWrtRadiationPressureCoefficient</span><span class="p">(</span><span class="w"></span>
+<span class="w">                 </span><span class="n">radiationPressureFunction_</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">areaFunction_</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">acceleratedBodyMassFunction_</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="p">(</span><span class="w"> </span><span class="n">sourceBodyState_</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">acceleratedBodyState_</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">).</span><span class="n">normalized</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -501,11 +505,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -540,6 +543,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

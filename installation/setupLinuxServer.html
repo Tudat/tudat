@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../started/index.html">Getting Started</a></li>
@@ -220,8 +224,8 @@
 </div>
 <div class="section" id="installing-and-building-tudat-bundle">
 <h2><span class="section-number">5.2. </span>Installing and building Tudat Bundle<a class="headerlink" href="#installing-and-building-tudat-bundle" title="Permalink to this headline">¶</a></h2>
-<p>Most of the steps described below are very similar to the install guide for Linux environments (see <a class="reference internal" href="setupDevLinux.html#setupdevelopmentenvironmentlinux"><span class="std std-ref">Install on Linux</span></a>) but will be reminded here for the sake of completeness. Before installing Tudat, please make sure that all the required dependencies are installed on the server (see <span class="xref std std-ref">setupDevLinux</span> for more details on the Tudat development environment).</p>
-<p>Once logged in your server account, navigate to the folder in which you want to download the Tudat code. To print the content of the folder you are in, use the <code class="docutils literal notranslate"><span class="pre">ls</span></code> command. To navigate from your current folder to the ‘parent’ one, use <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">..</span></code> (so that if you are in <code class="docutils literal notranslate"><span class="pre">folder1/folder2/</span></code> and type <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">..</span></code>, you will end up in <code class="docutils literal notranslate"><span class="pre">folder1/</span></code>). On the contrary, use <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">folderName</span></code> to do the opposite (enter <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">folder2</span></code> to get to <code class="docutils literal notranslate"><span class="pre">folder1/folder2/</span></code> from <code class="docutils literal notranslate"><span class="pre">folder1/</span></code>). Once you are in your chosen folder, clone the tudatBundle repository with the following command:</p>
+<p>Most of the steps described below are very similar to the install guide for Linux environments (see <a class="reference internal" href="setupDevLinux.html#setupdevelopmentenvironmentlinux"><span class="std std-ref">Install on Linux</span></a>) but will be repeated here for the sake of completeness. Before installing Tudat, please make sure that all the required dependencies are installed on the server (see <a class="reference internal" href="setupDevLinux.html#setupdevelopmentenvironmentlinux"><span class="std std-ref">Install on Linux</span></a> for more details on the Tudat development environment).</p>
+<p>Once logged into your server account, navigate to the folder in which you want to download the Tudat code. To print the content of the folder you are in, use the <code class="docutils literal notranslate"><span class="pre">ls</span></code> command. To navigate from your current folder to the ‘parent’ one, use <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">..</span></code> (so that if you are in <code class="docutils literal notranslate"><span class="pre">folder1/folder2/</span></code> and type <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">..</span></code>, you will end up in <code class="docutils literal notranslate"><span class="pre">folder1/</span></code>). On the contrary, use <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">folderName</span></code> to do the opposite (enter <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">folder2</span></code> to get to <code class="docutils literal notranslate"><span class="pre">folder1/folder2/</span></code> from <code class="docutils literal notranslate"><span class="pre">folder1/</span></code>). Once you are in your chosen folder, clone the tudatBundle repository with the following command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tudat</span><span class="o">/</span><span class="n">tudatBundle</span><span class="o">.</span><span class="n">git</span>
 </pre></div>
 </div>
@@ -230,19 +234,41 @@
 </pre></div>
 </div>
 <p>This step aims at updating the required modules and might take some time.</p>
-<p>Once all the previous steps are done, you might want to modify the default Tudat settings before building the whole Tudat code. Depending on the settings you want, you might set the different options (namely <code class="docutils literal notranslate"><span class="pre">USE_CSPICE</span></code>, <code class="docutils literal notranslate"><span class="pre">USE_JSON</span></code>, <code class="docutils literal notranslate"><span class="pre">USE_NRLMSISE00</span></code>, <code class="docutils literal notranslate"><span class="pre">USE_SOFA</span></code>, <code class="docutils literal notranslate"><span class="pre">USE_PAGMO</span></code>, <code class="docutils literal notranslate"><span class="pre">USE_PYGMO</span></code>, <code class="docutils literal notranslate"><span class="pre">BUILD_WITH_ESTIMATION_TOOLS</span></code>) to either <code class="docutils literal notranslate"><span class="pre">ON</span></code> or <code class="docutils literal notranslate"><span class="pre">OFF</span></code>. As an example, the option <code class="docutils literal notranslate"><span class="pre">USE_PAGMO</span></code> is set to <code class="docutils literal notranslate"><span class="pre">OFF</span></code> by default but should be turned on if you are planning on using the PAGMO toolbox for optimisation. This is done by typing the following command line:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="o">-</span><span class="n">DUSEPAGMO</span><span class="o">=</span><span class="n">ON</span>
-</pre></div>
-</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>As a general advice and if you do not need it in particular, please switch off the <code class="docutils literal notranslate"><span class="pre">USE_JSON</span></code> option on the TU Delft server. Indeed, it will most probably yield compilation issues because the version of the gcc compiler currently available on the server is not supported by the JSON interface. In case you really need the JSON interface, please contact the server administrator to discuss about installing more recent gcc versions.</p>
 </div>
-<p>The tudatBundle libraries are now ready to be built. Just entering the following command in your terminal will initiate the compilation (make sure you are in the <code class="docutils literal notranslate"><span class="pre">tudatBundle/</span></code> folder before doing it):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="n">CMakeLists</span><span class="o">.</span><span class="n">txt</span>
+<p>Since the Linux server is only accessible through a command line, the CMake configuration and build is done using commands rather than buttons in QtCreator. The process consists of three steps:</p>
+<ol class="arabic simple">
+<li><p>The configuration stage, in which CMake scans the project and generated the build script;</p></li>
+<li><p>The build stage, in which CMake calls <code class="docutils literal notranslate"><span class="pre">make</span></code> to compile and link the Tudat libraries and unit tests;</p></li>
+<li><p>The test stage, in which CMake runs all the unit tests and logs the output.</p></li>
+</ol>
+<p>We will now go over these three steps in more detail, outlining the commands and expected output.</p>
+<dl>
+<dt><strong>Step 1: Configuring the tudatBundle project</strong></dt><dd><p>The first step in building the libraries is the creation of the build tree, which contains all necessary build scripts and configuration files. In this step, you can also indicate the options which you want to switch on, e.g. to add features like the low-thrust module or Pagmo integration.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Before running the commands below, make sure you are in the top-level directory in your tudatBundle, e.g. <code class="docutils literal notranslate"><span class="pre">/home/your_name/tudatBundle/</span></code>. This directory contains the top-level CMakeLists.txt file that acts as the main project file for CMake.</p>
+</div>
+<p>If you want to build the bundle with the options left on their default setting, just entering the following command in your terminal will initiate the configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="o">-</span><span class="n">DCMAKE_BUILD_TYPE</span><span class="o">=</span><span class="n">Debug</span> <span class="o">-</span><span class="n">G</span> <span class="s2">&quot;CodeBlocks - Unix Makefiles&quot;</span>
 </pre></div>
 </div>
-<p>This will build the Tudat code and might take a while (from several dozens of minutes up to several hours). The following output is expected to appear in your terminal:</p>
+<p>Note the two arguments that are provided here. The first specifies the build style: you can choose from <code class="docutils literal notranslate"><span class="pre">Debug</span></code> and <code class="docutils literal notranslate"><span class="pre">Release</span></code>. The second argument specifies the format of the build scripts and should be not be changed.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Which one you should select depends on the available computing resources as well as your preference. <code class="docutils literal notranslate"><span class="pre">Debug</span></code> compiles all libraries with the debug flag, creating large files (resulting in a overall bundle size of multiple tens of GBs) suitable for debugging your applications while being able to step into Tudat code. The <code class="docutils literal notranslate"><span class="pre">Release</span></code> version compiles Tudat in a more optimized, compact way; this leads to smaller files and faster execution, although you will lose the advanced debugging features.</p>
+</div>
+<p>You might want to modify the default Tudat settings before building the whole Tudat code. Depending on the settings you want, you might set the different options (e.g. <code class="docutils literal notranslate"><span class="pre">BUILD_WITH_SOCIS_2019</span></code>, <code class="docutils literal notranslate"><span class="pre">USE_CSPICE</span></code>, <code class="docutils literal notranslate"><span class="pre">USE_JSON</span></code>, <code class="docutils literal notranslate"><span class="pre">USE_NRLMSISE00</span></code>, <code class="docutils literal notranslate"><span class="pre">USE_SOFA</span></code>, <code class="docutils literal notranslate"><span class="pre">USE_PAGMO</span></code>, <code class="docutils literal notranslate"><span class="pre">USE_PYGMO</span></code>, <code class="docutils literal notranslate"><span class="pre">BUILD_WITH_ESTIMATION_TOOLS</span></code>) to either <code class="docutils literal notranslate"><span class="pre">ON</span></code> or <code class="docutils literal notranslate"><span class="pre">OFF</span></code>. As an example, the option <code class="docutils literal notranslate"><span class="pre">USE_PAGMO</span></code> is set to <code class="docutils literal notranslate"><span class="pre">OFF</span></code> by default but should be turned on if you are planning on using the PAGMO toolbox for optimisation. This is done by adding the following to the CMake command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">DUSE_PAGMO</span><span class="o">=</span><span class="n">ON</span>
+</pre></div>
+</div>
+<p>So the entire command will look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="o">-</span><span class="n">DCMAKE_BUILD_TYPE</span><span class="o">=</span><span class="n">Debug</span> <span class="o">-</span><span class="n">DUSE_PAGMO</span><span class="o">=</span><span class="n">ON</span> <span class="o">-</span><span class="n">G</span> <span class="s2">&quot;CodeBlocks - Unix Makefiles&quot;</span>
+</pre></div>
+</div>
+<p>This will configure the Tudat code, and the first time you run the command, download and compile Boost. This step should not take more than a few dozen minutes on Linux. The following output is expected to appear in your terminal:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-- The C compiler identification is GNU 4.8.4
 -- The CXX compiler identification is GNU 4.8.4
 -- Check for working C compiler: /usr/bin/cc
@@ -337,8 +363,22 @@
 -- Build files have been written to: /home/dominicdirkx/Software/tudatClean/build-tudatBundle-Desktop-Default
 </pre></div>
 </div>
-<p>When the process is over, Tudat has been successfully build in your server account!
-The only remaining step is to run all the unit tests to ensure Tudat is working properly. It can be done from the tudatBundle directory by typing the following command:</p>
+<p>Depending on the options you passed to CMake, the output can change accordingly (e.g. you will see Pagmo related messages when you use <code class="docutils literal notranslate"><span class="pre">-DUSE_PAGMO=ON</span></code>).</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If you get error messages, check  your command line for errors. If you still encounter configuration errors, please create an issue on GitHub, adding a description of the problem, the CMake output, and the command line you used to configure the bundle.</p>
+</div>
+</dd>
+<dt><strong>Step 2: Building the libraries</strong></dt><dd><p>The next step is to actually build the libraries from source. To this extent, CMake will run the <code class="docutils literal notranslate"><span class="pre">make</span></code> command on the build tree, which in turn calls the compiler and linker for all libraries that should be built.</p>
+<p>The build is initiated by running the following command in the top-level tudatBundle directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="o">--</span><span class="n">build</span> <span class="o">.</span> <span class="o">--</span><span class="n">target</span> <span class="nb">all</span> <span class="o">--</span> <span class="o">-</span><span class="n">j6</span>
+</pre></div>
+</div>
+<p>The path following the <code class="docutils literal notranslate"><span class="pre">--build</span></code> command specifies the build directory; in this case, a full stop is used to denote that we will use the current directory. <code class="docutils literal notranslate"><span class="pre">--target</span></code> specifies which binaries are built. It is strongly recommended to leave this on <code class="docutils literal notranslate"><span class="pre">all</span></code>, as this will build all libraries and unit tests.</p>
+<p>After the target specification, there is one more argument. The <code class="docutils literal notranslate"><span class="pre">--</span></code> indicates that the arguments that follow are passed directly to <code class="docutils literal notranslate"><span class="pre">make</span></code>. The only make argument that is relevant here is the <code class="docutils literal notranslate"><span class="pre">-jxx</span></code> option, which specifies how many (logical) processor cores should be used to compile Tudat, where xx is an integer number equal to or greater than 1. For more information on this topic, please refer to Step 5 on the <a class="reference internal" href="configureTudatLibraries.html#configuretudatlibraries"><span class="std std-ref">Compile and Test Tudat Libraries</span></a> page.</p>
+<p>This step can take up to several hours, depending on the server resources that have been made available to you, so please wait patiently for the build to finish. Again, in case of build errors, please create a GitHub issue.</p>
+</dd>
+<dt><strong>Step 3: Running the Tudat unit tests</strong></dt><dd><p>The only remaining step is to run all the unit tests to ensure Tudat is working properly. It can be done from the tudatBundle directory by typing the following command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="o">--</span><span class="n">build</span> <span class="o">.</span> <span class="o">--</span><span class="n">target</span> <span class="nb">all</span> <span class="o">--</span> <span class="n">test</span>
 </pre></div>
 </div>
@@ -386,6 +426,8 @@ The only remaining step is to run all the unit tests to ensure Tudat is working 
 </pre></div>
 </div>
 <p>Depending on your compilation settings, this step can take from several minutes to more than one hour (the number of unit tests also depends on your settings). If the output ends with <code class="docutils literal notranslate"><span class="pre">100%</span> <span class="pre">tests</span> <span class="pre">passed,</span> <span class="pre">0</span> <span class="pre">tests</span> <span class="pre">failed</span></code>, everything worked out and you do not need to take any further action. If any tests fail the reader is refered to <a class="reference internal" href="troubleshooting/installationErrors.html#debuggingfailedunittests"><span class="std std-ref">Failed unit tests</span></a>.</p>
+</dd>
+</dl>
 </div>
 <div class="section" id="running-tudat-applications-on-the-server">
 <h2><span class="section-number">5.3. </span>Running Tudat applications on the server<a class="headerlink" href="#running-tudat-applications-on-the-server" title="Permalink to this headline">¶</a></h2>
@@ -467,11 +509,10 @@ For more details about getting a new application from an existing github reposit
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -506,6 +547,11 @@ For more details about getting a new application from an existing github reposit
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

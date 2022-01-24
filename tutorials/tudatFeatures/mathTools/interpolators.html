@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -104,7 +108,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">6. Low-Thrust Trajectory Design Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">Low-Thrust Trajectory Design Module</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">6. Basic Mathematics Tools</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">6.1. Interpolators</a></li>
 <li class="toctree-l4"><a class="reference internal" href="integrators.html">6.2. Integrators</a></li>
@@ -224,38 +228,38 @@
 <h2><span class="section-number">6.1.1. </span>One-dimensional Interpolator Creation<a class="headerlink" href="#one-dimensional-interpolator-creation" title="Permalink to this headline">¶</a></h2>
 <p>Creating interpolators of a single independent variable is most easily done in Tudat by creating an <a class="reference internal" href="#InterpolatorSettings" title="InterpolatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">InterpolatorSettings</span></code></a> object, and passing this to the <code class="docutils literal notranslate"><span class="pre">createOneDimensionalInterpolator</span></code> function.</p>
 <dl class="py class">
-<dt id="InterpolatorSettings">
-<em class="property">class </em><code class="sig-name descname">InterpolatorSettings</code><a class="headerlink" href="#InterpolatorSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="InterpolatorSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InterpolatorSettings</span></span><a class="headerlink" href="#InterpolatorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class containing settings to setup an interpolator.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load data.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="n">stateMap</span><span class="p">;</span>
-<span class="n">stateMap</span> <span class="o">=</span> <span class="p">....</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">stateMap</span><span class="p">;</span><span class="w"></span>
+<span class="n">stateMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">....</span><span class="w"></span>
 
 <span class="c1">// Create interpolator</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span> <span class="n">interpolatorSettings</span> <span class="o">=</span>
-   <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">linear_interpolator</span> <span class="p">);</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneDimensionalInterpolator</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">interpolator</span> <span class="o">=</span>
-     <span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span>
-             <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">interpolatorSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">linear_interpolator</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">OneDimensionalInterpolator</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">interpolator</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">     </span><span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span><span class="w"></span>
+<span class="w">             </span><span class="n">stateMap</span><span class="p">,</span><span class="w"> </span><span class="n">interpolatorSettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Interpolate</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span> <span class="mf">0.0</span> <span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="w"> </span><span class="n">interpolatedResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Note that if the data you interpolate is a different type, this should be reflected in how the interpolator is created. For instance, for <code class="docutils literal notranslate"><span class="pre">std::map&lt;</span> <span class="pre">double,</span> <span class="pre">Eigen::VectorXd</span> <span class="pre">&gt;</span></code> input, use</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load data.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">stateMap</span><span class="p">;</span>
-<span class="n">stateMap</span> <span class="o">=</span> <span class="p">....</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">stateMap</span><span class="p">;</span><span class="w"></span>
+<span class="n">stateMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">....</span><span class="w"></span>
 
 <span class="c1">// Create interpolator</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span> <span class="n">interpolatorSettings</span> <span class="o">=</span>
-   <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">linear_interpolator</span> <span class="p">);</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneDimensionalInterpolator</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">interpolator</span> <span class="o">=</span>
-     <span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span>
-             <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">interpolatorSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">linear_interpolator</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">OneDimensionalInterpolator</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">interpolator</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">     </span><span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span><span class="w"></span>
+<span class="w">             </span><span class="n">stateMap</span><span class="p">,</span><span class="w"> </span><span class="n">interpolatorSettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Interpolate</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span> <span class="mf">0.0</span> <span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="n">interpolatedResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In this example, the <code class="docutils literal notranslate"><span class="pre">stateMap</span></code> contains the data that is interpolated, using the <code class="docutils literal notranslate"><span class="pre">double</span></code> key (time) as independent variable and the <code class="docutils literal notranslate"><span class="pre">Eigen::Vector6d</span></code> value (state) as dependent variable. The interpolation type is linear, and the <code class="docutils literal notranslate"><span class="pre">interpolatorSettings</span></code> object is created by passing only the argument <code class="docutils literal notranslate"><span class="pre">linear_interpolator</span></code>.</p>
@@ -277,26 +281,26 @@
 <li><p><strong>Hermite spline:</strong> This interpolation requires the definition of the values, as well as the derivatives of the curve at each of the nodes. The interpolator is defined by using the <code class="docutils literal notranslate"><span class="pre">InterpolatorSettings</span></code> base class (with <code class="docutils literal notranslate"><span class="pre">hermite_spline_interpolator</span></code>) as argument.</p>
 <blockquote>
 <div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load data for values at node points</span>
-<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="n">stateMap</span><span class="p">;</span>
-<span class="n">stateMap</span> <span class="o">=</span> <span class="p">....</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">stateMap</span><span class="p">;</span><span class="w"></span>
+<span class="n">stateMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">....</span><span class="w"></span>
 
 <span class="c1">// Load data for first derivatives at node points</span>
-<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="n">stateDerivativeMap</span><span class="p">;</span>
-<span class="n">stateDerivativeMap</span> <span class="o">=</span> <span class="p">....</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">stateDerivativeMap</span><span class="p">;</span><span class="w"></span>
+<span class="n">stateDerivativeMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">....</span><span class="w"></span>
 
 <span class="c1">// Load pair of default values for extrapolation (empty by default)</span>
-<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="n">DependentVariableType</span><span class="p">,</span> <span class="n">DependentVariableType</span> <span class="o">&gt;</span> <span class="n">defaultExtrapolationValues</span><span class="p">;</span>
-<span class="n">defaultExtrapolationValues</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="w"> </span><span class="n">DependentVariableType</span><span class="p">,</span><span class="w"> </span><span class="n">DependentVariableType</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">defaultExtrapolationValues</span><span class="p">;</span><span class="w"></span>
+<span class="n">defaultExtrapolationValues</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
 
 <span class="c1">// Create interpolator</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span> <span class="n">interpolatorSettings</span> <span class="o">=</span>
- <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">hermite_spline_interpolator</span> <span class="p">)</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneDimensionalInterpolator</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">interpolator</span> <span class="o">=</span>
-         <span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span>
-                 <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span><span class="p">,</span> <span class="n">defaultExtrapolationValues</span><span class="p">,</span> <span class="n">stateDerivativeMap</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">interpolatorSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">hermite_spline_interpolator</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">OneDimensionalInterpolator</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">interpolator</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">         </span><span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span><span class="w"></span>
+<span class="w">                 </span><span class="n">stateMap</span><span class="p">,</span><span class="w"> </span><span class="n">interpolatorSettings</span><span class="p">,</span><span class="w"> </span><span class="n">defaultExtrapolationValues</span><span class="p">,</span><span class="w"> </span><span class="n">stateDerivativeMap</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Interpolate</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span> <span class="mf">0.0</span> <span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="w"> </span><span class="n">interpolatedResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -307,22 +311,22 @@
 <p>This interpolation routine uses an <span class="math notranslate nohighlight">\(n\)</span>-th degree polynomial to approximate a function from <span class="math notranslate nohighlight">\(n+1\)</span> data points. In our implementation, you can use a large data set of <span class="math notranslate nohighlight">\(m\)</span> data points (with <span class="math notranslate nohighlight">\(m &gt; n\)</span>) to generate a set of interpolating polynomials. When interpolating a data point, the interpolation routine will automatically select the polynomial where the requested data point lies between the two middle points, to prevent wild oscillations (which occur at the edge of the polynomial). At the boundaries of the full interval, a cubic spline interpolator is used.</p>
 <p>To create a Lagrange interpolator, the number of data points used for each interpolating polynomial should be defined, using the dedicated derived class <a class="reference internal" href="#LagrangeInterpolatorSettings" title="LagrangeInterpolatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">LagrangeInterpolatorSettings</span></code></a>. The input argument for this class is the amount of points per polynomial. An example, when using 8 data points per polynomial, is described below:</p>
 <dl class="py class">
-<dt id="LagrangeInterpolatorSettings">
-<em class="property">class </em><code class="sig-name descname">LagrangeInterpolatorSettings</code><a class="headerlink" href="#LagrangeInterpolatorSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="LagrangeInterpolatorSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LagrangeInterpolatorSettings</span></span><a class="headerlink" href="#LagrangeInterpolatorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Derived class used for the settings of a lagrange interpolator.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load data for values at node points</span>
-<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="n">stateMap</span><span class="p">;</span>
-<span class="n">stateMap</span> <span class="o">=</span> <span class="p">....</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">stateMap</span><span class="p">;</span><span class="w"></span>
+<span class="n">stateMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">....</span><span class="w"></span>
 
 <span class="c1">// Create interpolator</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span> <span class="o">&gt;</span> <span class="n">interpolatorSettings</span> <span class="o">=</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">interpolators</span><span class="o">::</span><span class="n">LagrangeInterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mi">8</span> <span class="p">)</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneDimensionalInterpolator</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">interpolator</span> <span class="o">=</span>
-                <span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span>
-                        <span class="n">stateMap</span><span class="p">,</span> <span class="n">interpolatorSettings</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">interpolators</span><span class="o">::</span><span class="n">InterpolatorSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">interpolatorSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">interpolators</span><span class="o">::</span><span class="n">LagrangeInterpolatorSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">OneDimensionalInterpolator</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">interpolator</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">                </span><span class="n">interpolators</span><span class="o">::</span><span class="n">createOneDimensionalInterpolator</span><span class="p">(</span><span class="w"></span>
+<span class="w">                        </span><span class="n">stateMap</span><span class="p">,</span><span class="w"> </span><span class="n">interpolatorSettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Interpolate</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">interpolatedResult</span> <span class="o">=</span> <span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span> <span class="mf">0.0</span> <span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="w"> </span><span class="n">interpolatedResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">interpolator</span><span class="o">-&gt;</span><span class="n">interpolate</span><span class="p">(</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </dd></dl>
@@ -371,14 +375,14 @@
 <p>In case you have specified <code class="docutils literal notranslate"><span class="pre">use_default_value</span></code>: or <code class="docutils literal notranslate"><span class="pre">use_default_value_with_warning</span></code>: as the boundary handling method, you should also specify the default value that the extrapolator has to output. As previously mentioned, this is done by adding an extra input to the <code class="docutils literal notranslate"><span class="pre">createOneDimensionalInterpolator</span></code> or <code class="docutils literal notranslate"><span class="pre">createMultiDimensionalInterpolator</span></code> functions. The format of this input, which is named <code class="docutils literal notranslate"><span class="pre">defaultExtrapolationValue</span></code>, depends on the dimensionality, and is as follows:</p>
 <blockquote>
 <div><dl class="py method">
-<dt>
-<code class="sig-name descname">std::pair&lt; DependentVariableType, DependentVariableType &gt;</code></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">std::pair&lt;</span> <span class="pre">DependentVariableType,</span> <span class="pre">DependentVariableType</span> <span class="pre">&gt;</span></span></dt>
 <dd><p>For <strong>one-dimenisonal</strong> interpolators, this variable is defined as a pair. The first value of the pair (accessed with the method <code class="docutils literal notranslate"><span class="pre">.first</span></code>) denotes the default extrapolation value in case the independent variable is requested below the lower domain boundary. The second value (<code class="docutils literal notranslate"><span class="pre">.second</span></code>), on the other hand, is output in case the independent variable is asked above the higher domain boundary.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt>
-<code class="sig-name descname">std::vector&lt; std::pair&lt; DependentVariableType, DependentVariableType &gt; &gt;</code></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">std::vector&lt;</span> <span class="pre">std::pair&lt;</span> <span class="pre">DependentVariableType,</span> <span class="pre">DependentVariableType</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></span></dt>
 <dd><p>For <strong>multi-dimensional</strong> interpolators, it is defined as a vector of pairs. In this case, the pairs are used in the same manner as above, but a pair is defined for each independent variable.</p>
 </dd></dl>
 
@@ -438,11 +442,11 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   
 
@@ -477,6 +481,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

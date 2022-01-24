@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -200,16 +204,16 @@
 <span id="estimationobjectcreation"></span><h2><span class="section-number">4.5.1. </span>Creating the estimation object<a class="headerlink" href="#creating-the-estimation-object" title="Permalink to this headline">¶</a></h2>
 <p>The estimation of orbits and physical parameters in Tudat is done through the use of an <a class="reference internal" href="#OrbitDeterminationManager" title="OrbitDeterminationManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrbitDeterminationManager</span></code></a> object. This object is created once for a given set of estimated parameters, and may be (re-)used to reset and/or estimate parameters from a given set of data.</p>
 <dl class="py class">
-<dt id="OrbitDeterminationManager">
-<em class="property">class </em><code class="sig-name descname">OrbitDeterminationManager</code><a class="headerlink" href="#OrbitDeterminationManager" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="OrbitDeterminationManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OrbitDeterminationManager</span></span><a class="headerlink" href="#OrbitDeterminationManager" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Creating an object of this type automatically propagates both the equations of motion and variational equations using the input to its constructor. Additionally, a set of <code class="xref py py-class docutils literal notranslate"><span class="pre">ObservationSimulatorBase</span></code> objects is created, as well as all required objects to compute the partial derivatives of the observations.</p>
 <p>An object is created as follows:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">OrbitDeterminationManager</span> <span class="n">orbitDeterminationManager</span> <span class="o">=</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ObservationViabilitySettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">OrbitDeterminationManager</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">parametersToEstimate</span><span class="p">,</span> <span class="n">observationSettingsMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">OrbitDeterminationManager</span><span class="w"> </span><span class="n">orbitDeterminationManager</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ObservationViabilitySettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">OrbitDeterminationManager</span><span class="p">(</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"> </span><span class="n">parametersToEstimate</span><span class="p">,</span><span class="w"> </span><span class="n">observationSettingsMap</span><span class="p">,</span><span class="w"> </span><span class="n">integratorSettings</span><span class="p">,</span><span class="w"> </span><span class="n">propagatorSettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The input is:</p>
@@ -256,12 +260,12 @@
 <span id="estimationinput"></span><h2><span class="section-number">4.5.2. </span>Defining estimation input<a class="headerlink" href="#defining-estimation-input" title="Permalink to this headline">¶</a></h2>
 <p>The input to the estimation consists of several parts. Firstly, the input data, weights, <em>etc.</em> need to be defined, which is done through the <code class="docutils literal notranslate"><span class="pre">PodInput</span></code> class.</p>
 <dl class="py class">
-<dt id="PodInput">
-<em class="property">class </em><code class="sig-name descname">PodInput</code><a class="headerlink" href="#PodInput" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="PodInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PodInput</span></span><a class="headerlink" href="#PodInput" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is templated by both <code class="docutils literal notranslate"><span class="pre">ObservationScalarType</span></code> and <code class="docutils literal notranslate"><span class="pre">TimeType</span></code>. An object of <a class="reference internal" href="#PodInput" title="PodInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">PodInput</span></code></a> is created as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">PodInput</span><span class="o">&lt;</span> <span class="n">ObservationScalarType</span><span class="p">,</span> <span class="n">TimeType</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">podInput</span> <span class="o">=</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">PodInput</span><span class="o">&lt;</span> <span class="n">ObservationScalarType</span><span class="p">,</span> <span class="n">TimeType</span> <span class="o">&gt;</span>  <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">observationsAndTimes</span><span class="p">,</span> <span class="n">numberOfEstimatedParameters</span><span class="p">,</span> <span class="n">inverseOfAprioriCovariance</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">PodInput</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ObservationScalarType</span><span class="p">,</span><span class="w"> </span><span class="n">TimeType</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">podInput</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">PodInput</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ObservationScalarType</span><span class="p">,</span><span class="w"> </span><span class="n">TimeType</span><span class="w"> </span><span class="o">&gt;</span><span class="w">  </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">observationsAndTimes</span><span class="p">,</span><span class="w"> </span><span class="n">numberOfEstimatedParameters</span><span class="p">,</span><span class="w"> </span><span class="n">inverseOfAprioriCovariance</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The input is:</p>
@@ -341,11 +345,11 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   
 
@@ -380,6 +384,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

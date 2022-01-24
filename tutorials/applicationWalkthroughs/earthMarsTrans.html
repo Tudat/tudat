@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
@@ -204,82 +208,82 @@
 <h2><span class="section-number">3.1. </span>Set up the problem<a class="headerlink" href="#set-up-the-problem" title="Permalink to this headline">¶</a></h2>
 <p>As mentioned earlier, in this example the definition of the bounds will be done in a more intuitive manner, as is shown below:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// We have two decision variables each with a lower and upper bound, create a vector of vectors that will contain these.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bounds</span><span class="p">(</span> <span class="mi">2</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.0</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">bounds</span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Define bounds: Search between 2020 and 2025 for flight duration between 200 and 1000 days.</span>
-<span class="n">bounds</span><span class="p">[</span> <span class="mi">0</span> <span class="p">][</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">2458849.5</span><span class="p">;</span>
-<span class="n">bounds</span><span class="p">[</span> <span class="mi">1</span> <span class="p">][</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">2460676.5</span><span class="p">;</span>
-<span class="n">bounds</span><span class="p">[</span> <span class="mi">0</span> <span class="p">][</span> <span class="mi">1</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
-<span class="n">bounds</span><span class="p">[</span> <span class="mi">1</span> <span class="p">][</span> <span class="mi">1</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
+<span class="n">bounds</span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2458849.5</span><span class="p">;</span><span class="w"></span>
+<span class="n">bounds</span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2460676.5</span><span class="p">;</span><span class="w"></span>
+<span class="n">bounds</span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span><span class="w"></span>
+<span class="n">bounds</span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In this example a two-dimensional vector is defined, wich is initialized to be of size 2-by-2, with 0.0 as initial values. The decision variable in this example contains two variables: the launch date and the flight duration. The first index of the vector represents the lower (0) and the upper (1) bound, the second index represents the launch date (0) and the flight duration (1). This vector can then be passed to the UDP, as is done in the following part of the code:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create object to compute the problem fitness</span>
-<span class="n">problem</span> <span class="n">prob</span><span class="p">{</span><span class="n">EarthMarsTransfer</span><span class="p">(</span> <span class="n">bounds</span> <span class="p">)};</span>
+<span class="n">problem</span><span class="w"> </span><span class="n">prob</span><span class="p">{</span><span class="n">EarthMarsTransfer</span><span class="p">(</span><span class="w"> </span><span class="n">bounds</span><span class="w"> </span><span class="p">)};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>and for the multi-objective example:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create object to compute the problem fitness</span>
-<span class="n">problem</span> <span class="n">prob</span><span class="p">{</span><span class="n">EarthMarsTransfer</span><span class="p">(</span> <span class="n">bounds</span><span class="p">,</span> <span class="nb">true</span> <span class="p">)};</span>
+<span class="n">problem</span><span class="w"> </span><span class="n">prob</span><span class="p">{</span><span class="n">EarthMarsTransfer</span><span class="p">(</span><span class="w"> </span><span class="n">bounds</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="w"> </span><span class="p">)};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">EarthMarsTransfer(</span> <span class="pre">bounds</span> <span class="pre">)</span></code> is the UDP. The true statement enables the UDP to not only use the delta-V as an objective, but also the trip time.</p>
 <p>This UDP contains an empty constructor, and a constructor that initializes the bounds, just as in <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>. Afterwards two methods are added:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//! Descriptive name of the problem</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">EarthMarsTransfer</span><span class="o">::</span><span class="n">get_name</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-   <span class="k">return</span> <span class="s">&quot;Multi-revolution Lambert Earth-Mars transfer trajectory&quot;</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">EarthMarsTransfer::get_name</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Multi-revolution Lambert Earth-Mars transfer trajectory&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
 <span class="c1">//! Get bounds</span>
-<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">EarthMarsTransfer</span><span class="o">::</span><span class="n">get_bounds</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-   <span class="k">return</span> <span class="p">{</span> <span class="n">problemBounds_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">problemBounds_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">};</span>
-<span class="p">}</span>
+<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">EarthMarsTransfer</span><span class="o">::</span><span class="n">get_bounds</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">problemBounds_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">problemBounds_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>They are in charge of producing an descriptive output, and getting the bounds (which is a mandatory method). After this the fitness function is defined. This function integrates several tudat features into the problem, thus it is important that these features are first understood. This will not be done in this tutorial, readers who do not undderstand these features are referred to: <a class="reference internal" href="index.html#walkthroughsindex"><span class="std std-ref">Application Tutorials</span></a> or <a class="reference internal" href="../tudatFeatures/index.html#tudatfeaturesindex"><span class="std std-ref">Tudat Libraries</span></a> to get a better understanding of them. The fitness function looks as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="c1">//! Implementation of the fitness function (return delta-v)</span>
- <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">EarthMarsTransfer</span><span class="o">::</span><span class="n">fitness</span><span class="p">(</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">xv</span> <span class="p">)</span> <span class="k">const</span><span class="p">{</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="c1">//! Implementation of the fitness function (return delta-v)</span>
+<span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">EarthMarsTransfer</span><span class="o">::</span><span class="n">fitness</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">xv</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">{</span><span class="w"></span>
 
-    <span class="k">using</span> <span class="n">tudat</span><span class="o">::</span><span class="n">mission_segments</span><span class="o">::</span><span class="n">MultiRevolutionLambertTargeterIzzo</span><span class="p">;</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">tudat</span><span class="o">::</span><span class="n">mission_segments</span><span class="o">::</span><span class="n">MultiRevolutionLambertTargeterIzzo</span><span class="p">;</span><span class="w"></span>
 
-    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">f</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1">// Gravitational parameter of the Sun</span>
-    <span class="kt">double</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">1.32712440018e+20</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Gravitational parameter of the Sun</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">mu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.32712440018e+20</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1">// Set initial and final position as those of Earth and Mars at</span>
-    <span class="c1">// departure and arrival respectively.</span>
+<span class="w">    </span><span class="c1">// Set initial and final position as those of Earth and Mars at</span>
+<span class="w">    </span><span class="c1">// departure and arrival respectively.</span>
 
-    <span class="n">StateType</span> <span class="n">initialState</span> <span class="o">=</span> <span class="n">getPlanetPosition</span><span class="p">(</span> <span class="n">xv</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&quot;Earth&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">StateType</span><span class="w"> </span><span class="n">initialState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getPlanetPosition</span><span class="p">(</span><span class="w"> </span><span class="n">xv</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="s">&quot;Earth&quot;</span><span class="p">);</span><span class="w"></span>
 
-    <span class="n">StateType</span> <span class="n">finalState</span>   <span class="o">=</span> <span class="n">getPlanetPosition</span><span class="p">(</span> <span class="n">xv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">xv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">&quot;Mars&quot;</span> <span class="p">);</span>
+<span class="w">    </span><span class="n">StateType</span><span class="w"> </span><span class="n">finalState</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">getPlanetPosition</span><span class="p">(</span><span class="w"> </span><span class="n">xv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">xv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="s">&quot;Mars&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="n">MultiRevolutionLambertTargeterIzzo</span> <span class="nf">lambertTargeter</span><span class="p">(</span> <span class="n">initialState</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span>
-        <span class="n">finalState</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">xv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">86400</span><span class="p">,</span> <span class="n">mu</span> <span class="p">);</span>
+<span class="w">    </span><span class="n">MultiRevolutionLambertTargeterIzzo</span><span class="w"> </span><span class="nf">lambertTargeter</span><span class="p">(</span><span class="w"> </span><span class="n">initialState</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="n">finalState</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="n">xv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">86400</span><span class="p">,</span><span class="w"> </span><span class="n">mu</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="kt">double</span> <span class="n">deltaV</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;::</span><span class="n">infinity</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">deltaV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;::</span><span class="n">infinity</span><span class="p">();</span><span class="w"></span>
 
-    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">maxrev</span> <span class="o">=</span> <span class="n">lambertTargeter</span><span class="p">.</span><span class="n">getMaximumNumberOfRevolutions</span><span class="p">(</span> <span class="p">);</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">maxrev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lambertTargeter</span><span class="p">.</span><span class="n">getMaximumNumberOfRevolutions</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="c1">// Go through all multi-revolution solutions and select the one</span>
-    <span class="c1">// with the lowest delta-V</span>
-    <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">maxrev</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
-        <span class="n">lambertTargeter</span><span class="p">.</span><span class="n">computeForRevolutionsAndBranch</span><span class="p">(</span> <span class="n">i</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
-        <span class="n">deltaV</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span> <span class="n">deltaV</span><span class="p">,</span> <span class="p">(</span> <span class="n">initialState</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
-                <span class="o">-</span> <span class="n">lambertTargeter</span><span class="p">.</span><span class="n">getInertialVelocityAtDeparture</span><span class="p">(</span> <span class="p">)).</span><span class="n">norm</span><span class="p">()</span> <span class="o">+</span>
-            <span class="o">+</span> <span class="p">(</span> <span class="n">finalState</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
-                <span class="o">-</span> <span class="n">lambertTargeter</span><span class="p">.</span><span class="n">getInertialVelocityAtArrival</span><span class="p">(</span> <span class="p">)).</span><span class="n">norm</span><span class="p">());</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="c1">// Go through all multi-revolution solutions and select the one</span>
+<span class="w">    </span><span class="c1">// with the lowest delta-V</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">maxrev</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">){</span><span class="w"></span>
+<span class="w">        </span><span class="n">lambertTargeter</span><span class="p">.</span><span class="n">computeForRevolutionsAndBranch</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">deltaV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="w"> </span><span class="n">deltaV</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">initialState</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="o">-</span><span class="w"> </span><span class="n">lambertTargeter</span><span class="p">.</span><span class="n">getInertialVelocityAtDeparture</span><span class="p">(</span><span class="w"> </span><span class="p">)).</span><span class="n">norm</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">            </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">finalState</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="o">-</span><span class="w"> </span><span class="n">lambertTargeter</span><span class="p">.</span><span class="n">getInertialVelocityAtArrival</span><span class="p">(</span><span class="w"> </span><span class="p">)).</span><span class="n">norm</span><span class="p">());</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="n">f</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">deltaV</span><span class="p">);</span>
+<span class="w">    </span><span class="n">f</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">deltaV</span><span class="p">);</span><span class="w"></span>
 
-    <span class="k">if</span><span class="p">(</span> <span class="n">useTripTime_</span> <span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">f</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">xv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">useTripTime_</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">f</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">xv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="k">return</span> <span class="n">f</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">f</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>After the necessary features and variables are defined, the first step in the fitness function is to get the initial state and the final state of the spacecraft. The initial state is the state of the Earth and the final state is that of Mars. These states are retrieved using a method in the same class called: :literal`getPlanetPosition()`, which doesn’t contain any special Pagmo features, thus is not discussed in this tutorial. The following three lines initialize the lambert targeter using the intitial and final positions, and the decision variables. Finally, in the for-loop, the solutions of the Lambert targeter are evaluated and the one with the lowest delta-v is selected. For the multi-objective optimizer, the variable <code class="docutils literal notranslate"><span class="pre">useTripTime_</span></code> is set to true, thus the trip time for the selected trajectory is added to the fitness vector.</p>
@@ -287,24 +291,24 @@
 <div class="section" id="selecting-the-algorithm">
 <h2><span class="section-number">3.2. </span>Selecting the Algorithm<a class="headerlink" href="#selecting-the-algorithm" title="Permalink to this headline">¶</a></h2>
 <p>In this example, 8 optimizers are compared. These optimizers are selected using a for-loop:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// Retrieve algorothm</span>
-    <span class="kt">int</span> <span class="n">algorithmIndex</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
-    <span class="n">algorithm</span> <span class="n">algo</span><span class="p">{</span><span class="n">getAlgorithm</span><span class="p">(</span> <span class="n">algorithmIndex</span> <span class="p">)};</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Retrieve algorothm</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">algorithmIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">algorithm</span><span class="w"> </span><span class="n">algo</span><span class="p">{</span><span class="n">getAlgorithm</span><span class="p">(</span><span class="w"> </span><span class="n">algorithmIndex</span><span class="w"> </span><span class="p">)};</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
 </pre></div>
 </div>
 <p>and for the multi-objective example</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// Retrieve MO algorithm</span>
-    <span class="n">algorithm</span> <span class="n">algo</span><span class="p">{</span><span class="n">getMultiObjectiveAlgorithm</span><span class="p">(</span> <span class="n">j</span> <span class="p">)};</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Retrieve MO algorithm</span>
+<span class="w">    </span><span class="n">algorithm</span><span class="w"> </span><span class="n">algo</span><span class="p">{</span><span class="n">getMultiObjectiveAlgorithm</span><span class="p">(</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="p">)};</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where the <code class="docutils literal notranslate"><span class="pre">getAlgorithm()</span></code> function is used, just as in the previous example. For the multi-objective example, a similar function is used: <code class="docutils literal notranslate"><span class="pre">getMultiObjectiveAlgorithm()</span></code>, which works the same as <code class="docutils literal notranslate"><span class="pre">getAlgorithm()</span></code>, but only selects algorithms suitable for multi-objective problems.</p>
@@ -313,30 +317,30 @@
 <h2><span class="section-number">3.3. </span>Building the Island<a class="headerlink" href="#building-the-island" title="Permalink to this headline">¶</a></h2>
 <p>The island is built in the same way as in <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create an island with 1024 individuals</span>
-<span class="n">island</span> <span class="n">isl</span><span class="p">{</span><span class="n">algo</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="mi">1024</span><span class="p">};</span>
+<span class="n">island</span><span class="w"> </span><span class="n">isl</span><span class="p">{</span><span class="n">algo</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span><span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="perform-the-optimization">
 <h2><span class="section-number">3.4. </span>Perform the Optimization<a class="headerlink" href="#perform-the-optimization" title="Permalink to this headline">¶</a></h2>
 <p>Finally, the optimization is performed in the same manner as in <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>   <span class="p">...</span>
-   <span class="p">...</span>
-   <span class="p">...</span>
-   <span class="c1">// Evolve for 100 generations</span>
-   <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
-   <span class="p">{</span>
-        <span class="n">isl</span><span class="p">.</span><span class="n">evolve</span><span class="p">();</span>
-        <span class="k">while</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">status</span><span class="p">()</span><span class="o">!=</span><span class="n">pagmo</span><span class="o">::</span><span class="n">evolve_status</span><span class="o">::</span><span class="n">idle</span> <span class="p">)</span>
-        <span class="n">isl</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="p">...</span><span class="w"></span>
+<span class="w">   </span><span class="p">...</span><span class="w"></span>
+<span class="w">   </span><span class="p">...</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// Evolve for 100 generations</span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">isl</span><span class="p">.</span><span class="n">evolve</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="k">while</span><span class="p">(</span><span class="w"> </span><span class="n">isl</span><span class="p">.</span><span class="n">status</span><span class="p">()</span><span class="o">!=</span><span class="n">pagmo</span><span class="o">::</span><span class="n">evolve_status</span><span class="o">::</span><span class="n">idle</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">isl</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span><span class="w"></span>
 
-        <span class="c1">// Write current iteration results to file</span>
-        <span class="n">printPopulationToFile</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span> <span class="p">).</span><span class="n">get_x</span><span class="p">(</span> <span class="p">),</span> <span class="s">&quot;earthMarsLambert_&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">j</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;_&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
-        <span class="n">printPopulationToFile</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span> <span class="p">).</span><span class="n">get_f</span><span class="p">(</span> <span class="p">),</span> <span class="s">&quot;earthMarsLambert_&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">j</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;_&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="p">,</span> <span class="nb">true</span> <span class="p">);</span>
+<span class="w">        </span><span class="c1">// Write current iteration results to file</span>
+<span class="w">        </span><span class="n">printPopulationToFile</span><span class="p">(</span><span class="w"> </span><span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">get_x</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="s">&quot;earthMarsLambert_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">printPopulationToFile</span><span class="p">(</span><span class="w"> </span><span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">get_f</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="s">&quot;earthMarsLambert_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-         <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">algorithmIndex</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="w">         </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">algorithmIndex</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -428,11 +432,10 @@ Grid search 999
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -467,6 +470,11 @@ Grid search 999
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

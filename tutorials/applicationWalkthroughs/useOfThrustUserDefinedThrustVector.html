@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
@@ -229,16 +233,16 @@
 </pre></div>
 </div>
 <p>The first column of this file represents a time, the following three columns represent the x-, y- and z-components of the thrust force vector. To load these data into Tudat, we firstly need to specify the location of the file we wish to load. To do this, we retrieve the string containing the current file (e.g. the <code class="docutils literal notranslate"><span class="pre">.cpp</span></code> file with the source code of the example) as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">cppFilePath</span><span class="p">(</span> <span class="n">__FILE__</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">cppFilePath</span><span class="p">(</span><span class="w"> </span><span class="n">__FILE__</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Subsequently, we strip of the name of the current file as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">cppFolder</span> <span class="o">=</span> <span class="n">cppFilePath</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span> <span class="mi">0</span> <span class="p">,</span> <span class="n">cppFilePath</span><span class="p">.</span><span class="n">find_last_of</span><span class="p">(</span><span class="s">&quot;/</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">cppFolder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cppFilePath</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">cppFilePath</span><span class="p">.</span><span class="n">find_last_of</span><span class="p">(</span><span class="s">&quot;/</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Do not worry if the details of these steps escape you. What is important is to know that the <code class="docutils literal notranslate"><span class="pre">cppFolder</span></code> now contains the location of the current directory. We now load the data into an <code class="docutils literal notranslate"><span class="pre">Eigen::MatrixXd</span></code> using the Tudat class <code class="xref py py-class docutils literal notranslate"><span class="pre">FromFileDataMapSettings</span></code>, which can be used to extract data into a map format, which can later be used as input to the interpolation settings:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">FromFileDataMapSettings</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">thrustDataSettings</span> <span class="o">=</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">FromFileDataMapSettings</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">cppFolder</span> <span class="o">+</span> <span class="s">&quot;testThrustValues.txt&quot;</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">FromFileDataMapSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">thrustDataSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">FromFileDataMapSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">cppFolder</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;testThrustValues.txt&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -246,25 +250,25 @@
 <h2><span class="section-number">6.2. </span>Creating the Interpolator<a class="headerlink" href="#creating-the-interpolator" title="Permalink to this headline">¶</a></h2>
 <p>We now have a <code class="xref py py-class docutils literal notranslate"><span class="pre">FromFileDataMapSettings</span></code> object containing the time vs. thrust data from the file. To pass this information to the <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#AccelerationSettings" title="AccelerationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">AccelerationSettings</span></code></a>, we need to turn this discrete data into a continuous function, for which we use an interpolator. Here, we choose to use a linear interpolator. For a list of the various other interpolation options, details of their implementation, and instructions on how to use/create them, go to <a class="reference internal" href="../tudatFeatures/mathTools/interpolators.html#tudatfeaturesinterpolators"><span class="std std-ref">Interpolators</span></a>. For this example, we use the following code to create an interpolator of the thrust vector:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define interpolator settings.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">InterpolatorSettings</span> <span class="o">&gt;</span> <span class="n">thrustInterpolatorSettings</span> <span class="o">=</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">InterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">linear_interpolator</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">InterpolatorSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">thrustInterpolatorSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">InterpolatorSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">linear_interpolator</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Create data interpolation settings</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">DataInterpolationSettings</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">thrustDataInterpolatorSettings</span> <span class="o">=</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DataInterpolationSettings</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span>
-            <span class="n">thrustDataSettings</span><span class="p">,</span> <span class="n">thrustInterpolatorSettings</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">DataInterpolationSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">thrustDataInterpolatorSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">DataInterpolationSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">thrustDataSettings</span><span class="p">,</span><span class="w"> </span><span class="n">thrustInterpolatorSettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The first part:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">InterpolatorSettings</span> <span class="o">&gt;</span>
-        <span class="n">thrustInterpolatorSettingsPointer</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">InterpolatorSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">linear_interpolator</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">InterpolatorSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">        </span><span class="n">thrustInterpolatorSettingsPointer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">InterpolatorSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">linear_interpolator</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>creates an <a class="reference internal" href="../tudatFeatures/mathTools/interpolators.html#InterpolatorSettings" title="InterpolatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">InterpolatorSettings</span></code></a> object that contains the settings for how to create the interpolator. For this application, this means specifying that the interpolator should be of the type <code class="docutils literal notranslate"><span class="pre">linear_interpolator</span></code>. Note that this setup is very similar to how an environment/acceleration/etc. model is set up. The interpolator is then created by calling:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Creating settings for thrust force</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">DataInterpolationSettings</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">thrustDataInterpolatorSettings</span> <span class="o">=</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DataInterpolationSettings</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span>
-            <span class="n">thrustDataSettings</span><span class="p">,</span> <span class="n">thrustInterpolatorSettings</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">DataInterpolationSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">thrustDataInterpolatorSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">DataInterpolationSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">thrustDataSettings</span><span class="p">,</span><span class="w"> </span><span class="n">thrustInterpolatorSettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">DataInterpolationSettings</span></code> object is created using the <code class="docutils literal notranslate"><span class="pre">thrustDataSettings</span></code> and <code class="docutils literal notranslate"><span class="pre">thrustInterpolatorSettings</span></code> defined above. The first parameter of the <code class="xref py py-class docutils literal notranslate"><span class="pre">DataInterpolationSettings</span></code> denotes that the independent variable is a <code class="docutils literal notranslate"><span class="pre">double</span></code> (time) and the dependent variable is a <code class="docutils literal notranslate"><span class="pre">Eigen::Vector3d</span></code> (thrust).</p>
@@ -272,11 +276,11 @@
 <div class="section" id="creating-the-thrust-acceleration">
 <h2><span class="section-number">6.3. </span>Creating the Thrust Acceleration<a class="headerlink" href="#creating-the-thrust-acceleration" title="Permalink to this headline">¶</a></h2>
 <p>The creation of the thrust acceleration is done similarly as in the previous example, by creating an object of type <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#ThrustAccelerationSettings" title="ThrustAccelerationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustAccelerationSettings</span></code></a>, as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">constantSpecificImpulse</span> <span class="o">=</span> <span class="mf">3000.0</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="n">constantSpecificImpulse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3000.0</span><span class="p">;</span><span class="w"></span>
 
- <span class="n">accelerationsOfVehicle</span><span class="p">[</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ThrustAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-                                                    <span class="n">thrustDataInterpolatorSettings</span><span class="p">,</span> <span class="n">constantSpecificImpulse</span><span class="p">,</span>
-                                                    <span class="n">lvlh_thrust_frame</span><span class="p">,</span> <span class="s">&quot;Earth&quot;</span> <span class="p">)</span> <span class="p">);</span>
+<span class="w"> </span><span class="n">accelerationsOfVehicle</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;Vehicle&quot;</span><span class="w"> </span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ThrustAccelerationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">                                                    </span><span class="n">thrustDataInterpolatorSettings</span><span class="p">,</span><span class="w"> </span><span class="n">constantSpecificImpulse</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                    </span><span class="n">lvlh_thrust_frame</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Earth&quot;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The input to the <a class="reference internal" href="../tudatFeatures/accelerationSetup/frameworkAcceleration.html#ThrustAccelerationSettings" title="ThrustAccelerationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustAccelerationSettings</span></code></a>, however, is different from that used in the previous example. In fact, we use a different constructor here, an example of constructor overloading. The input required to the constructor we use here is:</p>
@@ -364,11 +368,11 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   
 
@@ -403,6 +407,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

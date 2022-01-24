@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -208,14 +212,14 @@
 </ul>
 <p>In Tudat, these parameters influence the simulation in a variety of manners, and during propagation and/or observation simulation, information of this parameter is transferred in manner different ways. To provide a unified framework for estimating any type of parameter, the <a class="reference internal" href="#EstimatableParameter" title="EstimatableParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatableParameter</span></code></a> class has been set up.</p>
 <dl class="py class">
-<dt id="EstimatableParameter">
-<em class="property">class </em><code class="sig-name descname">EstimatableParameter</code><a class="headerlink" href="#EstimatableParameter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="EstimatableParameter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EstimatableParameter</span></span><a class="headerlink" href="#EstimatableParameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class has interfaces to retrieve and reset parameters, providing a single interface for modifying/obtaining any of the parameters that Tudat supports. For each estimated parameter, there is a dedicated derived class of <a class="reference internal" href="#EstimatableParameter" title="EstimatableParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatableParameter</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="EstimatableParameterSet">
-<em class="property">class </em><code class="sig-name descname">EstimatableParameterSet</code><a class="headerlink" href="#EstimatableParameterSet" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="EstimatableParameterSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EstimatableParameterSet</span></span><a class="headerlink" href="#EstimatableParameterSet" title="Permalink to this definition">¶</a></dt>
 <dd><p>The full list of estimated parameters is stored in an object of type <a class="reference internal" href="#EstimatableParameterSet" title="EstimatableParameterSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatableParameterSet</span></code></a>. This class is templated by the state scalar type of the estimated initial state parameters.</p>
 </dd></dl>
 
@@ -226,17 +230,17 @@
 <p>As is the case for acceleration models, integration models, environment models, <em>etc.</em>, the parameter objects are created by defining settings for them, and subsequently calling the associated factory function. The settings and passed by creating objects of type <a class="reference internal" href="#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatableParameterSettings</span></code></a> (or one of its derived classes). Some parameters settings are provided through the <a class="reference internal" href="#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatableParameterSettings</span></code></a> base class, and some through its derived classes. A full list is provided in the section on <a class="reference internal" href="#parametersettingcreation"><span class="std std-ref">Creating Estimated Parameters</span></a>. An example of the creation of the parameter objects is given below:</p>
 <blockquote>
 <div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define parameter settings</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">parameterNames</span><span class="p">;</span>
-<span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-   <span class="s">&quot;Vehicle&quot;</span><span class="p">,</span> <span class="n">radiation_pressure_coefficient</span> <span class="p">)</span> <span class="p">);</span>
-<span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-   <span class="s">&quot;Vehicle&quot;</span><span class="p">,</span> <span class="n">constant_drag_coefficient</span> <span class="p">)</span> <span class="p">);</span>
-<span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>  <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-   <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="n">rotation_pole_position</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">parameterNames</span><span class="p">;</span><span class="w"></span>
+<span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="s">&quot;Vehicle&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">radiation_pressure_coefficient</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="s">&quot;Vehicle&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">constant_drag_coefficient</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="s">&quot;Earth&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">rotation_pole_position</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Define parameter objects</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSet</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">parametersToEstimate</span> <span class="o">=</span>
-     <span class="n">createParametersToEstimate</span><span class="p">(</span> <span class="n">parameterNames</span><span class="p">,</span> <span class="n">bodyMap</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EstimatableParameterSet</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">parametersToEstimate</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">     </span><span class="n">createParametersToEstimate</span><span class="p">(</span><span class="w"> </span><span class="n">parameterNames</span><span class="p">,</span><span class="w"> </span><span class="n">bodyMap</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -249,23 +253,23 @@
 <p>Resetting the full parameter vector <span class="math notranslate nohighlight">\(\mathbf{p}(=[\mathbf{x}_{0};\mathbf{q}])\)</span> is done as follows (for <code class="docutils literal notranslate"><span class="pre">double</span></code> state scalar type):</p>
 <blockquote>
 <div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create parameter set</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSet</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">parametersToEstimate</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EstimatableParameterSet</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">parametersToEstimate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
 
-<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">parameterVector</span> <span class="o">=</span>
-     <span class="n">parametersToEstimate</span><span class="o">-&gt;</span><span class="n">getFullParameterValues</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="n">parameterVector</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">     </span><span class="n">parametersToEstimate</span><span class="o">-&gt;</span><span class="n">getFullParameterValues</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>While resetting the full parameter vector is done as:</p>
 <blockquote>
 <div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create parameter set</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSet</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">parametersToEstimate</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EstimatableParameterSet</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">parametersToEstimate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
 
 <span class="c1">// Define vector of new values of estimated parameters</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">newParameterVector</span> <span class="o">=</span> <span class="p">...</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="n">newParameterVector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
 
 <span class="c1">// Reset parameter values</span>
-<span class="n">parametersToEstimate</span><span class="o">-&gt;</span><span class="n">resetParameterValues</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span> <span class="p">);</span>
+<span class="n">parametersToEstimate</span><span class="o">-&gt;</span><span class="n">resetParameterValues</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -275,11 +279,11 @@
 <span id="parametersettingcreation"></span><h2><span class="section-number">4.4.2. </span>Creating Estimated Parameters<a class="headerlink" href="#creating-estimated-parameters" title="Permalink to this headline">¶</a></h2>
 <p>The framework discussed in the previous section explains how the <code class="docutils literal notranslate"><span class="pre">parameterNames</span></code> is populated. The goal of this section is to list the available parameters that can be estimated, and which environment models they are linked to.</p>
 <dl class="py class">
-<dt id="EstimatableParameterSettings">
-<em class="property">class </em><code class="sig-name descname">EstimatableParameterSettings</code><a class="headerlink" href="#EstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="EstimatableParameterSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EstimatableParameterSettings</span></span><a class="headerlink" href="#EstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This base-class is a generic method to define parameters that require no more information than their type, the associated body, and (in some cases) a secondary identifier. Variables are added to the <code class="docutils literal notranslate"><span class="pre">parameterNames</span></code> using the following code:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-             <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">associatedBody</span><span class="p">,</span> <span class="n">parameterType</span><span class="p">,</span> <span class="n">secondaryIdentifier</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"></span>
+<span class="w">             </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">associatedBody</span><span class="p">,</span><span class="w"> </span><span class="n">parameterType</span><span class="p">,</span><span class="w"> </span><span class="n">secondaryIdentifier</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:
@@ -313,12 +317,12 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="InitialTranslationalStateEstimatableParameterSettings">
-<em class="property">class </em><code class="sig-name descname">InitialTranslationalStateEstimatableParameterSettings</code><a class="headerlink" href="#InitialTranslationalStateEstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="InitialTranslationalStateEstimatableParameterSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InitialTranslationalStateEstimatableParameterSettings</span></span><a class="headerlink" href="#InitialTranslationalStateEstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class of <a class="reference internal" href="#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatableParameterSettings</span></code></a> is used to define settings for estimating an initial translational state of a single body. It is templated by the state scalar type of the dynamics (typically <code class="docutils literal notranslate"><span class="pre">double</span></code>). Two constructors are available for this class. The first constructor explicitly provides the current value of the initial state, while the second extracts the initial state from the current ephemeris of the body. The first constructor is called as:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-       <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">InitialTranslationalStateEstimatableParameterSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">associatedBody</span><span class="p">,</span> <span class="n">initialStateValue</span><span class="p">,</span> <span class="n">centralBody</span><span class="p">,</span> <span class="n">frameOrientation</span>  <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"></span>
+<span class="w">       </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">InitialTranslationalStateEstimatableParameterSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">associatedBody</span><span class="p">,</span><span class="w"> </span><span class="n">initialStateValue</span><span class="p">,</span><span class="w"> </span><span class="n">centralBody</span><span class="p">,</span><span class="w"> </span><span class="n">frameOrientation</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -348,9 +352,9 @@
 
 <p>The second constructor is called as:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-       <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">InitialTranslationalStateEstimatableParameterSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">associatedBody</span><span class="p">,</span> <span class="n">initialTime</span><span class="p">,</span> <span class="n">centralBody</span><span class="p">,</span> <span class="n">frameOrientation</span>  <span class="p">)</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"></span>
+<span class="w">       </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">InitialTranslationalStateEstimatableParameterSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">associatedBody</span><span class="p">,</span><span class="w"> </span><span class="n">initialTime</span><span class="p">,</span><span class="w"> </span><span class="n">centralBody</span><span class="p">,</span><span class="w"> </span><span class="n">frameOrientation</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -378,12 +382,12 @@
 </ul>
 </div></blockquote>
 <dl class="py class">
-<dt id="ArcWiseInitialTranslationalStateEstimatableParameterSettings">
-<em class="property">class </em><code class="sig-name descname">ArcWiseInitialTranslationalStateEstimatableParameterSettings</code><a class="headerlink" href="#ArcWiseInitialTranslationalStateEstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ArcWiseInitialTranslationalStateEstimatableParameterSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ArcWiseInitialTranslationalStateEstimatableParameterSettings</span></span><a class="headerlink" href="#ArcWiseInitialTranslationalStateEstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class of <a class="reference internal" href="#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatableParameterSettings</span></code></a> is used to define settings for estimating an initial translational state of a single body in an arc-wise manner. It is templated by the state scalar type of the dynamics (typically <code class="docutils literal notranslate"><span class="pre">double</span></code>). As was the case for the <a class="reference internal" href="#InitialTranslationalStateEstimatableParameterSettings" title="InitialTranslationalStateEstimatableParameterSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">InitialTranslationalStateEstimatableParameterSettings</span></code></a> class, two constructors are available for this class. The first constructor explicitly provides the current value of the arc initial states, while the second extracts the arc initial states from the current ephemeris of the body. The first constructor is called as:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-       <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ArcWiseInitialTranslationalStateEstimatableParameterSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">associatedBody</span><span class="p">,</span> <span class="n">concatenatedInitialStateValues</span><span class="p">,</span> <span class="n">arcStartTimes</span><span class="p">,</span> <span class="n">centralBody</span><span class="p">,</span> <span class="n">frameOrientation</span>  <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"></span>
+<span class="w">       </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ArcWiseInitialTranslationalStateEstimatableParameterSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">associatedBody</span><span class="p">,</span><span class="w"> </span><span class="n">concatenatedInitialStateValues</span><span class="p">,</span><span class="w"> </span><span class="n">arcStartTimes</span><span class="p">,</span><span class="w"> </span><span class="n">centralBody</span><span class="p">,</span><span class="w"> </span><span class="n">frameOrientation</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -418,9 +422,9 @@
 
 <p>The second constructor is called as:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-       <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ArcWiseInitialTranslationalStateEstimatableParameterSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">associatedBody</span><span class="p">,</span> <span class="n">arcStartTimes</span><span class="p">,</span> <span class="n">centralBody</span><span class="p">,</span> <span class="n">frameOrientation</span>  <span class="p">)</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"></span>
+<span class="w">       </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ArcWiseInitialTranslationalStateEstimatableParameterSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">associatedBody</span><span class="p">,</span><span class="w"> </span><span class="n">arcStartTimes</span><span class="p">,</span><span class="w"> </span><span class="n">centralBody</span><span class="p">,</span><span class="w"> </span><span class="n">frameOrientation</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -448,13 +452,13 @@
 </ul>
 </div></blockquote>
 <dl class="py class">
-<dt id="SphericalHarmonicEstimatableParameterSettings">
-<em class="property">class </em><code class="sig-name descname">SphericalHarmonicEstimatableParameterSettings</code><a class="headerlink" href="#SphericalHarmonicEstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="SphericalHarmonicEstimatableParameterSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SphericalHarmonicEstimatableParameterSettings</span></span><a class="headerlink" href="#SphericalHarmonicEstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This derived class of <a class="reference internal" href="#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatableParameterSettings</span></code></a> is used to define settings for estimating spherical harmonic coefficients. Two constructors are available for this class. The first constructor allows a specific set of coefficients to be estimated and is used as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-       <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicEstimatableParameterSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">blockIndices</span><span class="p">,</span> <span class="n">associatedBody</span><span class="p">,</span> <span class="n">coefficientType</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"></span>
+<span class="w">       </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">SphericalHarmonicEstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">blockIndices</span><span class="p">,</span><span class="w"> </span><span class="n">associatedBody</span><span class="p">,</span><span class="w"> </span><span class="n">coefficientType</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -481,9 +485,9 @@
 <blockquote>
 <div><p>The second constructor defines a ‘full’ block of coefficients to be estimated: it sets all degrees and orders from given minimum and maximum degrees and orders as the estimated parameters. It is created from:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-       <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicEstimatableParameterSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">minimumDegree</span><span class="p">,</span> <span class="n">minimumOrder</span><span class="p">,</span> <span class="n">maximumDegree</span><span class="p">,</span> <span class="n">maximumOrder</span><span class="p">,</span> <span class="n">associatedBody</span><span class="p">,</span> <span class="n">coefficientType</span> <span class="p">)</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"></span>
+<span class="w">       </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">SphericalHarmonicEstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">minimumDegree</span><span class="p">,</span><span class="w"> </span><span class="n">minimumOrder</span><span class="p">,</span><span class="w"> </span><span class="n">maximumDegree</span><span class="p">,</span><span class="w"> </span><span class="n">maximumOrder</span><span class="p">,</span><span class="w"> </span><span class="n">associatedBody</span><span class="p">,</span><span class="w"> </span><span class="n">coefficientType</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -525,9 +529,9 @@
 </ul>
 <blockquote>
 <div><p>As an example:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-   <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SphericalHarmonicEstimatableParameterSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-      <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="n">spherical_harmonics_cosine_coefficient_block</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">SphericalHarmonicEstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Earth&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">spherical_harmonics_cosine_coefficient_block</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Sets <span class="math notranslate nohighlight">\(C_{21}, C_{22}, C_{31}, C_{32},C_{33}, C_{41}, C_{42}, C_{43}\)</span> as the estimated parameters.</p>
@@ -539,12 +543,12 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="FullDegreeTidalLoveNumberEstimatableParameterSettings">
-<em class="property">class </em><code class="sig-name descname">FullDegreeTidalLoveNumberEstimatableParameterSettings</code><a class="headerlink" href="#FullDegreeTidalLoveNumberEstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="FullDegreeTidalLoveNumberEstimatableParameterSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FullDegreeTidalLoveNumberEstimatableParameterSettings</span></span><a class="headerlink" href="#FullDegreeTidalLoveNumberEstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class of <a class="reference internal" href="#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatableParameterSettings</span></code></a> is used to define settings for tidal Love numbers <span class="math notranslate nohighlight">\(k_{n}\)</span> at degree <span class="math notranslate nohighlight">\(n\)</span> that are constant over all all orders at that degree (so for <span class="math notranslate nohighlight">\(n=2, k_{20}=k_{21}=k_{22}\)</span>. The estimated parameters are a property of an <code class="xref py py-class docutils literal notranslate"><span class="pre">BasicSolidBodyTideGravityFieldVariations</span></code> object. It is created by:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-   <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">FullDegreeTidalLoveNumberEstimatableParameterSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-      <span class="n">associatedBody</span><span class="p">,</span> <span class="n">degree</span><span class="p">,</span> <span class="n">deformingBodies</span><span class="p">,</span> <span class="n">useComplexValue</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">FullDegreeTidalLoveNumberEstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">associatedBody</span><span class="p">,</span><span class="w"> </span><span class="n">degree</span><span class="p">,</span><span class="w"> </span><span class="n">deformingBodies</span><span class="p">,</span><span class="w"> </span><span class="n">useComplexValue</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -573,12 +577,12 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="SingleDegreeVariableTidalLoveNumberEstimatableParameterSettings">
-<em class="property">class </em><code class="sig-name descname">SingleDegreeVariableTidalLoveNumberEstimatableParameterSettings</code><a class="headerlink" href="#SingleDegreeVariableTidalLoveNumberEstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="SingleDegreeVariableTidalLoveNumberEstimatableParameterSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SingleDegreeVariableTidalLoveNumberEstimatableParameterSettings</span></span><a class="headerlink" href="#SingleDegreeVariableTidalLoveNumberEstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class of <a class="reference internal" href="#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatableParameterSettings</span></code></a> is used to define settings for tidal Love numbers <span class="math notranslate nohighlight">\(k_{nm}\)</span> at degree <span class="math notranslate nohighlight">\(n\)</span> that are vary over the orders at that degree. The estimated parameters are a property of an <code class="xref py py-class docutils literal notranslate"><span class="pre">BasicSolidBodyTideGravityFieldVariations</span></code> object. It is created by:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-   <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleDegreeVariableTidalLoveNumberEstimatableParameterSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-      <span class="n">associatedBody</span><span class="p">,</span> <span class="n">degree</span><span class="p">,</span> <span class="n">orders</span> <span class="n">deformingBodies</span><span class="p">,</span> <span class="n">useComplexValue</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">SingleDegreeVariableTidalLoveNumberEstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">associatedBody</span><span class="p">,</span><span class="w"> </span><span class="n">degree</span><span class="p">,</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="n">deformingBodies</span><span class="p">,</span><span class="w"> </span><span class="n">useComplexValue</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -612,12 +616,12 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="ConstantObservationBiasEstimatableParameterSettings">
-<em class="property">class </em><code class="sig-name descname">ConstantObservationBiasEstimatableParameterSettings</code><a class="headerlink" href="#ConstantObservationBiasEstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ConstantObservationBiasEstimatableParameterSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConstantObservationBiasEstimatableParameterSettings</span></span><a class="headerlink" href="#ConstantObservationBiasEstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class of <a class="reference internal" href="#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatableParameterSettings</span></code></a> is used to define settings for estimating a constant absolute or relative observation biases for a given set of <code class="docutils literal notranslate"><span class="pre">LinkEnds</span></code> and <code class="docutils literal notranslate"><span class="pre">ObservableType</span></code>. Depending on the input, an object of this class defines settings for estimating an abolute <em>or</em> a relative bias. The bias model itself is created by using the <a class="reference internal" href="observationModelSetup.html#ConstantObservationBiasSettings" title="ConstantObservationBiasSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstantObservationBiasSettings</span></code></a> or <a class="reference internal" href="observationModelSetup.html#ConstantRelativeObservationBiasSettings" title="ConstantRelativeObservationBiasSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstantRelativeObservationBiasSettings</span></code></a>, and the estimated parameter is a property of an <code class="xref py py-class docutils literal notranslate"><span class="pre">ConstantObservationBias</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">ConstantRelativeObservationBias</span></code> object. The parameter estimation settings are creating by:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-   <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantObservationBiasEstimatableParameterSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-      <span class="n">linkEnds</span><span class="p">,</span> <span class="n">observableType</span><span class="p">,</span> <span class="n">isBiasAdditive</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ConstantObservationBiasEstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">linkEnds</span><span class="p">,</span><span class="w"> </span><span class="n">observableType</span><span class="p">,</span><span class="w"> </span><span class="n">isBiasAdditive</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -641,12 +645,12 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="EmpiricalAccelerationEstimatableParameterSettings">
-<em class="property">class </em><code class="sig-name descname">EmpiricalAccelerationEstimatableParameterSettings</code><a class="headerlink" href="#EmpiricalAccelerationEstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="EmpiricalAccelerationEstimatableParameterSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EmpiricalAccelerationEstimatableParameterSettings</span></span><a class="headerlink" href="#EmpiricalAccelerationEstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class of <a class="reference internal" href="#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatableParameterSettings</span></code></a> is used to define settings for estimating a set of empirical accelerations that are constant throughout the propation interval. Coefficients can be estimated for each of the three directions in the RSW frame, and as a constant term, as well a sine/cosine of true anomaly (for a total of 9 possible coefficients). The parameter is a property of an object of type <code class="docutils literal notranslate"><span class="pre">EmpiricalAcceleration</span></code>, which is created by using an object of type <a class="reference internal" href="../accelerationSetup/frameworkAcceleration.html#EmpiricalAccelerationSettings" title="EmpiricalAccelerationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EmpiricalAccelerationSettings</span></code></a> The parameter estimation settings are creating by:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-   <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">EmpiricalAccelerationEstimatableParameterSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-      <span class="n">associatedBody</span><span class="p">,</span> <span class="n">centralBody</span><span class="p">,</span> <span class="n">componentsToEstimate</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EmpiricalAccelerationEstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">associatedBody</span><span class="p">,</span><span class="w"> </span><span class="n">centralBody</span><span class="p">,</span><span class="w"> </span><span class="n">componentsToEstimate</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -680,14 +684,14 @@
 </div></blockquote>
 <p>For instance, to estimate a constant along-track, a sine and cosine radial, and a constant and sine across-track empirical acceleration, the <code class="docutils literal notranslate"><span class="pre">componentsToEstimate</span></code> becomes:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">EmpiricalAccelerationComponents</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">EmpiricalAccelerationFunctionalShapes</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">componentsToEstimate</span><span class="p">;</span>
-<span class="n">componentsToEstimate</span><span class="p">[</span> <span class="n">along_track_empirical_acceleration_component</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">constant_empirical</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EmpiricalAccelerationComponents</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EmpiricalAccelerationFunctionalShapes</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">componentsToEstimate</span><span class="p">;</span><span class="w"></span>
+<span class="n">componentsToEstimate</span><span class="p">[</span><span class="w"> </span><span class="n">along_track_empirical_acceleration_component</span><span class="w"> </span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">constant_empirical</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-<span class="n">componentsToEstimate</span><span class="p">[</span> <span class="n">radial_empirical_acceleration_component</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">sine_empirical</span> <span class="p">);</span>
-<span class="n">componentsToEstimate</span><span class="p">[</span> <span class="n">radial_empirical_acceleration_component</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">cosine_empirical</span> <span class="p">);</span>
+<span class="n">componentsToEstimate</span><span class="p">[</span><span class="w"> </span><span class="n">radial_empirical_acceleration_component</span><span class="w"> </span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">sine_empirical</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">componentsToEstimate</span><span class="p">[</span><span class="w"> </span><span class="n">radial_empirical_acceleration_component</span><span class="w"> </span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">cosine_empirical</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-<span class="n">componentsToEstimate</span><span class="p">[</span> <span class="n">across_track_empirical_acceleration_component</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">constant_empirical</span> <span class="p">);</span>
-<span class="n">componentsToEstimate</span><span class="p">[</span> <span class="n">across_track_empirical_acceleration_component</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">sine_empirical</span> <span class="p">);</span>
+<span class="n">componentsToEstimate</span><span class="p">[</span><span class="w"> </span><span class="n">across_track_empirical_acceleration_component</span><span class="w"> </span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">constant_empirical</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">componentsToEstimate</span><span class="p">[</span><span class="w"> </span><span class="n">across_track_empirical_acceleration_component</span><span class="w"> </span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">sine_empirical</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -696,12 +700,12 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="ArcWiseEmpiricalAccelerationEstimatableParameterSettings">
-<em class="property">class </em><code class="sig-name descname">ArcWiseEmpiricalAccelerationEstimatableParameterSettings</code><a class="headerlink" href="#ArcWiseEmpiricalAccelerationEstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ArcWiseEmpiricalAccelerationEstimatableParameterSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ArcWiseEmpiricalAccelerationEstimatableParameterSettings</span></span><a class="headerlink" href="#ArcWiseEmpiricalAccelerationEstimatableParameterSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class of <a class="reference internal" href="#EstimatableParameterSettings" title="EstimatableParameterSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatableParameterSettings</span></code></a> is used to define settings for estimating a set of empirical acceleration components that are arc-wise constant. Coefficients can be estimated for each of the three directions in the RSW frame, and as a constant term, as well a sine/cosine of true anomaly (for a total of 9 possible coefficients). The parameter is a property of an object of type <code class="docutils literal notranslate"><span class="pre">EmpiricalAcceleration</span></code>, which is created by using an object of type <a class="reference internal" href="../accelerationSetup/frameworkAcceleration.html#EmpiricalAccelerationSettings" title="EmpiricalAccelerationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">EmpiricalAccelerationSettings</span></code></a> The parameter estimation settings are creating by:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span>
-   <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">EmpiricalAccelerationEstimatableParameterSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-      <span class="n">associatedBody</span><span class="p">,</span> <span class="n">centralBody</span><span class="p">,</span> <span class="n">componentsToEstimate</span><span class="p">,</span> <span class="n">arcStartTimeList</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">parameterNames</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EmpiricalAccelerationEstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">associatedBody</span><span class="p">,</span><span class="w"> </span><span class="n">centralBody</span><span class="p">,</span><span class="w"> </span><span class="n">componentsToEstimate</span><span class="p">,</span><span class="w"> </span><span class="n">arcStartTimeList</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -724,10 +728,10 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">arcStartTimeList</span></code></p>
 <blockquote>
 <div><p>A list of times at which the arcs start during which the coefficients are to be estimated, of <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">std::vector&lt;</span> <span class="pre">double</span> <span class="pre">&gt;</span></code>. For instance, when using:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">arcStartTimeList</span><span class="p">;</span>
-<span class="n">arcStartTimeList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mf">1000.0</span> <span class="p">);</span>
-<span class="n">arcStartTimeList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mf">7200.0</span> <span class="p">);</span>
-<span class="n">arcStartTimeList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mf">10000.0</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">arcStartTimeList</span><span class="p">;</span><span class="w"></span>
+<span class="n">arcStartTimeList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="mf">1000.0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">arcStartTimeList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="mf">7200.0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">arcStartTimeList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="mf">10000.0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>One set of empirical accelerations will be estimated, that are used for <span class="math notranslate nohighlight">\(1000&lt;t&lt;7200\)</span>, one set for <span class="math notranslate nohighlight">\(7200&lt;t&lt;10000\)</span> and one set for <span class="math notranslate nohighlight">\(t&gt;10000\)</span></p>
@@ -791,11 +795,11 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   
 
@@ -830,6 +834,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -198,25 +202,25 @@
 <h2><span class="section-number">5.2.1. </span>Lambert Targeter<a class="headerlink" href="#lambert-targeter" title="Permalink to this headline">¶</a></h2>
 <p>A Lambert targeter is an algorithm which can solve Lambert’s problem. The input into this problem is the initial position vector, the final position vector, and the time-of-flight (TOF) for the peoblem that needs to be solved. Several Lambert Targeting algorithms, developed over the last few years, are included in Tudat. Each of these algorithm are a seperate class that is derived from one base class: <code class="docutils literal notranslate"><span class="pre">lambertTargeter</span></code>.</p>
 <dl class="py class">
-<dt id="lambertTargeter">
-<em class="property">class </em><code class="sig-name descname">lambertTargeter</code><a class="headerlink" href="#lambertTargeter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lambertTargeter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lambertTargeter</span></span><a class="headerlink" href="#lambertTargeter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>This is the base class that is used to derive the different algorithms to solve Lambert’s problem. Each class that is derived from this base class contains a method called <code class="docutils literal notranslate"><span class="pre">execute()</span></code>. This method is called in the constructor of each class and performs the specific algorithm. Other methods like: <code class="docutils literal notranslate"><span class="pre">getInertialVelocityAtDeparture()</span></code> can then be called to get the results of the algorithm.</p>
 <p>There are several algorithms available in Tudat. Which algorithms are available are discussed below, however, the specifics of these algorithms are not explained here.</p>
 <dl class="py class">
-<dt id="lambertTargeterIzzo">
-<em class="property">class </em><code class="sig-name descname">lambertTargeterIzzo</code><a class="headerlink" href="#lambertTargeterIzzo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lambertTargeterIzzo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lambertTargeterIzzo</span></span><a class="headerlink" href="#lambertTargeterIzzo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>This class uses Izzo’s algorithm to solve the Lambert problem. This class can be called as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LambertTargeterIzzo</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtDeparture</span><span class="p">,</span>
-                   <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtArrival</span><span class="p">,</span>
-                   <span class="k">const</span> <span class="kt">double</span> <span class="n">aTimeOfFlight</span><span class="p">,</span>
-                   <span class="k">const</span> <span class="kt">double</span> <span class="n">aGravitationalParameter</span><span class="p">,</span>
-                   <span class="k">const</span> <span class="kt">bool</span> <span class="n">isRetrograde</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
-                   <span class="k">const</span> <span class="kt">double</span> <span class="n">convergenceTolerance</span> <span class="o">=</span> <span class="mf">1e-9</span><span class="p">,</span>
-                   <span class="k">const</span> <span class="kt">int</span> <span class="n">maximumNumberOfIterations</span> <span class="o">=</span> <span class="mi">50</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LambertTargeterIzzo</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">aCartesianPositionAtDeparture</span><span class="p">,</span><span class="w"></span>
+<span class="w">                   </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">aCartesianPositionAtArrival</span><span class="p">,</span><span class="w"></span>
+<span class="w">                   </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">aTimeOfFlight</span><span class="p">,</span><span class="w"></span>
+<span class="w">                   </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">aGravitationalParameter</span><span class="p">,</span><span class="w"></span>
+<span class="w">                   </span><span class="k">const</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">isRetrograde</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                   </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">convergenceTolerance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-9</span><span class="p">,</span><span class="w"></span>
+<span class="w">                   </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">maximumNumberOfIterations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -260,17 +264,17 @@
 </ul>
 </div></blockquote>
 <dl class="py class">
-<dt id="lambertTargeterGooding">
-<em class="property">class </em><code class="sig-name descname">lambertTargeterGooding</code><a class="headerlink" href="#lambertTargeterGooding" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lambertTargeterGooding">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lambertTargeterGooding</span></span><a class="headerlink" href="#lambertTargeterGooding" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>This class uses Gooding’s algorithm to solve the Lambert problem. This class can be called as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LambertTargeterGooding</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtDeparture</span><span class="p">,</span>
-                      <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtArrival</span><span class="p">,</span>
-                      <span class="k">const</span> <span class="kt">double</span> <span class="n">aTimeOfFlight</span><span class="p">,</span>
-                      <span class="k">const</span> <span class="kt">double</span> <span class="n">aGravitationalParameter</span><span class="p">,</span>
-                      <span class="n">root_finders</span><span class="o">::</span><span class="n">RootFinderPointer</span> <span class="n">aRootFinder</span> <span class="o">=</span>
-                      <span class="n">root_finders</span><span class="o">::</span><span class="n">RootFinderPointer</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LambertTargeterGooding</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">aCartesianPositionAtDeparture</span><span class="p">,</span><span class="w"></span>
+<span class="w">                      </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">aCartesianPositionAtArrival</span><span class="p">,</span><span class="w"></span>
+<span class="w">                      </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">aTimeOfFlight</span><span class="p">,</span><span class="w"></span>
+<span class="w">                      </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">aGravitationalParameter</span><span class="p">,</span><span class="w"></span>
+<span class="w">                      </span><span class="n">root_finders</span><span class="o">::</span><span class="n">RootFinderPointer</span><span class="w"> </span><span class="n">aRootFinder</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">                      </span><span class="n">root_finders</span><span class="o">::</span><span class="n">RootFinderPointer</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -304,18 +308,18 @@
 </ul>
 </div></blockquote>
 <dl class="py class">
-<dt id="ZeroRevolutionlambertTargeterIzzo">
-<em class="property">class </em><code class="sig-name descname">ZeroRevolutionlambertTargeterIzzo</code><a class="headerlink" href="#ZeroRevolutionlambertTargeterIzzo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ZeroRevolutionlambertTargeterIzzo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ZeroRevolutionlambertTargeterIzzo</span></span><a class="headerlink" href="#ZeroRevolutionlambertTargeterIzzo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>This class uses Izzo’s zero revolution algorithm to solve the Lambert problem. This class can be called as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ZeroRevolutionLambertTargeterIzzo</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtDeparture</span><span class="p">,</span>
-                                 <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtArrival</span><span class="p">,</span>
-                                 <span class="k">const</span> <span class="kt">double</span> <span class="n">aTimeOfFlight</span><span class="p">,</span>
-                                 <span class="k">const</span> <span class="kt">double</span> <span class="n">aGravitationalParameter</span><span class="p">,</span>
-                                 <span class="k">const</span> <span class="kt">bool</span> <span class="n">aIsRetrograde</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
-                                 <span class="k">const</span> <span class="kt">double</span> <span class="n">aConvergenceTolerance</span> <span class="o">=</span> <span class="mf">1.0e-9</span><span class="p">,</span>
-                                 <span class="k">const</span> <span class="kt">int</span> <span class="n">aMaximumNumberOfIterations</span> <span class="o">=</span> <span class="mi">50</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ZeroRevolutionLambertTargeterIzzo</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">aCartesianPositionAtDeparture</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                 </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">aCartesianPositionAtArrival</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                 </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">aTimeOfFlight</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                 </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">aGravitationalParameter</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                 </span><span class="k">const</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">aIsRetrograde</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                 </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">aConvergenceTolerance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0e-9</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                 </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">aMaximumNumberOfIterations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -360,20 +364,20 @@
 </ul>
 </div></blockquote>
 <dl class="py class">
-<dt id="MultiRevolutionlambertTargeterIzzo">
-<em class="property">class </em><code class="sig-name descname">MultiRevolutionlambertTargeterIzzo</code><a class="headerlink" href="#MultiRevolutionlambertTargeterIzzo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="MultiRevolutionlambertTargeterIzzo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultiRevolutionlambertTargeterIzzo</span></span><a class="headerlink" href="#MultiRevolutionlambertTargeterIzzo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>This class uses Izzo’s multi-revolution algorithm to solve the Lambert problem. This class is not directly derived from the <code class="docutils literal notranslate"><span class="pre">lambertTargeter</span></code> class, but it is derived from the <code class="docutils literal notranslate"><span class="pre">ZeroRevolutionlambertTargeterIzzo</span></code> class. This class can be called as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiRevolutionLambertTargeterIzzo</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtDeparture</span><span class="p">,</span>
-                                  <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span> <span class="n">aCartesianPositionAtArrival</span><span class="p">,</span>
-                                  <span class="k">const</span> <span class="kt">double</span> <span class="n">aTimeOfFlight</span><span class="p">,</span>
-                                  <span class="k">const</span> <span class="kt">double</span> <span class="n">aGravitationalParameter</span><span class="p">,</span>
-                                  <span class="k">const</span> <span class="kt">int</span> <span class="n">aNumberOfRevolutions</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-                                  <span class="k">const</span> <span class="kt">bool</span> <span class="n">aIsRightBranch</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
-                                  <span class="k">const</span> <span class="kt">bool</span> <span class="n">aIsRetrograde</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
-                                  <span class="k">const</span> <span class="kt">double</span> <span class="n">aConvergenceTolerance</span> <span class="o">=</span> <span class="mf">1e-9</span><span class="p">,</span>
-                                  <span class="k">const</span> <span class="kt">int</span> <span class="n">aMaximumNumberOfIterations</span> <span class="o">=</span> <span class="mi">50</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiRevolutionLambertTargeterIzzo</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">aCartesianPositionAtDeparture</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                  </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">aCartesianPositionAtArrival</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                  </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">aTimeOfFlight</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                  </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">aGravitationalParameter</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                  </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">aNumberOfRevolutions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                  </span><span class="k">const</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">aIsRightBranch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                  </span><span class="k">const</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">aIsRetrograde</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                  </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">aConvergenceTolerance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-9</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                  </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">aMaximumNumberOfIterations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -482,11 +486,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -521,6 +524,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

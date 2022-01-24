@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -196,18 +200,18 @@
 </div>
 <p>The first part of the script sets up the <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object. This is identical to the initial part of <a class="reference internal" href="../tutorialsSeamless/basicPropagation.html#matlabinterface-tutorialsseamless-basicpropagation"><span class="std std-ref">Unperturbed Earth-orbiting Satellite</span></a>, so it is not repeated here.</p>
 <p>Once that all the settings have been defined, instead of calling <code class="docutils literal notranslate"><span class="pre">simulatinon.run()</span></code>, we export the <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object to a JSON file. However, we have to specify first the results to be exported to output files:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">inputFile</span> <span class="p">=</span> <span class="n">fullfile</span><span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">,</span><span class="s">&#39;main.json&#39;</span><span class="p">);</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">addResultsToExport</span><span class="p">(</span><span class="n">fullfile</span><span class="p">(</span><span class="s">&#39;..&#39;</span><span class="p">,</span><span class="s">&#39;output&#39;</span><span class="p">,</span><span class="s">&#39;results.txt&#39;</span><span class="p">),{</span><span class="s">&#39;independent&#39;</span><span class="p">,</span><span class="s">&#39;state&#39;</span><span class="p">});</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">inputFile</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fullfile</span><span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">,</span><span class="s">&#39;main.json&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">addResultsToExport</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="s">&#39;..&#39;</span><span class="p">,</span><span class="s">&#39;output&#39;</span><span class="p">,</span><span class="s">&#39;results.txt&#39;</span><span class="p">),{</span><span class="s">&#39;independent&#39;</span><span class="p">,</span><span class="s">&#39;state&#39;</span><span class="p">});</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Here, the <code class="docutils literal notranslate"><span class="pre">fullfile</span></code> function is used to build a platform-dependent path (e.g. <code class="docutils literal notranslate"><span class="pre">input/main.json</span></code> on Unix systems, <code class="docutils literal notranslate"><span class="pre">input\main.json</span></code> on Windows). In the first line, we declare the path to which the input file will be saved (will be used later). Then, in the second line, we request the variables <code class="docutils literal notranslate"><span class="pre">independent</span></code> and <code class="docutils literal notranslate"><span class="pre">state</span></code> to be saved to a file at <code class="docutils literal notranslate"><span class="pre">../output/results.txt</span></code>.</p>
 <p>Then, we request the application to generate a file containing the full settings actually used for the propagation (including all the default values):</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="n">fullSettingsFile</span> <span class="p">=</span> <span class="s">&#39;fullSettings.json&#39;</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="n">fullSettingsFile</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;fullSettings.json&#39;</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This file will be generated inside the <code class="docutils literal notranslate"><span class="pre">input</span></code> directory, because paths are specified relative to the root input file (<code class="docutils literal notranslate"><span class="pre">input/main.json</span></code> in this case), and not relative to the directory in which the MATLAB script is located.</p>
 <p>The last step is to generate the JSON file:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span><span class="n">inputFile</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span><span class="n">inputFile</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>After running <code class="docutils literal notranslate"><span class="pre">json_interface</span> <span class="pre">main.json</span></code>, the resulting directory tree looks like this:</p>
@@ -281,11 +285,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -320,6 +323,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

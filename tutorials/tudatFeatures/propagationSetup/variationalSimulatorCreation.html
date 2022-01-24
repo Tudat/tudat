@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -217,23 +221,23 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
 </ul>
 <p>These are implemented in derived classes and are discussed below. Note that these objects of these classes propagate bothe the variational equations and dynamics (either concurrently or sequentially).</p>
 <dl class="py class">
-<dt id="VariationalEquationsSolver">
-<em class="property">class </em><code class="sig-name descname">VariationalEquationsSolver</code><a class="headerlink" href="#VariationalEquationsSolver" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VariationalEquationsSolver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VariationalEquationsSolver</span></span><a class="headerlink" href="#VariationalEquationsSolver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class from which the classes below are derived.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="SingleArcVariationalEquationsSolver">
-<em class="property">class </em><code class="sig-name descname">SingleArcVariationalEquationsSolver</code><a class="headerlink" href="#SingleArcVariationalEquationsSolver" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="SingleArcVariationalEquationsSolver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SingleArcVariationalEquationsSolver</span></span><a class="headerlink" href="#SingleArcVariationalEquationsSolver" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class simulates single arc dynamics and variational equations and its constructor is:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SingleArcVariationalEquationsSolver</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span>
-                                     <span class="n">integratorSettings</span><span class="p">,</span>
-                                     <span class="n">propagatorSettings</span><span class="p">,</span>
-                                     <span class="n">parametersToEstimate</span><span class="p">,</span>
-                                     <span class="n">integrateDynamicalAndVariationalEquationsConcurrently</span><span class="p">,</span>
-                                     <span class="n">variationalOnlyIntegratorSettings</span><span class="p">,</span>
-                                     <span class="n">clearNumericalSolution</span><span class="p">,</span>
-                                     <span class="n">integrateEquationsOnCreation</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SingleArcVariationalEquationsSolver</span><span class="p">(</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                     </span><span class="n">integratorSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                     </span><span class="n">propagatorSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                     </span><span class="n">parametersToEstimate</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                     </span><span class="n">integrateDynamicalAndVariationalEquationsConcurrently</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                     </span><span class="n">variationalOnlyIntegratorSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                     </span><span class="n">clearNumericalSolution</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                     </span><span class="n">integrateEquationsOnCreation</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -284,18 +288,18 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
 </dd></dl>
 
 <dl class="py class">
-<dt id="MultiArcVariationalEquationsSolver">
-<em class="property">class </em><code class="sig-name descname">MultiArcVariationalEquationsSolver</code><a class="headerlink" href="#MultiArcVariationalEquationsSolver" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="MultiArcVariationalEquationsSolver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultiArcVariationalEquationsSolver</span></span><a class="headerlink" href="#MultiArcVariationalEquationsSolver" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class allows the numerical propagation of variational equations for arc-wise dynamics. It is constructed using:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiArcVariationalEquationsSolver</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span>
-                                    <span class="n">integratorSettings</span><span class="p">,</span>
-                                    <span class="n">propagatorSettings</span><span class="p">,</span>
-                                    <span class="n">parametersToEstimate</span><span class="p">,</span>
-                                    <span class="n">arcStartTimes</span><span class="p">,</span>
-                                    <span class="n">integrateDynamicalAndVariationalEquationsConcurrently</span><span class="p">,</span>
-                                    <span class="n">variationalOnlyIntegratorSettings</span><span class="p">,</span>
-                                    <span class="n">clearNumericalSolution</span><span class="p">,</span>
-                                    <span class="n">integrateEquationsOnCreation</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiArcVariationalEquationsSolver</span><span class="p">(</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">integratorSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">propagatorSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">parametersToEstimate</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">arcStartTimes</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">integrateDynamicalAndVariationalEquationsConcurrently</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">variationalOnlyIntegratorSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">clearNumericalSolution</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">integrateEquationsOnCreation</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -309,17 +313,17 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
 </dd></dl>
 
 <dl class="py class">
-<dt id="HybridArcVariationalEquationsSolver">
-<em class="property">class </em><code class="sig-name descname">HybridArcVariationalEquationsSolver</code><a class="headerlink" href="#HybridArcVariationalEquationsSolver" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="HybridArcVariationalEquationsSolver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">HybridArcVariationalEquationsSolver</span></span><a class="headerlink" href="#HybridArcVariationalEquationsSolver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allows some bodies to be propagated in a single arc, and some in a multi-arc fashion. See <a class="reference internal" href="simulatorCreation.html#HybridArcDynamicsSimulator" title="HybridArcDynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">HybridArcDynamicsSimulator</span></code></a> for model details. It is constructed using:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HybridArcVariationalEquationsSolver</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span>
-                                    <span class="n">integratorSettings</span><span class="p">,</span>
-                                    <span class="n">propagatorSettings</span><span class="p">,</span>
-                                    <span class="n">parametersToEstimate</span><span class="p">,</span>
-                                    <span class="n">arcStartTimes</span><span class="p">,</span>
-                                    <span class="n">integrateDynamicalAndVariationalEquationsConcurrently</span><span class="p">,</span>
-                                    <span class="n">clearNumericalSolution</span><span class="p">,</span>
-                                    <span class="n">integrateEquationsOnCreation</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HybridArcVariationalEquationsSolver</span><span class="p">(</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">integratorSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">propagatorSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">parametersToEstimate</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">arcStartTimes</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">integrateDynamicalAndVariationalEquationsConcurrently</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">clearNumericalSolution</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">integrateEquationsOnCreation</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </dd></dl>
@@ -328,16 +332,16 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
 <h2><span class="section-number">3.7.1. </span>Retrieving the variational equation history<a class="headerlink" href="#retrieving-the-variational-equation-history" title="Permalink to this headline">¶</a></h2>
 <p>Once the <a class="reference internal" href="#VariationalEquationsSolver" title="VariationalEquationsSolver"><code class="xref py py-class docutils literal notranslate"><span class="pre">VariationalEquationsSolver</span></code></a> object has been created and the equations of motion have been integrated, the propagation history of the selected bodies is stored within the <a class="reference internal" href="#VariationalEquationsSolver" title="VariationalEquationsSolver"><code class="xref py py-class docutils literal notranslate"><span class="pre">VariationalEquationsSolver</span></code></a>. To make use of it manually after propagation, such history can to be retrieved and saved to a file.</p>
 <p>If the variational equations propagation history needs to be saved, the following code can be used (assuming an object of type <a class="reference internal" href="#SingleArcVariationalEquationsSolver" title="SingleArcVariationalEquationsSolver"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleArcVariationalEquationsSolver</span></code></a> called variationalEquationsSimulator has been created):</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="o">&gt;</span> <span class="n">stateTransitionResult</span> <span class="o">=</span>
-        <span class="n">variationalEquationsSimulator</span><span class="p">.</span><span class="n">getNumericalVariationalEquationsSolution</span><span class="p">(</span> <span class="p">).</span><span class="n">at</span><span class="p">(</span> <span class="mi">0</span> <span class="p">);</span>
-<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="o">&gt;</span> <span class="n">sensitivityResult</span> <span class="o">=</span>
-        <span class="n">variationalEquationsSimulator</span><span class="p">.</span><span class="n">getNumericalVariationalEquationsSolution</span><span class="p">(</span> <span class="p">).</span><span class="n">at</span><span class="p">(</span> <span class="mi">1</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">stateTransitionResult</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="n">variationalEquationsSimulator</span><span class="p">.</span><span class="n">getNumericalVariationalEquationsSolution</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">sensitivityResult</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="n">variationalEquationsSimulator</span><span class="p">.</span><span class="n">getNumericalVariationalEquationsSolution</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Where the state transition and sensitivity matrix are storeed separately. Saving the results to a file is done in the same manner as for the dynamics. Note however, that the matrix entries of the maps in the above are spread out over a single row in the output file. The concatenation of the matrix entries is done row by row.</p>
 <p>The state propagation history can also be retrieved from the object, as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="n">integrationResult</span> <span class="o">=</span>
-     <span class="n">variationalEquationsSimulator</span><span class="p">.</span><span class="n">getDynamicsSimulator</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">integrationResult</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">     </span><span class="n">variationalEquationsSimulator</span><span class="p">.</span><span class="n">getDynamicsSimulator</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="o">-&gt;</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -395,11 +399,11 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   
 
@@ -434,6 +438,11 @@ S &amp;= \frac{\partial \mathbf{x}(t)}{\partial \mathbf{p  }}\\\end{split}\]</di
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

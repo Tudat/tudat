@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
@@ -200,74 +204,74 @@
 <h2><span class="section-number">2.1. </span>Set up the problem<a class="headerlink" href="#set-up-the-problem" title="Permalink to this headline">¶</a></h2>
 <p>As there are 28 problems and 11 algorithms contained in this example, a matrix is first made to go through all the different problems and optimizers.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define run settings</span>
-<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">numberOfDimensionCases</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">numberOfOptimizers</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
-<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">numberOfProblems</span> <span class="o">=</span> <span class="mi">28</span><span class="p">;</span>
-<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">numberOfPopulationCases</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">numberOfDimensionCases</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">numberOfOptimizers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">11</span><span class="p">;</span><span class="w"></span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">numberOfProblems</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">28</span><span class="p">;</span><span class="w"></span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">numberOfPopulationCases</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">// Create double vector of Matrices that contain optimal solutions</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">optima</span><span class="p">;</span>
-<span class="n">optima</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">numberOfDimensionCases</span> <span class="p">);</span>
-<span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfDimensionCases</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">optima</span><span class="p">[</span> <span class="n">i</span> <span class="p">].</span><span class="n">resize</span><span class="p">(</span> <span class="n">numberOfPopulationCases</span> <span class="p">);</span>
-    <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">numberOfPopulationCases</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">optima</span><span class="p">[</span> <span class="n">i</span> <span class="p">][</span> <span class="n">j</span> <span class="p">]</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="p">(</span> <span class="n">numberOfProblems</span><span class="p">,</span> <span class="n">numberOfOptimizers</span> <span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">optima</span><span class="p">;</span><span class="w"></span>
+<span class="n">optima</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="w"> </span><span class="n">numberOfDimensionCases</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numberOfDimensionCases</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">optima</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">].</span><span class="n">resize</span><span class="p">(</span><span class="w"> </span><span class="n">numberOfPopulationCases</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numberOfPopulationCases</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">optima</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="p">(</span><span class="w"> </span><span class="n">numberOfProblems</span><span class="p">,</span><span class="w"> </span><span class="n">numberOfOptimizers</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The optima vector is an <code class="docutils literal notranslate"><span class="pre">std::vector</span></code> which contains <code class="docutils literal notranslate"><span class="pre">Eigen::MatrixX</span></code>. The size of the vector is 3 as that is the amount of cases with different dimensionalities. The matrices in the vector are resized to contain the problem in the row of the matrix, and the optimizer that will solve that problem in the corresponding column.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Perform optimization for each optimizer</span>
-<span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfOptimizers</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// Perform optimization for each test problem</span>
-    <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">numberOfProblems</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">)</span>
-    <span class="p">{</span>
-        <span class="c1">// Perform optimization for each dimensionality</span>
-        <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">numberOfDimensionCases</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span> <span class="p">)</span>
-        <span class="p">{</span>
-            <span class="kt">int</span> <span class="n">numberOfDimensions</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-            <span class="k">if</span><span class="p">(</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
-            <span class="p">{</span>
-                <span class="n">numberOfDimensions</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span>
-            <span class="p">{</span>
-                <span class="n">numberOfDimensions</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">2</span> <span class="p">)</span>
-            <span class="p">{</span>
-                <span class="n">numberOfDimensions</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-            <span class="p">}</span>
+<span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numberOfOptimizers</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Perform optimization for each test problem</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numberOfProblems</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Perform optimization for each dimensionality</span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numberOfDimensionCases</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">numberOfDimensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">numberOfDimensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">numberOfDimensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">numberOfDimensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
 
-            <span class="c1">// Perform optimization for each population size/number of generations</span>
-            <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">numberOfPopulationCases</span><span class="p">;</span> <span class="n">l</span><span class="o">++</span> <span class="p">)</span>
-            <span class="p">{</span>
-                <span class="n">pagmo</span><span class="o">::</span><span class="n">population</span><span class="o">::</span><span class="n">size_type</span> <span class="n">populationSize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-                <span class="kt">int</span> <span class="n">numberOfGenerations</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-                <span class="k">if</span><span class="p">(</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
-                <span class="p">{</span>
-                    <span class="n">populationSize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
-                    <span class="n">numberOfGenerations</span> <span class="o">=</span> <span class="mi">64</span><span class="p">;</span>
-                <span class="p">}</span>
-                <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span>
-                <span class="p">{</span>
-                    <span class="n">populationSize</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
-                    <span class="n">numberOfGenerations</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
-                <span class="p">}</span>
-                <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">2</span> <span class="p">)</span>
-                <span class="p">{</span>
-                    <span class="n">populationSize</span> <span class="o">=</span> <span class="mi">64</span><span class="p">;</span>
-                    <span class="n">numberOfGenerations</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
-                <span class="p">}</span>
+<span class="w">            </span><span class="c1">// Perform optimization for each population size/number of generations</span>
+<span class="w">            </span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numberOfPopulationCases</span><span class="p">;</span><span class="w"> </span><span class="n">l</span><span class="o">++</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">pagmo</span><span class="o">::</span><span class="n">population</span><span class="o">::</span><span class="n">size_type</span><span class="w"> </span><span class="n">populationSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">numberOfGenerations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">populationSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16</span><span class="p">;</span><span class="w"></span>
+<span class="w">                    </span><span class="n">numberOfGenerations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">64</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">                </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">populationSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">32</span><span class="p">;</span><span class="w"></span>
+<span class="w">                    </span><span class="n">numberOfGenerations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">32</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">                </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">populationSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">64</span><span class="p">;</span><span class="w"></span>
+<span class="w">                    </span><span class="n">numberOfGenerations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
 
-                <span class="c1">// Create test problem</span>
-                <span class="n">pagmo</span><span class="o">::</span><span class="n">problem</span> <span class="n">prob</span><span class="p">{</span> <span class="n">pagmo</span><span class="o">::</span><span class="n">cec2013</span><span class="p">(</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">numberOfDimensions</span> <span class="p">)</span> <span class="p">};</span>
-                <span class="p">...</span>
-                <span class="p">...</span>
-                <span class="p">...</span>
+<span class="w">                </span><span class="c1">// Create test problem</span>
+<span class="w">                </span><span class="n">pagmo</span><span class="o">::</span><span class="n">problem</span><span class="w"> </span><span class="n">prob</span><span class="p">{</span><span class="w"> </span><span class="n">pagmo</span><span class="o">::</span><span class="n">cec2013</span><span class="p">(</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">numberOfDimensions</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="w">                </span><span class="p">...</span><span class="w"></span>
+<span class="w">                </span><span class="p">...</span><span class="w"></span>
+<span class="w">                </span><span class="p">...</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This for-loop shown above first assigns the number of dimensions for each case, then it assigns the population size and number of generations for each case. It is important to make the population size of type <code class="docutils literal notranslate"><span class="pre">pagmo::population::size_type</span></code> to be able to use it in the <code class="docutils literal notranslate"><span class="pre">pagmo::problem</span></code> class. Then, as was done in the previous example, the problem is set-up using the <code class="docutils literal notranslate"><span class="pre">pagmo::problem</span></code> class.</p>
@@ -276,7 +280,7 @@
 <h2><span class="section-number">2.2. </span>Selecting the Algorithm<a class="headerlink" href="#selecting-the-algorithm" title="Permalink to this headline">¶</a></h2>
 <p>Continuing in the same for-loops as in the previous section, the following is done to get the algorithm:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create optimization algorithm</span>
-<span class="n">pagmo</span><span class="o">::</span><span class="n">algorithm</span> <span class="n">algo</span> <span class="o">=</span> <span class="n">getAlgorithm</span><span class="p">(</span> <span class="n">i</span> <span class="p">);</span>
+<span class="n">pagmo</span><span class="o">::</span><span class="n">algorithm</span><span class="w"> </span><span class="n">algo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getAlgorithm</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where the <code class="docutils literal notranslate"><span class="pre">getAlgorithm</span></code> function is a seperate function (not inherent to pagmo) that selects an algorithm to use. First, the same algorithm is used for all 28 problems, then a new algorithm will be chosen for all the 28 problems until all the optimizers have been tested on all the problems (and for each population size and number of generations cases).</p>
@@ -285,7 +289,7 @@
 <h2><span class="section-number">2.3. </span>Building the Island<a class="headerlink" href="#building-the-island" title="Permalink to this headline">¶</a></h2>
 <p>The island is built as before (inside the for-loops):</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create island with given population size</span>
-<span class="n">pagmo</span><span class="o">::</span><span class="n">island</span> <span class="n">isl</span> <span class="o">=</span> <span class="n">pagmo</span><span class="o">::</span><span class="n">island</span><span class="p">{</span> <span class="n">algo</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">populationSize</span> <span class="p">};</span>
+<span class="n">pagmo</span><span class="o">::</span><span class="n">island</span><span class="w"> </span><span class="n">isl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pagmo</span><span class="o">::</span><span class="n">island</span><span class="p">{</span><span class="w"> </span><span class="n">algo</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="p">,</span><span class="w"> </span><span class="n">populationSize</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where now the population size is an external variable of the type: <code class="docutils literal notranslate"><span class="pre">pagmo::population::size_type</span></code>.</p>
@@ -293,25 +297,25 @@
 <div class="section" id="perform-the-optimization">
 <h2><span class="section-number">2.4. </span>Perform the Optimization<a class="headerlink" href="#perform-the-optimization" title="Permalink to this headline">¶</a></h2>
 <p>Finally, the optimization is performed in the same manner as the Himmelblau function:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>                <span class="p">...</span>
-                <span class="p">...</span>
-                <span class="p">...</span>
-                <span class="c1">// Evolve for required number of generations</span>
-                <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">numberOfGenerations</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">)</span>
-                <span class="p">{</span>
-                    <span class="n">isl</span><span class="p">.</span><span class="n">evolve</span><span class="p">(</span> <span class="p">);</span>
-                    <span class="k">while</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">status</span><span class="p">()</span><span class="o">!=</span><span class="n">pagmo</span><span class="o">::</span><span class="n">evolve_status</span><span class="o">::</span><span class="n">idle</span> <span class="p">)</span>
-                        <span class="n">isl</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span>
-                <span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">                </span><span class="p">...</span><span class="w"></span>
+<span class="w">                </span><span class="p">...</span><span class="w"></span>
+<span class="w">                </span><span class="p">...</span><span class="w"></span>
+<span class="w">                </span><span class="c1">// Evolve for required number of generations</span>
+<span class="w">                </span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">numberOfGenerations</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">isl</span><span class="p">.</span><span class="n">evolve</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">                    </span><span class="k">while</span><span class="p">(</span><span class="w"> </span><span class="n">isl</span><span class="p">.</span><span class="n">status</span><span class="p">()</span><span class="o">!=</span><span class="n">pagmo</span><span class="o">::</span><span class="n">evolve_status</span><span class="o">::</span><span class="n">idle</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">                        </span><span class="n">isl</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
 
-                <span class="c1">// Save optimal results for current optimization.</span>
-                <span class="n">optima</span><span class="p">[</span> <span class="n">k</span> <span class="p">][</span> <span class="n">l</span> <span class="p">](</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span> <span class="p">)</span> <span class="o">=</span> <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">().</span><span class="n">champion_f</span><span class="p">()[</span><span class="mi">0</span><span class="p">];</span>
-                <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Minimum: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">j</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">().</span><span class="n">champion_f</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="w">                </span><span class="c1">// Save optimal results for current optimization.</span>
+<span class="w">                </span><span class="n">optima</span><span class="p">[</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="p">](</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">().</span><span class="n">champion_f</span><span class="p">()[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Minimum: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">j</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">().</span><span class="n">champion_f</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -376,11 +380,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -415,6 +418,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -209,16 +213,16 @@
 </ul>
 <p>The different types of <a class="reference internal" href="#PropagationTerminationSettings" title="PropagationTerminationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropagationTerminationSettings</span></code></a> are implemented by means of derived classes and custom constructors, as detailed in this page.</p>
 <dl class="py class">
-<dt id="PropagationTerminationSettings">
-<em class="property">class </em><code class="sig-name descname">PropagationTerminationSettings</code><a class="headerlink" href="#PropagationTerminationSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="PropagationTerminationSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PropagationTerminationSettings</span></span><a class="headerlink" href="#PropagationTerminationSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for the termination settings of the propagation. Different options are implemented in the derived classes below.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="PropagationTimeTerminationSettings">
-<em class="property">class </em><code class="sig-name descname">PropagationTimeTerminationSettings</code><a class="headerlink" href="#PropagationTimeTerminationSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="PropagationTimeTerminationSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PropagationTimeTerminationSettings</span></span><a class="headerlink" href="#PropagationTimeTerminationSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>As the name suggests, these settings will cause the propagation to terminate after a certain time has passed. Please note that the simulator will finish the final time-step, which may cause the termination time to be slightly overpassed. The constructor is:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PropagationTimeTerminationSettings</span><span class="p">(</span> <span class="n">terminationTime</span><span class="p">,</span> <span class="n">terminateExactlyOnFinalCondition</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PropagationTimeTerminationSettings</span><span class="p">(</span><span class="w"> </span><span class="n">terminationTime</span><span class="p">,</span><span class="w"> </span><span class="n">terminateExactlyOnFinalCondition</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -237,31 +241,31 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="PropagationCPUTimeTerminationSettings">
-<em class="property">class </em><code class="sig-name descname">PropagationCPUTimeTerminationSettings</code><a class="headerlink" href="#PropagationCPUTimeTerminationSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="PropagationCPUTimeTerminationSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PropagationCPUTimeTerminationSettings</span></span><a class="headerlink" href="#PropagationCPUTimeTerminationSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>You may want to make sure that the propagation does not exceed a certain computation time. In this case, you can easily set the termination settings as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PropagationCPUTimeTerminationSettings</span><span class="p">(</span> <span class="n">cpuTerminationTime</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PropagationCPUTimeTerminationSettings</span><span class="p">(</span><span class="w"> </span><span class="n">cpuTerminationTime</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">cpuTerminationTime</span></code> is the maximum allowed CPU time, after which propagation should be stopped.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="PropagationDependentVariableTerminationSettings">
-<em class="property">class </em><code class="sig-name descname">PropagationDependentVariableTerminationSettings</code><a class="headerlink" href="#PropagationDependentVariableTerminationSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="PropagationDependentVariableTerminationSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PropagationDependentVariableTerminationSettings</span></span><a class="headerlink" href="#PropagationDependentVariableTerminationSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>A more powerful method is the use of a <code class="xref py py-class docutils literal notranslate"><span class="pre">DependentVariable</span></code> to terminate a propagation. Using this class will terminate the propagation once the chosen dependent variable meets a certain criterion. To do so, the user needs to first create the dependent variable that will dictate the termination of the propagation:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span> <span class="n">terminationDependentVariable</span> <span class="o">=</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">SingleDependentVariableSaveSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">altitude_dependent_variable</span><span class="p">,</span> <span class="s">&quot;Vehicle&quot;</span><span class="p">,</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">SingleDependentVariableSaveSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">terminationDependentVariable</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">SingleDependentVariableSaveSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">altitude_dependent_variable</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Vehicle&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Earth&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where in this example the variable created is an <code class="docutils literal notranslate"><span class="pre">altitude_dependent_variable</span></code> which provides the altitude of <code class="docutils literal notranslate"><span class="pre">Vehicle</span></code> with respect to <code class="docutils literal notranslate"><span class="pre">Earth</span></code>.</p>
 <p>The versatility in the use of <a class="reference internal" href="#PropagationDependentVariableTerminationSettings" title="PropagationDependentVariableTerminationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropagationDependentVariableTerminationSettings</span></code></a> to terminate a simulation lies in the large number of dependent variable types available in Tudat. The user is referred to <a class="reference internal" href="propagatorSettingsDependentVariables.html#tudatfeaturespropagatorsettingsdependentvariables"><span class="std std-ref">Propagator Settings: Dependent Variables</span></a> for a full list of the available dependent variables as well as their use.</p>
 <p>The constructor for this derived class is:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PropagationDependentVariableTerminationSettings</span><span class="p">(</span> <span class="n">terminationDependentVariable</span><span class="p">,</span>
-                                                 <span class="n">limitValue</span><span class="p">,</span>
-                                                 <span class="n">useAsLowerLimit</span><span class="p">,</span>
-                                                 <span class="n">terminateExactlyOnFinalCondition</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PropagationDependentVariableTerminationSettings</span><span class="p">(</span><span class="w"> </span><span class="n">terminationDependentVariable</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                 </span><span class="n">limitValue</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                 </span><span class="n">useAsLowerLimit</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                 </span><span class="n">terminateExactlyOnFinalCondition</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -290,10 +294,10 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="PropagationCustomTerminationSettings">
-<em class="property">class </em><code class="sig-name descname">PropagationCustomTerminationSettings</code><a class="headerlink" href="#PropagationCustomTerminationSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="PropagationCustomTerminationSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PropagationCustomTerminationSettings</span></span><a class="headerlink" href="#PropagationCustomTerminationSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>With this class, you can set a custom function that based on some internal calculations will return whether to stop propagation. The function should take the current time as input (hence a <code class="docutils literal notranslate"><span class="pre">double</span></code>) and output a boolean (i.e., <code class="docutils literal notranslate"><span class="pre">bool</span></code>). This boolean should be <code class="docutils literal notranslate"><span class="pre">true</span></code> when the propagation has to be stopped and <code class="docutils literal notranslate"><span class="pre">false</span></code> otherwise. The constructor looks like this:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PropagationCustomTerminationSettings</span><span class="p">(</span> <span class="n">checkStopCondition</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PropagationCustomTerminationSettings</span><span class="p">(</span><span class="w"> </span><span class="n">checkStopCondition</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">checkStopCondition</span></code> is the only input and is of type <code class="docutils literal notranslate"><span class="pre">std::function&lt;</span> <span class="pre">bool(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code>.</p>
@@ -302,21 +306,21 @@
 <p>In case your custom function requires more inputs (e.g., it may depend on the position of the spacecraft or other variables that are not the current time), you can use <code class="docutils literal notranslate"><span class="pre">std::bind</span></code> to add more inputs.</p>
 </div>
 <p>As an example, the case where the state of the spacecraft is added as an input is shown below:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">spacecraftStateFunction</span> <span class="o">=</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">Body</span><span class="o">::</span><span class="n">getState</span><span class="p">,</span> <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="s">&quot;Satellite&quot;</span> <span class="p">)</span> <span class="p">);</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">PropagationTerminationSettings</span> <span class="o">&gt;</span> <span class="n">terminationSettings</span> <span class="o">=</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">PropagationCustomTerminationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-            <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">customTerminationFunction</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">spacecraftStateFunction</span> <span class="p">)</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">spacecraftStateFunction</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">Body</span><span class="o">::</span><span class="n">getState</span><span class="p">,</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Satellite&quot;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">PropagationTerminationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">terminationSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">PropagationCustomTerminationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">customTerminationFunction</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span><span class="w"> </span><span class="n">spacecraftStateFunction</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="py class">
-<dt id="PropagationHybridTerminationSettings">
-<em class="property">class </em><code class="sig-name descname">PropagationHybridTerminationSettings</code><a class="headerlink" href="#PropagationHybridTerminationSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="PropagationHybridTerminationSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PropagationHybridTerminationSettings</span></span><a class="headerlink" href="#PropagationHybridTerminationSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>It may be possible that the user desires to terminate a propagation according several criteria, where such criteria may or may not be fulfilled simulataneously. The constructor for this derived class is:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PropagationHybridTerminationSettings</span><span class="p">(</span> <span class="n">terminationSettingsList</span><span class="p">,</span>
-                                      <span class="n">fulFillSingleCondition</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PropagationHybridTerminationSettings</span><span class="p">(</span><span class="w"> </span><span class="n">terminationSettingsList</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                      </span><span class="n">fulFillSingleCondition</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -396,11 +400,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -435,6 +438,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

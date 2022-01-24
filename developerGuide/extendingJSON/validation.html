@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
@@ -216,8 +220,8 @@
 <div class="section" id="access-history">
 <h2>Access history<a class="headerlink" href="#access-history" title="Permalink to this headline">¶</a></h2>
 <p>The validator feature to check the keys that have not been used is useful to inform the user about the existence of redundant information in their input file, the use of old key identifiers that are not used anymore in the current version of Tudat, or the detection of typos in optional keys when manually writing the input file. Consider the following:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">j</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span> <span class="s">&quot;tyep&quot;</span><span class="p">,</span> <span class="s">&quot;euler&quot;</span> <span class="p">},</span> <span class="p">{</span> <span class="s">&quot;stepSize&quot;</span><span class="o">:</span> <span class="mi">20</span> <span class="p">}</span> <span class="p">};</span>  <span class="c1">// not typo in key &quot;tyep&quot;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">type</span> <span class="o">=</span> <span class="n">getValue</span><span class="p">(</span> <span class="n">j</span><span class="p">,</span> <span class="s">&quot;type&quot;</span><span class="p">,</span> <span class="s">&quot;rungeKutta4&quot;</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;tyep&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;euler&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;stepSize&quot;</span><span class="o">:</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">};</span><span class="w">  </span><span class="c1">// not typo in key &quot;tyep&quot;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getValue</span><span class="p">(</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;type&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;rungeKutta4&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This would result in the integrator being used to be of the default type <code class="docutils literal notranslate"><span class="pre">rungeKutta4</span></code> even though the intention of the user was to use of type <code class="docutils literal notranslate"><span class="pre">euler</span></code>. However, the user will not know about this unless they have configured the validator to warn about the use of default values (which is off by default). Thus, before integrating the equations of motion, when all the required information has been retrieved from the <code class="docutils literal notranslate"><span class="pre">mainJson</span></code> object, the call to <code class="docutils literal notranslate"><span class="pre">checkUnusedKeys</span></code> will print the following warning (by default):</p>
@@ -228,33 +232,33 @@
 <p>In order to make this feature possible, the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> has to keep track of all the key paths of <code class="docutils literal notranslate"><span class="pre">mainJson</span></code> that have been accessed, and then iterate over all its keys to check whether any of them has not been used. Keeping track of the accessed key paths is done by calling the <code class="docutils literal notranslate"><span class="pre">getValue</span></code> function (i.e. using the default value access methods will not keep track of the used keys). The original implementation proposal consisted in defining a special key, e.g. <code class="docutils literal notranslate"><span class="pre">#accessedKeyPaths</span></code>, for the <code class="docutils literal notranslate"><span class="pre">mainJson</span></code> object, in which an array of <code class="xref py py-class docutils literal notranslate"><span class="pre">KeyPath</span></code> s would be stored. However, the <code class="docutils literal notranslate"><span class="pre">mainJson</span></code> object is not always accessible in the <code class="docutils literal notranslate"><span class="pre">from_json</span></code> functions. For instance, in the following code it <em>is</em> accessible:</p>
 <div class="literal-block-wrapper docutils container" id="simulation-h">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">simulation.h</span></code></span><a class="headerlink" href="#simulation-h" title="Permalink to this code">¶</a></div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;integrator.h&quot;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;integrator.h&quot;</span><span class="cp"></span>
 
-<span class="kt">void</span> <span class="nf">from_json</span><span class="p">(</span> <span class="k">const</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">mainJson</span><span class="p">,</span> <span class="n">Simulation</span><span class="o">&amp;</span> <span class="n">simulation</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span> <span class="o">=</span>
-      <span class="n">getValue</span><span class="o">&lt;</span> <span class="n">Integrator</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">mainJson</span><span class="p">,</span> <span class="s">&quot;integrator&quot;</span> <span class="p">);</span>  <span class="c1">// integrators::from_json called</span>
-<span class="p">}</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">from_json</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="o">&amp;</span><span class="w"> </span><span class="n">mainJson</span><span class="p">,</span><span class="w"> </span><span class="n">Simulation</span><span class="o">&amp;</span><span class="w"> </span><span class="n">simulation</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">getValue</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Integrator</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">mainJson</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;integrator&quot;</span><span class="w"> </span><span class="p">);</span><span class="w">  </span><span class="c1">// integrators::from_json called</span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <p>so the <code class="docutils literal notranslate"><span class="pre">getValue</span></code> function could potentially modify <code class="docutils literal notranslate"><span class="pre">mainJson</span></code> to add <code class="docutils literal notranslate"><span class="pre">integrator</span></code> as an accessed key, but here the <code class="docutils literal notranslate"><span class="pre">mainJson</span></code> object is not accessible:</p>
 <div class="literal-block-wrapper docutils container" id="integrator-h">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">integrator.h</span></code></span><a class="headerlink" href="#integrator-h" title="Permalink to this code">¶</a></div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">integrators</span>
-<span class="p">{</span>
-    <span class="kt">void</span> <span class="n">from_json</span><span class="p">(</span> <span class="k">const</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">jsonIntegrator</span><span class="p">,</span> <span class="n">Integrator</span><span class="o">&amp;</span> <span class="n">integrator</span> <span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">integrator</span><span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">getValue</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">jsonIntegrator</span><span class="p">,</span> <span class="s">&quot;type&quot;</span> <span class="p">);</span>
-        <span class="n">integrator</span><span class="p">.</span><span class="n">stepSize</span> <span class="o">=</span> <span class="n">getValue</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">jsonIntegrator</span><span class="p">,</span> <span class="s">&quot;stepSize&quot;</span> <span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">integrators</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">from_json</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="o">&amp;</span><span class="w"> </span><span class="n">jsonIntegrator</span><span class="p">,</span><span class="w"> </span><span class="n">Integrator</span><span class="o">&amp;</span><span class="w"> </span><span class="n">integrator</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">integrator</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getValue</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">jsonIntegrator</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;type&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">integrator</span><span class="p">.</span><span class="n">stepSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getValue</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">jsonIntegrator</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;stepSize&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <p>and thus is is not possible for the <code class="docutils literal notranslate"><span class="pre">getValue</span></code> to add the <code class="docutils literal notranslate"><span class="pre">integrator.type</span></code> and <code class="docutils literal notranslate"><span class="pre">integrator.stepSize</span></code> key paths to the <code class="docutils literal notranslate"><span class="pre">mainObject</span></code>’s <code class="docutils literal notranslate"><span class="pre">#accessedKeyPaths</span></code> special key.</p>
 <p>A possible walk-around this issue could consist in defining the <code class="docutils literal notranslate"><span class="pre">#accessedKeyPaths</span></code> for each <code class="xref py py-class docutils literal notranslate"><span class="pre">nlohmann::json</span></code> object, and not only for the <code class="docutils literal notranslate"><span class="pre">mainJson</span></code>. However, the updated sub-<code class="xref py py-class docutils literal notranslate"><span class="pre">nlohmann::json</span></code> objects would still have to be passed back to the <code class="docutils literal notranslate"><span class="pre">mainJson</span></code> somehow. Even if this was possible, the definition of the <code class="docutils literal notranslate"><span class="pre">from_json</span></code> function, with the first argument as a <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">nlohmann::json&amp;</span></code> makes this approach unfeasible, as the <code class="docutils literal notranslate"><span class="pre">getValue</span></code> function would not be capable of updating it (it will not be possible to update its <code class="docutils literal notranslate"><span class="pre">#accessedKeyPaths</span></code> because it is a constant object). Thus, a completely different approach had to be followed, making use of a global variable. This global variable is declared in <code class="xref py py-class docutils literal notranslate"><span class="pre">Tudat/JsonInterface/Support/valueAccess.h</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">extern</span> <span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span> <span class="n">KeyPath</span> <span class="o">&gt;</span> <span class="n">accessedKeyPaths</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">extern</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="w"> </span><span class="n">KeyPath</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">accessedKeyPaths</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This variable is automatically updated when calling the <code class="docutils literal notranslate"><span class="pre">getValue</span></code> function. In order to clear the contents of this variable, the function <code class="docutils literal notranslate"><span class="pre">clearAccessHistory</span></code> must be called. In the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> application, this is done after reading the input JSON file and just before starting to use the read <code class="xref py py-class docutils literal notranslate"><span class="pre">nlohmann::json</span></code> object to update the settings objects.</p>
@@ -317,11 +321,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -356,6 +359,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

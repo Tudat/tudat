@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -202,7 +206,7 @@
 <p>This example considers a shared pointer to a <a class="reference internal" href="#TestBody" title="TestBody"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestBody</span></code></a> class. This “TestBody” class is essentially a stripped-down version of the full <code class="docutils literal notranslate"><span class="pre">Body</span></code> class used in Tudat. For this example it is assumed that the code for this class is in your application folder. The code of this small TestBody class is given at the end of this page.</p>
 <p>The constructor of the TestBody class is:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TestBody</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">aState</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">aTime</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TestBody</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">aState</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">aTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -211,7 +215,7 @@
 <h3><span class="section-number">4.1.1. </span>Include Statements<a class="headerlink" href="#include-statements" title="Permalink to this headline">¶</a></h3>
 <p>For this example, the following include statement is required:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -221,20 +225,20 @@
 <h3><span class="section-number">4.1.2. </span>Defining the Type<a class="headerlink" href="#defining-the-type" title="Permalink to this headline">¶</a></h3>
 <p>The <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared_ptr</span></code></a> class is a template class that stores a smart pointer to a dynamically allocated object. Generally, it is of the following form:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">objectType</span> <span class="o">&gt;</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">objectType</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>where <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code> is used to indicate that it is a shared pointer, and <code class="docutils literal notranslate"><span class="pre">objectType</span></code> is the type of the object that it points to. The object type is placed in angular brackets, because it is a template parameter.</p>
 <p>The shared pointer to an object of the TestBody class can now be declared as:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TestBody</span> <span class="o">&gt;</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TestBody</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>The above type can be roughly considered as the ‘equivalent’ to the following raw pointer-type:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TestBody</span><span class="o">*</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TestBody</span><span class="o">*</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -243,7 +247,7 @@
 <h3><span class="section-number">4.1.3. </span>Typedef<a class="headerlink" href="#typedef" title="Permalink to this headline">¶</a></h3>
 <p>It can be convenient to create a typedef for the <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared_ptr</span></code></a> to a TestBody class as follows:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TestBody</span> <span class="o">&gt;</span> <span class="n">TestBodyPointer</span><span class="p">;</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TestBody</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">TestBodyPointer</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -253,7 +257,7 @@
 <h3><span class="section-number">4.1.4. </span>Creation<a class="headerlink" href="#creation" title="Permalink to this headline">¶</a></h3>
 <p>In our main function, we now want to create a shared pointer to an object of the TestBody class, we will name the pointer <code class="docutils literal notranslate"><span class="pre">exampleTestBodyPointer</span></code>. We can use the following code to create the <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared_ptr</span></code></a>:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TestBody</span> <span class="o">&gt;</span> <span class="n">exampleTestBodyPointer</span><span class="p">(</span> <span class="k">new</span> <span class="n">TestBody</span><span class="p">(</span> <span class="n">initialState</span> <span class="p">)</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TestBody</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">exampleTestBodyPointer</span><span class="p">(</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TestBody</span><span class="p">(</span><span class="w"> </span><span class="n">initialState</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -269,13 +273,13 @@
 </div></blockquote>
 <p>Note that the default value for aTime (0.0) is used. Equivalently, we can use the above typedef instead:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TestBodyPointer</span> <span class="nf">exampleTestBodyPointer</span><span class="p">(</span> <span class="k">new</span> <span class="n">TestBody</span><span class="p">(</span> <span class="n">initialState</span> <span class="p">)</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TestBodyPointer</span><span class="w"> </span><span class="nf">exampleTestBodyPointer</span><span class="p">(</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TestBody</span><span class="p">(</span><span class="w"> </span><span class="n">initialState</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>The above line of code can be roughly considered as the <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared_ptr</span></code></a> ‘equivalent’ to the following raw pointer code:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TestBody</span><span class="o">*</span> <span class="n">exampleTestBodyPointer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestBody</span><span class="p">(</span> <span class="n">initialState</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TestBody</span><span class="o">*</span><span class="w"> </span><span class="n">exampleTestBodyPointer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TestBody</span><span class="p">(</span><span class="w"> </span><span class="n">initialState</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -289,7 +293,7 @@
 <h3><span class="section-number">4.2.1. </span>Include Statements<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>For this example the following include statements are required:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -298,7 +302,7 @@
 <h3><span class="section-number">4.2.2. </span>Creation<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>In our main function, we again want to create a shared pointer to an object of the <a class="reference internal" href="#TestBody" title="TestBody"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestBody</span></code></a> class, which we will name <code class="docutils literal notranslate"><span class="pre">newExampleTestBodyPointer</span></code>. Now we will create it using <a class="reference internal" href="utility.html#make_shared" title="make_shared"><code class="xref py py-class docutils literal notranslate"><span class="pre">make_shared</span></code></a>:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TestBody</span> <span class="o">&gt;</span> <span class="n">newExampleTestBodyPointer</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TestBody</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">initialState</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TestBody</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">newExampleTestBodyPointer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TestBody</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">initialState</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -313,13 +317,13 @@
 </div></blockquote>
 <p>The above line of code can be roughly considered as the <a class="reference internal" href="utility.html#shared_ptr" title="shared_ptr"><code class="xref py py-class docutils literal notranslate"><span class="pre">shared_ptr</span></code></a> and <a class="reference internal" href="utility.html#make_shared" title="make_shared"><code class="xref py py-class docutils literal notranslate"><span class="pre">make_shared</span></code></a> ‘equivalent’ to the following raw pointer code:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TestBody</span><span class="o">*</span> <span class="n">asterix</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestBody</span><span class="p">(</span> <span class="n">asterixInitialState</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TestBody</span><span class="o">*</span><span class="w"> </span><span class="n">asterix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TestBody</span><span class="p">(</span><span class="w"> </span><span class="n">asterixInitialState</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>Note that the <a class="reference internal" href="utility.html#make_shared" title="make_shared"><code class="xref py py-class docutils literal notranslate"><span class="pre">make_shared</span></code></a> constructor cannot take more that 10 arguments. If you want to construct a shared pointer to an object that requires more than 10 arguments, use the following code instead:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">objectType</span> <span class="o">&gt;</span> <span class="n">newExampleTestBodyPointer</span><span class="p">(</span> <span class="k">new</span> <span class="n">objectType</span><span class="p">(</span> <span class="n">input1</span><span class="p">,</span> <span class="n">input2</span><span class="p">,</span> <span class="p">...,</span> <span class="n">inputN</span> <span class="p">)</span> <span class="p">);</span> <span class="c1">// Where N &gt; 10.</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">objectType</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">newExampleTestBodyPointer</span><span class="p">(</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">objectType</span><span class="p">(</span><span class="w"> </span><span class="n">input1</span><span class="p">,</span><span class="w"> </span><span class="n">input2</span><span class="p">,</span><span class="w"> </span><span class="p">...,</span><span class="w"> </span><span class="n">inputN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c1">// Where N &gt; 10.</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -333,17 +337,17 @@
 <p>The <a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal notranslate"><span class="pre">function</span></code></a> function is used in Tudat instead of a normal C++ function pointer because it is an easy way to pass a function as an input to another object or function. Specifically, it allows the passing of free functions and class member functions with a single interface. The <code class="xref py py-class docutils literal notranslate"><span class="pre">functio</span></code> type defines both its input types (and order) and its output type. Any function that fits this profile is accepted when it is passed.</p>
 <p>For this example, we will show the use of <a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal notranslate"><span class="pre">function</span></code></a> with a free function. The example with a member function is shown in the <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal notranslate"><span class="pre">bind</span></code></a> example below. We use the Himmelblau function as an example:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">)</span> <span class="o">=</span> <span class="p">(</span> <span class="n">x</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">11</span> <span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">7</span> <span class="p">)</span><span class="o">^</span><span class="mi">2</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">11</span><span class="w"> </span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>For which we have the following C++ free function:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="nf">himmelblau</span><span class="p">(</span> <span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">double</span> <span class="n">y</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="p">(</span> <span class="p">(</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">11.0</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">11.0</span> <span class="p">)</span> <span class="o">+</span>
-              <span class="p">(</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">7.0</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">7.0</span> <span class="p">)</span> <span class="p">);</span>
-<span class="p">}</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="nf">himmelblau</span><span class="p">(</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">11.0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">11.0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">              </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">7.0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">7.0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -351,7 +355,7 @@
 <h3><span class="section-number">5.1.1. </span>Include Statements<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>For this example, the following include statement is required:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;functional&gt;</span><span class="cp"></span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;functional&gt;</span><span class="cp"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -361,13 +365,13 @@
 <h3><span class="section-number">5.1.2. </span>Defining the Type<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>The <a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal notranslate"><span class="pre">function</span></code></a> type that corresponds to the Himmelblau function defined above is:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span><span class="p">;</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>where the parameters between the angular brackets are the template parameters. These parameters comply to the form:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span> <span class="n">output</span><span class="p">(</span> <span class="n">input</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="p">)</span> <span class="o">&gt;</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="w"> </span><span class="n">output</span><span class="p">(</span><span class="w"> </span><span class="n">input</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -377,7 +381,7 @@
 <h3><span class="section-number">5.1.3. </span>Creation<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>In our main function, we want to create a function pointer that complies to this form, which we name <code class="docutils literal notranslate"><span class="pre">exampleFunction</span></code>. We can use the following code to create the function pointer:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">exampleFunction</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">himmelblau</span><span class="p">;</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">exampleFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">himmelblau</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -394,8 +398,8 @@
 <h3><span class="section-number">5.1.4. </span>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
 <p>Later-on in the code the input argument to the function object <code class="docutils literal notranslate"><span class="pre">exampleFunction</span></code> can be provided using:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">initialPoint</span> <span class="o">=</span> <span class="n">exampleFunction</span><span class="p">(</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span> <span class="p">);</span> <span class="c1">// Computes f( 0.0, 0.0 )</span>
-<span class="kt">double</span> <span class="n">randomPoint</span> <span class="o">=</span> <span class="n">exampleFunction</span><span class="p">(</span> <span class="o">-</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">3.0</span> <span class="p">);</span> <span class="c1">// Computes f( -5.0, 3.0 )</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="n">initialPoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exampleFunction</span><span class="p">(</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c1">// Computes f( 0.0, 0.0 )</span>
+<span class="kt">double</span><span class="w"> </span><span class="n">randomPoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exampleFunction</span><span class="p">(</span><span class="w"> </span><span class="mf">-5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c1">// Computes f( -5.0, 3.0 )</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -416,7 +420,7 @@
 <span id="exampleutilitylambdaexpression"></span><h3><span class="section-number">5.1.6. </span>Lambda Expressions<a class="headerlink" href="#lambda-expressions" title="Permalink to this headline">¶</a></h3>
 <p>There are cases in which you will want to create a function that always returns the same value, without any reference to a specific implementation. This is achieved by using a so-called lambda expression. The structure of this type of expression is as follows:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="p">[</span> <span class="n">captures</span> <span class="p">](</span> <span class="n">params</span> <span class="p">){</span> <span class="n">body</span> <span class="p">}</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="w"> </span><span class="n">captures</span><span class="w"> </span><span class="p">](</span><span class="w"> </span><span class="n">params</span><span class="w"> </span><span class="p">){</span><span class="w"> </span><span class="n">body</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <ul>
@@ -435,27 +439,27 @@
 </div></blockquote>
 <p>Applying the above definition to an example, a double-returning function that requires no input can be created as follows:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">testFunction</span> <span class="o">=</span> <span class="p">[</span> <span class="o">=</span> <span class="p">](</span> <span class="p">){</span> <span class="k">return</span> <span class="mi">3</span><span class="p">;</span> <span class="p">};</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">testFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">](</span><span class="w"> </span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>Now, if at any point in the code, the following is called:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">testValue</span> <span class="o">=</span> <span class="n">testFunction</span><span class="p">(</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="n">testValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">testFunction</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>will result in testValue holding the value 3.0. The same trick can be used for any other type than a double. For instance:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">testVectorFunction</span> <span class="o">=</span> <span class="p">[</span> <span class="o">=</span> <span class="p">](</span> <span class="p">){</span> <span class="k">return</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitX</span><span class="p">(</span> <span class="p">);</span> <span class="p">};</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">testVectorFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">](</span><span class="w"> </span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitX</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>will create a function that always returns the <span class="math notranslate nohighlight">\([1,0,0]^\mathrm{T}\)</span> vector. Also, this interface can be used for functions requiring inputs, so that:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">testFunction</span> <span class="o">=</span> <span class="p">[</span> <span class="o">=</span> <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="mi">3</span><span class="p">;</span> <span class="p">};</span>
-<span class="kt">double</span> <span class="n">inputValue</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">;</span>
-<span class="kt">double</span> <span class="n">testValue</span> <span class="o">=</span> <span class="n">testFunction</span><span class="p">(</span> <span class="n">inputValue</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">testFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">](</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">inputValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">20.0</span><span class="p">;</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">testValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">testFunction</span><span class="p">(</span><span class="w"> </span><span class="n">inputValue</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -487,9 +491,9 @@
 <h3><span class="section-number">5.2.1. </span>Include Statements<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>For this example, the following include statements are required:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;functional&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;Eigen/Core&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;Tudat/Mathematics/NumericalIntegrators/rungeKutta4Integrator.h&gt;</span><span class="cp"></span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;functional&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Eigen/Core&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Tudat/Mathematics/NumericalIntegrators/rungeKutta4Integrator.h&gt;</span><span class="cp"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -499,63 +503,63 @@
 <h3><span class="section-number">5.2.2. </span>Calling the Class from Outside<a class="headerlink" href="#calling-the-class-from-outside" title="Permalink to this headline">¶</a></h3>
 <p>First, an example is given when calling a class method from outside the class. For this we will define the <code class="docutils literal notranslate"><span class="pre">Skydiver</span></code> class, with a constructor and a function that computes the state derivative for its equations of motion:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Skydiver</span>
-<span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Skydiver</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
 
-    <span class="c1">//! Constructor of the Skydiver class.</span>
-    <span class="n">Skydiver</span><span class="p">(</span> <span class="p">){</span> <span class="p">}</span>
+<span class="w">    </span><span class="c1">//! Constructor of the Skydiver class.</span>
+<span class="w">    </span><span class="n">Skydiver</span><span class="p">(</span><span class="w"> </span><span class="p">){</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
-    <span class="c1">//! Compute the state derivative for given time and state.</span>
-    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">computeStateDerivative</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">time</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">&amp;</span> <span class="n">state</span> <span class="p">);</span>
+<span class="w">    </span><span class="c1">//! Compute the state derivative for given time and state.</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="w"> </span><span class="n">computeStateDerivative</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">time</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-<span class="k">protected</span><span class="o">:</span>
+<span class="k">protected</span><span class="o">:</span><span class="w"></span>
 
-<span class="k">private</span><span class="o">:</span>
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
 
-<span class="p">};</span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>The function to compute the state derivative is:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">Skydiver</span><span class="o">::</span><span class="n">computeStateDerivative</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">time</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">&amp;</span> <span class="n">state</span> <span class="p">)</span>
-<span class="p">{</span>
-   <span class="c1">// Note that the time is not used in this function, but it is required as input for the integrator.</span>
-   <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">stateDerivative</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">::</span><span class="n">Zero</span><span class="p">(</span> <span class="p">);</span> <span class="c1">// Declare and initialize to zero.</span>
-   <span class="n">stateDerivative</span><span class="p">(</span> <span class="mi">0</span> <span class="p">)</span> <span class="o">=</span> <span class="n">state</span><span class="p">(</span> <span class="mi">1</span> <span class="p">);</span>  <span class="c1">// Velocity</span>
-   <span class="n">stateDerivative</span><span class="p">(</span> <span class="mi">1</span> <span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mf">9.81</span><span class="p">;</span>       <span class="c1">// Acceleration</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="w"> </span><span class="nf">Skydiver::computeStateDerivative</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">time</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// Note that the time is not used in this function, but it is required as input for the integrator.</span>
+<span class="w">   </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="w"> </span><span class="n">stateDerivative</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">::</span><span class="n">Zero</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c1">// Declare and initialize to zero.</span>
+<span class="w">   </span><span class="n">stateDerivative</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">state</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">);</span><span class="w">  </span><span class="c1">// Velocity</span>
+<span class="w">   </span><span class="n">stateDerivative</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-9.81</span><span class="p">;</span><span class="w">       </span><span class="c1">// Acceleration</span>
 
-   <span class="k">return</span> <span class="n">stateDerivative</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">stateDerivative</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>The Skydiver class and function to compute the derivative can be placed above the main function (or alternatively in a separate header and source file). Inside the main function, first declare the constants that were given above. Declare these yourself:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">initialTime</span>
-<span class="n">initialState</span> <span class="c1">// (which is of the type Eigen::Vector2d)</span>
-<span class="n">timeStep</span>
-<span class="n">endTime</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">initialTime</span><span class="w"></span>
+<span class="n">initialState</span><span class="w"> </span><span class="c1">// (which is of the type Eigen::Vector2d)</span>
+<span class="n">timeStep</span><span class="w"></span>
+<span class="n">endTime</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>Then, our Skydiver testDiver is constructed:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Skydiver</span> <span class="n">testDiver</span><span class="p">;</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Skydiver</span><span class="w"> </span><span class="n">testDiver</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>Next, an intermediate step is taken, before defining the integrator itself. The constructor of the RK4 integrator takes a state-derivative function, an initial time and an initial state. The state-derivative function is a <a class="reference internal" href="utility.html#function" title="function"><code class="xref py py-class docutils literal notranslate"><span class="pre">function</span></code></a> type that corresponds to:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="p">(</span> <span class="k">const</span> <span class="kt">double</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="p">)</span> <span class="o">&gt;</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>The state derivative is the class method <code class="docutils literal notranslate"><span class="pre">computeStateDerivative</span></code> of the Skydiver class, because this is a class method, <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal notranslate"><span class="pre">bind</span></code></a> is used to create a function pointer to the state-derivative function:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="p">(</span> <span class="k">const</span> <span class="kt">double</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">stateDerivativeFunction</span> <span class="o">=</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">Skydiver</span><span class="o">::</span><span class="n">computeStateDerivative</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">testDiver</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">stateDerivativeFunction</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">Skydiver</span><span class="o">::</span><span class="n">computeStateDerivative</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">testDiver</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -572,8 +576,8 @@
 </div></blockquote>
 <p>This <code class="docutils literal notranslate"><span class="pre">std::function</span></code> can then be passed to the constructor of the integrator, the integrator is created as follows:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="o">::</span><span class="n">mathematics</span><span class="o">::</span><span class="n">numerical_integrators</span><span class="o">::</span><span class="n">RungeKutta4IntegratorXd</span> <span class="n">integrator</span><span class="p">(</span>
-    <span class="n">stateDerivativeFunction</span><span class="p">,</span> <span class="n">initialTime</span><span class="p">,</span> <span class="n">initialState</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="o">::</span><span class="n">mathematics</span><span class="o">::</span><span class="n">numerical_integrators</span><span class="o">::</span><span class="n">RungeKutta4IntegratorXd</span><span class="w"> </span><span class="nf">integrator</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">stateDerivativeFunction</span><span class="p">,</span><span class="w"> </span><span class="n">initialTime</span><span class="p">,</span><span class="w"> </span><span class="n">initialState</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -587,15 +591,15 @@
 </div></blockquote>
 <p>Note that the previous two code fragments can also be coded as a single statement, which is more complex:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="o">::</span><span class="n">mathematics</span><span class="o">::</span><span class="n">numerical_integrators</span><span class="o">::</span><span class="n">RungeKutta4IntegratorXd</span> <span class="n">integrator</span><span class="p">(</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">Skydiver</span><span class="o">::</span><span class="n">computeStateDerivative</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">testDiver</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span> <span class="p">),</span>
-    <span class="n">initialTime</span><span class="p">,</span> <span class="n">initialState</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="o">::</span><span class="n">mathematics</span><span class="o">::</span><span class="n">numerical_integrators</span><span class="o">::</span><span class="n">RungeKutta4IntegratorXd</span><span class="w"> </span><span class="nf">integrator</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">Skydiver</span><span class="o">::</span><span class="n">computeStateDerivative</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">testDiver</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="w"> </span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="n">initialTime</span><span class="p">,</span><span class="w"> </span><span class="n">initialState</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>The end state can now be computed using the class method integrateTo( ) of the integrator:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">endState</span> <span class="o">=</span> <span class="n">integrator</span><span class="p">.</span><span class="n">integrateTo</span><span class="p">(</span> <span class="n">endTime</span><span class="p">,</span> <span class="n">timeStep</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="w"> </span><span class="n">endState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integrator</span><span class="p">.</span><span class="n">integrateTo</span><span class="p">(</span><span class="w"> </span><span class="n">endTime</span><span class="p">,</span><span class="w"> </span><span class="n">timeStep</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -604,40 +608,40 @@
 <h3><span class="section-number">5.2.3. </span>Calling the Class from Inside<a class="headerlink" href="#calling-the-class-from-inside" title="Permalink to this headline">¶</a></h3>
 <p>Second, an example is given when calling a class method from inside the class. For this we will modify the Skydiver class by adding a second class method:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Skydiver</span>
-<span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Skydiver</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
 
-    <span class="c1">//! Constructor of the Skydiver class.</span>
-    <span class="n">Skydiver</span><span class="p">(</span> <span class="p">){</span> <span class="p">}</span>
+<span class="w">    </span><span class="c1">//! Constructor of the Skydiver class.</span>
+<span class="w">    </span><span class="n">Skydiver</span><span class="p">(</span><span class="w"> </span><span class="p">){</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
-    <span class="c1">//! Compute the state derivative for given time and state.</span>
-    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">computeStateDerivative</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">time</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">&amp;</span> <span class="n">state</span> <span class="p">);</span>
+<span class="w">    </span><span class="c1">//! Compute the state derivative for given time and state.</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="w"> </span><span class="n">computeStateDerivative</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">time</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="c1">//! Compute the final state for given initial conditions, final time and time step-size.</span>
-    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">computeFinalState</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">initialTime</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">&amp;</span> <span class="n">initialState</span><span class="p">,</span>
-                                       <span class="k">const</span> <span class="kt">double</span> <span class="n">endTime</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">timeStep</span> <span class="p">);</span>
+<span class="w">    </span><span class="c1">//! Compute the final state for given initial conditions, final time and time step-size.</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="w"> </span><span class="nf">computeFinalState</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">initialTime</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">initialState</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                       </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">endTime</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">timeStep</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-<span class="k">protected</span><span class="o">:</span>
+<span class="k">protected</span><span class="o">:</span><span class="w"></span>
 
-<span class="k">private</span><span class="o">:</span>
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
 
-<span class="p">};</span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>The function to compute the state derivative is the same as above, and the function to compute the final state is:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">Skydiver</span><span class="o">::</span><span class="n">computeFinalState</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">initialTime</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">&amp;</span> <span class="n">initialState</span><span class="p">,</span>
-                                         <span class="k">const</span> <span class="kt">double</span> <span class="n">endTime</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">timeStep</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">tudat</span><span class="o">::</span><span class="n">mathematics</span><span class="o">::</span><span class="n">numerical_integrators</span><span class="o">::</span><span class="n">RungeKutta4IntegratorXd</span> <span class="n">integrator</span><span class="p">(</span>
-                <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">Skydiver</span><span class="o">::</span><span class="n">computeStateDerivative</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span>
-                <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span> <span class="p">),</span>
-                <span class="n">initialTime</span><span class="p">,</span> <span class="n">initialState</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="w"> </span><span class="nf">Skydiver::computeFinalState</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">initialTime</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">initialState</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                         </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">endTime</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">timeStep</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">tudat</span><span class="o">::</span><span class="n">mathematics</span><span class="o">::</span><span class="n">numerical_integrators</span><span class="o">::</span><span class="n">RungeKutta4IntegratorXd</span><span class="w"> </span><span class="n">integrator</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">Skydiver</span><span class="o">::</span><span class="n">computeStateDerivative</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="w"> </span><span class="p">),</span><span class="w"></span>
+<span class="w">                </span><span class="n">initialTime</span><span class="p">,</span><span class="w"> </span><span class="n">initialState</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="k">return</span> <span class="n">integrator</span><span class="p">.</span><span class="n">integrateTo</span><span class="p">(</span> <span class="n">endTime</span><span class="p">,</span> <span class="n">timeStep</span> <span class="p">);</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">integrator</span><span class="p">.</span><span class="n">integrateTo</span><span class="p">(</span><span class="w"> </span><span class="n">endTime</span><span class="p">,</span><span class="w"> </span><span class="n">timeStep</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -645,7 +649,7 @@
 <p>Focus on the <code class="docutils literal notranslate"><span class="pre">std::bind</span></code> call. In the previous example, the object that the method belonged to was <code class="docutils literal notranslate"><span class="pre">testDiver</span></code>. Now, the class method is called from within the class and the object that the method belongs to is this. Did you spot it? Great! That is the difference between calling from outside or inside a class.</p>
 <p>As in the previous example, declare the constants that were given in the main function. In the same manner as before, also the <code class="docutils literal notranslate"><span class="pre">testDiver</span></code> is declared. Now the end state can be computed using:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span> <span class="n">endState</span> <span class="o">=</span> <span class="n">testDiver</span><span class="p">.</span><span class="n">computeFinalState</span><span class="p">(</span> <span class="n">initialTime</span><span class="p">,</span> <span class="n">initialState</span><span class="p">,</span> <span class="n">endTime</span><span class="p">,</span> <span class="n">timeStep</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector2d</span><span class="w"> </span><span class="n">endState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">testDiver</span><span class="p">.</span><span class="n">computeFinalState</span><span class="p">(</span><span class="w"> </span><span class="n">initialTime</span><span class="p">,</span><span class="w"> </span><span class="n">initialState</span><span class="p">,</span><span class="w"> </span><span class="n">endTime</span><span class="p">,</span><span class="w"> </span><span class="n">timeStep</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -661,8 +665,8 @@
 </div>
 <p>Note that the following explanation about function calls in C++ is a simplification of reality, and for a rigorous explanation refer to your local computer scientist. When a new instance of a class is created, this does not mean that all function definitions etc. are copied. There is only one copy of a function in memory, regardless of the amount of class instances. When a class method is called, the function is called with a hidden pointer to the class instance; this way the method knows about the class variables. When a class method is called via a function pointer, then the pointer to the class instance needs to be passed explicitly by the called. This is where <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal notranslate"><span class="pre">bind</span></code></a> comes into the picture. The <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal notranslate"><span class="pre">bind</span></code></a> function wraps a function into another object, and stores the passed arguments (which in the examples are respectively <code class="docutils literal notranslate"><span class="pre">testDiver</span></code> and this). When the function wrapper is eventually called, the function wrapper will call the wrapped function with both the arguments passed at its construction, as those passed to the call. The arguments passed to the function wrapper call are indicated with the <code class="docutils literal notranslate"><span class="pre">std::placeholders::_1</span></code>, respectively <code class="docutils literal notranslate"><span class="pre">std::placeholders::_2</span></code> in the <a class="reference internal" href="utility.html#bind" title="bind"><code class="xref py py-class docutils literal notranslate"><span class="pre">bind</span></code></a> call.</p>
 <dl class="py class">
-<dt id="TestBody">
-<em class="property">class </em><code class="sig-name descname">TestBody</code><a class="headerlink" href="#TestBody" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="TestBody">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TestBody</span></span><a class="headerlink" href="#TestBody" title="Permalink to this definition">¶</a></dt>
 <dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//! The test body class.</span>
 <span class="cm">/*!</span>
 <span class="cm"> * This class serves as an example of how a data repository can be constructed that stores state</span>
@@ -670,47 +674,47 @@
 <span class="cm"> * state derivative model, and the composite state derivative model. It should be noted that this</span>
 <span class="cm"> * class should NOT be used &quot;as is&quot;, without consideration for the application at hand. Classes</span>
 <span class="cm"> * such as this are application-specific, hence unavailable through the Tudat libraries.</span>
-<span class="cm"> */</span>
-<span class="k">class</span> <span class="nc">TestBody</span>
-<span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
+<span class="cm"> */</span><span class="w"></span>
+<span class="k">class</span> <span class="nc">TestBody</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
 
-    <span class="c1">// Constructor that takes an input state and time.</span>
-    <span class="c1">// The default value of the input time is 0.0.</span>
-    <span class="n">TestBody</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">aState</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">aTime</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="p">)</span>
-        <span class="o">:</span> <span class="n">currentState</span><span class="p">(</span> <span class="n">aState</span> <span class="p">),</span>
-          <span class="n">currentPosition</span><span class="p">(</span> <span class="n">aState</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span> <span class="p">)</span> <span class="p">),</span>
-          <span class="n">currentTime</span><span class="p">(</span> <span class="n">aTime</span> <span class="p">)</span>
-    <span class="p">{</span> <span class="p">}</span>
+<span class="w">    </span><span class="c1">// Constructor that takes an input state and time.</span>
+<span class="w">    </span><span class="c1">// The default value of the input time is 0.0.</span>
+<span class="w">    </span><span class="n">TestBody</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">aState</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">aTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">currentState</span><span class="p">(</span><span class="w"> </span><span class="n">aState</span><span class="w"> </span><span class="p">),</span><span class="w"></span>
+<span class="w">          </span><span class="n">currentPosition</span><span class="p">(</span><span class="w"> </span><span class="n">aState</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">),</span><span class="w"></span>
+<span class="w">          </span><span class="n">currentTime</span><span class="p">(</span><span class="w"> </span><span class="n">aTime</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
-    <span class="c1">// Public member function: set the current time and state.</span>
-    <span class="c1">// This sets the current time, state and position, that are stored internally.</span>
-    <span class="kt">void</span> <span class="n">setCurrentTimeAndState</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">aTime</span><span class="p">,</span>
-                                 <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">aState</span> <span class="p">)</span>
-   <span class="p">{</span>
-        <span class="n">currentTime</span> <span class="o">=</span> <span class="n">aTime</span><span class="p">;</span>
-        <span class="n">currentState</span> <span class="o">=</span> <span class="n">aState</span><span class="p">;</span>
-        <span class="n">currentPosition</span> <span class="o">=</span> <span class="n">aState</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span> <span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="c1">// Public member function: set the current time and state.</span>
+<span class="w">    </span><span class="c1">// This sets the current time, state and position, that are stored internally.</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">setCurrentTimeAndState</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">aTime</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                 </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">aState</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">currentTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTime</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">currentState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aState</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">currentPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aState</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="c1">// Public member function: get the current position.</span>
-    <span class="c1">// This returns the internally stored current position vector.</span>
-    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">getCurrentPosition</span><span class="p">(</span> <span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">currentPosition</span><span class="p">;</span> <span class="p">}</span>
+<span class="w">    </span><span class="c1">// Public member function: get the current position.</span>
+<span class="w">    </span><span class="c1">// This returns the internally stored current position vector.</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="n">getCurrentPosition</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">currentPosition</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
-<span class="k">protected</span><span class="o">:</span>
+<span class="k">protected</span><span class="o">:</span><span class="w"></span>
 
-<span class="k">private</span><span class="o">:</span>
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
 
-    <span class="c1">// Private member: the current state.</span>
-    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">currentState</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Private member: the current state.</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="w"> </span><span class="n">currentState</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1">// Private member: the current position.</span>
-    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">currentPosition</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Private member: the current position.</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="n">currentPosition</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1">// Private member: the current time.</span>
-    <span class="kt">double</span> <span class="n">currentTime</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Private member: the current time.</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">currentTime</span><span class="p">;</span><span class="w"></span>
 
-<span class="p">};</span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 </dd></dl>
@@ -771,11 +775,11 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   
 
@@ -810,6 +814,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

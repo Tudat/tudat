@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -227,14 +231,14 @@
 <span id="observationsettings"></span><h2><span class="section-number">4.2.2. </span>Observation Settings<a class="headerlink" href="#observation-settings" title="Permalink to this headline">¶</a></h2>
 <p>The settings for most obsevation model types are provided to an object of the <a class="reference internal" href="#ObservationSettings" title="ObservationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObservationSettings</span></code></a> class, which takes the type of observable, the <a class="reference internal" href="#lighttimecorrections"><span class="std std-ref">Light-time Corrections</span></a> and observation biases <a class="reference internal" href="#observationbiases"><span class="std std-ref">Observation Biases</span></a>. For some observation models, however, specific additional information is required, and a dedicated <a class="reference internal" href="#ObservationSettings" title="ObservationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObservationSettings</span></code></a> derived class is created. Below the input to these classes is discussed in detail.</p>
 <dl class="py class">
-<dt id="ObservationSettings">
-<em class="property">class </em><code class="sig-name descname">ObservationSettings</code><a class="headerlink" href="#ObservationSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ObservationSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ObservationSettings</span></span><a class="headerlink" href="#ObservationSettings" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl>
-<dt>An <code class="docutils literal notranslate"><span class="pre">ObservationSettings</span></code> is created as follows:</dt><dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">observableType</span><span class="p">,</span> <span class="n">lightTimeCorrectionsList</span><span class="p">,</span> <span class="n">biasSettings</span> <span class="p">);</span>
+<dt>An <code class="docutils literal notranslate"><span class="pre">ObservationSettings</span></code> is created as follows:</dt><dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ObservationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">observationSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ObservationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">observableType</span><span class="p">,</span><span class="w"> </span><span class="n">lightTimeCorrectionsList</span><span class="p">,</span><span class="w"> </span><span class="n">biasSettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -269,31 +273,31 @@
 </dl>
 <p>Note that the light-time correction and bias settings are empty by default, so that:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">observableType</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ObservationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">observationSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ObservationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">observableType</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>and:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">observableType</span><span class="p">,</span> <span class="n">lightTimeCorrectionsList</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ObservationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">observationSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ObservationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">observableType</span><span class="p">,</span><span class="w"> </span><span class="n">lightTimeCorrectionsList</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>may be used as well to create an observation model without light-time corrections or biases (in the case of the former) and no biases (in the case of the latter).</p>
 <p>Additionally, a second constructor is provided that takes a single light-time correction setting, instead of a list, as its second argument. So, you may substitute the input of type <code class="docutils literal notranslate"><span class="pre">std::vector&lt;</span> <span class="pre">std::shared_ptr&lt;</span> <span class="pre">LightTimeCorrectionSettings</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code> by an input of type <code class="docutils literal notranslate"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">LightTimeCorrectionSettings</span> <span class="pre">&gt;</span></code>, in which case you can set only a single light-time correction.</p>
 <dl class="py class">
-<dt id="OneWayDifferencedRangeRateObservationSettings">
-<em class="property">class </em><code class="sig-name descname">OneWayDifferencedRangeRateObservationSettings</code><a class="headerlink" href="#OneWayDifferencedRangeRateObservationSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="OneWayDifferencedRangeRateObservationSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OneWayDifferencedRangeRateObservationSettings</span></span><a class="headerlink" href="#OneWayDifferencedRangeRateObservationSettings" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>The <code class="docutils literal notranslate"><span class="pre">OneWayDifferencedRangeRateObservationSettings</span></code> class is used to define settings for one-way differenced range observables (typically termed one-way Doppler in the deep-space tracking community). An object of this type is created as follows, similar to an <code class="docutils literal notranslate"><span class="pre">ObservationSettings</span></code> object:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneWayDifferencedRangeRateObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OneWayDifferencedRangeRateObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">integrationTimeFunction</span><span class="p">,</span> <span class="n">lightTimeCorrectionsList</span><span class="p">,</span> <span class="n">biasSettings</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">OneWayDifferencedRangeRateObservationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">observationSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">OneWayDifferencedRangeRateObservationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">integrationTimeFunction</span><span class="p">,</span><span class="w"> </span><span class="n">lightTimeCorrectionsList</span><span class="p">,</span><span class="w"> </span><span class="n">biasSettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -304,8 +308,8 @@
 <blockquote>
 <div><p><code class="docutils literal notranslate"><span class="pre">std::function&lt;</span> <span class="pre">double(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span></code> that returns the integration time of the observable as a function of observation time (function input). In many cases, the integration time will be constant, and you may use a lambda expression, so for a constant 60 s integration time:</p>
 </div></blockquote>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">integrationTimeFunction</span> <span class="o">=</span>
-    <span class="p">[</span> <span class="o">=</span> <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="mf">60.0</span><span class="p">;</span> <span class="p">};</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">integrationTimeFunction</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">](</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mf">60.0</span><span class="p">;</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
@@ -313,15 +317,15 @@
 </div></blockquote>
 <p>As is the case for the <a class="reference internal" href="#ObservationSettings" title="ObservationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObservationSettings</span></code></a> class, the second and third constructor arguments are optional, and the second argument may be either a <code class="docutils literal notranslate"><span class="pre">std::vector</span></code> of <code class="docutils literal notranslate"><span class="pre">std::shared_ptr&lt;</span> <span class="pre">LightTimeCorrectionSettings</span> <span class="pre">&gt;</span></code>, or a single such object.</p>
 <dl class="py class">
-<dt id="NWayRangeObservationSettings">
-<em class="property">class </em><code class="sig-name descname">NWayRangeObservationSettings</code><a class="headerlink" href="#NWayRangeObservationSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="NWayRangeObservationSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NWayRangeObservationSettings</span></span><a class="headerlink" href="#NWayRangeObservationSettings" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>The <code class="docutils literal notranslate"><span class="pre">NWayRangeObservationSettings</span></code> class is used to define settings for n-way range observables. An object of this type is created as follows:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">NWayRangeObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">NWayRangeObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">oneWayRangeObsevationSettings</span><span class="p">,</span> <span class="n">retransmissionTimesFunction</span><span class="p">,</span> <span class="n">biasSettings</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">NWayRangeObservationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">observationSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">NWayRangeObservationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">oneWayRangeObsevationSettings</span><span class="p">,</span><span class="w"> </span><span class="n">retransmissionTimesFunction</span><span class="p">,</span><span class="w"> </span><span class="n">biasSettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -341,15 +345,15 @@
 </ul>
 </div></blockquote>
 <dl class="py class">
-<dt id="OneWayDopperObservationSettings">
-<em class="property">class </em><code class="sig-name descname">OneWayDopperObservationSettings</code><a class="headerlink" href="#OneWayDopperObservationSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="OneWayDopperObservationSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OneWayDopperObservationSettings</span></span><a class="headerlink" href="#OneWayDopperObservationSettings" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>The <code class="docutils literal notranslate"><span class="pre">OneWayDopperObservationSettings</span></code> class is used to define settings for one-way Doppler observables. Here, the term Doppler is used in the instantaneous sense, and is distinct from what is typically termed Doppler in the deep-space tracking community, which is defined by the <a class="reference internal" href="#OneWayDifferencedRangeRateObservationSettings" title="OneWayDifferencedRangeRateObservationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">OneWayDifferencedRangeRateObservationSettings</span></code></a> class. An object of the <a class="reference internal" href="#OneWayDopperObservationSettings" title="OneWayDopperObservationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">OneWayDopperObservationSettings</span></code></a> type is created as follows:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneWayDopperObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OneWayDopperObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">lightTimeCorrectionsList</span><span class="p">,</span> <span class="n">transmitterProperTimeRateSettings</span><span class="p">,</span> <span class="n">receiverProperTimeRateSettings</span><span class="p">,</span> <span class="n">biasSettings</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">OneWayDopperObservationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">observationSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">OneWayDopperObservationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">lightTimeCorrectionsList</span><span class="p">,</span><span class="w"> </span><span class="n">transmitterProperTimeRateSettings</span><span class="p">,</span><span class="w"> </span><span class="n">receiverProperTimeRateSettings</span><span class="p">,</span><span class="w"> </span><span class="n">biasSettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -379,15 +383,15 @@
 </ul>
 </div></blockquote>
 <dl class="py class">
-<dt id="TwoWayDopperObservationSettings">
-<em class="property">class </em><code class="sig-name descname">TwoWayDopperObservationSettings</code><a class="headerlink" href="#TwoWayDopperObservationSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="TwoWayDopperObservationSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TwoWayDopperObservationSettings</span></span><a class="headerlink" href="#TwoWayDopperObservationSettings" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>The <code class="docutils literal notranslate"><span class="pre">TwoWayDopperObservationSettings</span></code> class is used to define settings for two-way Doppler observables:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TwoWayDopperObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TwoWayDopperObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">uplinkOneWayDopplerSettings</span><span class="p">,</span> <span class="n">downlinkOneWayDopplerSettings</span><span class="p">,</span> <span class="n">biasSettings</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TwoWayDopperObservationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">observationSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TwoWayDopperObservationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">uplinkOneWayDopplerSettings</span><span class="p">,</span><span class="w"> </span><span class="n">downlinkOneWayDopplerSettings</span><span class="p">,</span><span class="w"> </span><span class="n">biasSettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -415,15 +419,15 @@
 <span id="propertimerates"></span><h3><span class="section-number">4.2.2.1. </span>Proper-time Rate Settings<a class="headerlink" href="#proper-time-rate-settings" title="Permalink to this headline">¶</a></h3>
 <p>When creating a one- or two-way Doppler model, the user can provide settings for the proper time rate model at the link ends, which is handled by the <code class="xref py py-class docutils literal notranslate"><span class="pre">DopplerProperTimeRateSettings</span></code> class. Each type of proper-time rate model has its own dedicated derived class, which are described below.</p>
 <dl class="py class">
-<dt id="DirectFirstOrderDopplerProperTimeRateSettings">
-<em class="property">class </em><code class="sig-name descname">DirectFirstOrderDopplerProperTimeRateSettings</code><a class="headerlink" href="#DirectFirstOrderDopplerProperTimeRateSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="DirectFirstOrderDopplerProperTimeRateSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DirectFirstOrderDopplerProperTimeRateSettings</span></span><a class="headerlink" href="#DirectFirstOrderDopplerProperTimeRateSettings" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>The <code class="docutils literal notranslate"><span class="pre">DirectFirstOrderDopplerProperTimeRateSettings</span></code> class is derived from  <code class="docutils literal notranslate"><span class="pre">DopplerProperTimeRateSettings</span></code> and defines the proper time rate due to a single static point mass. In this sense, the term ‘static’ indicates that the motion of the body causing a change in proper time rate is not incorporated in the model. An object of this type is created as:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">DirectFirstOrderDopplerProperTimeRateSettings</span> <span class="o">&gt;</span> <span class="n">properTimeRateSettings</span> <span class="o">=</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DirectFirstOrderDopplerProperTimeRateSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">bodyName</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">DirectFirstOrderDopplerProperTimeRateSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">properTimeRateSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">DirectFirstOrderDopplerProperTimeRateSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">bodyName</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -439,13 +443,13 @@
 </div></blockquote>
 <p>As an example, a one-way Doppler model, where the Earth’s mass is used to perturtb the transmitting station’s proper time rate, and the Moon’s mass the receiver’s proper time rate would be by creating <a class="reference internal" href="#OneWayDopperObservationSettings" title="OneWayDopperObservationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">OneWayDopperObservationSettings</span></code></a> as follows:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">DopplerProperTimeRateSettings</span> <span class="o">&gt;</span> <span class="n">transmitterProperTimeRateSettings</span> <span class="o">=</span>
-   <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DirectFirstOrderDopplerProperTimeRateSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span> <span class="p">);</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">DopplerProperTimeRateSettings</span> <span class="o">&gt;</span> <span class="n">receiverProperTimeRateSettings</span> <span class="o">=</span>
-   <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">DirectFirstOrderDopplerProperTimeRateSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="s">&quot;Moon&quot;</span> <span class="p">);</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">OneWayDopperObservationSettings</span> <span class="o">&gt;</span> <span class="n">observationSettings</span> <span class="o">=</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">OneWayDopperObservationSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">LightTimeCorrectionSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">,</span> <span class="n">transmitterProperTimeRateSettings</span><span class="p">,</span> <span class="n">receiverProperTimeRateSettings</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">DopplerProperTimeRateSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">transmitterProperTimeRateSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">DirectFirstOrderDopplerProperTimeRateSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Earth&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">DopplerProperTimeRateSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">receiverProperTimeRateSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">DirectFirstOrderDopplerProperTimeRateSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Moon&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">OneWayDopperObservationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">observationSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">OneWayDopperObservationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">LightTimeCorrectionSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">transmitterProperTimeRateSettings</span><span class="p">,</span><span class="w"> </span><span class="n">receiverProperTimeRateSettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -460,14 +464,14 @@
 </ul>
 <p>As is the case with many other models, a base class settings object is provided <code class="docutils literal notranslate"><span class="pre">LightTimeCorrectionSettings</span></code>. Specific light-time corrections are defined in derived classes:</p>
 <dl class="py class">
-<dt id="FirstOrderRelativisticLightTimeCorrectionSettings">
-<em class="property">class </em><code class="sig-name descname">FirstOrderRelativisticLightTimeCorrectionSettings</code><a class="headerlink" href="#FirstOrderRelativisticLightTimeCorrectionSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="FirstOrderRelativisticLightTimeCorrectionSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FirstOrderRelativisticLightTimeCorrectionSettings</span></span><a class="headerlink" href="#FirstOrderRelativisticLightTimeCorrectionSettings" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>The <a class="reference internal" href="#FirstOrderRelativisticLightTimeCorrectionSettings" title="FirstOrderRelativisticLightTimeCorrectionSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">FirstOrderRelativisticLightTimeCorrectionSettings</span></code></a> defines settings for a first-order relativistic correction to the light-time, as formulated by <em>e.g.</em> Moyer (2000). The class is created by:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">FirstOrderRelativisticLightTimeCorrectionSettings</span> <span class="o">&gt;</span> <span class="n">lightTimeCorrectionSettings</span> <span class="o">=</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">FirstOrderRelativisticLightTimeCorrectionSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">perturbingBodies</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">FirstOrderRelativisticLightTimeCorrectionSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">lightTimeCorrectionSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">FirstOrderRelativisticLightTimeCorrectionSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">perturbingBodies</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -522,12 +526,12 @@
 </div></blockquote>
 <p>As discussed above, the biases are created by passing a <code class="xref py py-class docutils literal notranslate"><span class="pre">ObservationBiasSettings</span></code> (or derived class) object to the <a class="reference internal" href="#ObservationSettings" title="ObservationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObservationSettings</span></code></a> (or derived class)  constructor. Each bias type has a dedicated derived class of <code class="xref py py-class docutils literal notranslate"><span class="pre">ObservationBiasSettings</span></code>, which are defined as follows:</p>
 <dl class="py class">
-<dt id="ConstantObservationBiasSettings">
-<em class="property">class </em><code class="sig-name descname">ConstantObservationBiasSettings</code><a class="headerlink" href="#ConstantObservationBiasSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ConstantObservationBiasSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConstantObservationBiasSettings</span></span><a class="headerlink" href="#ConstantObservationBiasSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>The <code class="docutils literal notranslate"><span class="pre">ConstantObservationBiasSettings</span></code> class is used to define settings for an absolute bias <span class="math notranslate nohighlight">\(K_{a}\)</span> and is created by:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ConstantObservationBiasSettings</span> <span class="o">&gt;</span> <span class="n">observationBiasSettings</span> <span class="o">=</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantObservationBiasSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">observationBias</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ConstantObservationBiasSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">observationBiasSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ConstantObservationBiasSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">observationBias</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The input is:</p>
@@ -541,12 +545,12 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="ConstantRelativeObservationBiasSettings">
-<em class="property">class </em><code class="sig-name descname">ConstantRelativeObservationBiasSettings</code><a class="headerlink" href="#ConstantRelativeObservationBiasSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ConstantRelativeObservationBiasSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConstantRelativeObservationBiasSettings</span></span><a class="headerlink" href="#ConstantRelativeObservationBiasSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>The <code class="docutils literal notranslate"><span class="pre">ConstantRelativeObservationBiasSettings</span></code> class is used to define settings for an absolute bias <span class="math notranslate nohighlight">\(K_{r}\)</span> and is created by:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ConstantRelativeObservationBiasSettings</span> <span class="o">&gt;</span> <span class="n">observationBiasSettings</span> <span class="o">=</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantRelativeObservationBiasSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">observationBias</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ConstantRelativeObservationBiasSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">observationBiasSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ConstantRelativeObservationBiasSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">observationBias</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The input is:</p>
@@ -560,12 +564,12 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="MultipleObservationBiasSettings">
-<em class="property">class </em><code class="sig-name descname">MultipleObservationBiasSettings</code><a class="headerlink" href="#MultipleObservationBiasSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="MultipleObservationBiasSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObservationBiasSettings</span></span><a class="headerlink" href="#MultipleObservationBiasSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>The <code class="docutils literal notranslate"><span class="pre">MultipleObservationBiasSettings</span></code> class is used to define settings for a combined bias, that is composed of multiple bias models.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">MultipleObservationBiasSettings</span> <span class="o">&gt;</span> <span class="n">observationBiasSettings</span> <span class="o">=</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">MultipleObservationBiasSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">biasSettingsList</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">MultipleObservationBiasSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">observationBiasSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">MultipleObservationBiasSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="n">biasSettingsList</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The input is:</p>
@@ -633,11 +637,11 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   
 
@@ -672,6 +676,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

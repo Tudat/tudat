@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../started/index.html">Getting Started</a></li>
@@ -221,95 +225,86 @@
 </ul>
 </div></blockquote>
 <p>Then, in the C++ app, as explained in <a class="reference internal" href="../../customJsonApp.html#jsoninterface-customjsonapp"><span class="std std-ref">Writing Custom JSON-based Applications</span></a>, a derived class of <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonSimulationManager</span></code> has been created, providing custom implementations for the virtual methods <code class="docutils literal notranslate"><span class="pre">resetBodies</span></code>, <code class="docutils literal notranslate"><span class="pre">resetExportSettings</span></code> and <code class="docutils literal notranslate"><span class="pre">resetPropagatorSettings</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ApolloJsonSimulationManager</span> <span class="o">:</span> <span class="k">public</span> <span class="n">tudat</span><span class="o">::</span><span class="n">json_interface</span><span class="o">::</span><span class="n">JsonSimulationManager</span><span class="o">&lt;</span> <span class="o">&gt;</span>
-<span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ApolloJsonSimulationManager</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">tudat</span><span class="o">::</span><span class="n">json_interface</span><span class="o">::</span><span class="n">JsonSimulationManager</span><span class="o">&lt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
 
-    <span class="c1">// Inherit constructor.</span>
-    <span class="k">using</span> <span class="n">JsonSimulationManager</span><span class="o">&lt;</span> <span class="o">&gt;::</span><span class="n">JsonSimulationManager</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Inherit constructor.</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">JsonSimulationManager</span><span class="o">&lt;</span><span class="w"> </span><span class="o">&gt;::</span><span class="n">JsonSimulationManager</span><span class="p">;</span><span class="w"></span>
 
-<span class="k">protected</span><span class="o">:</span>
+<span class="k">protected</span><span class="o">:</span><span class="w"></span>
 
-    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">resetBodies</span><span class="p">(</span> <span class="p">)</span>
-    <span class="p">{</span>
-        <span class="p">...</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">resetBodies</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">resetExportSettings</span><span class="p">(</span> <span class="p">)</span>
-    <span class="p">{</span>
-        <span class="p">...</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">resetExportSettings</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">resetPropagatorSettings</span><span class="p">(</span> <span class="p">)</span>
-    <span class="p">{</span>
-        <span class="p">...</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">resetPropagatorSettings</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-<span class="p">};</span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>For the <code class="docutils literal notranslate"><span class="pre">resetBodies</span></code> method, we first call the default implementation of the base class, and then we create Apollo’s aerodynamic coefficients interface manually, using a function defined in <code class="docutils literal notranslate"><span class="pre">tudat::unit_tests</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">virtual</span> <span class="kt">void</span> <span class="nf">resetBodies</span><span class="p">(</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// First, call the original resetBodies, which uses the information in the JSON file</span>
-    <span class="n">JsonSimulationManager</span><span class="o">::</span><span class="n">resetBodies</span><span class="p">(</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">resetBodies</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// First, call the original resetBodies, which uses the information in the JSON file</span>
+<span class="w">    </span><span class="n">JsonSimulationManager</span><span class="o">::</span><span class="n">resetBodies</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="c1">// Then, create vehicle&#39;s aerodynamic coefficients interface</span>
-    <span class="n">getBody</span><span class="p">(</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">setAerodynamicCoefficientInterface</span><span class="p">(</span> <span class="n">tudat</span><span class="o">::</span><span class="n">unit_tests</span><span class="o">::</span><span class="n">getApolloCoefficientInterface</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="c1">// Then, create vehicle&#39;s aerodynamic coefficients interface</span>
+<span class="w">    </span><span class="n">getBody</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Apollo&quot;</span><span class="w"> </span><span class="p">)</span><span class="o">-&gt;</span><span class="n">setAerodynamicCoefficientInterface</span><span class="p">(</span><span class="w"> </span><span class="n">tudat</span><span class="o">::</span><span class="n">unit_tests</span><span class="o">::</span><span class="n">getApolloCoefficientInterface</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Note that we use the method <code class="docutils literal notranslate"><span class="pre">getBody(</span> <span class="pre">const</span> <span class="pre">std::string&amp;</span> <span class="pre">bodyName</span> <span class="pre">)</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonSimulationManager</span></code>, which retrieves the body named <code class="docutils literal notranslate"><span class="pre">bodyName</span></code> from the body map. If we want to create a new body manually, we use the method <code class="docutils literal notranslate"><span class="pre">addBody(</span> <span class="pre">const</span> <span class="pre">std::string&amp;</span> <span class="pre">bodyName</span> <span class="pre">)</span></code> (note that, if the body already exists, it will be reset to a body created with the empty constructor).</p>
 <p>For the <code class="docutils literal notranslate"><span class="pre">resetExportSettings</span></code> method, we first call the default implementation of the base class, and then modify the output files paths using the function <code class="docutils literal notranslate"><span class="pre">tudat_applications::getOutputPath(</span> <span class="pre">)</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">virtual</span> <span class="kt">void</span> <span class="nf">resetExportSettings</span><span class="p">(</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// First, call the original resetExportSettings, which uses the information in the JSON file</span>
-    <span class="n">JsonSimulationManager</span><span class="o">::</span><span class="n">resetExportSettings</span><span class="p">(</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">resetExportSettings</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// First, call the original resetExportSettings, which uses the information in the JSON file</span>
+<span class="w">    </span><span class="n">JsonSimulationManager</span><span class="o">::</span><span class="n">resetExportSettings</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="c1">// Then, replace the output file paths (empty strings placeholders had been specified in the JSON file)</span>
-    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputDirectory</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;ApolloCapsuleExampleJSON/&quot;</span><span class="p">;</span>
-    <span class="n">getExportSettings</span><span class="p">(</span> <span class="mi">0</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">setOutputFile</span><span class="p">(</span> <span class="n">outputDirectory</span> <span class="o">+</span> <span class="s">&quot;apolloPropagationHistory.dat&quot;</span> <span class="p">);</span>
-    <span class="n">getExportSettings</span><span class="p">(</span> <span class="mi">1</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">setOutputFile</span><span class="p">(</span> <span class="n">outputDirectory</span> <span class="o">+</span> <span class="s">&quot;apolloDependentVariableHistory.dat&quot;</span> <span class="p">);</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="c1">// Then, replace the output file paths (empty strings placeholders had been specified in the JSON file)</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">outputDirectory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;ApolloCapsuleExampleJSON/&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">getExportSettings</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="o">-&gt;</span><span class="n">setOutputFile</span><span class="p">(</span><span class="w"> </span><span class="n">outputDirectory</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;apolloPropagationHistory.dat&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">getExportSettings</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="o">-&gt;</span><span class="n">setOutputFile</span><span class="p">(</span><span class="w"> </span><span class="n">outputDirectory</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;apolloDependentVariableHistory.dat&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In this case, we use the method <code class="docutils literal notranslate"><span class="pre">getExportSettings(</span> <span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">index</span> <span class="pre">)</span></code>, which returns the <code class="xref py py-class docutils literal notranslate"><span class="pre">ExportSettings</span></code> object created from the key <span class="jsonkey">export[ index ]</span> in the JSON file.</p>
 <p>Finally, we also override the method <code class="docutils literal notranslate"><span class="pre">resetPropagatorSettings</span></code>:</p>
-<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">virtual</span> <span class="kt">void</span> <span class="nf">resetPropagatorSettings</span><span class="p">(</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// First, call the original resetPropagatorSettings, which uses the information in the JSON file</span>
-    <span class="n">JsonSimulationManager</span><span class="o">::</span><span class="n">resetPropagatorSettings</span><span class="p">(</span> <span class="p">);</span>
-
-    <span class="c1">// Define constant 30 degree angle of attack</span>
-    <span class="kt">double</span> <span class="n">constantAngleOfAttack</span> <span class="o">=</span> <span class="mf">30.0</span> <span class="o">*</span> <span class="n">tudat</span><span class="o">::</span><span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span> <span class="o">/</span> <span class="mf">180.0</span><span class="p">;</span>
-    <span class="n">getBody</span><span class="p">(</span> <span class="s">&quot;Apollo&quot;</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getAerodynamicAngleCalculator</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span>
-            <span class="n">setOrientationAngleFunctions</span><span class="p">(</span> <span class="p">[</span> <span class="o">=</span> <span class="p">](</span> <span class="p">){</span> <span class="k">return</span> <span class="n">constantAngleOfAttack</span><span class="p">;</span> <span class="p">}</span> <span class="p">);</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">resetPropagatorSettings</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="linenos"> 2</span><span class="p">{</span><span class="w"></span>
+<span class="linenos"> 3</span><span class="w">    </span><span class="c1">// First, call the original resetPropagatorSettings, which uses the information in the JSON file</span>
+<span class="linenos"> 4</span><span class="w">    </span><span class="n">JsonSimulationManager</span><span class="o">::</span><span class="n">resetPropagatorSettings</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="w">    </span><span class="c1">// Define constant 30 degree angle of attack</span>
+<span class="linenos"> 7</span><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">constantAngleOfAttack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">30.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tudat</span><span class="o">::</span><span class="n">mathematical_constants</span><span class="o">::</span><span class="n">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180.0</span><span class="p">;</span><span class="w"></span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="n">getBody</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Apollo&quot;</span><span class="w"> </span><span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="o">-&gt;</span><span class="n">getAerodynamicAngleCalculator</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="o">-&gt;</span><span class="w"></span>
+<span class="linenos"> 9</span><span class="w">            </span><span class="n">setOrientationAngleFunctions</span><span class="p">(</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">](</span><span class="w"> </span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">constantAngleOfAttack</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="linenos">10</span><span class="p">}</span><span class="w"></span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>After calling the original implementation in line 4, we define an angle of attack for Apollo. This is done by modifying Apollo’s flight conditions. This can only be done once the flight conditions have been created, i.e. after <code class="docutils literal notranslate"><span class="pre">JsonSimulationManager::resetPropagatorSettings(</span> <span class="pre">)</span></code> has been called, since this method will create the acceleration aerodynamic models based on the body map created previously.</p>
 <p>Now, we can write our <code class="docutils literal notranslate"><span class="pre">main</span></code> function, which uses the custom class <code class="xref py py-class docutils literal notranslate"><span class="pre">ApolloJsonSimulationManager</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">cppFilePath</span><span class="p">(</span> <span class="n">__FILE__</span> <span class="p">);</span>
-    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">cppFolder</span> <span class="o">=</span> <span class="n">cppFilePath</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cppFilePath</span><span class="p">.</span><span class="n">find_last_of</span><span class="p">(</span><span class="s">&quot;/</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">cppFilePath</span><span class="p">(</span><span class="w"> </span><span class="n">__FILE__</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">cppFolder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cppFilePath</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">cppFilePath</span><span class="p">.</span><span class="n">find_last_of</span><span class="p">(</span><span class="s">&quot;/</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="n">ApolloJsonSimulationManager</span> <span class="n">jsonSimulationManager</span><span class="p">(</span> <span class="n">cppFolder</span> <span class="o">+</span> <span class="s">&quot;apolloCapsuleEntry.json&quot;</span> <span class="p">);</span>
-    <span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">updateSettings</span><span class="p">(</span> <span class="p">);</span>
-    <span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">runPropagation</span><span class="p">(</span> <span class="p">);</span>
-    <span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">exportResults</span><span class="p">(</span> <span class="p">);</span>
+<span class="w">    </span><span class="n">ApolloJsonSimulationManager</span><span class="w"> </span><span class="n">jsonSimulationManager</span><span class="p">(</span><span class="w"> </span><span class="n">cppFolder</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;apolloCapsuleEntry.json&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">updateSettings</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">runPropagation</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">exportResults</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="k">return</span> <span class="n">EXIT_SUCCESS</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_SUCCESS</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>After running the application, the results can be found in the directory:</p>
@@ -370,11 +365,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -409,6 +403,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
@@ -189,85 +193,85 @@
 <p>First, it is important to understand how environment models are used in Tudat, this will give some insight in what needs to be added/changed if a new environment model is integrated into Tudat. For this tutorial, an existing environment model will be used as an example: the tabulated atmosphere model.</p>
 <p>A user will define a list of bodies to be used in the simulation, an example is given here:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define simulation body settings.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodySettings</span> <span class="o">=</span>
-        <span class="n">getDefaultBodySettings</span><span class="p">(</span> <span class="p">{</span> <span class="s">&quot;Mars&quot;</span> <span class="p">},</span> <span class="n">simulationStartEpoch</span> <span class="o">-</span> <span class="mf">10.0</span> <span class="o">*</span> <span class="n">fixedStepSize</span><span class="p">,</span>
-                                <span class="n">simulationEndEpoch</span> <span class="o">+</span> <span class="mf">10.0</span> <span class="o">*</span> <span class="n">fixedStepSize</span> <span class="p">);</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">ConstantEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-            <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">::</span><span class="n">Zero</span><span class="p">(</span> <span class="p">),</span> <span class="s">&quot;SSB&quot;</span><span class="p">,</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span><span class="o">-&gt;</span><span class="n">resetOriginalFrame</span><span class="p">(</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">atmosphereFile</span> <span class="o">=</span> <span class="p">...</span> <span class="p">;</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TabulatedAtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">atmosphereFile</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">BodySettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">bodySettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="n">getDefaultBodySettings</span><span class="p">(</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;Mars&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="n">simulationStartEpoch</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">10.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">fixedStepSize</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                </span><span class="n">simulationEndEpoch</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">10.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">fixedStepSize</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">bodySettings</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;Mars&quot;</span><span class="w"> </span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">simulation_setup</span><span class="o">::</span><span class="n">ConstantEphemerisSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">::</span><span class="n">Zero</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="s">&quot;SSB&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;J2000&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">bodySettings</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;Mars&quot;</span><span class="w"> </span><span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span><span class="o">-&gt;</span><span class="n">resetOriginalFrame</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;J2000&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">atmosphereFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="n">bodySettings</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;Mars&quot;</span><span class="w"> </span><span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TabulatedAtmosphereSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">atmosphereFile</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">BodySettings</span></code> class contains a member variable called <code class="docutils literal notranslate"><span class="pre">atmosphereSettings</span></code> of type <code class="docutils literal notranslate"><span class="pre">AtmosphereSettings</span></code>. As can be seen in the last line of the example code above, this member variable is set to a <code class="docutils literal notranslate"><span class="pre">TabulatedAtmosphereSettings</span></code> by the user. This is a valid statement (eventhough <code class="docutils literal notranslate"><span class="pre">atmosphereSettings</span></code> is not of type <code class="docutils literal notranslate"><span class="pre">TabulatedAtmosphereSettings</span></code>) because <code class="docutils literal notranslate"><span class="pre">TabulatedAtmosphereSettings</span></code> is derived from the base class <code class="docutils literal notranslate"><span class="pre">AtmosphereSettings</span></code>. These concepts are called polymorphism and inheritance, and should be understood by the reader before continuing.</p>
 <p>When all the <code class="docutils literal notranslate"><span class="pre">bodySettings</span></code> are defined by the user, the following command will be executed:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="w"> </span><span class="n">bodyMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">simulation_setup</span><span class="o">::</span><span class="n">createBodies</span><span class="p">(</span><span class="w"> </span><span class="n">bodySettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">simulation_setup::createBodies()</span></code> will set all the environment models up to be used later in the simulation, and stores them in the variable <code class="docutils literal notranslate"><span class="pre">bodyMap</span></code>. If the <code class="docutils literal notranslate"><span class="pre">simulation_setup::createBodies()</span></code> is looked at, the following can be seen:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create atmosphere model objects for each body (if required).</span>
-<span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span> <span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">).</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">bodyMap</span><span class="p">[</span> <span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">).</span><span class="n">first</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setAtmosphereModel</span><span class="p">(</span>
-                    <span class="n">createAtmosphereModel</span><span class="p">(</span> <span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">).</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span><span class="p">,</span>
-                                           <span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">).</span><span class="n">first</span> <span class="p">)</span> <span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">).</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">bodyMap</span><span class="p">[</span><span class="w"> </span><span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">).</span><span class="n">first</span><span class="w"> </span><span class="p">]</span><span class="o">-&gt;</span><span class="n">setAtmosphereModel</span><span class="p">(</span><span class="w"></span>
+<span class="w">                    </span><span class="n">createAtmosphereModel</span><span class="p">(</span><span class="w"> </span><span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">).</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">).</span><span class="n">first</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Where <code class="docutils literal notranslate"><span class="pre">orderedBodySettings</span></code> is an ordered map of all the bodies. This code goes through all the bodies and checks if the bodies have an atmosphere model set or not. If not, the atmosphere model is set by the <code class="docutils literal notranslate"><span class="pre">setAtmosphereModel()</span></code> function, which takes as input a pointer to the atmosphereModel of the body. This pointer is returned by the function: <code class="docutils literal notranslate"><span class="pre">createAtmosphereModel()</span></code>, which creates the atmosphere model using the settings defined by the user in the variable <code class="docutils literal notranslate"><span class="pre">atmosphereSettings</span></code>. The <code class="docutils literal notranslate"><span class="pre">createAtmosphereModel()</span></code> looks as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">aerodynamics</span><span class="o">::</span><span class="n">AtmosphereModel</span> <span class="o">&gt;</span> <span class="n">createAtmosphereModel</span><span class="p">(</span>
-   <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AtmosphereSettings</span> <span class="o">&gt;</span> <span class="n">atmosphereSettings</span><span class="p">,</span>
-   <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">body</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">using</span> <span class="k">namespace</span> <span class="n">tudat</span><span class="o">::</span><span class="n">aerodynamics</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">aerodynamics</span><span class="o">::</span><span class="n">AtmosphereModel</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">createAtmosphereModel</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AtmosphereSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">atmosphereSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">body</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">tudat</span><span class="o">::</span><span class="nn">aerodynamics</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1">// Declare return object.</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AtmosphereModel</span> <span class="o">&gt;</span> <span class="n">atmosphereModel</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Declare return object.</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AtmosphereModel</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">atmosphereModel</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1">// Check which type of atmosphere model is to be created.</span>
-    <span class="k">switch</span><span class="p">(</span> <span class="n">atmosphereSettings</span><span class="o">-&gt;</span><span class="n">getAtmosphereType</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span>
-    <span class="p">{</span>
-    <span class="k">case</span> <span class="nl">exponential_atmosphere</span><span class="p">:</span>
-    <span class="p">{</span>
-        <span class="p">...</span>
-        <span class="p">...</span>
-        <span class="p">...</span>
-    <span class="p">}</span>
-    <span class="k">case</span> <span class="nl">tabulated_atmosphere</span><span class="p">:</span>
-    <span class="p">{</span>
-        <span class="c1">// Check whether settings for atmosphere are consistent with its type</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TabulatedAtmosphereSettings</span> <span class="o">&gt;</span> <span class="n">tabulatedAtmosphereSettings</span> <span class="o">=</span>
-                <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">TabulatedAtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">atmosphereSettings</span> <span class="p">);</span>
-        <span class="k">if</span><span class="p">(</span> <span class="n">tabulatedAtmosphereSettings</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span>
-                        <span class="s">&quot;Error, expected tabulated atmosphere settings for body &quot;</span> <span class="o">+</span> <span class="n">body</span> <span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">else</span>
-        <span class="p">{</span>
-            <span class="c1">// Create and initialize tabulatedl atmosphere model.</span>
-            <span class="n">atmosphereModel</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TabulatedAtmosphere</span> <span class="o">&gt;</span><span class="p">(</span>
-                        <span class="n">tabulatedAtmosphereSettings</span><span class="o">-&gt;</span><span class="n">getAtmosphereFile</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">break</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">case</span> <span class="nl">nrlmsise00</span><span class="p">:</span>
-    <span class="p">{</span>
-        <span class="p">...</span>
-        <span class="p">...</span>
-        <span class="p">...</span>
-    <span class="p">}</span>
-    <span class="k">default</span><span class="o">:</span>
-        <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span>
-                    <span class="s">&quot;Error, did not recognize atmosphere model settings type &quot;</span> <span class="o">+</span>
-                    <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">atmosphereSettings</span><span class="o">-&gt;</span><span class="n">getAtmosphereType</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span> <span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="c1">// Check which type of atmosphere model is to be created.</span>
+<span class="w">    </span><span class="k">switch</span><span class="p">(</span><span class="w"> </span><span class="n">atmosphereSettings</span><span class="o">-&gt;</span><span class="n">getAtmosphereType</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">exponential_atmosphere</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="p">...</span><span class="w"></span>
+<span class="w">        </span><span class="p">...</span><span class="w"></span>
+<span class="w">        </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">tabulated_atmosphere</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Check whether settings for atmosphere are consistent with its type</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TabulatedAtmosphereSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">tabulatedAtmosphereSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TabulatedAtmosphereSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">atmosphereSettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">tabulatedAtmosphereSettings</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="w"></span>
+<span class="w">                        </span><span class="s">&quot;Error, expected tabulated atmosphere settings for body &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">body</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// Create and initialize tabulatedl atmosphere model.</span>
+<span class="w">            </span><span class="n">atmosphereModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TabulatedAtmosphere</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">                        </span><span class="n">tabulatedAtmosphereSettings</span><span class="o">-&gt;</span><span class="n">getAtmosphereFile</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">nrlmsise00</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="p">...</span><span class="w"></span>
+<span class="w">        </span><span class="p">...</span><span class="w"></span>
+<span class="w">        </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">default</span><span class="o">:</span><span class="w"></span>
+<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="w"></span>
+<span class="w">                    </span><span class="s">&quot;Error, did not recognize atmosphere model settings type &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                    </span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="w"> </span><span class="n">atmosphereSettings</span><span class="o">-&gt;</span><span class="n">getAtmosphereType</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="k">return</span> <span class="n">atmosphereModel</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">atmosphereModel</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This function checks which atmosphere model is used by using a switch statement with the <code class="docutils literal notranslate"><span class="pre">atmosphereSettings-&gt;getAtmosphereType(</span> <span class="pre">)</span></code>. The three cases are defined using the enum <code class="docutils literal notranslate"><span class="pre">AtmosphereTypes</span></code> (located in <code class="docutils literal notranslate"><span class="pre">createAtmosphereModel.h</span></code>). In the case of the tabulated atmosphere, first a check is made if tabulated atmosphere setting are actually initialized. If they are, the <code class="docutils literal notranslate"><span class="pre">atmosphereModel</span></code> is set to a tabulated atmosphere using the settings from <code class="docutils literal notranslate"><span class="pre">atmosphereSettings</span></code>. It can be seen in the example code above that the variable <code class="docutils literal notranslate"><span class="pre">atmosphereModel</span></code> is of type <code class="docutils literal notranslate"><span class="pre">AtmosphereModel</span></code>, but it is set to a variable of type <code class="docutils literal notranslate"><span class="pre">TabulatedAtmosphere</span></code> in the tabulated atmosphere case. This is again valid due to the fact that the class <code class="docutils literal notranslate"><span class="pre">TabulatedAtmosphere</span></code> is derived from the base class <code class="docutils literal notranslate"><span class="pre">AtmosphereModel</span></code>.</p>
@@ -331,11 +335,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -370,6 +373,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

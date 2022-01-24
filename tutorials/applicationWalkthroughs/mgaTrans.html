@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
@@ -201,143 +205,143 @@
 <p>The gravity assist are done in the following order: Eart, Venus, Earth, Earth, Jupiter (EVEEJ). The decision variables in this example are the start date, and the duration of the legs. The bounds are defined as before:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// We have five decision variables each with a lower and upper</span>
 <span class="c1">// bound, create a vector of vectors that will contain these.</span>
-<span class="kt">int</span> <span class="n">numberOfParameters</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bounds</span><span class="p">(</span> <span class="mi">2</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">numberOfParameters</span><span class="p">,</span> <span class="mf">0.0</span> <span class="p">)</span> <span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">numberOfParameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">bounds</span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">numberOfParameters</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Define search bounds: first parameter is start date, following parameters are leg durations</span>
-<span class="n">bounds</span><span class="p">[</span> <span class="mi">0</span> <span class="p">][</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">7304.5</span><span class="p">;</span> <span class="c1">//MJD2000</span>
-<span class="n">bounds</span><span class="p">[</span> <span class="mi">1</span> <span class="p">][</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">7304.5</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">365</span><span class="p">;</span> <span class="c1">//MJD2000</span>
-<span class="n">bounds</span><span class="p">[</span> <span class="mi">0</span> <span class="p">][</span> <span class="mi">1</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
-<span class="n">bounds</span><span class="p">[</span> <span class="mi">1</span> <span class="p">][</span> <span class="mi">1</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
-<span class="n">bounds</span><span class="p">[</span> <span class="mi">0</span> <span class="p">][</span> <span class="mi">2</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
-<span class="n">bounds</span><span class="p">[</span> <span class="mi">1</span> <span class="p">][</span> <span class="mi">2</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span>
-<span class="n">bounds</span><span class="p">[</span> <span class="mi">0</span> <span class="p">][</span> <span class="mi">3</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
-<span class="n">bounds</span><span class="p">[</span> <span class="mi">1</span> <span class="p">][</span> <span class="mi">3</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span>
-<span class="n">bounds</span><span class="p">[</span> <span class="mi">0</span> <span class="p">][</span> <span class="mi">4</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
-<span class="n">bounds</span><span class="p">[</span> <span class="mi">1</span> <span class="p">][</span> <span class="mi">4</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">3000</span><span class="p">;</span>
+<span class="n">bounds</span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">7304.5</span><span class="p">;</span><span class="w"> </span><span class="c1">//MJD2000</span>
+<span class="n">bounds</span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">7304.5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">365</span><span class="p">;</span><span class="w"> </span><span class="c1">//MJD2000</span>
+<span class="n">bounds</span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span><span class="w"></span>
+<span class="n">bounds</span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500</span><span class="p">;</span><span class="w"></span>
+<span class="n">bounds</span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span><span class="w"></span>
+<span class="n">bounds</span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">300</span><span class="p">;</span><span class="w"></span>
+<span class="n">bounds</span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span><span class="w"></span>
+<span class="n">bounds</span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">300</span><span class="p">;</span><span class="w"></span>
+<span class="n">bounds</span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500</span><span class="p">;</span><span class="w"></span>
+<span class="n">bounds</span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3000</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The decision variable is set up in the same manner as the last tutorial: the first index will determine if it is the lower or upper bound, and the second index determines the decision variable. For the input of the UDP, a vector containing the planets need to be passed to the constructor, this vector is set-up as follows:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define the problem: EVEEJ flyby sequence</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">int</span> <span class="o">&gt;</span> <span class="n">flybySequence</span><span class="p">;</span>
-<span class="n">flybySequence</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mi">3</span> <span class="p">);</span>
-<span class="n">flybySequence</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mi">2</span> <span class="p">);</span>
-<span class="n">flybySequence</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mi">3</span> <span class="p">);</span>
-<span class="n">flybySequence</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mi">3</span> <span class="p">);</span>
-<span class="n">flybySequence</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mi">5</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">flybySequence</span><span class="p">;</span><span class="w"></span>
+<span class="n">flybySequence</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">flybySequence</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">flybySequence</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">flybySequence</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">flybySequence</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The index here represents the planet where a flyby will be performed.</p>
 <p>This vector, plus the bounds, can then be passed to the UDP, as is done in the following part of the code:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create object to compute the problem fitness</span>
-<span class="n">problem</span> <span class="n">prob</span><span class="p">{</span> <span class="n">MultipleGravityAssist</span><span class="p">(</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">flybySequence</span><span class="p">,</span> <span class="nb">true</span> <span class="p">)</span> <span class="p">};</span>
+<span class="n">problem</span><span class="w"> </span><span class="n">prob</span><span class="p">{</span><span class="w"> </span><span class="n">MultipleGravityAssist</span><span class="p">(</span><span class="w"> </span><span class="n">bounds</span><span class="p">,</span><span class="w"> </span><span class="n">flybySequence</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">MultipleGravityAssist(</span> <span class="pre">bounds,</span> <span class="pre">flybySequence,</span> <span class="pre">true</span> <span class="pre">)</span></code> is the UDP. The true statement enables the UDP to also use the trip time as an objective for the optimalization.</p>
 <p>This UDP contains an empty constructor, and a constructor that initializes the problem. The first part of the constructor initializes the leg types of the trajectory:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Specify required parameters</span>
 <span class="c1">// Specify the number of legs and type of legs.</span>
-<span class="n">numberOfLegs_</span> <span class="o">=</span> <span class="n">flybySequence</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span>
-<span class="n">legTypeVector_</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">numberOfLegs_</span> <span class="p">);</span>
-<span class="n">legTypeVector_</span><span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="n">mga_Departure</span><span class="p">;</span>
-<span class="n">legTypeVector_</span><span class="p">[</span> <span class="n">numberOfLegs_</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">]</span> <span class="o">=</span> <span class="n">capture</span><span class="p">;</span>
+<span class="n">numberOfLegs_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flybySequence</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">legTypeVector_</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="w"> </span><span class="n">numberOfLegs_</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">legTypeVector_</span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mga_Departure</span><span class="p">;</span><span class="w"></span>
+<span class="n">legTypeVector_</span><span class="p">[</span><span class="w"> </span><span class="n">numberOfLegs_</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">capture</span><span class="p">;</span><span class="w"></span>
 
-<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfLegs_</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
-    <span class="n">legTypeVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">mga_Swingby</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numberOfLegs_</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
+<span class="w">    </span><span class="n">legTypeVector_</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mga_Swingby</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The trajectory starts with a departure from Earth, and ends with a capture at Jupiter. All the legs between the departure and capture are swing-by legs. This application will not go into detail on the trajectory design setup, if this is not understood the reader is referred to the <a class="reference internal" href="interplanetaryTrajectory.html#interplanetarytrajectorydesign"><span class="std std-ref">MGA Trajectory Design</span></a> application tutorial.</p>
 <p>After the trajectory is setup, the parameters for the selected order of planets is intialized using a large switch statement:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create the ephemeris, gravitational parameter, and minimum pericentre vector.</span>
-<span class="n">ephemerisVector_</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">numberOfLegs_</span> <span class="p">);</span>
-<span class="n">gravitationalParameterVector_</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">numberOfLegs_</span> <span class="p">);</span>
-<span class="n">minimumPericenterRadii_</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">numberOfLegs_</span> <span class="p">);</span>
-<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfLegs_</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">switch</span><span class="p">(</span><span class="n">flybySequence</span><span class="p">[</span> <span class="n">i</span> <span class="p">])</span>
-    <span class="p">{</span>
-    <span class="k">case</span><span class="p">(</span> <span class="mi">1</span> <span class="p">)</span><span class="o">:</span>
-        <span class="n">ephemerisVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span>
-                <span class="p">(</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">mercury</span> <span class="p">);</span>
-        <span class="n">gravitationalParameterVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">2.2032E13</span><span class="p">;</span>
-        <span class="n">minimumPericenterRadii_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">2639.7E3</span><span class="p">;</span>
-        <span class="k">break</span><span class="p">;</span>
-    <span class="k">case</span><span class="p">(</span> <span class="mi">2</span> <span class="p">)</span><span class="o">:</span>
-        <span class="n">ephemerisVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span>
-                <span class="p">(</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">venus</span> <span class="p">);</span>
-        <span class="n">gravitationalParameterVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">3.24859E14</span><span class="p">;</span>
-        <span class="n">minimumPericenterRadii_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">6251.8E3</span><span class="p">;</span>
-        <span class="k">break</span><span class="p">;</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="k">case</span><span class="p">(</span> <span class="mi">8</span> <span class="p">)</span><span class="o">:</span>
-        <span class="n">ephemerisVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span>
-                <span class="p">(</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">neptune</span> <span class="p">);</span>
-        <span class="n">gravitationalParameterVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">6.836529E15</span><span class="p">;</span>
-        <span class="n">minimumPericenterRadii_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">25000.0E3</span><span class="p">;</span>
-        <span class="k">break</span><span class="p">;</span>
-    <span class="k">case</span><span class="p">(</span> <span class="mi">9</span> <span class="p">)</span><span class="o">:</span>
-        <span class="n">ephemerisVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span> <span class="o">&gt;</span>
-                <span class="p">(</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">pluto</span> <span class="p">);</span>
-        <span class="n">gravitationalParameterVector_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">8.71E11</span><span class="p">;</span>
-        <span class="n">minimumPericenterRadii_</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">1395.0E3</span><span class="p">;</span>
-        <span class="k">break</span><span class="p">;</span>
-    <span class="k">default</span><span class="o">:</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="o">&lt;&lt;</span><span class="s">&quot;Planet in flyby sequence is not defined.&quot;</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="n">ephemerisVector_</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="w"> </span><span class="n">numberOfLegs_</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">gravitationalParameterVector_</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="w"> </span><span class="n">numberOfLegs_</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">minimumPericenterRadii_</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="w"> </span><span class="n">numberOfLegs_</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numberOfLegs_</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">switch</span><span class="p">(</span><span class="n">flybySequence</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">])</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="o">:</span><span class="w"></span>
+<span class="w">        </span><span class="n">ephemerisVector_</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">                </span><span class="p">(</span><span class="w"> </span><span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">mercury</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">gravitationalParameterVector_</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.2032E13</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">minimumPericenterRadii_</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2639.7E3</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="o">:</span><span class="w"></span>
+<span class="w">        </span><span class="n">ephemerisVector_</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">                </span><span class="p">(</span><span class="w"> </span><span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">venus</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">gravitationalParameterVector_</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.24859E14</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">minimumPericenterRadii_</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">6251.8E3</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">)</span><span class="o">:</span><span class="w"></span>
+<span class="w">        </span><span class="n">ephemerisVector_</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">                </span><span class="p">(</span><span class="w"> </span><span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">neptune</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">gravitationalParameterVector_</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">6.836529E15</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">minimumPericenterRadii_</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">25000.0E3</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="p">(</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="p">)</span><span class="o">:</span><span class="w"></span>
+<span class="w">        </span><span class="n">ephemerisVector_</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositions</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">                </span><span class="p">(</span><span class="w"> </span><span class="n">ephemerides</span><span class="o">::</span><span class="n">ApproximatePlanetPositionsBase</span><span class="o">::</span><span class="n">BodiesWithEphemerisData</span><span class="o">::</span><span class="n">pluto</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">gravitationalParameterVector_</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">8.71E11</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">minimumPericenterRadii_</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1395.0E3</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">default</span><span class="o">:</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="o">&lt;&lt;</span><span class="s">&quot;Planet in flyby sequence is not defined.&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
 <span class="c1">// Create departure and capture variables.</span>
-<span class="n">semiMajorAxes_</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="mi">2</span> <span class="p">);</span>
-<span class="n">eccentricities_</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="mi">2</span> <span class="p">);</span>
-<span class="n">semiMajorAxes_</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;::</span><span class="n">infinity</span><span class="p">(</span> <span class="p">),</span> <span class="mf">1.0895e8</span> <span class="o">/</span> <span class="mf">0.02</span><span class="p">;</span>
-<span class="n">eccentricities_</span> <span class="o">&lt;&lt;</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">;</span>
+<span class="n">semiMajorAxes_</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">eccentricities_</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">semiMajorAxes_</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;::</span><span class="n">infinity</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="mf">1.0895e8</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">0.02</span><span class="p">;</span><span class="w"></span>
+<span class="n">eccentricities_</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mf">0.</span><span class="p">,</span><span class="w"> </span><span class="mf">0.98</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Now, the fitness function needs to be set up:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//! Implementation of the fitness function (return delta-v)</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">MultipleGravityAssist</span><span class="o">::</span><span class="n">fitness</span><span class="p">(</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">xv</span> <span class="p">)</span> <span class="k">const</span>
-<span class="p">{</span>
-    <span class="c1">// Sun gravitational parameter</span>
-    <span class="k">const</span> <span class="kt">double</span> <span class="n">sunGravitationalParameter</span> <span class="o">=</span> <span class="mf">1.32712428e20</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">MultipleGravityAssist</span><span class="o">::</span><span class="n">fitness</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">xv</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Sun gravitational parameter</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">sunGravitationalParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.32712428e20</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1">// Create variable vector.</span>
-    <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">variableVector</span> <span class="p">(</span> <span class="n">numberOfLegs_</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">);</span>
+<span class="w">    </span><span class="c1">// Create variable vector.</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="nf">variableVector</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">numberOfLegs_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="kt">double</span> <span class="n">TOF</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfLegs_</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
-        <span class="n">variableVector</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">xv</span><span class="p">[</span> <span class="n">i</span> <span class="p">];</span>
-        <span class="k">if</span><span class="p">(</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">){</span>
-            <span class="n">TOF</span> <span class="o">+=</span> <span class="n">xv</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="n">variableVector</span><span class="p">[</span> <span class="n">numberOfLegs_</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="c1">//dummy</span>
-    <span class="n">variableVector</span> <span class="o">*=</span> <span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">TOF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numberOfLegs_</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
+<span class="w">        </span><span class="n">variableVector</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xv</span><span class="p">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">){</span><span class="w"></span>
+<span class="w">            </span><span class="n">TOF</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">xv</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">variableVector</span><span class="p">[</span><span class="w"> </span><span class="n">numberOfLegs_</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="c1">//dummy</span>
+<span class="w">    </span><span class="n">variableVector</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1">// Create the trajectory problem.</span>
-    <span class="n">Trajectory</span> <span class="nf">mgaTraj</span><span class="p">(</span> <span class="n">numberOfLegs_</span><span class="p">,</span> <span class="n">legTypeVector_</span><span class="p">,</span> <span class="n">ephemerisVector_</span><span class="p">,</span>
-                          <span class="n">gravitationalParameterVector_</span><span class="p">,</span> <span class="n">variableVector</span><span class="p">,</span> <span class="n">sunGravitationalParameter</span><span class="p">,</span>
-                          <span class="n">minimumPericenterRadii_</span><span class="p">,</span> <span class="n">semiMajorAxes_</span><span class="p">,</span> <span class="n">eccentricities_</span> <span class="p">);</span>
+<span class="w">    </span><span class="c1">// Create the trajectory problem.</span>
+<span class="w">    </span><span class="n">Trajectory</span><span class="w"> </span><span class="nf">mgaTraj</span><span class="p">(</span><span class="w"> </span><span class="n">numberOfLegs_</span><span class="p">,</span><span class="w"> </span><span class="n">legTypeVector_</span><span class="p">,</span><span class="w"> </span><span class="n">ephemerisVector_</span><span class="p">,</span><span class="w"></span>
+<span class="w">                          </span><span class="n">gravitationalParameterVector_</span><span class="p">,</span><span class="w"> </span><span class="n">variableVector</span><span class="p">,</span><span class="w"> </span><span class="n">sunGravitationalParameter</span><span class="p">,</span><span class="w"></span>
+<span class="w">                          </span><span class="n">minimumPericenterRadii_</span><span class="p">,</span><span class="w"> </span><span class="n">semiMajorAxes_</span><span class="p">,</span><span class="w"> </span><span class="n">eccentricities_</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="c1">// Start the deltaV vector.</span>
-    <span class="kt">double</span> <span class="n">resultingDeltaV</span><span class="p">;</span>
-    <span class="n">mgaTraj</span><span class="p">.</span><span class="n">calculateTrajectory</span><span class="p">(</span> <span class="n">resultingDeltaV</span> <span class="p">);</span>
+<span class="w">    </span><span class="c1">// Start the deltaV vector.</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">resultingDeltaV</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">mgaTraj</span><span class="p">.</span><span class="n">calculateTrajectory</span><span class="p">(</span><span class="w"> </span><span class="n">resultingDeltaV</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">isnan</span><span class="p">(</span><span class="n">resultingDeltaV</span><span class="p">))</span>
-    <span class="p">{</span>
-        <span class="n">resultingDeltaV</span> <span class="o">=</span> <span class="mf">1.0E10</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">isnan</span><span class="p">(</span><span class="n">resultingDeltaV</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">resultingDeltaV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0E10</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="k">if</span> <span class="p">(</span> <span class="n">useTripTime_</span> <span class="p">){</span>
-        <span class="k">return</span> <span class="p">{</span> <span class="n">resultingDeltaV</span><span class="p">,</span> <span class="n">TOF</span> <span class="p">};</span>
-    <span class="p">}</span>
-    <span class="k">else</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="p">{</span> <span class="n">resultingDeltaV</span> <span class="p">};</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">useTripTime_</span><span class="w"> </span><span class="p">){</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">resultingDeltaV</span><span class="p">,</span><span class="w"> </span><span class="n">TOF</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">resultingDeltaV</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-<span class="p">}</span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">fitness(</span> <span class="pre">const</span> <span class="pre">std::vector&lt;double&gt;</span> <span class="pre">&amp;xv</span> <span class="pre">)</span></code> method is made in a similar way as the previous examples. The decision variables are the departure time and the time-of-flight, thus they need to be entered into the trajectory design code to be able to calculate the delta V. A check is also made, that if the final Delta V was not able to be calculated, it will give a large penalty.</p>
@@ -346,7 +350,7 @@
 <h2><span class="section-number">4.2. </span>Selecting the Algorithm<a class="headerlink" href="#selecting-the-algorithm" title="Permalink to this headline">¶</a></h2>
 <p>In this example, the nsga2 algorithm is selected to optimize the trajectory:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Select NSGA2 algorithm for problem</span>
-<span class="n">algorithm</span> <span class="n">algo</span><span class="p">{</span><span class="n">nsga2</span><span class="p">(</span> <span class="p">)};</span>
+<span class="n">algorithm</span><span class="w"> </span><span class="n">algo</span><span class="p">{</span><span class="n">nsga2</span><span class="p">(</span><span class="w"> </span><span class="p">)};</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -354,7 +358,7 @@
 <h2><span class="section-number">4.3. </span>Building the Island<a class="headerlink" href="#building-the-island" title="Permalink to this headline">¶</a></h2>
 <p>The island is built in the same way as in <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create an island with 1000 individuals</span>
-<span class="n">island</span> <span class="n">isl</span><span class="p">{</span><span class="n">algo</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="mi">1000</span> <span class="p">};</span>
+<span class="n">island</span><span class="w"> </span><span class="n">isl</span><span class="p">{</span><span class="n">algo</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -362,17 +366,17 @@
 <h2><span class="section-number">4.4. </span>Perform the Optimization<a class="headerlink" href="#perform-the-optimization" title="Permalink to this headline">¶</a></h2>
 <p>Finally, the optimization is performed in the same manner as in <a class="reference internal" href="himmelblau.html#walkthroughshimmelblau"><span class="std std-ref">Himmelblau Optimization</span></a>:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Evolve for 512 generations</span>
-<span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">512</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">isl</span><span class="p">.</span><span class="n">evolve</span><span class="p">();</span>
-    <span class="k">while</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">status</span><span class="p">()</span><span class="o">!=</span><span class="n">pagmo</span><span class="o">::</span><span class="n">evolve_status</span><span class="o">::</span><span class="n">idle</span> <span class="p">)</span>
-        <span class="n">isl</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span>
+<span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">512</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">isl</span><span class="p">.</span><span class="n">evolve</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="w"> </span><span class="n">isl</span><span class="p">.</span><span class="n">status</span><span class="p">()</span><span class="o">!=</span><span class="n">pagmo</span><span class="o">::</span><span class="n">evolve_status</span><span class="o">::</span><span class="n">idle</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">isl</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span><span class="w"></span>
 
-    <span class="c1">// Write current iteration results to file</span>
-    <span class="n">printPopulationToFile</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span> <span class="p">).</span><span class="n">get_x</span><span class="p">(</span> <span class="p">),</span> <span class="s">&quot;mo_mga_EVEEJ_&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">i</span> <span class="p">),</span> <span class="nb">false</span> <span class="p">);</span>
-    <span class="n">printPopulationToFile</span><span class="p">(</span> <span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span> <span class="p">).</span><span class="n">get_f</span><span class="p">(</span> <span class="p">),</span> <span class="s">&quot;mo_mga_EVEEJ_&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">i</span> <span class="p">),</span> <span class="nb">true</span> <span class="p">);</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="c1">// Write current iteration results to file</span>
+<span class="w">    </span><span class="n">printPopulationToFile</span><span class="p">(</span><span class="w"> </span><span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">get_x</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="s">&quot;mo_mga_EVEEJ_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="nb">false</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">printPopulationToFile</span><span class="p">(</span><span class="w"> </span><span class="n">isl</span><span class="p">.</span><span class="n">get_population</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">get_f</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="s">&quot;mo_mga_EVEEJ_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="nb">true</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -449,11 +453,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -488,6 +491,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

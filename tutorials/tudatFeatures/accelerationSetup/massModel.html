@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -197,25 +201,25 @@
   <div class="section" id="mass-rate-model-set-up">
 <span id="tudatfeaturesframeworkmassratemodelsetup"></span><h1><span class="section-number">2.3. </span>Mass Rate Model Set-up<a class="headerlink" href="#mass-rate-model-set-up" title="Permalink to this headline">¶</a></h1>
 <p>Although propagating a body’s translational dynamics is the backbone of Tudat’s simulations, it is also possible to propagate a vehicle’s mass (either concurrently or separately). The manner in which the models that govern the ‘mass dynamics’, i.e. mass-rate models, are handled in the code is very similar to the acceleration models: a list of settings for the models is created by the user, which are then used to create the required objects. The list to be created by the user is:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">MassRateModelSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">massRateModelSettings</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">MassRateModelSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">massRateModelSettings</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where the map key denotes the body of which the mass-rate is to be computed.</p>
 <dl class="py class">
-<dt id="MassRateModelSettings">
-<em class="property">class </em><code class="sig-name descname">MassRateModelSettings</code><a class="headerlink" href="#MassRateModelSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="MassRateModelSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MassRateModelSettings</span></span><a class="headerlink" href="#MassRateModelSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for the mass rate model setup. Currently two mass rate models are available each with its own derived class described below.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="CustomMassRateModelSettings">
-<em class="property">class </em><code class="sig-name descname">CustomMassRateModelSettings</code><a class="headerlink" href="#CustomMassRateModelSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="CustomMassRateModelSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CustomMassRateModelSettings</span></span><a class="headerlink" href="#CustomMassRateModelSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Using this class, the user must provide a <code class="docutils literal notranslate"><span class="pre">std::function&lt;</span> <span class="pre">double(</span> <span class="pre">const</span> <span class="pre">double</span> <span class="pre">)</span> <span class="pre">&gt;</span> <span class="pre">function</span></code>, i.e. a function returning a double, representing the mass-rate, and taking another double, representing time, as an input. The internal workings of this function are completely up to the user. If any help is required in setting up such a model please contact the Tudat support team.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="FromThrustMassModelSettings">
-<em class="property">class </em><code class="sig-name descname">FromThrustMassModelSettings</code><a class="headerlink" href="#FromThrustMassModelSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="FromThrustMassModelSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FromThrustMassModelSettings</span></span><a class="headerlink" href="#FromThrustMassModelSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Using this mass-rate model, the change in vehicle mass due to the expulsion of propellant is taken into account when propagating a vehicle’s dynamics. It retrieves the required data from a <a class="reference internal" href="thrustModels.html#ThrustAcceleration" title="ThrustAcceleration"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustAcceleration</span></code></a> object (set by <a class="reference internal" href="frameworkAcceleration.html#ThrustAccelerationSettings" title="ThrustAccelerationSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustAccelerationSettings</span></code></a>), ensuring full consistency between the two. Two option are available when creating this type of mass-rate model:</p>
 <ul class="simple">
 <li><p>Use all thrust forces acting on a single body, combined into a single mass-rate model. This will in most cases be the model of choice, as there is often no need to distinguish between thrust sources when computing the mass rate: only the total amount of propellant usage is relevant. This option is toggled by setting the <code class="docutils literal notranslate"><span class="pre">useAllThrustModels</span></code> input argument of the <a class="reference internal" href="#FromThrustMassModelSettings" title="FromThrustMassModelSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">FromThrustMassModelSettings</span></code></a> constructor to true.</p></li>
@@ -277,11 +281,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -316,6 +319,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

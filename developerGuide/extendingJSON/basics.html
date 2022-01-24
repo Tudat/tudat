@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
@@ -198,34 +202,34 @@
 <p>The external library used by the <a class="reference internal" href="../../tutorials/jsonInterface/index.html#jsoninterface"><span class="std std-ref">JSON Interface</span></a> is <a class="reference external" href="http://github.com/nlohmann/json">JSON for Modern C++</a>. The basic concepts necessary to understand the following sections are provided here.</p>
 <div class="section" id="including-the-library">
 <h2>Including the library<a class="headerlink" href="#including-the-library" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;json/src/json.hpp&quot;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;json/src/json.hpp&quot;</span><span class="cp"></span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="serialisation-and-deserialisation">
 <h2>Serialisation and deserialisation<a class="headerlink" href="#serialisation-and-deserialisation" title="Permalink to this headline">¶</a></h2>
 <p>Parse a JSON-formatted <code class="xref py py-class docutils literal notranslate"><span class="pre">std::string</span></code> as <code class="xref py py-class docutils literal notranslate"><span class="pre">nlohmann::json</span></code> (deserialisation):</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;[0, 1, 2]&quot;</span><span class="p">;</span>
-<span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">j</span> <span class="o">=</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="o">::</span><span class="n">parse</span><span class="p">(</span> <span class="n">str</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;[0, 1, 2]&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="o">::</span><span class="n">parse</span><span class="p">(</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Parse a JSON file as <code class="xref py py-class docutils literal notranslate"><span class="pre">nlohmann::json</span></code> (deserialisation):</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">filePath</span> <span class="o">=</span> <span class="p">...</span>
-<span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">stream</span><span class="p">(</span> <span class="n">filePath</span> <span class="p">);</span>
-<span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">j</span> <span class="o">=</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="o">::</span><span class="n">parse</span><span class="p">(</span> <span class="n">stream</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">filePath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="w"> </span><span class="n">stream</span><span class="p">(</span><span class="w"> </span><span class="n">filePath</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="o">::</span><span class="n">parse</span><span class="p">(</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Convert a <code class="xref py py-class docutils literal notranslate"><span class="pre">nlohmann::json</span></code> object to JSON-formatted <code class="xref py py-class docutils literal notranslate"><span class="pre">std::string</span></code> (serialisation):</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">j</span> <span class="o">=</span> <span class="p">...</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">oneLineString</span> <span class="o">=</span> <span class="n">j</span><span class="p">.</span><span class="n">dump</span><span class="p">(</span> <span class="p">);</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">multiLineStringWithIndent</span> <span class="o">=</span> <span class="n">j</span><span class="p">.</span><span class="n">dump</span><span class="p">(</span> <span class="mi">2</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">oneLineString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="p">.</span><span class="n">dump</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">multiLineStringWithIndent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="p">.</span><span class="n">dump</span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where the (optional) argument of the <code class="docutils literal notranslate"><span class="pre">dump</span></code> method is the number of spaces used for each indentation level.</p>
 <p>Print a <code class="xref py py-class docutils literal notranslate"><span class="pre">nlohmann::json</span></code> object as JSON-formatted text (serialisation):</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">j</span> <span class="o">=</span> <span class="p">...</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">j</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">j</span><span class="p">.</span><span class="n">dump</span><span class="p">(</span> <span class="mi">2</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">j</span><span class="p">.</span><span class="n">dump</span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -235,34 +239,34 @@
 <blockquote>
 <div><ul>
 <li><p><span class="jsontype">null</span></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">j</span><span class="p">;</span>                            <span class="c1">// j.is_null( ) -&gt; true</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w">                            </span><span class="c1">// j.is_null( ) -&gt; true</span>
 
-<span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">k</span> <span class="o">=</span> <span class="p">...</span>                       <span class="c1">// k.is_null( ) -&gt; false</span>
-<span class="n">k</span> <span class="o">=</span> <span class="n">json</span><span class="p">(</span> <span class="p">);</span>                                 <span class="c1">// k.is_null( ) -&gt; true</span>
+<span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span><span class="w">                       </span><span class="c1">// k.is_null( ) -&gt; false</span>
+<span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">json</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w">                                 </span><span class="c1">// k.is_null( ) -&gt; true</span>
 </pre></div>
 </div>
 </li>
 <li><p><span class="jsontype">object</span>: similar to <code class="xref py py-class docutils literal notranslate"><span class="pre">std::map</span></code>, but with the possibility to mix different value types and with keys always of type string.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">j</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;zero&quot;</span> <span class="p">},</span> <span class="p">{</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="mi">1</span> <span class="p">}</span> <span class="p">};</span>    <span class="c1">// j.is_object( ) -&gt; true</span>
-<span class="n">j</span><span class="p">[</span> <span class="s">&quot;b&quot;</span> <span class="p">];</span>                                              <span class="c1">// 1</span>
-<span class="n">j</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span>                                             <span class="c1">// 2</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;zero&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">};</span><span class="w">    </span><span class="c1">// j.is_object( ) -&gt; true</span>
+<span class="n">j</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="w"> </span><span class="p">];</span><span class="w">                                              </span><span class="c1">// 1</span>
+<span class="n">j</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w">                                             </span><span class="c1">// 2</span>
 
-<span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">k</span><span class="p">;</span>                                      <span class="c1">// k.is_object( ) -&gt; false</span>
-<span class="n">k</span><span class="p">[</span> <span class="s">&quot;a&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                                          <span class="c1">// k.is_object( ) -&gt; true</span>
+<span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w">                                      </span><span class="c1">// k.is_object( ) -&gt; false</span>
+<span class="n">k</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">                                          </span><span class="c1">// k.is_object( ) -&gt; true</span>
 </pre></div>
 </div>
 </li>
 <li><p><span class="jsontype">array</span>: similar to <code class="xref py py-class docutils literal notranslate"><span class="pre">std::vector</span></code>, but with the possibility to mix different value types.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">j</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;one&quot;</span> <span class="p">};</span>             <span class="c1">// j.is_array( ) -&gt; true</span>
-<span class="n">j</span><span class="p">[</span> <span class="mi">1</span> <span class="p">];</span>                                      <span class="c1">// &quot;one&quot;</span>
-<span class="n">j</span><span class="p">.</span><span class="n">empty</span><span class="p">(</span> <span class="p">);</span>                                  <span class="c1">// false</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;one&quot;</span><span class="w"> </span><span class="p">};</span><span class="w">             </span><span class="c1">// j.is_array( ) -&gt; true</span>
+<span class="n">j</span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">];</span><span class="w">                                      </span><span class="c1">// &quot;one&quot;</span>
+<span class="n">j</span><span class="p">.</span><span class="n">empty</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w">                                  </span><span class="c1">// false</span>
 
-<span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">k</span><span class="p">;</span>                                      <span class="c1">// k.is_array( ) -&gt; false</span>
-<span class="n">k</span><span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>                                <span class="c1">// k.is_array( ) -&gt; true</span>
-<span class="n">k</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;pi&quot;</span> <span class="p">);</span>                         <span class="c1">//</span>
+<span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w">                                      </span><span class="c1">// k.is_array( ) -&gt; false</span>
+<span class="n">k</span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w">                                </span><span class="c1">// k.is_array( ) -&gt; true</span>
+<span class="n">k</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;pi&quot;</span><span class="w"> </span><span class="p">);</span><span class="w">                         </span><span class="c1">//</span>
 <span class="c1">// k[ &quot;b&quot; ] = 1;                             // run-time error</span>
-<span class="n">k</span> <span class="o">=</span> <span class="n">json</span><span class="p">(</span> <span class="p">);</span>                                 <span class="c1">// k.is_null( ) -&gt; true</span>
-<span class="n">k</span><span class="p">[</span> <span class="s">&quot;b&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>                                <span class="c1">// k.is_object( ) -&gt; true</span>
+<span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">json</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w">                                 </span><span class="c1">// k.is_null( ) -&gt; true</span>
+<span class="n">k</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">                                </span><span class="c1">// k.is_object( ) -&gt; true</span>
 </pre></div>
 </div>
 </li>
@@ -273,9 +277,9 @@
 </div></blockquote>
 <p>The types <span class="jsontype">object</span> and <span class="jsontype">array</span> are known as structured types (the method <code class="docutils literal notranslate"><span class="pre">is_structured</span></code> will return <code class="docutils literal notranslate"><span class="pre">true</span></code>), while the types <span class="jsontype">string</span>, <span class="jsontype">number</span> and <span class="jsontype">boolean</span> are known as primitive types (the method <code class="docutils literal notranslate"><span class="pre">is_primitive</span></code> will return <code class="docutils literal notranslate"><span class="pre">true</span></code>).</p>
 <p>Structured <code class="xref py py-class docutils literal notranslate"><span class="pre">nlohmann::json</span></code> objects are containers of <code class="xref py py-class docutils literal notranslate"><span class="pre">nlohmann::json</span></code> objects (of any value type). This means that if we create the following <code class="xref py py-class docutils literal notranslate"><span class="pre">nlohmann::json</span></code> object of array type:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">aDouble</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">aString</span> <span class="o">=</span> <span class="s">&quot;two&quot;</span><span class="p">;</span>
-<span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">j</span> <span class="o">=</span> <span class="p">{</span> <span class="n">aDouble</span><span class="p">,</span> <span class="n">aString</span> <span class="p">};</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="n">aDouble</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">aString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;two&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">aDouble</span><span class="p">,</span><span class="w"> </span><span class="n">aString</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>then when we access any of its elements (e.g. <code class="docutils literal notranslate"><span class="pre">j[</span> <span class="pre">0</span> <span class="pre">]</span></code> or <code class="docutils literal notranslate"><span class="pre">j[</span> <span class="pre">1</span> <span class="pre">]</span></code>) we will not get a <code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">std::string</span></code>, but a <code class="xref py py-class docutils literal notranslate"><span class="pre">nlohmann::json</span></code> object (with value type <span class="jsontype">number</span> or <span class="jsontype">string</span> in this case).</p>
@@ -334,11 +338,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -373,6 +376,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -104,7 +108,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">6. Low-Thrust Trajectory Design Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">Low-Thrust Trajectory Design Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mathTools/index.html">6. Basic Mathematics Tools</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">7. Other Libraries</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="inputOutput.html">7.1. Input/Output</a></li>
@@ -276,15 +280,15 @@
 <p>One of the main advantages of the use of Spice in Tudat is the use of Spice ephemerides. It indeed allows for directly retrieving the states of some of the celestial bodies from the kernels, without having to propagte their dynamics. This can save a significant fraction of the total computational time, while not deteriorating the accuracy too severely.</p>
 <p>Two different classes have been implemented to generate ephemerides based on the Spice data.</p>
 <dl class="py class">
-<dt id="SpiceEphemeris">
-<em class="property">class </em><code class="sig-name descname">SpiceEphemeris</code><a class="headerlink" href="#SpiceEphemeris" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="SpiceEphemeris">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SpiceEphemeris</span></span><a class="headerlink" href="#SpiceEphemeris" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for ephemerides based on Spice data. The state of the body is directly retrieved from the Spice kernels, without any need for propagating it.</p>
 </dd></dl>
 
 <p>Such a Spice ephemeris can be created from the following class of ephemeris settings (see <a class="reference internal" href="../environmentSetup/setup.html#tudatfeaturesenvironmentsetup"><span class="std std-ref">Setting up the Environment</span></a> for more details):</p>
 <dl class="py class">
-<dt id="DirectSpiceEphemerisSettings">
-<em class="property">class </em><code class="sig-name descname">DirectSpiceEphemerisSettings</code><a class="headerlink" href="#DirectSpiceEphemerisSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="DirectSpiceEphemerisSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DirectSpiceEphemerisSettings</span></span><a class="headerlink" href="#DirectSpiceEphemerisSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class of ephemeris settings to set up a ephemeris model directly retrieved from Spice, specifying the frame origin and orientation. Among the available options, it is also possible to choose to apply correcting for stellar and light-time abberations.</p>
 </dd></dl>
 
@@ -298,57 +302,57 @@
 <li><p>The Spice functions cannot deal with <code class="docutils literal notranslate"><span class="pre">TUDAT_NAN</span></code> inputs. This can occur in particular when using variable step-size integrators in combination with Spice data: if the minimum step-size is exceeded and a <code class="docutils literal notranslate"><span class="pre">TUDAT_NAN</span></code> is returned for the current time, it can then be passed as input when trying to retrieve the body state from Spice kernels. The following error is then returned:</p></li>
 </ul>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="n">Toolkit</span> <span class="nl">version</span><span class="p">:</span> <span class="n">N0065</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="n">Toolkit</span><span class="w"> </span><span class="nl">version</span><span class="p">:</span><span class="w"> </span><span class="n">N0065</span><span class="w"></span>
 
- <span class="n">SPICE</span><span class="p">(</span><span class="n">SPKINSUFFDATA</span><span class="p">)</span> <span class="o">--</span>
+<span class="w"> </span><span class="n">SPICE</span><span class="p">(</span><span class="n">SPKINSUFFDATA</span><span class="p">)</span><span class="w"> </span><span class="o">--</span><span class="w"></span>
 
- <span class="n">Insufficient</span> <span class="n">ephemeris</span> <span class="n">data</span> <span class="n">has</span> <span class="n">been</span> <span class="n">loaded</span> <span class="n">to</span> <span class="n">compute</span> <span class="n">the</span> <span class="n">state</span> <span class="n">of</span> <span class="mi">1000093</span>
- <span class="p">(</span><span class="n">TEMPEL</span> <span class="mi">1</span><span class="p">)</span> <span class="n">relative</span> <span class="n">to</span> <span class="mi">0</span> <span class="p">(</span><span class="n">SOLAR</span> <span class="n">SYSTEM</span> <span class="n">BARYCENTER</span><span class="p">)</span> <span class="n">at</span> <span class="n">the</span> <span class="n">ephemeris</span> <span class="n">epoch</span>
- <span class="mi">5879611</span> <span class="n">B</span><span class="p">.</span><span class="n">C</span><span class="p">.</span> <span class="n">JUN</span> <span class="mi">23</span> <span class="mi">0</span><span class="o">-:</span><span class="mi">0</span><span class="o">-:-</span><span class="mf">23.64</span><span class="p">.</span>
+<span class="w"> </span><span class="n">Insufficient</span><span class="w"> </span><span class="n">ephemeris</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="n">loaded</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">compute</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="mi">1000093</span><span class="w"></span>
+<span class="w"> </span><span class="p">(</span><span class="n">TEMPEL</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">relative</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">(</span><span class="n">SOLAR</span><span class="w"> </span><span class="n">SYSTEM</span><span class="w"> </span><span class="n">BARYCENTER</span><span class="p">)</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">ephemeris</span><span class="w"> </span><span class="n">epoch</span><span class="w"></span>
+<span class="w"> </span><span class="mi">5879611</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">C</span><span class="p">.</span><span class="w"> </span><span class="n">JUN</span><span class="w"> </span><span class="mi">23</span><span class="w"> </span><span class="mi">0</span><span class="o">-:</span><span class="mi">0</span><span class="o">-:</span><span class="mf">-23.64</span><span class="p">.</span><span class="w"></span>
 
- <span class="n">A</span> <span class="n">traceback</span> <span class="n">follows</span><span class="p">.</span>  <span class="n">The</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">highest</span> <span class="n">level</span> <span class="k">module</span> <span class="n">is</span> <span class="n">first</span><span class="p">.</span>
- <span class="n">spkezr_c</span> <span class="o">--&gt;</span> <span class="n">SPKEZR</span> <span class="o">--&gt;</span> <span class="n">SPKEZ</span> <span class="o">--&gt;</span> <span class="n">SPKACS</span> <span class="o">--&gt;</span> <span class="n">SPKAPS</span> <span class="o">--&gt;</span> <span class="n">SPKLTC</span> <span class="o">--&gt;</span> <span class="n">SPKGEO</span>
+<span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">traceback</span><span class="w"> </span><span class="n">follows</span><span class="p">.</span><span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">highest</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="k">module</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">first</span><span class="p">.</span><span class="w"></span>
+<span class="w"> </span><span class="n">spkezr_c</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">SPKEZR</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">SPKEZ</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">SPKACS</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">SPKAPS</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">SPKLTC</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">SPKGEO</span><span class="w"></span>
 
-<span class="n">Oh</span><span class="p">,</span> <span class="n">by</span> <span class="n">the</span> <span class="nl">way</span><span class="p">:</span>  <span class="n">The</span> <span class="n">SPICELIB</span> <span class="n">error</span> <span class="n">handling</span> <span class="n">actions</span> <span class="n">are</span> <span class="n">USER</span><span class="o">-</span><span class="n">TAILORABLE</span><span class="p">.</span>  <span class="n">You</span>
-<span class="n">can</span> <span class="n">choose</span> <span class="n">whether</span> <span class="n">the</span> <span class="n">Toolkit</span> <span class="n">aborts</span> <span class="n">or</span> <span class="n">continues</span> <span class="n">when</span> <span class="n">errors</span> <span class="n">occur</span><span class="p">,</span> <span class="n">which</span>
-<span class="n">error</span> <span class="n">messages</span> <span class="n">to</span> <span class="n">output</span><span class="p">,</span> <span class="n">and</span> <span class="n">where</span> <span class="n">to</span> <span class="n">send</span> <span class="n">the</span> <span class="n">output</span><span class="p">.</span>  <span class="n">Please</span> <span class="n">read</span> <span class="n">the</span> <span class="n">ERROR</span>
-<span class="s">&quot;Required Reading&quot;</span> <span class="n">file</span><span class="p">,</span> <span class="n">or</span> <span class="n">see</span> <span class="n">the</span> <span class="n">routines</span> <span class="n">ERRACT</span><span class="p">,</span> <span class="n">ERRDEV</span><span class="p">,</span> <span class="n">and</span> <span class="n">ERRPRT</span><span class="p">.</span>
+<span class="n">Oh</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="nl">way</span><span class="p">:</span><span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">SPICELIB</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">handling</span><span class="w"> </span><span class="n">actions</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">USER</span><span class="o">-</span><span class="n">TAILORABLE</span><span class="p">.</span><span class="w">  </span><span class="n">You</span><span class="w"></span>
+<span class="n">can</span><span class="w"> </span><span class="n">choose</span><span class="w"> </span><span class="n">whether</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">Toolkit</span><span class="w"> </span><span class="n">aborts</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">continues</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="n">occur</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="w"></span>
+<span class="n">error</span><span class="w"> </span><span class="n">messages</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">send</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">output</span><span class="p">.</span><span class="w">  </span><span class="n">Please</span><span class="w"> </span><span class="n">read</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">ERROR</span><span class="w"></span>
+<span class="s">&quot;Required Reading&quot;</span><span class="w"> </span><span class="n">file</span><span class="p">,</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">see</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">routines</span><span class="w"> </span><span class="n">ERRACT</span><span class="p">,</span><span class="w"> </span><span class="n">ERRDEV</span><span class="p">,</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">ERRPRT</span><span class="p">.</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <ul>
 <li><p>It can also occur that one tries to retrieve non-existing data from Spice. Especially when retrieving a body ephemeris, the time interval over which the ephemeris data are available is limited and it might then be exceeded, leading to the following error message:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Toolkit</span> <span class="nl">version</span><span class="p">:</span> <span class="n">N0065</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Toolkit</span><span class="w"> </span><span class="nl">version</span><span class="p">:</span><span class="w"> </span><span class="n">N0065</span><span class="w"></span>
 
-<span class="n">SPICE</span><span class="p">(</span><span class="n">SPKINSUFFDATA</span><span class="p">)</span> <span class="o">--</span>
+<span class="n">SPICE</span><span class="p">(</span><span class="n">SPKINSUFFDATA</span><span class="p">)</span><span class="w"> </span><span class="o">--</span><span class="w"></span>
 
-<span class="n">Insufficient</span> <span class="n">ephemeris</span> <span class="n">data</span> <span class="n">has</span> <span class="n">been</span> <span class="n">loaded</span> <span class="n">to</span> <span class="n">compute</span> <span class="n">the</span> <span class="n">state</span> <span class="n">of</span> <span class="mi">1000093</span>
-<span class="p">(</span><span class="n">TEMPEL</span> <span class="mi">1</span><span class="p">)</span> <span class="n">relative</span> <span class="n">to</span> <span class="mi">0</span> <span class="p">(</span><span class="n">SOLAR</span> <span class="n">SYSTEM</span> <span class="n">BARYCENTER</span><span class="p">)</span> <span class="n">at</span> <span class="n">the</span> <span class="n">ephemeris</span> <span class="n">epoch</span> <span class="mi">2013</span>
-<span class="n">SEP</span> <span class="mi">24</span> <span class="mi">12</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mf">00.000</span><span class="p">.</span>
+<span class="n">Insufficient</span><span class="w"> </span><span class="n">ephemeris</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="n">loaded</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">compute</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="mi">1000093</span><span class="w"></span>
+<span class="p">(</span><span class="n">TEMPEL</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">relative</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">(</span><span class="n">SOLAR</span><span class="w"> </span><span class="n">SYSTEM</span><span class="w"> </span><span class="n">BARYCENTER</span><span class="p">)</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">ephemeris</span><span class="w"> </span><span class="n">epoch</span><span class="w"> </span><span class="mi">2013</span><span class="w"></span>
+<span class="n">SEP</span><span class="w"> </span><span class="mi">24</span><span class="w"> </span><span class="mi">12</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mf">00.000</span><span class="p">.</span><span class="w"></span>
 
-<span class="n">A</span> <span class="n">traceback</span> <span class="n">follows</span><span class="p">.</span>  <span class="n">The</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">highest</span> <span class="n">level</span> <span class="k">module</span> <span class="n">is</span> <span class="n">first</span><span class="p">.</span>
-<span class="n">spkezr_c</span> <span class="o">--&gt;</span> <span class="n">SPKEZR</span> <span class="o">--&gt;</span> <span class="n">SPKEZ</span> <span class="o">--&gt;</span> <span class="n">SPKACS</span> <span class="o">--&gt;</span> <span class="n">SPKAPS</span> <span class="o">--&gt;</span> <span class="n">SPKLTC</span> <span class="o">--&gt;</span> <span class="n">SPKGEO</span>
+<span class="n">A</span><span class="w"> </span><span class="n">traceback</span><span class="w"> </span><span class="n">follows</span><span class="p">.</span><span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">highest</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="k">module</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">first</span><span class="p">.</span><span class="w"></span>
+<span class="n">spkezr_c</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">SPKEZR</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">SPKEZ</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">SPKACS</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">SPKAPS</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">SPKLTC</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">SPKGEO</span><span class="w"></span>
 
-<span class="n">Oh</span><span class="p">,</span> <span class="n">by</span> <span class="n">the</span> <span class="nl">way</span><span class="p">:</span>  <span class="n">The</span> <span class="n">SPICELIB</span> <span class="n">error</span> <span class="n">handling</span> <span class="n">actions</span> <span class="n">are</span> <span class="n">USER</span><span class="o">-</span><span class="n">TAILORABLE</span><span class="p">.</span>  <span class="n">You</span>
-<span class="n">can</span> <span class="n">choose</span> <span class="n">whether</span> <span class="n">the</span> <span class="n">Toolkit</span> <span class="n">aborts</span> <span class="n">or</span> <span class="n">continues</span> <span class="n">when</span> <span class="n">errors</span> <span class="n">occur</span><span class="p">,</span> <span class="n">which</span>
-<span class="n">error</span> <span class="n">messages</span> <span class="n">to</span> <span class="n">output</span><span class="p">,</span> <span class="n">and</span> <span class="n">where</span> <span class="n">to</span> <span class="n">send</span> <span class="n">the</span> <span class="n">output</span><span class="p">.</span>  <span class="n">Please</span> <span class="n">read</span> <span class="n">the</span> <span class="n">ERROR</span>
-<span class="s">&quot;Required Reading&quot;</span> <span class="n">file</span><span class="p">,</span> <span class="n">or</span> <span class="n">see</span> <span class="n">the</span> <span class="n">routines</span> <span class="n">ERRACT</span><span class="p">,</span> <span class="n">ERRDEV</span><span class="p">,</span> <span class="n">and</span> <span class="n">ERRPRT</span><span class="p">.</span>
+<span class="n">Oh</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="nl">way</span><span class="p">:</span><span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">SPICELIB</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">handling</span><span class="w"> </span><span class="n">actions</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">USER</span><span class="o">-</span><span class="n">TAILORABLE</span><span class="p">.</span><span class="w">  </span><span class="n">You</span><span class="w"></span>
+<span class="n">can</span><span class="w"> </span><span class="n">choose</span><span class="w"> </span><span class="n">whether</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">Toolkit</span><span class="w"> </span><span class="n">aborts</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">continues</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="n">occur</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="w"></span>
+<span class="n">error</span><span class="w"> </span><span class="n">messages</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">send</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">output</span><span class="p">.</span><span class="w">  </span><span class="n">Please</span><span class="w"> </span><span class="n">read</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">ERROR</span><span class="w"></span>
+<span class="s">&quot;Required Reading&quot;</span><span class="w"> </span><span class="n">file</span><span class="p">,</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">see</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">routines</span><span class="w"> </span><span class="n">ERRACT</span><span class="p">,</span><span class="w"> </span><span class="n">ERRDEV</span><span class="p">,</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">ERRPRT</span><span class="p">.</span><span class="w"></span>
 </pre></div>
 </div>
 <p>As mentioned previously, some ephemerides data files have been reduced to avoid loading too large files in Tudat. You might want to extend the time range of the ephemerides files so that it can cover the timescale of your propagation. Modifying the time interval (and more generally the different properties) of an ephemerides file is done via the SPKmerge program. This executable can be downloaded from <a class="reference external" href="https://naif.jpl.nasa.gov/naif/utilities.html">https://naif.jpl.nasa.gov/naif/utilities.html</a> (first select the platform and architecture corresponding to your own laptop, and then download the <code class="docutils literal notranslate"><span class="pre">spkmerge</span></code> executable from the list of available utilities). When running <code class="docutils literal notranslate"><span class="pre">SPKmerge</span></code>, it will ask for the path and name of an input file containing the required characteristics of the ephemerides file you want to create. The new ephemerides file is generated by combining different already-existing Spice kernels, for specific bodies and dates, all defined by the user in the input file. All already-existing Spice kernels imported in Tudat can be found in <code class="docutils literal notranslate"><span class="pre">/tudatBundle/tudat/Tudat/External/SpiceInterface/Kernels/</span></code> and other kernels can be downloaded from <a class="reference external" href="https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/">https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/</a> if necessary). To give an example, the <code class="docutils literal notranslate"><span class="pre">de430_small.inp</span></code> input file, from which the <code class="docutils literal notranslate"><span class="pre">de430_small.bsp</span></code> kernel has been generated, is written as follows.</p>
 </li>
 </ul>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LEAPSECONDS_KERNEL</span>   <span class="o">=</span> <span class="n">naif0012</span><span class="p">.</span><span class="n">tls</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LEAPSECONDS_KERNEL</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">naif0012</span><span class="p">.</span><span class="n">tls</span><span class="w"></span>
 
-<span class="n">SPK_KERNEL</span>           <span class="o">=</span> <span class="n">de430_small</span><span class="p">.</span><span class="n">bsp</span>
-<span class="n">BEGIN_TIME</span>          <span class="o">=</span> <span class="mi">1975</span> <span class="n">JAN</span> <span class="mo">01</span>
-<span class="n">END_TIME</span>            <span class="o">=</span> <span class="mi">2025</span> <span class="n">JAN</span> <span class="mo">01</span>
-<span class="n">SOURCE_SPK_KERNEL</span>   <span class="o">=</span> <span class="n">de430</span><span class="p">.</span><span class="n">bsp</span>
-<span class="n">SOURCE_SPK_KERNEL</span>   <span class="o">=</span> <span class="n">mar097</span><span class="p">.</span><span class="n">bsp</span>
-<span class="n">BODIES</span> <span class="o">=</span> <span class="mi">499</span>
-<span class="n">SOURCE_SPK_KERNEL</span>   <span class="o">=</span> <span class="n">jup310</span><span class="p">.</span><span class="n">bsp</span>
-<span class="n">BODIES</span> <span class="o">=</span> <span class="mi">599</span>
+<span class="n">SPK_KERNEL</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="n">de430_small</span><span class="p">.</span><span class="n">bsp</span><span class="w"></span>
+<span class="n">BEGIN_TIME</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="mi">1975</span><span class="w"> </span><span class="n">JAN</span><span class="w"> </span><span class="mo">01</span><span class="w"></span>
+<span class="n">END_TIME</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="mi">2025</span><span class="w"> </span><span class="n">JAN</span><span class="w"> </span><span class="mo">01</span><span class="w"></span>
+<span class="n">SOURCE_SPK_KERNEL</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">de430</span><span class="p">.</span><span class="n">bsp</span><span class="w"></span>
+<span class="n">SOURCE_SPK_KERNEL</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">mar097</span><span class="p">.</span><span class="n">bsp</span><span class="w"></span>
+<span class="n">BODIES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">499</span><span class="w"></span>
+<span class="n">SOURCE_SPK_KERNEL</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">jup310</span><span class="p">.</span><span class="n">bsp</span><span class="w"></span>
+<span class="n">BODIES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">599</span><span class="w"></span>
 </pre></div>
 </div>
 <dl class="simple">
@@ -418,11 +422,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -457,6 +460,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

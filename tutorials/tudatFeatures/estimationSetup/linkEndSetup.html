@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -207,17 +211,17 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">geodetic_position</span></code> For this type, the three entries of the position are the altitude (w.r.t. the body’s shape model), the geodetic latitude and the longitude (in that order).</p></li>
 </ul>
 <p>Now, creating a ground station is done by:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span> <span class="n">earth</span> <span class="o">=</span> <span class="p">...;</span><span class="c1">// Define object for Earth</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Body</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">earth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...;</span><span class="c1">// Define object for Earth</span>
 
 <span class="c1">// Define name of station</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">stationName</span> <span class="o">=</span> <span class="s">&quot;Graz&quot;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">stationName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Graz&quot;</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">// Position of ground station</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">stationPosition</span><span class="p">;</span>
-<span class="n">stationPosition</span> <span class="o">&lt;&lt;</span> <span class="mf">4194511.7</span><span class="p">,</span> <span class="mf">1162789.7</span><span class="p">,</span> <span class="mf">4647362.5</span><span class="p">;</span>
-<span class="n">PositionElementTypes</span> <span class="n">positionType</span> <span class="o">=</span> <span class="n">cartesian_position</span><span class="p">;</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="n">stationPosition</span><span class="p">;</span><span class="w"></span>
+<span class="n">stationPosition</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mf">4194511.7</span><span class="p">,</span><span class="w"> </span><span class="mf">1162789.7</span><span class="p">,</span><span class="w"> </span><span class="mf">4647362.5</span><span class="p">;</span><span class="w"></span>
+<span class="n">PositionElementTypes</span><span class="w"> </span><span class="n">positionType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cartesian_position</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">createGroundStation</span><span class="p">(</span> <span class="n">earth</span><span class="p">,</span> <span class="n">stationName</span><span class="p">,</span> <span class="n">stationPosition</span><span class="p">,</span> <span class="n">positionType</span> <span class="p">);</span>
+<span class="n">createGroundStation</span><span class="p">(</span><span class="w"> </span><span class="n">earth</span><span class="p">,</span><span class="w"> </span><span class="n">stationName</span><span class="p">,</span><span class="w"> </span><span class="n">stationPosition</span><span class="p">,</span><span class="w"> </span><span class="n">positionType</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Which will create a ground station named <code class="docutils literal notranslate"><span class="pre">&quot;Graz&quot;</span></code> on the body <code class="docutils literal notranslate"><span class="pre">earth</span></code> at the given position.</p>
@@ -225,24 +229,24 @@
 <div class="section" id="creating-a-set-of-link-ends">
 <h2><span class="section-number">4.1.2. </span>Creating a Set of Link Ends<a class="headerlink" href="#creating-a-set-of-link-ends" title="Permalink to this headline">¶</a></h2>
 <p>A set of link ends used for a given observable are stored in a <code class="docutils literal notranslate"><span class="pre">LinkEnds</span></code> type, which is a <code class="docutils literal notranslate"><span class="pre">typedef</span></code> for <code class="docutils literal notranslate"><span class="pre">std::map&lt;</span> <span class="pre">LinkEndType,</span> <span class="pre">std::pair&lt;</span> <span class="pre">std::string,</span> <span class="pre">std::string</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></code>. As you can see, the map value is a pair of strings. The first entry of the string is the body on which the link end is placed, the second entry the reference point on this body (typically the ground station). In the case where the second entry is empty (as is often the case for spacecraft), the body’s center of mass is used. An example of defining link ends is given below:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LinkEnds</span> <span class="n">oneWayLinkEnds</span><span class="p">;</span>
-<span class="n">oneWayLinkEnds</span><span class="p">[</span> <span class="n">transmitter</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;Graz&quot;</span> <span class="p">);</span>
-<span class="n">oneWayLinkEnds</span><span class="p">[</span> <span class="n">receiver</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;LRO&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LinkEnds</span><span class="w"> </span><span class="n">oneWayLinkEnds</span><span class="p">;</span><span class="w"></span>
+<span class="n">oneWayLinkEnds</span><span class="p">[</span><span class="w"> </span><span class="n">transmitter</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Earth&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Graz&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">oneWayLinkEnds</span><span class="p">[</span><span class="w"> </span><span class="n">receiver</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;LRO&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This defines a link for which the ground station termed Graz on the boy called Earth acts as transmitter, and the body called LRO is used as the receiver (in this case placed at the body’s center of mass).</p>
 <p>An example of link-ends for a two-way link from Graz to LRO and back to Graz is:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LinkEnds</span> <span class="n">twoWayLinkEnds</span><span class="p">;</span>
-<span class="n">twoWayLinkEnds</span><span class="p">[</span> <span class="n">transmitter</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;Graz&quot;</span> <span class="p">);</span>
-<span class="n">twoWayLinkEnds</span><span class="p">[</span> <span class="n">reflector1</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;LRO&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span> <span class="p">);</span>
-<span class="n">twoWayLinkEnds</span><span class="p">[</span> <span class="n">receiver</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;Graz&quot;</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LinkEnds</span><span class="w"> </span><span class="n">twoWayLinkEnds</span><span class="p">;</span><span class="w"></span>
+<span class="n">twoWayLinkEnds</span><span class="p">[</span><span class="w"> </span><span class="n">transmitter</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Earth&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Graz&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">twoWayLinkEnds</span><span class="p">[</span><span class="w"> </span><span class="n">reflector1</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;LRO&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">twoWayLinkEnds</span><span class="p">[</span><span class="w"> </span><span class="n">receiver</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Earth&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Graz&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Where the Graz station now acts as both transmitter and receiver. Similarly, the receiver may be different from the transmitter (in what is typically called a three-way observable in Deep Space tracking ), so:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LinkEnds</span> <span class="n">twoWayLinkEnds</span><span class="p">;</span>
-<span class="n">twoWayLinkEnds</span><span class="p">[</span> <span class="n">transmitter</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;Graz&quot;</span> <span class="p">);</span>
-<span class="n">twoWayLinkEnds</span><span class="p">[</span> <span class="n">reflector1</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;LRO&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span> <span class="p">);</span>
-<span class="n">twoWayLinkEnds</span><span class="p">[</span> <span class="n">receiver</span> <span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="s">&quot;Matera&quot;</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LinkEnds</span><span class="w"> </span><span class="n">twoWayLinkEnds</span><span class="p">;</span><span class="w"></span>
+<span class="n">twoWayLinkEnds</span><span class="p">[</span><span class="w"> </span><span class="n">transmitter</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Earth&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Graz&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">twoWayLinkEnds</span><span class="p">[</span><span class="w"> </span><span class="n">reflector1</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;LRO&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">twoWayLinkEnds</span><span class="p">[</span><span class="w"> </span><span class="n">receiver</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Earth&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Matera&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where the signal is transmitter by Graz station, retransmitter or reflected by LRO, and then received by the Matera station.</p>
@@ -301,11 +305,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -340,6 +343,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

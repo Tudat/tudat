@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -202,37 +206,37 @@
 <p>This page presents an overview of the available options within <a class="reference internal" href="#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropagatorSettings</span></code></a>. As the name suggests, these settings define how the orbit is propagated within the <a class="reference internal" href="simulatorCreation.html#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a>.</p>
 <p>Similarly to the <a class="reference internal" href="integratorSettings.html#IntegratorSettings" title="IntegratorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntegratorSettings</span></code></a> discussed in <a class="reference internal" href="integratorSettings.html#tudatfeaturesintegratorsettings"><span class="std std-ref">Integrator Settings</span></a>, various derived classes are used to implement different settings:</p>
 <dl class="py class">
-<dt id="PropagatorSettings">
-<em class="property">class </em><code class="sig-name descname">PropagatorSettings</code><a class="headerlink" href="#PropagatorSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="PropagatorSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PropagatorSettings</span></span><a class="headerlink" href="#PropagatorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class from which the other settings classes described below are derived.</p>
 </dd></dl>
 
 <div class="section" id="single-arc-propagation">
 <h2><span class="section-number">3.2.1. </span>Single-arc Propagation<a class="headerlink" href="#single-arc-propagation" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="SingleArcPropagatorSettings">
-<em class="property">class </em><code class="sig-name descname">SingleArcPropagatorSettings</code><a class="headerlink" href="#SingleArcPropagatorSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="SingleArcPropagatorSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SingleArcPropagatorSettings</span></span><a class="headerlink" href="#SingleArcPropagatorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Derived class of <a class="reference internal" href="#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropagatorSettings</span></code></a>. Base class from which the other single-arc settings classes described below are derived. Settings object for a specific type (e.g. translational, rotational, etc.) are always derived from this class. This class (or in essence one of its derived classes) is used as input to the <code class="docutils literal notranslate"><span class="pre">SingleArcDynamicsSimulator</span></code>. A list of single-arc settings can be passed to a <code class="docutils literal notranslate"><span class="pre">MultiArcPropagatorSettings</span></code> to perform multi-arc propagation (see below).</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="TranslationalStatePropagatorSettings">
-<em class="property">class </em><code class="sig-name descname">TranslationalStatePropagatorSettings</code><a class="headerlink" href="#TranslationalStatePropagatorSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="TranslationalStatePropagatorSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TranslationalStatePropagatorSettings</span></span><a class="headerlink" href="#TranslationalStatePropagatorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class implements the framework required to propagate the translation state of a body. The constructor of this derived class is overloaded allowing two types of termination conditions:</p>
 <ul class="simple">
 <li><p>Termination when the simulation time reaches a predefined <code class="docutils literal notranslate"><span class="pre">endTime</span></code> (Default).</p></li>
 <li><p>Termination when a predefined dependent variables meets a certain criterion.</p></li>
 </ul>
 <dl class="py method">
-<dt>
-<code class="sig-name descname">Using default termination settings</code></dt>
-<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span><span class="n">StateScalarType</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span>
-                                                       <span class="n">accelerationsMap</span><span class="p">,</span>
-                                                       <span class="n">bodiesToIntegrate</span><span class="p">,</span>
-                                                       <span class="n">initialBodyStates</span><span class="p">,</span>
-                                                       <span class="n">endTime</span><span class="p">,</span>
-                                                       <span class="n">propagator</span><span class="p">,</span>
-                                                       <span class="n">dependentVariablesToSave</span> <span class="p">)</span>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">Using</span> <span class="pre">default</span> <span class="pre">termination</span> <span class="pre">settings</span></span></dt>
+<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span><span class="n">StateScalarType</span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">centralBodies</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">accelerationsMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">bodiesToIntegrate</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">initialBodyStates</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">endTime</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">propagator</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">dependentVariablesToSave</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -263,10 +267,10 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The state variables contained in <code class="docutils literal notranslate"><span class="pre">initialBodyStates</span></code> are ordered with respect to the elements of <code class="docutils literal notranslate"><span class="pre">centralBodies</span></code> and <code class="docutils literal notranslate"><span class="pre">bodiesToIntegrate</span></code>. Please take a look at the following pseudocode:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">centralBodies</span> <span class="o">=</span> <span class="p">{</span> <span class="n">Sun</span> <span class="p">,</span> <span class="n">Earth</span> <span class="p">,</span> <span class="n">Moon</span> <span class="p">}</span>
-<span class="n">bodiesToIntegrate</span> <span class="o">=</span> <span class="p">{</span> <span class="n">Earth</span> <span class="p">,</span> <span class="n">Moon</span> <span class="p">}</span>
-<span class="n">initialBodyStates</span> <span class="o">=</span> <span class="p">{</span> <span class="n">xEarthWrtSun</span> <span class="p">,</span> <span class="n">yEarthWrtSun</span> <span class="p">,</span> <span class="n">zEarthWrtSun</span> <span class="p">,</span> <span class="n">uEarthWrtSun</span> <span class="p">,</span> <span class="n">vEarthWrtSun</span> <span class="p">,</span> <span class="n">wEarthWrtSun</span> <span class="p">,</span>
-                  <span class="n">xMoonWrtEarth</span> <span class="p">,</span> <span class="n">yMoonWrtEarth</span> <span class="p">,</span> <span class="n">zMoonWrtEarth</span> <span class="p">,</span> <span class="n">uMoonWrtEarth</span> <span class="p">,</span> <span class="n">vMoonWrtEarth</span> <span class="p">,</span> <span class="n">wMoonWrtEarth</span> <span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">centralBodies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Sun</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Earth</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Moon</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="n">bodiesToIntegrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Earth</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Moon</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="n">initialBodyStates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">xEarthWrtSun</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">yEarthWrtSun</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">zEarthWrtSun</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">uEarthWrtSun</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">vEarthWrtSun</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">wEarthWrtSun</span><span class="w"> </span><span class="p">,</span><span class="w"></span>
+<span class="w">                  </span><span class="n">xMoonWrtEarth</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">yMoonWrtEarth</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">zMoonWrtEarth</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">uMoonWrtEarth</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">vMoonWrtEarth</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">wMoonWrtEarth</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -304,26 +308,26 @@
 </div></blockquote>
 </li>
 </ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span><span class="n">StateScalarType</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span>
-                                                       <span class="n">accelerationsMap</span><span class="p">,</span>
-                                                       <span class="n">bodiesToIntegrate</span><span class="p">,</span>
-                                                       <span class="n">initialBodyStates</span><span class="p">,</span>
-                                                       <span class="n">endTime</span><span class="p">,</span>
-                                                       <span class="n">propagator</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span><span class="n">StateScalarType</span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">centralBodies</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">accelerationsMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">bodiesToIntegrate</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">initialBodyStates</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">endTime</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">propagator</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="py method">
-<dt>
-<code class="sig-name descname">With user-defined termination settings</code></dt>
-<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span><span class="n">StateScalarType</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span>
-                                                       <span class="n">accelerationsMap</span><span class="p">,</span>
-                                                       <span class="n">bodiesToIntegrate</span><span class="p">,</span>
-                                                       <span class="n">initialBodyStates</span><span class="p">,</span>
-                                                       <span class="n">terminationSettings</span><span class="p">,</span>
-                                                       <span class="n">propagator</span><span class="p">,</span>
-                                                       <span class="n">dependentVariablesToSave</span> <span class="p">)</span>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">With</span> <span class="pre">user-defined</span> <span class="pre">termination</span> <span class="pre">settings</span></span></dt>
+<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span><span class="n">StateScalarType</span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">centralBodies</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">accelerationsMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">bodiesToIntegrate</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">initialBodyStates</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">terminationSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">propagator</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="n">dependentVariablesToSave</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -339,15 +343,15 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="RotationalStatePropagatorSettings">
-<em class="property">class </em><code class="sig-name descname">RotationalStatePropagatorSettings</code><a class="headerlink" href="#RotationalStatePropagatorSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="RotationalStatePropagatorSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RotationalStatePropagatorSettings</span></span><a class="headerlink" href="#RotationalStatePropagatorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class implements the framework required to propagate the rotational dynamics of a body. The settings are constructed as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RotationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="n">StateScalarType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">torqueModelMap</span><span class="p">,</span>
-                                                      <span class="n">bodiesToIntegrate</span><span class="p">,</span>
-                                                      <span class="n">initialBodyStates</span><span class="p">,</span>
-                                                      <span class="n">terminationSettings</span><span class="p">,</span>
-                                                      <span class="n">propagator</span><span class="p">,</span>
-                                                      <span class="n">dependentVariablesToSave</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RotationalStatePropagatorSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">torqueModelMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                      </span><span class="n">bodiesToIntegrate</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                      </span><span class="n">initialBodyStates</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                      </span><span class="n">terminationSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                      </span><span class="n">propagator</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                      </span><span class="n">dependentVariablesToSave</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -398,17 +402,17 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="MassPropagationSettings">
-<em class="property">class </em><code class="sig-name descname">MassPropagationSettings</code><a class="headerlink" href="#MassPropagationSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="MassPropagationSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MassPropagationSettings</span></span><a class="headerlink" href="#MassPropagationSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class implements the framework required to propagate the mass of a body. The constructor of this derived class is overloaded allowing either a single mass-rate per body or multiple mass-rates per body:</p>
 <dl class="py method">
-<dt>
-<code class="sig-name descname">Single mass-rate model per body</code></dt>
-<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MassPropagationSettings</span><span class="o">&lt;</span> <span class="n">StateScalarType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodiesWithMassToPropagate</span><span class="p">,</span>
-                                            <span class="n">massRateModels</span><span class="p">,</span>
-                                            <span class="n">initialBodyMasses</span><span class="p">,</span>
-                                            <span class="n">terminationSettings</span><span class="p">,</span>
-                                            <span class="n">dependentVariablesToSave</span> <span class="p">)</span>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">Single</span> <span class="pre">mass-rate</span> <span class="pre">model</span> <span class="pre">per</span> <span class="pre">body</span></span></dt>
+<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MassPropagationSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">bodiesWithMassToPropagate</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                            </span><span class="n">massRateModels</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                            </span><span class="n">initialBodyMasses</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                            </span><span class="n">terminationSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                            </span><span class="n">dependentVariablesToSave</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -442,13 +446,13 @@
 </dd></dl>
 
 <dl class="py method">
-<dt>
-<code class="sig-name descname">Various mass-rate models per body</code></dt>
-<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MassPropagationSettings</span><span class="o">&lt;</span> <span class="n">StateScalarType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodiesWithMassToPropagate</span><span class="p">,</span>
-                                            <span class="n">massRateModels</span><span class="p">,</span>
-                                            <span class="n">initialBodyMasses</span><span class="p">,</span>
-                                            <span class="n">terminationSettings</span><span class="p">,</span>
-                                            <span class="n">dependentVariablesToSave</span> <span class="p">)</span>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">Various</span> <span class="pre">mass-rate</span> <span class="pre">models</span> <span class="pre">per</span> <span class="pre">body</span></span></dt>
+<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MassPropagationSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">bodiesWithMassToPropagate</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                            </span><span class="n">massRateModels</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                            </span><span class="n">initialBodyMasses</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                            </span><span class="n">terminationSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                            </span><span class="n">dependentVariablesToSave</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -464,16 +468,16 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="CustomStatePropagatorSettings">
-<em class="property">class </em><code class="sig-name descname">CustomStatePropagatorSettings</code><a class="headerlink" href="#CustomStatePropagatorSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="CustomStatePropagatorSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CustomStatePropagatorSettings</span></span><a class="headerlink" href="#CustomStatePropagatorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class allows the user to define and propagate its own state derivative function. The constructor of this derived class is overloaded allowing the user to either use a scalar state or vector state:</p>
 <dl class="py method">
-<dt>
-<code class="sig-name descname">Using a scalar state</code></dt>
-<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CustomStatePropagatorSettings</span><span class="o">&lt;</span> <span class="n">StateScalarType</span><span class="p">,</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">stateDerivativeFunction</span><span class="p">,</span>
-                                                            <span class="n">initialState</span><span class="p">,</span>
-                                                            <span class="n">terminationSettings</span><span class="p">,</span>
-                                                            <span class="n">dependentVariablesToSave</span> <span class="p">)</span>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">Using</span> <span class="pre">a</span> <span class="pre">scalar</span> <span class="pre">state</span></span></dt>
+<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CustomStatePropagatorSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="p">,</span><span class="w"> </span><span class="n">TimeType</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">stateDerivativeFunction</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                            </span><span class="n">initialState</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                            </span><span class="n">terminationSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                            </span><span class="n">dependentVariablesToSave</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -497,12 +501,12 @@
 </dd></dl>
 
 <dl class="py method">
-<dt>
-<code class="sig-name descname">Using a vector state</code></dt>
-<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CustomStatePropagatorSettings</span><span class="o">&lt;</span> <span class="n">StateScalarType</span><span class="p">,</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">stateDerivativeFunction</span><span class="p">,</span>
-                                                            <span class="n">initialState</span><span class="p">,</span>
-                                                            <span class="n">terminationSettings</span><span class="p">,</span>
-                                                            <span class="n">dependentVariablesToSave</span> <span class="p">)</span>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">Using</span> <span class="pre">a</span> <span class="pre">vector</span> <span class="pre">state</span></span></dt>
+<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CustomStatePropagatorSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="p">,</span><span class="w"> </span><span class="n">TimeType</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">stateDerivativeFunction</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                            </span><span class="n">initialState</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                            </span><span class="n">terminationSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                            </span><span class="n">dependentVariablesToSave</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -523,17 +527,17 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="MultiTypePropagatorSettings">
-<em class="property">class </em><code class="sig-name descname">MultiTypePropagatorSettings</code><a class="headerlink" href="#MultiTypePropagatorSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="MultiTypePropagatorSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultiTypePropagatorSettings</span></span><a class="headerlink" href="#MultiTypePropagatorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This class is used to propagate multiple types of <a class="reference internal" href="#PropagatorSettings" title="PropagatorSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropagatorSettings</span></code></a> concurrently, for instance a translational-rotational dynamics, translational and mass dynamics (spacecraft under thrust) <em>etc</em>. Note that the types of dynamics need not apply to the same body, you may for instance propagate the translational state and mass of a spacecraft concurrently with the rotational state of the Earth.
 The constructor of this class is overloaded depending on how the list of propagator settings is passed (with the former being typical)      :</p>
 <dl class="py method">
-<dt>
-<code class="sig-name descname">Using an std::vector</code></dt>
-<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiTypePropagatorSettings</span><span class="o">&lt;</span> <span class="n">StateScalarType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">propagatorSettingsMap</span><span class="p">,</span>
-                                               <span class="n">terminationSettings</span><span class="p">,</span>
-                                               <span class="n">dependentVariablesToSave</span> <span class="p">)</span>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">Using</span> <span class="pre">an</span> <span class="pre">std::vector</span></span></dt>
+<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiTypePropagatorSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">propagatorSettingsMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                               </span><span class="n">terminationSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                               </span><span class="n">dependentVariablesToSave</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -547,11 +551,11 @@ The constructor of this class is overloaded depending on how the list of propaga
 </dd></dl>
 
 <dl class="py method">
-<dt>
-<code class="sig-name descname">Using an std::map</code></dt>
-<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiTypePropagatorSettings</span><span class="o">&lt;</span> <span class="n">StateScalarType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">propagatorSettingsMap</span><span class="p">,</span>
-                                                <span class="n">terminationSettings</span><span class="p">,</span>
-                                                <span class="n">dependentVariablesToSave</span> <span class="p">)</span>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">Using</span> <span class="pre">an</span> <span class="pre">std::map</span></span></dt>
+<dd><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiTypePropagatorSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">propagatorSettingsMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                </span><span class="n">terminationSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                </span><span class="n">dependentVariablesToSave</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -575,13 +579,13 @@ The constructor of this class is overloaded depending on how the list of propaga
 <div class="section" id="multi-and-hybrid-arc-propagation">
 <h2><span class="section-number">3.2.2. </span>Multi- and Hybrid-arc Propagation<a class="headerlink" href="#multi-and-hybrid-arc-propagation" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="MultiArcPropagatorSettings">
-<em class="property">class </em><code class="sig-name descname">MultiArcPropagatorSettings</code><a class="headerlink" href="#MultiArcPropagatorSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="MultiArcPropagatorSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultiArcPropagatorSettings</span></span><a class="headerlink" href="#MultiArcPropagatorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This class is meant to be used together with a <a class="reference internal" href="simulatorCreation.html#MultiArcDynamicsSimulator" title="MultiArcDynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiArcDynamicsSimulator</span></code></a>. This allows the numerical propagation to be performed in an arc-wise manner. Dynamical model settings may be defined differently per arc.</p>
 </div></blockquote>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiArcPropagatorSettings</span><span class="o">&lt;</span> <span class="n">StateScalarType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">singleArcSettings</span><span class="p">,</span>
-                                               <span class="n">transferInitialStateInformationPerArc</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiArcPropagatorSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">singleArcSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                               </span><span class="n">transferInitialStateInformationPerArc</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -600,12 +604,12 @@ The constructor of this class is overloaded depending on how the list of propaga
 </dd></dl>
 
 <dl class="py class">
-<dt id="HybridArcPropagatorSettings">
-<em class="property">class </em><code class="sig-name descname">HybridArcPropagatorSettings</code><a class="headerlink" href="#HybridArcPropagatorSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="HybridArcPropagatorSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">HybridArcPropagatorSettings</span></span><a class="headerlink" href="#HybridArcPropagatorSettings" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This class is meant to be used together with a <a class="reference internal" href="simulatorCreation.html#HybridArcDynamicsSimulator" title="HybridArcDynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">HybridArcDynamicsSimulator</span></code></a> (see this class description for more details on model implementation). This allows the numerical propagation to be performed, with any number of states propagated in a single arc, and any other states propagated in a multi-arc state. The results of the single-arc propagation are automatically used for the subsequent multi-arc propagation. A typical application is the propagation of a planetary orbiter (multi-arc) and the planet it is orbiting (single-arc).</p>
 </div></blockquote>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HybridArcPropagatorSettings</span><span class="o">&lt;</span> <span class="n">StateScalarType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">singleArcPropagatorSettings</span><span class="p">,</span> <span class="n">multiArcPropagatorSettings</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HybridArcPropagatorSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">singleArcPropagatorSettings</span><span class="p">,</span><span class="w"> </span><span class="n">multiArcPropagatorSettings</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -682,11 +686,10 @@ The constructor of this class is overloaded depending on how the list of propaga
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -721,6 +724,11 @@ The constructor of this class is overloaded depending on how the list of propaga
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

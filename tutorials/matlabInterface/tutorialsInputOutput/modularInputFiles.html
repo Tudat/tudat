@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -196,27 +200,27 @@
 </div>
 <p>The first part of the script sets up the <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object. This is done in a similar way as explained for previous examples.</p>
 <p>Once that all the settings have been defined, instead of calling <code class="docutils literal notranslate"><span class="pre">simulatinon.run()</span></code>, we export parts of the <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object to different JSON files. Before that, we change the current working directory in MATLAB to the directory in which the root JSON file (<code class="docutils literal notranslate"><span class="pre">main.json</span></code>) will be generated, so that relatives paths in the MATLAB script and in the input files coincide:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">exist</span><span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">,</span><span class="s">&#39;dir&#39;</span><span class="p">)</span> <span class="o">~=</span> <span class="mi">7</span>
-    <span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">);</span>
-<span class="n">end</span>
-<span class="s">originalWorkingDirectory</span> <span class="s">=</span> <span class="s">cd</span><span class="p">;</span>
-<span class="n">cd</span><span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="nb">exist</span><span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">,</span><span class="s">&#39;dir&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="mi">7</span><span class="w"></span>
+<span class="w">    </span><span class="nb">mkdir</span><span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="n">originalWorkingDirectory</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">cd</span><span class="p">;</span><span class="w"></span>
+<span class="nb">cd</span><span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>We also store the original working directory to set it back once that the file generation is done, and create the directory if it does not exist.</p>
 <p>We want to export different parts of the settings to separated files. For instance, we export the body settings to a file <code class="docutils literal notranslate"><span class="pre">bodies.json</span></code> inside the <code class="docutils literal notranslate"><span class="pre">input</span></code> directory:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">bodies</span> <span class="p">=</span> <span class="n">json</span><span class="p">.</span><span class="n">modular</span><span class="p">(</span><span class="n">simulation</span><span class="p">.</span><span class="n">bodies</span><span class="p">,</span><span class="s">&#39;bodies.json&#39;</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">bodies</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">json</span><span class="p">.</span><span class="n">modular</span><span class="p">(</span><span class="n">simulation</span><span class="p">.</span><span class="n">bodies</span><span class="p">,</span><span class="s">&#39;bodies.json&#39;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">json.modular</span></code> function exports the object specified as first argument to a file specified by the second argument, and returns the string <code class="docutils literal notranslate"><span class="pre">$(bodies.json)</span></code> in this case, which is assigned to <code class="docutils literal notranslate"><span class="pre">simulation.bodies</span></code>. In this way, the simulation object does not store the bodies anymore, but a reference to the file containing that information, by means of the special string <code class="docutils literal notranslate"><span class="pre">$()</span></code>.</p>
 <p>We can do the same for other settings:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">propagators</span> <span class="p">=</span> <span class="p">{</span><span class="n">json</span><span class="p">.</span><span class="n">modular</span><span class="p">(</span><span class="n">propagator</span><span class="p">,</span><span class="s">&#39;translationalPropagator.json&#39;</span><span class="p">)};</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span> <span class="p">=</span> <span class="n">json</span><span class="p">.</span><span class="n">modular</span><span class="p">(</span><span class="n">integrator</span><span class="p">,</span><span class="s">&#39;rk4.json&#39;</span><span class="p">);</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">export</span> <span class="p">=</span> <span class="n">json</span><span class="p">.</span><span class="n">modular</span><span class="p">(</span><span class="n">simulation</span><span class="p">.</span><span class="n">export</span><span class="p">,</span><span class="s">&#39;export.json&#39;</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">propagators</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="n">json</span><span class="p">.</span><span class="n">modular</span><span class="p">(</span><span class="n">propagator</span><span class="p">,</span><span class="s">&#39;translationalPropagator.json&#39;</span><span class="p">)};</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">json</span><span class="p">.</span><span class="n">modular</span><span class="p">(</span><span class="n">integrator</span><span class="p">,</span><span class="s">&#39;rk4.json&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">export</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">json</span><span class="p">.</span><span class="n">modular</span><span class="p">(</span><span class="n">simulation</span><span class="p">.</span><span class="n">export</span><span class="p">,</span><span class="s">&#39;export.json&#39;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Finally, we export the main JSON file:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span><span class="s">&#39;main.json&#39;</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span><span class="s">&#39;main.json&#39;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>which looks like this:</p>
@@ -320,11 +324,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -359,6 +362,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

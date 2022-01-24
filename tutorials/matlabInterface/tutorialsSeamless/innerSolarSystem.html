@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -199,76 +203,76 @@
 </pre></div>
 </div>
 <p>The first step is to include the source code of the MATLAB Interface into MATLAB’s path in the current session so that all the classes needed to set up the simulation can be accessed. This is done by writing:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">load</span><span class="p">();</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">load</span><span class="p">();</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Now, we create a <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object and specify the initial and final epochs and the global frame orientation:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span> <span class="p">=</span> <span class="n">Simulation</span><span class="p">();</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">initialEpoch</span> <span class="p">=</span> <span class="mf">1e7</span><span class="p">;</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">finalEpoch</span> <span class="p">=</span> <span class="n">simulation</span><span class="p">.</span><span class="n">initialEpoch</span> <span class="o">+</span> <span class="n">convert</span><span class="p">.</span><span class="n">toSI</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s">&#39;y&#39;</span><span class="p">);</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">spice</span><span class="p">.</span><span class="n">preloadEphemeris</span> <span class="p">=</span> <span class="n">false</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Simulation</span><span class="p">();</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">initialEpoch</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">1e7</span><span class="p">;</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">finalEpoch</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">simulation</span><span class="p">.</span><span class="n">initialEpoch</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">convert</span><span class="p">.</span><span class="n">toSI</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s">&#39;y&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">spice</span><span class="p">.</span><span class="n">preloadEphemeris</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Note that the function <code class="docutils literal notranslate"><span class="pre">toSI</span></code> from the <code class="docutils literal notranslate"><span class="pre">convert</span></code> package has been used to convert 2 years to seconds. In this case, we disable preloading ephemeris of the celestial bodies from Spice, as this is precisely what we are going to propagate.</p>
 <p>Next, we create the bodies. There exist predefined objects for celestial bodies (namely the Sun, the Moon and the eight planets), so these objects can be added directly without the need to specify their properties:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">addBodies</span><span class="p">(</span><span class="n">Sun</span><span class="p">,</span><span class="n">Mercury</span><span class="p">,</span><span class="n">Venus</span><span class="p">,</span><span class="n">Earth</span><span class="p">,</span><span class="n">Moon</span><span class="p">,</span><span class="n">Mars</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">addBodies</span><span class="p">(</span><span class="n">Sun</span><span class="p">,</span><span class="n">Mercury</span><span class="p">,</span><span class="n">Venus</span><span class="p">,</span><span class="n">Earth</span><span class="p">,</span><span class="n">Moon</span><span class="p">,</span><span class="n">Mars</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Now we need to specify the accelerations acting on each body. The accelerations acting on each body are the point-mass gravitational attractions caused by the other bodies. We can define all the accelerations by writing a nested for-loop:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">bodyNames</span> <span class="p">=</span> <span class="n">fieldnames</span><span class="p">(</span><span class="n">simulation</span><span class="p">.</span><span class="n">bodies</span><span class="p">);</span>
-<span class="n">for</span> <span class="s">i</span> <span class="s">=</span> <span class="s">1:length(bodyNames)</span>
-    <span class="n">for</span> <span class="s">j</span> <span class="s">=</span> <span class="s">1:length(bodyNames)</span>
-        <span class="n">if</span> <span class="s">i</span> <span class="s">~=</span> <span class="s">j</span>
-            <span class="n">accelerations</span><span class="p">.(</span><span class="n">bodyNames</span><span class="p">{</span><span class="nb">i</span><span class="p">}).(</span><span class="n">bodyNames</span><span class="p">{</span><span class="nb">j</span><span class="p">})</span> <span class="p">=</span> <span class="p">{</span><span class="n">PointMassGravity</span><span class="p">()};</span>
-        <span class="n">end</span>
-    <span class="s">end</span>
-<span class="k">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">bodyNames</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fieldnames</span><span class="p">(</span><span class="n">simulation</span><span class="p">.</span><span class="n">bodies</span><span class="p">);</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">bodyNames</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nb">j</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">bodyNames</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="nb">j</span><span class="w"></span>
+<span class="w">            </span><span class="n">accelerations</span><span class="p">.(</span><span class="n">bodyNames</span><span class="p">{</span><span class="nb">i</span><span class="p">}).(</span><span class="n">bodyNames</span><span class="p">{</span><span class="nb">j</span><span class="p">})</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="n">PointMassGravity</span><span class="p">()};</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Note that the names of the bodies have been retrieved from <code class="docutils literal notranslate"><span class="pre">fieldnames(simulation.bodies)</span></code>.</p>
 <p>Then, we create the settings for the propagation. We are going to propagate the translational state of the celestial bodies. Thus, we use a <code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationalPropagator</span></code>:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">propagator</span> <span class="p">=</span> <span class="n">TranslationalPropagator</span><span class="p">();</span>
-<span class="n">propagator</span><span class="p">.</span><span class="n">bodiesToPropagate</span> <span class="p">=</span> <span class="n">bodyNames</span><span class="p">;</span>
-<span class="n">propagator</span><span class="p">.</span><span class="n">centralBodies</span> <span class="p">=</span> <span class="nb">repmat</span><span class="p">({</span><span class="s">&#39;SSB&#39;</span><span class="p">},</span><span class="nb">size</span><span class="p">(</span><span class="n">bodyNames</span><span class="p">));</span>
-<span class="n">propagator</span><span class="p">.</span><span class="n">accelerations</span> <span class="p">=</span> <span class="n">accelerations</span><span class="p">;</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">propagators</span> <span class="p">=</span> <span class="p">{</span><span class="n">propagator</span><span class="p">};</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">propagator</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">TranslationalPropagator</span><span class="p">();</span><span class="w"></span>
+<span class="n">propagator</span><span class="p">.</span><span class="n">bodiesToPropagate</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">bodyNames</span><span class="p">;</span><span class="w"></span>
+<span class="n">propagator</span><span class="p">.</span><span class="n">centralBodies</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">repmat</span><span class="p">({</span><span class="s">&#39;SSB&#39;</span><span class="p">},</span><span class="nb">size</span><span class="p">(</span><span class="n">bodyNames</span><span class="p">));</span><span class="w"></span>
+<span class="n">propagator</span><span class="p">.</span><span class="n">accelerations</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">accelerations</span><span class="p">;</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">propagators</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="n">propagator</span><span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In this case, we use an hypothetical central body named <code class="docutils literal notranslate"><span class="pre">SSB</span></code> (Solar system barycentre) for all the celestial bodies. The built-in function <code class="docutils literal notranslate"><span class="pre">repmat</span></code> is used to create a cell array containing <code class="docutils literal notranslate"><span class="pre">'SSB'</span></code> repeated six times in this case.</p>
 <p>Finally, we define the integrator settings, in this case we use a Runge-Kutta 4 integrator with a fixed step-size of one hour:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="p">.</span><span class="n">type</span> <span class="p">=</span> <span class="n">Integrators</span><span class="p">.</span><span class="n">rungeKutta4</span><span class="p">;</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="p">.</span><span class="n">stepSize</span> <span class="p">=</span> <span class="mi">3600</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Integrators</span><span class="p">.</span><span class="n">rungeKutta4</span><span class="p">;</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="p">.</span><span class="n">stepSize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">3600</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>All the settings needed to run the simulation have been defined. Thus, we can write:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">run</span><span class="p">();</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">run</span><span class="p">();</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This method creates a temporary input file and calls the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> application, generating a temporary output file containing the state of the satellite for each integration step. Then, it loads these results into the struct <code class="docutils literal notranslate"><span class="pre">results</span></code> of the <code class="docutils literal notranslate"><span class="pre">simulation</span></code> object. Finally, all the temporary files are deleted.</p>
 <p>After running the simulation, if no specific results have been requested, we can obtain the numerical solution of the equations of motion from <code class="docutils literal notranslate"><span class="pre">simulation.results.numericalSolution</span></code>. This is a matrix containing in each row the results of an integration step. The first column contains the epochs, while the columns 2 to 7 contain the associated Cartesian states of the first propagated body (the Sun), columns 8 to 13 the Cartesian states of the second propagated body (Mercury), and so on. We can retrieve the positions for each body and save them in the struct <code class="docutils literal notranslate"><span class="pre">r</span></code> by writing:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="nb">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">bodyNames</span><span class="p">)</span>
-    <span class="n">fromIndex</span> <span class="p">=</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="nb">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">6</span><span class="p">;</span>
-    <span class="n">toIndex</span> <span class="p">=</span> <span class="n">fromIndex</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
-    <span class="n">r</span><span class="p">.(</span><span class="n">bodyNames</span><span class="p">{</span><span class="nb">i</span><span class="p">})</span> <span class="p">=</span> <span class="n">convert</span><span class="p">.</span><span class="n">fromSI</span><span class="p">(</span><span class="n">simulation</span><span class="p">.</span><span class="n">results</span><span class="p">.</span><span class="n">numericalSolution</span><span class="p">(:,</span><span class="n">fromIndex</span><span class="p">:</span><span class="n">toIndex</span><span class="p">),</span><span class="s">&#39;AU&#39;</span><span class="p">);</span>
-<span class="n">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">bodyNames</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">fromIndex</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nb">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">6</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">toIndex</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">fromIndex</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">r</span><span class="p">.(</span><span class="n">bodyNames</span><span class="p">{</span><span class="nb">i</span><span class="p">})</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">convert</span><span class="p">.</span><span class="n">fromSI</span><span class="p">(</span><span class="n">simulation</span><span class="p">.</span><span class="n">results</span><span class="p">.</span><span class="n">numericalSolution</span><span class="p">(:,</span><span class="n">fromIndex</span><span class="p">:</span><span class="n">toIndex</span><span class="p">),</span><span class="s">&#39;AU&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Note the use of the function <code class="docutils literal notranslate"><span class="pre">fromSI</span></code> of the <code class="docutils literal notranslate"><span class="pre">convert</span></code> package, which in this case converts metres to astronomical units.</p>
 <p>Finally, we generate a plot showing the positions of the celestial bodies during the propagation period of two years, which yields the orbits of the planets:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">figure</span><span class="p">;</span>
-<span class="n">hold</span> <span class="s">on</span><span class="p">;</span>
-<span class="n">for</span> <span class="s">i</span> <span class="s">=</span> <span class="s">1:length(bodyNames)</span>
-    <span class="n">bodyPosition</span> <span class="p">=</span> <span class="n">r</span><span class="p">.(</span><span class="n">bodyNames</span><span class="p">{</span><span class="nb">i</span><span class="p">});</span>
-    <span class="n">plot3</span><span class="p">(</span><span class="n">bodyPosition</span><span class="p">(:,</span><span class="mi">1</span><span class="p">),</span><span class="n">bodyPosition</span><span class="p">(:,</span><span class="mi">2</span><span class="p">),</span><span class="n">bodyPosition</span><span class="p">(:,</span><span class="mi">3</span><span class="p">));</span>
-<span class="n">end</span>
-<span class="s">legend(bodyNames{:})</span><span class="p">;</span>
-<span class="n">axis</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span> <span class="mi">2</span> <span class="o">-</span><span class="mi">2</span> <span class="mi">2</span> <span class="o">-</span><span class="mf">0.1</span> <span class="mf">0.1</span><span class="p">]);</span>
-<span class="n">axis</span> <span class="s">equal</span><span class="p">;</span>
-<span class="n">grid</span> <span class="s">on</span><span class="p">;</span>
-<span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;X [AU]&#39;</span><span class="p">);</span>
-<span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Y [AU]&#39;</span><span class="p">);</span>
-<span class="n">zlabel</span><span class="p">(</span><span class="s">&#39;Z [AU]&#39;</span><span class="p">);</span>
-<span class="n">hold</span> <span class="s">off</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="nb">figure</span><span class="p">;</span><span class="w"></span>
+<span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">bodyNames</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">bodyPosition</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">r</span><span class="p">.(</span><span class="n">bodyNames</span><span class="p">{</span><span class="nb">i</span><span class="p">});</span><span class="w"></span>
+<span class="w">    </span><span class="nb">plot3</span><span class="p">(</span><span class="n">bodyPosition</span><span class="p">(:,</span><span class="mi">1</span><span class="p">),</span><span class="n">bodyPosition</span><span class="p">(:,</span><span class="mi">2</span><span class="p">),</span><span class="n">bodyPosition</span><span class="p">(:,</span><span class="mi">3</span><span class="p">));</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="nb">legend</span><span class="p">(</span><span class="n">bodyNames</span><span class="p">{:});</span><span class="w"></span>
+<span class="nb">axis</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="mf">0.1</span><span class="w"> </span><span class="mf">0.1</span><span class="p">]);</span><span class="w"></span>
+<span class="n">axis</span><span class="w"> </span><span class="s">equal</span><span class="p">;</span><span class="w"></span>
+<span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span><span class="w"></span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;X [AU]&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Y [AU]&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="nb">zlabel</span><span class="p">(</span><span class="s">&#39;Z [AU]&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="n">hold</span><span class="w"> </span><span class="s">off</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <img alt="../../../_images/innerSolarSystem.png" src="../../../_images/innerSolarSystem.png" />
@@ -326,11 +330,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -365,6 +368,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

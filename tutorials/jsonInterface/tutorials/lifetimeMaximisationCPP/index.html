@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../started/index.html">Getting Started</a></li>
@@ -202,99 +206,58 @@
 <p>The file <code class="xref py py-class docutils literal notranslate"><span class="pre">lifetimeMaximisation.json</span></code> used as input for all the propagations is identical to the file <code class="xref py py-class docutils literal notranslate"><span class="pre">shared.json</span></code> created in <a class="reference internal" href="../lifetimeMaximisation/index.html#jsoninterface-tutorials-lifetimemaximisation"><span class="std std-ref">Perturbed Earth-orbiting Satellite Lifetime Maximisation</span></a>.</p>
 <p>In this case, we do not write a C++ application because we want to use Tudat features that cannot be provided through a JSON file, but because we want to avoid having to generate a different input file for each propagation. The disadvantage of this choice is that we cannot use parallel processing, as all the propagations will be run sequentially by a single process, while when using the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> with different input files, we are able to run many cases concurrently.</p>
 <p>In this case there is no need to write a derived class of <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonSimulationManager</span></code> with custom implementations for virtual methods. We can simply modify the JSON object containing the settings read from the JSON file before it is actually used to set up the simulation objects. Thus, all the code we need to write is:</p>
-<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;Tudat/JsonInterface/jsonInterface.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;SatellitePropagatorExamples/applicationOutput.h&gt;</span><span class="cp"></span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span> <span class="p">)</span>
-<span class="p">{</span>
-  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">cppFilePath</span><span class="p">(</span> <span class="n">__FILE__</span> <span class="p">);</span>
-  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">cppFolder</span> <span class="o">=</span> <span class="n">cppFilePath</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cppFilePath</span><span class="p">.</span><span class="n">find_last_of</span><span class="p">(</span><span class="s">&quot;/</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">);</span>
-  <span class="n">tudat</span><span class="o">::</span><span class="n">json_interface</span><span class="o">::</span><span class="n">JsonSimulationManager</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="n">jsonSimulationManager</span><span class="p">(</span> <span class="n">cppFolder</span> <span class="o">+</span> <span class="s">&quot;lifetimeMaximisation.json&quot;</span> <span class="p">);</span>
-
-  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">outputDirectory</span> <span class="o">=</span> <span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;LifetimeMaximisation/&quot;</span><span class="p">;</span>
-  <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">numberOfCases</span> <span class="o">=</span> <span class="mi">365</span><span class="p">;</span>
-  <span class="k">for</span> <span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfCases</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
-  <span class="p">{</span>
-      <span class="c1">// Notify on propagation start</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Running propagation &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; of &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">numberOfCases</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;...&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-
-      <span class="c1">// Define the initial and final epochs</span>
-      <span class="k">const</span> <span class="kt">double</span> <span class="n">initialEpoch</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">tudat</span><span class="o">::</span><span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">;</span>
-      <span class="n">jsonSimulationManager</span><span class="p">[</span> <span class="s">&quot;initialEpoch&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">initialEpoch</span><span class="p">;</span>
-      <span class="n">jsonSimulationManager</span><span class="p">[</span> <span class="s">&quot;finalEpoch&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">initialEpoch</span> <span class="o">+</span> <span class="n">tudat</span><span class="o">::</span><span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_YEAR</span><span class="p">;</span>
-
-      <span class="c1">// Define the output file</span>
-      <span class="n">jsonSimulationManager</span><span class="p">[</span> <span class="s">&quot;export&quot;</span> <span class="p">][</span> <span class="mi">0</span> <span class="p">][</span> <span class="s">&quot;file&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">outputDirectory</span> <span class="o">+</span> <span class="s">&quot;day&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;.txt&quot;</span><span class="p">;</span>
-
-      <span class="c1">// Create settings objects</span>
-      <span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">updateSettings</span><span class="p">(</span> <span class="p">);</span>
-
-      <span class="c1">// Propagate</span>
-      <span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">runPropagation</span><span class="p">(</span> <span class="p">);</span>
-
-      <span class="c1">// Export results</span>
-      <span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">exportResults</span><span class="p">(</span> <span class="p">);</span>
-
-      <span class="c1">// Silence unused key warnings after first propagation</span>
-      <span class="k">if</span> <span class="p">(</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
-      <span class="p">{</span>
-          <span class="n">jsonSimulationManager</span><span class="p">[</span> <span class="s">&quot;options&quot;</span> <span class="p">][</span> <span class="s">&quot;unusedKey&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">tudat</span><span class="o">::</span><span class="n">json_interface</span><span class="o">::</span><span class="n">continueSilently</span><span class="p">;</span>
-      <span class="p">}</span>
-  <span class="p">}</span>
-
-  <span class="k">return</span> <span class="n">EXIT_SUCCESS</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Tudat/JsonInterface/jsonInterface.h&gt;</span><span class="cp"></span>
+<span class="linenos"> 2</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;SatellitePropagatorExamples/applicationOutput.h&gt;</span><span class="cp"></span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="linenos"> 5</span><span class="p">{</span><span class="w"></span>
+<span class="linenos"> 6</span><span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">cppFilePath</span><span class="p">(</span><span class="w"> </span><span class="n">__FILE__</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="linenos"> 7</span><span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">cppFolder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cppFilePath</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">cppFilePath</span><span class="p">.</span><span class="n">find_last_of</span><span class="p">(</span><span class="s">&quot;/</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="linenos"> 8</span><span class="w">  </span><span class="n">tudat</span><span class="o">::</span><span class="n">json_interface</span><span class="o">::</span><span class="n">JsonSimulationManager</span><span class="o">&lt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">jsonSimulationManager</span><span class="p">(</span><span class="w"> </span><span class="n">cppFolder</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;lifetimeMaximisation.json&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">outputDirectory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tudat_applications</span><span class="o">::</span><span class="n">getOutputPath</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;LifetimeMaximisation/&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">11</span><span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">numberOfCases</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">365</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">12</span><span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numberOfCases</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="linenos">13</span><span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="linenos">14</span><span class="w">      </span><span class="c1">// Notify on propagation start</span>
+<span class="linenos">15</span><span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Running propagation &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; of &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">numberOfCases</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="w">      </span><span class="c1">// Define the initial and final epochs</span>
+<span class="linenos">18</span><span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">initialEpoch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tudat</span><span class="o">::</span><span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_DAY</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">19</span><span class="w">      </span><span class="n">jsonSimulationManager</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;initialEpoch&quot;</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">initialEpoch</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">20</span><span class="w">      </span><span class="n">jsonSimulationManager</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;finalEpoch&quot;</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">initialEpoch</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tudat</span><span class="o">::</span><span class="n">physical_constants</span><span class="o">::</span><span class="n">JULIAN_YEAR</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="w">      </span><span class="c1">// Define the output file</span>
+<span class="linenos">23</span><span class="w">      </span><span class="n">jsonSimulationManager</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;export&quot;</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="s">&quot;file&quot;</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">outputDirectory</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;day&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;.txt&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="w">      </span><span class="c1">// Create settings objects</span>
+<span class="linenos">26</span><span class="w">      </span><span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">updateSettings</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="w">      </span><span class="c1">// Propagate</span>
+<span class="linenos">29</span><span class="w">      </span><span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">runPropagation</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="linenos">30</span>
+<span class="linenos">31</span><span class="w">      </span><span class="c1">// Export results</span>
+<span class="linenos">32</span><span class="w">      </span><span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">exportResults</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="linenos">33</span>
+<span class="linenos">34</span><span class="w">      </span><span class="c1">// Silence unused key warnings after first propagation</span>
+<span class="linenos">35</span><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="linenos">36</span><span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="linenos">37</span><span class="w">          </span><span class="n">jsonSimulationManager</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;options&quot;</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="s">&quot;unusedKey&quot;</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tudat</span><span class="o">::</span><span class="n">json_interface</span><span class="o">::</span><span class="n">continueSilently</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">38</span><span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="linenos">39</span><span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="linenos">40</span>
+<span class="linenos">41</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_SUCCESS</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">42</span><span class="p">}</span><span class="w"></span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>In this example, we first create a <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonSimulationManager</span></code>, which will contain the JSON object obtained by parsing the specified input file. Then, we write a loop in which we modify this JSON object before it is actually used to set up the objects needed for the propagation (integrator, propagators, bodies, etc.) when we call the <code class="docutils literal notranslate"><span class="pre">updateSettings</span></code> method. We can access this JSON object by using the method <code class="docutils literal notranslate"><span class="pre">getJsonObject</span></code>. However, we can also modify this object by accessing the <code class="docutils literal notranslate"><span class="pre">at</span></code> method and the <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">]</span></code> operators of the <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonSimulationManager</span></code> directly. Thus, these two lines are equivalent:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">getJsonObject</span><span class="p">(</span> <span class="p">)[</span> <span class="s">&quot;initialEpoch&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">jsonSimulationManager</span><span class="p">[</span> <span class="s">&quot;initialEpoch&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">getJsonObject</span><span class="p">(</span><span class="w"> </span><span class="p">)[</span><span class="w"> </span><span class="s">&quot;initialEpoch&quot;</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="n">jsonSimulationManager</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;initialEpoch&quot;</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>And so are these two lines too:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">getJsonObject</span><span class="p">(</span> <span class="p">).</span><span class="n">at</span><span class="p">(</span> <span class="s">&quot;initialEpoch&quot;</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="s">&quot;initialEpoch&quot;</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">getJsonObject</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;initialEpoch&quot;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">jsonSimulationManager</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;initialEpoch&quot;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Inside the loop, in which we iterate for each of the propagations to be carried out, we modify the keys <span class="jsonkey">initialEpoch</span> and <span class="jsonkey">finalEpoch</span> of the JSON object. Additionally, we want each propagation to generate an output file with a unique name, so we also modify the key <span class="jsonkey">export[ 0 ].file</span>. Then, we can set up the simulation, run the propagation and export the results.</p>
@@ -353,11 +316,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -392,6 +354,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

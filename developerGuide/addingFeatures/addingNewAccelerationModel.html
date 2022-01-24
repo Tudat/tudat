@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
@@ -188,100 +192,100 @@
 <p>For some applications, the various acceleration models in Tudat might not be sufficient. This guide will explain how acceleration models are set-up within Tudat, and how these models can be modified, or how to add a completely new model.</p>
 <p>Just as before, it is important to understand the framework of the acceleration models. This will be explained using an example, namely the aerodynamic acceleration model. The first time the acceleration models will be needed is in the user’s own code. An example of how this can be done is shown below:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define propagator settings variables.</span>
-<span class="n">SelectedAccelerationMap</span> <span class="n">accelerationMap</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToPropagate</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodies</span><span class="p">;</span>
+<span class="n">SelectedAccelerationMap</span><span class="w"> </span><span class="n">accelerationMap</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">bodiesToPropagate</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">centralBodies</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">// Define acceleration model settings.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">accelerationsOfWaverider</span><span class="p">;</span>
-<span class="n">accelerationsOfWaverider</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">aerodynamic</span> <span class="p">)</span> <span class="p">);</span>
-<span class="n">accelerationMap</span><span class="p">[</span>  <span class="s">&quot;Vehicle&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">accelerationsOfWaverider</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AccelerationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">accelerationsOfWaverider</span><span class="p">;</span><span class="w"></span>
+<span class="n">accelerationsOfWaverider</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;Mars&quot;</span><span class="w"> </span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AccelerationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">aerodynamic</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">accelerationMap</span><span class="p">[</span><span class="w">  </span><span class="s">&quot;Vehicle&quot;</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">accelerationsOfWaverider</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">);</span>
-<span class="n">centralBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Mars&quot;</span> <span class="p">);</span>
+<span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Vehicle&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">centralBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Mars&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Create acceleration models</span>
-<span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span> <span class="n">accelerationModelMap</span> <span class="o">=</span> <span class="n">createAccelerationModelsMap</span><span class="p">(</span>
-<span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">centralBodies</span> <span class="p">);</span>
+<span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span><span class="w"> </span><span class="n">accelerationModelMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createAccelerationModelsMap</span><span class="p">(</span><span class="w"></span>
+<span class="n">bodyMap</span><span class="p">,</span><span class="w"> </span><span class="n">accelerationMap</span><span class="p">,</span><span class="w"> </span><span class="n">bodiesToPropagate</span><span class="p">,</span><span class="w"> </span><span class="n">centralBodies</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The user will define a special map, with type <code class="docutils literal notranslate"><span class="pre">SelectedAccelerationMap</span></code> that works as follows: the first key defines the body exerting the acceleration, the second key the body undergoing the acceleration, and the value in the map is a vector of pointers to a type class called <code class="docutils literal notranslate"><span class="pre">AccelerationSettings</span></code>, which takes as input an <code class="docutils literal notranslate"><span class="pre">enum</span></code> called <code class="docutils literal notranslate"><span class="pre">AvailableAcceleration</span></code>, which lists all the available acceleration models. This map is then used as an input for the <code class="docutils literal notranslate"><span class="pre">createAccelerationModelsMap</span></code> function, which is a function that creates a special acceleration map that can be used as an input to the propagator settings.</p>
 <p>There are two functions, located in <code class="docutils literal notranslate"><span class="pre">CreateAccelerationModels.cpp</span></code>, called <code class="docutils literal notranslate"><span class="pre">createAccelerationModelsMap</span></code>. The function that is called will first order the map, and then return the value of the other function, which takes as input the ordered map, made in the first <code class="docutils literal notranslate"><span class="pre">createAccelerationModelsMap</span></code>. The second function looks as follows:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//! Function to create a set of acceleration models from a map of bodies and acceleration model types.</span>
-<span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span> <span class="n">createAccelerationModelsMap</span><span class="p">(</span>
-       <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span>
-       <span class="k">const</span> <span class="n">SelectedAccelerationMap</span><span class="o">&amp;</span> <span class="n">selectedAccelerationPerBody</span><span class="p">,</span>
-       <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;&amp;</span> <span class="n">centralBodies</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-        <span class="n">currentAcceleration</span> <span class="o">=</span> <span class="n">createAccelerationModel</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">bodyUndergoingAcceleration</span> <span class="p">),</span>
-                                                           <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">bodyExertingAcceleration</span> <span class="p">),</span>
-                                                           <span class="n">accelerationsForBody</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">).</span><span class="n">second</span><span class="p">,</span>
-                                                           <span class="n">bodyUndergoingAcceleration</span><span class="p">,</span>
-                                                           <span class="n">bodyExertingAcceleration</span><span class="p">,</span>
-                                                           <span class="n">currentCentralBody</span><span class="p">,</span>
-                                                           <span class="n">currentCentralBodyName</span><span class="p">,</span>
-                                                           <span class="n">bodyMap</span> <span class="p">);</span>
+<span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span><span class="w"> </span><span class="nf">createAccelerationModelsMap</span><span class="p">(</span><span class="w"></span>
+<span class="w">       </span><span class="k">const</span><span class="w"> </span><span class="n">NamedBodyMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="k">const</span><span class="w"> </span><span class="n">SelectedAccelerationMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">selectedAccelerationPerBody</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">centralBodies</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">        </span><span class="n">currentAcceleration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createAccelerationModel</span><span class="p">(</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">bodyUndergoingAcceleration</span><span class="w"> </span><span class="p">),</span><span class="w"></span>
+<span class="w">                                                           </span><span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">bodyExertingAcceleration</span><span class="w"> </span><span class="p">),</span><span class="w"></span>
+<span class="w">                                                           </span><span class="n">accelerationsForBody</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">).</span><span class="n">second</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                           </span><span class="n">bodyUndergoingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                           </span><span class="n">bodyExertingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                           </span><span class="n">currentCentralBody</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                           </span><span class="n">currentCentralBodyName</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                           </span><span class="n">bodyMap</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 
-        <span class="c1">// Create acceleration model.</span>
-        <span class="n">mapOfAccelerationsForBody</span><span class="p">[</span> <span class="n">bodyExertingAcceleration</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span>
-                     <span class="n">currentAcceleration</span> <span class="p">);</span>
+<span class="w">        </span><span class="c1">// Create acceleration model.</span>
+<span class="w">        </span><span class="n">mapOfAccelerationsForBody</span><span class="p">[</span><span class="w"> </span><span class="n">bodyExertingAcceleration</span><span class="w"> </span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="w"></span>
+<span class="w">                     </span><span class="n">currentAcceleration</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-        <span class="c1">// Put acceleration models on current body in return map.</span>
-        <span class="n">accelerationModelMap</span><span class="p">[</span> <span class="n">bodyUndergoingAcceleration</span> <span class="p">]</span> <span class="o">=</span> <span class="n">mapOfAccelerationsForBody</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">accelerationModelMap</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Put acceleration models on current body in return map.</span>
+<span class="w">        </span><span class="n">accelerationModelMap</span><span class="p">[</span><span class="w"> </span><span class="n">bodyUndergoingAcceleration</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mapOfAccelerationsForBody</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">accelerationModelMap</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This function does several checks if the right models are present, and then calls the <code class="docutils literal notranslate"><span class="pre">createAccelerationModel(</span> <span class="pre">)</span></code> function. This function is where the acceleration models are called and looks as follows:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//! Function to create acceleration model object.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationModel</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">createAccelerationModel</span><span class="p">(</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span> <span class="n">bodyUndergoingAcceleration</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span> <span class="n">bodyExertingAcceleration</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="n">accelerationSettings</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">nameOfBodyUndergoingAcceleration</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">nameOfBodyExertingAcceleration</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span> <span class="n">centralBody</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">nameOfCentralBody</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// Declare pointer to return object.</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationModel</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">accelerationModelPointer</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AccelerationModel</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">createAccelerationModel</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Body</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">bodyUndergoingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Body</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">bodyExertingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AccelerationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">accelerationSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">nameOfBodyUndergoingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">nameOfBodyExertingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Body</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">centralBody</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">nameOfCentralBody</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">NamedBodyMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bodyMap</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Declare pointer to return object.</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AccelerationModel</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">accelerationModelPointer</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1">// Switch to call correct acceleration model type factory function.</span>
-    <span class="k">switch</span><span class="p">(</span> <span class="n">accelerationSettings</span><span class="o">-&gt;</span><span class="n">accelerationType_</span> <span class="p">)</span>
-    <span class="p">{</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="k">case</span> <span class="nl">aerodynamic</span><span class="p">:</span>
-        <span class="n">accelerationModelPointer</span> <span class="o">=</span> <span class="n">createAerodynamicAcceleratioModel</span><span class="p">(</span>
-                    <span class="n">bodyUndergoingAcceleration</span><span class="p">,</span>
-                    <span class="n">bodyExertingAcceleration</span><span class="p">,</span>
-                    <span class="n">nameOfBodyUndergoingAcceleration</span><span class="p">,</span>
-                    <span class="n">nameOfBodyExertingAcceleration</span> <span class="p">);</span>
-        <span class="k">break</span><span class="p">;</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="k">default</span><span class="o">:</span>
-        <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span>
-                    <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span> <span class="s">&quot;Error, acceleration model &quot;</span><span class="p">)</span> <span class="o">+</span>
-                    <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">accelerationSettings</span><span class="o">-&gt;</span><span class="n">accelerationType_</span> <span class="p">)</span> <span class="o">+</span>
-                    <span class="s">&quot; not recognized when making acceleration model of&quot;</span> <span class="o">+</span>
-                    <span class="n">nameOfBodyExertingAcceleration</span> <span class="o">+</span> <span class="s">&quot; on &quot;</span> <span class="o">+</span>
-                   <span class="n">nameOfBodyUndergoingAcceleration</span> <span class="p">);</span>
-        <span class="k">break</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">accelerationModelPointer</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="c1">// Switch to call correct acceleration model type factory function.</span>
+<span class="w">    </span><span class="k">switch</span><span class="p">(</span><span class="w"> </span><span class="n">accelerationSettings</span><span class="o">-&gt;</span><span class="n">accelerationType_</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">aerodynamic</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="n">accelerationModelPointer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createAerodynamicAcceleratioModel</span><span class="p">(</span><span class="w"></span>
+<span class="w">                    </span><span class="n">bodyUndergoingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="n">bodyExertingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="n">nameOfBodyUndergoingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="n">nameOfBodyExertingAcceleration</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="k">default</span><span class="o">:</span><span class="w"></span>
+<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="w"></span>
+<span class="w">                    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Error, acceleration model &quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                    </span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="w"> </span><span class="n">accelerationSettings</span><span class="o">-&gt;</span><span class="n">accelerationType_</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                    </span><span class="s">&quot; not recognized when making acceleration model of&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                    </span><span class="n">nameOfBodyExertingAcceleration</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; on &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                   </span><span class="n">nameOfBodyUndergoingAcceleration</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">accelerationModelPointer</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Ths function uses a switch statement on the <code class="docutils literal notranslate"><span class="pre">accelerationSettings-&gt;accelerationType_</span></code> (which was set by the user in the beginning), to determine which acceleration model needs to be called. The <code class="docutils literal notranslate"><span class="pre">createAerodynamicAcceleratioModel(</span> <span class="pre">)</span></code> then does several checks to determine if all the models that are used to calculate the aerodynamic force are present, after which it calls the constructor of the <code class="docutils literal notranslate"><span class="pre">AerodynamicAcceleration</span></code> class using the input values created in <code class="docutils literal notranslate"><span class="pre">createAerodynamicAcceleratioModel(</span> <span class="pre">)</span></code>. The structure of the <code class="docutils literal notranslate"><span class="pre">AerodynamicAcceleration</span></code> class, and how one can make a new acceleration model will be discussed in the next section.</p>
@@ -291,27 +295,27 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">dataType</span> <span class="pre">getAcceleration(</span> <span class="pre">)</span></code>. This function uses the recently updated member variables to calculate the acceleration acting on the body.</p></li>
 </ul>
 <p>For the case of the aerodynamic acceleration, these two functions look as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">getAcceleration</span><span class="p">(</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="n">computeAerodynamicAcceleration</span><span class="p">(</span>
-                <span class="mf">0.5</span> <span class="o">*</span> <span class="n">currentDensity_</span> <span class="o">*</span> <span class="n">currentAirspeed_</span> <span class="o">*</span> <span class="n">currentAirspeed_</span><span class="p">,</span>
-                <span class="n">currentReferenceArea_</span><span class="p">,</span> <span class="n">currentForceCoefficients_</span><span class="p">,</span> <span class="n">currentMass_</span> <span class="p">);</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="nf">getAcceleration</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">computeAerodynamicAcceleration</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">currentDensity_</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">currentAirspeed_</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">currentAirspeed_</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="n">currentReferenceArea_</span><span class="p">,</span><span class="w"> </span><span class="n">currentForceCoefficients_</span><span class="p">,</span><span class="w"> </span><span class="n">currentMass_</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
 
-<span class="kt">void</span> <span class="n">updateMembers</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">currentTime</span> <span class="o">=</span> <span class="n">TUDAT_NAN</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="p">(</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">currentTime_</span> <span class="o">==</span> <span class="n">currentTime</span> <span class="p">)</span> <span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">currentForceCoefficients_</span> <span class="o">=</span> <span class="n">coefficientMultiplier_</span> <span class="o">*</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">coefficientFunction_</span><span class="p">(</span> <span class="p">);</span>
-        <span class="n">currentDensity_</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">densityFunction_</span><span class="p">(</span> <span class="p">);</span>
-        <span class="n">currentMass_</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">massFunction_</span><span class="p">(</span> <span class="p">);</span>
-        <span class="n">currentAirspeed_</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">airSpeedFunction_</span><span class="p">(</span> <span class="p">);</span>
-        <span class="n">currentReferenceArea_</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">referenceAreaFunction_</span><span class="p">(</span> <span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">updateMembers</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">currentTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TUDAT_NAN</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="p">(</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">currentTime_</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">currentTime</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">currentForceCoefficients_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coefficientMultiplier_</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">coefficientFunction_</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">currentDensity_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">densityFunction_</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">currentMass_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">massFunction_</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">currentAirspeed_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">airSpeedFunction_</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">currentReferenceArea_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">referenceAreaFunction_</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-        <span class="n">currentTime_</span> <span class="o">=</span> <span class="n">currentTime</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="w">        </span><span class="n">currentTime_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">currentTime</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">computeAcceleration()</span></code> is a function that uses the well known lift, side, and drag acceleration equations to calculate the acceleration vector.</p>
@@ -371,11 +375,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -410,6 +413,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

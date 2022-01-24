@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -88,7 +92,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
@@ -173,60 +177,60 @@
 </div></blockquote>
 <p>For this guide, the <code class="docutils literal notranslate"><span class="pre">mach_number_dependent_variable</span></code> will be used as an example of how a dependent variable is implemented. Be aware that there are some slight differences between the implementation of the <code class="docutils literal notranslate"><span class="pre">mach_number_dependent_variable</span></code> and other variables, but this will be explained in the guide.</p>
 <p>The first addition needs to be made in the <code class="docutils literal notranslate"><span class="pre">propagationOutputSettings.h</span></code> file. Here, an <code class="docutils literal notranslate"><span class="pre">enum</span></code> called <code class="docutils literal notranslate"><span class="pre">PropagationDependentVariables</span></code> is given which shows the names of all the available dependent variables that can be saved. The list looks as follows;</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">PropagationDependentVariables</span>
-<span class="p">{</span>
-    <span class="n">mach_number_dependent_variable</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="n">altitude_dependent_variable</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="n">airspeed_dependent_variable</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="n">body_fixed_groundspeed_based_velocity_variable</span> <span class="o">=</span> <span class="mi">31</span><span class="p">,</span>
-    <span class="n">keplerian_state_dependent_variable</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
-    <span class="n">modified_equinocial_state_dependent_variable</span> <span class="o">=</span> <span class="mi">33</span>
-<span class="p">};</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="nc">PropagationDependentVariables</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">mach_number_dependent_variable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">altitude_dependent_variable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">airspeed_dependent_variable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="n">body_fixed_groundspeed_based_velocity_variable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">31</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">keplerian_state_dependent_variable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">modified_equinocial_state_dependent_variable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">33</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The name of the new variable can thus be added to the end of the list, with a number assigned to it.</p>
 <p>The next addition needs to be made in the <code class="docutils literal notranslate"><span class="pre">propagationOutputSettings.cpp</span></code> file. In this file, a method is present called: <code class="docutils literal notranslate"><span class="pre">getDependentVariableName</span></code>. This method contains a switch statement which contains cases for all the different dependent variables. For a new variable, a new case must be made with the name that was added to the <code class="docutils literal notranslate"><span class="pre">PropagationDependentVariables</span></code> list. Inside the case, a string called <code class="docutils literal notranslate"><span class="pre">variableName</span></code> must be assigned with the name of the to be added variable. In the case of the mach number, it looks as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">case</span> <span class="nl">mach_number_dependent_variable</span><span class="p">:</span>
-    <span class="n">variableName</span> <span class="o">=</span> <span class="s">&quot;Mach number &quot;</span><span class="p">;</span>
-    <span class="k">break</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">case</span><span class="w"> </span><span class="nl">mach_number_dependent_variable</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">variableName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Mach number &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>It is important to remember that the case should be the same as the name given in <code class="docutils literal notranslate"><span class="pre">PropagationDependentVariables</span></code>, but the <code class="docutils literal notranslate"><span class="pre">variableName</span></code> can be chosen to the preference of the user.</p>
 <p>The third addition needs to be made in <code class="docutils literal notranslate"><span class="pre">propagationOutput.cpp</span></code>. Here a method called <code class="docutils literal notranslate"><span class="pre">getDependentVariableSize</span></code> is located. In this function, another switch statement is made with the same cases as before. Again a new case should be made for the new variable, but now, inside the case, another variable called <code class="docutils literal notranslate"><span class="pre">variableSize</span></code> should be changed to the size of the added variable. Thus this could be 1 for a <code class="docutils literal notranslate"><span class="pre">double</span></code>, or 3 for an <code class="docutils literal notranslate"><span class="pre">Eigen::Vector3d</span></code>. In the case of the mach number, it looks as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">case</span> <span class="nl">mach_number_dependent_variable</span><span class="p">:</span>
-    <span class="n">variableSize</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="k">break</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">case</span><span class="w"> </span><span class="nl">mach_number_dependent_variable</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">variableSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The final change should then be made to the <code class="docutils literal notranslate"><span class="pre">propagationOutput.h</span></code> file. In a method called <code class="docutils literal notranslate"><span class="pre">getDoubleDependentVariableFunction</span></code>, the actual calculation of the variable is done. Again, a switch stamentent in the same manner as before is made, with in every case the calculation of the variable. This method gets the <code class="docutils literal notranslate"><span class="pre">bodyMap</span></code> as input, thus methods available inside the <code class="docutils literal notranslate"><span class="pre">FlightConditions</span></code> could, for example, be used to calculate the dependent variable. For the new variable, a new case needs to be made in which a <code class="docutils literal notranslate"><span class="pre">std::function&lt;</span> <span class="pre">double(</span> <span class="pre">)&gt;</span></code> is returned. This function can take several variables as input and should return the dependent variable. The implementation for the mach number is given here:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="k">case</span> <span class="nl">mach_number_dependent_variable</span><span class="p">:</span>
-  <span class="p">{</span>
-      <span class="k">if</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">bodyWithProperty</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span> <span class="p">)</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="p">)</span>
-      <span class="p">{</span>
-          <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;Error, no flight conditions available when requesting Mach number output of &quot;</span> <span class="o">+</span>
-                  <span class="n">bodyWithProperty</span> <span class="o">+</span> <span class="s">&quot;w.r.t.&quot;</span> <span class="o">+</span> <span class="n">secondaryBody</span><span class="p">;</span>
-          <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="n">errorMessage</span> <span class="p">);</span>
-      <span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">mach_number_dependent_variable</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">bodyWithProperty</span><span class="w"> </span><span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Error, no flight conditions available when requesting Mach number output of &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                  </span><span class="n">bodyWithProperty</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;w.r.t.&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">secondaryBody</span><span class="p">;</span><span class="w"></span>
+<span class="w">          </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
 
-      <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">functionToEvaluate</span> <span class="o">=</span>
-              <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">aerodynamics</span><span class="o">::</span><span class="n">computeMachNumber</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span> <span class="p">);</span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">functionToEvaluate</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">              </span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">aerodynamics</span><span class="o">::</span><span class="n">computeMachNumber</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-      <span class="c1">// Retrieve functions for airspeed and speed of sound.</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">firstInput</span> <span class="o">=</span>
-              <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">aerodynamics</span><span class="o">::</span><span class="n">FlightConditions</span><span class="o">::</span><span class="n">getCurrentAirspeed</span><span class="p">,</span>
-                           <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">bodyWithProperty</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">secondInput</span> <span class="o">=</span>
-              <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">aerodynamics</span><span class="o">::</span><span class="n">FlightConditions</span><span class="o">::</span><span class="n">getCurrentSpeedOfSound</span><span class="p">,</span>
-                           <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">bodyWithProperty</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
+<span class="w">      </span><span class="c1">// Retrieve functions for airspeed and speed of sound.</span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">firstInput</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">              </span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">aerodynamics</span><span class="o">::</span><span class="n">FlightConditions</span><span class="o">::</span><span class="n">getCurrentAirspeed</span><span class="p">,</span><span class="w"></span>
+<span class="w">                           </span><span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">bodyWithProperty</span><span class="w"> </span><span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">secondInput</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">              </span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">aerodynamics</span><span class="o">::</span><span class="n">FlightConditions</span><span class="o">::</span><span class="n">getCurrentSpeedOfSound</span><span class="p">,</span><span class="w"></span>
+<span class="w">                           </span><span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">bodyWithProperty</span><span class="w"> </span><span class="p">)</span><span class="o">-&gt;</span><span class="n">getFlightConditions</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 
-      <span class="n">variableFunction</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">evaluateBivariateFunction</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">,</span>
-                                      <span class="n">functionToEvaluate</span><span class="p">,</span> <span class="n">firstInput</span><span class="p">,</span> <span class="n">secondInput</span> <span class="p">);</span>
-      <span class="k">break</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">      </span><span class="n">variableFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">evaluateBivariateFunction</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                      </span><span class="n">functionToEvaluate</span><span class="p">,</span><span class="w"> </span><span class="n">firstInput</span><span class="p">,</span><span class="w"> </span><span class="n">secondInput</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>If the variable is a vector (or matrix) and not a double, the case should not be added to <code class="docutils literal notranslate"><span class="pre">getDoubleDependentVariableFunction</span></code>, but to: <code class="docutils literal notranslate"><span class="pre">getVectorDependentVariableFunction</span></code></p>
@@ -238,85 +242,85 @@
 <p>First, it is important to understand how environment models are used in Tudat, this will give some insight in what needs to be added/changed if a new environment model is integrated into Tudat. For this tutorial, an existing environment model will be used as an example: the tabulated atmosphere model.</p>
 <p>A user will define a list of bodies to be used in the simulation, an example is given here:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define simulation body settings.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">BodySettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">bodySettings</span> <span class="o">=</span>
-        <span class="n">getDefaultBodySettings</span><span class="p">(</span> <span class="p">{</span> <span class="s">&quot;Mars&quot;</span> <span class="p">},</span> <span class="n">simulationStartEpoch</span> <span class="o">-</span> <span class="mf">10.0</span> <span class="o">*</span> <span class="n">fixedStepSize</span><span class="p">,</span>
-                                <span class="n">simulationEndEpoch</span> <span class="o">+</span> <span class="mf">10.0</span> <span class="o">*</span> <span class="n">fixedStepSize</span> <span class="p">);</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">ConstantEphemerisSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-            <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">::</span><span class="n">Zero</span><span class="p">(</span> <span class="p">),</span> <span class="s">&quot;SSB&quot;</span><span class="p">,</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span><span class="o">-&gt;</span><span class="n">resetOriginalFrame</span><span class="p">(</span> <span class="s">&quot;J2000&quot;</span> <span class="p">);</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">atmosphereFile</span> <span class="o">=</span> <span class="p">...</span> <span class="p">;</span>
-<span class="n">bodySettings</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TabulatedAtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">atmosphereFile</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">BodySettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">bodySettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="n">getDefaultBodySettings</span><span class="p">(</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;Mars&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="n">simulationStartEpoch</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">10.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">fixedStepSize</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                </span><span class="n">simulationEndEpoch</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">10.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">fixedStepSize</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">bodySettings</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;Mars&quot;</span><span class="w"> </span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ephemerisSettings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">simulation_setup</span><span class="o">::</span><span class="n">ConstantEphemerisSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">::</span><span class="n">Zero</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="s">&quot;SSB&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;J2000&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">bodySettings</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;Mars&quot;</span><span class="w"> </span><span class="p">]</span><span class="o">-&gt;</span><span class="n">rotationModelSettings</span><span class="o">-&gt;</span><span class="n">resetOriginalFrame</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;J2000&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">atmosphereFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="n">bodySettings</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;Mars&quot;</span><span class="w"> </span><span class="p">]</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TabulatedAtmosphereSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">atmosphereFile</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">BodySettings</span></code> class contains a member variable called <code class="docutils literal notranslate"><span class="pre">atmosphereSettings</span></code> of type <code class="docutils literal notranslate"><span class="pre">AtmosphereSettings</span></code>. As can be seen in the last line of the example code above, this member variable is set to a <code class="docutils literal notranslate"><span class="pre">TabulatedAtmosphereSettings</span></code> by the user. This is a valid statement (eventhough <code class="docutils literal notranslate"><span class="pre">atmosphereSettings</span></code> is not of type <code class="docutils literal notranslate"><span class="pre">TabulatedAtmosphereSettings</span></code>) because <code class="docutils literal notranslate"><span class="pre">TabulatedAtmosphereSettings</span></code> is derived from the base class <code class="docutils literal notranslate"><span class="pre">AtmosphereSettings</span></code>. These concepts are called polymorphism and inheritance, and should be understood by the reader before continuing.</p>
 <p>When all the <code class="docutils literal notranslate"><span class="pre">bodySettings</span></code> are defined by the user, the following command will be executed:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">createBodies</span><span class="p">(</span> <span class="n">bodySettings</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="w"> </span><span class="n">bodyMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">simulation_setup</span><span class="o">::</span><span class="n">createBodies</span><span class="p">(</span><span class="w"> </span><span class="n">bodySettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">simulation_setup::createBodies()</span></code> will set all the environment models up to be used later in the simulation, and stores them in the variable <code class="docutils literal notranslate"><span class="pre">bodyMap</span></code>. If the <code class="docutils literal notranslate"><span class="pre">simulation_setup::createBodies()</span></code> is looked at, the following can be seen:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create atmosphere model objects for each body (if required).</span>
-<span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">size</span><span class="p">(</span> <span class="p">);</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span> <span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">).</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">bodyMap</span><span class="p">[</span> <span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">).</span><span class="n">first</span> <span class="p">]</span><span class="o">-&gt;</span><span class="n">setAtmosphereModel</span><span class="p">(</span>
-                    <span class="n">createAtmosphereModel</span><span class="p">(</span> <span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">).</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span><span class="p">,</span>
-                                           <span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">).</span><span class="n">first</span> <span class="p">)</span> <span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">).</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">bodyMap</span><span class="p">[</span><span class="w"> </span><span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">).</span><span class="n">first</span><span class="w"> </span><span class="p">]</span><span class="o">-&gt;</span><span class="n">setAtmosphereModel</span><span class="p">(</span><span class="w"></span>
+<span class="w">                    </span><span class="n">createAtmosphereModel</span><span class="p">(</span><span class="w"> </span><span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">).</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">atmosphereSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">orderedBodySettings</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">).</span><span class="n">first</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Where <code class="docutils literal notranslate"><span class="pre">orderedBodySettings</span></code> is an ordered map of all the bodies. This code goes through all the bodies and checks if the bodies have an atmosphere model set or not. If not, the atmosphere model is set by the <code class="docutils literal notranslate"><span class="pre">setAtmosphereModel()</span></code> function, which takes as input a pointer to the atmosphereModel of the body. This pointer is returned by the function: <code class="docutils literal notranslate"><span class="pre">createAtmosphereModel()</span></code>, which creates the atmosphere model using the settings defined by the user in the variable <code class="docutils literal notranslate"><span class="pre">atmosphereSettings</span></code>. The <code class="docutils literal notranslate"><span class="pre">createAtmosphereModel()</span></code> looks as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">aerodynamics</span><span class="o">::</span><span class="n">AtmosphereModel</span> <span class="o">&gt;</span> <span class="n">createAtmosphereModel</span><span class="p">(</span>
-   <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AtmosphereSettings</span> <span class="o">&gt;</span> <span class="n">atmosphereSettings</span><span class="p">,</span>
-   <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">body</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">using</span> <span class="k">namespace</span> <span class="n">tudat</span><span class="o">::</span><span class="n">aerodynamics</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">aerodynamics</span><span class="o">::</span><span class="n">AtmosphereModel</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">createAtmosphereModel</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AtmosphereSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">atmosphereSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">body</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">tudat</span><span class="o">::</span><span class="nn">aerodynamics</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1">// Declare return object.</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AtmosphereModel</span> <span class="o">&gt;</span> <span class="n">atmosphereModel</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Declare return object.</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AtmosphereModel</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">atmosphereModel</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1">// Check which type of atmosphere model is to be created.</span>
-    <span class="k">switch</span><span class="p">(</span> <span class="n">atmosphereSettings</span><span class="o">-&gt;</span><span class="n">getAtmosphereType</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span>
-    <span class="p">{</span>
-    <span class="k">case</span> <span class="nl">exponential_atmosphere</span><span class="p">:</span>
-    <span class="p">{</span>
-        <span class="p">...</span>
-        <span class="p">...</span>
-        <span class="p">...</span>
-    <span class="p">}</span>
-    <span class="k">case</span> <span class="nl">tabulated_atmosphere</span><span class="p">:</span>
-    <span class="p">{</span>
-        <span class="c1">// Check whether settings for atmosphere are consistent with its type</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TabulatedAtmosphereSettings</span> <span class="o">&gt;</span> <span class="n">tabulatedAtmosphereSettings</span> <span class="o">=</span>
-                <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">TabulatedAtmosphereSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">atmosphereSettings</span> <span class="p">);</span>
-        <span class="k">if</span><span class="p">(</span> <span class="n">tabulatedAtmosphereSettings</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span>
-                        <span class="s">&quot;Error, expected tabulated atmosphere settings for body &quot;</span> <span class="o">+</span> <span class="n">body</span> <span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">else</span>
-        <span class="p">{</span>
-            <span class="c1">// Create and initialize tabulatedl atmosphere model.</span>
-            <span class="n">atmosphereModel</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TabulatedAtmosphere</span> <span class="o">&gt;</span><span class="p">(</span>
-                        <span class="n">tabulatedAtmosphereSettings</span><span class="o">-&gt;</span><span class="n">getAtmosphereFile</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">break</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">case</span> <span class="nl">nrlmsise00</span><span class="p">:</span>
-    <span class="p">{</span>
-        <span class="p">...</span>
-        <span class="p">...</span>
-        <span class="p">...</span>
-    <span class="p">}</span>
-    <span class="k">default</span><span class="o">:</span>
-        <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span>
-                    <span class="s">&quot;Error, did not recognize atmosphere model settings type &quot;</span> <span class="o">+</span>
-                    <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">atmosphereSettings</span><span class="o">-&gt;</span><span class="n">getAtmosphereType</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span> <span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="c1">// Check which type of atmosphere model is to be created.</span>
+<span class="w">    </span><span class="k">switch</span><span class="p">(</span><span class="w"> </span><span class="n">atmosphereSettings</span><span class="o">-&gt;</span><span class="n">getAtmosphereType</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">exponential_atmosphere</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="p">...</span><span class="w"></span>
+<span class="w">        </span><span class="p">...</span><span class="w"></span>
+<span class="w">        </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">tabulated_atmosphere</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Check whether settings for atmosphere are consistent with its type</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TabulatedAtmosphereSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">tabulatedAtmosphereSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TabulatedAtmosphereSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">atmosphereSettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">tabulatedAtmosphereSettings</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="w"></span>
+<span class="w">                        </span><span class="s">&quot;Error, expected tabulated atmosphere settings for body &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">body</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// Create and initialize tabulatedl atmosphere model.</span>
+<span class="w">            </span><span class="n">atmosphereModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TabulatedAtmosphere</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">                        </span><span class="n">tabulatedAtmosphereSettings</span><span class="o">-&gt;</span><span class="n">getAtmosphereFile</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">nrlmsise00</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="p">...</span><span class="w"></span>
+<span class="w">        </span><span class="p">...</span><span class="w"></span>
+<span class="w">        </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">default</span><span class="o">:</span><span class="w"></span>
+<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="w"></span>
+<span class="w">                    </span><span class="s">&quot;Error, did not recognize atmosphere model settings type &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                    </span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="w"> </span><span class="n">atmosphereSettings</span><span class="o">-&gt;</span><span class="n">getAtmosphereType</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="k">return</span> <span class="n">atmosphereModel</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">atmosphereModel</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This function checks which atmosphere model is used by using a switch statement with the <code class="docutils literal notranslate"><span class="pre">atmosphereSettings-&gt;getAtmosphereType(</span> <span class="pre">)</span></code>. The three cases are defined using the enum <code class="docutils literal notranslate"><span class="pre">AtmosphereTypes</span></code> (located in <code class="docutils literal notranslate"><span class="pre">createAtmosphereModel.h</span></code>). In the case of the tabulated atmosphere, first a check is made if tabulated atmosphere setting are actually initialized. If they are, the <code class="docutils literal notranslate"><span class="pre">atmosphereModel</span></code> is set to a tabulated atmosphere using the settings from <code class="docutils literal notranslate"><span class="pre">atmosphereSettings</span></code>. It can be seen in the example code above that the variable <code class="docutils literal notranslate"><span class="pre">atmosphereModel</span></code> is of type <code class="docutils literal notranslate"><span class="pre">AtmosphereModel</span></code>, but it is set to a variable of type <code class="docutils literal notranslate"><span class="pre">TabulatedAtmosphere</span></code> in the tabulated atmosphere case. This is again valid due to the fact that the class <code class="docutils literal notranslate"><span class="pre">TabulatedAtmosphere</span></code> is derived from the base class <code class="docutils literal notranslate"><span class="pre">AtmosphereModel</span></code>.</p>
@@ -332,100 +336,100 @@
 <p>For some applications, the various acceleration models in Tudat might not be sufficient. This guide will explain how acceleration models are set-up within Tudat, and how these models can be modified, or how to add a completely new model.</p>
 <p>Just as before, it is important to understand the framework of the acceleration models. This will be explained using an example, namely the aerodynamic acceleration model. The first time the acceleration models will be needed is in the user’s own code. An example of how this can be done is shown below:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define propagator settings variables.</span>
-<span class="n">SelectedAccelerationMap</span> <span class="n">accelerationMap</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">bodiesToPropagate</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;</span> <span class="n">centralBodies</span><span class="p">;</span>
+<span class="n">SelectedAccelerationMap</span><span class="w"> </span><span class="n">accelerationMap</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">bodiesToPropagate</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">centralBodies</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">// Define acceleration model settings.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">accelerationsOfWaverider</span><span class="p">;</span>
-<span class="n">accelerationsOfWaverider</span><span class="p">[</span> <span class="s">&quot;Mars&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">aerodynamic</span> <span class="p">)</span> <span class="p">);</span>
-<span class="n">accelerationMap</span><span class="p">[</span>  <span class="s">&quot;Vehicle&quot;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">accelerationsOfWaverider</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AccelerationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">accelerationsOfWaverider</span><span class="p">;</span><span class="w"></span>
+<span class="n">accelerationsOfWaverider</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;Mars&quot;</span><span class="w"> </span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AccelerationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">aerodynamic</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">accelerationMap</span><span class="p">[</span><span class="w">  </span><span class="s">&quot;Vehicle&quot;</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">accelerationsOfWaverider</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">);</span>
-<span class="n">centralBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="s">&quot;Mars&quot;</span> <span class="p">);</span>
+<span class="n">bodiesToPropagate</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Vehicle&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">centralBodies</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Mars&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Create acceleration models</span>
-<span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span> <span class="n">accelerationModelMap</span> <span class="o">=</span> <span class="n">createAccelerationModelsMap</span><span class="p">(</span>
-<span class="n">bodyMap</span><span class="p">,</span> <span class="n">accelerationMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">centralBodies</span> <span class="p">);</span>
+<span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span><span class="w"> </span><span class="n">accelerationModelMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createAccelerationModelsMap</span><span class="p">(</span><span class="w"></span>
+<span class="n">bodyMap</span><span class="p">,</span><span class="w"> </span><span class="n">accelerationMap</span><span class="p">,</span><span class="w"> </span><span class="n">bodiesToPropagate</span><span class="p">,</span><span class="w"> </span><span class="n">centralBodies</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The user will define a special map, with type <code class="docutils literal notranslate"><span class="pre">SelectedAccelerationMap</span></code> that works as follows: the first key defines the body exerting the acceleration, the second key the body undergoing the acceleration, and the value in the map is a vector of pointers to a type class called <code class="docutils literal notranslate"><span class="pre">AccelerationSettings</span></code>, which takes as input an <code class="docutils literal notranslate"><span class="pre">enum</span></code> called <code class="docutils literal notranslate"><span class="pre">AvailableAcceleration</span></code>, which lists all the available acceleration models. This map is then used as an input for the <code class="docutils literal notranslate"><span class="pre">createAccelerationModelsMap</span></code> function, which is a function that creates a special acceleration map that can be used as an input to the propagator settings.</p>
 <p>There are two functions, located in <code class="docutils literal notranslate"><span class="pre">CreateAccelerationModels.cpp</span></code>, called <code class="docutils literal notranslate"><span class="pre">createAccelerationModelsMap</span></code>. The function that is called will first order the map, and then return the value of the other function, which takes as input the ordered map, made in the first <code class="docutils literal notranslate"><span class="pre">createAccelerationModelsMap</span></code>. The second function looks as follows:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//! Function to create a set of acceleration models from a map of bodies and acceleration model types.</span>
-<span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span> <span class="n">createAccelerationModelsMap</span><span class="p">(</span>
-       <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span>
-       <span class="k">const</span> <span class="n">SelectedAccelerationMap</span><span class="o">&amp;</span> <span class="n">selectedAccelerationPerBody</span><span class="p">,</span>
-       <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&gt;&amp;</span> <span class="n">centralBodies</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-        <span class="n">currentAcceleration</span> <span class="o">=</span> <span class="n">createAccelerationModel</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">bodyUndergoingAcceleration</span> <span class="p">),</span>
-                                                           <span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">bodyExertingAcceleration</span> <span class="p">),</span>
-                                                           <span class="n">accelerationsForBody</span><span class="p">.</span><span class="n">at</span><span class="p">(</span> <span class="n">i</span> <span class="p">).</span><span class="n">second</span><span class="p">,</span>
-                                                           <span class="n">bodyUndergoingAcceleration</span><span class="p">,</span>
-                                                           <span class="n">bodyExertingAcceleration</span><span class="p">,</span>
-                                                           <span class="n">currentCentralBody</span><span class="p">,</span>
-                                                           <span class="n">currentCentralBodyName</span><span class="p">,</span>
-                                                           <span class="n">bodyMap</span> <span class="p">);</span>
+<span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span><span class="w"> </span><span class="nf">createAccelerationModelsMap</span><span class="p">(</span><span class="w"></span>
+<span class="w">       </span><span class="k">const</span><span class="w"> </span><span class="n">NamedBodyMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="k">const</span><span class="w"> </span><span class="n">SelectedAccelerationMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">selectedAccelerationPerBody</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">centralBodies</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">        </span><span class="n">currentAcceleration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createAccelerationModel</span><span class="p">(</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">bodyUndergoingAcceleration</span><span class="w"> </span><span class="p">),</span><span class="w"></span>
+<span class="w">                                                           </span><span class="n">bodyMap</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">bodyExertingAcceleration</span><span class="w"> </span><span class="p">),</span><span class="w"></span>
+<span class="w">                                                           </span><span class="n">accelerationsForBody</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">).</span><span class="n">second</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                           </span><span class="n">bodyUndergoingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                           </span><span class="n">bodyExertingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                           </span><span class="n">currentCentralBody</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                           </span><span class="n">currentCentralBodyName</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                           </span><span class="n">bodyMap</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 
-        <span class="c1">// Create acceleration model.</span>
-        <span class="n">mapOfAccelerationsForBody</span><span class="p">[</span> <span class="n">bodyExertingAcceleration</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span>
-                     <span class="n">currentAcceleration</span> <span class="p">);</span>
+<span class="w">        </span><span class="c1">// Create acceleration model.</span>
+<span class="w">        </span><span class="n">mapOfAccelerationsForBody</span><span class="p">[</span><span class="w"> </span><span class="n">bodyExertingAcceleration</span><span class="w"> </span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="w"></span>
+<span class="w">                     </span><span class="n">currentAcceleration</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-        <span class="c1">// Put acceleration models on current body in return map.</span>
-        <span class="n">accelerationModelMap</span><span class="p">[</span> <span class="n">bodyUndergoingAcceleration</span> <span class="p">]</span> <span class="o">=</span> <span class="n">mapOfAccelerationsForBody</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">accelerationModelMap</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Put acceleration models on current body in return map.</span>
+<span class="w">        </span><span class="n">accelerationModelMap</span><span class="p">[</span><span class="w"> </span><span class="n">bodyUndergoingAcceleration</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mapOfAccelerationsForBody</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">accelerationModelMap</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This function does several checks if the right models are present, and then calls the <code class="docutils literal notranslate"><span class="pre">createAccelerationModel(</span> <span class="pre">)</span></code> function. This function is where the acceleration models are called and looks as follows:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//! Function to create acceleration model object.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationModel</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">createAccelerationModel</span><span class="p">(</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span> <span class="n">bodyUndergoingAcceleration</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span> <span class="n">bodyExertingAcceleration</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationSettings</span> <span class="o">&gt;</span> <span class="n">accelerationSettings</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">nameOfBodyUndergoingAcceleration</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">nameOfBodyExertingAcceleration</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">Body</span> <span class="o">&gt;</span> <span class="n">centralBody</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">nameOfCentralBody</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// Declare pointer to return object.</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">AccelerationModel</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">accelerationModelPointer</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AccelerationModel</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">createAccelerationModel</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Body</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">bodyUndergoingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Body</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">bodyExertingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AccelerationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">accelerationSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">nameOfBodyUndergoingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">nameOfBodyExertingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Body</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">centralBody</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">nameOfCentralBody</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">NamedBodyMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bodyMap</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Declare pointer to return object.</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">AccelerationModel</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">accelerationModelPointer</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1">// Switch to call correct acceleration model type factory function.</span>
-    <span class="k">switch</span><span class="p">(</span> <span class="n">accelerationSettings</span><span class="o">-&gt;</span><span class="n">accelerationType_</span> <span class="p">)</span>
-    <span class="p">{</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="k">case</span> <span class="nl">aerodynamic</span><span class="p">:</span>
-        <span class="n">accelerationModelPointer</span> <span class="o">=</span> <span class="n">createAerodynamicAcceleratioModel</span><span class="p">(</span>
-                    <span class="n">bodyUndergoingAcceleration</span><span class="p">,</span>
-                    <span class="n">bodyExertingAcceleration</span><span class="p">,</span>
-                    <span class="n">nameOfBodyUndergoingAcceleration</span><span class="p">,</span>
-                    <span class="n">nameOfBodyExertingAcceleration</span> <span class="p">);</span>
-        <span class="k">break</span><span class="p">;</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="k">default</span><span class="o">:</span>
-        <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span>
-                    <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span> <span class="s">&quot;Error, acceleration model &quot;</span><span class="p">)</span> <span class="o">+</span>
-                    <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">accelerationSettings</span><span class="o">-&gt;</span><span class="n">accelerationType_</span> <span class="p">)</span> <span class="o">+</span>
-                    <span class="s">&quot; not recognized when making acceleration model of&quot;</span> <span class="o">+</span>
-                    <span class="n">nameOfBodyExertingAcceleration</span> <span class="o">+</span> <span class="s">&quot; on &quot;</span> <span class="o">+</span>
-                   <span class="n">nameOfBodyUndergoingAcceleration</span> <span class="p">);</span>
-        <span class="k">break</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">accelerationModelPointer</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="c1">// Switch to call correct acceleration model type factory function.</span>
+<span class="w">    </span><span class="k">switch</span><span class="p">(</span><span class="w"> </span><span class="n">accelerationSettings</span><span class="o">-&gt;</span><span class="n">accelerationType_</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">aerodynamic</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="n">accelerationModelPointer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createAerodynamicAcceleratioModel</span><span class="p">(</span><span class="w"></span>
+<span class="w">                    </span><span class="n">bodyUndergoingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="n">bodyExertingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="n">nameOfBodyUndergoingAcceleration</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="n">nameOfBodyExertingAcceleration</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="k">default</span><span class="o">:</span><span class="w"></span>
+<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="w"></span>
+<span class="w">                    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Error, acceleration model &quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                    </span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="w"> </span><span class="n">accelerationSettings</span><span class="o">-&gt;</span><span class="n">accelerationType_</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                    </span><span class="s">&quot; not recognized when making acceleration model of&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                    </span><span class="n">nameOfBodyExertingAcceleration</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; on &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                   </span><span class="n">nameOfBodyUndergoingAcceleration</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">accelerationModelPointer</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Ths function uses a switch statement on the <code class="docutils literal notranslate"><span class="pre">accelerationSettings-&gt;accelerationType_</span></code> (which was set by the user in the beginning), to determine which acceleration model needs to be called. The <code class="docutils literal notranslate"><span class="pre">createAerodynamicAcceleratioModel(</span> <span class="pre">)</span></code> then does several checks to determine if all the models that are used to calculate the aerodynamic force are present, after which it calls the constructor of the <code class="docutils literal notranslate"><span class="pre">AerodynamicAcceleration</span></code> class using the input values created in <code class="docutils literal notranslate"><span class="pre">createAerodynamicAcceleratioModel(</span> <span class="pre">)</span></code>. The structure of the <code class="docutils literal notranslate"><span class="pre">AerodynamicAcceleration</span></code> class, and how one can make a new acceleration model will be discussed in the next section.</p>
@@ -435,27 +439,27 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">dataType</span> <span class="pre">getAcceleration(</span> <span class="pre">)</span></code>. This function uses the recently updated member variables to calculate the acceleration acting on the body.</p></li>
 </ul>
 <p>For the case of the aerodynamic acceleration, these two functions look as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">getAcceleration</span><span class="p">(</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="n">computeAerodynamicAcceleration</span><span class="p">(</span>
-                <span class="mf">0.5</span> <span class="o">*</span> <span class="n">currentDensity_</span> <span class="o">*</span> <span class="n">currentAirspeed_</span> <span class="o">*</span> <span class="n">currentAirspeed_</span><span class="p">,</span>
-                <span class="n">currentReferenceArea_</span><span class="p">,</span> <span class="n">currentForceCoefficients_</span><span class="p">,</span> <span class="n">currentMass_</span> <span class="p">);</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="nf">getAcceleration</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">computeAerodynamicAcceleration</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">currentDensity_</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">currentAirspeed_</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">currentAirspeed_</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="n">currentReferenceArea_</span><span class="p">,</span><span class="w"> </span><span class="n">currentForceCoefficients_</span><span class="p">,</span><span class="w"> </span><span class="n">currentMass_</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
 
-<span class="kt">void</span> <span class="n">updateMembers</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">currentTime</span> <span class="o">=</span> <span class="n">TUDAT_NAN</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="p">(</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">currentTime_</span> <span class="o">==</span> <span class="n">currentTime</span> <span class="p">)</span> <span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">currentForceCoefficients_</span> <span class="o">=</span> <span class="n">coefficientMultiplier_</span> <span class="o">*</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">coefficientFunction_</span><span class="p">(</span> <span class="p">);</span>
-        <span class="n">currentDensity_</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">densityFunction_</span><span class="p">(</span> <span class="p">);</span>
-        <span class="n">currentMass_</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">massFunction_</span><span class="p">(</span> <span class="p">);</span>
-        <span class="n">currentAirspeed_</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">airSpeedFunction_</span><span class="p">(</span> <span class="p">);</span>
-        <span class="n">currentReferenceArea_</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">referenceAreaFunction_</span><span class="p">(</span> <span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">updateMembers</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">currentTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TUDAT_NAN</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="p">(</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">currentTime_</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">currentTime</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">currentForceCoefficients_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coefficientMultiplier_</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">coefficientFunction_</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">currentDensity_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">densityFunction_</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">currentMass_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">massFunction_</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">currentAirspeed_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">airSpeedFunction_</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">currentReferenceArea_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">referenceAreaFunction_</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-        <span class="n">currentTime_</span> <span class="o">=</span> <span class="n">currentTime</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="w">        </span><span class="n">currentTime_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">currentTime</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">computeAcceleration()</span></code> is a function that uses the well known lift, side, and drag acceleration equations to calculate the acceleration vector.</p>
@@ -466,58 +470,58 @@
 <h2>Adding a New State Derivative Model<a class="headerlink" href="#adding-a-new-state-derivative-model" title="Permalink to this headline">¶</a></h2>
 <p>Another type of model which allows the user to add extra features to it, is the state derivative model. These models are used by the dynamics simulator to determine how the state equations are solved. Currently there are several available, e.g. cowell state derivative model, encke state derivate model, and more, but if a special model is needed for a certain application, the user can add this to tudat by following this guide.</p>
 <p>As before, this guide will start by looking at the framework of how the state derivative model is implemented. First, the state derivative model is chosen by the user from an enum called <code class="docutils literal notranslate"><span class="pre">TranslationalPropagatorType</span></code>, located in <code class="docutils literal notranslate"><span class="pre">nBodyStateDerivativeModel.h</span></code>. The model picked from this enum is then used as an input into the constructor of the <code class="docutils literal notranslate"><span class="pre">TranslationalPropagatorSettings</span></code>, where it is assigned to a specific member variable called: <code class="docutils literal notranslate"><span class="pre">propagator_</span></code>. The <code class="docutils literal notranslate"><span class="pre">TranslationalPropagatorSettings</span></code> is used as an input to the <code class="docutils literal notranslate"><span class="pre">SingleArcDynamicsSimulator</span></code>, where it will be used further. An example of this is shown below:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="c1">// Create propagation settings.</span>
- <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">propagatorSettings</span> <span class="o">=</span>
-         <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
-         <span class="p">(</span> <span class="n">centralBodies</span><span class="p">,</span> <span class="n">accelerationModelMap</span><span class="p">,</span> <span class="n">bodiesToPropagate</span><span class="p">,</span> <span class="n">systemInitialState</span><span class="p">,</span>
-           <span class="n">terminationSettings</span><span class="p">,</span> <span class="n">cowell</span><span class="p">,</span> <span class="n">dependentVariablesToSave</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="c1">// Create propagation settings.</span>
+<span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">propagatorSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">         </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">         </span><span class="p">(</span><span class="w"> </span><span class="n">centralBodies</span><span class="p">,</span><span class="w"> </span><span class="n">accelerationModelMap</span><span class="p">,</span><span class="w"> </span><span class="n">bodiesToPropagate</span><span class="p">,</span><span class="w"> </span><span class="n">systemInitialState</span><span class="p">,</span><span class="w"></span>
+<span class="w">           </span><span class="n">terminationSettings</span><span class="p">,</span><span class="w"> </span><span class="n">cowell</span><span class="p">,</span><span class="w"> </span><span class="n">dependentVariablesToSave</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Create simulation object and propagate dynamics.</span>
-<span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="o">&gt;</span> <span class="n">dynamicsSimulator</span><span class="p">(</span>
-         <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span> <span class="p">);</span>
+<span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">dynamicsSimulator</span><span class="p">(</span><span class="w"></span>
+<span class="w">         </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"> </span><span class="n">integratorSettings</span><span class="p">,</span><span class="w"> </span><span class="n">propagatorSettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Inside <code class="docutils literal notranslate"><span class="pre">SingleArcDynamicsSimulator</span></code>, the propagator settings are passed to various functions, but the state derivative model is only needed in <code class="docutils literal notranslate"><span class="pre">createStateDerivativeModels</span></code>. This function returns a vector of <code class="docutils literal notranslate"><span class="pre">SingleStateTypeDerivative</span></code>. If a hybrid state derivative model is used, this function will fill the vector with state derivative models. If not, this vector will only contain one state derivative model, created by the function (equally) called <code class="docutils literal notranslate"><span class="pre">createStateDerivativeModels</span></code>. This function checks what kind of state is propagated (translational, rotational, etc.) and creates the specific state derivative model. For example, for the translational state it will call the <code class="docutils literal notranslate"><span class="pre">createTranslationalStateDerivativeModel</span></code> function. This function looks as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="k">template</span><span class="o">&lt;</span> <span class="k">typename</span> <span class="n">StateScalarType</span> <span class="o">=</span> <span class="kt">double</span><span class="p">,</span> <span class="k">typename</span> <span class="n">TimeType</span> <span class="o">=</span> <span class="kt">double</span> <span class="o">&gt;</span>
- <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">SingleStateTypeDerivative</span><span class="o">&lt;</span> <span class="n">StateScalarType</span><span class="p">,</span> <span class="n">TimeType</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
- <span class="n">createTranslationalStateDerivativeModel</span><span class="p">(</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span> <span class="n">StateScalarType</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
-        <span class="n">translationPropagatorSettings</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">TimeType</span> <span class="n">propagationStartTime</span> <span class="p">)</span>
-<span class="p">{</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="k">template</span><span class="o">&lt;</span><span class="w"> </span><span class="k">typename</span> <span class="nc">StateScalarType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span> <span class="nc">TimeType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">SingleStateTypeDerivative</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="p">,</span><span class="w"> </span><span class="n">TimeType</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="w"> </span><span class="n">createTranslationalStateDerivativeModel</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TranslationalStatePropagatorSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">        </span><span class="n">translationPropagatorSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">TimeType</span><span class="w"> </span><span class="n">propagationStartTime</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
 
-    <span class="c1">// Create object for frame origin transformations.</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">CentralBodyData</span><span class="o">&lt;</span> <span class="n">StateScalarType</span><span class="p">,</span> <span class="n">TimeType</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">centralBodyData</span> <span class="o">=</span>
-            <span class="n">createCentralBodyData</span><span class="o">&lt;</span> <span class="n">StateScalarType</span><span class="p">,</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span>
-                <span class="n">translationPropagatorSettings</span><span class="o">-&gt;</span><span class="n">centralBodies_</span><span class="p">,</span>
-                <span class="n">translationPropagatorSettings</span><span class="o">-&gt;</span><span class="n">bodiesToIntegrate_</span><span class="p">,</span>
-                <span class="n">bodyMap</span> <span class="p">);</span>
+<span class="w">    </span><span class="c1">// Create object for frame origin transformations.</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">CentralBodyData</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="p">,</span><span class="w"> </span><span class="n">TimeType</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">centralBodyData</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">            </span><span class="n">createCentralBodyData</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="p">,</span><span class="w"> </span><span class="n">TimeType</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="n">translationPropagatorSettings</span><span class="o">-&gt;</span><span class="n">centralBodies_</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="n">translationPropagatorSettings</span><span class="o">-&gt;</span><span class="n">bodiesToIntegrate_</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="n">bodyMap</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">SingleStateTypeDerivative</span><span class="o">&lt;</span> <span class="n">StateScalarType</span><span class="p">,</span> <span class="n">TimeType</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">stateDerivativeModel</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">SingleStateTypeDerivative</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="p">,</span><span class="w"> </span><span class="n">TimeType</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">stateDerivativeModel</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1">// Check propagator type and create corresponding state derivative object.</span>
-    <span class="k">switch</span><span class="p">(</span> <span class="n">translationPropagatorSettings</span><span class="o">-&gt;</span><span class="n">propagator_</span> <span class="p">)</span>
-    <span class="p">{</span>
-    <span class="k">case</span> <span class="nl">cowell</span><span class="p">:</span>
-    <span class="p">{</span>
-        <span class="n">stateDerivativeModel</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span>
-                <span class="n">NBodyCowellStateDerivative</span><span class="o">&lt;</span> <span class="n">StateScalarType</span><span class="p">,</span> <span class="n">TimeType</span> <span class="o">&gt;</span> <span class="o">&gt;</span>
-                <span class="p">(</span> <span class="n">translationPropagatorSettings</span><span class="o">-&gt;</span><span class="n">getAccelerationsMap</span><span class="p">(</span> <span class="p">),</span> <span class="n">centralBodyData</span><span class="p">,</span>
-                  <span class="n">translationPropagatorSettings</span><span class="o">-&gt;</span><span class="n">bodiesToIntegrate_</span> <span class="p">);</span>
-        <span class="k">break</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="p">...</span>
-    <span class="p">}</span>
-    <span class="k">default</span><span class="o">:</span>
-        <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span>
-                    <span class="s">&quot;Error, did not recognize translational state propagation type: &quot;</span> <span class="o">+</span>
-                    <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span> <span class="n">translationPropagatorSettings</span><span class="o">-&gt;</span><span class="n">propagator_</span> <span class="p">)</span> <span class="p">);</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">stateDerivativeModel</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="c1">// Check propagator type and create corresponding state derivative object.</span>
+<span class="w">    </span><span class="k">switch</span><span class="p">(</span><span class="w"> </span><span class="n">translationPropagatorSettings</span><span class="o">-&gt;</span><span class="n">propagator_</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">cowell</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">stateDerivativeModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"></span>
+<span class="w">                </span><span class="n">NBodyCowellStateDerivative</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="p">,</span><span class="w"> </span><span class="n">TimeType</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">                </span><span class="p">(</span><span class="w"> </span><span class="n">translationPropagatorSettings</span><span class="o">-&gt;</span><span class="n">getAccelerationsMap</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">centralBodyData</span><span class="p">,</span><span class="w"></span>
+<span class="w">                  </span><span class="n">translationPropagatorSettings</span><span class="o">-&gt;</span><span class="n">bodiesToIntegrate_</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">default</span><span class="o">:</span><span class="w"></span>
+<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="w"></span>
+<span class="w">                    </span><span class="s">&quot;Error, did not recognize translational state propagation type: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                    </span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="w"> </span><span class="n">translationPropagatorSettings</span><span class="o">-&gt;</span><span class="n">propagator_</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">stateDerivativeModel</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This function is responsible for making the state derivate model based on the <code class="docutils literal notranslate"><span class="pre">TranslationalPropagatorType</span></code> variable decalred by the user, using a switch statement.</p>
@@ -533,68 +537,68 @@
 <p>The list of estimatable parameters already available in Tudat is presented in <a class="reference internal" href="../../tutorials/tudatFeatures/estimationSetup/parameterEstimationSettings.html#parameterestimationsettings"><span class="std std-ref">Setting Up Estimated Parameters</span></a>. However, it is possible to add another parameter to this list of estimatable parameters if needed. This process requires to modify several files located in different directories and  will be described in details based on the examples of the two parameters <code class="docutils literal notranslate"><span class="pre">radiation_pressure_coefficient</span></code> and <code class="docutils literal notranslate"><span class="pre">rotation_pole_position</span></code>.</p>
 <p>First of all, the name of the new estimatable parameter has to be added to the list of the estimatable parameters available in Tudat, in the file <code class="docutils literal notranslate"><span class="pre">estimatableParameter.h</span></code>:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//! List of parameters that can be estimated by the orbit determination code</span>
-<span class="k">enum</span> <span class="n">EstimatebleParametersEnum</span>
-<span class="p">{</span>
-   <span class="n">arc_wise_initial_body_state</span><span class="p">,</span>
-   <span class="n">initial_body_state</span><span class="p">,</span>
-   <span class="n">initial_rotational_body_state</span><span class="p">,</span>
-   <span class="n">gravitational_parameter</span><span class="p">,</span>
-   <span class="n">constant_drag_coefficient</span><span class="p">,</span>
-   <span class="n">radiation_pressure_coefficient</span><span class="p">,</span>
-   <span class="n">arc_wise_radiation_pressure_coefficient</span><span class="p">,</span>
-   <span class="n">spherical_harmonics_cosine_coefficient_block</span><span class="p">,</span>
-   <span class="n">spherical_harmonics_sine_coefficient_block</span><span class="p">,</span>
-   <span class="n">constant_rotation_rate</span><span class="p">,</span>
-   <span class="n">rotation_pole_position</span><span class="p">,</span>
-   <span class="n">constant_additive_observation_bias</span><span class="p">,</span>
-   <span class="p">...</span>
-   <span class="p">...</span>
-<span class="p">}</span>
+<span class="k">enum</span> <span class="nc">EstimatebleParametersEnum</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="n">arc_wise_initial_body_state</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">initial_body_state</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">initial_rotational_body_state</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">gravitational_parameter</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">constant_drag_coefficient</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">radiation_pressure_coefficient</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">arc_wise_radiation_pressure_coefficient</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">spherical_harmonics_cosine_coefficient_block</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">spherical_harmonics_sine_coefficient_block</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">constant_rotation_rate</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">rotation_pole_position</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">constant_additive_observation_bias</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="p">...</span><span class="w"></span>
+<span class="w">   </span><span class="p">...</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In addition to the file <code class="docutils literal notranslate"><span class="pre">estimatableParameters.h</span></code>, the file <code class="docutils literal notranslate"><span class="pre">estimatableParameters.cpp</span></code> also has to be modified. In particular, a short description of each estimatable parameter has to be provided in the function <code class="docutils literal notranslate"><span class="pre">getParameterTypeString</span></code>, as it is done in the following for the parameters <code class="docutils literal notranslate"><span class="pre">radiation_pressure_coefficient</span></code> and <code class="docutils literal notranslate"><span class="pre">rotation_pole_position</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">getParameterTypeString</span><span class="p">(</span> <span class="k">const</span> <span class="n">EstimatebleParametersEnum</span> <span class="n">parameterType</span> <span class="p">)</span>
-<span class="p">{</span>
-<span class="p">...</span>
-<span class="k">case</span> <span class="nl">radiation_pressure_coefficient</span><span class="p">:</span>
-     <span class="n">parameterDescription</span> <span class="o">=</span> <span class="s">&quot;radiation pressure coefficient &quot;</span><span class="p">;</span>
-     <span class="k">break</span><span class="p">;</span>
-<span class="p">...</span>
-<span class="k">case</span> <span class="nl">rotation_pole_position</span><span class="p">:</span>
-     <span class="n">parameterDescription</span> <span class="o">=</span> <span class="s">&quot;pole position &quot;</span><span class="p">;</span>
-     <span class="k">break</span><span class="p">;</span>
-<span class="p">...</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">getParameterTypeString</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">EstimatebleParametersEnum</span><span class="w"> </span><span class="n">parameterType</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="k">case</span><span class="w"> </span><span class="nl">radiation_pressure_coefficient</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="n">parameterDescription</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;radiation pressure coefficient &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="k">case</span><span class="w"> </span><span class="nl">rotation_pole_position</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="n">parameterDescription</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;pole position &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The type of the new estimatable parameter must then be specified within the function <code class="docutils literal notranslate"><span class="pre">isDoubleParameter</span></code> (still inside the file <code class="docutils literal notranslate"><span class="pre">estimatableParameters.cpp</span></code>). An estimatable parameter can either be a <code class="docutils literal notranslate"><span class="pre">double</span></code> or a <code class="docutils literal notranslate"><span class="pre">Eigen::VectorXd</span></code>. Regarding the two examples which are considered here, the parameter <code class="docutils literal notranslate"><span class="pre">radiation_pressure_coefficient</span></code> is a <code class="docutils literal notranslate"><span class="pre">double</span></code> while the parameter <code class="docutils literal notranslate"><span class="pre">rotation_pole_position</span></code> is a <code class="docutils literal notranslate"><span class="pre">Eigen::VectorXd</span></code>, whose first element is the right ascension of the rotation pole and the second one its declination.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="nf">isDoubleParameter</span><span class="p">(</span> <span class="k">const</span> <span class="n">EstimatebleParametersEnum</span> <span class="n">parameterType</span> <span class="p">)</span>
-<span class="p">{</span>
-<span class="p">...</span>
-<span class="k">case</span> <span class="nl">radiation_pressure_coefficient</span><span class="p">:</span>
-     <span class="n">isDoubleParameter</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-     <span class="k">break</span><span class="p">;</span>
-<span class="p">...</span>
-<span class="k">case</span> <span class="nl">rotation_pole_position</span><span class="p">:</span>
-     <span class="n">isDoubleParameter</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-     <span class="k">break</span><span class="p">;</span>
-<span class="p">...</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">isDoubleParameter</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">EstimatebleParametersEnum</span><span class="w"> </span><span class="n">parameterType</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="k">case</span><span class="w"> </span><span class="nl">radiation_pressure_coefficient</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="n">isDoubleParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="k">case</span><span class="w"> </span><span class="nl">rotation_pole_position</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="n">isDoubleParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Finally, depending on which estimatable parameter is to be added to the list of available parameters, the functions <code class="docutils literal notranslate"><span class="pre">isParameterDynamicalPropertyInitialState</span></code>, <code class="docutils literal notranslate"><span class="pre">isParameterRotationMatrixProperty</span></code>, <code class="docutils literal notranslate"><span class="pre">isParameterObservationLinkProperty</span></code> and <code class="docutils literal notranslate"><span class="pre">isParameterTidalProperty</span></code> might also need to be modified to take this new parameter into account (again in <code class="docutils literal notranslate"><span class="pre">estimatableParameters.cpp</span></code>). They usually return a boolean which is set to false as default value, but a specific case has to added for the new parameter if it is related to either the initial state, a rotation matrix, an observation link or any tidal property. The parameter <code class="docutils literal notranslate"><span class="pre">radiation_pressure_coefficient</span></code> is related to none of them but the parameter <code class="docutils literal notranslate"><span class="pre">rotation_pole_position</span></code> is linked to a rotation matrix so that the function <code class="docutils literal notranslate"><span class="pre">isParameterRotationMatrixProperty</span></code> includes a case switching the boolean to <code class="docutils literal notranslate"><span class="pre">true</span></code> for this parameter.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="nf">isParameterRotationMatrixProperty</span><span class="p">(</span> <span class="k">const</span> <span class="n">EstimatebleParametersEnum</span> <span class="n">parameterType</span> <span class="p">)</span>
-<span class="p">{</span>
-   <span class="kt">bool</span> <span class="n">flag</span><span class="p">;</span>
-   <span class="k">switch</span><span class="p">(</span> <span class="n">parameterType</span> <span class="p">)</span>
-   <span class="p">{</span>
-   <span class="p">...</span>
-   <span class="k">case</span> <span class="nl">rotation_pole_position</span><span class="p">:</span>
-      <span class="n">flag</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-      <span class="k">break</span><span class="p">;</span>
-   <span class="p">}</span>
-   <span class="k">return</span> <span class="n">flag</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">isParameterRotationMatrixProperty</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">EstimatebleParametersEnum</span><span class="w"> </span><span class="n">parameterType</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">flag</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">switch</span><span class="p">(</span><span class="w"> </span><span class="n">parameterType</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="p">...</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="nl">rotation_pole_position</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="n">flag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">flag</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Once the new estimatable parameter has been defined and characterised, a corresponding class is to be created to fully describe this parameter. This is done in an additional file which has to be created in the directory:</p>
@@ -602,122 +606,122 @@
 <div><p>…/tudatBundle/tudat/Tudat/Astrodynamics/OrbitDetermination/EstimatableParameters/</p>
 </div></blockquote>
 <p>Each estimatable parameter class is defined in a similar way, usually from the base class <code class="docutils literal notranslate"><span class="pre">EstimatableParameter</span></code> and includes the definition of three functions <code class="docutils literal notranslate"><span class="pre">getParameterValues</span></code>, <code class="docutils literal notranslate"><span class="pre">setParameterValue</span></code> and <code class="docutils literal notranslate"><span class="pre">getParameterSize</span></code>. Considering the parameter <code class="docutils literal notranslate"><span class="pre">radiation_pressure_coefficient</span></code>, the definition of its associated class <code class="docutils literal notranslate"><span class="pre">RadiationPressureCoefficient</span></code> is done as follows (in the file <code class="docutils literal notranslate"><span class="pre">radiationPressureCoefficient.h</span></code>).</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RadiationPressureCoefficient</span><span class="o">:</span> <span class="k">public</span> <span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span>
-<span class="p">{</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RadiationPressureCoefficient</span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">EstimatableParameter</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
 
-<span class="k">public</span><span class="o">:</span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
 <span class="c1">//! Constructor.</span>
-<span class="n">RadiationPressureCoefficient</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">electro_magnetism</span><span class="o">::</span><span class="n">RadiationPressureInterface</span> <span class="o">&gt;</span> <span class="n">radiationPressureInterface</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">associatedBody</span> <span class="p">)</span><span class="o">:</span>
-<span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">radiation_pressure_coefficient</span><span class="p">,</span> <span class="n">associatedBody</span> <span class="p">),</span> <span class="n">radiationPressureInterface_</span><span class="p">(</span> <span class="n">radiationPressureInterface</span> <span class="p">)</span>
-<span class="p">{</span> <span class="p">}</span>
+<span class="n">RadiationPressureCoefficient</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">electro_magnetism</span><span class="o">::</span><span class="n">RadiationPressureInterface</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">radiationPressureInterface</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">associatedBody</span><span class="w"> </span><span class="p">)</span><span class="o">:</span><span class="w"></span>
+<span class="n">EstimatableParameter</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">radiation_pressure_coefficient</span><span class="p">,</span><span class="w"> </span><span class="n">associatedBody</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">radiationPressureInterface_</span><span class="p">(</span><span class="w"> </span><span class="n">radiationPressureInterface</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
 <span class="c1">//! Destructor.</span>
-<span class="o">~</span><span class="n">RadiationPressureCoefficient</span><span class="p">(</span> <span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+<span class="o">~</span><span class="n">RadiationPressureCoefficient</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
 <span class="c1">//! Function to get the current value of the radiation pressure coefficient that is to be estimated.</span>
-<span class="kt">double</span> <span class="n">getParameterValue</span><span class="p">(</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="n">radiationPressureInterface_</span><span class="o">-&gt;</span><span class="n">getRadiationPressureCoefficient</span><span class="p">(</span> <span class="p">);</span>
-<span class="p">}</span>
+<span class="kt">double</span><span class="w"> </span><span class="n">getParameterValue</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">radiationPressureInterface_</span><span class="o">-&gt;</span><span class="n">getRadiationPressureCoefficient</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
 <span class="c1">//! Function to reset the value of the radiation pressure coefficient that is to be estimated.</span>
-<span class="kt">void</span> <span class="n">setParameterValue</span><span class="p">(</span> <span class="kt">double</span> <span class="n">parameterValue</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">radiationPressureInterface_</span><span class="o">-&gt;</span><span class="n">resetRadiationPressureCoefficient</span><span class="p">(</span> <span class="n">parameterValue</span> <span class="p">);</span>
-<span class="p">}</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">setParameterValue</span><span class="p">(</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">parameterValue</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">radiationPressureInterface_</span><span class="o">-&gt;</span><span class="n">resetRadiationPressureCoefficient</span><span class="p">(</span><span class="w"> </span><span class="n">parameterValue</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
 <span class="c1">//! Function to retrieve the size of the parameter.</span>
-<span class="kt">int</span> <span class="n">getParameterSize</span><span class="p">(</span> <span class="p">){</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">getParameterSize</span><span class="p">(</span><span class="w"> </span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
-<span class="k">protected</span><span class="o">:</span>
+<span class="k">protected</span><span class="o">:</span><span class="w"></span>
 
-<span class="k">private</span><span class="o">:</span>
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
 
 <span class="c1">//! Object containing the radiation pressure coefficient to be estimated.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">electro_magnetism</span><span class="o">::</span><span class="n">RadiationPressureInterface</span> <span class="o">&gt;</span> <span class="n">radiationPressureInterface_</span><span class="p">;</span>
-<span class="p">};</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">electro_magnetism</span><span class="o">::</span><span class="n">RadiationPressureInterface</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">radiationPressureInterface_</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>For the parameter <code class="docutils literal notranslate"><span class="pre">rotation_pole_position</span></code>, the class <code class="docutils literal notranslate"><span class="pre">ConstantRotationalOrientation</span></code> is created in a very similar way, in a file <code class="docutils literal notranslate"><span class="pre">constantRotationalOrientation.h</span></code>, keeping in mind that this parameter is a <code class="docutils literal notranslate"><span class="pre">Eigen::VectorXd</span></code> whose size is 2 and not a double as it is the case for the radiation pressure coefficient.</p>
 <p>Then an interface object has to be created to estimate the new parameter. This is done in the file <code class="docutils literal notranslate"><span class="pre">createEstimatableParameters.cpp</span></code>, either with the function <code class="docutils literal notranslate"><span class="pre">createDoubleParameterToEstimate</span></code> if the estimatable parameter is of type <code class="docutils literal notranslate"><span class="pre">double</span></code> or with <code class="docutils literal notranslate"><span class="pre">createVectorParameterToEstimate</span></code> if it is a <code class="docutils literal notranslate"><span class="pre">Eigen::VectorXd</span></code> object. These functions take as input an <code class="docutils literal notranslate"><span class="pre">EstimatableParameterSettings</span></code> object from which the settings of the parameter to be estimated are checked to ensure that it is properly defined and thus make the estimation possible. In some cases, the base class <code class="docutils literal notranslate"><span class="pre">EstimatableParameterSettings</span></code> is not detailed enough to give access to all the required properties of the estimatable parameter and a specific class has to be defined. As an example, the parameter <code class="docutils literal notranslate"><span class="pre">spherical_harmonics_cosine_coefficient_block</span></code> requires the definition of the estimatable parameter settings class called <code class="docutils literal notranslate"><span class="pre">SphericalHarmonicEstimatableParameterSettings</span></code> (defined in the file <code class="docutils literal notranslate"><span class="pre">estimatableParameterSettings.h</span></code>). This class manages the different combinations of degrees and orders of the spherical harmonic coefficients that have to be estimated.</p>
 <p>Regarding the verification of the estimatable parameter settings of <code class="docutils literal notranslate"><span class="pre">radiation_pressure_coefficient</span></code>, it is checked that only one single radiation pressure interface is defined before creating the parameter and linking it to this radiation pressure interface and to the propagated body.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">createDoubleParameterToEstimate</span><span class="p">(</span>
-     <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSettings</span> <span class="o">&gt;&amp;</span> <span class="n">doubleParameterName</span><span class="p">,</span>
-     <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="k">const</span> <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span><span class="o">&amp;</span> <span class="n">accelerationModelMap</span> <span class="p">)</span>
-<span class="p">{</span>
-<span class="p">...</span>
-<span class="k">case</span> <span class="nl">radiation_pressure_coefficient</span><span class="p">:</span>
-     <span class="p">{</span>
-         <span class="k">if</span><span class="p">(</span> <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRadiationPressureInterfaces</span><span class="p">(</span> <span class="p">).</span><span class="n">size</span><span class="p">(</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
-         <span class="p">{</span>
-             <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;Error, no radiation pressure interfaces found in body &quot;</span> <span class="o">+</span>
-                     <span class="n">currentBodyName</span> <span class="o">+</span> <span class="s">&quot; when making Cr parameter.&quot;</span><span class="p">;</span>
-             <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="n">errorMessage</span> <span class="p">);</span>
-         <span class="p">}</span>
-         <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRadiationPressureInterfaces</span><span class="p">(</span> <span class="p">).</span><span class="n">size</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="p">)</span>
-         <span class="p">{</span>
-             <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;Error, multiple radiation pressure interfaces found in body &quot;</span> <span class="o">+</span>
-                     <span class="n">currentBodyName</span> <span class="o">+</span> <span class="s">&quot; when making Cr parameter.&quot;</span><span class="p">;</span>
-             <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="n">errorMessage</span> <span class="p">);</span>
-         <span class="p">}</span>
-         <span class="k">else</span>
-         <span class="p">{</span>
-             <span class="n">doubleParameterToEstimate</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">RadiationPressureCoefficient</span> <span class="o">&gt;</span><span class="p">(</span>
-                         <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRadiationPressureInterfaces</span><span class="p">(</span> <span class="p">).</span><span class="n">begin</span><span class="p">(</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">,</span>
-                         <span class="n">currentBodyName</span> <span class="p">);</span>
-         <span class="p">}</span>
-         <span class="k">break</span><span class="p">;</span>
-     <span class="p">}</span>
- <span class="p">...</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EstimatableParameter</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">createDoubleParameterToEstimate</span><span class="p">(</span><span class="w"></span>
+<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">doubleParameterName</span><span class="p">,</span><span class="w"></span>
+<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="n">NamedBodyMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">accelerationModelMap</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="k">case</span><span class="w"> </span><span class="nl">radiation_pressure_coefficient</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRadiationPressureInterfaces</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">size</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="w">             </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Error, no radiation pressure interfaces found in body &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                     </span><span class="n">currentBodyName</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; when making Cr parameter.&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">             </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRadiationPressureInterfaces</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">size</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="w">             </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Error, multiple radiation pressure interfaces found in body &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                     </span><span class="n">currentBodyName</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; when making Cr parameter.&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">             </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="k">else</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="w">             </span><span class="n">doubleParameterToEstimate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">RadiationPressureCoefficient</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">                         </span><span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRadiationPressureInterfaces</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">begin</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">,</span><span class="w"></span>
+<span class="w">                         </span><span class="n">currentBodyName</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="p">}</span><span class="w"></span>
+<span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Concerning the parameter <code class="docutils literal notranslate"><span class="pre">rotation_pole_position</span></code>, it must be verified that the rotation model is a simple rotational ephemeris for which the position of the rotation pole is indeed defined before creating the estimatable parameter.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">createVectorParameterToEstimate</span><span class="p">(</span>
-     <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">EstimatableParameterSettings</span> <span class="o">&gt;&amp;</span> <span class="n">vectorParameterName</span><span class="p">,</span>
-     <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="k">const</span> <span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span><span class="o">&amp;</span> <span class="n">accelerationModelMap</span> <span class="p">)</span>
-<span class="p">{</span>
-<span class="p">...</span>
-<span class="k">case</span> <span class="nl">rotation_pole_position</span><span class="p">:</span>
-         <span class="k">if</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">SimpleRotationalEphemeris</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span> <span class="o">==</span> <span class="k">nullptr</span> <span class="p">)</span>
-         <span class="p">{</span>
-             <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;Warning, no simple rotational ephemeris present in body &quot;</span> <span class="o">+</span> <span class="n">currentBodyName</span> <span class="o">+</span>
-                     <span class="s">&quot; when making constant rotation orientation parameter&quot;</span><span class="p">;</span>
-             <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="n">errorMessage</span> <span class="p">);</span>
-         <span class="p">}</span>
-         <span class="k">else</span>
-         <span class="p">{</span>
-             <span class="n">vectorParameterToEstimate</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ConstantRotationalOrientation</span> <span class="o">&gt;</span>
-                     <span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">SimpleRotationalEphemeris</span> <span class="o">&gt;</span>
-                       <span class="p">(</span> <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span> <span class="p">)</span> <span class="p">),</span> <span class="n">currentBodyName</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EstimatableParameter</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">createVectorParameterToEstimate</span><span class="p">(</span><span class="w"></span>
+<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">EstimatableParameterSettings</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">vectorParameterName</span><span class="p">,</span><span class="w"></span>
+<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="n">NamedBodyMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">basic_astrodynamics</span><span class="o">::</span><span class="n">AccelerationMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">accelerationModelMap</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="k">case</span><span class="w"> </span><span class="nl">rotation_pole_position</span><span class="p">:</span><span class="w"></span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span><span class="w"> </span><span class="n">SimpleRotationalEphemeris</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="w">             </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Warning, no simple rotational ephemeris present in body &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">currentBodyName</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                     </span><span class="s">&quot; when making constant rotation orientation parameter&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">             </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="k">else</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="w">             </span><span class="n">vectorParameterToEstimate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ConstantRotationalOrientation</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">                     </span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ephemerides</span><span class="o">::</span><span class="n">SimpleRotationalEphemeris</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">                       </span><span class="p">(</span><span class="w"> </span><span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">currentBodyName</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-         <span class="p">}</span>
-         <span class="k">break</span><span class="p">;</span>
-  <span class="p">...</span>
-  <span class="p">}</span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">...</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>To allow the parameter estimation to be conducted, partials with respect to this parameter have to be implemented. They can either be cartesian state or acceleration partials. In the former case, the partials of the cartesian state of the propagated body with respect to the estimatable parameter have to be implemented in the file <code class="docutils literal notranslate"><span class="pre">createCartesianStatePartial.cpp</span></code>. These partials are defined within the functions <code class="docutils literal notranslate"><span class="pre">createCartesianStatePartialsWrtParameter</span></code> (two functions exist with two different input types, depending on the type of the parameter (<code class="docutils literal notranslate"><span class="pre">double</span></code> or <code class="docutils literal notranslate"><span class="pre">Eigen::VectorXd</span></code>) that is to be considered). Three cases have to be distinguished here. First, if the estimatable parameter has been identified as being a property of a rotation matrix, then the function <code class="docutils literal notranslate"><span class="pre">createCartesianStatePartialsWrtParameter</span></code> calls another function named <code class="docutils literal notranslate"><span class="pre">createRotationMatrixPartialsWrtParameter</span></code> and defined in <code class="docutils literal notranslate"><span class="pre">createCartesianStatePartial.cpp</span></code> too (again two functions with the same name exist for the two types of estimatable parameters). A specific case has to be added within this function for each parameter which is related to a rotation matrix. For the parameter <code class="docutils literal notranslate"><span class="pre">rotation_pole_position</span></code>, the following lines of code have been added to first check that the rotation model is consistent with the estimatable parameter (here that is a simple rotational model) and then to call a function that returns the required rotation matrix  partials for this particular model.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RotationMatrixPartial</span> <span class="o">&gt;</span> <span class="n">createRotationMatrixPartialsWrtParameter</span><span class="p">(</span>
-      <span class="k">const</span> <span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span>
-      <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">estimatable_parameters</span><span class="o">::</span><span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">parameterToEstimate</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">RotationMatrixPartial</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">createRotationMatrixPartialsWrtParameter</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">estimatable_parameters</span><span class="o">::</span><span class="n">EstimatableParameter</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">parameterToEstimate</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 
-<span class="p">{</span>
-   <span class="p">...</span>
-   <span class="k">case</span> <span class="n">estimatable_parameters</span><span class="o">::</span><span class="nl">rotation_pole_position</span><span class="p">:</span>
-      <span class="k">if</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">ephemerides</span><span class="o">::</span><span class="n">SimpleRotationalEphemeris</span> <span class="o">&gt;</span><span class="p">(</span>
-                  <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span> <span class="o">==</span> <span class="k">nullptr</span> <span class="p">)</span>
-      <span class="p">{</span>
-          <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;Warning, body&#39;s rotation model is not simple when making position w.r.t. pole position partial&quot;</span><span class="p">;</span>
-          <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span> <span class="n">errorMessage</span> <span class="p">);</span>
-      <span class="p">}</span>
-      <span class="c1">// Create rotation matrix partial object</span>
-      <span class="n">rotationMatrixPartial</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">RotationMatrixPartialWrtPoleOrientation</span> <span class="o">&gt;</span><span class="p">(</span>
-                  <span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span> <span class="n">SimpleRotationalEphemeris</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span> <span class="p">)</span> <span class="p">)</span> <span class="p">);</span>
-      <span class="k">break</span><span class="p">;</span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="p">...</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="n">estimatable_parameters</span><span class="o">::</span><span class="nl">rotation_pole_position</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ephemerides</span><span class="o">::</span><span class="n">SimpleRotationalEphemeris</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">                  </span><span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Warning, body&#39;s rotation model is not simple when making position w.r.t. pole position partial&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">          </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// Create rotation matrix partial object</span>
+<span class="w">      </span><span class="n">rotationMatrixPartial</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">RotationMatrixPartialWrtPoleOrientation</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">                  </span><span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span><span class="w"> </span><span class="n">SimpleRotationalEphemeris</span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">currentBody</span><span class="o">-&gt;</span><span class="n">getRotationalEphemeris</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 
- <span class="p">...</span>
- <span class="p">}</span>
+<span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="w"> </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The class <code class="docutils literal notranslate"><span class="pre">RotationMatrixPartialWrtPoleOrientation</span></code> used in the code above to define the <code class="docutils literal notranslate"><span class="pre">rotationMatrixPartial</span></code> variable is created in the file <code class="docutils literal notranslate"><span class="pre">rotationMatrixPartial.h</span></code> and must contain two internal functions <code class="docutils literal notranslate"><span class="pre">calculatePartialOfRotationMatrixToBaseFrameWrtParameter</span></code> and <code class="docutils literal notranslate"><span class="pre">calculatePartialOfRotationMatrixDerivativeToBaseFrameWrtParameter</span></code>. These functions return the rotation matrix and rotation matrix derivative partials respectively, with respect to the estimatable parameter. Specific functions to calculate these partials have to be added to the file <code class="docutils literal notranslate"><span class="pre">rotationMatrixPartial.cpp</span></code>. Regarding the parameter <code class="docutils literal notranslate"><span class="pre">rotation_pole_position</span></code>, these functions are <code class="docutils literal notranslate"><span class="pre">calculatePartialOfRotationMatrixFromLocalFrameWrtPoleOrientation</span></code> and <code class="docutils literal notranslate"><span class="pre">calculatePartialOfRotationMatrixDerivativeFromLocalFrameWrtPoleOrientation</span></code>, respectively.</p>
@@ -728,39 +732,39 @@
 </div></blockquote>
 <p>For any estimatable parameter related to an acceleration model, one must define a function <code class="docutils literal notranslate"><span class="pre">getParameterPartialFunction</span></code> which is a method of its associated acceleration partial clas. This function provides the partial of the acceleration model with respect to the estimatable parameter. Looking at the parameter <code class="docutils literal notranslate"><span class="pre">radiation_pressure_coefficient</span></code> in particular, the acceleration partials are defined from the class <code class="docutils literal notranslate"><span class="pre">CannonBallRadiationPressurePartial</span></code> which is itself derived from the base class <code class="docutils literal notranslate"><span class="pre">AccelerationPartial</span></code>). This acceleration partials class is defined in the files <code class="docutils literal notranslate"><span class="pre">radiationPressureAccelerationPartial.h</span></code> and <code class="docutils literal notranslate"><span class="pre">radiationPressureAccelerationPartial.cpp</span></code>. Only the radiation pressure coefficient can be estimated for this acceleration model so that the function <code class="docutils literal notranslate"><span class="pre">getParameterPartialFunction</span></code> only contains a single specific case dedicated to this parameter.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//! Function for setting up and retrieving a function returning a partial w.r.t. a double parameter.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">void</span><span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span> <span class="p">)</span> <span class="o">&gt;</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&gt;</span> <span class="n">CannonBallRadiationPressurePartial</span><span class="o">::</span><span class="n">getParameterPartialFunction</span><span class="p">(</span>
-     <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">estimatable_parameters</span><span class="o">::</span><span class="n">EstimatableParameter</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">parameter</span> <span class="p">)</span>
-<span class="p">{</span>
-   <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">void</span><span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">partialFunction</span><span class="p">;</span>
-   <span class="kt">int</span> <span class="n">numberOfRows</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">void</span><span class="p">(</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">CannonBallRadiationPressurePartial</span><span class="o">::</span><span class="n">getParameterPartialFunction</span><span class="p">(</span><span class="w"></span>
+<span class="w">     </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">estimatable_parameters</span><span class="o">::</span><span class="n">EstimatableParameter</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">parameter</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">void</span><span class="p">(</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">partialFunction</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">int</span><span class="w"> </span><span class="n">numberOfRows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 
-   <span class="c1">// Check if parameter dependency exists.</span>
-   <span class="k">if</span><span class="p">(</span> <span class="n">parameter</span><span class="o">-&gt;</span><span class="n">getParameterName</span><span class="p">(</span> <span class="p">).</span><span class="n">second</span><span class="p">.</span><span class="n">first</span> <span class="o">==</span> <span class="n">acceleratedBody_</span> <span class="p">)</span>
-   <span class="p">{</span>
-      <span class="k">switch</span><span class="p">(</span> <span class="n">parameter</span><span class="o">-&gt;</span><span class="n">getParameterName</span><span class="p">(</span> <span class="p">).</span><span class="n">first</span> <span class="p">)</span>
-      <span class="p">{</span>
-         <span class="c1">// Set function returning partial w.r.t. radiation pressure coefficient.</span>
-         <span class="k">case</span> <span class="n">estimatable_parameters</span><span class="o">::</span><span class="nl">radiation_pressure_coefficient</span><span class="p">:</span>
+<span class="w">   </span><span class="c1">// Check if parameter dependency exists.</span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">parameter</span><span class="o">-&gt;</span><span class="n">getParameterName</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">second</span><span class="p">.</span><span class="n">first</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">acceleratedBody_</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">switch</span><span class="p">(</span><span class="w"> </span><span class="n">parameter</span><span class="o">-&gt;</span><span class="n">getParameterName</span><span class="p">(</span><span class="w"> </span><span class="p">).</span><span class="n">first</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// Set function returning partial w.r.t. radiation pressure coefficient.</span>
+<span class="w">         </span><span class="k">case</span><span class="w"> </span><span class="n">estimatable_parameters</span><span class="o">::</span><span class="nl">radiation_pressure_coefficient</span><span class="p">:</span><span class="w"></span>
 
-            <span class="n">partialFunction</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">CannonBallRadiationPressurePartial</span><span class="o">::</span><span class="n">wrtRadiationPressureCoefficient</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span> <span class="p">);</span>
-            <span class="n">numberOfRows</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="w">            </span><span class="n">partialFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">CannonBallRadiationPressurePartial</span><span class="o">::</span><span class="n">wrtRadiationPressureCoefficient</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">numberOfRows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
 
-            <span class="k">break</span><span class="p">;</span>
-         <span class="k">default</span><span class="o">:</span>
-            <span class="k">break</span><span class="p">;</span>
-       <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="n">partialFunction</span><span class="p">,</span> <span class="n">numberOfRows</span> <span class="p">);</span>
- <span class="p">}</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="k">default</span><span class="o">:</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">       </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="w"> </span><span class="n">partialFunction</span><span class="p">,</span><span class="w"> </span><span class="n">numberOfRows</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w"> </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The function <code class="docutils literal notranslate"><span class="pre">wrtRadiationPressureCoefficient</span></code> called in the piece of code above is also a method of the class <code class="docutils literal notranslate"><span class="pre">CannonBallRadiationPressurePartial</span></code> and is defined in the file <code class="docutils literal notranslate"><span class="pre">radiationPressureAccelerationPartial.h</span></code>. It directly returns the partial derivative of the radiation pressure acceleration model with respect to the radiation pressure coefficient, as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">wrtRadiationPressureCoefficient</span><span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span> <span class="n">partial</span> <span class="p">)</span>
-<span class="p">{</span>
-     <span class="n">partial</span> <span class="o">=</span> <span class="n">computePartialOfCannonBallRadiationPressureAccelerationWrtRadiationPressureCoefficient</span><span class="p">(</span>
-                 <span class="n">radiationPressureFunction_</span><span class="p">(</span> <span class="p">),</span> <span class="n">areaFunction_</span><span class="p">(</span> <span class="p">),</span> <span class="n">acceleratedBodyMassFunction_</span><span class="p">(</span> <span class="p">),</span>
-                 <span class="p">(</span> <span class="n">sourceBodyState_</span><span class="p">(</span> <span class="p">)</span> <span class="o">-</span> <span class="n">acceleratedBodyState_</span><span class="p">(</span> <span class="p">)</span> <span class="p">).</span><span class="n">normalized</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
-<span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">wrtRadiationPressureCoefficient</span><span class="p">(</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span><span class="w"> </span><span class="n">partial</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="n">partial</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">computePartialOfCannonBallRadiationPressureAccelerationWrtRadiationPressureCoefficient</span><span class="p">(</span><span class="w"></span>
+<span class="w">                 </span><span class="n">radiationPressureFunction_</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">areaFunction_</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">acceleratedBodyMassFunction_</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="p">(</span><span class="w"> </span><span class="n">sourceBodyState_</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">acceleratedBodyState_</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">).</span><span class="n">normalized</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -809,11 +813,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -848,6 +851,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

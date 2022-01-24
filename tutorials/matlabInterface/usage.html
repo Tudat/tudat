@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
@@ -189,7 +193,7 @@
   <div class="section" id="usage">
 <span id="matlabinterface-usage"></span><h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
 <p>To use the MATLAB Interface, you first need to include the directories containing the code into your MATLAB’s path for the current MATLAB’s session. You can do this by writing at the beginning of your script:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">load</span><span class="p">();</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">tudat</span><span class="p">.</span><span class="n">load</span><span class="p">();</span><span class="w"></span>
 </pre></div>
 </div>
 <p>After this line, you can create objects such as <code class="docutils literal notranslate"><span class="pre">Integrator()</span></code>, <code class="docutils literal notranslate"><span class="pre">Body()</span></code>, etc, and access the functionality of the packages included in the MATLAB Interface, such as <code class="docutils literal notranslate"><span class="pre">+convert</span></code>, <code class="docutils literal notranslate"><span class="pre">+json</span></code>, etc.</p>
@@ -205,19 +209,19 @@
 <p>The settings for a Tudat simulation are defined by creating a <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object in MATLAB. Then, this object is used to create a JSON input file that will be provided to the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> application, either manually by the user or internally by MATLAB.</p>
 <p>The properties that can be defined for this <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object are very similar to those that can be defined for a JSON Interface. You can read the <a class="reference internal" href="../jsonInterface/keys/rst/index.html#jsoninterface-keys"><span class="std std-ref">List of Keys</span></a> for an exhaustive list of possible keys. Here, only the most frequently-used features, and those that in the MATLAB Interface are set up in a different way, will be discussed.</p>
 <p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object can be created by writing:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span> <span class="p">=</span> <span class="n">Simulation</span><span class="p">();</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Simulation</span><span class="p">();</span><span class="w"></span>
 </pre></div>
 </div>
 <p>It is also possible to provide up to four parameters to the constructor:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span> <span class="p">=</span> <span class="n">Simulation</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">86400</span><span class="p">,</span><span class="s">&#39;SSB&#39;</span><span class="p">,</span><span class="s">&#39;J2000&#39;</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Simulation</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">86400</span><span class="p">,</span><span class="s">&#39;SSB&#39;</span><span class="p">,</span><span class="s">&#39;J2000&#39;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>which is equivalent to:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span> <span class="p">=</span> <span class="n">Simulation</span><span class="p">();</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">initialEpoch</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">finalEpoch</span> <span class="p">=</span> <span class="mi">86400</span><span class="p">;</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">globalFrameOrigin</span> <span class="p">=</span> <span class="s">&#39;SSB&#39;</span><span class="p">;</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">globalFrameOrientation</span> <span class="p">=</span> <span class="s">&#39;J2000&#39;</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Simulation</span><span class="p">();</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">initialEpoch</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">finalEpoch</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">86400</span><span class="p">;</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">globalFrameOrigin</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;SSB&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">globalFrameOrientation</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;J2000&#39;</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The documentation for the properties <span class="jsonkey">initialEpoch</span>, <span class="jsonkey">finalEpoch</span>, <span class="jsonkey">globalFrameOrigin</span> and <span class="jsonkey">globalFrameOrientation</span> can be found in <a class="reference internal" href="../jsonInterface/keys/rst/index.html#jsoninterface-keys"><span class="std std-ref">List of Keys</span></a>.</p>
@@ -225,11 +229,11 @@
 <h3>Providing Spice settings<a class="headerlink" href="#providing-spice-settings" title="Permalink to this headline">¶</a></h3>
 <p>Spice is used to determine properties of celestial bodies, such as gravitational parameter, radius, ephemeris, etc. When creating a <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code>, the property <span class="jsonkey">spice.useStandardKernels</span> will be <code class="docutils literal notranslate"><span class="pre">true</span></code> by default, so if you want to use the standard Spice kernels you do not need to write any additional code in your MATLAB script.</p>
 <p>If you do not need to use Spice, you can disable it by writing:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">spice</span> <span class="p">=</span> <span class="p">[];</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">spice</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[];</span><span class="w"></span>
 </pre></div>
 </div>
 <p>By default, Tudat will try to preload the ephemeris of the bodies with the property <span class="jsonkey">useDefaultSettings</span> set to <code class="docutils literal notranslate"><span class="pre">true</span></code> from <span class="jsonkey">initialEpoch</span> to <span class="jsonkey">finalEpoch</span>. To prevent this from happening, one can write:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">spice</span><span class="p">.</span><span class="n">preloadEphemeris</span> <span class="p">=</span> <span class="n">false</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">spice</span><span class="p">.</span><span class="n">preloadEphemeris</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This is necessary when no time-termination condition is provided (i.e. when <span class="jsonkey">finalEpoch</span> is not specified, and the propagation will terminate based on other conditions such as altitude). For propagations in which <em>there is</em> a time-termination condition but the probability of meeting another termination condition before reaching the maximum final epoch is large, disabling preload of ephemeris may result in faster propagations. For all other cases, preloading the ephemeris is usually faster than retrieving them from Spice at every integration step.</p>
@@ -237,99 +241,99 @@
 <div class="section" id="providing-body-settings">
 <h3>Providing body settings<a class="headerlink" href="#providing-body-settings" title="Permalink to this headline">¶</a></h3>
 <p>A body is created by writing:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">body</span> <span class="p">=</span> <span class="n">Body</span><span class="p">(</span><span class="s">&#39;Asterix&#39;</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">body</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Body</span><span class="p">(</span><span class="s">&#39;Asterix&#39;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>which creates a <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> named <code class="docutils literal notranslate"><span class="pre">Asterix</span></code>. A second argument can be provided to the constructor to specify whether the default settings for that body should be loaded. This is only valid when the name of the body is recognised by Tudat/Spice (e.g. <code class="docutils literal notranslate"><span class="pre">Sun</span></code>, <code class="docutils literal notranslate"><span class="pre">Earth</span></code>, <code class="docutils literal notranslate"><span class="pre">Moon</span></code>, <code class="docutils literal notranslate"><span class="pre">Mars</span></code>, etc.). If this second argument is omitted, all the settings for that body are provided manually through the MATLAB Interface. When <span class="jsonkey">useDefaultSettings</span> is set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, but also some settings are provided manually, first the default settings will be loaded when running Tudat, and then the other settings specified manually will be used, potentially overriding some of the default settings that were loaded.</p>
 <p>For the Sun, the Moon and the planets, the MATLAB Interface provides predefined bodies (basically, <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> objects with the property <span class="jsonkey">useDefaultSettings</span> set to <code class="docutils literal notranslate"><span class="pre">true</span></code> and the corresponding name already set). These bodies are readily accessible by writing e.g.:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">earth</span> <span class="p">=</span> <span class="n">Earth</span><span class="p">();</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">earth</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Earth</span><span class="p">();</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Then, we can provide additional settings by writing:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">earth</span><span class="p">.</span><span class="n">atmosphere</span><span class="p">.</span><span class="n">type</span> <span class="p">=</span> <span class="n">AtmosphereModels</span><span class="p">.</span><span class="n">nrlmsise00</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">earth</span><span class="p">.</span><span class="n">atmosphere</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">AtmosphereModels</span><span class="p">.</span><span class="n">nrlmsise00</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Finally, when all the bodies needed for the simulation have been created, they have to be added to the <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object. We do this by writing e.g.:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">addBodies</span><span class="p">(</span><span class="n">Sun</span><span class="p">,</span><span class="n">earth</span><span class="p">,</span><span class="n">Moon</span><span class="p">,</span><span class="n">body</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">addBodies</span><span class="p">(</span><span class="n">Sun</span><span class="p">,</span><span class="n">earth</span><span class="p">,</span><span class="n">Moon</span><span class="p">,</span><span class="n">body</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Note that we can directly add celestial bodies for which we have not defined additional properties (in this case, <code class="xref py py-class docutils literal notranslate"><span class="pre">Sun</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">Moon</span></code>).</p>
 <p>We can also modify the bodies after having added them to <code class="docutils literal notranslate"><span class="pre">simulation</span></code> by writing:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">bodies</span><span class="p">.</span><span class="n">Asterix</span><span class="p">.</span><span class="n">mass</span> <span class="p">=</span> <span class="mi">5000</span><span class="p">;</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">bodies</span><span class="p">.</span><span class="n">Earth</span><span class="p">.</span><span class="n">ephemeris</span> <span class="p">=</span> <span class="n">ConstantEphemeris</span><span class="p">(</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">bodies</span><span class="p">.</span><span class="n">Asterix</span><span class="p">.</span><span class="n">mass</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">5000</span><span class="p">;</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">bodies</span><span class="p">.</span><span class="n">Earth</span><span class="p">.</span><span class="n">ephemeris</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ConstantEphemeris</span><span class="p">(</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Note that here we refer to the bodies by their names (<code class="docutils literal notranslate"><span class="pre">Asterix</span></code>, <code class="docutils literal notranslate"><span class="pre">Earth</span></code>) and not by the name of the MATLAB variables in which they are stored (<code class="docutils literal notranslate"><span class="pre">body</span></code>, <code class="docutils literal notranslate"><span class="pre">earth</span></code>). We can also modify the body objects directly, and <code class="docutils literal notranslate"><span class="pre">simulation</span></code> will be updated automatically. For instance, these two lines are equivalent to the previous code block and can be written safely after the call to <code class="docutils literal notranslate"><span class="pre">addBodies</span></code>:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">body</span><span class="p">.</span><span class="n">mass</span> <span class="p">=</span> <span class="mi">5000</span><span class="p">;</span>
-<span class="n">earth</span><span class="p">.</span><span class="n">ephemeris</span> <span class="p">=</span> <span class="n">ConstantEphemeris</span><span class="p">(</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">body</span><span class="p">.</span><span class="n">mass</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">5000</span><span class="p">;</span><span class="w"></span>
+<span class="n">earth</span><span class="p">.</span><span class="n">ephemeris</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ConstantEphemeris</span><span class="p">(</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="providing-propagator-settings">
 <h3>Providing propagator settings<a class="headerlink" href="#providing-propagator-settings" title="Permalink to this headline">¶</a></h3>
 <p>We can create a propagator by writing:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">propagator</span> <span class="p">=</span> <span class="n">Propagator</span><span class="p">();</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">propagator</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Propagator</span><span class="p">();</span><span class="w"></span>
 </pre></div>
 </div>
 <p>However, this creates a non-functional object, as the propagators supported by Tudat have to be either translational, rotational or mass propagators. The most used propagator is the <code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationalPropagator</span></code>, which is used to propagate the Cartesian state of a body. Thus, we can write:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">propagator</span> <span class="p">=</span> <span class="n">TranslationalPropagator</span><span class="p">();</span>
-<span class="n">propagator</span><span class="p">.</span><span class="n">bodiesToPropagate</span> <span class="p">=</span> <span class="p">{</span><span class="n">body</span><span class="p">};</span>
-<span class="n">propagator</span><span class="p">.</span><span class="n">centralBodies</span> <span class="p">=</span> <span class="p">{</span><span class="n">earth</span><span class="p">};</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">propagator</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">TranslationalPropagator</span><span class="p">();</span><span class="w"></span>
+<span class="n">propagator</span><span class="p">.</span><span class="n">bodiesToPropagate</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="n">body</span><span class="p">};</span><span class="w"></span>
+<span class="n">propagator</span><span class="p">.</span><span class="n">centralBodies</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="n">earth</span><span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Since we can propagate the states of several bodies, we have to provide a list (i.e. a cell array of objects) to the property <span class="jsonkey">bodiesToPropagate</span>. We also must specify a central body for each of the bodies to be propagated through <span class="jsonkey">centralBodies</span>. We can provide either a list of <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> objects or a list of body names. The following two lines are equivalent to the last two lines of the previous code block:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">propagator</span><span class="p">.</span><span class="n">bodiesToPropagate</span> <span class="p">=</span> <span class="p">{</span><span class="s">&#39;Asterix&#39;</span><span class="p">};</span>
-<span class="n">propagator</span><span class="p">.</span><span class="n">centralBodies</span> <span class="p">=</span> <span class="p">{</span><span class="s">&#39;Earth&#39;</span><span class="p">};</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">propagator</span><span class="p">.</span><span class="n">bodiesToPropagate</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">&#39;Asterix&#39;</span><span class="p">};</span><span class="w"></span>
+<span class="n">propagator</span><span class="p">.</span><span class="n">centralBodies</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">&#39;Earth&#39;</span><span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>When converting the <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object (which will contain the propagator) to JSON, the name of the body will be used if a <a class="reference internal" href="../tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> objects has been provided.</p>
 <p>For the <code class="docutils literal notranslate"><span class="pre">propagator</span></code> object to be valid, we need to specify the accelerations acting on the different bodies. For instance, for an unperturbed motion:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">propagator</span><span class="p">.</span><span class="n">accelerations</span><span class="p">.</span><span class="n">Asterix</span><span class="p">.</span><span class="n">Earth</span> <span class="p">=</span> <span class="p">{</span><span class="n">PointMassGravity</span><span class="p">()};</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">propagator</span><span class="p">.</span><span class="n">accelerations</span><span class="p">.</span><span class="n">Asterix</span><span class="p">.</span><span class="n">Earth</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="n">PointMassGravity</span><span class="p">()};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In this case, the only acceleration is the Earth’s point-mass gravity acting on the body Asterix. Note that here we also use the names of the bodies. The key <span class="jsonkey">accelerations.Asterix.Earth</span> is read as “accelerations on Asterix caused by Earth”. We can create additional acceleration objects, such as:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">propagator</span><span class="p">.</span><span class="n">accelerations</span><span class="p">.</span><span class="n">Asterix</span><span class="p">.</span><span class="n">Earth</span> <span class="p">=</span> <span class="p">{</span><span class="n">SphericalHarmonicGravity</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">AerodynamicAcceleration</span><span class="p">()};</span>
-<span class="n">propagator</span><span class="p">.</span><span class="n">accelerations</span><span class="p">.</span><span class="n">Asterix</span><span class="p">.</span><span class="n">Sun</span> <span class="p">=</span> <span class="p">{</span><span class="n">PointMassGravity</span><span class="p">(),</span> <span class="n">RadiationPressureAcceleration</span><span class="p">()};</span>
-<span class="n">propagator</span><span class="p">.</span><span class="n">accelerations</span><span class="p">.</span><span class="n">Asterix</span><span class="p">.</span><span class="n">Moon</span> <span class="p">=</span> <span class="p">{</span><span class="n">PointMassGravity</span><span class="p">()};</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">propagator</span><span class="p">.</span><span class="n">accelerations</span><span class="p">.</span><span class="n">Asterix</span><span class="p">.</span><span class="n">Earth</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="n">SphericalHarmonicGravity</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="w"> </span><span class="n">AerodynamicAcceleration</span><span class="p">()};</span><span class="w"></span>
+<span class="n">propagator</span><span class="p">.</span><span class="n">accelerations</span><span class="p">.</span><span class="n">Asterix</span><span class="p">.</span><span class="n">Sun</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="n">PointMassGravity</span><span class="p">(),</span><span class="w"> </span><span class="n">RadiationPressureAcceleration</span><span class="p">()};</span><span class="w"></span>
+<span class="n">propagator</span><span class="p">.</span><span class="n">accelerations</span><span class="p">.</span><span class="n">Asterix</span><span class="p">.</span><span class="n">Moon</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="n">PointMassGravity</span><span class="p">()};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The constructor of <code class="xref py py-class docutils literal notranslate"><span class="pre">SphericalHarmonicGravity</span></code> takes the maximum degree and order of the spherical harmonic expansion as arguments. For the rest of accelerations, no input argument are needed. In more complex examples, we can provide additional accelerations such as <code class="docutils literal notranslate"><span class="pre">Thrust</span></code>, <code class="docutils literal notranslate"><span class="pre">MutualSphericalHarmonicGravity</span></code>, <code class="docutils literal notranslate"><span class="pre">RelativisticCorrectionAcceleration</span></code> or <code class="docutils literal notranslate"><span class="pre">EmpiricalAcceleration</span></code>, which do require additional information in general to result in valid propagations.</p>
 <p>Finally, when the propagator has been created, we can assign it to the <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">propagators</span> <span class="p">=</span> <span class="p">{</span><span class="n">propagator</span><span class="p">};</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">propagators</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="n">propagator</span><span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Here we provide a list of propagators, since we may want to propagate several states simultaneously. For instance, we may want to propagate both the translational state of the body Asterix and its mass, so we would need to use two different propagators:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">translationalPropagator</span> <span class="p">=</span> <span class="n">TranslationalPropagator</span><span class="p">();</span>
-<span class="c">...</span>
-<span class="n">massPropagator</span> <span class="p">=</span> <span class="n">MassPropagator</span><span class="p">();</span>
-<span class="c">...</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">propagators</span> <span class="p">=</span> <span class="p">{</span><span class="n">translationalPropagator</span><span class="p">,</span> <span class="n">massPropagator</span><span class="p">};</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">translationalPropagator</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">TranslationalPropagator</span><span class="p">();</span><span class="w"></span>
+<span class="k">...</span><span class="w"></span>
+<span class="n">massPropagator</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">MassPropagator</span><span class="p">();</span><span class="w"></span>
+<span class="k">...</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">propagators</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="n">translationalPropagator</span><span class="p">,</span><span class="w"> </span><span class="n">massPropagator</span><span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="providing-integrator-settings">
 <h3>Providing integrator settings<a class="headerlink" href="#providing-integrator-settings" title="Permalink to this headline">¶</a></h3>
 <p>We can create a fixed step-size <code class="xref py py-class docutils literal notranslate"><span class="pre">Integrator</span></code> by writing:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span> <span class="p">=</span> <span class="n">Integrator</span><span class="p">();</span>
-<span class="n">integrator</span><span class="p">.</span><span class="n">type</span> <span class="p">=</span> <span class="n">Integrators</span><span class="p">.</span><span class="n">rungeKutta4</span><span class="p">;</span>
-<span class="n">integrator</span><span class="p">.</span><span class="n">stepSize</span> <span class="p">=</span> <span class="mi">10</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Integrator</span><span class="p">();</span><span class="w"></span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Integrators</span><span class="p">.</span><span class="n">rungeKutta4</span><span class="p">;</span><span class="w"></span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">stepSize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>If we want to use a variable step-size integrator, we can write:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span> <span class="p">=</span> <span class="n">VariableStepSizeIntegrator</span><span class="p">(</span><span class="n">RungeKuttaCoefficientSets</span><span class="p">.</span><span class="n">rungeKuttaFehlberg78</span><span class="p">);</span>
-<span class="n">integrator</span><span class="p">.</span><span class="n">initialStepSize</span> <span class="p">=</span> <span class="mi">20</span><span class="p">;</span>
-<span class="n">integrator</span><span class="p">.</span><span class="n">minimumStepSize</span> <span class="p">=</span> <span class="mi">5</span><span class="p">;</span>
-<span class="n">integrator</span><span class="p">.</span><span class="n">maximumStepSize</span> <span class="p">=</span> <span class="mf">1e4</span><span class="p">;</span>
-<span class="n">integrator</span><span class="p">.</span><span class="n">errorTolerance</span> <span class="p">=</span> <span class="mf">1e-11</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">VariableStepSizeIntegrator</span><span class="p">(</span><span class="n">RungeKuttaCoefficientSets</span><span class="p">.</span><span class="n">rungeKuttaFehlberg78</span><span class="p">);</span><span class="w"></span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">initialStepSize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span><span class="w"></span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">minimumStepSize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">maximumStepSize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">1e4</span><span class="p">;</span><span class="w"></span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">errorTolerance</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">1e-11</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Setting the property <code class="docutils literal notranslate"><span class="pre">errorTolerance</span></code> sets both the <span class="jsonkey">relativeErrorTolerance</span> and <span class="jsonkey">absoluteErrorTolerance</span> keys.</p>
 <p>Then, we add the integrator to the <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span> <span class="p">=</span> <span class="n">integrator</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">integrator</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Since a fixed step-size RK4 integrator is used by default, we can simply write this line to provide all the necessary integrator settings:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="p">.</span><span class="n">stepSize</span> <span class="p">=</span> <span class="mi">10</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="p">.</span><span class="n">stepSize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The other required key, <span class="jsonkey">integrator.initialEpoch</span>, is retrieved from the property <code class="docutils literal notranslate"><span class="pre">initialEpoch</span></code> of the <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object, if defined.</p>
@@ -338,50 +342,50 @@
 <h3>Requesting results<a class="headerlink" href="#requesting-results" title="Permalink to this headline">¶</a></h3>
 <p>In order to define the variables whose values have to be either exported to output files and/or loaded into MATLAB after running the propagation, we need to define Tudat variables in MATLAB. There exist four fundamental variable types: <code class="docutils literal notranslate"><span class="pre">independent</span></code>, <code class="docutils literal notranslate"><span class="pre">state</span></code>, <code class="docutils literal notranslate"><span class="pre">cpuTime</span></code> and <code class="docutils literal notranslate"><span class="pre">dependent</span></code>. The independent variable is typically the epoch (in seconds since J2000), the state is a vector containing all the states of all the bodies being propagated and the CPU time variable represents the cumulative computation time up to each integration step. There exist many dependent variables whose value can be saved, such as altitude, Mach number, relative position, etc.</p>
 <p>Creating a Tudat variable in MATLAB can be done in several ways:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">epoch</span> <span class="p">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;independent&#39;</span><span class="p">);</span>
-<span class="n">state</span> <span class="p">=</span> <span class="n">Variables</span><span class="p">.</span><span class="n">state</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">epoch</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;independent&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="n">state</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Variables</span><span class="p">.</span><span class="n">state</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>For dependent variables, additional information is required. For instance, to create a variable representing the relative velocity of the body named Asterix w.r.t. Earth we write:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="p">=</span> <span class="n">Variable</span><span class="p">();</span>
-<span class="n">v</span><span class="p">.</span><span class="n">body</span> <span class="p">=</span> <span class="s">&#39;Asterix&#39;</span><span class="p">;</span>
-<span class="n">v</span><span class="p">.</span><span class="n">dependentVariableType</span> <span class="p">=</span> <span class="n">DependentVariables</span><span class="p">.</span><span class="n">relativeVelocity</span><span class="p">;</span>
-<span class="n">v</span><span class="p">.</span><span class="n">relativeToBody</span> <span class="p">=</span> <span class="s">&#39;Earth&#39;</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Variable</span><span class="p">();</span><span class="w"></span>
+<span class="n">v</span><span class="p">.</span><span class="n">body</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;Asterix&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="n">v</span><span class="p">.</span><span class="n">dependentVariableType</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">DependentVariables</span><span class="p">.</span><span class="n">relativeVelocity</span><span class="p">;</span><span class="w"></span>
+<span class="n">v</span><span class="p">.</span><span class="n">relativeToBody</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;Earth&#39;</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Note that, when we create a variable with an empty constructor, it is assumed to be of dependent type.</p>
 <p>However, in the MATLAB Interface, there is a shortcut for defining Tudat variables. The previous block of code is equivalent to:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="p">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.relativeVelocity-Earth&#39;</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.relativeVelocity-Earth&#39;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>A few dependent variables, such as <code class="docutils literal notranslate"><span class="pre">acceleration</span></code> or <code class="docutils literal notranslate"><span class="pre">accelerationNorm</span></code>, require additional information, namely the type of acceleration. For instance, if we want to define variables representing the aerodynamic and radiation pressure accelerations caused by Earth and the Sun on Asterix, we can write:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">drag</span> <span class="p">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.acceleration@aerodynamic-Earth&#39;</span><span class="p">);</span>
-<span class="n">srp</span> <span class="p">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.acceleration@cannonBallRadiationPressure-Sun&#39;</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="nb">drag</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.acceleration@aerodynamic-Earth&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="n">srp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.acceleration@cannonBallRadiationPressure-Sun&#39;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>For vectorial variables, if we are only interested in one of the components, we can add the index of the component we want at the end. For instance, for the x-component of aerodynamic drag:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">drag_x</span> <span class="p">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.acceleration@aerodynamic-Earth[0]&#39;</span><span class="p">);</span>
-<span class="n">drag_x</span> <span class="p">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.acceleration@aerodynamic-Earth(1)&#39;</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">drag_x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.acceleration@aerodynamic-Earth[0]&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="n">drag_x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.acceleration@aerodynamic-Earth(1)&#39;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Note that, when using the C++ syntax, i.e. <code class="docutils literal notranslate"><span class="pre">[index]</span></code>, the indices start from 0, while when using the MATLAB syntax, i.e. <code class="docutils literal notranslate"><span class="pre">(index)</span></code>, the indices start from 1. Thus, the two previous lines are equivalent.</p>
 <p>Once that we have created the variables that we want to compute, we can configure the <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object to export their values to an output file (for each integration step). We do this by writing:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">addResultsToExport</span><span class="p">(</span><span class="s">&#39;dragX.txt&#39;</span><span class="p">,{</span><span class="s">&#39;independent&#39;</span><span class="p">,</span><span class="n">drag_x</span><span class="p">});</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">addResultsToExport</span><span class="p">(</span><span class="s">&#39;dragX.txt&#39;</span><span class="p">,{</span><span class="s">&#39;independent&#39;</span><span class="p">,</span><span class="n">drag_x</span><span class="p">});</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Here, the first argument is the output file path (relative to the directory where the input JSON file is located, or to the current working directory if run directly from MATLAB) and the second argument is a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code> objects. If a <code class="xref py py-class docutils literal notranslate"><span class="pre">Variable</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">char</span></code> is provided, it will be converted to a <code class="docutils literal notranslate"><span class="pre">Result</span></code> object with default settings. A <code class="docutils literal notranslate"><span class="pre">Result</span></code> object can be used to specify whether the values at all the integration steps are wanted (or only the first and/or last), the number of digits, whether the independent variable should be automatically included (which is <code class="docutils literal notranslate"><span class="pre">false</span></code> by default in the MATLAB interface, hence the need to include the variable <code class="docutils literal notranslate"><span class="pre">independent</span></code> in the list).</p>
 <p>For instance, we can write:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="p">=</span> <span class="n">Result</span><span class="p">();</span>
-<span class="n">result</span><span class="p">.</span><span class="n">variables</span> <span class="p">=</span> <span class="p">{</span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.acceleration@aerodynamic-Earth(1)&#39;</span><span class="p">)};</span>
-<span class="n">result</span><span class="p">.</span><span class="n">epochsInFirstColumn</span> <span class="p">=</span> <span class="n">true</span><span class="p">;</span>
-<span class="n">result</span><span class="p">.</span><span class="n">numericalPrecision</span> <span class="p">=</span> <span class="mi">10</span><span class="p">;</span>
-<span class="n">result</span><span class="p">.</span><span class="n">onlyFinalStep</span> <span class="p">=</span> <span class="n">true</span><span class="p">;</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">addResultsToExport</span><span class="p">(</span><span class="s">&#39;finalDragX.txt&#39;</span><span class="p">,</span><span class="n">result</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Result</span><span class="p">();</span><span class="w"></span>
+<span class="n">result</span><span class="p">.</span><span class="n">variables</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.acceleration@aerodynamic-Earth(1)&#39;</span><span class="p">)};</span><span class="w"></span>
+<span class="n">result</span><span class="p">.</span><span class="n">epochsInFirstColumn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="n">result</span><span class="p">.</span><span class="n">numericalPrecision</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+<span class="n">result</span><span class="p">.</span><span class="n">onlyFinalStep</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">addResultsToExport</span><span class="p">(</span><span class="s">&#39;finalDragX.txt&#39;</span><span class="p">,</span><span class="n">result</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>to generate an output file containing the X component of the aerodynamic acceleration only at the last step, together with the final epoch.</p>
 <p>If we do not want to export the results to an output file, we can write:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">addResultsToSave</span><span class="p">(</span><span class="s">&#39;dragX&#39;</span><span class="p">,</span><span class="n">drag_x</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">addResultsToSave</span><span class="p">(</span><span class="s">&#39;dragX&#39;</span><span class="p">,</span><span class="n">drag_x</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where the first argument is the name of the MATLAB variable containing the results (after running the simulation) and the second argument is (a list of) result/variable(s). Behind the scenes, this will ask Tudat to create a temporary output file containing the results, which will then be loaded by the MATLAB interface into the struct <code class="docutils literal notranslate"><span class="pre">simulation.results</span></code> and deleted. Thus, after the call to <code class="docutils literal notranslate"><span class="pre">simulation.run()</span></code>, the drag can be obtained at <code class="docutils literal notranslate"><span class="pre">simulation.results.dragX</span></code>.</p>
@@ -391,33 +395,33 @@
 <p>For the propagation to terminate, we have to define termination conditions; otherwise, it will go on forever or terminate with an error when undefined behaviour is reached (e.g. the satellite reaches infinite velocity, its altitude goes below zero, etc.).</p>
 <p>It is possible to define termination conditions for any <code class="xref py py-class docutils literal notranslate"><span class="pre">Variable</span></code> object. The time-termination condition is based on a limit for the value of the independent variable. However, we need not specify this condition manually; it will be created automatically by Tudat if the property of <code class="docutils literal notranslate"><span class="pre">finalEpoch</span></code> of the <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object has been defined.</p>
 <p>In some case, we want to provide additional conditions, such as terminating the propagation when the satellite’s altitude goes below 100 km. We can do this by writing:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">termination</span> <span class="p">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.altitude-Earth&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">100000</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">termination</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.altitude-Earth&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100000</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Note that the operators <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code> and <code class="docutils literal notranslate"><span class="pre">==</span></code> are not defined for <code class="xref py py-class docutils literal notranslate"><span class="pre">Variable</span></code> objects, so we always have to use either <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> or <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>. We can also provide multiple termination conditions by using the operators <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> and <code class="docutils literal notranslate"><span class="pre">|</span></code> (note that <code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code> and <code class="docutils literal notranslate"><span class="pre">||</span></code> won’t work):</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">condition1</span> <span class="p">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.altitude-Earth&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">50000</span><span class="p">;</span>
-<span class="n">condition2</span> <span class="p">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.altitude-Earth&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">80000</span><span class="p">;</span>
-<span class="n">condition3</span> <span class="p">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.machNumber&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">;</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">termination</span> <span class="p">=</span> <span class="n">condition1</span> <span class="o">|</span> <span class="p">(</span> <span class="n">condition2</span> <span class="o">&amp;</span> <span class="n">condition3</span> <span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">condition1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.altitude-Earth&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">50000</span><span class="p">;</span><span class="w"></span>
+<span class="n">condition2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.altitude-Earth&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">80000</span><span class="p">;</span><span class="w"></span>
+<span class="n">condition3</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.machNumber&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">termination</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">condition1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">condition2</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">condition3</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In any case, if <code class="docutils literal notranslate"><span class="pre">simulation.finalEpoch</span></code> has been defined, a time-based condition will be added to the provided conditions, so these three blocks of code are equivalent:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">finalEpoch</span> <span class="p">=</span> <span class="mf">1e5</span><span class="p">;</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">termination</span> <span class="p">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.machNumber&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">finalEpoch</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">1e5</span><span class="p">;</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">termination</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.machNumber&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">termination</span> <span class="p">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.machNumber&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">|</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;independent&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e5</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">termination</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.machNumber&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;independent&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">1e5</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">finalEpoch</span> <span class="p">=</span> <span class="mf">1e5</span><span class="p">;</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">termination</span> <span class="p">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.machNumber&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">|</span> <span class="n">Variable</span><span class="p">(</span><span class="s">&#39;independent&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e5</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">finalEpoch</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">1e5</span><span class="p">;</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">termination</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;Asterix.machNumber&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Variable</span><span class="p">(</span><span class="s">&#39;independent&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">1e5</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="defining-application-options">
 <h3>Defining application options<a class="headerlink" href="#defining-application-options" title="Permalink to this headline">¶</a></h3>
 <p>It is possible to specify options for the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> application called by MATLAB or called directly by the user with the JSON files generated by MATLAB as input files by changing the properties of <code class="docutils literal notranslate"><span class="pre">simulation.options</span></code>:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="n">fullSettingsFile</span> <span class="p">=</span> <span class="s">&#39;fullSettings.json&#39;</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="n">fullSettingsFile</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;fullSettings.json&#39;</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>For instance, this is asking the application to generate a JSON file containing all the settings (those provided in the input file(s) and the default values and settings loaded from Tudat). This file will be generated when running the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> application, right before integrating the equations of motion.</p>
@@ -426,46 +430,46 @@
 <div class="section" id="running-the-simulation">
 <h2>Running the simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">¶</a></h2>
 <p>If you want to call the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> from MATLAB, you can simply write:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">run</span><span class="p">();</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">run</span><span class="p">();</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This will generate a temporary JSON input file, use it to run <code class="docutils literal notranslate"><span class="pre">json_interface</span></code>, load the generated output files, and delete all the temporary input and output files that have been generated.</p>
 <p>If you want to run the simulation manually, you will have to export the JSON file containing the settings for the simulation. You do this by using the <code class="docutils literal notranslate"><span class="pre">json</span></code> package of the MATLAB Interface:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span><span class="s">&#39;main.json&#39;</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span><span class="s">&#39;main.json&#39;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>which exports the object <code class="docutils literal notranslate"><span class="pre">simulation</span></code> to the file <code class="xref py py-class docutils literal notranslate"><span class="pre">main.json</span></code>. Then, you can call the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> application:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">json_interface</span> <span class="s">main.json</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">json_interface</span><span class="w"> </span><span class="s">main.json</span><span class="w"></span>
 </pre></div>
 </div>
 <p>which will generate the output files specified in the key <span class="jsonkey">export</span>.</p>
 <p>For generating <a class="reference external" href="../jsonInterface/modularFiles.html">modular files</a>, one can write e.g.:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span> <span class="p">=</span> <span class="c">...</span>
-<span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">integrator</span><span class="p">,</span><span class="s">&#39;rk4.json&#39;</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">integrator</span><span class="p">,</span><span class="s">&#39;rk4.json&#39;</span><span class="p">);</span><span class="w"></span>
 
-<span class="n">simulation</span> <span class="p">=</span> <span class="c">...</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span> <span class="p">=</span> <span class="s">&#39;$(rk4.json)&#39;</span><span class="p">;</span>
-<span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span><span class="s">&#39;main.json&#39;</span><span class="p">);</span>
+<span class="n">simulation</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;$(rk4.json)&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span><span class="s">&#39;main.json&#39;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Which will generate the file <code class="xref py py-class docutils literal notranslate"><span class="pre">rk4.json</span></code> containing only the integrator settings, and the file <code class="xref py py-class docutils literal notranslate"><span class="pre">main.json</span></code> containing the remainder of the settings, and a reference to the integrator file by using the special string <code class="docutils literal notranslate"><span class="pre">$(rk4.json)</span></code>. The previous block of code is equivalent to:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span> <span class="p">=</span> <span class="c">...</span>
-<span class="n">simulation</span> <span class="p">=</span> <span class="c">...</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span> <span class="p">=</span> <span class="n">json</span><span class="p">.</span><span class="n">modular</span><span class="p">(</span><span class="n">integrator</span><span class="p">,</span><span class="s">&#39;rk4.json&#39;</span><span class="p">);</span>
-<span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span><span class="s">&#39;main.json&#39;</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="n">simulation</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">json</span><span class="p">.</span><span class="n">modular</span><span class="p">(</span><span class="n">integrator</span><span class="p">,</span><span class="s">&#39;rk4.json&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span><span class="s">&#39;main.json&#39;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The function <code class="docutils literal notranslate"><span class="pre">json.modular</span></code> exports the object <code class="docutils literal notranslate"><span class="pre">integrator</span></code> to the file <code class="xref py py-class docutils literal notranslate"><span class="pre">rk4.json</span></code> and returns the string <code class="docutils literal notranslate"><span class="pre">$(rk4.json)</span></code>, which is assigned to <code class="docutils literal notranslate"><span class="pre">simulation.integrator</span></code>.</p>
 <p>For <a class="reference external" href="../jsonInterface/multicase.html">multi-case propagations</a>, one can write e.g.:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span> <span class="p">=</span> <span class="c">...</span>
-<span class="n">body</span> <span class="p">=</span> <span class="c">...</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">addBodies</span><span class="p">(</span><span class="n">body</span><span class="p">,</span><span class="c">...);</span>
-<span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span><span class="s">&#39;shared.json&#39;</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="n">body</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">addBodies</span><span class="p">(</span><span class="n">body</span><span class="p">,</span><span class="k">...</span><span class="c">);</span><span class="w"></span>
+<span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span><span class="s">&#39;shared.json&#39;</span><span class="p">);</span><span class="w"></span>
 
-<span class="n">for</span> <span class="s">i</span> <span class="s">=</span> <span class="s">1:10</span>
-  <span class="n">m</span> <span class="p">=</span> <span class="nb">i</span><span class="o">*</span><span class="mi">1000</span><span class="p">;</span>
-  <span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">json</span><span class="p">.</span><span class="n">merge</span><span class="p">(</span><span class="s">&#39;$(shared.json)&#39;</span><span class="p">,</span><span class="s">&#39;bodies.Asterix.mass&#39;</span><span class="p">,</span><span class="n">m</span><span class="p">),</span><span class="n">sprintf</span><span class="p">(</span><span class="s">&#39;mass%i.json&#39;</span><span class="p">,</span><span class="n">m</span><span class="p">));</span>
-<span class="n">end</span>
+<span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="w"></span>
+<span class="w">  </span><span class="n">m</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">i</span><span class="o">*</span><span class="mi">1000</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">json</span><span class="p">.</span><span class="n">merge</span><span class="p">(</span><span class="s">&#39;$(shared.json)&#39;</span><span class="p">,</span><span class="s">&#39;bodies.Asterix.mass&#39;</span><span class="p">,</span><span class="n">m</span><span class="p">),</span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;mass%i.json&#39;</span><span class="p">,</span><span class="n">m</span><span class="p">));</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 <p>which generates the file <code class="xref py py-class docutils literal notranslate"><span class="pre">shared.json</span></code> containing the shared settings, and 10 files such as:</p>
@@ -481,15 +485,15 @@
 </div>
 </div>
 <p>If no output files are to be generated (seamless mode), the same behaviour can be achieved just by writing:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span> <span class="p">=</span> <span class="c">...</span>
-<span class="n">body</span> <span class="p">=</span> <span class="c">...</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">addBodies</span><span class="p">(</span><span class="n">body</span><span class="p">,</span><span class="c">...);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="n">body</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">addBodies</span><span class="p">(</span><span class="n">body</span><span class="p">,</span><span class="k">...</span><span class="c">);</span><span class="w"></span>
 
-<span class="n">for</span> <span class="s">i</span> <span class="s">=</span> <span class="s">1:10</span>
-  <span class="n">body</span><span class="p">.</span><span class="n">mass</span> <span class="p">=</span> <span class="nb">i</span><span class="o">*</span><span class="mi">1000</span><span class="p">;</span>
-  <span class="n">simulation</span><span class="p">.</span><span class="n">run</span><span class="p">();</span>
-  <span class="n">results</span><span class="p">{</span><span class="nb">i</span><span class="p">}</span> <span class="p">=</span> <span class="n">simulation</span><span class="p">.</span><span class="n">results</span><span class="p">;</span>
-<span class="n">end</span>
+<span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="w"></span>
+<span class="w">  </span><span class="n">body</span><span class="p">.</span><span class="n">mass</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">i</span><span class="o">*</span><span class="mi">1000</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">simulation</span><span class="p">.</span><span class="n">run</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">results</span><span class="p">{</span><span class="nb">i</span><span class="p">}</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">simulation</span><span class="p">.</span><span class="n">results</span><span class="p">;</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -498,13 +502,13 @@
 <p>After running the propagation, the results can be retrieved from the generated output files, or directly from the struct <code class="docutils literal notranslate"><span class="pre">results</span></code> of the <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> object.</p>
 <p>In addition to the results requested to be saved in <code class="docutils literal notranslate"><span class="pre">simulation.results</span></code> by using the method <code class="docutils literal notranslate"><span class="pre">addResultsToSave</span></code>, it is always possible to access <code class="docutils literal notranslate"><span class="pre">simulation.results.numericalSolution</span></code>, which is a matrix containing, for each step, the epoch in the first column and the states (of all the bodies) in subsequent columns.</p>
 <p>The function called internally by the MATLAB Interface to load the results from the temporary output files that have been generated is <code class="docutils literal notranslate"><span class="pre">import.results</span></code>. This is the same function that should be used when importing the results from output files generated by running the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> manually:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">results</span><span class="p">,</span><span class="n">failure</span><span class="p">]</span> <span class="p">=</span> <span class="n">import</span><span class="p">.</span><span class="n">results</span><span class="p">(</span><span class="s">&#39;output.txt&#39;</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">results</span><span class="p">,</span><span class="n">failure</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">import</span><span class="p">.</span><span class="n">results</span><span class="p">(</span><span class="s">&#39;output.txt&#39;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This function reads the contents of the output file into the matrix <code class="docutils literal notranslate"><span class="pre">results</span></code> and can also return a second argument, <code class="docutils literal notranslate"><span class="pre">failure</span></code>, which will be <code class="docutils literal notranslate"><span class="pre">true</span></code> if the propagation terminated before reaching the termination condition. If an error occurred during propagation, the results will only be available until the integration step previous to that error. In that case, the JSON Interface adds the header <code class="docutils literal notranslate"><span class="pre">FAILURE</span></code> to the generated output files, which is detected by the <code class="docutils literal notranslate"><span class="pre">import.results</span></code> function.</p>
 <p>When calling <code class="docutils literal notranslate"><span class="pre">simulation.run()</span></code> and loading the results automatically into MATLAB, the information on whether the propagation failed is not available, but it is not needed because a message will be printed to the command window in case that a propagation error is encountered. However, when running many propagations e.g. on a server using the <code class="docutils literal notranslate"><span class="pre">json_interface</span></code> application, it is possible that the only remaining consolidated information be the output file and not the command-line warnings/errors. Thus, in that case, the presence of the <code class="docutils literal notranslate"><span class="pre">FAILURE</span></code> header in the output files <em>is</em> useful.</p>
 <p>To turn off this feature (i.e. to prevent output files from including a line containing the text <code class="docutils literal notranslate"><span class="pre">FAILURE</span></code> when a propagation error is encountered), one can write:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="n">tagOutputFilesIfPropagationFails</span> <span class="p">=</span> <span class="n">false</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="n">tagOutputFilesIfPropagationFails</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In that case, it is safe to import the results by calling built-in MATLAB functions such as <code class="docutils literal notranslate"><span class="pre">load</span></code> or <code class="docutils literal notranslate"><span class="pre">importdata</span></code>.</p>
@@ -564,11 +568,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -603,6 +606,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../started/index.html">Getting Started</a></li>
@@ -193,22 +197,22 @@
 <p>An enumeration is defined by writing its possible values names. These names must match the string representations defined in the C++ code. Note that the unsupported enum values are also included, but commented out:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatlabInterface/Acceleration/Accelerations.m</span></code></span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span> <span class="n">Accelerations</span>
-    <span class="n">enumeration</span>
-        <span class="s">undefined</span>
-        <span class="n">pointMassGravity</span>
-        <span class="s">aerodynamic</span>
-        <span class="n">cannonBallRadiationPressure</span>
-        <span class="s">sphericalHarmonicGravity</span>
-        <span class="n">mutualSphericalHarmonicGravity</span>
-        <span class="s">%</span> <span class="s">thirdBodyPointMassGravity</span>
-        <span class="c">% thirdBodySphericalHarmonicGravity</span>
-        <span class="c">% thirdBodyMutualSphericalHarmonicGravity</span>
-        <span class="n">thrust</span>
-        <span class="s">relativisticCorrection</span>
-        <span class="n">empirical</span>
-    <span class="s">end</span>
-<span class="k">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">Accelerations</span><span class="w"></span>
+<span class="w">    </span><span class="nb">enumeration</span><span class="w"></span>
+<span class="w">        </span><span class="n">undefined</span><span class="w"></span>
+<span class="w">        </span><span class="n">pointMassGravity</span><span class="w"></span>
+<span class="w">        </span><span class="n">aerodynamic</span><span class="w"></span>
+<span class="w">        </span><span class="n">cannonBallRadiationPressure</span><span class="w"></span>
+<span class="w">        </span><span class="n">sphericalHarmonicGravity</span><span class="w"></span>
+<span class="w">        </span><span class="n">mutualSphericalHarmonicGravity</span><span class="w"></span>
+<span class="w">        </span><span class="c">% thirdBodyPointMassGravity</span><span class="w"></span>
+<span class="w">        </span><span class="c">% thirdBodySphericalHarmonicGravity</span><span class="w"></span>
+<span class="w">        </span><span class="c">% thirdBodyMutualSphericalHarmonicGravity</span><span class="w"></span>
+<span class="w">        </span><span class="n">thrust</span><span class="w"></span>
+<span class="w">        </span><span class="n">relativisticCorrection</span><span class="w"></span>
+<span class="w">        </span><span class="n">empirical</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -220,50 +224,50 @@
 <p>A settings-containing class defines a set of properties, whose names must match exactly those of the JSON keys. The properties that must not be used during conversion to JSON are marked as transient:</p>
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatlabInterface/Body/Body.m</span></code></span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span> <span class="n">Body</span> <span class="o">&lt;</span> <span class="n">jsonable</span>
-    <span class="n">properties</span>
-        <span class="s">useDefaultSettings</span>
-        <span class="n">initialState</span>
-        <span class="s">mass</span>
-        <span class="n">rotationalState</span>
-        <span class="s">referenceArea</span>
-        <span class="n">aerodynamics</span>
-        <span class="s">atmosphere</span>
-        <span class="n">ephemeris</span>
-        <span class="s">gravityField</span>
-        <span class="n">gravityFieldVariation</span>
-        <span class="s">radiationPressure</span>
-        <span class="n">rotationModel</span>
-        <span class="s">shapeModel</span>
-    <span class="n">end</span>
-    <span class="s">properties</span> <span class="s">(Transient)</span>
-        <span class="n">name</span>
-    <span class="s">end</span>
-    <span class="k">properties</span> <span class="p">(</span><span class="n">Transient</span><span class="p">,</span> <span class="n">Dependent</span><span class="p">)</span>
-        <span class="n">dragCoefficient</span>
-        <span class="s">radiationPressureCoefficient</span>
-    <span class="n">end</span>
-    <span class="s">...</span>
-<span class="k">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">Body</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">jsonable</span><span class="w"></span>
+<span class="w">    </span><span class="k">properties</span><span class="w"></span>
+<span class="w">        </span><span class="n">useDefaultSettings</span><span class="w"></span>
+<span class="w">        </span><span class="n">initialState</span><span class="w"></span>
+<span class="w">        </span><span class="n">mass</span><span class="w"></span>
+<span class="w">        </span><span class="n">rotationalState</span><span class="w"></span>
+<span class="w">        </span><span class="n">referenceArea</span><span class="w"></span>
+<span class="w">        </span><span class="n">aerodynamics</span><span class="w"></span>
+<span class="w">        </span><span class="n">atmosphere</span><span class="w"></span>
+<span class="w">        </span><span class="n">ephemeris</span><span class="w"></span>
+<span class="w">        </span><span class="n">gravityField</span><span class="w"></span>
+<span class="w">        </span><span class="n">gravityFieldVariation</span><span class="w"></span>
+<span class="w">        </span><span class="n">radiationPressure</span><span class="w"></span>
+<span class="w">        </span><span class="n">rotationModel</span><span class="w"></span>
+<span class="w">        </span><span class="n">shapeModel</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">properties</span><span class="w"> </span><span class="p">(</span>Transient<span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">name</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">properties</span><span class="w"> </span><span class="p">(</span>Transient<span class="p">,</span><span class="w"> </span>Dependent<span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">dragCoefficient</span><span class="w"></span>
+<span class="w">        </span><span class="n">radiationPressureCoefficient</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">...</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <p>Dependent properties can be used as shortcuts to other properties. For instance, <code class="docutils literal notranslate"><span class="pre">Body.dragCoefficient</span></code> sets/gets the value of <code class="docutils literal notranslate"><span class="pre">Body.aerodynamics.dragCoefficient</span></code>, and <code class="docutils literal notranslate"><span class="pre">Body.radiationPressureCoefficient</span></code> sets/gets the value of <code class="docutils literal notranslate"><span class="pre">Body.radiationPressure.Sun.radiationPressureCoefficient</span></code>. Thus, we need to provide set/get methods. For instance:</p>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatlabInterface/Body/Body.m</span></code></span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span> <span class="n">Body</span> <span class="o">&lt;</span> <span class="n">jsonable</span>
-<span class="c">...</span>
-<span class="k">methods</span>
-    <span class="c">...</span>
-<span class="k">    function</span><span class="w"> </span>value <span class="p">=</span><span class="w"> </span><span class="nf">get.dragCoefficient</span><span class="p">(</span>obj<span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">value</span> <span class="p">=</span> <span class="n">obj</span><span class="p">.</span><span class="n">aerodynamics</span><span class="p">.</span><span class="n">dragCoefficient</span><span class="p">;</span>
-    <span class="n">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">Body</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">jsonable</span><span class="w"></span>
+<span class="k">...</span><span class="w"></span>
+<span class="k">methods</span><span class="w"></span>
+<span class="w">    </span><span class="k">...</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>value<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">get.dragCoefficient</span><span class="p">(</span>obj<span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">value</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">obj</span><span class="p">.</span><span class="n">aerodynamics</span><span class="p">.</span><span class="n">dragCoefficient</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
 
-    <span class="s">function</span> <span class="s">set.dragCoefficient(obj,value)</span>
-        <span class="n">obj</span><span class="p">.</span><span class="n">aerodynamics</span><span class="p">.</span><span class="n">dragCoefficient</span> <span class="p">=</span> <span class="n">value</span><span class="p">;</span>
-    <span class="n">end</span>
-    <span class="s">...</span>
-<span class="k">end</span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">set.dragCoefficient</span><span class="p">(</span>obj,value<span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">obj</span><span class="p">.</span><span class="n">aerodynamics</span><span class="p">.</span><span class="n">dragCoefficient</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">...</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -273,29 +277,29 @@
 <li><p><strong>Setters for properties storing enumeration values</strong>, in order to enable using a char (in addition to an enumeration value) when defining it. For instance:</p>
 <div class="literal-block-wrapper docutils container" id="id4">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatlabInterface/Integrator/VariableStepSizeIntegrator.m</span></code></span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span> <span class="n">VariableStepSizeIntegrator</span> <span class="o">&lt;</span> <span class="n">Integrator</span>
-<span class="k">properties</span>
-    <span class="c">...</span>
-    <span class="n">rungeKuttaCoefficientSet</span>
-    <span class="s">...</span>
-<span class="k">end</span>
-<span class="c">...</span>
-<span class="k">methods</span>
-    <span class="c">...</span>
-<span class="k">    function</span><span class="w"> </span><span class="nf">set.rungeKuttaCoefficientSet</span><span class="p">(</span>obj,value<span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span> <span class="o">~</span><span class="n">isa</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="s">&#39;RungeKuttaCoefficientSets&#39;</span><span class="p">)</span>
-            <span class="n">value</span> <span class="p">=</span> <span class="n">RungeKuttaCoefficientSets</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
-        <span class="n">end</span>
-        <span class="s">obj.rungeKuttaCoefficientSet</span> <span class="s">=</span> <span class="s">value</span><span class="p">;</span>
-    <span class="n">end</span>
-<span class="s">...</span>
-<span class="k">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">VariableStepSizeIntegrator</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">Integrator</span><span class="w"></span>
+<span class="k">properties</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="n">rungeKuttaCoefficientSet</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="k">...</span><span class="w"></span>
+<span class="k">methods</span><span class="w"></span>
+<span class="w">    </span><span class="k">...</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">set.rungeKuttaCoefficientSet</span><span class="p">(</span>obj,value<span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="o">~</span><span class="nb">isa</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="s">&#39;RungeKuttaCoefficientSets&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">value</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">RungeKuttaCoefficientSets</span><span class="p">(</span><span class="n">value</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">        </span><span class="n">obj</span><span class="p">.</span><span class="n">rungeKuttaCoefficientSet</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="k">...</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <p>In this way, these two assignments are equivalent and both result in a valid integrator:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span><span class="p">.</span><span class="n">rungeKuttaCoefficientSet</span> <span class="p">=</span> <span class="n">RungeKuttaCoefficientSets</span><span class="p">.</span><span class="n">rungeKuttaFehlberg78</span><span class="p">;</span>
-<span class="n">integrator</span><span class="p">.</span><span class="n">rungeKuttaCoefficientSet</span> <span class="p">=</span> <span class="s">&#39;rungeKuttaFehlberg78&#39;</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span><span class="p">.</span><span class="n">rungeKuttaCoefficientSet</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">RungeKuttaCoefficientSets</span><span class="p">.</span><span class="n">rungeKuttaFehlberg78</span><span class="p">;</span><span class="w"></span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">rungeKuttaCoefficientSet</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;rungeKuttaFehlberg78&#39;</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Without writing the method <code class="docutils literal notranslate"><span class="pre">set.rungeKuttaCoefficientSet</span></code>, if the user writes a value that is not in the enumeration list, the second assignment does not generate any warnings or error, an invalid integrator will be generated and an error will be thrown when running Tudat. By writing the <code class="docutils literal notranslate"><span class="pre">set.rungeKuttaCoefficientSet</span></code> method, the second assignment will throw a MATLAB error if the provided enum value is not in the enumeration list, preventing the generation of invalid JSON files.</p>
@@ -303,30 +307,30 @@
 <li><p><strong>Getters for properties storing body names</strong>, in order to be able to provide either body objects or body names. For instance:</p>
 <div class="literal-block-wrapper docutils container" id="id5">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatlabInterface/Acceleration/Thrust.m</span></code></span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span> <span class="n">Thrust</span> <span class="o">&lt;</span> <span class="n">Acceleration</span>
-    <span class="n">properties</span>
-        <span class="s">...</span>
-        <span class="n">centralBody</span>
-    <span class="s">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">Thrust</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">Acceleration</span><span class="w"></span>
+<span class="w">    </span><span class="k">properties</span><span class="w"></span>
+<span class="w">        </span><span class="p">...</span><span class="w"></span>
+<span class="w">        </span><span class="n">centralBody</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
 
-    <span class="n">methods</span>
-        <span class="s">...</span>
-<span class="k">        function</span><span class="w"> </span>bodyName <span class="p">=</span><span class="w"> </span><span class="nf">get.centralBody</span><span class="p">(</span>obj<span class="p">)</span><span class="w"></span>
-<span class="w">            </span><span class="k">if</span> <span class="n">isa</span><span class="p">(</span><span class="n">obj</span><span class="p">.</span><span class="n">centralBody</span><span class="p">,</span><span class="s">&#39;Body&#39;</span><span class="p">)</span>
-                <span class="n">bodyName</span> <span class="p">=</span> <span class="n">obj</span><span class="p">.</span><span class="n">centralBody</span><span class="p">.</span><span class="n">name</span><span class="p">;</span>
-            <span class="n">else</span>
-                <span class="s">bodyName</span> <span class="s">=</span> <span class="s">obj.centralBody</span><span class="p">;</span>
-            <span class="n">end</span>
-        <span class="s">end</span>
-        <span class="c">...</span>
-    <span class="n">end</span>
-<span class="s">end</span>
+<span class="w">    </span><span class="k">methods</span><span class="w"></span>
+<span class="w">        </span><span class="k">...</span><span class="w"></span>
+<span class="w">        </span><span class="k">function</span><span class="w"> </span>bodyName<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">get.centralBody</span><span class="p">(</span>obj<span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nb">isa</span><span class="p">(</span><span class="n">obj</span><span class="p">.</span><span class="n">centralBody</span><span class="p">,</span><span class="s">&#39;Body&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">bodyName</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">obj</span><span class="p">.</span><span class="n">centralBody</span><span class="p">.</span><span class="n">name</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">else</span><span class="w"></span>
+<span class="w">                </span><span class="n">bodyName</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">obj</span><span class="p">.</span><span class="n">centralBody</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">end</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">        </span><span class="k">...</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <p>When getting the <code class="xref py py-class docutils literal notranslate"><span class="pre">centralBody</span></code> property of a <code class="xref py py-class docutils literal notranslate"><span class="pre">Thrust</span></code> object, a char will be returned even if the user assigned a <a class="reference internal" href="../../tutorials/tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> object to this property; in that case, the transient property <code class="docutils literal notranslate"><span class="pre">name</span></code> of the body will be used. Thus, the following two assignments are equivalent and valid:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">thrust</span><span class="p">.</span><span class="n">centralBody</span> <span class="p">=</span> <span class="s">&#39;Earth&#39;</span><span class="p">;</span>
-<span class="n">thrust</span><span class="p">.</span><span class="n">centralBody</span> <span class="p">=</span> <span class="n">Earth</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">thrust</span><span class="p">.</span><span class="n">centralBody</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;Earth&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="n">thrust</span><span class="p">.</span><span class="n">centralBody</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Earth</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Note that <code class="xref py py-class docutils literal notranslate"><span class="pre">Earth</span></code> is just a pre-defined <a class="reference internal" href="../../tutorials/tudatFeatures/environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> with the property <code class="docutils literal notranslate"><span class="pre">name</span></code> set to <code class="docutils literal notranslate"><span class="pre">'Earth'</span></code> and the property <code class="docutils literal notranslate"><span class="pre">useDefaultSettings</span></code> set to <code class="docutils literal notranslate"><span class="pre">true</span></code> (so that its properties are obtained automatically from Spice if not specified manually). Pre-defined objects for the other celestial bodies also exist.</p>
@@ -338,95 +342,95 @@
 <p>We can provide constructors for the settings-containing classes. Usually, in the classes provided in the MATLAB interface, a type containing an enumeration value is provided as first (and only) argument and assigned to a <code class="docutils literal notranslate"><span class="pre">type</span></code> property:</p>
 <div class="literal-block-wrapper docutils container" id="id6">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatlabInterface/Acceleration.m</span></code></span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span> <span class="n">Acceleration</span> <span class="o">&lt;</span> <span class="n">jsonable</span>
-    <span class="n">properties</span>
-        <span class="s">type</span>
-    <span class="n">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">Acceleration</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">jsonable</span><span class="w"></span>
+<span class="w">    </span><span class="k">properties</span><span class="w"></span>
+<span class="w">        </span><span class="n">type</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
 
-    <span class="s">methods</span>
-<span class="k">        function</span><span class="w"> </span>obj <span class="p">=</span><span class="w"> </span><span class="nf">Acceleration</span><span class="p">(</span>type<span class="p">)</span><span class="w"></span>
-<span class="w">            </span><span class="k">if</span> <span class="n">nargin</span> <span class="o">&gt;=</span> <span class="mi">1</span>
-                <span class="n">obj</span><span class="p">.</span><span class="n">type</span> <span class="p">=</span> <span class="n">type</span><span class="p">;</span>
-            <span class="n">end</span>
-        <span class="s">end</span>
-        <span class="c">...</span>
-    <span class="n">end</span>
-<span class="s">end</span>
+<span class="w">    </span><span class="k">methods</span><span class="w"></span>
+<span class="w">        </span><span class="k">function</span><span class="w"> </span>obj<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">Acceleration</span><span class="p">(</span>type<span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nb">nargin</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                </span><span class="n">obj</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">type</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">end</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">        </span><span class="k">...</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <p>Providing constructors with additional arguments is discouraged, as this usually results in code that is not readily understandable. For instance, the following must be avoided:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span> <span class="p">=</span> <span class="n">VariableStepSizeIntegrator</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="s">&#39;rungeKuttaFehlberg78&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mf">1E-9</span><span class="p">,</span><span class="mf">1E-9</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">VariableStepSizeIntegrator</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="s">&#39;rungeKuttaFehlberg78&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mf">1E-9</span><span class="p">,</span><span class="mf">1E-9</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>If the user writes this in their MATLAB script, it is difficult to know what each parameter represents. If one checks the constructor definition (in MATLAB, only one constructor can be provided per class), it will look like <code class="docutils literal notranslate"><span class="pre">VariableStepSizeIntegrator(varargin)</span></code> in most cases, which does not provide useful information. Moreover, if more properties are added in the future, these could only be added at the end of the list of input arguments; otherwise existing code would be broken (or worse, would still run but generating in wrong results). Thus, it is recommended to create instances of settings-containing objects using an empty constructor whenever possible:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span> <span class="p">=</span> <span class="n">VariableStepSizeIntegrator</span><span class="p">();</span>
-<span class="n">integrator</span><span class="p">.</span><span class="n">initialStepSize</span> <span class="p">=</span> <span class="mi">10</span><span class="p">;</span>
-<span class="n">integrator</span><span class="p">.</span><span class="n">rungeKuttaCoefficientSet</span> <span class="p">=</span> <span class="s">&#39;rungeKuttaFehlberg78&#39;</span><span class="p">;</span>
-<span class="n">integrator</span><span class="p">.</span><span class="n">minimumStepSize</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="n">integrator</span><span class="p">.</span><span class="n">maximumStepSize</span> <span class="p">=</span> <span class="mi">1000</span><span class="p">;</span>
-<span class="n">integrator</span><span class="p">.</span><span class="n">relativeErrorTolerance</span> <span class="p">=</span> <span class="mf">1E-9</span><span class="p">;</span>
-<span class="n">integrator</span><span class="p">.</span><span class="n">absoluteErrorTolerance</span> <span class="p">=</span> <span class="mf">1E-9</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">integrator</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">VariableStepSizeIntegrator</span><span class="p">();</span><span class="w"></span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">initialStepSize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">rungeKuttaCoefficientSet</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;rungeKuttaFehlberg78&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">minimumStepSize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">maximumStepSize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span><span class="w"></span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">relativeErrorTolerance</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">1E-9</span><span class="p">;</span><span class="w"></span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">absoluteErrorTolerance</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">1E-9</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In any case, <strong>an empty constructor must always be provided</strong> (i.e. the length of <code class="docutils literal notranslate"><span class="pre">varargin</span></code> must be allowed to be zero). In this way, we can write:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span> <span class="p">=</span> <span class="n">Simulation</span><span class="p">();</span>
-<span class="c">...</span>
-<span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="p">.</span><span class="n">stepSize</span> <span class="p">=</span> <span class="mi">20</span><span class="p">;</span>
-<span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span><span class="s">&#39;main.json&#39;</span><span class="p">);</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Simulation</span><span class="p">();</span><span class="w"></span>
+<span class="k">...</span><span class="w"></span>
+<span class="n">simulation</span><span class="p">.</span><span class="n">integrator</span><span class="p">.</span><span class="n">stepSize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span><span class="w"></span>
+<span class="n">json</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span><span class="s">&#39;main.json&#39;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>because in the constructor of <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code>, the property <code class="docutils literal notranslate"><span class="pre">integrator</span></code> is set to <code class="docutils literal notranslate"><span class="pre">Integrator()</span></code>. If we skip this step, the code above would still be valid, but the property <code class="docutils literal notranslate"><span class="pre">simulation.integrator</span></code> would be a <code class="xref py py-class docutils literal notranslate"><span class="pre">struct</span></code> instead of an <code class="xref py py-class docutils literal notranslate"><span class="pre">Integrator</span></code> object, so all the functionality defined in the <code class="xref py py-class docutils literal notranslate"><span class="pre">Integrator</span></code> class for converting to JSON would be lost. This means that, all the properties storing settings-containing objects must be initialised in the constructor with their corresponding empty constructors to prevent this problems. For instance:</p>
 <div class="literal-block-wrapper docutils container" id="id7">
 <div class="code-block-caption"><span class="caption-text"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatlabInterface/Acceleration/Thrust.m</span></code></span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span> <span class="n">Thrust</span> <span class="o">&lt;</span> <span class="n">Acceleration</span>
-    <span class="n">properties</span>
-        <span class="s">direction</span>
-        <span class="n">magnitude</span>
-        <span class="s">dataInterpolation</span>
-        <span class="n">specificImpulse</span>
-        <span class="s">frame</span>
-        <span class="n">centralBody</span>
-    <span class="s">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">Thrust</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">Acceleration</span><span class="w"></span>
+<span class="w">    </span><span class="k">properties</span><span class="w"></span>
+<span class="w">        </span><span class="n">direction</span><span class="w"></span>
+<span class="w">        </span><span class="n">magnitude</span><span class="w"></span>
+<span class="w">        </span><span class="n">dataInterpolation</span><span class="w"></span>
+<span class="w">        </span><span class="n">specificImpulse</span><span class="w"></span>
+<span class="w">        </span><span class="n">frame</span><span class="w"></span>
+<span class="w">        </span><span class="n">centralBody</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
 
-    <span class="n">methods</span>
-        <span class="s">function</span> <span class="s">obj</span> <span class="s">=</span> <span class="s">Thrust()</span>
-            <span class="n">obj</span><span class="p">@</span><span class="n">Acceleration</span><span class="p">(</span><span class="n">Accelerations</span><span class="p">.</span><span class="n">thrust</span><span class="p">);</span>
-            <span class="n">obj</span><span class="p">.</span><span class="n">direction</span> <span class="p">=</span> <span class="n">ThrustDirection</span><span class="p">();</span>
-            <span class="n">obj</span><span class="p">.</span><span class="n">magnitude</span> <span class="p">=</span> <span class="n">ThrustMagnitude</span><span class="p">();</span>
-            <span class="n">obj</span><span class="p">.</span><span class="n">dataInterpolation</span> <span class="p">=</span> <span class="n">DataInterpolation</span><span class="p">();</span>
-        <span class="n">end</span>
-        <span class="s">...</span>
-    <span class="n">end</span>
-<span class="s">end</span>
+<span class="w">    </span><span class="k">methods</span><span class="w"></span>
+<span class="w">        </span><span class="k">function</span><span class="w"> </span>obj<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">Thrust</span><span class="p">()</span><span class="w"></span>
+<span class="w">            </span><span class="n">obj</span><span class="p">@</span><span class="n">Acceleration</span><span class="p">(</span><span class="n">Accelerations</span><span class="p">.</span><span class="n">thrust</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">obj</span><span class="p">.</span><span class="n">direction</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ThrustDirection</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="n">obj</span><span class="p">.</span><span class="n">magnitude</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ThrustMagnitude</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="n">obj</span><span class="p">.</span><span class="n">dataInterpolation</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">DataInterpolation</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">        </span><span class="k">...</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <p>Note that before we call the base class’ constructor first by writing <code class="docutils literal notranslate"><span class="pre">obj&#64;BaseClass(...)</span></code>.</p>
 <p>For optional properties, we can also set them during construction, but in that case the used empty constructor <strong>must</strong> return an empty object. For instance, consider the constructor of the <code class="docutils literal notranslate"><span class="pre">Body</span></code> class:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span>obj <span class="p">=</span><span class="w"> </span><span class="nf">Body</span><span class="p">(</span>name,useDefaultSettings<span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">obj</span><span class="p">.</span><span class="n">initialState</span> <span class="p">=</span> <span class="n">State</span><span class="p">();</span>
-    <span class="n">obj</span><span class="p">.</span><span class="n">aerodynamics</span> <span class="p">=</span> <span class="n">ConstantAerodynamics</span><span class="p">();</span>
-    <span class="n">obj</span><span class="p">.</span><span class="n">atmosphere</span> <span class="p">=</span> <span class="n">Atmosphere</span><span class="p">();</span>
-    <span class="n">obj</span><span class="p">.</span><span class="n">ephemeris</span> <span class="p">=</span> <span class="n">Ephemeris</span><span class="p">();</span>
-    <span class="n">obj</span><span class="p">.</span><span class="n">gravityField</span> <span class="p">=</span> <span class="n">GravityField</span><span class="p">();</span>
-    <span class="n">obj</span><span class="p">.</span><span class="n">gravityFieldVariation</span> <span class="p">=</span> <span class="n">GravityFieldVariation</span><span class="p">();</span>
-    <span class="n">obj</span><span class="p">.</span><span class="n">rotationModel</span> <span class="p">=</span> <span class="n">RotationModel</span><span class="p">();</span>
-    <span class="n">obj</span><span class="p">.</span><span class="n">shapeModel</span> <span class="p">=</span> <span class="n">ShapeModel</span><span class="p">();</span>
-    <span class="n">if</span> <span class="s">nargin</span> <span class="s">&gt;=</span> <span class="s">1</span>
-        <span class="n">obj</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">name</span><span class="p">;</span>
-        <span class="n">if</span> <span class="s">nargin</span> <span class="s">&gt;=</span> <span class="s">2</span>
-            <span class="n">obj</span><span class="p">.</span><span class="n">useDefaultSettings</span> <span class="p">=</span> <span class="n">useDefaultSettings</span><span class="p">;</span>
-        <span class="n">end</span>
-    <span class="s">end</span>
-<span class="k">end</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span>obj<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">Body</span><span class="p">(</span>name,useDefaultSettings<span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">obj</span><span class="p">.</span><span class="n">initialState</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">State</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">obj</span><span class="p">.</span><span class="n">aerodynamics</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ConstantAerodynamics</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">obj</span><span class="p">.</span><span class="n">atmosphere</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Atmosphere</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">obj</span><span class="p">.</span><span class="n">ephemeris</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Ephemeris</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">obj</span><span class="p">.</span><span class="n">gravityField</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">GravityField</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">obj</span><span class="p">.</span><span class="n">gravityFieldVariation</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">GravityFieldVariation</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">obj</span><span class="p">.</span><span class="n">rotationModel</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">RotationModel</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">obj</span><span class="p">.</span><span class="n">shapeModel</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ShapeModel</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nb">nargin</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="n">obj</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nb">nargin</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="w">            </span><span class="n">obj</span><span class="p">.</span><span class="n">useDefaultSettings</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">useDefaultSettings</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Thanks to this constructor, one can write:</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">body</span> <span class="p">=</span> <span class="n">Body</span><span class="p">(</span><span class="s">&#39;Vehicle&#39;</span><span class="p">);</span>
-<span class="c">% body.aerdoynamics = ConstantAerodynamics();</span>
-<span class="n">body</span><span class="p">.</span><span class="n">aerodynamics</span><span class="p">.</span><span class="n">forceCoefficients</span> <span class="p">=</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">];</span>
-<span class="n">body</span><span class="p">.</span><span class="n">aerodynamics</span><span class="p">.</span><span class="n">referenceArea</span> <span class="p">=</span> <span class="mi">10</span><span class="p">;</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">body</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Body</span><span class="p">(</span><span class="s">&#39;Vehicle&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="c">% body.aerdoynamics = ConstantAerodynamics();</span><span class="w"></span>
+<span class="n">body</span><span class="p">.</span><span class="n">aerodynamics</span><span class="p">.</span><span class="n">forceCoefficients</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="n">body</span><span class="p">.</span><span class="n">aerodynamics</span><span class="p">.</span><span class="n">referenceArea</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>without the need to write the line that has been commented out. However, <code class="docutils literal notranslate"><span class="pre">ConstantAerodynamics()</span></code> must provide an empty object, otherwise the property <code class="docutils literal notranslate"><span class="pre">body.aerodynamics</span></code> will be defined in the JSON file even when the user does not provide any aerodynamics settings. For <code class="xref py py-class docutils literal notranslate"><span class="pre">Atmosphere</span></code>, <a class="reference internal" href="../../tutorials/tudatFeatures/environmentSetup/availableSettings.html#Ephemeris" title="Ephemeris"><code class="xref py py-class docutils literal notranslate"><span class="pre">Ephemeris</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">GravityField</span></code>, etc. this is trivial, but for <code class="xref py py-class docutils literal notranslate"><span class="pre">ConstantAerodynamics</span></code> this is more difficult because it derives from <code class="xref py py-class docutils literal notranslate"><span class="pre">Aerodynamics</span></code> and its property <code class="docutils literal notranslate"><span class="pre">type</span></code> should be set to <code class="docutils literal notranslate"><span class="pre">'constant'</span></code>, resulting in an object that is not empty. Thus, this is only possible because the JSON Interface uses the default value <code class="docutils literal notranslate"><span class="pre">&quot;constant&quot;</span></code> for the type of the aerodynamics settings when no provided in the input file.</p>
@@ -486,11 +490,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -525,6 +528,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

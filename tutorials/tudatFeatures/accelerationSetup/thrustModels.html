@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -205,17 +209,17 @@
 </ul>
 </div></blockquote>
 <p>In fact, when creating settings for a thrust force, the user needs to provide settings for these two aspects of the force model</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustDirectionGuidanceSettings</span> <span class="o">&gt;</span> <span class="n">thrustDirectionSettings</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustMagnitudeSettings</span> <span class="o">&gt;</span> <span class="n">thrustMagnitudeSettings</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ThrustDirectionGuidanceSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">thrustDirectionSettings</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ThrustMagnitudeSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">thrustMagnitudeSettings</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">SelectedAccelerationMap</span> <span class="n">accelerationSettingsMap</span><span class="p">;</span>
-<span class="n">accelerationSettingsMap</span><span class="p">[</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">][</span> <span class="s">&quot;Vehicle&quot;</span> <span class="p">].</span><span class="n">push_back</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">ThrustAccelerationSettings</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">thrustDirectionSettings</span><span class="p">,</span> <span class="n">thrustMagnitudeSettings</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">SelectedAccelerationMap</span><span class="w"> </span><span class="n">accelerationSettingsMap</span><span class="p">;</span><span class="w"></span>
+<span class="n">accelerationSettingsMap</span><span class="p">[</span><span class="w"> </span><span class="s">&quot;Vehicle&quot;</span><span class="w"> </span><span class="p">][</span><span class="w"> </span><span class="s">&quot;Vehicle&quot;</span><span class="w"> </span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ThrustAccelerationSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">thrustDirectionSettings</span><span class="p">,</span><span class="w"> </span><span class="n">thrustMagnitudeSettings</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In the above code snippet, two things may stand out. First of all, we define the thrust force as one that the vehicle exerts on itself. Secondly, to define the thrust force, the user must provide two objects: one of type (derived from) <a class="reference internal" href="#ThrustDirectionGuidanceSettings" title="ThrustDirectionGuidanceSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustDirectionGuidanceSettings</span></code></a> and <a class="reference internal" href="#ThrustMagnitudeSettings" title="ThrustMagnitudeSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustMagnitudeSettings</span></code></a>. The settings are used to create a <a class="reference internal" href="#ThrustAcceleration" title="ThrustAcceleration"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustAcceleration</span></code></a> acceleration object.</p>
 <dl class="py class">
-<dt id="ThrustAcceleration">
-<em class="property">class </em><code class="sig-name descname">ThrustAcceleration</code><a class="headerlink" href="#ThrustAcceleration" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ThrustAcceleration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ThrustAcceleration</span></span><a class="headerlink" href="#ThrustAcceleration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class contaning the properties of the thrust acceleration. Set by the settings classes described below.</p>
 </dd></dl>
 
@@ -223,8 +227,8 @@
 <h2><span class="section-number">2.5.1. </span>Thrust direction<a class="headerlink" href="#thrust-direction" title="Permalink to this headline">¶</a></h2>
 <p>For the direction of the thrust, there are presently four available types of guidance. As is done for the acceleration models, some of the types of thrust direction require a specific derived class of <a class="reference internal" href="#ThrustDirectionGuidanceSettings" title="ThrustDirectionGuidanceSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustDirectionGuidanceSettings</span></code></a>, while others are defined purely by their type.</p>
 <dl class="py class">
-<dt id="ThrustDirectionGuidanceSettings">
-<em class="property">class </em><code class="sig-name descname">ThrustDirectionGuidanceSettings</code><a class="headerlink" href="#ThrustDirectionGuidanceSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ThrustDirectionGuidanceSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ThrustDirectionGuidanceSettings</span></span><a class="headerlink" href="#ThrustDirectionGuidanceSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for the setting for the direction of the thrust, in most cases not created directly by user. Important exception: thrust direction from existing orientation (see below).</p>
 <blockquote>
 <div><div class="admonition note">
@@ -235,11 +239,11 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="ThrustDirectionFromStateGuidanceSettings">
-<em class="property">class </em><code class="sig-name descname">ThrustDirectionFromStateGuidanceSettings</code><a class="headerlink" href="#ThrustDirectionFromStateGuidanceSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ThrustDirectionFromStateGuidanceSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ThrustDirectionFromStateGuidanceSettings</span></span><a class="headerlink" href="#ThrustDirectionFromStateGuidanceSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>In various simplified cases, the thrust direction can be assumed to be in line with either the position or velocity w.r.t. some body. As an example:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ThrustDirectionFromStateGuidanceSettings</span><span class="p">(</span>
-        <span class="n">centralBodyName</span><span class="p">,</span> <span class="n">isThurstInVelocityDirection</span><span class="p">,</span> <span class="n">directionIsOppositeToVector</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ThrustDirectionFromStateGuidanceSettings</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">centralBodyName</span><span class="p">,</span><span class="w"> </span><span class="n">isThurstInVelocityDirection</span><span class="p">,</span><span class="w"> </span><span class="n">directionIsOppositeToVector</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </dd></dl>
@@ -262,11 +266,11 @@
 </li>
 </ul>
 <dl class="py class">
-<dt id="CustomThrustDirectionSettings">
-<em class="property">class </em><code class="sig-name descname">CustomThrustDirectionSettings</code><a class="headerlink" href="#CustomThrustDirectionSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="CustomThrustDirectionSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CustomThrustDirectionSettings</span></span><a class="headerlink" href="#CustomThrustDirectionSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>For a generalized thrust direction guidance, the thrust can be defined as an arbitrary function of time. This allows a broad range of options to be defined, at the expense of increased complexity (somehow this thrust direction needs to be manually defined):</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CustomThrustDirectionSettings</span><span class="p">(</span>
-        <span class="n">thrustDirectionFunction</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CustomThrustDirectionSettings</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">thrustDirectionFunction</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </dd></dl>
@@ -284,39 +288,39 @@
 </div>
 <p>As a possible example of how to use this function:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">myThrustFunction</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">time</span><span class="p">,</span> <span class="k">const</span> <span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span> <span class="p">)</span>
-<span class="p">{</span>
-   <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">thrustDirection</span> <span class="o">=</span>
-      <span class="c1">//... define algorithm to compute thurst based on current environment</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="nf">myThrustFunction</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">time</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">NamedBodyMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bodyMap</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="n">thrustDirection</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="c1">//... define algorithm to compute thurst based on current environment</span>
 
-   <span class="k">return</span> <span class="n">thrustDirection</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">thrustDirection</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="kt">int</span> <span class="n">main</span><span class="p">(</span> <span class="p">)</span>
-<span class="p">{</span>
-   <span class="c1">// Define environment and other settings</span>
-   <span class="n">NamedBodyMap</span> <span class="n">bodyMap</span> <span class="o">=</span> <span class="p">...</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// Define environment and other settings</span>
+<span class="w">   </span><span class="n">NamedBodyMap</span><span class="w"> </span><span class="n">bodyMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
 
-   <span class="c1">// ...</span>
-   <span class="c1">// ...</span>
-   <span class="c1">// ...</span>
+<span class="w">   </span><span class="c1">// ...</span>
+<span class="w">   </span><span class="c1">// ...</span>
+<span class="w">   </span><span class="c1">// ...</span>
 
-   <span class="c1">// Create custom thrust direction settings</span>
-   <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">CustomThrustDirectionSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-      <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">myThrustFunction</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">bodyMap</span> <span class="p">);</span>
-<span class="p">}</span>
+<span class="w">   </span><span class="c1">// Create custom thrust direction settings</span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">CustomThrustDirectionSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">myThrustFunction</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span><span class="w"> </span><span class="n">bodyMap</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <dl class="py class">
-<dt id="CustomThrustOrientationSettings">
-<em class="property">class </em><code class="sig-name descname">CustomThrustOrientationSettings</code><a class="headerlink" href="#CustomThrustOrientationSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="CustomThrustOrientationSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CustomThrustOrientationSettings</span></span><a class="headerlink" href="#CustomThrustOrientationSettings" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>As an alternative expression for generalized thrust direction guidance, the thrust orientation can be defined as an arbitrary function of time. As with the custom thrust direction. this allows a broad range of options to be defined, at the expense of increased complexity).</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CustomThrustOrientationSettings</span><span class="p">(</span>
-        <span class="n">thrustOrientationFunction</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CustomThrustOrientationSettings</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">thrustOrientationFunction</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -328,19 +332,19 @@
 </li>
 </ul>
 <dl class="py class">
-<dt id="MeeCostateBasedThrustDirectionSettings">
-<em class="property">class </em><code class="sig-name descname">MeeCostateBasedThrustDirectionSettings</code><a class="headerlink" href="#MeeCostateBasedThrustDirectionSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="MeeCostateBasedThrustDirectionSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MeeCostateBasedThrustDirectionSettings</span></span><a class="headerlink" href="#MeeCostateBasedThrustDirectionSettings" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>By using these settings for the thrust direction, the so-called co-states of the Modified Equinoctial elements are used to determine the direction of the thrust. Details of this model are given by Kluever (2010), Boudestijn (2014) and Hogervorst (2017).</p>
 <dl class="py method">
-<dt>
-<code class="sig-name descname">Thrust direction from existing orientation</code></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">Thrust</span> <span class="pre">direction</span> <span class="pre">from</span> <span class="pre">existing</span> <span class="pre">orientation</span></span></dt>
 <dd><blockquote>
 <div><p>In some cases, the vehicle’s orientation may be predetermined, either due to aerodynamic guidance of concurrent propagation of the rotational equations of motion. In such a case, the thrust direction is computed from the body-fixed thrust direction (defined in <a class="reference internal" href="#ThrustMagnitudeSettings" title="ThrustMagnitudeSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustMagnitudeSettings</span></code></a>) and the existing vehicle orientation. This thrust direction does not require a specific derived class, but instead only requires the input of <code class="docutils literal notranslate"><span class="pre">thrust_direction_from_existing_body_orientation</span></code> to the <a class="reference internal" href="#ThrustDirectionGuidanceSettings" title="ThrustDirectionGuidanceSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustDirectionGuidanceSettings</span></code></a> constructor, so:</p>
 </div></blockquote>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ThrustDirectionGuidanceSettings</span><span class="p">(</span>
-        <span class="n">thrust_direction_from_existing_body_orientation</span><span class="p">,</span> <span class="s">&quot;&quot;</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ThrustDirectionGuidanceSettings</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">thrust_direction_from_existing_body_orientation</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </dd></dl>
@@ -350,19 +354,19 @@
 <h2><span class="section-number">2.5.2. </span>Thrust magnitude<a class="headerlink" href="#thrust-magnitude" title="Permalink to this headline">¶</a></h2>
 <p>To define the thrust magnitude, there are presently three available types of settings, each with its own dedicated derived class of <a class="reference internal" href="#ThrustMagnitudeSettings" title="ThrustMagnitudeSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustMagnitudeSettings</span></code></a>. We note that presently, the definition of the thrust direction in the body-fixed frame is also defined through these derived classes. In essence, the <a class="reference internal" href="#ThrustMagnitudeSettings" title="ThrustMagnitudeSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustMagnitudeSettings</span></code></a> defines all local (to the vehicle systems) settings for the thrust, while <a class="reference internal" href="#ThrustDirectionGuidanceSettings" title="ThrustDirectionGuidanceSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustDirectionGuidanceSettings</span></code></a> defines how the full vehicle must orient itself in space for the required thrust direction to be achieved. At present, there is no direct option for thrust-vector control (i.e. modifying the thrust direction in the body-fixed frame). If your application requires such functionality, please contact the Tudat support team. The following thrust magnitude settings are available:</p>
 <dl class="py class">
-<dt id="ThrustMagnitudeSettings">
-<em class="property">class </em><code class="sig-name descname">ThrustMagnitudeSettings</code><a class="headerlink" href="#ThrustMagnitudeSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ThrustMagnitudeSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ThrustMagnitudeSettings</span></span><a class="headerlink" href="#ThrustMagnitudeSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for the thrust magnitude settings.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="ConstantThrustMagnitudeSettings">
-<em class="property">class </em><code class="sig-name descname">ConstantThrustMagnitudeSettings</code><a class="headerlink" href="#ConstantThrustMagnitudeSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ConstantThrustMagnitudeSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConstantThrustMagnitudeSettings</span></span><a class="headerlink" href="#ConstantThrustMagnitudeSettings" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This model defines a constant thrust force and specific impulse:</p>
 </div></blockquote>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ConstantThrustMagnitudeSettings</span><span class="p">(</span>
-    <span class="n">thrustMagnitude</span><span class="p">,</span> <span class="n">specificImpulse</span><span class="p">,</span> <span class="n">bodyFixedThrustDirection</span> <span class="p">)</span><span class="o">:</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ConstantThrustMagnitudeSettings</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">thrustMagnitude</span><span class="p">,</span><span class="w"> </span><span class="n">specificImpulse</span><span class="p">,</span><span class="w"> </span><span class="n">bodyFixedThrustDirection</span><span class="w"> </span><span class="p">)</span><span class="o">:</span><span class="w"></span>
 </pre></div>
 </div>
 </dd></dl>
@@ -373,14 +377,14 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">bodyFixedThrustDirection</span></code> Body-fixed thrust direction (positive x-direction by default) as an <code class="docutils literal notranslate"><span class="pre">Eigen::Vector3d</span></code>. Note that this should be a unit-vector, and represents the direction opposite to the nozzle direction.</p></li>
 </ul>
 <dl class="py class">
-<dt id="FromFunctionThrustMagnitudeSettings">
-<em class="property">class </em><code class="sig-name descname">FromFunctionThrustMagnitudeSettings</code><a class="headerlink" href="#FromFunctionThrustMagnitudeSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="FromFunctionThrustMagnitudeSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FromFunctionThrustMagnitudeSettings</span></span><a class="headerlink" href="#FromFunctionThrustMagnitudeSettings" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This model defines a thrust force and specific impulse that can vary with time. It requires the following settings as input:</p>
 </div></blockquote>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">FromFunctionThrustMagnitudeSettings</span><span class="p">(</span>
-         <span class="n">thrustMagnitudeFunction</span><span class="p">,</span> <span class="n">specificImpulseFunction</span><span class="p">,</span>
-         <span class="n">isEngineOnFunction</span><span class="p">,</span> <span class="n">bodyFixedThrustDirection</span><span class="p">,</span> <span class="n">customUpdateFunction</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">FromFunctionThrustMagnitudeSettings</span><span class="p">(</span><span class="w"></span>
+<span class="w">         </span><span class="n">thrustMagnitudeFunction</span><span class="p">,</span><span class="w"> </span><span class="n">specificImpulseFunction</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="n">isEngineOnFunction</span><span class="p">,</span><span class="w"> </span><span class="n">bodyFixedThrustDirection</span><span class="p">,</span><span class="w"> </span><span class="n">customUpdateFunction</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </dd></dl>
@@ -394,73 +398,73 @@
 </ul>
 <p>Note that if you wish to use a constant value (as opposed to the <code class="docutils literal notranslate"><span class="pre">std::function</span></code> expression) for any or all of the first three arguments, you can use lambda expression. For instance, for a variable thrust magnitude, but constant specific impulse of 300 s, you can use:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">FromFunctionThrustMagnitudeSettings</span><span class="p">(</span>
-         <span class="n">thrustMagnitudeFunction</span><span class="p">,</span> <span class="p">[](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="mi">300</span><span class="p">;</span> <span class="p">}</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">FromFunctionThrustMagnitudeSettings</span><span class="p">(</span><span class="w"></span>
+<span class="w">         </span><span class="n">thrustMagnitudeFunction</span><span class="p">,</span><span class="w"> </span><span class="p">[](</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">300</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>Where the last two arguments (<code class="docutils literal notranslate"><span class="pre">isEngineOnFunction</span></code> and <code class="docutils literal notranslate"><span class="pre">bodyFixedThrustDirection</span></code>) are omitted and therefore are set to their default values.</p>
 <p>Below, we give a simple example of a class that can be used to incorporate TVC into your models. It uses a toy model, in which the thrust vector is rotated along the body-fixed y-axis, with a llinear rate in time.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TVCGuidance</span>
-<span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TVCGuidance</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
 
-<span class="n">TVCGuidance</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">initialAngle</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">angleRate</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">referenceTime</span> <span class="p">)</span><span class="o">:</span>
-   <span class="n">initialAngle_</span><span class="p">(</span> <span class="n">initialAngle</span> <span class="p">),</span> <span class="n">angleRate_</span><span class="p">(</span> <span class="n">angleRate</span> <span class="p">),</span> <span class="n">referenceTime_</span><span class="p">(</span> <span class="n">referenceTime</span> <span class="p">){</span> <span class="p">}</span>
+<span class="n">TVCGuidance</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">initialAngle</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">angleRate</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">referenceTime</span><span class="w"> </span><span class="p">)</span><span class="o">:</span><span class="w"></span>
+<span class="w">   </span><span class="n">initialAngle_</span><span class="p">(</span><span class="w"> </span><span class="n">initialAngle</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">angleRate_</span><span class="p">(</span><span class="w"> </span><span class="n">angleRate</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">referenceTime_</span><span class="p">(</span><span class="w"> </span><span class="n">referenceTime</span><span class="w"> </span><span class="p">){</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
-<span class="o">~</span><span class="n">TVCGuidance</span><span class="p">(</span> <span class="p">){</span> <span class="p">}</span>
+<span class="o">~</span><span class="n">TVCGuidance</span><span class="p">(</span><span class="w"> </span><span class="p">){</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
-<span class="kt">void</span> <span class="n">updateGuidance</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">currentTime</span> <span class="p">)</span>
-<span class="p">{</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">updateGuidance</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">currentTime</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
 
-   <span class="c1">// Implement your guidance model here, using your specific algorithm</span>
-   <span class="kt">double</span> <span class="n">currentThrustAngle</span> <span class="o">=</span> <span class="n">initialAngle_</span> <span class="o">+</span> <span class="n">angleRate_</span> <span class="o">*</span> <span class="p">(</span> <span class="n">currentTime</span> <span class="o">-</span> <span class="n">referenceTime</span> <span class="p">);</span>
-   <span class="n">bodyFixedThrustDirection_</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">cos</span><span class="p">(</span> <span class="n">currentThrustAngle</span> <span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">sin</span><span class="p">(</span> <span class="n">currentThrustAngle</span> <span class="p">);</span>
+<span class="w">   </span><span class="c1">// Implement your guidance model here, using your specific algorithm</span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">currentThrustAngle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">initialAngle_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">angleRate_</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">currentTime</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">referenceTime</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">bodyFixedThrustDirection_</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">cos</span><span class="p">(</span><span class="w"> </span><span class="n">currentThrustAngle</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">sin</span><span class="p">(</span><span class="w"> </span><span class="n">currentThrustAngle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-   <span class="c1">// Ensure that direction is a unit vector</span>
-   <span class="n">bodyFixedThrustDirection_</span><span class="p">.</span><span class="n">normalize</span><span class="p">(</span> <span class="p">);</span>
-<span class="p">}</span>
+<span class="w">   </span><span class="c1">// Ensure that direction is a unit vector</span>
+<span class="w">   </span><span class="n">bodyFixedThrustDirection_</span><span class="p">.</span><span class="n">normalize</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">getBodyFixedThrustDirection</span><span class="p">(</span> <span class="p">)</span>
-<span class="p">{</span>
-   <span class="k">return</span> <span class="n">bodyFixedThrustDirection_</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="n">getBodyFixedThrustDirection</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">bodyFixedThrustDirection_</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="k">protected</span><span class="o">:</span>
+<span class="k">protected</span><span class="o">:</span><span class="w"></span>
 
-   <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">bodyFixedThrustDirection_</span><span class="p">;</span>
+<span class="w">   </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="n">bodyFixedThrustDirection_</span><span class="p">;</span><span class="w"></span>
 
-   <span class="kt">double</span> <span class="n">initialAngle_</span><span class="p">;</span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">initialAngle_</span><span class="p">;</span><span class="w"></span>
 
-   <span class="kt">double</span> <span class="n">angleRate_</span><span class="p">;</span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">angleRate_</span><span class="p">;</span><span class="w"></span>
 
-   <span class="kt">double</span> <span class="n">referenceTime_</span><span class="p">;</span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">referenceTime_</span><span class="p">;</span><span class="w"></span>
 
-<span class="p">};</span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>A real guidance model will likely depend on the current environment, and will therefore often have a <span class="xref std std-ref">NamedBodyMap</span> as an input to its constructor.</p>
 <p>The <a class="reference internal" href="#ThrustMagnitudeSettings" title="ThrustMagnitudeSettings"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustMagnitudeSettings</span></code></a> are then created as follows, with an initial thrust angle of -0.01 radians (at t=86400 s since J2000) and an angle rate 1.0E-6 radians per second:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create TVC guidance object</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">TVCGuidance</span> <span class="o">&gt;</span> <span class="n">tvcGuidance</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">TVCGuidance</span> <span class="o">&gt;</span><span class="p">(</span>
-   <span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">1.0E-6</span><span class="p">,</span> <span class="mf">86400.0</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TVCGuidance</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">tvcGuidance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">TVCGuidance</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="mf">-0.01</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0E-6</span><span class="p">,</span><span class="w"> </span><span class="mf">86400.0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Retrieve required functions from TVC object</span>
-<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">void</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">updateFunction</span> <span class="o">=</span>
-   <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">TVCGuidance</span><span class="o">::</span><span class="n">updateGuidance</span><span class="p">,</span> <span class="n">tvcGuidance</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span> <span class="p">);</span>
-<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">thrustDirectionFunction</span> <span class="o">=</span>
-   <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">TVCGuidance</span><span class="o">::</span><span class="n">getBodyFixedThrustDirection</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">void</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">updateFunction</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">TVCGuidance</span><span class="o">::</span><span class="n">updateGuidance</span><span class="p">,</span><span class="w"> </span><span class="n">tvcGuidance</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">thrustDirectionFunction</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">TVCGuidance</span><span class="o">::</span><span class="n">getBodyFixedThrustDirection</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Create thrust magnitude settings, with constant thrust magnitude and specific impulse</span>
-<span class="kt">double</span> <span class="n">thrustMagnitude</span> <span class="o">=</span> <span class="mf">1.0E3</span><span class="p">;</span>
-<span class="kt">double</span> <span class="n">specificImpulse</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">ThrustMagnitudeSettings</span> <span class="o">&gt;</span> <span class="n">thrustMagnitudeSettings</span> <span class="o">=</span>
-   <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span> <span class="n">FromFunctionThrustMagnitudeSettings</span> <span class="o">&gt;</span><span class="p">(</span>
-      <span class="p">[</span> <span class="o">=</span> <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="n">thrustMagnitude</span><span class="p">;</span> <span class="p">},</span>
-      <span class="p">[</span> <span class="o">=</span> <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="n">specificImpulse</span><span class="p">;</span> <span class="p">},</span>
-      <span class="p">[</span> <span class="p">](</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">){</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">},</span>
-      <span class="n">thrustDirectionFunction</span><span class="p">,</span>
-      <span class="n">updateFunction</span> <span class="p">);</span>
+<span class="kt">double</span><span class="w"> </span><span class="n">thrustMagnitude</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0E3</span><span class="p">;</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">specificImpulse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">300</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">ThrustMagnitudeSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">thrustMagnitudeSettings</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="w"> </span><span class="n">FromFunctionThrustMagnitudeSettings</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">](</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">thrustMagnitude</span><span class="p">;</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">](</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">specificImpulse</span><span class="p">;</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="p">](</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="n">thrustDirectionFunction</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">updateFunction</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Note that we use a constant thrust magnitude (1 kN) and specific impulse (300 s) here, and focus the example on showing how to incorporate variable body-fixed thrust direction. If so desired, the above could also be used for variable thrust mangitude/specific impulse, by modifying any guidance class(es).</p>
@@ -469,13 +473,13 @@
 <p>You can combined thrust and aerodynamic guidance, by implementing any required thrust guidance functions into your own custom derived class of <a class="reference internal" href="aerodynamicGuidance.html#AerodynamicGuidance" title="AerodynamicGuidance"><code class="xref py py-class docutils literal notranslate"><span class="pre">AerodynamicGuidance</span></code></a></p>
 </div>
 <dl class="py class">
-<dt id="FromBodyThrustMagnitudeSettings">
-<em class="property">class </em><code class="sig-name descname">FromBodyThrustMagnitudeSettings</code><a class="headerlink" href="#FromBodyThrustMagnitudeSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="FromBodyThrustMagnitudeSettings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FromBodyThrustMagnitudeSettings</span></span><a class="headerlink" href="#FromBodyThrustMagnitudeSettings" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>A <a class="reference internal" href="../environmentSetup/setup.html#Body" title="Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Body</span></code></a> object may be endowed with a <code class="xref py py-class docutils literal notranslate"><span class="pre">VehicleSystems</span></code> property, which defines the suite of hardware that it carries. One of the systems that may be defined in the <code class="xref py py-class docutils literal notranslate"><span class="pre">VehicleSystems</span></code> object which is a list of <a class="reference internal" href="#EngineModel" title="EngineModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">EngineModel</span></code></a> objects (stored in a list). This class creates thrust magnitude settings that use the thrust from one or all of the <a class="reference internal" href="#EngineModel" title="EngineModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">EngineModel</span></code></a> objects that a vehicle is endowed with. In such a situation, the thrust direction, force and specific impulse are taken from the <a class="reference internal" href="#EngineModel" title="EngineModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">EngineModel</span></code></a>. It requires the following settings:</p>
 </div></blockquote>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">FromBodyThrustMagnitudeSettings</span><span class="p">(</span>
-         <span class="n">useAllEngines</span><span class="p">,</span> <span class="n">thrustOrigin</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">FromBodyThrustMagnitudeSettings</span><span class="p">(</span><span class="w"></span>
+<span class="w">         </span><span class="n">useAllEngines</span><span class="p">,</span><span class="w"> </span><span class="n">thrustOrigin</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </dd></dl>
@@ -485,8 +489,8 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">thrustOrigin</span></code> A <code class="docutils literal notranslate"><span class="pre">std::string</span></code> with the name of the engine that is to be used for the thrust (to be empty if useAllEngines is true)</p></li>
 </ul>
 <dl class="py class">
-<dt id="EngineModel">
-<em class="property">class </em><code class="sig-name descname">EngineModel</code><a class="headerlink" href="#EngineModel" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="EngineModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EngineModel</span></span><a class="headerlink" href="#EngineModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class in which the model of the engine is saved. Settings similar to those in the previous two thrust magnitude settings may be stored. However, using the interface with an engine model allows a more integrated systems/trajectory simulation to be performed, with applications in e.g. MDO. It allows multiple engine models, each with their own properties, to be defined.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -549,11 +553,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -588,6 +591,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

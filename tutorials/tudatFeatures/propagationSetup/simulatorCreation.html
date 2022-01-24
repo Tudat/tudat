@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -212,16 +216,16 @@
 </div>
 <p>These are implemented in derived classes and are discussed below.</p>
 <dl class="py class">
-<dt id="DynamicsSimulator">
-<em class="property">class </em><code class="sig-name descname">DynamicsSimulator</code><a class="headerlink" href="#DynamicsSimulator" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="DynamicsSimulator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DynamicsSimulator</span></span><a class="headerlink" href="#DynamicsSimulator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class from which the classes below are derived.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="SingleArcDynamicsSimulator">
-<em class="property">class </em><code class="sig-name descname">SingleArcDynamicsSimulator</code><a class="headerlink" href="#SingleArcDynamicsSimulator" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="SingleArcDynamicsSimulator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SingleArcDynamicsSimulator</span></span><a class="headerlink" href="#SingleArcDynamicsSimulator" title="Permalink to this definition">¶</a></dt>
 <dd><p>This derived class simulates single arc dynamics and its constructor is:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="n">StateScalarType</span><span class="p">,</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="p">,</span><span class="w"> </span><span class="n">TimeType</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"> </span><span class="n">integratorSettings</span><span class="p">,</span><span class="w"> </span><span class="n">propagatorSettings</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -256,9 +260,9 @@
 
 <p>By default, the equations of motion are integrated once the object is created. This can be changed by adding additional arguments to the cosntructors of the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a>, as shown below for the <a class="reference internal" href="#SingleArcDynamicsSimulator" title="SingleArcDynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleArcDynamicsSimulator</span></code></a>:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create simulation object and propagate dynamics.</span>
-<span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span> <span class="n">StateScalarType</span><span class="p">,</span> <span class="n">TimeType</span> <span class="o">&gt;</span><span class="n">dynamicsSimulator</span><span class="p">(</span>
-   <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="n">areEquationsOfMotionToBeIntegrated</span><span class="p">,</span>
-   <span class="n">clearNumericalSolutions</span><span class="p">,</span> <span class="n">setIntegratedResult</span><span class="p">,</span> <span class="n">printNumberOfFunctionEvaluations</span> <span class="p">);</span>
+<span class="n">SingleArcDynamicsSimulator</span><span class="o">&lt;</span><span class="w"> </span><span class="n">StateScalarType</span><span class="p">,</span><span class="w"> </span><span class="n">TimeType</span><span class="w"> </span><span class="o">&gt;</span><span class="n">dynamicsSimulator</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"> </span><span class="n">integratorSettings</span><span class="p">,</span><span class="w"> </span><span class="n">propagatorSettings</span><span class="p">,</span><span class="w"> </span><span class="n">areEquationsOfMotionToBeIntegrated</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">clearNumericalSolutions</span><span class="p">,</span><span class="w"> </span><span class="n">setIntegratedResult</span><span class="p">,</span><span class="w"> </span><span class="n">printNumberOfFunctionEvaluations</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -285,12 +289,12 @@
 </li>
 </ul>
 <dl class="py class">
-<dt id="MultiArcDynamicsSimulator">
-<em class="property">class </em><code class="sig-name descname">MultiArcDynamicsSimulator</code><a class="headerlink" href="#MultiArcDynamicsSimulator" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="MultiArcDynamicsSimulator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultiArcDynamicsSimulator</span></span><a class="headerlink" href="#MultiArcDynamicsSimulator" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This derived class allows the numerical propagation to be performed in an arc-wise manner. It is constructed using:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiArcDynamicsSimulator</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="n">arcStartTimes</span><span class="p">,</span>
-                           <span class="n">areEquationsOfMotionToBeIntegrated</span><span class="p">,</span> <span class="n">clearNumericalSolutions</span><span class="p">,</span> <span class="n">setIntegratedResult</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiArcDynamicsSimulator</span><span class="p">(</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"> </span><span class="n">integratorSettings</span><span class="p">,</span><span class="w"> </span><span class="n">propagatorSettings</span><span class="p">,</span><span class="w"> </span><span class="n">arcStartTimes</span><span class="p">,</span><span class="w"></span>
+<span class="w">                           </span><span class="n">areEquationsOfMotionToBeIntegrated</span><span class="p">,</span><span class="w"> </span><span class="n">clearNumericalSolutions</span><span class="p">,</span><span class="w"> </span><span class="n">setIntegratedResult</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where:</p>
@@ -314,8 +318,8 @@
 <p>The following, alternative, constructor allows you to specify different integrator settings per arc:</p>
 <blockquote>
 <div><blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiArcDynamicsSimulator</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettingsList</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="n">arcStartTimes</span><span class="p">,</span>
-                         <span class="n">areEquationsOfMotionToBeIntegrated</span><span class="p">,</span> <span class="n">clearNumericalSolutions</span><span class="p">,</span> <span class="n">setIntegratedResult</span> <span class="p">);</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MultiArcDynamicsSimulator</span><span class="p">(</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"> </span><span class="n">integratorSettingsList</span><span class="p">,</span><span class="w"> </span><span class="n">propagatorSettings</span><span class="p">,</span><span class="w"> </span><span class="n">arcStartTimes</span><span class="p">,</span><span class="w"></span>
+<span class="w">                         </span><span class="n">areEquationsOfMotionToBeIntegrated</span><span class="p">,</span><span class="w"> </span><span class="n">clearNumericalSolutions</span><span class="p">,</span><span class="w"> </span><span class="n">setIntegratedResult</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -328,15 +332,15 @@
 </ul>
 </div></blockquote>
 <dl class="py class">
-<dt id="HybridArcDynamicsSimulator">
-<em class="property">class </em><code class="sig-name descname">HybridArcDynamicsSimulator</code><a class="headerlink" href="#HybridArcDynamicsSimulator" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="HybridArcDynamicsSimulator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">HybridArcDynamicsSimulator</span></span><a class="headerlink" href="#HybridArcDynamicsSimulator" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Allows some bodies to be propagated in a single arc, and some in a multi-arc fashion. This has the strict requirement that the single-arc bodies’ dynamics does not depend on the multi-arc bodies. For instance, the multi-arc bodies are typically spacecraft and the single-arc bodies solar system bodies. The vehicles do not exert an acceleration on the planets, but the planets exert accelerations on the spacecraft. When using hybrid-arc propagation, the single-arc bodies are first propagated, followed by the multi-arc bodies.</p>
 </div></blockquote>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="n">HybridArcDynamicsSimulator</span><span class="p">(</span> <span class="n">bodyMap</span><span class="p">,</span> <span class="n">integratorSettings</span><span class="p">,</span> <span class="n">propagatorSettings</span><span class="p">,</span> <span class="n">arcStartTimes</span><span class="p">,</span>
-                            <span class="n">areEquationsOfMotionToBeIntegrated</span><span class="p">,</span> <span class="n">clearNumericalSolutions</span><span class="p">,</span> <span class="n">setIntegratedResult</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="n">HybridArcDynamicsSimulator</span><span class="p">(</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"> </span><span class="n">integratorSettings</span><span class="p">,</span><span class="w"> </span><span class="n">propagatorSettings</span><span class="p">,</span><span class="w"> </span><span class="n">arcStartTimes</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="n">areEquationsOfMotionToBeIntegrated</span><span class="p">,</span><span class="w"> </span><span class="n">clearNumericalSolutions</span><span class="p">,</span><span class="w"> </span><span class="n">setIntegratedResult</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-<span class="nl">where</span><span class="p">:</span>
+<span class="nl">where</span><span class="p">:</span><span class="w"></span>
 </pre></div>
 </div>
 <ul>
@@ -364,9 +368,9 @@
 <div><p>The <em>conventional</em> coordinates are those coordinates that are used to describe the acceleration model. For translational motion, these are the Cartesian coordinates, whereas for rotational motion, they are quaternions. To access and save these results you can use the function <code class="docutils literal notranslate"><span class="pre">getEquationsOfMotionNumericalSolution</span></code> of the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a> object, as shown below:</p>
 <blockquote>
 <div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Write body propagation history in conventional coordinates to file.</span>
-<span class="n">writeDataMapToTextFile</span><span class="p">(</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span> <span class="p">),</span>
-                        <span class="s">&quot;bodyPropagationHistory.dat&quot;</span><span class="p">,</span>
-                        <span class="n">outputPath</span> <span class="p">);</span>
+<span class="n">writeDataMapToTextFile</span><span class="p">(</span><span class="w"> </span><span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolution</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"></span>
+<span class="w">                        </span><span class="s">&quot;bodyPropagationHistory.dat&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="n">outputPath</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -377,9 +381,9 @@
 <div><p>The <em>propagation</em> coordinates are those coordinates that are used to describe the equations of motion and thus are the ones that are actually integrated. For translational motion, these can be Cartesian coordinates, Keplerian elements and one of the three unified state models, whereas for rotational motion, these can be quaternions, modified Rodrigues parameters or the exponential map. To access and save these results you can use the function <code class="docutils literal notranslate"><span class="pre">getEquationsOfMotionNumericalSolutionRaw</span></code> of the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a> object, as shown here:</p>
 <blockquote>
 <div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Write body propagation history in propagation coordinates to file.</span>
-<span class="n">writeDataMapToTextFile</span><span class="p">(</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolutionRaw</span><span class="p">(</span> <span class="p">),</span>
-                        <span class="s">&quot;bodyPropagationRawHistory.dat&quot;</span><span class="p">,</span>
-                        <span class="n">outputPath</span> <span class="p">);</span>
+<span class="n">writeDataMapToTextFile</span><span class="p">(</span><span class="w"> </span><span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getEquationsOfMotionNumericalSolutionRaw</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"></span>
+<span class="w">                        </span><span class="s">&quot;bodyPropagationRawHistory.dat&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="n">outputPath</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -393,9 +397,9 @@
 </div></blockquote>
 <p>In case you have also decided to store some dependent variables, you can access and save their history by placing the following code after the <a class="reference internal" href="#DynamicsSimulator" title="DynamicsSimulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicsSimulator</span></code></a> object creation:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Write body dependent variable history to file.</span>
-<span class="n">writeDataMapToTextFile</span><span class="p">(</span> <span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getDependentVariableHistory</span><span class="p">(</span> <span class="p">),</span>
-                        <span class="s">&quot;bodyDependentVariableHistory.dat&quot;</span><span class="p">,</span>
-                        <span class="n">outputPath</span> <span class="p">);</span>
+<span class="n">writeDataMapToTextFile</span><span class="p">(</span><span class="w"> </span><span class="n">dynamicsSimulator</span><span class="p">.</span><span class="n">getDependentVariableHistory</span><span class="p">(</span><span class="w"> </span><span class="p">),</span><span class="w"></span>
+<span class="w">                        </span><span class="s">&quot;bodyDependentVariableHistory.dat&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="n">outputPath</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Similarly to the <code class="docutils literal notranslate"><span class="pre">getEquationsOfMotionNumericalSolution</span></code> and <code class="docutils literal notranslate"><span class="pre">getEquationsOfMotionNumericalSolutionRaw</span></code> functions, the <code class="docutils literal notranslate"><span class="pre">getDependentVariableHistory</span></code> outputs a map, where the key is the time and the mapped value a vector of variable length. This length depends on a few things:</p>
@@ -476,11 +480,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -515,6 +518,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

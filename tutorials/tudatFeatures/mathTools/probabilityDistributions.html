@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -104,7 +108,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">6. Low-Thrust Trajectory Design Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lowThrustTrajectoryDesign/index.html">Low-Thrust Trajectory Design Module</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">6. Basic Mathematics Tools</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="interpolators.html">6.1. Interpolators</a></li>
 <li class="toctree-l4"><a class="reference internal" href="integrators.html">6.2. Integrators</a></li>
@@ -217,16 +221,16 @@
 </ul>
 </div></blockquote>
 <p>Each of these distributions can be create through the same Tudat interface. Below we given an example of creating a uniform distribution with bounds at -1 and 2.5:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">statistics</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">statistics</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">// Define properties of distribution</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">parameters</span><span class="p">;</span>
-<span class="n">parameters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="o">-</span><span class="mf">1.0</span> <span class="p">);</span>
-<span class="n">parameters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mf">2.5</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">parameters</span><span class="p">;</span><span class="w"></span>
+<span class="n">parameters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="mf">-1.0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">parameters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="mf">2.5</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Create distribution</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">InvertibleContinuousProbabilityDistribution</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">probabilityDistribution</span> <span class="o">=</span>
-        <span class="n">createBoostRandomVariable</span><span class="p">(</span> <span class="n">uniform_boost_distribution</span><span class="p">,</span> <span class="n">parameters</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">InvertibleContinuousProbabilityDistribution</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">probabilityDistribution</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="n">createBoostRandomVariable</span><span class="p">(</span><span class="w"> </span><span class="n">uniform_boost_distribution</span><span class="p">,</span><span class="w"> </span><span class="n">parameters</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where the <code class="docutils literal notranslate"><span class="pre">probabilityDistribution</span></code> object is created by the <code class="docutils literal notranslate"><span class="pre">createBoostRandomVariable</span></code> function, which takes two inputs:</p>
@@ -245,9 +249,9 @@
 </ul>
 </div></blockquote>
 <p>For instance, we can perform the following:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">localPdf</span> <span class="o">=</span> <span class="n">probabilityDistribution</span><span class="o">-&gt;</span><span class="n">evaluatePdf</span><span class="p">(</span> <span class="mf">1.6</span> <span class="p">);</span>
-<span class="kt">double</span> <span class="n">localCdf</span> <span class="o">=</span> <span class="n">probabilityDistribution</span><span class="o">-&gt;</span><span class="n">evaluateCdf</span><span class="p">(</span> <span class="mf">1.6</span> <span class="p">);</span>
-<span class="kt">double</span> <span class="n">samplePoint</span> <span class="o">=</span> <span class="n">probabilityDistribution</span><span class="o">-&gt;</span><span class="n">evaluateInverseCdf</span><span class="p">(</span> <span class="mf">0.8</span> <span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="n">localPdf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">probabilityDistribution</span><span class="o">-&gt;</span><span class="n">evaluatePdf</span><span class="p">(</span><span class="w"> </span><span class="mf">1.6</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">localCdf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">probabilityDistribution</span><span class="o">-&gt;</span><span class="n">evaluateCdf</span><span class="p">(</span><span class="w"> </span><span class="mf">1.6</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">samplePoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">probabilityDistribution</span><span class="o">-&gt;</span><span class="n">evaluateInverseCdf</span><span class="p">(</span><span class="w"> </span><span class="mf">0.8</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>To compute the three quantities listed above.</p>
@@ -367,31 +371,31 @@
 </ul>
 </div></blockquote>
 <p>We illustrate these two options with some examples below.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">statistics</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">statistics</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">// Define properties of distribution</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">parameters</span><span class="p">;</span>
-<span class="n">parameters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mf">1.0</span> <span class="p">);</span>
-<span class="n">parameters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="mf">3.2</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">parameters</span><span class="p">;</span><span class="w"></span>
+<span class="n">parameters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">parameters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="mf">3.2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Create distribution object</span>
-<span class="kt">double</span> <span class="n">distributionSeed</span> <span class="o">=</span> <span class="mf">42.0</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">RandomVariableGenerator</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">randomNumberGenerator</span> <span class="o">=</span> <span class="n">createBoostContinuousRandomVariableGenerator</span><span class="p">(</span>
-        <span class="n">uniform_boost_distribution</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">distributionSeed</span> <span class="p">);</span>
+<span class="kt">double</span><span class="w"> </span><span class="n">distributionSeed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">42.0</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">RandomVariableGenerator</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">randomNumberGenerator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createBoostContinuousRandomVariableGenerator</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">uniform_boost_distribution</span><span class="p">,</span><span class="w"> </span><span class="n">parameters</span><span class="p">,</span><span class="w"> </span><span class="n">distributionSeed</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Create distrubution function</span>
-<span class="n">distributionSeed</span> <span class="o">=</span> <span class="mf">43.0</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">(</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="n">randomNumberFunction</span> <span class="o">=</span> <span class="n">createBoostContinuousRandomVariableGeneratorFunction</span><span class="p">(</span>
-        <span class="n">uniform_boost_distribution</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">distributionSeed</span> <span class="p">);</span>
+<span class="n">distributionSeed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">43.0</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">randomNumberFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createBoostContinuousRandomVariableGeneratorFunction</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">uniform_boost_distribution</span><span class="p">,</span><span class="w"> </span><span class="n">parameters</span><span class="p">,</span><span class="w"> </span><span class="n">distributionSeed</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Generate random variables</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">randomVariables1</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">randomVariables2</span><span class="p">;</span>
-<span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mf">1E6</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">randomVariables1</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">randomNumberGenerator</span><span class="o">-&gt;</span><span class="n">getRandomVariableValue</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
-    <span class="n">randomVariables2</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">randomNumberFunction</span><span class="p">(</span> <span class="p">)</span> <span class="p">);</span>
-<span class="p">}</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">randomVariables1</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">randomVariables2</span><span class="p">;</span><span class="w"></span>
+<span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">1E6</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">randomVariables1</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">randomNumberGenerator</span><span class="o">-&gt;</span><span class="n">getRandomVariableValue</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">randomVariables2</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">randomNumberFunction</span><span class="p">(</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The above creates two vectors give a million doubles, distributed according to an uniform distribution with mean of 1 and standard deviation of 3.2.</p>
@@ -454,11 +458,11 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   
 
@@ -493,6 +497,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 

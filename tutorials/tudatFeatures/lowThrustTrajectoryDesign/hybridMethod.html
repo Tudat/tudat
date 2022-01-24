@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
     <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -40,7 +44,7 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="TU Delft Astrodynamic Toolbox  documentation" href="../../../index.html"/>
-        <link rel="up" title="6. Low-Thrust Trajectory Design Module" href="index.html"/>
+        <link rel="up" title="Low-Thrust Trajectory Design Module" href="index.html"/>
         <link rel="next" title="4. Shape-Based Methods" href="shapeBasedMethods/index.html"/>
         <link rel="prev" title="2. Sims-Flanagan Method" href="SimsFlanagan.html"/> 
 
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Start Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../started/index.html">Getting Started</a></li>
@@ -104,7 +108,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../propagationSetup/index.html">3. Simulator Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../estimationSetup/index.html">4. Estimation Set-Up</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../astroTools/index.html">5. Basic Astrodynamics Tools</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">6. Low-Thrust Trajectory Design Module</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Low-Thrust Trajectory Design Module</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="lowThrustTrajectory.html">1. Low-Thrust Trajectories</a></li>
 <li class="toctree-l4"><a class="reference internal" href="SimsFlanagan.html">2. Sims-Flanagan Method</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">3. Hybrid Method</a></li>
@@ -172,7 +176,7 @@
         
           <li><a href="../index.html">Tudat Libraries</a> &raquo;</li>
         
-          <li><a href="index.html"><span class="section-number">6. </span>Low-Thrust Trajectory Design Module</a> &raquo;</li>
+          <li><a href="index.html">Low-Thrust Trajectory Design Module</a> &raquo;</li>
         
       <li><span class="section-number">3. </span>Hybrid Method</li>
     
@@ -221,26 +225,26 @@
 <h2><span class="section-number">3.1. </span>Hybrid method optimisation problem<a class="headerlink" href="#hybrid-method-optimisation-problem" title="Permalink to this headline">¶</a></h2>
 <p>The hybrid method has been implemented in the class <code class="docutils literal notranslate"><span class="pre">HybridMethod</span></code>, which inherits from the base class <code class="docutils literal notranslate"><span class="pre">LowThrustLeg</span></code>.</p>
 <dl class="py class">
-<dt id="HybridMethod">
-<em class="property">class </em><code class="sig-name descname">HybridMethod</code><a class="headerlink" href="#HybridMethod" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="HybridMethod">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">HybridMethod</span></span><a class="headerlink" href="#HybridMethod" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>This class defines the trajectory design problem as addressed by the hybrid method and runs the associated optimisation problem. The constructor is defined as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HybridMethod</span><span class="p">(</span>
-        <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">stateAtDeparture</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">stateAtArrival</span><span class="p">,</span>
-        <span class="k">const</span> <span class="kt">double</span> <span class="n">maximumThrust</span><span class="p">,</span>
-        <span class="k">const</span> <span class="kt">double</span> <span class="n">specificImpulse</span><span class="p">,</span>
-        <span class="k">const</span> <span class="kt">double</span> <span class="n">timeOfFlight</span><span class="p">,</span>
-        <span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">bodyToPropagate</span><span class="p">,</span>
-        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">centralBody</span><span class="p">,</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">numerical_integrators</span><span class="o">::</span><span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">integratorSettings</span><span class="p">,</span>
-        <span class="n">pagmo</span><span class="o">::</span><span class="n">algorithm</span> <span class="n">optimisationAlgorithm</span><span class="p">,</span>
-        <span class="k">const</span> <span class="kt">int</span> <span class="n">numberOfGenerations</span><span class="p">,</span>
-        <span class="k">const</span> <span class="kt">int</span> <span class="n">numberOfIndividualsPerPopulation</span><span class="p">,</span>
-        <span class="k">const</span> <span class="kt">double</span> <span class="n">relativeToleranceConstraints</span> <span class="o">=</span> <span class="mf">1.0e-6</span><span class="p">,</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">)</span> <span class="o">&gt;</span><span class="p">,</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="n">initialGuessThrustModel</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span> <span class="k">nullptr</span><span class="p">,</span> <span class="mf">0.0</span> <span class="p">)</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HybridMethod</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">stateAtDeparture</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">stateAtArrival</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">maximumThrust</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">specificImpulse</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">timeOfFlight</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">bodyToPropagate</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">centralBody</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">numerical_integrators</span><span class="o">::</span><span class="n">IntegratorSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">integratorSettings</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">pagmo</span><span class="o">::</span><span class="n">algorithm</span><span class="w"> </span><span class="n">optimisationAlgorithm</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">numberOfGenerations</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">numberOfIndividualsPerPopulation</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">relativeToleranceConstraints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0e-6</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">initialGuessThrustModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where the input parameters are:</p>
@@ -305,22 +309,22 @@
 <h2><span class="section-number">3.2. </span>Hybrid method trajectory model<a class="headerlink" href="#hybrid-method-trajectory-model" title="Permalink to this headline">¶</a></h2>
 <p>Addressing a trajectory design problem with the hybrid method described above requires to run an optimisation algorithm to find the best trajectory, i.e. a trajectory which fulfills the departure and arrival boundary conditions, as well as the required time-of-flight, for the lowest deltaV. This requires the assessment of numerous trajectories to finally identify the best performing one. Each of the individual trajectories parsed by the optimisation algorithm is obtained out of a given set of initial and final MEE costates, and is defined as an object of the class described below.</p>
 <dl class="py class">
-<dt id="HybridMethodModel">
-<em class="property">class </em><code class="sig-name descname">HybridMethodModel</code><a class="headerlink" href="#HybridMethodModel" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="HybridMethodModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">HybridMethodModel</span></span><a class="headerlink" href="#HybridMethodModel" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>This class models the low-thrust trajectory as described by the hybrid method. It simply propagates the trajectory assuming a simplified model with thrust and central body gravitational accelerations only. The thrust acceleration is derived from the optimal control theory, using a vector of costates functions which return the value of each costate as a function of time. The costate functions are directly derived from the linear interpolation between their initial and final values, which are provided by the user. This class does not solve the optimisation problem, but it defines the low-thrust trajectory corresponding to a given set of initial and final costate values. The class is defined as:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HybridMethodLeg</span><span class="p">(</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">stateAtDeparture</span><span class="p">,</span>
-             <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span> <span class="n">stateAtArrival</span><span class="p">,</span>
-             <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="o">&amp;</span> <span class="n">initialCoStates</span><span class="p">,</span>
-             <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="o">&amp;</span> <span class="n">finalCoStates</span><span class="p">,</span>
-             <span class="k">const</span> <span class="kt">double</span> <span class="n">maximumThrust</span><span class="p">,</span>
-             <span class="k">const</span> <span class="kt">double</span> <span class="n">specificImpulse</span><span class="p">,</span>
-             <span class="k">const</span> <span class="kt">double</span> <span class="n">timeOfFlight</span><span class="p">,</span>
-             <span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="o">&amp;</span> <span class="n">bodyMap</span><span class="p">,</span>
-             <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">bodyToPropagate</span><span class="p">,</span>
-             <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">centralBody</span><span class="p">,</span>
-             <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span> <span class="n">numerical_integrators</span><span class="o">::</span><span class="n">IntegratorSettings</span><span class="o">&lt;</span> <span class="kt">double</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">integratorSettings</span> <span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HybridMethodLeg</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">stateAtDeparture</span><span class="p">,</span><span class="w"></span>
+<span class="w">             </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">&amp;</span><span class="w"> </span><span class="n">stateAtArrival</span><span class="p">,</span><span class="w"></span>
+<span class="w">             </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="o">&amp;</span><span class="w"> </span><span class="n">initialCoStates</span><span class="p">,</span><span class="w"></span>
+<span class="w">             </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="o">&amp;</span><span class="w"> </span><span class="n">finalCoStates</span><span class="p">,</span><span class="w"></span>
+<span class="w">             </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">maximumThrust</span><span class="p">,</span><span class="w"></span>
+<span class="w">             </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">specificImpulse</span><span class="p">,</span><span class="w"></span>
+<span class="w">             </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">timeOfFlight</span><span class="p">,</span><span class="w"></span>
+<span class="w">             </span><span class="n">simulation_setup</span><span class="o">::</span><span class="n">NamedBodyMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bodyMap</span><span class="p">,</span><span class="w"></span>
+<span class="w">             </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">bodyToPropagate</span><span class="p">,</span><span class="w"></span>
+<span class="w">             </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">centralBody</span><span class="p">,</span><span class="w"></span>
+<span class="w">             </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="w"> </span><span class="n">numerical_integrators</span><span class="o">::</span><span class="n">IntegratorSettings</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">integratorSettings</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The input parameters of this class constructor are:</p>
@@ -438,11 +442,10 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -477,6 +480,11 @@
             $(".toggle .header").show(400);
             $(".toggle .header .arrow").removeClass("open");
         });
+
+        var nav_top_height = Math.round($(".wy-side-nav-search").outerHeight())+2;
+        $(".wy-nav-content-wrap").prepend("<div id='announcement'><p>⚠️ This website is now mostly outdated! ⚠️</p><p>Please visit <a href='https://tudat-space.readthedocs.io/en/latest'>tudat-space.readthedocs.io</a> instead.</p></div>");
+        $("#announcement").css("height", String(nav_top_height) + "px");
+        $(".rst-content").css("margin-top", String(nav_top_height) + "px");
     });
 </script>
 
