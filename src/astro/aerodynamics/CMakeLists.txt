@@ -23,7 +23,8 @@ set(aerodynamics_SOURCES
         "flightConditions.cpp"
         "trimOrientation.cpp"
         "equilibriumWallTemperature.cpp"
-        )
+        "marsDtmAtmosphereModel.cpp"
+)
 
 # Set the header files.
 set(aerodynamics_HEADERS
@@ -46,7 +47,8 @@ set(aerodynamics_HEADERS
         "aerodynamicGuidance.h"
         "equilibriumWallTemperature.h"
         "windModel.h"
-        )
+        "marsDtmAtmosphereModel.h"
+)
 
 if (TUDAT_BUILD_WITH_NRLMSISE00)
     set(aerodynamics_SOURCES
