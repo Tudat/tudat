@@ -334,7 +334,7 @@ namespace aerodynamics
     {
         double T0 = coefficients_[0][indexg];
         double Ti;
-        double Gl = computeGl_Subr(latitude, longitude, minutes_, hours_, day_ , month_, year_, indexg);
+        double Gl = computeGl(latitude, longitude, minutes_, hours_, day_ , month_, year_, indexg);
         Ti = T0*(1.0 + Gl);
         return Ti;
     }
@@ -389,7 +389,7 @@ namespace aerodynamics
             if (col == 7)
                 std::cout << "fi CO2: " << fi << std::endl;
 
-            double gl = computeGl_Subr(latitude, longitude, minutes_, hours_, day_ , month_, year_, col);
+            double gl = computeGl(latitude, longitude, minutes_, hours_, day_ , month_, year_, col);
             std::cout << "gl: " << gl << std::endl;
             std::cout << "col" << col << std::endl;
             rho += rho0*fi*exp(gl);
