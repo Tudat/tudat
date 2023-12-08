@@ -60,7 +60,7 @@ int main( )
     // Close the file when you are done
     //outputFile.close();
     //std::cout << "Density computation and output written to file successfully." << std::endl;
-    std::cout << atmosphereModel.getTotalDensity( 400.0E3, 0.785398, 0.0, 1.0697333, 0.0, 16 ,12, 2000) << std::endl;
+    std::cout << atmosphereModel.getTotalDensity( 1000.0E3, 0.0, 0.0, 1.0697333, 0.0, 16 ,12, 2000) << std::endl;
 
 //    return 0;
     //std::cout << atmosphereModel.getTotalDensity( 138.0E3, 0.0, 0.0, 1.0697333, 0.0, 16 ,12, 2000) <<std::endl;
